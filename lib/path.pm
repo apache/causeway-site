@@ -6,7 +6,9 @@ our @patterns = (
     # from openejb
     [qr!\.md(text)?$!, basic => { template => "doc.html" } ],
 
-	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
+	[qr!\.mdtext$!, basic => { template => "doc.html" }],
+    
+#	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
 	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
 
 ) ;
