@@ -3,7 +3,8 @@ package path;
 # taken from django's url.py
 
 our @patterns = (
-    # from openejb
+
+	[qr!\index.md$!, single_narrative => { template => "index.html" }],
 
 	[qr!\.md$!, single_narrative => { template => "doc.html" }],
 	[qr!\.mdtext$!, single_narrative => { template => "doc.html" }],
