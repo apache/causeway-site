@@ -5,7 +5,7 @@ package path;
 our @patterns = (
     # from openejb
 
-	[qr!\.md($!, single_narrative => { template => "doc.html" }],
+	[qr!\.md$!, single_narrative => { template => "doc.html" }],
 	[qr!\.mdtext$!, single_narrative => { template => "doc.html" }],
     
 #	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
