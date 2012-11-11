@@ -8,5 +8,5 @@ There is also a mirrored copy up on [github](https://github.com/danhaywood/apach
 
 Mailing lists are:
 
-- users@apache.isis.org (send email to users-subscribe@apache.org)
-- dev@apache.isis.org (send email to dev-subscribe@apache.org)
+- users@apache.isis.org (subscribe by mailing [users-subscribe@apache.org](mailto:users-subscribe@apache.org))
+- dev@apache.isis.org (subscribe by mailing [dev-subscribe@apache.org](mailto:dev-subscribe@apache.org))
