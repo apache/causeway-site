@@ -28,4 +28,4 @@ You can download the Isis source code using:
 
     svn checkout https://svn.apache.org/repos/asf/isis/trunk
 
-We expect to have our top level migration out and an initial release this side of Xmas 2012.
+We expect to have our migration to a top level project (along with an initial release) this side of Xmas 2012.
