@@ -21,7 +21,7 @@ Title: Documentation
 }
 
 {span-one-third
-###  Contributors Guide
+###  Contributors
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html)
 
@@ -32,20 +32,20 @@ Title: Documentation
 {row
 
 {span-one-third
-###  Scimpi Viewer
-- [About](viewers/wicket/about.html)
-
-}
-
-{span-one-third
 ###  Wicket Viewer
-- [About](viewers/scimpi/about.html)
+- [About](viewers/wicket/about.html)
 
 }
 
 {span-one-third
 ###  Restful Objects Viewer
 - [About](viewers/restfulobjects/about.html)
+
+}
+
+{span-one-third
+###  Scimpi Viewer
+- [About](viewers/scimpi/about.html)
 
 }
 
