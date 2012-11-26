@@ -1,9 +1,38 @@
 Title: Books and Articles
 
-{stub
-This page is a stub.
-}
+Although it has evolved since, the Apache Isis framework started out as an open source implementation of the naked objects pattern.  Indeed, the generic user interfaces provided by Isis [Wicket](../viewers/wicket/about.html) and [Scimpi](../viewers/scimpi/about.html) viewers just naked objects systems, providing a default generic representation of domain objects.  The [Restful Objects](../viewers/restfulobjects/about.html) viewer is also a naked objects system; it's just that the representation is intended for machines rather than human beings.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+If the idea of naked objects is of interest, then there are a couple of books on the topic that you might want to read.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+### Naked Objects
+
+![](resources/books/nakedobjects-book.jpg)
+Richard Pawson and Robert Matthews, Wiley 2002
+
+This book describes the original ideas of Naked Objects. Although based on a very early version of the framework, it's still definitely worth a read (and beautifully produced).
+
+Amazon quotes: (avg 5 stars)
+
+- Brilliant argument and toolkit for information systems
+- Most thoughtful and beautiful technical book I have read
+- Excellent presentation of an innovative practical idea
+
+The book is freely available online [here](http://www.nakedobjects.org/book/). Or, you can get a hardcopy of the book at [Wiley (publisher)](http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470844205.html) and [Amazon](http://www.amazon.com/Naked-Objects-Richard-Pawson/dp/0470844205).
+ 
+
+### Domain Driven Design using Naked Objects
+
+![](resources/books/dhnako.jpg)
+Dan Haywood, Pragmatic Bookshelf 2009
+
+
+This more recent book draws the parallel between domain-driven design and Naked Objects (4.0). In the spirit of the Pragmatic Bookshelf, it's a practical, hands-on sort of book, building up a case study as it goes and encouraging you to build your own app as you go.
+
+Amazon quotes: (avg 4.5 stars)
+
+- Important Contribution to Domain-Driven Design
+- The easy-to-learn Naked Objects Framework .. provide[s] a masterful exposition on DDD
+- Clear and passionate book about a great subject
+- Excellent book and a great framework
+
+You can find the book at [Pragmatic Bookshelf (publisher)](http://www.pragprog.com/titles/dhnako/domain-driven-design-using-naked-objects) and [Amazon](http://www.amazon.com/Domain-Driven-Design-Objects-Pragmatic-Programmers/dp/1934356441).
