@@ -10,6 +10,9 @@ sub import {
 }
 
 sub markdown_filter {
+
+    print "in markdown_filter...";
+	
     my $value = shift;
 
     # Use raw value rather than escape (by calling repr() rather than

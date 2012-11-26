@@ -89,7 +89,7 @@ sub basic {
         $args{content} =~ s/{include:$include}/$text/g;
     }
 
-    print " - rendering";
+    print " - rendering using Dotiac::DTL";
 
     my $rendered = Dotiac::DTL->new($template_path)->render(\%args);
 

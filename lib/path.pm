@@ -11,7 +11,7 @@ use ASF::Value;
 
 our @patterns = (
 
-	[qr!\index.md$!, single_narrative => { template => "index.html" }],
+	[qr!/index.md(text)?$!, single_narrative => { template => "index.html" }],
 
 	#[qr!\.md(text)?$!, single_narrative => { template => "doc.html" }],
 	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
