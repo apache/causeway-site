@@ -130,7 +130,7 @@ sub _breadcrumbs {
             $name .= ucfirst($n) . " ";
         }
         $name =~ s/ *$//;
-        push @breadcrumbs, qq(<a href="$relpath">\u$name</a>);
+        push @breadcrumbs, qq(<a href="$relpath/index.html">\u$name</a>);
     }
     return join "&nbsp;&raquo&nbsp;", @breadcrumbs;
 }

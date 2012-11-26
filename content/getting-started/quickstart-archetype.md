@@ -1,4 +1,4 @@
-Title: Quickstart Archetype
+Title: Quickstart Archetype (0.2.0-incubating)
 
 The quickest way to get started with Apache Isis is to run the quickstart archetype.  This will generate a simple one-class domain model, for tracking to-do items.  The intention is not to showcase all of Isis' capabilities; rather it is to allow you to very easily modify the generated app to your own domain.
 
