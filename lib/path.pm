@@ -7,6 +7,7 @@ our @patterns = (
 	[qr!\index.md$!, single_narrative => { template => "index.html" }],
 
 	[qr!\.md$!, single_narrative => { template => "doc.html" }],
+	[qr!\documentation.md$!, basic => { template => "doc.html" }],
 	[qr!\.mdtext$!, single_narrative => { template => "doc.html" }],
     
 #	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
