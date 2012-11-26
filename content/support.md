@@ -11,18 +11,17 @@ Apache Isis has two public mailing lists, archived by [Markmail](http://markmail
 </tr>
 <tr>
 	<td>Users</t>
-	<td>[users@apache.isis.org](mailto:users@apache.isis.org)</td>
-	<td>[archives](http://markmail.org/search/isis-users+list:org.apache.incubator.isis-users)
+	<td><a href="mailto:users@apache.isis.org">users@apache.isis.org</a></td>
+	<td><a href="http://markmail.org/search/isis-users+list:org.apache.incubator.isis-users">archives</a>
 	</td>
-	<td>[users-subscribe@apache.org](mailto:users-subscribe@apache.org))</td>
+	<td><a href="mailto:users-subscribe@apache.org">users-subscribe@apache.org</a></td>
 </tr>
 <tr>
 	<td>Contributors</t>
-	<td>[dev@apache.isis.org](mailto:dev@apache.isis.org)</td>
-	<td>[archives](http://markmail.org/search/isis-dev+list:org.apache.incubator.isis-dev)
+	<td><a href="mailto:dev@apache.isis.org">dev@apache.isis.org</a></td>
+	<td><a href="http://markmail.org/search/isis-dev+list:org.apache.incubator.isis-dev">archives</a>
 	</td>
-	<td>[dev-subscribe@apache.org](mailto:dev-subscribe@apache.org))</td>
-</tr>
+	<td><a href="mailto:dev-subscribe@apache.org">dev-subscribe@apache.org</a></td></tr>
 </table>
 
 The markmail archives span both our current mailing lists and our original incubator mailing lists.
