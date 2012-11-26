@@ -107,11 +107,11 @@ sub _breadcrumbs {
     my $path        = shift;
     my $base        = shift;
 
-    my $index = "$base/index.html";
+    my $index = "$base/documentation.html";
     $index =~ s,/+,/,g;
 
     my @breadcrumbs = (
-        qq|<a href="$index">Home</a>|,
+        qq|<a href="$index">Docs</a>|,
     );
     my @path_components = split( m!/!, $path );
     pop @path_components;
