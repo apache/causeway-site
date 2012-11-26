@@ -17,7 +17,10 @@ Title: Documentation
 - [Presentations](learning-more/presentations.html)
 - [Isis Programming Model](learning-more/isis-programming-model.html)
 - [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
-- [Books and Articles](learning-more/books-and-articles.html)
+- [Books](learning-more/books.html)
+<!--
+- [Articles](learning-more/articles.html)
+-->
 
 }
 

@@ -1,4 +1,4 @@
-Title: Books and Articles
+Title: Books
 
 Although it has evolved since, the Apache Isis framework started out as an open source implementation of the naked objects pattern.  Indeed, the generic user interfaces provided by Isis [Wicket](../viewers/wicket/about.html) and [Scimpi](../viewers/scimpi/about.html) viewers just naked objects systems, providing a default generic representation of domain objects.  The [Restful Objects](../viewers/restfulobjects/about.html) viewer is also a naked objects system; it's just that the representation is intended for machines rather than human beings.
 
@@ -66,5 +66,17 @@ Amazon quotes: (avg 4.5 stars)
 You can find the book at [Pragmatic Bookshelf (publisher)](http://www.pragprog.com/titles/dhnako/domain-driven-design-using-naked-objects) and [Amazon](http://www.amazon.com/Domain-Driven-Design-Objects-Pragmatic-Programmers/dp/1934356441).
 
 }
+
+}
+
+### Restful Objects Specification
+
+Dan Haywood
+
+{ row
+
+The [Restful Objects specification](http://restfulobjects.org) defines a set of RESTful resources, and corresponding JSON representations, for accessing and manipulating a domain object model.
+
+This is a comprehensive specification, running to over 200 pages in length.  It is implemented by Isis' [Restful Objects](../viewers/restfulobjects/about.html) viewer.  It is also implemented by another (non-Apache) open source project, [Naked Objects MVC](http://nakedobjects.codeplex.com).
 
 }
