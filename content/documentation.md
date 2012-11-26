@@ -29,29 +29,25 @@ Title: Index
 
 {row
 
-## Viewers
-
 {span-one-third
-###  Scimpi
+###  Scimpi Viewer
 - [About](viewers/wicket/about.html)
 
 }
 
 {span-one-third
-###  Wicket
+###  Wicket Viewer
 - [About](viewers/scimpi/about.html)
 
 }
 
 {span-one-third
-###  Restful Objects
+###  Restful Objects 'Viewer'
 - [About](viewers/restfulobjects/about.html)
 
 }
 
 }
-
-## Object Stores
 
 {row
 
