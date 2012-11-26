@@ -26,13 +26,13 @@ Isis provides two alternative user interface webapps:
 
 - the [Scimpi viewer](../viewers/scimpi/about.html) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
 
-Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO](../objectstores/jdo/about.html) objectstore and the [NoSQL](../objectstores/nosql/about.html) objectstore.
+Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO objectstore](../objectstores/jdo/about.html) and the [NoSQL objectstore](../objectstores/nosql/about.html).
 
 ### Deploy on Isis as a RESTful web service
 
 REST (Representation State Transfer) is an architectural style for building highly scalable distributed systems, using the same principles as the World Wide Web. Many commercial web APIs (twitter, facebook, Amazon) are implemented as either pure REST APIs or some approximation therein.
 
-The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../viewers/resstfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
+The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../viewers/restfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
 
 There are two main use cases for deploying Isis as a RESTful web service are:
 
@@ -44,4 +44,4 @@ There are two main use cases for deploying Isis as a RESTful web service are:
 
   REST is designed to be machine-readable, and so is an excellent choice for synchronous data interchange scenarios.
 
-As for the auto-generated webapps, the framework manages object persistence, either the [JDO](../objectstores/jdo/about.html) objectstore and the [NoSQL](../objectstores/nosql/about.html) objectstore.  It is also perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
+As for the auto-generated webapps, the framework manages object persistence, either the [JDO objectstore](../objectstores/jdo/about.html) objectstore and the [NoSQL objectstore](../objectstores/nosql/about.html).  It is also perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
