@@ -1,5 +1,7 @@
 Title: Support
 
+### Mailing Lists
+
 Apache Isis has two public mailing lists, archived by [Markmail](http://markmail.org).
 
 <table>
@@ -25,3 +27,21 @@ Apache Isis has two public mailing lists, archived by [Markmail](http://markmail
 </table>
 
 The markmail archives span both our current mailing lists and our original incubator mailing lists.
+
+### Other Resources
+
+- [JIRA](https://issues.apache.org/jira/browse/ISIS)
+- [wiki](https://cwiki.apache.org/confluence/display/ISIS/Index)
+- [CI Builds](https://builds.apache.org/job/isis-framework-ubuntu)
+- [Fisheye](https://fisheye6.atlassian.com/changelog/isis)
+<!--
+- [Apache ML archives](http://mail-archives.apache.org/mod_mbox/incubator-isis-users/)
+- [Gmane](http://blog.gmane.org/gmane.comp.apache.incubator.isis.users)
+- [Isis extras](http://code.google.com/a/apache-extras.org/p/isis-extras/)
+-->
+
+### Committers' Blogs
+
+- [Dan Haywood](http://danhaywood.com/)
+- [Rob Matthews](http://www.objectconnexions.co.uk/)
+- [Kevin Meyer](http://www.kmz.co.za/blog/)
