@@ -16,7 +16,8 @@ Title: Documentation
 - [Common Use Cases](learning-more/common-use-cases.html)
 - [Presentations](learning-more/presentations.html)
 - [Isis Programming Model](learning-more/isis-programming-model.html)
-- [Isis Module Documentation](learning-more/isis-module-documentation.html)
+- [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
+- [Books and Articles](learning-more/books-and-articles.html)
 
 }
 
