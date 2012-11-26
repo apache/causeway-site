@@ -63,7 +63,7 @@ sub basic {
     read_text_file($filepath, \%args);
 
     if ($args{indexpage}) 
-      $args{path} += $args{indexpage};
+      $args{path} = "$args{path}$args{indexpage}";
     }
     
     $args{path} =~ s/\.md(text)?$/\.html/;
