@@ -42,7 +42,7 @@ Title: Index
 }
 
 {span-one-third
-###  Restful Objects 'Viewer'
+###  Restful Objects Viewer
 - [About](viewers/restfulobjects/about.html)
 
 }
