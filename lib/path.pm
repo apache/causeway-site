@@ -11,11 +11,10 @@ use ASF::Value;
 
 our @patterns = (
 
-	[qr!/index.md(text)?$!, single_narrative => { template => "index.html" }],
+	[qr!/index.md(text)?$!, basic => { template => "index.html" }],
 
-	[qr!\.md(text)?$!, basic => { template => "single_narrative.html" }],
-#	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
-#	[qr!\.md(text)?$!, single_narrative => { template => "single_narrative.html" }],
+	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
+  
 	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
 
 ) ;
