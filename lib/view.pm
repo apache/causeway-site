@@ -62,7 +62,7 @@ sub basic {
 
     read_text_file($filepath, \%args);
 
-    if ($args{indexpage}) 
+    if (exists $args{indexpage}) 
       $args{path} = "$args{path}$args{indexpage}";
     }
     
