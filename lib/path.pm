@@ -14,7 +14,7 @@ our @patterns = (
 	[qr!/index.md(text)?$!, basic => { template => "index.html" }],
 
 	[qr!\.md(text)?$!, basic => { template => "basic.html" }],
-	[qr!/$!, basic => { indexpage="index.html", template => "basic.html" }],
+	[qr!/$!, basic => { indexpage => "index.html", template => "basic.html" }],
   
 	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
 
