@@ -20,13 +20,13 @@ our @patterns = (
 
 ) ;
 
-# The %dependecies hash is used when building pages that reference or depend
+# The %dependencies hash is used when building pages that reference or depend
 # upon other pages -- e.g. a sitemap, which depends upon the pages that it
 # links to.  The keys for %dependencies are filepaths, and the values are
 # arrayrefs containing other filepaths.
 
 our %dependencies = (
-    "/sitemap.html" => [ grep s!^content!!, glob "content/*.mdtext" ],
+    "/sitemap.html" => [ grep s!^content!!, glob "content/*.md" ],
 );
 
 1;
