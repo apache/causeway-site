@@ -13,9 +13,9 @@ our @patterns = (
 
 	[qr!/index.md(text)?$!, single_narrative => { template => "index.html" }],
 
-	#[qr!\.md(text)?$!, single_narrative => { template => "doc.html" }],
-	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
-#	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
+	[qr!\.md(text)?$!, basic => { template => "single_narrative.html" }],
+#	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
+#	[qr!\.md(text)?$!, single_narrative => { template => "single_narrative.html" }],
 	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
 
 ) ;
