@@ -11,12 +11,12 @@ use ASF::Value;
 
 our @patterns = (
 
-	[qr!/index.md(text)?$!, basic => { template => "index.html" }],
+	[qr!/index.md(text)?$!, basic => { template => "index.html" }]
 
-	[qr!\.md(text)?$!, basic => { template => "basic.html" }],
-#	[qr!/$!, basic => { indexpage => "index.html", template => "basic.html" }],
+	,[qr!\.md(text)?$!, basic => { template => "basic.html" }]
+#	,[qr!/$!, basic => { indexpage => "index.html", template => "basic.html" }]
   
-	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
+#	,[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ]
 
 ) ;
 
@@ -26,7 +26,7 @@ our @patterns = (
 # arrayrefs containing other filepaths.
 
 our %dependencies = (
-    "/sitemap.html" => [ grep s!^content!!, glob "content/*.md" ],
+#    "/sitemap.html" => [ grep s!^content!!, glob "content/*.md" ]
 );
 
 1;
