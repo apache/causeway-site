@@ -1,13 +1,55 @@
 package view;
 use base 'ASF::View'; # see https://svn.apache.org/repos/infra/websites/cms/build/lib/ASF/View.pm
 
+=head1 INTERFACE
+
+Each function within view.pm which will be used for page generation must
+implement a standard interface.
+
+    sub my_view {
+        my %args = @_;
+        ...
+        return ($content, $extension, @optional);
+    }
+
+First, each function must accept labeled parameters.  The only parameter which
+will always be present is "path"; see the documentation in path.pm for the
+"@patterns" array with regards to invocation with additional parameters.
+
+Second, each function must return a list with at least two elements: the first
+element must be the page content, and the second must be a file extention.
+Returning additional elements in the list (as some of the functions below do)
+is optional.
+
+    return ($content, 'html', \%args);
+
+The constraints imposed by this interface may cause difficulties, for example
+when you want to generate both "foo.html" and "foo.pdf".  However, it is
+usually possible to work around such issues with symlinks and dependency
+management in path.pm.
+
+=cut
+
 use strict;
 use warnings;
-#use Carp;
-#use Dotiac::DTL;
+use Carp;
+use Dotiac::DTL;
 use ASF::Util qw( read_text_file );
-#use OpenEJBSiteDotiacFilter;
-#use Data::Dumper;
+use OpenEJBSiteDotiacFilter;
+use Data::Dumper;
+
+BEGIN { push @Dotiac::DTL::TEMPLATE_DIRS, "templates"; }
+
+# This is most widely used view.  It takes a
+# 'template' argument and a 'path' argument.
+# Assuming the path ends in foo.mdtext, any files
+# like foo.page/bar.mdtext will be parsed and
+# passed to the template in the "bar" (hash)
+# variable.
+# Has the same behavior as the above for foo.page/bar.txt
+# files, parsing them into a bar variable for the template.
+# Otherwise presumes the template is the path.
+
 
 # A "basic" view, which takes 'template' and 'path' parameters.
 # borrowed from openejb
@@ -20,7 +62,7 @@ sub basic {
 
     read_text_file($filepath, \%args);
 
-    $args{path} =~ s/\.md$/\.html/;
+    $args{path} =~ s/\.md(text)?$/\.html/;
     $args{base} = _base($args{path});
     $args{breadcrumbs} = _breadcrumbs($args{path}, $args{base});
 

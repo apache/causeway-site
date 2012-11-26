@@ -1,21 +1,29 @@
 package path;
+use strict;
+use warnings;
+use ASF::Value;
 
-# taken from django's url.py
+# The @patterns array is used to map filepaths to page treatments.  Each
+# element must be an arrayref with 3 elements of its own: a regex pattern for
+# selecting filepaths, the name of the subroutine from view.pm which will be
+# invoked to generate the page, and a hashref of named parameters which will
+# be passed to the view subroutine.
 
 our @patterns = (
 
 	[qr!\index.md$!, single_narrative => { template => "index.html" }],
 
-	[qr!\.md$!, single_narrative => { template => "doc.html" }],
-	[qr!\documentation.md$!, basic => { template => "doc.html" }],
-	[qr!\.mdtext$!, single_narrative => { template => "doc.html" }],
-    
+	#[qr!\.md(text)?$!, single_narrative => { template => "doc.html" }],
+	[qr!\.md(text)?$!, basic => { template => "doc.html" }],
 #	[qr!\.mdtext$!, single_narrative => { template => "single_narrative.html" }],
 	[qr!/sitemap\.html$!, sitemap => { headers => { title => "Sitemap" }} ],
 
 ) ;
 
-# for specifying interdependencies between files
+# The %dependecies hash is used when building pages that reference or depend
+# upon other pages -- e.g. a sitemap, which depends upon the pages that it
+# links to.  The keys for %dependencies are filepaths, and the values are
+# arrayrefs containing other filepaths.
 
 our %dependencies = (
     "/sitemap.html" => [ grep s!^content!!, glob "content/*.mdtext" ],
