@@ -1,9 +1,11 @@
 Title: Presentations
 
-{stub
-This page is a stub.
-}
+The following presentation, available in multiple formats, provides some background on Isis:
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+- [Introduction to Apache Isis (pptx)](resources/presentations/IntroducingApacheIsis.pptx)
+- [Introduction to Apache Isis (	ppt)](resources/presentations/IntroducingApacheIsis.ppt)
+- [Introduction to Apache Isis (odp)](resources/presentations/IntroducingApacheIsis.odp)
+- [Introduction to Apache Isis (pdf slides)](resources/presentations/IntroducingApacheIsis-slides.pdf)
+- [Introduction to Apache Isis (pdf notes)](resources/presentations/IntroducingApacheIsis-notes.pdf)
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+Feel free to use/adapt as you see fit.
