@@ -99,6 +99,37 @@ sub basic {
 }
 
 
+sub _breadcrumbs {
+    my $path        = shift;
+    my $base        = shift;
+
+    my $index = "$base/index.html";
+    $index =~ s,/+,/,g;
+
+    my @breadcrumbs = (
+        qq|<a href="$index">Home</a>|,
+    );
+    my @path_components = split( m!/!, $path );
+    pop @path_components;
+
+    my $relpath = $base;
+
+
+    for (@path_components) {
+        $relpath .= "$_/";
+        $relpath =~ s,/+,/,g;
+        next unless $_;
+
+        my @names = split("-", $_);
+        my $name = "";
+        for my $n (@names) {
+            $name .= ucfirst($n) . " ";
+        }
+        $name =~ s/ *$//;
+        push @breadcrumbs, qq(<a href="$relpath">\u$name</a>);
+    }
+    return join "&nbsp;&raquo&nbsp;", @breadcrumbs;
+}
 sub _base {
     my $path        = shift;
 
