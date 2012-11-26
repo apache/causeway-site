@@ -1,4 +1,4 @@
-Title: Index
+Title: Documentation
 
 {row
 
@@ -14,6 +14,7 @@ Title: Index
 {span-one-third
 ###  Learning More
 - [Common Use Cases](learning-more/common-use-cases.html)
+- [Presentations](getting-started/presentations.html)
 - [Isis Programming Model](learning-more/isis-programming-model.html)
 - [Isis Module Documentation](learning-more/isis-programming-model.html)
 
