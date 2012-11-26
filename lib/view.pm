@@ -62,9 +62,7 @@ sub basic {
 
     read_text_file($filepath, \%args);
 
-    if (exists $args{indexpage}) 
-      $args{path} = "$args{path}$args{indexpage}";
-    }
+    $args{path} = "$args{path}$args{indexpage}";
     
     $args{path} =~ s/\.md(text)?$/\.html/;
     $args{base} = _base($args{path});
