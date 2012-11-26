@@ -6,10 +6,24 @@ If the idea of naked objects is of interest, then there are a couple of books on
 
 ### Naked Objects
 
-![](resources/books/nakedobjects-book.jpg)
 Richard Pawson and Robert Matthews, Wiley 2002
 
+{row
+
+{span-one-third
+
+{book-image
+
+![](resources/books/nakedobjects-book.jpg)
+}
+
+}
+
+{span-two-thirds
+
 This book describes the original ideas of Naked Objects. Although based on a very early version of the framework, it's still definitely worth a read (and beautifully produced).
+
+}
 
 Amazon quotes: (avg 5 stars)
 
@@ -22,11 +36,24 @@ The book is freely available online [here](http://www.nakedobjects.org/book/). O
 
 ### Domain Driven Design using Naked Objects
 
-![](resources/books/dhnako.jpg)
 Dan Haywood, Pragmatic Bookshelf 2009
 
+{row
+
+{span-one-third
+
+{book-image
+
+![](resources/books/dhnako.jpg)
+}
+
+}
+
+{span-two-thirds
 
 This more recent book draws the parallel between domain-driven design and Naked Objects (4.0). In the spirit of the Pragmatic Bookshelf, it's a practical, hands-on sort of book, building up a case study as it goes and encouraging you to build your own app as you go.
+
+}
 
 Amazon quotes: (avg 4.5 stars)
 
