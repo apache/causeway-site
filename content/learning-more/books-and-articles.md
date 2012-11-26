@@ -23,7 +23,6 @@ Richard Pawson and Robert Matthews, Wiley 2002
 
 This book describes the original ideas of Naked Objects. Although based on a very early version of the framework, it's still definitely worth a read (and beautifully produced).
 
-}
 
 Amazon quotes: (avg 5 stars)
 
@@ -33,12 +32,16 @@ Amazon quotes: (avg 5 stars)
 
 The book is freely available online [here](http://www.nakedobjects.org/book/). Or, you can get a hardcopy of the book at [Wiley (publisher)](http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470844205.html) and [Amazon](http://www.amazon.com/Naked-Objects-Richard-Pawson/dp/0470844205).
  
+}
+
+}
 
 ### Domain Driven Design using Naked Objects
 
 Dan Haywood, Pragmatic Bookshelf 2009
 
 {row
+
 
 {span-one-third
 
@@ -53,8 +56,6 @@ Dan Haywood, Pragmatic Bookshelf 2009
 
 This more recent book draws the parallel between domain-driven design and Naked Objects (4.0). In the spirit of the Pragmatic Bookshelf, it's a practical, hands-on sort of book, building up a case study as it goes and encouraging you to build your own app as you go.
 
-}
-
 Amazon quotes: (avg 4.5 stars)
 
 - Important Contribution to Domain-Driven Design
@@ -63,3 +64,7 @@ Amazon quotes: (avg 4.5 stars)
 - Excellent book and a great framework
 
 You can find the book at [Pragmatic Bookshelf (publisher)](http://www.pragprog.com/titles/dhnako/domain-driven-design-using-naked-objects) and [Amazon](http://www.amazon.com/Domain-Driven-Design-Objects-Pragmatic-Programmers/dp/1934356441).
+
+}
+
+}
