@@ -62,6 +62,10 @@ sub basic {
 
     read_text_file($filepath, \%args);
 
+    if ($args{indexpage}) 
+      $args{path} += $args{indexpage};
+    }
+    
     $args{path} =~ s/\.md(text)?$/\.html/;
     $args{base} = _base($args{path});
     $args{breadcrumbs} = _breadcrumbs($args{path}, $args{base});
