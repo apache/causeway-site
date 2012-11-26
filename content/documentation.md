@@ -14,14 +14,15 @@ Title: Documentation
 {span-one-third
 ###  Learning More
 - [Common Use Cases](learning-more/common-use-cases.html)
-- [Presentations](getting-started/presentations.html)
+- [Presentations](learning-more/presentations.html)
 - [Isis Programming Model](learning-more/isis-programming-model.html)
-- [Isis Module Documentation](learning-more/isis-programming-model.html)
+- [Isis Module Documentation](learning-more/isis-module-documentation.html)
 
 }
 
 {span-one-third
 ###  Contributors Guide
+- [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html)
 
 }
@@ -72,4 +73,34 @@ Title: Documentation
 
 }
 
+
+{row
+
+{span-one-third
+###  Security
+- [About](security/about.html)
+
+}
+
+{span-one-third
+###  Testing Support
+- [About](testing/about.html)
+- [JUnit](testing/junit.html)
+- [Integration Testing](testing/integtest.html)
+- [BDD (Concordion)](testing/bdd.html)
+
+}
+
+{span-one-third
+###  Other Topics
+- [Programming Models](other/progmodels.html)
+<!--
+- [DSL](other/dsl.html)
+- [Maven Plugin](other/maven.html)
+- [Eclipse IDE Plugin](other/eclipse-plugin.html)
+-->
+}
+
+
+}
 
