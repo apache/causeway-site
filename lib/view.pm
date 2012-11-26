@@ -99,6 +99,21 @@ sub basic {
 }
 
 
+sub _base {
+    my $path        = shift;
+
+    my @path_components = split( m!/!, $path );
+    pop @path_components;
+    pop @path_components;
+
+    my $rel = "./";
+
+    for (@path_components) {
+        $rel .= "../";
+    }
+
+    return $rel;
+}
 1;
 
 =head1 LICENSE
