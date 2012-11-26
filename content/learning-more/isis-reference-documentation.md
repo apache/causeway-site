@@ -41,7 +41,7 @@ Thereafter, we've broken Isis documentation out by component. That means that an
 <td>runtimes.dflt.objectstores:jdo</td><td>JDO Object Store</td><td>Configuration and Deployment</td><td><a href="../objectstores/jdo/about.html">see here</a></td><td>none</td><td>0%</td><td>Dan</td>
 </tr>
 <tr>
-<td>runtimes.dflt.objectstores:nosql</td><td>NoSQL Object Store</td><td>Configuration and Deployment Guide</td><td><a href="../objectstores/nosql/about.html">see here</a></td><td>none<td>Rob</td>
+<td>runtimes.dflt.objectstores:nosql</td><td>NoSQL Object Store</td><td>Configuration and Deployment Guide</td><td><a href="../objectstores/nosql/about.html">see here</a></td><td>0%</td><td>none<td>Rob</td>
 </tr>
 <tr>
 <td>runtimes.dflt.objectstores:sql</td><td>SQL Object Store</td><td>Configuration and Deployment Guide</td><td><a href="../objectstores/sql/about.html">see here</a></td><td><a href="http://incubator.apache.org/isis/runtimes/dflt/objectstores/sql/docbkx/pdf/isis-sql-objectstore.pdf">PDF</a>&nbsp;<a href="http://incubator.apache.org/isis/runtimes/dflt/objectstores/sql/docbkx/html/guide/isis-sql-objectstore.html">HTML</a></td><td>Done</td><td>Kevin</td>
