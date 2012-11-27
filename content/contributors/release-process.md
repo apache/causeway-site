@@ -191,6 +191,6 @@ The website's `src/site/apt/downloads.apt.vm` file lists (what will be) the curr
 
 ## Preparing a Release (`mvn release:prepare`)
 
-In order to prepare a release, you must have a public/private key pair, and have configured Maven.  See [release manager prerequisites](release-process-release-manager-prereqs.html) for more details.
+In order to prepare a release, you must have a public/private key pair, and have configured Maven.  See the page on [key generation](key-generation.html) for more details.
 
 ... in progress ...
