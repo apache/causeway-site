@@ -33,7 +33,8 @@ First, check (via [http://search.maven.org](http://search.maven.org)) whether th
 Second, use the Maven versions plugin can be used to determine if there are newer versions of any of Isis' dependencies:
 
 <pre>
-mvn versions:display-dependency-updates
+mvn versions:display-dependency-updates > /tmp/foo
+grep "\->" /tmp/foo | sort -u
 </pre>
 
 Update any of the dependencies that are out-of-date.
@@ -133,3 +134,61 @@ def fileEndings = [".java", ".htm"]
 Although Apache Isis has no dependencies which have incompatible licenses, the POMs for some of these dependencies (in the Maven central repo) do not necessarily contain the required license information.  Without appropriate additional configuration, this would result in the generated `DEPENDENCIES` file and generated Maven site indicating dependencies as having "unknown" licenses.
 
 Fortunately, Maven allows the missing information to be provided by configuring the `maven-remote-resources-plugin`.  This is stored in the `src/main/appended-resources/supplemental-models.xml` file in the parent `[oai:isis]` module.
+
+To capture the missing license information, use:
+
+<pre>
+mvn license:download-licenses
+</pre>
+
+This Maven plugin creates a `licensexml` file in the `target/generated-resources` directory of each module.
+
+Then, run the Isis script:
+
+<pre>
+groovy checkmissinglicenses.groovy
+</pre>
+
+This searches for all `licenses.xml` files, and compares them against the contents of the `supplemental-models.xml` file.   For example, the output could be something like:
+
+<pre>
+licenses to add to supplemental-models.xml:
+
+[org.slf4j, slf4j-api, 1.5.7]
+[org.codehaus.groovy, groovy-all, 1.7.2]
+
+
+licenses to remove from supplemental-models.xml (are spurious):
+
+[org.slf4j, slf4j-api, 1.5.2]
+</pre>
+
+If any missing entries are listed or are spurious, then update `supplemental-models.xml` and try again.
+
+{note
+Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg `bdd-concordion-tck`) depending on the TCK dom, fixtures etc.
+}
+
+## JIRA Prerequisites
+
+### Close All JIRA tickets for the release
+
+All JIRA tickets for the release should be closed, or moved to future releases if not yet addressed.
+
+### Generate Release Notes
+
+Each release should have a release note page called `release-x.x.x.html`, in `src/site/resources` (in `[oai:isis]` parent module).  This is linked to from the download page (`src/site/apt/downloads.apt.vm`); the download page should not need updating.
+
+The release notes can be generated using JIRA, using the procedure documented [here](http://confluence.atlassian.com/display/JIRA/Creating+Release+Notes).  If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
+
+### Update STATUS file
+
+The trunk holds a `STATUS` file which is a brief summary of the current status of the project.  Update this file prior to cutting the release.
+
+### Update downloads.apt.vm
+
+The website's `src/site/apt/downloads.apt.vm` file lists (what will be) the current release, along with any archived releases. Update this to reflect how things will be once the release is complete.
+
+## Preparing a Release (`mvn release:prepare`)
+
+In order to prepare a release, you must have a public/private key pair, and have configured Maven.  See [release manager prerequisites](release-process-release-manager-prereqs.html) for more details.
