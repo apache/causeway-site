@@ -44,17 +44,21 @@ Next, perform a quick sanity check:
 
 - builds ok
 
-  `mvn clean install -o`
+<pre>
+mvn clean install -o
+</pre>
 
 - site builds ok
 
-  `sh msdf.sh -o`
+<pre>
+sh msdf.sh -o
+</pre>
 
 - archetype is ok
 
   - archetype runs ok
 
-     `-D archetypeCatalog=local`
+     using `-D archetypeCatalog=local`
 
   - app generated from the archetype runs ok
 
@@ -96,8 +100,8 @@ The Isis parent `pom.xml`specifies the RAT Maven plugin, with the following cust
 <tr><td>&nbsp;</td><td>**/*.ucd, **/*.ucls</td><td>Soyatec UML plugin project files</td></tr>
 <tr><td>Image formats</td><td>**/*.svg</td><td>Scalable Vector Graphics</td></tr>
 <tr><td>&nbsp;</td><td>**/*.pdn</td><td>Paint.NET format</td></tr>
-<tr><td>Data files</td>**/*.json<td></td><td>JSON (test) data</td></tr>
-<tr><td>&nbsp;</td><td>**/isis.log</td>Isis' log file (byproduct of tests)<td></td></tr>
+<tr><td>Data files</td><td>**/*.json</td><td>JSON (test) data</td></tr>
+<tr><td>&nbsp;</td><td>**/isis.log</td><td>Isis' log file (byproduct of tests)</td></tr>
 <tr><td>&nbsp;</td><td>**/rat.txt</td><td>RAT's own audit file</td></tr>
 <tr><td>&nbsp;</td><td>**/fixture-data</td><td>SQL Object Store fixture data</td></tr>
 <tr><td>&nbsp;</td><td>**/test.data</td><td>SQL Object Store fixture data</td></tr>
@@ -105,8 +109,7 @@ The Isis parent `pom.xml`specifies the RAT Maven plugin, with the following cust
 <tr><td>&nbsp;</td><td>tmp/tests/*.xml</td><td>XML Object Store fixture data</td></tr>
 <tr><td>&nbsp;</td><td>tmp/ldap-conf/**</td><td>LDAP Security fixture data</td></tr>
 <tr><td>&nbsp;</td><td>**/src/main/resources/resources.txt</td><td>Resource file</td></tr>
-<tr><td>Archetype support</td><td></td><td></td></tr>
-<tr><td>&nbsp;</td><td>**/src/main/appended-resources/, supplemental-models.xml</td><td>(Empty) supplemental models</td></tr>
+<tr><td>Archetype support</td><td>**/src/main/appended-resources/, supplemental-models.xml</td><td>(Empty) supplemental models</td></tr>
 <tr><td>Program formats</td><td>**/*.min.js</td><td>Minified Javascript (note that the non-Minified Javascript equivalents is checked for its license)</td></tr>
 </table>
 
@@ -116,7 +119,6 @@ In addition, a number of additional licenses are configured:
 <tr><th>License</th><th>Description</th></tr>
 <tr><td>Apache 2.0</td><td>The RAT tool searches for an older version of the Apache license header. This additional license reconfigures RAT to use the current form of words</td></tr>
 <tr><td>MIT</td><td>JQuery (bundled with Isis) is dual licensed under MIT</td></tr>
-<tr>Isis bundles up source code fom the still-to-be-released JMock 2.6-RC2 codebase<td></td><td></td></tr>
 <tr><td>DocBook</td><td>Like many other Apache projects, Isis generates its documentation in DocBook form. In order to speed up generation, Isis has a local copy of the DocBook DTDs, Entities etc. Key phrases from these files are configured so that RAT identifies these files as valid to use.</td></tr>
 <tr><td>XHTML</td><td>Isis also has a dependency on the XHTML-strict DTD</td></tr>
 </table>
@@ -159,11 +161,6 @@ def fileEndings = [".java", ".htm"]
 
 ## Missing License Check
 
-Although <emphasis
->Apache Isis</emphasis
-> has no dependencies which have incompatible licenses, the <acronym
->POM</acronym
->s for these dependencies (in the Maven central repo) do not necessarily contain the required license information. When the release process is run this results in the generated <filename
->DEPENDENCIES</filename
-> file and generated Maven site listing dependencies as having "unknown" licenses.</ns:clipboard
->
+Although Apache Isis has no dependencies which have incompatible licenses, the POMs for some of these dependencies (in the Maven central repo) do not necessarily contain the required license information.  Without appropriate additional configuration, this would result in the generated `DEPENDENCIES` file and generated Maven site indicating dependencies as having "unknown" licenses.
+
+Fortunately, Maven allows the missing information to be provided by configuring the `maven-remote-resources-plugin`.  This is stored in the `src/main/appended-resources/supplemental-models.xml` file in the parent `[oai:isis]` module.

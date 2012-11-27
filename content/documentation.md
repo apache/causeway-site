@@ -26,7 +26,7 @@ Title: Documentation
 
 {span-one-third
 ###  Contributors
-- [Coding Conventions](coding-conventions.html)
+- [Coding Conventions](contributors/coding-conventions.html)
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html)
 
