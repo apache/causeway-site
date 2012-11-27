@@ -1,12 +1,10 @@
-Title: Release Manager Prereqs (Keys)
-
-## Key Generation
+Title: Key Generation
 
 In order that a contributor can make a release it is necessary for them to have generated a key and had that key recognized by other members of the Apache Software Foundation. 
 
 For further background information on this topic, see the [release signing page](http://www.apache.org/dev/release-signing.html) and the [openpgp page](http://www.apache.org/dev/openpgp.html#generate-key) on the Apache wiki.
 
-### Install and Configure gpg
+## Install and Configure gpg
 
 Download and install GnuPG (gpg), version 1.4.10 or higher.
 
@@ -19,7 +17,7 @@ default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB
 </pre>
 
 
-### Key Generation
+## Key Generation
 
 The ASF requires that keys are signed with a key (or subkey) based on RSA 4096 bits. To do this:
 
@@ -162,7 +160,7 @@ The Digest line should list SHA-512 first and SHA-1 last.
 Finally, remember to take a backup of your key and the keyring (ie, backup the `.gnupg` directory and its contents).
 
 
-### Subkey Generation
+## Subkey Generation
 
 It's recommended to use a subkey with an expiry date to sign releases, rather than your main, non-expiring key. If a subkey is present, then gpg will use it for signing in preference to the main key.
 
@@ -249,7 +247,7 @@ gpg>
 Quit the gpg shell; you now have a subkey.
 
 
-### Generate a Revocation Certificate
+## Generate a Revocation Certificate
 
 It's good practice to generate a number of revocation certificates so that the key can be revoked if it happens to be compromised. See the [gpg page](http://www.apache.org/dev/openpgp.html#revocation-certs) on the Apache wiki for more background on this topic.
 
@@ -334,7 +332,7 @@ if you find that you need to revoke your certificate, this blog post explains ho
 
 }
 
-### Publish Key
+## Publish Key
 
 It is also necessary to publish your key. There are several places where this should be done. In most cases, you'll need the "armored" " (ie ASCII) representation of your key. This can be generated using:
 
@@ -352,7 +350,7 @@ $ gpg --fingerprint nnnnnnnn
 
 The output from this command includes a line beginning "Key fingerprint", followed by a (space delimited) 40 character hexadecimal fingerprint. The last 8 characters should be the same as the key id (`nnnnnnnn`).
 
-#### Publish to a public key server
+### Publish to a public key server
 
 To a publish your key to a public key server (eg the MIT key server hosted at [http://pgp.mit.edu](http://pgp.mit.edu)), use the procedure below. Public key servers synchronize with each other, so publishing to one key server should be sufficient. For background reading on this, see the [release signing page](http://www.apache.org/dev/release-signing.html#keyserver-upload) on the Apache wiki, and the [gpg key page](http://maven.apache.org/developers/release/pmc-gpg-keys.html) on the Maven wiki.
 
@@ -372,11 +370,11 @@ Confirm the key has been added by browsing to submitting the following URL:
 
 again, where `nnnnnnnn` is the key Id.
 
-#### Publish to your Apache home directory
+### Publish to your Apache home directory
 
 The armored representation of your public key should be uploaded to your home directory on `people.apache.org`, and renamed as `.pgpkey`. Make sure this is readable by all.
 
-#### Publish to your Apache HTML home directory
+### Publish to your Apache HTML home directory
 
 The armored representation of your public key should be uploaded to your `public_html` home directory on `people.apache.org`, named `nnnnnnnn.asc`. Make sure this is readable by all.
 
@@ -389,7 +387,7 @@ where
 - `xxxxxxxx` is your apache LDAP user name
 - `nnnnnnnn` is your public key id.
 
-#### FOAF
+### FOAF
 
 First, check out the committers/info directory:
 
@@ -465,7 +463,7 @@ ie, referencing your publically exported public key
 
 Finally, commit your changes.
 
-#### Save to `KEYS`
+### Save to `KEYS`
 
 The armored representation of the public key should be saved to Isis' `KEYS` file, [https://svn.apache.org/repo/asf/isis/KEYS](https://svn.apache.org/repo/asf/isis/KEYS) (ie, parent of `trunk`).
 
@@ -485,12 +483,12 @@ gpg --armor --export nnnnnnnn >>KEYS
 
 Then commit.
 
-#### id.apache.org
+### id.apache.org
 
 Log onto `id.apache.org` and ensure that the finger print of your public key is correct.
 
 
-### Attend Key Signing Party (Apache web of trust)
+## Attend Key Signing Party (Apache web of trust)
 
 It is strongly advised that the contributor attend a key signing party at an Apache event, in order that other Apache committers/members can in person verify their identity against the key. The process for this is described [here](http://www.apache.org/dev/release-signing.html#key-signing-party) and [here](http://wiki.apache.org/apachecon/PgpKeySigning).
 

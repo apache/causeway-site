@@ -29,6 +29,7 @@ Title: Documentation
 - [Coding Conventions](contributors/coding-conventions.html)
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html)
+- [Key generation](contributors/key-generation.html)
 
 }
 
