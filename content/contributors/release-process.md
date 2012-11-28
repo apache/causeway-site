@@ -112,15 +112,9 @@ where `rat.num` property is set to a high figure, temporarily overriding the def
 Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete mvn-rat-plugin from Codehaus repo.
 }
 
-All being well the command should succeed.  If it does not, then review the `rat.txt` files in the failing module's `target` directory.  Missing license notes are indicated using the key:
-
-- `!???` identifies those files that are missing license notes
-- `tests-common/*` and `tests/*` ignores certain test files
-- `hsql-db` are generated HSQLDB directories
-
-You can collate these together using something like:
+All being well the command should succeed.  If it does not, then review the `rat.txt` files in the failing module's `target` directory.  Missing license notes are indicated using the key `!???`.  You can collate these together using something like:
 <pre>
-for a in `find . -name rat.txt -print`; do grep -H '!???' $a; done
+for a in `find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
 Investigate and fix any reported violations.
