@@ -96,31 +96,45 @@ The Isis parent `pom.xml` specifies the RAT Maven plugin, with a number of [cust
 To run the RAT tool, first clean up any generated artifacts:
 
 <pre>
-mvn clean -P integration-tests
+mvn clean          # clean up target directory
+mvn clean -P m2e   # clean up target-ide directory
 </pre>
 
 Then, run the tool using:
 
 <pre>
-mvn org.apache.rat:apache-rat-plugin:check
+mvn org.apache.rat:apache-rat-plugin:check -D rat.num=50
 </pre>
+
+where `rat.num` property is set to a high figure, temporarily overriding the default value of 0.  (If this isn't overridden and there are licenses, then the command will simply fail).
 
 {note
 Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete mvn-rat-plugin from Codehaus repo.
 }
 
-All being well the command should succeed.  If it does not, then review the `rat.txt` file in the failing module's `target` directory.  Missing license notes are indicated using the key:
+All being well the command should succeed.  If it does not, then review the `rat.txt` files in the failing module's `target` directory.  Missing license notes are indicated using the key:
 
 - `!???` identifies those files that are missing license notes
 - `tests-common/*` and `tests/*` ignores certain test files
 - `hsql-db` are generated HSQLDB directories
 
+You can collate these together using something like:
+<pre>
+for a in `find . -name rat.txt -print`; do grep -H '!???' $a; done
+</pre>
+
 Investigate and fix any reported violations.
 
-You can use the groovy script `addmissinglicenses.groovy` to automatically insert missing headers:
+You can use the groovy script `addmissinglicenses.groovy` to automatically insert missing headers
 
+Dry run:
 <pre>
 groovy addmissinglicenses.groovy
+</pre>
+
+or actually execute:
+<pre>
+groovy addmissinglicenses.groovy -x
 </pre>
 
 The actual files checked are those with extensions specified in the line:
@@ -128,6 +142,7 @@ The actual files checked are those with extensions specified in the line:
 <pre>
 def fileEndings = [".java", ".htm"]
 </pre>
+
 
 ## Missing License Check
 

@@ -14,9 +14,11 @@ The Isis parent `pom.xml` specifies the RAT Maven plugin, with the following cus
 <tr><td>&nbsp;</td><td>**/*.pdn</td><td>Paint.NET format</td></tr>
 <tr><td>Data files</td><td>**/*.json</td><td>JSON (test) data</td></tr>
 <tr><td>&nbsp;</td><td>**/isis.log</td><td>Isis' log file (byproduct of tests)</td></tr>
+<tr><td>&nbsp;</td><td>**/datanucleus.log</td><td>DataNucleus' log file (byproduct of bytecode enhancement during compilation)</td></tr>
 <tr><td>&nbsp;</td><td>**/rat.txt</td><td>RAT's own audit file</td></tr>
 <tr><td>&nbsp;</td><td>**/fixture-data</td><td>SQL Object Store fixture data</td></tr>
 <tr><td>&nbsp;</td><td>**/test.data</td><td>SQL Object Store fixture data</td></tr>
+<tr><td>&nbsp;</td><td>**/hsql-db/**</td><td>SQL Object Store test database</td></tr>
 <tr><td>&nbsp;</td><td>**/xml/**/*.xml</td><td>XML Object Store fixture data</td></tr>
 <tr><td>&nbsp;</td><td>tmp/tests/*.xml</td><td>XML Object Store fixture data</td></tr>
 <tr><td>&nbsp;</td><td>tmp/ldap-conf/**</td><td>LDAP Security fixture data</td></tr>
