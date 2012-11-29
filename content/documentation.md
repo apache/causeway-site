@@ -86,14 +86,14 @@ Title: Documentation
 }
 
 {span-one-third
-###  Restful Objects Viewer `0.2.0-incubating`
+###  Restful Objects `0.2.0-incubating`
 
 - [About](viewers/restfulobjects/about.html)
 
 }
 
 {span-one-third
-###  Scimpi Viewer `0.2.0-incubating`
+###  Scimpi `0.2.0-incubating`
 
 - [About](viewers/scimpi/about.html)
 
