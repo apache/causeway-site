@@ -1,6 +1,6 @@
 Title: Documentation
 
-{row
+{row even
 
 {span-one-third
 ### Getting started
@@ -44,9 +44,7 @@ Title: Documentation
 
 }
 
-##Core Modules
-
-{row
+{row odd
 
 {span-one-third
 ###  Applib
@@ -78,13 +76,10 @@ Title: Documentation
 }
 
 
-##Viewers
-
 {row
 
 {span-one-third
-###  Wicket Viewer
-most recent release: `0.2.0-incubating`
+###  Wicket Viewer `0.2.0-incubating`
 
 - [About](viewers/wicket/about.html)
 
@@ -111,16 +106,16 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-most recent release: `0.2.0-incubating`
 ###  HTML Viewer
+most recent release: `0.2.0-incubating`
 
 - [About](viewers/html/about.html)
 
 }
 
 {span-one-third
-most recent release: `0.2.0-incubating`
 ###  DnD Viewer
+most recent release: `0.2.0-incubating`
 
 - [About](viewers/dnd/about.html)
 
@@ -141,8 +136,6 @@ most recent release: `0.2.0-incubating`
 
 }
 
-
-## Object Stores
 
 {row
 
@@ -201,8 +194,6 @@ most recent release: `0.2.0-incubating`
 
 
 
-##Security
-
 {row
 
 {span-one-third
@@ -228,8 +219,6 @@ most recent release: `0.2.0-incubating`
 }
 
 
-
-##Other
 
 {row
 
@@ -276,9 +265,5 @@ most recent release: `0.2.0-incubating`
 }
 
 }
-
-
-
-
 
 
