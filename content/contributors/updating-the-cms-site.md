@@ -1,7 +1,5 @@
 Title: Updating the CMS site
 
-#Updating the CMS site
-
 Apache Isis uses the Apache CMS to manage this website.
 
 ##About the Apache CMS
