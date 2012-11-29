@@ -124,7 +124,7 @@ Title: Documentation
 
 ### JUnit Viewer `0.2.0-incubating`
 
-- [about](viewers/junit/about.html)
+- [About](viewers/junit/about.html)
 
 }
 
@@ -134,7 +134,7 @@ Title: Documentation
 {row
 
 {span-one-third
-###  JDO/DataNucleus Object Store `no release`
+###  JDO Object Store `no release`
 
 - [About](objectstores/jdo/about.html)
 - [Hints and Tips](objectstores/jdo/hints-and-tips.html)
