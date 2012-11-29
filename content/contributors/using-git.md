@@ -187,7 +187,8 @@ git rebase --continue
 Once the rebase is finished, you'll see the branch *branchname* as a direct descendent of `master` (use `gitk --all` to confirm).  You will still be on the *branchname*.  To catch up `master`, use:
 
 <pre>
-git merge master --ff-only
+git checkout master
+git merge <i>branchname</i> --ff-only
 </pre>
 
 The `--ff-only` ensures that the merge is a fast-forward; ie all commits will have only a single parent, and no conflicts.
@@ -195,7 +196,6 @@ The `--ff-only` ensures that the merge is a fast-forward; ie all commits will ha
 At this point you can delete the branch:
 
 <pre>
-git checkout master
 git branch -d <i>branchname</i>
 </pre>
 
@@ -259,3 +259,41 @@ See also:
 - [man page](http://www.kernel.org/pub/software/scm/git/docs/gitignore.html)
 
 
+## More advanced use cases
+
+### If accidentally push to remote
+
+Suppose you committed to `master`, and then pushed the change, and then decided that you didn't intend to do that:
+
+<pre>
+C1  -  C2  -  C3  -  C4  -  C5  -  C6  -  C7
+                                          ^
+                                          master
+                                          ^
+                                          origin/master
+</pre>
+
+To go back to an earlier commit, first we wind back the local `master`:
+
+<pre>
+git reset --hard C5
+</pre>
+where `C5` is the long sha-id for that commit.
+
+This gets us to:
+
+<pre>
+C1  -  C2  -  C3  -  C4  -  C5  -  C6  -  C7
+                            ^
+                            master
+                                          ^
+                                          origin/master
+</pre>
+
+Then, do a force push:
+
+<pre>
+git push origin master --force
+</pre>
+
+If this doesn't work, it may be that the remote repo has disabled this feature.  There are other hacks to get around this, see for example [here](http://stackoverflow.com/questions/1377845/git-reset-hard-and-a-remote-repository).
