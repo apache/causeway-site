@@ -16,7 +16,7 @@ For more background reading, see:
 
 - [Pro Git](http://git-scm.com/book) book (free in electronic form)
 - [Git community book](https://github.s3.amazonaws.com/media/book.pdf)
-- [git reset demystified](http://git-scm.com/2011/07/11/reset.html) - differentiating the working directory vs staging area (index)
+- [git reset demystified](http://git-scm.com/2011/07/11/reset.html) - differentiating the working directory vs index/staging area
 
 And, of course, there is loads of good advice on [stackoverflow.com](http://stackoverflow.com/questions/tagged/git)
 
@@ -39,15 +39,15 @@ Once git is installed, the two main command line tools to note are:
 
 Three commands in particular worth knowing:
 
-- `git help *command*`
+<pre>git help <i>command</i></pre>
 
    will open the man page in your web browser
 
-- `git gui`
+<pre>git gui</pre>
 
    will open up a basic GUI client to staging changes and making commits
 
-- `gitk --all`
+<pre>gitk --all</pre>
 
    will open the commit history for all branches.  In particular, you should be able to see the local `master`, which branch you are working on (the `HEAD`), and also the last known position of the `master` branch from the central repo, called `origin/master`.
 
@@ -186,7 +186,9 @@ git rebase --continue
 
 Once the rebase is finished, you'll see the branch *branchname* as a direct descendent of `master` (use `gitk --all` to confirm).  You will still be on the *branchname*.  To catch up `master`, use:
 
-    git merge master --ff-only
+<pre>
+git merge master --ff-only
+</pre>
 
 The `--ff-only` ensures that the merge is a fast-forward; ie all commits will have only a single parent, and no conflicts.
 
@@ -212,7 +214,9 @@ Using `gitk --all` will show you this new branch, named *origin/branchname*.
 
 Thereafter, you can push subsequent commits using simply:
 
-    git push
+<pre>
+git push
+</pre>
 
 Doing this also allows others to collaborate on this branch, just as they would for `master`.
 
@@ -228,7 +232,9 @@ For more detail, see these blogs/posts [here](http://www.mariopareja.com/blog/ar
 
 If you are working on something but are not ready to commit, then use:
 
-    git stash
+<pre>
+git stash
+</pre>
 
 If you use `gitk --all` then you'll see new commits are made that hold the current state of your working directory and staging area.
 
@@ -236,7 +242,9 @@ You can then, for example, pull down the latest changes using `git pull --rebase
 
 To reapply your stash, then use:
 
-    git stash pop
+<pre>
+git stash pop
+</pre>
 
 Note that stashing works even if switching branches
 
