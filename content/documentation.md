@@ -1,6 +1,6 @@
 Title: Documentation
 
-{row even
+{row
 
 {span-one-third
 ### Getting started
@@ -44,7 +44,7 @@ Title: Documentation
 
 }
 
-{row odd
+{row
 
 {span-one-third
 ###  Applib
@@ -86,16 +86,14 @@ Title: Documentation
 }
 
 {span-one-third
-###  Restful Objects Viewer
-most recent release: `0.2.0-incubating`
+###  Restful Objects Viewer `0.2.0-incubating`
 
 - [About](viewers/restfulobjects/about.html)
 
 }
 
 {span-one-third
-###  Scimpi Viewer
-most recent release: `0.2.0-incubating`
+###  Scimpi Viewer `0.2.0-incubating`
 
 - [About](viewers/scimpi/about.html)
 
@@ -106,29 +104,25 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-###  HTML Viewer
-most recent release: `0.2.0-incubating`
+###  HTML Viewer `0.2.0-incubating`
 
 - [About](viewers/html/about.html)
 
 }
 
 {span-one-third
-###  DnD Viewer
-most recent release: `0.2.0-incubating`
+###  DnD Viewer `0.2.0-incubating`
 
 - [About](viewers/dnd/about.html)
 
 }
 
 {span-one-third
-### BDD Viewer
-most recent release: `0.2.0-incubating`
+### BDD Viewer `0.2.0-incubating`
 
 - [About](viewers/bdd/about.html)
 
-### JUnit Viewer
-most recent release: `0.2.0-incubating`
+### JUnit Viewer `0.2.0-incubating`
 
 - [about](viewers/junit/about.html)
 
@@ -140,8 +134,7 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-###  JDO/DataNucleus Object Store
-most recent release: `none`
+###  JDO/DataNucleus Object Store `no release`
 
 - [About](objectstores/jdo/about.html)
 - [Hints and Tips](objectstores/jdo/hints-and-tips.html)
@@ -149,16 +142,14 @@ most recent release: `none`
 }
 
 {span-one-third
-###  NoSQL Object Store
-most recent release: `0.2.0-incubating`
+###  NoSQL Object Store `0.2.0-incubating`
 
 - [About](objectstores/nosql/about.html)
 
 }
 
 {span-one-third
-###  SQL Object Store
-most recent release: `0.2.0-incubating`
+###  SQL Object Store `0.2.0-incubating`
 
 - [About](objectstores/sql/about.html)
 
@@ -170,8 +161,7 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-###Default Object Store
-most recent release: `0.2.0-incubating`
+###Default Object Store `0.2.0-incubating`
 
 - [About](objectstores/dflt/about.html)
 
@@ -179,8 +169,7 @@ most recent release: `0.2.0-incubating`
 
 
 {span-one-third
-###XML Object Store
-most recent release: `0.2.0-incubating`
+###XML Object Store `0.2.0-incubating`
 
 - [About](objectstores/xml/about.html)
 
@@ -197,16 +186,14 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-### SQL-based Security
-most recent release: `0.2.0-incubating`
+### SQL-based Security `0.2.0-incubating`
 
 - [About](security/sql/about.html)
 
 }
 
 {span-one-third
-### LDAP-based Security
-most recent release: `0.2.0-incubating`
+### LDAP-based Security `0.2.0-incubating`
 
 - [About](security/ldap/about.html)
 
@@ -223,8 +210,7 @@ most recent release: `0.2.0-incubating`
 {row
 
 {span-one-third
-###XML Profile Store
-most recent release: `0.2.0-incubating`
+###XML Profile Store `0.2.0-incubating`
 
 - [About](profilestores/xml/about.html)
 
@@ -236,21 +222,18 @@ most recent release: `0.2.0-incubating`
 }
 
 {span-one-third
-###Groovy Programming Model
-most recent release: `0.2.0-incubating`
+###Groovy Programming Model `0.2.0-incubating`
 
 - [About](progmodels/groovy/about.html)
 
-###Wrapper Programming Model
-most recent release: `0.2.0-incubating`
+###Wrapper Programming Model `0.2.0-incubating`
 
 - [About](progmodels/wrapper/about.html)
 
 }
 
 {span-one-third
-###Monitoring
-most recent release: `0.2.0-incubating`
+###Monitoring `0.2.0-incubating`
 
 - [About](other/monitoring.html)
 
