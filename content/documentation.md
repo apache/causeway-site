@@ -222,11 +222,11 @@ most recent release: `0.2.0-incubating`
 }
 
 {span-one-third
-###Groovy Programming Model `0.2.0-incubating`
+###Groovy ProgModel `0.2.0-incubating`
 
 - [About](progmodels/groovy/about.html) [stub]
 
-###Wrapper Programming Model `0.2.0-incubating`
+###Wrapper ProgModel `0.2.0-incubating`
 
 - [About](progmodels/wrapper/about.html) [stub]
 
