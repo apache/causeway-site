@@ -26,7 +26,7 @@ Title: Documentation
 - [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
 - [Books](learning-more/books.html)
 - [Articles](learning-more/articles.html) [stub]
-- [Tutorials](learning-more/tutorials.html) [stub]
+- [Tutorials](learning-more/tutorials.html)
 - [Integration Testing](learning-more/integtest.html) [stub]
 
 }
@@ -193,7 +193,7 @@ Title: Documentation
 }
 
 {span-one-third
-### LDAP-based Security `0.2.0-incubating`
+### LDAP Security `0.2.0-incubating`
 
 - [About](security/ldap/about.html) [stub]
 
