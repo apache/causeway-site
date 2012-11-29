@@ -36,7 +36,7 @@ Title: Documentation
 
 - [Using Git](contributors/using-git.html)
 - [Coding Conventions](contributors/coding-conventions.html) [stub]
-- [Updating the CMS site](contributors/updating-the-cms-site.html) [stub]
+- [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html) [wip]
 - [Key generation](contributors/key-generation.html)
 
