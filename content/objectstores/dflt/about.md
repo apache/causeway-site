@@ -1,4 +1,4 @@
-Title: JUnit testing
+Title: Default (in-memory) object store
 
 {stub
 This page is a stub.

@@ -1,6 +1,6 @@
 Title: Other Topics
 
-- [Programming Models](progmodels.html)
+- [Monitoring Support](monitoring.html)
 <!--
 - [DSL](dsl.html)
 - [Maven Plugin](maven.html)
