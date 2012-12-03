@@ -11,7 +11,6 @@ Title: Documentation
 ### Archetypes
 
 - [Quickstart (0.2.0-incubating) Archetype](getting-started/quickstart-archetype.html)
-
 <!--
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype-wicket-restful-jdo.html)
 - [Scimpi/NoSQL Archetype](getting-started/quickstart-archetype-scimpi-nosql.html)
@@ -62,7 +61,7 @@ Title: Documentation
 
 }
 {span-one-third
-### Core Modules (Development Utilities)
+### Core Modules (Development)
 
 - [Unit Test Support](core/unittestsupport.html) [stub]
 - [Integration Test Support](core/integtestsupport.html) [stub]
@@ -132,7 +131,8 @@ Title: Documentation
 }
 {row-even
 {span-one-third
-###In-memory Object Store `0.2.0-incubating`
+###In-memory Object Store
+`0.2.0-incubating`
 
 - [About](components/objectstores/inmemory/about.html) [stub]
 
