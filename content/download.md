@@ -6,10 +6,12 @@ Isis graduated from the Apache incubator in October 2012; we are currently setti
 
 In the meantime, you can download the Isis source code using:
 
-    svn checkout https://svn.apache.org/repos/asf/isis/trunk
+    git clone https://git.apache.org/isis.git
 
-There is also a mirrored copy up on [github](https://github.com/danhaywood/apache-isis-tlp).  We'll be moving over to Apache supported git infrastructure shortly (but will maintain a github mirror).
 
+## Examples
+
+There are some examples of running against the current snapshot; see [here](getting-started/examples.html).
 
 ## Previous releases
 

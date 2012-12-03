@@ -9,6 +9,7 @@ Title: Documentation
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
+- [Examples](getting-started/examples.html) (`0.3.1-SNAPSHOT`)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
 
