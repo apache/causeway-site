@@ -48,6 +48,7 @@ Title: Documentation
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
+- [Release snapshot](contributors/release-snapshot.html)
 - [Release process](contributors/release-process.html) [wip]
 - [Key Generation](contributors/key-generation.html)
 
@@ -184,7 +185,7 @@ Title: Documentation
 ###  JDO `no release`
 
 - [About](components/objectstores/jdo/about.html) [stub]
-- [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html) [stub]
+- [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
 
 }
 
