@@ -171,7 +171,7 @@ Title: Documentation
 }
 {row-even
 {span-one-third
-###In-memory Profile Store `0.2.0-incubating`
+###In-memory Prof Store `0.2.0-incubating`
 
 - [About](components/profilestores/inmemory/about.html) [stub]
 
@@ -179,8 +179,7 @@ Title: Documentation
 
 - [About](components/profilestores/xml/about.html) [stub]
 
-###SQL Profile Store
-most recent release: `0.2.0-incubating`
+###SQL Profile Store `0.2.0-incubating`
 
 - [About](components/profilestores/sql/about.html) [stub]
 
