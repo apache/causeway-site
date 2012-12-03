@@ -95,7 +95,7 @@ Title: Documentation
 
 {group
 
-## Viewer Component Implementations
+## Viewers
 
 {row-odd
 
@@ -175,7 +175,7 @@ Title: Documentation
 
 {group
 
-## Object Store Component Implementations
+## Object Stores
 
 {row-even
 
@@ -230,7 +230,7 @@ Title: Documentation
 
 {group
 
-## Security Component Implementations
+## Security
 
 {row-even
 
@@ -268,7 +268,7 @@ Title: Documentation
 
 {group
 
-## Profile Store Component Implementations
+## Profile Stores
 
 {row-odd
 
@@ -302,7 +302,7 @@ Title: Documentation
 
 {group
 
-## Programming Model Component Implementations
+## Programming Models
 
 {row-even
 
