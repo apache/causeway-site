@@ -1,8 +1,11 @@
 Title: Documentation
 
 {documentation
+
 {row-odd
+
 {span-one-third
+
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html)
@@ -19,7 +22,9 @@ Title: Documentation
 -->
 
 }
+
 {span-one-third
+
 ###  Learning More
 
 - [Common Use Cases](learning-more/common-use-cases.html)
@@ -31,7 +36,9 @@ Title: Documentation
 - [Tutorials](learning-more/tutorials.html)
 
 }
+
 {span-one-third
+
 ###  Contributors
 
 - [Using Git](contributors/using-git.html)
@@ -45,17 +52,25 @@ Title: Documentation
 - [Key Generation](contributors/key-generation.html)
 
 }
+
 }
-## Core
+
 {group
+
+## Core
+
 {row-even
+
 {span-one-third
+
 ###  Applib
 
 - [Applib](core/applib.html) [stub]
 
 }
+
 {span-one-third
+
 ### Core Modules
 
 - [Core](core/core.html) [stub]
@@ -63,7 +78,9 @@ Title: Documentation
 - [Bytecode](core/bytecode.html) [stub]
 
 }
+
 {span-one-third
+
 ### Core Modules (Development)
 
 - [Unit Test Support](core/unittestsupport.html) [stub]
@@ -71,44 +88,63 @@ Title: Documentation
 - [Webserver](core/webserver.html) [stub]
 
 }
+
 }
+
 }
-## Viewer Component Implementations
+
 {group
+
+## Viewer Component Implementations
+
 {row-odd
+
 {span-one-third
+
 ###  Wicket Viewer `0.2.0-incubating`
 
 - [About](components/viewers/wicket/about.html) [stub]
 
 }
+
 {span-one-third
+
 ###  Restful Objects `0.2.0-incubating`
 
 - [About](components/viewers/restfulobjects/about.html) [stub]
 
 }
+
 {span-one-third
+
 ###  Scimpi `0.2.0-incubating`
 
 - [About](components/viewers/scimpi/about.html) [stub]
 
 }
+
 }
+
 {row-even
+
 {span-one-third
+
 ###  DnD Viewer `0.2.0-incubating`
 
 - [About](components/viewers/dnd/about.html) [stub]
 
 }
+
 {span-one-third
+
 ### HTML Viewer `0.2.0-incubating`
 
 - [About](components/viewers/html/about.html) [stub]
 
 }
+
 {span-one-third
+
 ### BDD Viewer `0.2.0-incubating`
 
 - [About](components/viewers/bdd/about.html) [stub]
@@ -117,11 +153,17 @@ Title: Documentation
 
 - [About](components/viewers/junit/about.html) [stub]
 }
+
 }
+
 }
-## Object Store Component Implementations
+
 {group
+
+## Object Store Component Implementations
+
 {row-odd
+
 {span-one-third
 
 ###  JDO Object Store `no release`
@@ -130,39 +172,53 @@ Title: Documentation
 - [Hints and Tips](components/objectstores/jdo/hints-and-tips.html) [stub]
 
 }
+
 {span-one-third
 ###  NoSQL Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/nosql/about.html) [stub]
 
 }
+
 {span-one-third
 ###  SQL Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/sql/about.html) [stub]
 
 }
+
 }
+
 {row-even
+
 {span-one-third
+
 ###In-memory OS `0.2.0-incubating`
 
 - [About](components/objectstores/inmemory/about.html) [stub]
 
 }
+
 {span-one-third
 ###XML Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/xml/about.html) [stub]
 
 }
+
 {span-one-third
 }
+
 }
+
 }
-## Security Component Implementations
+
 {group
+
+## Security Component Implementations
+
 {row-odd
+
 {span-one-third
 
 ### Noop Security `0.2.0-incubating`
@@ -174,24 +230,35 @@ Title: Documentation
 - [About](components/security/file/about.html) [stub]
 
 }
+
 {span-one-third
+
 ### SQL-based Security `0.2.0-incubating`
 
 - [About](components/security/sql/about.html) [stub]
 
 }
+
 {span-one-third
+
 ### LDAP Security `0.2.0-incubating`
 
 - [About](components/security/ldap/about.html) [stub]
 
 }
+
 }
+
 }
-## Other Component Implementations
+
 {group
+
+## Other Component Implementations
+
 {row-even
+
 {span-one-third
+
 ###In-memory PS `0.2.0-incubating`
 
 - [About](components/profilestores/inmemory/about.html) [stub]
@@ -205,7 +272,9 @@ Title: Documentation
 - [About](components/profilestores/sql/about.html) [stub]
 
 }
+
 {span-one-third
+
 ###Groovy ProgModel `0.2.0-incubating`
 
 - [About](components/progmodels/groovy/about.html) [stub]
@@ -215,7 +284,9 @@ Title: Documentation
 - [About](components/progmodels/wrapper/about.html) [stub]
 
 }
+
 {span-one-third
+
 ###  Other Topics
 
 - [Maven Plugin](other/maven.html) [stub]
@@ -226,5 +297,7 @@ Title: Documentation
 -->
 
 }
+
 }
+
 }
