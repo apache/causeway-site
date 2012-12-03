@@ -8,13 +8,13 @@ Title: Documentation
 
 ### Getting started
 
-- [Demo App](getting-started/demo-app.html)
+- [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
 
 ### Archetypes
 
-- [Quickstart (0.2.0-incubating) Archetype](getting-started/quickstart-archetype.html)
+- [Quickstart Archetype](getting-started/quickstart-archetype.html) (`0.2.0-incubating`)
 <!--
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype-wicket-restful-jdo.html)
 - [Scimpi/NoSQL Archetype](getting-started/quickstart-archetype-scimpi-nosql.html)
