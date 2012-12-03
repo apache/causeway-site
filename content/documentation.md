@@ -35,6 +35,7 @@ Title: Documentation
 ###  Contributors
 
 - [Using Git](contributors/using-git.html)
+- [Git workflow](contributors/git-workflow.html)
 - [Coding Conventions](contributors/coding-conventions.html) [stub]
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html) [wip]
@@ -248,5 +249,4 @@ most recent release: `0.2.0-incubating`
 }
 
 }
-
 

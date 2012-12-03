@@ -1,6 +1,6 @@
 Title: Using Git
 
-*See [INFRA-5502](https://issues.apache.org/jira/browse/INFRA-5502) for current status on our move from svn to git*
+*There is some overlap between this material and that in [Git workflow](git-workflow.html).  We intend to merge the two pages; for now please read both.*
 
 ## Introduction
 
@@ -56,12 +56,54 @@ If using Windows, note that github also have a dedicated [Windows client](https:
 If using Mac, you might also want to check out Atlassian's [Sourcetree](http://www.atlassian.com/software/sourcetree/overview).
 
 
-#### Git clone
+#### Cloning the Isis repo and Configuring
+
+First, clone the Isis repo (nb: pending completion of [INFRA-5502](https://issues.apache.org/jira/browse/INFRA-5502))
 
 <pre>
-git clone url  # awaiting url, pending completion of INFRA-5502
+git clone https://git-wip-us.apache.org/repos/asf/isis.git
 </pre>
 
+As per [Apache's Git page](https://git-wip-us.apache.org/), you should then configure your user name and password:
+
+<pre>
+git config user.name "<i>My Name Here</i>"
+git config user.email <i>myusername@apache.org</i>
+</pre>
+
+And (again as recommended by [Apache's Git page](https://git-wip-us.apache.org/)), you should also configure the `core.autocrlf` so that line endings are normalized to LF (Unix style) in the repo.
+
+- on Windows, use:
+<pre>git config core.autocrlf auto   
+</pre>
+
+- on Mac/Linux, use:
+<pre>
+git config core.autocrlf input
+</pre>
+
+The Windows setting means that files are converted back to CRLF on checkout; the Mac/Linux setting means that the file is left as LF on checkout.
+
+We also recommend setting `core.safecrlf`, which aims to ensure that any line ending conversion is repeatable.  Do this on all platforms:
+
+<pre>
+git config core.safecrlf true
+</pre>
+
+Note that these settings are supplemented in the repo by the `.gitattributes` file and that explicitly specifies line handling treatment for most of the common file types that we have.
+
+One final configuration that we recommend is for `git pull` to perform a rebase by default, rather than a merge.  This results in a linear log history.  If you want to explicitly have branches in the history, then you can always create a topic branch, discussed below:
+<pre>
+git config branch.autosetuprebase always
+</pre>
+
+If you don't use git outside of Apache, you can add the `--global` flag so that the above settings apply for all repos managed by git on your PC.
+
+For further reading, see:
+
+- [git config man page](http://www.kernel.org/pub/software/scm/git/docs/git-config.html)
+- [.gitattributes man page](http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html)
+- [.gitattributes git-scm.com docs](http://git-scm.com/docs/gitattributes)
 
 #### Commit message format
 
