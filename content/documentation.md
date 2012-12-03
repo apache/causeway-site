@@ -149,11 +149,22 @@ Title: Documentation
 
 - [About](components/viewers/bdd/about.html) [stub]
 
+}
+
+}
+
+{row-odd
+
+{span-one-third
 ### JUnit Viewer `0.2.0-incubating`
 
 - [About](components/viewers/junit/about.html) [stub]
 }
 
+{span-one-third
+}
+
+{span-one-third
 }
 
 }
@@ -162,7 +173,7 @@ Title: Documentation
 
 ## Object Store Component Implementations
 
-{row-odd
+{row-even
 
 {span-one-third
 
@@ -189,7 +200,7 @@ Title: Documentation
 
 }
 
-{row-even
+{row-odd
 
 {span-one-third
 
@@ -217,7 +228,7 @@ Title: Documentation
 
 ## Security Component Implementations
 
-{row-odd
+{row-even
 
 {span-one-third
 
@@ -255,7 +266,7 @@ Title: Documentation
 
 ## Other Component Implementations
 
-{row-even
+{row-odd
 
 {span-one-third
 
