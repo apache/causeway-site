@@ -1,9 +1,5 @@
 Title: Using JDO in Maven and Eclipse
 
-{stub
-This page is a work-in-progress
-}
-
 By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. However, with such power comes a little bit of complexity to the development environment: all domain objects must be enhanced through the [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  So the enhancer must, in one way or another, be integrated into your development environment.
 
 If working from the Maven command line, JDO enhancement is done using the `maven-datanucleus-plugin`.
@@ -19,22 +15,22 @@ There are two distinct sets of problems you may encounter:
 In other words:
 
 <table>
-<tr><th></th><th>Maven</th><th>Eclipse</th></tr>
-<tr><th>Unix</th><td>use workaround when new DN version</td><td>no known issues</td></tr>
-<tr><th>Windows</th><td>use workaround for path limit<br/>use workaround when new DN versions</td> </td><td>use workaround for path limits</tr>
+<tr><th>&nbsp;</th><th>Maven</th><th>Eclipse</th></tr>
+<tr><td><b>Unix</b></td><td>use workaround when new DN version</td><td>no known issues</td></tr>
+<tr><td><b>Windows</b></td><td>use workaround for path limit<br/>use workaround when new DN versions</td> </td><td>use workaround for path limits</tr>
 </table>
 
-In addition, Eclipse's enhancer needs some special care over the classpath
+In addition, Eclipse's enhancer needs some special care over the classpath.
 
 ## For Eclipse: configuring the enhancer
 
 for the domain object model project, first add DataNucleus support:
 
-<img src="resources/eclipse-100-project-support.png"  width="600px"/>
+<img src="resources/eclipse-100-project-support.png"  width="400px"/>
 
 Then turn on Auto-Enhancement:
 
-<img src="resources/eclipse-110-project-support.png"  width="600px"/>
+<img src="resources/eclipse-110-project-support.png"  width="400px"/>
 
 
 ### For Eclipse: classpath considerations
@@ -45,7 +41,7 @@ Update domain object model's classpath to reference DataNucleus JARs:
 
 And tell DataNucleus to use the project classpath:
 
-<img src="resources/eclipse-010-windows-preferences.png" width="600px"/>
+<img src="resources/eclipse-010-windows-preferences.png" width="400px"/>
 
 When the enhancer runs, it will print out to the console:
 
@@ -64,7 +60,7 @@ in `src/main/java/META-INF` of the domain project:
 ### For Eclipse: Windows &gt; Preferences
 
 
-<img src="resources/eclipse-020-windows-preferences.png"  width="600px"/>
+<img src="resources/eclipse-020-windows-preferences.png"  width="400px"/>
 
 
 ## Workaround for DN versions: using a profile
@@ -77,7 +73,7 @@ Unfortunately, if the enhancer is run referencing two different versions of the 
 
 The fix is to use a Maven profile:
 
-<img src="resources/eclipse-300-range-incompatibilities.png"  width="600px"/>
+<img src="resources/eclipse-300-range-incompatibilities.png"/>
 
 This says that when *not* run within Eclipse (the ${m2e.version} property is *not* set), then to use the latest version of the DataNucleus dependency can be referenced.  You can maintain the &lt;version&gt; to keep track with the latest-n-greatest available in the Maven repo.
 
@@ -94,4 +90,4 @@ At any rate, you'll know you've encountered this error if you see the following 
 
 The best solution is to remove DataNucleus support and then to re-add it:
 
-<img src="resources/eclipse-220-enhancer-fails-duplicates.png"  width="600px"/>
+<img src="resources/eclipse-220-enhancer-fails-duplicates.png"  width="400px"/>
