@@ -101,7 +101,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Wicket Viewer `0.2.0-incubating`
+###  Wicket `0.2.0-incubating`
 
 - [About](components/viewers/wicket/about.html) [stub]
 
@@ -109,7 +109,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Restful Objects `0.2.0-incubating`
+###  RestfulObjects `0.2.0-incubating`
 
 - [About](components/viewers/restfulobjects/about.html) [stub]
 
@@ -129,7 +129,7 @@ Title: Documentation
 
 {span-one-third
 
-###  DnD Viewer `0.2.0-incubating`
+###  DnD `0.2.0-incubating`
 
 - [About](components/viewers/dnd/about.html) [stub]
 
@@ -137,7 +137,7 @@ Title: Documentation
 
 {span-one-third
 
-### HTML Viewer `0.2.0-incubating`
+### HTML `0.2.0-incubating`
 
 - [About](components/viewers/html/about.html) [stub]
 
@@ -145,9 +145,9 @@ Title: Documentation
 
 {span-one-third
 
-### BDD Viewer `0.2.0-incubating`
+### JUnit `0.2.0-incubating`
 
-- [About](components/viewers/bdd/about.html) [stub]
+- [About](components/viewers/junit/about.html) [stub]
 
 }
 
@@ -156,15 +156,19 @@ Title: Documentation
 {row-odd
 
 {span-one-third
-### JUnit Viewer `0.2.0-incubating`
 
-- [About](components/viewers/junit/about.html) [stub]
+### BDD (Concordion) `0.2.0-incubating`
+
+- [About](components/viewers/bdd/about.html) [stub]
+
 }
 
 {span-one-third
 }
 
 {span-one-third
+}
+
 }
 
 }
@@ -177,7 +181,7 @@ Title: Documentation
 
 {span-one-third
 
-###  JDO Object Store `no release`
+###  JDO `no release`
 
 - [About](components/objectstores/jdo/about.html) [stub]
 - [Hints and Tips](components/objectstores/jdo/hints-and-tips.html) [stub]
@@ -185,14 +189,14 @@ Title: Documentation
 }
 
 {span-one-third
-###  NoSQL Object Store `0.2.0-incubating`
+###  NoSQL `0.2.0-incubating`
 
 - [About](components/objectstores/nosql/about.html) [stub]
 
 }
 
 {span-one-third
-###  SQL Object Store `0.2.0-incubating`
+###  SQL `0.2.0-incubating`
 
 - [About](components/objectstores/sql/about.html) [stub]
 
@@ -204,14 +208,14 @@ Title: Documentation
 
 {span-one-third
 
-###In-memory OS `0.2.0-incubating`
+###In-memory `0.2.0-incubating`
 
 - [About](components/objectstores/inmemory/about.html) [stub]
 
 }
 
 {span-one-third
-###XML Object Store `0.2.0-incubating`
+###XML `0.2.0-incubating`
 
 - [About](components/objectstores/xml/about.html) [stub]
 
@@ -232,11 +236,11 @@ Title: Documentation
 
 {span-one-third
 
-### Noop Security `0.2.0-incubating`
+### Noop `0.2.0-incubating`
 
 - [About](components/security/noop/about.html) [stub]
 
-### File-based Security `0.2.0-incubating`
+### File `0.2.0-incubating`
 
 - [About](components/security/file/about.html) [stub]
 
@@ -244,7 +248,7 @@ Title: Documentation
 
 {span-one-third
 
-### SQL-based Security `0.2.0-incubating`
+### SQL `0.2.0-incubating`
 
 - [About](components/security/sql/about.html) [stub]
 
@@ -252,7 +256,7 @@ Title: Documentation
 
 {span-one-third
 
-### LDAP Security `0.2.0-incubating`
+### LDAP `0.2.0-incubating`
 
 - [About](components/security/ldap/about.html) [stub]
 
@@ -264,44 +268,83 @@ Title: Documentation
 
 {group
 
-## Other Component Implementations
+## Profile Store Component Implementations
 
 {row-odd
 
 {span-one-third
 
-###In-memory PS `0.2.0-incubating`
+###In-memory `0.2.0-incubating`
 
 - [About](components/profilestores/inmemory/about.html) [stub]
-
-###XML Profile Store `0.2.0-incubating`
-
-- [About](components/profilestores/xml/about.html) [stub]
-
-###SQL Profile Store `0.2.0-incubating`
-
-- [About](components/profilestores/sql/about.html) [stub]
 
 }
 
 {span-one-third
 
-###Groovy ProgModel `0.2.0-incubating`
+###XML `0.2.0-incubating`
+
+- [About](components/profilestores/xml/about.html) [stub]
+
+}
+
+{span-one-third
+
+###SQL `0.2.0-incubating`
+
+- [About](components/profilestores/sql/about.html) [stub]
+
+}
+
+}
+
+}
+
+{group
+
+## Programming Model Component Implementations
+
+{row-even
+
+{span-one-third
+
+###Groovy `0.2.0-incubating`
 
 - [About](components/progmodels/groovy/about.html) [stub]
 
-###Wrapper ProgModel `0.2.0-incubating`
+}
+
+{span-one-third
+
+###Wrapper `0.2.0-incubating`
 
 - [About](components/progmodels/wrapper/about.html) [stub]
 
 }
 
 {span-one-third
+}
 
-###  Other Topics
+}
+
+}
+
+{group
+
+##  Other Topics
+
+{row-even
+
+{span-one-third
+
+### Plugins
 
 - [Maven Plugin](other/maven.html) [stub]
 - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+
+}
+
+{span-one-third
 
 <!--
 - [DSL](other/dsl.html) [stub]
@@ -309,6 +352,12 @@ Title: Documentation
 
 }
 
+{span-one-third
 }
+
+}
+
+}
+
 
 }
