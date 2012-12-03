@@ -46,7 +46,6 @@ Title: Documentation
 
 }
 }
-}
 ## Core
 {group
 {row-even
