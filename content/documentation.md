@@ -1,5 +1,6 @@
 Title: Documentation
 
+{documentation
 {row-odd
 {span-one-third
 ### Getting started
@@ -97,15 +98,19 @@ Title: Documentation
 
 }
 {span-one-third
-### JUnit Viewer `0.2.0-incubating`
+### HTML Viewer `0.2.0-incubating`
 
-- [About](components/viewers/junit/about.html) [stub]
+- [About](components/viewers/html/about.html) [stub]
 
 }
 {span-one-third
 ### BDD Viewer `0.2.0-incubating`
 
 - [About](components/viewers/bdd/about.html) [stub]
+
+### JUnit Viewer `0.2.0-incubating`
+
+- [About](components/viewers/junit/about.html) [stub]
 }
 }
 {row-odd
@@ -204,5 +209,6 @@ Title: Documentation
 - [DSL](other/dsl.html) [stub]
 -->
 
+}
 }
 }
