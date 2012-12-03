@@ -18,8 +18,7 @@ Title: Documentation
 -->
 
 }
-{span-one-third
-###  Learning More
+{span-one-third ###  Learning More
 
 - [Common Use Cases](learning-more/common-use-cases.html)
 - [Presentations](learning-more/presentations.html)
@@ -131,8 +130,7 @@ Title: Documentation
 }
 {row-even
 {span-one-third
-###In-memory Object Store
-`0.2.0-incubating`
+###In-memory OS `0.2.0-incubating`
 
 - [About](components/objectstores/inmemory/about.html) [stub]
 
