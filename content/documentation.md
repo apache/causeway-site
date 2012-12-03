@@ -184,7 +184,7 @@ Title: Documentation
 ###  JDO `no release`
 
 - [About](components/objectstores/jdo/about.html) [stub]
-- [Hints and Tips](components/objectstores/jdo/hints-and-tips.html) [stub]
+- [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html) [stub]
 
 }
 
