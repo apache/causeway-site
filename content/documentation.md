@@ -110,6 +110,7 @@ Title: Documentation
 }
 {row-odd
 {span-one-third
+
 ###  JDO Object Store `no release`
 
 - [About](components/objectstores/jdo/about.html) [stub]
@@ -147,6 +148,7 @@ Title: Documentation
 }
 {row-odd
 {span-one-third
+
 ### Noop Security `0.2.0-incubating`
 
 - [About](components/security/noop/about.html) [stub]
@@ -174,11 +176,9 @@ Title: Documentation
 ###In-memory PS `0.2.0-incubating`
 
 - [About](components/profilestores/inmemory/about.html) [stub]
-
 ###XML Profile Store `0.2.0-incubating`
 
 - [About](components/profilestores/xml/about.html) [stub]
-
 ###SQL Profile Store `0.2.0-incubating`
 
 - [About](components/profilestores/sql/about.html) [stub]
