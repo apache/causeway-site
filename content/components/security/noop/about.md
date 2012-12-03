@@ -1,4 +1,4 @@
-Title: Default Profile Store
+Title: No-op Security
 
 {stub
 This page is a stub.

@@ -1,4 +1,4 @@
-Title: Default Security
+Title: In-memory Profile Store
 
 {stub
 This page is a stub.
