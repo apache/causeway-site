@@ -190,9 +190,11 @@ Title: Documentation
 ###In-memory PS `0.2.0-incubating`
 
 - [About](components/profilestores/inmemory/about.html) [stub]
+
 ###XML Profile Store `0.2.0-incubating`
 
 - [About](components/profilestores/xml/about.html) [stub]
+
 ###SQL Profile Store `0.2.0-incubating`
 
 - [About](components/profilestores/sql/about.html) [stub]
