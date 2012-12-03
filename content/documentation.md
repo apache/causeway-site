@@ -1,7 +1,6 @@
 Title: Documentation
 
 {row-odd
-
 {span-one-third
 ### Getting started
 
@@ -20,7 +19,6 @@ Title: Documentation
 -->
 
 }
-
 {span-one-third
 ###  Learning More
 
@@ -33,7 +31,6 @@ Title: Documentation
 - [Tutorials](learning-more/tutorials.html)
 
 }
-
 {span-one-third
 ###  Contributors
 
@@ -48,18 +45,14 @@ Title: Documentation
 - [Key Generation](contributors/key-generation.html)
 
 }
-
 }
-
 {row-even
-
 {span-one-third
 ###  Applib
 
 - [Applib](core/applib.html) [stub]
 
 }
-
 {span-one-third
 ### Core Modules
 
@@ -68,7 +61,6 @@ Title: Documentation
 - [Bytecode](core/bytecode.html) [stub]
 
 }
-
 {span-one-third
 ### Core Modules (Development Utilities)
 
@@ -77,63 +69,47 @@ Title: Documentation
 - [Webserver](core/webserver.html) [stub]
 
 }
-
 }
-
-
 {row-odd
-
 {span-one-third
 ###  Wicket Viewer `0.2.0-incubating`
 
 - [About](components/viewers/wicket/about.html) [stub]
 
 }
-
 {span-one-third
 ###  Restful Objects `0.2.0-incubating`
 
 - [About](components/viewers/restfulobjects/about.html) [stub]
 
 }
-
 {span-one-third
 ###  Scimpi `0.2.0-incubating`
 
 - [About](components/viewers/scimpi/about.html) [stub]
 
 }
-
 }
-
 {row-even
-
 {span-one-third
 ###  DnD Viewer `0.2.0-incubating`
 
 - [About](components/viewers/dnd/about.html) [stub]
 
 }
-
 {span-one-third
 ### JUnit Viewer `0.2.0-incubating`
 
 - [About](components/viewers/junit/about.html) [stub]
 
 }
-
 {span-one-third
 ### BDD Viewer `0.2.0-incubating`
 
 - [About](components/viewers/bdd/about.html) [stub]
-
 }
-
 }
-
-
 {row-odd
-
 {span-one-third
 ###  JDO Object Store `no release`
 
@@ -141,51 +117,36 @@ Title: Documentation
 - [Hints and Tips](components/objectstores/jdo/hints-and-tips.html) [stub]
 
 }
-
 {span-one-third
 ###  NoSQL Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/nosql/about.html) [stub]
 
 }
-
 {span-one-third
 ###  SQL Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/sql/about.html) [stub]
 
 }
-
 }
-
-
 {row-even
-
 {span-one-third
 ###In-memory Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/inmemory/about.html) [stub]
 
 }
-
-
 {span-one-third
 ###XML Object Store `0.2.0-incubating`
 
 - [About](components/objectstores/xml/about.html) [stub]
 
 }
-
 {span-one-third
-
 }
-
 }
-
-
-
 {row-odd
-
 {span-one-third
 ### Noop Security `0.2.0-incubating`
 
@@ -196,28 +157,20 @@ Title: Documentation
 - [About](components/security/file/about.html) [stub]
 
 }
-
-
 {span-one-third
 ### SQL-based Security `0.2.0-incubating`
 
 - [About](components/security/sql/about.html) [stub]
 
 }
-
 {span-one-third
 ### LDAP Security `0.2.0-incubating`
 
 - [About](components/security/ldap/about.html) [stub]
 
 }
-
 }
-
-
-
 {row-even
-
 {span-one-third
 ###In-memory Profile Store `0.2.0-incubating`
 
@@ -233,7 +186,6 @@ most recent release: `0.2.0-incubating`
 - [About](components/profilestores/sql/about.html) [stub]
 
 }
-
 {span-one-third
 ###Groovy ProgModel `0.2.0-incubating`
 
@@ -244,7 +196,6 @@ most recent release: `0.2.0-incubating`
 - [About](components/progmodels/wrapper/about.html) [stub]
 
 }
-
 {span-one-third
 ###  Other Topics
 
@@ -256,12 +207,4 @@ most recent release: `0.2.0-incubating`
 -->
 
 }
-
 }
-
-
-
-
-
-- [Default Profile Store](core/profilestore-dflt.html) [stub]
-
