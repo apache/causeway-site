@@ -46,6 +46,7 @@ Title: Documentation
 
 }
 }
+{group
 {row-even
 {span-one-third
 ###  Applib
@@ -70,6 +71,8 @@ Title: Documentation
 
 }
 }
+}
+{group
 {row-odd
 {span-one-third
 ###  Wicket Viewer `0.2.0-incubating`
@@ -113,6 +116,8 @@ Title: Documentation
 - [About](components/viewers/junit/about.html) [stub]
 }
 }
+}
+{group
 {row-odd
 {span-one-third
 
@@ -151,6 +156,8 @@ Title: Documentation
 {span-one-third
 }
 }
+}
+{group
 {row-odd
 {span-one-third
 
@@ -176,6 +183,8 @@ Title: Documentation
 
 }
 }
+}
+{group
 {row-even
 {span-one-third
 ###In-memory PS `0.2.0-incubating`
