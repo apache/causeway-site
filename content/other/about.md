@@ -1,8 +1,7 @@
 Title: Other Topics
 
-- [Monitoring Support](monitoring.html)
+- [Maven Plugin](maven.html) [stub]
+- [Eclipse IDE Plugin](eclipse-plugin.html) [stub]
 <!--
 - [DSL](dsl.html)
-- [Maven Plugin](maven.html)
-- [Eclipse IDE Plugin](eclipse-plugin.html)
 -->

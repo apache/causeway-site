@@ -1,4 +1,4 @@
-Title: Integration testing
+Title: In-memory object store
 
 {stub
 This page is a stub.

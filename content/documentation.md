@@ -6,14 +6,18 @@ Title: Documentation
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html)
+- [Cheat Sheet](getting-started/cheat-sheet.html)
+- [Icons](getting-started/icons.html)
+
+### Archetypes
+
 - [Quickstart (0.2.0-incubating) Archetype](getting-started/quickstart-archetype.html)
+
 <!--
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype-wicket-restful-jdo.html)
 - [Scimpi/NoSQL Archetype](getting-started/quickstart-archetype-scimpi-nosql.html)
-- [HTML/SQL Archetype](getting-started/quickstart-archetype-html-sql.html)
+- [DnD/XML Archetype](getting-started/quickstart-archetype-dnd-xml.html)
 -->
-- [Cheat Sheet](getting-started/cheat-sheet.html)
-- [Icons](getting-started/icons.html)
 
 }
 
@@ -27,7 +31,6 @@ Title: Documentation
 - [Books](learning-more/books.html)
 - [Articles](learning-more/articles.html) [stub]
 - [Tutorials](learning-more/tutorials.html)
-- [Integration Testing](learning-more/integtest.html) [stub]
 
 }
 
@@ -35,11 +38,14 @@ Title: Documentation
 ###  Contributors
 
 - [Using Git](contributors/using-git.html)
-- [Git workflow](contributors/git-workflow.html)
+- [Git Workflow](contributors/git-workflow.html)
 - [Coding Conventions](contributors/coding-conventions.html) [stub]
+
+###  Committers
+
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release process](contributors/release-process.html) [wip]
-- [Key generation](contributors/key-generation.html)
+- [Key Generation](contributors/key-generation.html)
 
 }
 
@@ -51,26 +57,24 @@ Title: Documentation
 ###  Applib
 
 - [Applib](core/applib.html) [stub]
-- [Default Programming Model](core/progmodel-dflt.html) [stub]
 
 }
 
 {span-one-third
-### Core & Runtime
+### Core Modules
 
 - [Core](core/core.html) [stub]
 - [Default Runtime](core/runtime-dflt.html) [stub]
 - [Bytecode](core/bytecode.html) [stub]
-- [TestSupport](core/testsupport.html) [stub]
-- [Webapp & Webserver](core/webapp-and-webserver.html) [stub]
+
 }
 
 {span-one-third
-### Supporting Modules
+### Core Modules (Development Utilities)
 
-- [Default Security](core/security-dflt.html) [stub]
-- [File-based Security](core/security-file.html) [stub]
-- [Default Profile Store](core/profilestore-dflt.html) [stub]
+- [Unit Test Support](core/unittestsupport.html) [stub]
+- [Integration Test Support](core/integtestsupport.html) [stub]
+- [Webserver](core/webserver.html) [stub]
 
 }
 
@@ -82,21 +86,21 @@ Title: Documentation
 {span-one-third
 ###  Wicket Viewer `0.2.0-incubating`
 
-- [About](viewers/wicket/about.html) [stub]
+- [About](components/viewers/wicket/about.html) [stub]
 
 }
 
 {span-one-third
 ###  Restful Objects `0.2.0-incubating`
 
-- [About](viewers/restfulobjects/about.html) [stub]
+- [About](components/viewers/restfulobjects/about.html) [stub]
 
 }
 
 {span-one-third
 ###  Scimpi `0.2.0-incubating`
 
-- [About](viewers/scimpi/about.html) [stub]
+- [About](components/viewers/scimpi/about.html) [stub]
 
 }
 
@@ -105,27 +109,23 @@ Title: Documentation
 {row-even
 
 {span-one-third
-###  HTML Viewer `0.2.0-incubating`
+###  DnD Viewer `0.2.0-incubating`
 
-- [About](viewers/html/about.html) [stub]
+- [About](components/viewers/dnd/about.html) [stub]
 
 }
 
 {span-one-third
-###  DnD Viewer `0.2.0-incubating`
+### JUnit Viewer `0.2.0-incubating`
 
-- [About](viewers/dnd/about.html) [stub]
+- [About](components/viewers/junit/about.html) [stub]
 
 }
 
 {span-one-third
 ### BDD Viewer `0.2.0-incubating`
 
-- [About](viewers/bdd/about.html) [stub]
-
-### JUnit Viewer `0.2.0-incubating`
-
-- [About](viewers/junit/about.html) [stub]
+- [About](components/viewers/bdd/about.html) [stub]
 
 }
 
@@ -137,22 +137,22 @@ Title: Documentation
 {span-one-third
 ###  JDO Object Store `no release`
 
-- [About](objectstores/jdo/about.html) [stub]
-- [Hints and Tips](objectstores/jdo/hints-and-tips.html) [stub]
+- [About](components/objectstores/jdo/about.html) [stub]
+- [Hints and Tips](components/objectstores/jdo/hints-and-tips.html) [stub]
 
 }
 
 {span-one-third
 ###  NoSQL Object Store `0.2.0-incubating`
 
-- [About](objectstores/nosql/about.html) [stub]
+- [About](components/objectstores/nosql/about.html) [stub]
 
 }
 
 {span-one-third
 ###  SQL Object Store `0.2.0-incubating`
 
-- [About](objectstores/sql/about.html) [stub]
+- [About](components/objectstores/sql/about.html) [stub]
 
 }
 
@@ -162,9 +162,9 @@ Title: Documentation
 {row-even
 
 {span-one-third
-###Default Object Store `0.2.0-incubating`
+###In-memory Object Store `0.2.0-incubating`
 
-- [About](objectstores/dflt/about.html) [stub]
+- [About](components/objectstores/inmemory/about.html) [stub]
 
 }
 
@@ -172,7 +172,7 @@ Title: Documentation
 {span-one-third
 ###XML Object Store `0.2.0-incubating`
 
-- [About](objectstores/xml/about.html) [stub]
+- [About](components/objectstores/xml/about.html) [stub]
 
 }
 
@@ -187,20 +187,28 @@ Title: Documentation
 {row-odd
 
 {span-one-third
+### Noop Security `0.2.0-incubating`
+
+- [About](components/security/noop/about.html) [stub]
+
+### File-based Security `0.2.0-incubating`
+
+- [About](components/security/file/about.html) [stub]
+
+}
+
+
+{span-one-third
 ### SQL-based Security `0.2.0-incubating`
 
-- [About](security/sql/about.html) [stub]
+- [About](components/security/sql/about.html) [stub]
 
 }
 
 {span-one-third
 ### LDAP Security `0.2.0-incubating`
 
-- [About](security/ldap/about.html) [stub]
-
-}
-
-{span-one-third
+- [About](components/security/ldap/about.html) [stub]
 
 }
 
@@ -211,42 +219,49 @@ Title: Documentation
 {row-even
 
 {span-one-third
+###In-memory Profile Store `0.2.0-incubating`
+
+- [About](components/profilestores/inmemory/about.html) [stub]
+
 ###XML Profile Store `0.2.0-incubating`
 
-- [About](profilestores/xml/about.html) [stub]
+- [About](components/profilestores/xml/about.html) [stub]
 
 ###SQL Profile Store
 most recent release: `0.2.0-incubating`
 
-- [About](profilestores/sql/about.html) [stub]
+- [About](components/profilestores/sql/about.html) [stub]
 
 }
 
 {span-one-third
 ###Groovy ProgModel `0.2.0-incubating`
 
-- [About](progmodels/groovy/about.html) [stub]
+- [About](components/progmodels/groovy/about.html) [stub]
 
 ###Wrapper ProgModel `0.2.0-incubating`
 
-- [About](progmodels/wrapper/about.html) [stub]
+- [About](components/progmodels/wrapper/about.html) [stub]
 
 }
 
 {span-one-third
-###Monitoring `0.2.0-incubating`
-
-- [About](other/monitoring.html) [stub]
-
-
-<!--
 ###  Other Topics
-- [DSL](other/dsl.html) [stub]
+
 - [Maven Plugin](other/maven.html) [stub]
 - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+
+<!--
+- [DSL](other/dsl.html) [stub]
 -->
 
 }
 
 }
+
+
+
+
+
+- [Default Profile Store](core/profilestore-dflt.html) [stub]
 

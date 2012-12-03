@@ -1,4 +1,4 @@
-Title: Default (in-memory) object store
+Title: Integration testing Support
 
 {stub
 This page is a stub.
