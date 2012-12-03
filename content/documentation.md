@@ -46,6 +46,7 @@ Title: Documentation
 
 }
 }
+# Core
 {group
 {row-even
 {span-one-third
@@ -72,6 +73,7 @@ Title: Documentation
 }
 }
 }
+# Viewer Component Implementations
 {group
 {row-odd
 {span-one-third
@@ -117,6 +119,7 @@ Title: Documentation
 }
 }
 }
+# Object Store Component Implementations
 {group
 {row-odd
 {span-one-third
@@ -157,6 +160,7 @@ Title: Documentation
 }
 }
 }
+# Security Component Implementations
 {group
 {row-odd
 {span-one-third
@@ -184,6 +188,7 @@ Title: Documentation
 }
 }
 }
+# Other Component Implementations
 {group
 {row-even
 {span-one-third
