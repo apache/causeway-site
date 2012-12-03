@@ -18,7 +18,8 @@ Title: Documentation
 -->
 
 }
-{span-one-third ###  Learning More
+{span-one-third
+###  Learning More
 
 - [Common Use Cases](learning-more/common-use-cases.html)
 - [Presentations](learning-more/presentations.html)
