@@ -69,11 +69,65 @@ Every so often there will be a new release of DataNucleus plugins to the Maven c
 
 The Eclipse DataNucleus plugin on the other hand is configured to use the project classpath, and so it will remain compatible with the version referenced by Isis' own JDO objectstore.
 
-Unfortunately, if the enhancer is run referencing two different versions of the `org.datanucleus:dataducleus-core` jar, then it will fail.
+Unfortunately, if the enhancer is run referencing two different versions of the `org.datanucleus:dataducleus-core` jar, then it will fail:
+
+<pre>
+[INFO] Example Claims .................................... SUCCESS [0.017s]
+[INFO] Example Claims App DOM ............................ FAILURE [1.532s]
+[INFO] Example Claims App Repositories (for ObjectStore Default)  SKIPPED
+[INFO] Example Claims App Fixtures ....................... SKIPPED
+[INFO] Example Claims App Repositories (for JDO ObjectStore)  SKIPPED
+...
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5:49.374s
+[INFO] Finished at: Thu Dec 06 15:54:44 GMT 2012
+[INFO] Final Memory: 113M/883M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.datanucleus:maven-datanucleus-plugin:3.1.1:en
+hance (default) on project claims-dom: Error executing DataNucleus tool org.data
+nucleus.enhancer.DataNucleusEnhancer: InvocationTargetException: Plugin (Bundle)
+ "org.datanucleus" is already registered. Ensure you dont have multiple JAR vers
+ions of the same plugin in the classpath. The URL "file:/C:/MVN/.m2/repository/o
+rg/datanucleus/datanucleus-core/3.1.3/datanucleus-core-3.1.3.jar" is already reg
+istered, and you are trying to register an identical plugin located at URL "file
+:/C:/MVN/.m2/repository/org/datanucleus/datanucleus-core/3.1.2/datanucleus-core-
+3.1.2.jar." -&gt; [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e swit
+ch.
+</pre>
 
 The fix is to use a Maven profile:
 
-<img src="resources/eclipse-300-range-incompatibilities.png"/>
+<pre>
+    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;not-m2e&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;property&gt;
+                    &lt;name&gt;!m2e.version&lt;/name&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;dependencies&gt;
+                &lt;dependency&gt;
+                    &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+                    &lt;artifactId&gt;datanucleus-core&lt;/artifactId&gt;
+                    &lt;version&gt;(3.0.99, 3.1.99)&lt;/version&gt;
+                    &lt;scope&gt;runtime&lt;/scope&gt;
+                &lt;/dependency&gt;
+                &lt;dependency&gt;
+                    &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+                    &lt;artifactId&gt;datanucleus-enhancer&lt;/artifactId&gt;
+                    &lt;version&gt;(3.0.99, 3.1.99)&lt;/version&gt;
+                    &lt;scope&gt;runtime&lt;/scope&gt;
+                &lt;/dependency&gt;
+            &lt;/dependencies&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt;
+</pre>
 
 This says that when *not* run within Eclipse (the ${m2e.version} property is *not* set), then to use the latest version of the DataNucleus dependency can be referenced.  You can maintain the &lt;version&gt; to keep track with the latest-n-greatest available in the Maven repo.
 
