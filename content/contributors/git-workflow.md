@@ -38,6 +38,7 @@ What you'll also want to do is to add a remote to the original Apache Isis repo 
 
 <pre>
 git remote add upstream https://github.com/apache/isis.git
+git pull upstream
 git branch --set-upstream master upstream/master
 </pre>
 
