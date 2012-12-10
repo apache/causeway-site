@@ -1,23 +1,25 @@
 Title: Coding Conventions
 
-{stub
-This page is a stub.
-}
+Code should be formatted using the following Eclipse templates:
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+- `Windows > Preferences > Java > Code Style > Code Templates` 
+ - Import [Apache-code-style-template.xml](resources/Apache-code-style-template.xml)
+- `Windows > Preferences > Java > Code Style > Formatter` 
+  - Import [Apache-code-style-formatting.xml](resources/Apache-code-style-formatting.xml)
+- `Windows > Preferences > Java > Code Style > Organize Imports` 
+  - Import [isis.importorder](resources/isis.importorder)
+- `Windows > Preferences > Java > Code Style > Clean Up` 
+  - Import [Apache-Isis-code-style-cleanup.xml](resources/Apache-Isis-code-style-cleanup.xml)
+  - (this performs both code formatting and organizing imports)
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
-
-Code formatting (as documented in the `0.2.0-incubating` version of the contributors guide):
-
-- code formatting should be checked as per sec.CodeStyleFormatter
-- imports should be organized as per sec.ImportOrder
-- cleanup should be performed as per sec.CodeStyleCleanup
-  (this performs both code formatting and organizing imports)
+In addition, you will probably want to import the Java editor templates, as described in the [getting started](../getting-started/editor-templates.html) section.
+<!--
+TODO: to add from the original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
 
 In addition:
 
 - checkstyle, as per sec.Checkstyle
 - PMD, as per sec.PMD
 - findbugs, as per sec.FindBugs
+-->
 

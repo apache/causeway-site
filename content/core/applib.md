@@ -1,9 +1,8 @@
 Title: Application Library
 
-{stub
-This page is a stub.
-}
+Apache Isis works using convention-over-configuration; you write your domain objects following a set of conventions, and these are interpreted by the framework in order to render, persist, remote or otherwise interact with your domain model.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+These conventions are together known as the Apache Isis Programming Model. The Apache Isis Application Library - or AppLib - constitutes those elements of the programming model that are declarative (such as annotations and interfaces). It also contains the `DomainObjectContainer` interface, which is normally injected into your domain objects and represents the only point of coupling from your domain into the framework.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+See the applib programming guide ([HTML](http://incubator.apache.org/isis/applib/docbkx/html/guide/isis-applib.html) or [PDF](http://incubator.apache.org/isis/applib/docbkx/pdf/isis-applib.pdf)) for further details.
+

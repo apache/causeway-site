@@ -10,6 +10,7 @@ Title: Documentation
 
 - [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
 - [Examples](getting-started/examples.html) (`0.3.1-SNAPSHOT`)
+- [Editor templates](getting-started/editor-templates.html)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
 
@@ -30,11 +31,14 @@ Title: Documentation
 
 - [Common Use Cases](learning-more/common-use-cases.html)
 - [Presentations](learning-more/presentations.html)
-- [Isis Programming Model](learning-more/isis-programming-model.html)
+<!--
+- [Hexagonal Architecture](learning-more/hexagonal-architecture.html)
+-->
 - [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
 - [Books](learning-more/books.html)
 - [Articles](learning-more/articles.html) [stub]
 - [Tutorials](learning-more/tutorials.html)
+- [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
 
 }
 

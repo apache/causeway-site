@@ -4,7 +4,7 @@ The following examples are zipped-up versions of the `examples/` directory, conf
 
 * if you've built Isis from the source code, then these examples will run against your local cached Isis modules
 
-* If you **haven't** built Isis from source code, then these examples will pull down the current snapshots on the [Apache snapshot repo](https://repository.apache.org/index.html).
+* If you **haven't** built Isis from source code, then these examples will pull down the current snapshots from the [ASF's Nexus repo](https://repository.apache.org/index.html).
 
 In both cases the domain object model is a very simple todo application.  No prizes for originality there, but we wanted a one domain class that you could easily refactor for your own purposes.
 
@@ -38,9 +38,13 @@ cd viewer-restfulobjects
 mvn antrun:run
 </pre>
 
+If you are prompted for user/password, then you can use `sven:pass`.  This is one of the accounts configured for the [file-based security](../components/security/file/about.html); see the `authentication_file.passwd` file in `src/main/webapp/WEB-INF` directory.
+
 ### DnD/Junit/BDD (Concordion)
 
-This example demonstrates the use of domain object testing using the [junit viewer](../components/viewers/junit/about.html), BDD-style testing using the [BDD viewer](../components/viewers/bdd/about.html), as well as using the [DnD viewer](../components/viewers/dnd/about.html) to explore the domain model.  The viewers are configured to use the [in-memory objectstore](../components/objectstores/inmemory/about.html), so changes are never persisted between runs.
+This example demonstrates the use of domain object testing using the [junit viewer](../components/viewers/junit/about.html), and BDD-style testing using the [BDD viewer](../components/viewers/bdd/about.html).  It alsoconfigures the [DnD viewer](../components/viewers/dnd/about.html) to explore the domain model.
+
+Each of these viewers are configured to use the [in-memory objectstore](../components/objectstores/inmemory/about.html), so changes are never persisted between runs.  They all share the configuration defined in the DnD viewer's `config` directory.
 
 To build the example:
 

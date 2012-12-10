@@ -2,9 +2,11 @@ Title: Learning More
 
 - [Common Use Cases](common-use-cases.html)
 - [Presentations](presentations.html)
-- [Isis Programming Model](isis-programming-model.html)
-- [Isis Reference Documentation](isis-reference-documentation.html)
+<!--
+- [Hexagonal Architecture](hexagonal-architecture.html)
+-->
 - [Books](books.html)
 - [Articles](articles.html)
 - [Tutorials](tutorials.html)
 - [Integration Testing](integtest.html)
+- [Richard Pawson's Naked Objects thesis](resources/Pawson-Naked-Objects-thesis.pdf)
