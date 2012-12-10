@@ -31,9 +31,7 @@ Title: Documentation
 
 - [Common Use Cases](learning-more/common-use-cases.html)
 - [Presentations](learning-more/presentations.html)
-<!--
-- [Hexagonal Architecture](learning-more/hexagonal-architecture.html)
--->
+- [Hexagonal Architecture](learning-more/hexagonal-architecture.html) [stub]
 - [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
 - [Books](learning-more/books.html)
 - [Articles](learning-more/articles.html) [stub]
