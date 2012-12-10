@@ -111,22 +111,6 @@ mvn clean install -o
 All remaining steps should be performed in the base directory of the module being released.
 }
 
-<!--
-- site builds ok
-
-<pre>
-sh msdf.sh -o
-</pre>
-
-- archetype is ok
-
-  - archetype runs ok
-
-     using `-D archetypeCatalog=local`
-
-  - app generated from the archetype runs ok
--->
-
 
 ### Code cleanup / formatting
 

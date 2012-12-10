@@ -48,12 +48,12 @@ Title: Documentation
 
 - [Using Git](contributors/using-git.html)
 - [Git Workflow](contributors/git-workflow.html)
-- [Coding Conventions](contributors/coding-conventions.html) [stub]
+- [Coding Conventions](contributors/coding-conventions.html)
 
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
-- [Release snapshot](contributors/release-snapshot.html)
+- [Release snapshot](contributors/release-snapshot.html) [wip]
 - [Release process](contributors/release-process.html) [wip]
 - [Key Generation](contributors/key-generation.html)
 

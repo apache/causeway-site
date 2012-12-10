@@ -1,5 +1,9 @@
 Title: Deploying a Snapshot Release
 
+{stub
+This page is a work-in-progress; it needs to be updated with respect to the [release process](release-process.html) for multiple releasable modules.
+}
+
 The only prerequisites for performing a release is that the contributor has configured their environment. This involves updating your `~/.m2/settings.xml` file:
 
 <pre>
