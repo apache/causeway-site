@@ -58,7 +58,7 @@ If using Mac, you might also want to check out Atlassian's [Sourcetree](http://w
 
 #### Cloning the Isis repo and Configuring
 
-First, clone the Isis repo (nb: pending completion of [INFRA-5502](https://issues.apache.org/jira/browse/INFRA-5502))
+First, clone the Isis repo:
 
 <pre>
 git clone https://git-wip-us.apache.org/repos/asf/isis.git
