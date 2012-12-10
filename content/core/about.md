@@ -1,18 +1,24 @@
 Title: Core Modules
 
-### Applib
+###  Applib & Runtime
 
-- [Applib](core/applib.html)
-
-### Core Modules
-
-- [Core](core/core.html)
-- [Default Runtime](core/runtime.html)
-- [Bytecode](core/bytecode.html)
-
-### Core Modules (Development)
-
-- [Unit Test Support](unittestsupport.html)
-- [Integration Test Support](integtestsupport.html)
+- [Applib](applib.html)
+- [Core Metamodel](metamodel.html)
+- [Core Runtime](runtime.html)
 - [Webserver](webserver.html)
 
+}
+
+### Bundled Components
+
+- [Bytecode Enhancers](bytecode.html)
+- [No-op Security](noop-security.html)
+- [In-memory Object Store](inmemory-objectstore.html)
+- [In-memory Profile Store](inmemory-profilestore.html)
+
+}
+
+### Development
+
+- [Unit Test Support](core/unittestsupport.html)
+- [Integration Test Support](core/integtestsupport.html)

@@ -68,29 +68,32 @@ Title: Documentation
 
 {span-one-third
 
-###  Applib
+###  Applib & Runtime
 
 - [Applib](core/applib.html)
-
-}
-
-{span-one-third
-
-### Core Modules
-
-- [Core Metamodel](core/core.html) [stub]
+- [Core Metamodel](core/metamodel.html) [stub]
 - [Core Runtime](core/runtime.html) [stub]
-- [Bytecode Enhancers](core/bytecode.html) [stub]
+- [Webserver](core/webserver.html) [stub]
 
 }
 
 {span-one-third
 
-### Core Modules (Development)
+### Bundled Components
+
+- [Bytecode Enhancers](core/bytecode.html) [stub]
+- [No-op Security](core/noop-security.html) [stub]
+- [In-memory Object Store](core/inmemory-objectstore.html) [stub]
+- [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
+
+}
+
+{span-one-third
+
+### Development
 
 - [Unit Test Support](core/unittestsupport.html) [stub]
 - [Integration Test Support](core/integtestsupport.html) [stub]
-- [Webserver](core/webserver.html) [stub]
 
 }
 
