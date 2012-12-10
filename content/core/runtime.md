@@ -1,4 +1,4 @@
-Title: Default Runtime
+Title: Core Runtime
 
 {stub
 This page is a stub.

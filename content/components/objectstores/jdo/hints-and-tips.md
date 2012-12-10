@@ -60,7 +60,7 @@ in `src/main/java/META-INF` of the domain project:
 ### For Eclipse: Windows &gt; Preferences
 
 
-<img src="resources/eclipse-020-windows-preferences.png"  width="400px"/>
+<img src="resources/eclipse-020-windows-preferences.png"  width="600px"/>
 
 
 ## Workaround for DN versions: using a profile

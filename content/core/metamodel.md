@@ -1,4 +1,4 @@
-Title: Core Modules
+Title: Core MetaModel
 
 {stub
 This page is a stub.

@@ -46,6 +46,7 @@ Title: Documentation
 
 ###  Contributors
 
+- [Building Isis](contributors/building-isis.html)
 - [Using Git](contributors/using-git.html)
 - [Git Workflow](contributors/git-workflow.html)
 - [Coding Conventions](contributors/coding-conventions.html)
@@ -63,7 +64,7 @@ Title: Documentation
 
 {group
 
-## Core
+## Core `0.2.0-incubating`
 
 {row-even
 
@@ -71,7 +72,7 @@ Title: Documentation
 
 ###  Applib
 
-- [Applib](core/applib.html) [stub]
+- [Applib](core/applib.html)
 
 }
 
@@ -79,9 +80,9 @@ Title: Documentation
 
 ### Core Modules
 
-- [Core](core/core.html) [stub]
-- [Default Runtime](core/runtime-dflt.html) [stub]
-- [Bytecode](core/bytecode.html) [stub]
+- [Core Metamodel](core/core.html) [stub]
+- [Core Runtime](core/runtime.html) [stub]
+- [Bytecode Enhancers](core/bytecode.html) [stub]
 
 }
 
