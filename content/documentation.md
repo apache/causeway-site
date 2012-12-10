@@ -54,6 +54,9 @@ Title: Documentation
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release snapshot](contributors/release-snapshot.html) [wip]
 - [Release process](contributors/release-process.html) [wip]
+<!--
+- [Verifying releases](contributors/verifying-releases.html) [wip]
+-->
 - [Key Generation](contributors/key-generation.html)
 
 }

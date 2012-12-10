@@ -4,7 +4,7 @@ Title: Deploying a Snapshot Release
 This page is a work-in-progress; it needs to be updated with respect to the [release process](release-process.html) for multiple releasable modules.
 }
 
-The only prerequisites for performing a release is that the contributor has configured their environment. This involves updating your `~/.m2/settings.xml` file:
+Before you start, make sure you've defined the snapshots repo in your local `~/.m2/settings.xml` file:
 
 <pre>
 &lt;settings&gt;
@@ -12,8 +12,8 @@ The only prerequisites for performing a release is that the contributor has conf
     &lt;!-- To publish a snapshot of some part of Maven --&gt;
     &lt;server&gt;
       &lt;id&gt;apache.snapshots.https&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;yyy&lt;/password&gt;
+      &lt;username&gt;xxxxxxx&lt;/username&gt;
+      &lt;password&gt;yyyyyyy&lt;/password&gt;
     &lt;/server&gt;
     ...
   &lt;/servers&gt;
@@ -21,9 +21,7 @@ The only prerequisites for performing a release is that the contributor has conf
 &lt;/settings&gt;
 </pre>
 
-where `xxx` and `yyy` constitute your apache LDAP username and password.
-
-This information is as documented in the [ASF documentation](http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env).
+where `xxxxxxx` and `yyyyyyy` are your Apache LDAP username and password.     For more information, see these [ASF docs](http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env).
 
 {note
 It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://incubator.apache.org/bval/cwiki/release-setup.html).
