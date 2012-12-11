@@ -52,11 +52,9 @@ Title: Documentation
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
-- [Release snapshot](contributors/release-snapshot.html) [wip]
-- [Release process](contributors/release-process.html) [wip]
-<!--
-- [Verifying releases](contributors/verifying-releases.html) [wip]
--->
+- [Release snapshot](contributors/release-snapshot.html)
+- [Release process](contributors/release-process.html)
+- [Verifying releases](contributors/verifying-releases.html)
 - [Key Generation](contributors/key-generation.html)
 
 }

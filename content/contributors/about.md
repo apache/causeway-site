@@ -10,9 +10,7 @@ Title: Contributors
 ###  Committers
 
 - [Updating the CMS site](updating-the-cms-site.html)
-- [Release snapshot](release-snapshot.html) [wip]
-- [Release process](release-process.html) [wip]
-<!--
-- [Verifying releases](verifying-releases.html) [wip]
--->
+- [Release snapshot](release-snapshot.html)
+- [Release process](release-process.html)
+- [Verifying releases](verifying-releases.html)
 - [Key Generation](key-generation.html)

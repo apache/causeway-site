@@ -1,38 +1,53 @@
 Title: Verifying Releases
 
-12.6.2. Other contributors cast their vote
+Whenever a committer announces a vote on a release on the [dev mailing list](../support.html), it is the responsibility of the project's PMC to cast their vote on the release.  Any other ASF member may also vote.
 
-It is the responsibility of other contributors (or any ASF member) to cast their vote on the release. This section provides some guidance on this process.
+This page provides some guidance on what a voter is expected to verify before casting their vote.
 
-12.6.2.1. Verifying the source release artifacts
+## Verifying the source release artifacts
 
 Download both the ZIP and .ASC files from the location specified in the voting email. To verify that the signature is correct, use:
 
-gpg --verify isis-x.x.x-incubating.zip.asc isis-x.x.x-incubating.zip
-The ZIP file should then be unpacked.
+<pre>
+gpg --verify isis-x.y.z.zip.asc isis-x.y.z.zip
+</pre>
 
-Once unpacked, it is recommended that voters at a minimum sanity check the contents, as per Section 12.1.2, ŒÈŒÌSanity checkŒÈŒÌ.
+### Building the source release artifacts
 
-In particular, when building locally, confirm that the versions in your local repository (~/.m2/repository/org/apache/isis) are correct.
+Assuming the ZIP file verifies, it should be unpacked, and then the artifact built from source.
 
-12.6.2.2. Verifying the binary release artifacts
+First, delete all Isis artifacts from your local Maven repo:
 
-Optionally, voters can verify the binary releases (in the Maven staging repository). For this it is necessary to download each artifact from Nexus and its corresponding .ASC file. Since there are many such artifacts, we suggest you just choose one or two at random.
+<pre>
+rm -rf ~/.m2/repository/org/apache/isis
+</pre>
 
-12.6.2.3. Casting a Vote
+The build process depends on whether the artifact is of Isis core or of one of its components:
 
-When the above checks have been made (and any other checks that the voter thinks is relevant), they should cast a vote by replying to the email thread above.
+* For Isis core, build using the `-o` offline flag:
 
-12.6.3. After the isis-dev vote
+  `mvn clean install -o`
 
-Once the vote has completed, post the results to the isis-dev mailing list.
+  Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
-Use the following subject:
+* For an Isis component, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
 
-[RESULT] [VOTE] Apache Isis release 0.x.x-incubating
-with the body:
+  `mvn clean install`
 
-The vote has completed with the following result :
+  Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
 
-  +1 (binding): <<list of names>>
-  +1 (non binding): <<list of names>>
+The above steps are the bare minimum you should perform before casting a vote.  Ideally, you should also run an Isis application (eg one of the examples) against the new code (either against a new version of core, or configured to use the new version of the component).
+
+## Verifying the binary release artifacts
+
+Optionally, you can verify the binary releases (in the Maven staging repository).  For this it is necessary to download each artifact from Nexus and its corresponding .ASC file.  Since there are many such artifacts, just verify one or two at random.
+
+
+<!--
+TODO: use the other creadur tools
+-->
+
+
+## Casting a Vote
+
+When you have made the above checks (and any other checks you think may be relevant), cast your vote by replying to the email thread on the mailing list.  If you are casting `-1`, please provide details of the problem(s) you have found.
