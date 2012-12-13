@@ -247,9 +247,12 @@ Ignore any missing license warnings for the TCK modules; this is a result of the
 
 Before you cut the release, perform one last sanity check on the codebase.
 
+
 ### Sanity check for `core`
 
-Start off by deleting all Isis artifacts from your local Maven repo:
+First, check that there are *NO SNAPSHOT* dependencies in any of the `pom.xml` of the modules of the core.
+
+Next, delete all Isis artifacts from your local Maven repo:
 
 <pre>
 rm -rf ~/.m2/repository/org/apache/isis
@@ -261,19 +264,30 @@ Next, check that `core` builds independently, using the `-o` offline flag:
 mvn clean install -o
 </pre>
 
-Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct; there should be no SNAPSHOTs.
 
 
 ### Sanity check for non-`core` components
 
-Start off by deleting all Isis artifacts from your local Maven repo:
+First, check that there are *NO SNAPSHOT* dependencies in any of the `pom.xml` of the modules of the component.
+
+In particular, in the root pom of the component, ensure that *the version of core specified as the parent is correct and IS NOT A SNAPSHOT*.  For example:
+
+<pre>
+&lt;parent&gt;
+    &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
+    &lt;artifactId&gt;isis&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;relativePath&gt;&lt;/relativePath&gt;
+&lt;/parent&gt;
+</pre>
+
+Next, delete all Isis artifacts from your local Maven repo:
 
 <pre>
 rm -rf ~/.m2/repository/org/apache/isis
 </pre>
 
-For the root pom of the component, ensure that the version in its parent pom 
-is correct and *IS NOT A SNAPSHOT*.  Check also that there are no other snapshot dependencies in any of the `pom.xml` of the component.
 
 Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
@@ -281,7 +295,7 @@ Next, build the component, though without the offline flag. Maven should pull do
 mvn clean install
 </pre>
 
-Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  There should be no SNAPSHOTs.
 
 {note
 If you want to release both a new version of core and a new version of a component at the same time, then you'll need to build the Isis core locally first.
