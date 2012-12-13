@@ -441,6 +441,8 @@ Then, re-run the command, but without the `dryRun` flag.  You can also set the `
 mvn release:prepare -P apache-release -D skipTests=true
 </pre>
 
+Because we were required to delete `release.properties` file, you'll need to re-enter the same information version/tag information when prompted.
+
 ### Post-prepare sanity check
 
 You should end up with artifacts in your local repo with the new version `x.y.z`. There are then a couple of sanity checks that you can perform:
