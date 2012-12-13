@@ -298,7 +298,7 @@ mvn clean install
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  There should be no SNAPSHOTs.
 
 {note
-If you want to release both a new version of core and a new version of a component at the same time, then you'll need to build the Isis core locally first.
+Note that if you want to release both a new version of core and a new version of a component at the same time, then you'll need to build the Isis core locally first; it won't yet be up on Maven central repo to be pulled down.
 }
 
 
