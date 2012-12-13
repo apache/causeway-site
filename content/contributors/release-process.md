@@ -393,27 +393,27 @@ $ mvn release:prepare -P apache-release -D dryRun=true
 [INFO] Isis Core TCK Fixtures
 [INFO]
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Isis Core 0.3.1-SNAPSHOT
+[INFO] Building Apache Isis Core 1.0.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO]
 [INFO] --- maven-release-plugin:2.3.2:prepare (default-cli) @ isis ---
 [INFO] Resuming release from phase 'map-release-versions'
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
-0.3.1: :
+1.0.0: :
 </pre>
 
-Then answer the next three questions, either accepting the offered values or overriding as required:
+Then answer the next three questions, either accepting the offered values or overriding (see [release tag names](release-branch-and-tag-names.html):
 <pre>
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
-0.3.1: :
+1.0.0: :
 What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:i
-sis) isis-0.3.1: :
+sis) isis-1.0.0: : <b>release/core/1.0.0</b>
 What is the new development version for "Apache Isis Core"? (org.apache.isis.cor
-e:isis) 0.3.2-SNAPSHOT:
+e:isis) 1.0.1-SNAPSHOT:
 </pre>
 
 
-The next step, assuming this completes successfully, is to re-run the command.  Before you do that, first delete the generated `release.properties` file:
+The next step, assuming this completes successfully, is to delete the generated `release.properties` file:
 
 <pre>
 rm release.properties
