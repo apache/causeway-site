@@ -388,9 +388,9 @@ $ mvn release:prepare -P apache-release -D dryRun=true
 [INFO] Isis Core WebServer
 [INFO] Isis Core CgLib Bytecode
 [INFO] Isis Core Javassist Bytecode
-[INFO] Isis Core In-Memory ObjectStore
-[INFO] Isis Core In-memory ProfileStore
-[INFO] Isis Core No-op Security
+[INFO] Isis Core (In-Memory) ObjectStore
+[INFO] Isis Core (In-memory) ProfileStore
+[INFO] Isis Core (Bypass) Security
 [INFO] Isis Core TCK App
 [INFO] Isis Core TCK DOM
 [INFO] Isis Core Integration Testing Support
@@ -406,26 +406,20 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.0.0: :
 </pre>
 
-Then answer the next three questions, either accepting the offered values or overriding (see [release tag names](release-branch-and-tag-names.html):
+Then answer the next three questions, either accepting the offered values or overriding as per [release tag names](release-branch-and-tag-names.html):
 <pre>
-What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
-1.0.0: :
-What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:i
-sis) isis-1.0.0: : <b>release/core/1.0.0</b>
-What is the new development version for "Apache Isis Core"? (org.apache.isis.cor
-e:isis) 1.0.1-SNAPSHOT:
+What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.0: :
+What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.0.0: : <b>release/core/1.0.0</b>
+What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.1-SNAPSHOT:
 </pre>
 
-
-The next step, assuming this completes successfully, is to delete the generated `release.properties` file:
+Assuming this completes successfully, delete the generated `release.properties` file:
 
 <pre>
 rm release.properties
 </pre>
 
-{note
-The requirement to delete this file is a side-effect of using `mvn` with a decentralized version control system such `git` rather than with a centralized version control system such as `svn`
-}
+The requirement to delete this file is a side-effect of using `mvn` with a decentralized version control system such `git` rather than with a centralized version control system such as `svn`.
 
 Then, re-run the command, but without the `dryRun` flag.  You can also set the `skipTests` flag since they would have been run during the previous dry run:
 <pre>
