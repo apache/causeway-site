@@ -11,8 +11,8 @@ The following table suggests the branch name to use when readying the release lo
 <table>
 <tr>
 <th>Releasable module</th>
-<th>Branch name to use while preparing the release</th>
-<th>Tag name during release</tt></th>
+<th>Branch name to use while readying the release locally</th>
+<th>Tag name pushed during `release:prepare`</tt></th>
 </tr>
 <tr><td>core</td><td>prepare/core/x.y.z</td><td>release/core/x.y.z</td></tr>
 <tr><td>objectstore/xxx</td><td>prepare/objectstore/xxx/x.y.z</td><td>release/objectstore/xxx/x.y.z</td></tr>
