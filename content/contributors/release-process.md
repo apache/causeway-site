@@ -383,13 +383,13 @@ Then commit the `site.xml` file.
 If you are working on Windows and using mSysGit, this is where you'll need to switch over to using `cmd.exe`
 }
 
+Run the dry-run as follows:
+
 <pre>
 mvn release:prepare -P apache-release -D dryRun=true
 </pre>
 
-{note
 Some modules might have additional profiles to be activated.  For example, the sql OS requires `-P apache-release,integration-tests` so that its integration tests are also run.
-}
 
 This should generate something like:
 
