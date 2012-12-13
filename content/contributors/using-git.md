@@ -30,7 +30,12 @@ This is accomplished using `git rebase`; the idea being that any changes that yo
 
 #### Installing Git
 
-The easiest place to get hold of command-line git is probably the [github download page](http://git-scm.com/downloads). On Windows, this also installs the rather good mSysGit Unix shell.
+The easiest place to get hold of command-line git is probably the [github download page](http://git-scm.com/downloads).
+
+On Windows, this also installs the rather good mSysGit Unix shell.  We recommend that you enable git for both the mSysgit and the Windows command prompt:
+
+<img src="resources/setting-up-git.png" width="500px"></img>
+
 
 Once git is installed, the two main command line tools to note are:
 

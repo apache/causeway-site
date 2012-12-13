@@ -1,5 +1,6 @@
 Title: Building Isis
 
+
 ## Introduction
 
 Check out the Isis source code as documented [here](using-git.html).
@@ -18,3 +19,9 @@ Build using:
 <pre>
 mvn clean install
 </pre>
+
+
+<!--
+TODO: x-ref importing-projects
+TODO: x-ref sharing projects
+-->
