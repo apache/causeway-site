@@ -264,7 +264,7 @@ Next, check that `core` builds independently, using the `-o` offline flag:
 mvn clean install -o
 </pre>
 
-Confirm that the versions of the Isis artifacts now cached in your local repository are correct; there should be no SNAPSHOTs.
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
 
 ### Sanity check for non-`core` components
@@ -282,6 +282,11 @@ In particular, in the root pom of the component, ensure that *the version of cor
 &lt;/parent&gt;
 </pre>
 
+{note
+This obviously requires that the core has been released previously.  If you 
+also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
+}
+
 Next, delete all Isis artifacts from your local Maven repo:
 
 <pre>
@@ -295,11 +300,7 @@ Next, build the component, though without the offline flag. Maven should pull do
 mvn clean install
 </pre>
 
-Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  There should be no SNAPSHOTs.
-
-{note
-Note that if you want to release both a new version of core and a new version of a component at the same time, then you'll need to build the Isis core locally first; it won't yet be up on Maven central repo to be pulled down.
-}
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
 
 
