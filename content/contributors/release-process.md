@@ -257,7 +257,9 @@ rm -rf ~/.m2/repository/org/apache/isis
 
 Next, check that `core` builds independently, using the `-o` offline flag:
 
-  `mvn clean install -o`
+<pre>
+mvn clean install -o
+</pre>
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
@@ -275,7 +277,9 @@ is correct and *IS NOT A SNAPSHOT*.  Check also that there are no other snapshot
 
 Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
-  `mvn clean install`
+<pre>
+mvn clean install
+</pre>
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
 
