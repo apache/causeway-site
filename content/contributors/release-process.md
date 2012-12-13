@@ -26,7 +26,7 @@ All the non-core components depend on the `core`, and use the `core`'s parent `p
 
 Before releasing `core`, ensure there is consensus on the [dev mailing list](../support.html) that this is the right time for a release.  The discussion should include confirming the version number to be used, and to confirm content.
 
-For non-`core` components, ensure that there is awareness on the dev mailing list that a release is to be cut.  In particular, indicate the version of `core` that the component release will depend upon, and the version number to be used for the component's release.
+For non-`core` components, ensure that there is at least awareness on the dev mailing list that a release is to be cut.  In particular, indicate the version of `core` that the component release will depend upon, and the version number to be used for the component's release.
 
 Once agreed, the formal release can begin.  The steps are:
 
@@ -54,7 +54,7 @@ The most important configuration you require is to set up public/private key pai
 In order to prepare the release, you'll (need to) have a `~/.gnupg` directory with the relevant files (`gpg.conf`, `pubring.gpg`, `secring.gpg` etc), and have `gpg` on your operating system PATH.
 
 {note
-If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin.
+If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin. In other words, even if you normally use mSysGit bash, you may need to cut the release using `cmd.exe`.
 }
 
 #### Maven `settings.xml`
@@ -91,9 +91,10 @@ git checkout master
 git pull --ff-only
 </pre>
 
-Then, create a release branch in your local Git repo:
+Then, create a release branch in your local Git repo, as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release of `core`, use:
+
 <pre>
-git checkout -b release/x.y.z
+git checkout -b prepare/isis-core/x.y.z
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -111,18 +112,44 @@ Before making any formal release, there are a number of prerequisites that shoul
 
 If releasing Isis Core, check (via [http://search.maven.org](http://search.maven.org)) whether there is a newer version of the Apache parent `org.apache:apache`.
 
-If there is, update the `<version>` in the `<parent>` element in the parent POM `org.apache.isis.core:isis`.
+If there is, update the `<version>` in the `<parent>` element in the parent POM `org.apache.isis.core:isis`:
+
+<pre>
+&lt;parent&gt;
+    &lt;groupId&gt;org.apache&lt;/groupId&gt;
+    &lt;artifactId&gt;apache&lt;/artifactId&gt;
+    &lt;version&gt;NN&lt;/version&gt;
+    &lt;relativePath&gt;&lt;/relativePath&gt;
+&lt;/parent&gt;
+</pre>
+
+where `NN` is the updated version number.
 
 ### Update dependency versions
 
-The `maven-versions-plugin` should be used to determine if there are newer versions of any of Isis' dependencies:
+The `maven-versions-plugin` should be used to determine if there are newer versions of any of Isis' dependencies.  Since this goes off to the internet, it may take a minute or two to run:
 
 <pre>
 mvn versions:display-dependency-updates > /tmp/foo
 grep "\->" /tmp/foo | sort -u
 </pre>
 
-Update any of the dependencies that are out-of-date.
+Update any of the dependencies that are out-of-date.  That said, do note that some dependencies may show up with with a new dependency, when in fact the dependency is for an old, badly named version.  Also, there may be new dependencies that you do not wish to move to, eg release candidates or milestones.
+
+For example, here is a report showing both of these cases:
+<pre>
+[INFO]   asm:asm ..................................... 3.3.1 -> 20041228.180559
+[INFO]   commons-httpclient:commons-httpclient .......... 3.1 -> 3.1-jbossorg-1
+[INFO]   commons-logging:commons-logging ......... 1.1.1 -> 99.0-does-not-exist
+[INFO]   dom4j:dom4j ................................. 1.6.1 -> 20040902.021138
+[INFO]   org.datanucleus:datanucleus-api-jdo ................ 3.1.2 -> 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-core ................... 3.1.2 -> 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-jodatime ............... 3.1.1 -> 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-rdbms .................. 3.1.2 -> 3.2.0-m1
+[INFO]   org.easymock:easymock ................................... 2.5.2 -> 3.1
+[INFO]   org.jboss.resteasy:resteasy-jaxrs ............. 2.3.1.GA -> 3.0-beta-1
+</pre>
+For these artifacts you will need to search [Maven central repo](http://search.maven.org) directly yourself to confirm there are no newer dependencies not shown in this list.
 
 
 ### Code cleanup / formatting
@@ -139,10 +166,10 @@ To run the RAT tool, use:
 mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
 </pre>
 
-where `rat.numUnapprovedLicenses` property is set to a high figure, temporarily overriding the default value of 0.  This will allow the command to run over all submodules, rather than failing after the first one.
+where `rat.numUnapprovedLicenses` property is set to a high figure, temporarily overriding the default value of 0.  This will allow the command to run over all submodules, rather than failing after the first one. 
 
 {note
-Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete `mvn-rat-plugin` from Codehaus repo.
+Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete `mvn-rat-plugin` from the Codehaus repo.
 }
 
 All being well the command should complete.  For each failing submodule, it will have written out a `target\rat.txt`; missing license notes are indicated using the key `!???`.  You can collate these together using something like:
@@ -213,32 +240,49 @@ licenses to remove from supplemental-models.xml (are spurious):
 If any missing entries are listed or are spurious, then update `supplemental-models.xml` and try again.
 
 {note
-Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg `bdd-concordion-tck`) depending on the TCK dom, fixtures etc.
+Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg `isis-viewer-bdd-concordion-tck`) depending on the TCK dom, fixtures etc.
 }
 
 ## Sanity check
 
 Before you cut the release, perform one last sanity check on the codebase.
 
-First, delete all Isis artifacts from your local Maven repo:
+### Sanity check for `core`
+
+Start off by deleting all Isis artifacts from your local Maven repo:
 
 <pre>
 rm -rf ~/.m2/repository/org/apache/isis
 </pre>
 
-Next, check that the releasable module builds independently. The build process depends on whether the artifact is of Isis core or of one of its components:
-
-* For Isis core, build using the `-o` offline flag:
+Next, check that `core` builds independently, using the `-o` offline flag:
 
   `mvn clean install -o`
 
-  Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
-* For an Isis component, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
+
+### Sanity check for non-`core` components
+
+Start off by deleting all Isis artifacts from your local Maven repo:
+
+<pre>
+rm -rf ~/.m2/repository/org/apache/isis
+</pre>
+
+For the root pom of the component, ensure that the version in its parent pom 
+is correct and *IS NOT A SNAPSHOT*.  Check also that there are no other snapshot dependencies in any of the `pom.xml` of the component.
+
+Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
   `mvn clean install`
 
-  Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
+
+{note
+If you want to release both a new version of core and a new version of a component at the same time, then you'll need to build the Isis core locally first.
+}
+
 
 
 <!--
