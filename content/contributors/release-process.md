@@ -494,7 +494,7 @@ The command to stage the release is:
 mvn release:perform -P apache-release
 </pre>
 
-The command starts off by checking out the codebase from the tag:
+The command starts off by checking out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:
 
 <pre>
 ...
@@ -521,8 +521,7 @@ re
 ...
 </pre>
 
-All being well this command will complete successfully.  Depending on the module being released, it could take a long time.  Go grab a bite of lunch.
-
+All being well this command will complete successfully.  Given that it is uploading code artifacts, it could take a while to complete. 
 
 
 ### Check the Repository
