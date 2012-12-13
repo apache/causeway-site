@@ -6,7 +6,7 @@ In Isis the version numbers of core and each component can vary independently
 (they are not synchronized); therefore the branches and the tag names must 
 distinguish the releasable module that they refer to.
 
-The following table summarizes the branch name to use for release preparation, and the tag name to use when the release is pushed for review.
+The following table suggests the branch name to use when readying the release locally, and the tag name to use when running the `release:prepare` command itself.  If the release is voted through, this tag will be the permanent identifier of the release within the git source code repository.
 
 <table>
 <tr>
