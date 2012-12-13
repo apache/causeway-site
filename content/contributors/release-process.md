@@ -379,6 +379,10 @@ Then commit the `site.xml` file.
 
 ### Dry-run
 
+{note
+If you are working on Windows and using mSysGit, this is where you'll need to switch over to using `cmd.exe`
+}
+
 <pre>
 mvn release:prepare -P apache-release -D dryRun=true
 </pre>
