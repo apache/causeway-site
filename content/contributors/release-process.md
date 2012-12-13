@@ -481,33 +481,26 @@ The command starts off by checking out the codebase from the tag:
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
 re
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-0.4.0 file:///C:\APACHE
-\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.0.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-0.4.0 file:///C:\APACHE
-\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.0.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Executing: cmd.exe /X /C "git ls-remote file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
 [INFO] Executing: cmd.exe /X /C "git fetch file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C "git checkout isis-0.4.0"
+[INFO] Executing: cmd.exe /X /C "git checkout isis-1.0.0"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
 [INFO] Executing: cmd.exe /X /C "git ls-files"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Invoking perform goals in directory C:\APACHE\isis-git-rw\core\target\che
-ckout\core
+[INFO] Invoking perform goals in directory C:\APACHE\isis-git-rw\core\target\checkout\core
 [INFO] Executing goals 'deploy'...
 ...
 </pre>
 
-All being well this command will complete successfully.
-
-{note
-Depending on the module being released, the deploy process could take a long time.  Go grab a bite of lunch.
-}
+All being well this command will complete successfully.  Depending on the module being released, it could take a long time.  Go grab a bite of lunch.
 
 
 
