@@ -94,7 +94,7 @@ git pull --ff-only
 Then, create a release branch in your local Git repo, as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release of `core`, use:
 
 <pre>
-git checkout -b prepare/isis-core/x.y.z
+git checkout -b prepare/core/x.y.z
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -573,11 +573,14 @@ Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See 
 
 ### Push changes
 
-Finally, push your local branch to a new, similarly named branch on the central origin server:
+Finally, push the tag that was created locally to the central origin server, for example:
 <pre>
-git push -u origin release/x.y.z
+git push origin tag release/core/x.y.z
 </pre>
 
+{note
+The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary)
+}
 ## Voting
 
 Once the artifacts have been uploaded, you can call a vote.
@@ -646,16 +649,22 @@ The vote is SUCCESSFUL.
 
 If the vote has been unsuccessful, then:
 
-* delete your local branch
+* delete your local branch, for example:
 
 <pre>
-  git branch -D release/x.y.z
+  git branch -D prepare/core/x.y.z
 </pre>
 
-* delete the remote origin server's branch
+* delete the tag that was created locally, for example:
 
 <pre>
-  git push origin --delete release/x.y.z
+  git tag -d release/core/x.y.z
+</pre>
+
+* delete the remote origin server's tag, for example:
+
+<pre>
+  git push origin --delete tag release/core/x.y.z
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
@@ -808,11 +817,12 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
 <pre>
-git checkout master         # update master with latest
+git checkout master                # update master with latest
 git pull
-git checkout release/x.y.z  # apply release commits onto master
+git checkout prepare/core/x.y.z    # apply branch commits onto master
 git rebase master
 git checkout master
+git branch -D prepare/core/x.y.z   # branch no longer needed
 </pre>
 
 Next, do a sanity check that everything builds ok:
@@ -822,7 +832,8 @@ rm -rf ~/.m2/org/apache/isis
 mvn clean install
 </pre>
 
-Finally, and run up an Isis application
+... and run up an Isis application.
+
 
 ### Update `STATUS` file
 
