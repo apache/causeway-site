@@ -96,7 +96,7 @@ Then, determine/confirm the version number of the module being released.  This s
 Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.2.3 of `core`, use:
 
 <pre>
-git checkout -b isis-1.2.3
+git checkout -b prepare/isis-1.2.3
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -639,7 +639,7 @@ The artifacts have been staged to staging repository on repository.apache.org:
 * https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
 * https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
 
-In the source code repo the code has been tagged as release/isis-1.2.3.
+In the source code repo the code has been tagged as isis-1.2.3.
 
 Our website contains some suggestions of how to verify the release, see
 http://isis.apache.org/contributors/verifying-releases.html
@@ -686,19 +686,19 @@ If the vote has been unsuccessful, then:
 * delete your local branch, for example:
 
 <pre>
-  git branch -D isis-1.2.3
+  git branch -D prepare/isis-1.2.3
 </pre>
 
 * delete the tag that was created locally, for example:
 
 <pre>
-  git tag -d release/core/1.2.3
+  git tag -d isis-1.2.3
 </pre>
 
 * delete the remote origin server's tag, for example:
 
 <pre>
-  git push origin --delete tag release/core/1.2.3
+  git push origin --delete tag isis-1.2.3
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
@@ -853,10 +853,10 @@ Because we release from a branch, the changes made in the branch (changes to `po
 <pre>
 git checkout master                # update master with latest
 git pull
-git checkout isis-1.2.3    # apply branch commits onto master
+git checkout prepare/isis-1.2.3    # apply branch commits onto master
 git rebase master
 git checkout master
-git branch -D isis-1.2.3   # branch no longer needed
+git branch -D prepare/isis-1.2.3   # branch no longer needed
 </pre>
 
 Next, do a sanity check that everything builds ok:
