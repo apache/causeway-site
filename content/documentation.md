@@ -53,7 +53,7 @@ Title: Documentation
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
-- [Release snapshot](contributors/release-snapshot.html)
+- [Snapshot process](contributors/snapshot-process.html)
 - [Release process](contributors/release-process.html)
 - [Release branch and tag names](release-branch-and-tag-names.html)
 - [Verifying releases](contributors/verifying-releases.html)

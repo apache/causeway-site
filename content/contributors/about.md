@@ -11,7 +11,7 @@ Title: Contributors
 ###  Committers
 
 - [Updating the CMS site](updating-the-cms-site.html)
-- [Release snapshot](release-snapshot.html)
+- [Snapshot process](snapshot-process.html)
 - [Release process](release-process.html)
 - [Release branch and tag names](release-branch-and-tag-names.html)
 - [Verifying releases](verifying-releases.html)

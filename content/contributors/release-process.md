@@ -1,4 +1,4 @@
-Title: Release Process
+Title: Formal Release Process
 
 Apache Isis consists of a number of separately releasable modules.  Relative to the root of the [source code repo](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree), these are:
 
