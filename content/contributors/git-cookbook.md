@@ -102,14 +102,16 @@ git checkout <i>branchname</i>
 
 Any changes in your working directory and index/staging area are *preserved*.  This makes it easy to separate out different strands of work... you realize that some set of changes just made should be on a different ticket, so you create a new branch and commit those changes there.
 
-When you want to reintegrate the changes into the branch, use:
+## Updating branch with latest
+
+When you want to 'catch-up' with the changes made by others and in the remote `origin`, use:
 
 <pre>
 git checkout <i>branchname</i>
 git rebase master
 </pre>
 
-This will reapply the commits on top of the `master` branch.  If there are conflicts then they will occur a this point.  Conflicts are resolved by editing the file, then:
+This will reapply the commits from `origin` on top of the `master` branch.  If there are conflicts then they will occur a this point.  Conflicts are resolved by editing the file, then:
 
 <pre>
 git add <i>filename</i>
@@ -129,6 +131,31 @@ At this point you can delete the branch:
 
 <pre>
 git branch -d <i>branchname</i>
+</pre>
+
+## Push the changes
+
+Immediately prior to pushing your changes, check one more time that you are up-to-date:
+
+<pre>
+git fetch
+</pre>
+
+If this pulls down any commits, then reintegrate first (using `git rebase`) and try again.
+
+Assuming that now new commits were brought down, you can now simply do a fast forward merge of master, and then push the changes:
+
+<pre>
+git checkout master
+git merge --ff-only ISIS-123-blobs
+git push
+</pre>
+
+Because the `master` branch is a direct ancestor of the topic branch, the fast-forward merge should work.  The `git push` then pushes those changes back to the master Isis repo.
+
+To clean up, you can delete your topic branch:
+<pre>
+git branch -d ISIS-123-blobs
 </pre>
 
 
