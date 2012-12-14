@@ -48,14 +48,16 @@ Title: Documentation
 - [Using Git](contributors/using-git.html)
 - [Git Workflow](contributors/git-workflow.html)
 - [Coding Conventions](contributors/coding-conventions.html)
+- [Versioning Policy](versioning-policy.html)
 
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
 - [Release snapshot](contributors/release-snapshot.html)
 - [Release process](contributors/release-process.html)
+- [Release branch and tag names](release-branch-and-tag-names.html)
 - [Verifying releases](contributors/verifying-releases.html)
-- [Key Generation](contributors/key-generation.html)
+- [Key generation](contributors/key-generation.html)
 
 }
 
