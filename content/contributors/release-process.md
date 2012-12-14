@@ -91,22 +91,37 @@ git checkout master
 git pull --ff-only
 </pre>
 
-Then, create a release branch in your local Git repo, as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release of `core`, use:
+Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](release-semantic-versioning.html).
+
+Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.0.0 of `core`, use:
 
 <pre>
-git checkout -b prepare/core/x.y.z
+git checkout -b isis-1.0.0
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
-
 
 {note
 Unless otherwise stated, you should assume that all remaining steps should be performed in the base directory of the module being released.
 }
 
+Finally, make sure you have a JIRA ticket open against which to perform all commits.
+
 ## Code Prerequisites
 
 Before making any formal release, there are a number of prerequisites that should always be checked.
+
+### Update the version number
+
+The version number of the parent pom should reflect the branch name that you are now on (with a `-SNAPSHOT` suffix).  In many cases this will have been done already during earlier development; but confirm that it has been updated.  If it has not, make the change.
+
+For example, if releasing `core` version `1.2.3`, the POM should read:
+
+<pre>
+&lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
+&lt;artifactId&gt;isis&lt;/artifactId&gt;
+&lt;version&gt;1.2.3-SNAPSHOT&lt;/version&gt;
+</pre>
 
 ### Update Apache parent (Isis Core only)
 
@@ -287,6 +302,8 @@ This obviously requires that the core has been released previously.  If you
 also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
 }
 
+Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it is also updated.
+
 Next, delete all Isis artifacts from your local Maven repo:
 
 <pre>
@@ -425,10 +442,21 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.0.0: :
 </pre>
 
-Then answer the next three questions, either accepting the offered values or overriding as per [release tag names](release-branch-and-tag-names.html):
+Then answer the next three questions.  
+
+For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
+
 <pre>
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.0: :
-What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.0.0: : <b>release/core/1.0.0</b>
+</pre>
+
+For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above.  This is the same as our [standard](release-branch-and-tag-names.html):
+<pre>
+What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.0.0: :
+</pre>
+
+For the final question, new development version", the minor 'z' part of the version should be incremented, and `-SNAPSHOT` appended.  Generally you can, once more, accept the default:
+<pre>
 What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.1-SNAPSHOT:
 </pre>
 
@@ -449,11 +477,11 @@ Because we were required to delete `release.properties` file, you'll need to re-
 
 ### Post-prepare sanity check
 
-You should end up with artifacts in your local repo with the new version `x.y.z`. There are then a couple of sanity checks that you can perform:
+You should end up with artifacts in your local repo with the new version `1.2.3`. There are then a couple of sanity checks that you can perform:
 
 * unzip the source-release ZIP and check it builds
 
-  For example, if building core, then the ZIP file will be called `isis-x.y.z-source-release.zip` and should reside in `~/.m2/repository/org/apache/isis/core/isis/x.y.z` directory.
+  For example, if building core, then the ZIP file will be called `isis-1.2.3-source-release.zip` and should reside in `~/.m2/repository/org/apache/isis/core/isis/1.2.3` directory.
 
   Unzip in a new directory, and build.
 
@@ -581,7 +609,7 @@ Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See 
 
 Finally, push the tag that was created locally to the central origin server, for example:
 <pre>
-git push origin tag release/core/x.y.z
+git push origin tag release/core/1.2.3
 </pre>
 
 {note
@@ -599,19 +627,19 @@ The following boilerplate is for a release of the Apache Isis Core.  Adapt as re
 
 Use the following subject:
 <pre>
-[VOTE] Apache Isis Core release x.y.z
+[VOTE] Apache Isis Core release 1.2.3
 </pre>
 
 And use the following body:
 
 <pre>
-I've staged a release for Apache Isis Core, namely x.y.z.
+I've staged a release for Apache Isis Core, namely 1.2.3.
 
 The artifacts have been staged to staging repository on repository.apache.org:
-* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/x.y.z/isis-x.y.z-source-release.zip (zip file)
-* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/x.y.z/isis-x.y.z-source-release.zip.asc (signature)
+* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
+* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
 
-In the source code repo the code has been tagged as release/isis-x.y.z.
+In the source code repo the code has been tagged as release/isis-1.2.3.
 
 Our website contains some suggestions of how to verify the release, see
 http://isis.apache.org/contributors/verifying-releases.html
@@ -635,7 +663,7 @@ Once the vote has completed, post the results to the isis-dev mailing list.
 For example, use the following subject for a vote on Isis Core:
 
 <pre>
-[RESULT] [VOTE] Apache Isis Core release x.y.z
+[RESULT] [VOTE] Apache Isis Core release 1.2.3
 </pre>
 
 for a successful vote, using the body:
@@ -658,19 +686,19 @@ If the vote has been unsuccessful, then:
 * delete your local branch, for example:
 
 <pre>
-  git branch -D prepare/core/x.y.z
+  git branch -D isis-1.2.3
 </pre>
 
 * delete the tag that was created locally, for example:
 
 <pre>
-  git tag -d release/core/x.y.z
+  git tag -d release/core/1.2.3
 </pre>
 
 * delete the remote origin server's tag, for example:
 
 <pre>
-  git push origin --delete tag release/core/x.y.z
+  git push origin --delete tag release/core/1.2.3
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
@@ -740,15 +768,15 @@ If necessary, checkout this directory structure:
 svn co https://dist.apache.org/repos/dist/release/isis isis-dist
 </pre>
 
-Next, add the new release into the approprite directory, and delete any previous release.  For example, if releasing Apache Isis Core `x.y.z`, superceding a previous release `p.q.r`, use:
+Next, add the new release into the approprite directory, and delete any previous release.  For example, if releasing Apache Isis Core `1.2.3`, superceding a previous release `p.q.r`, use:
 
 <pre>
 cd core
 svn delete isis-p.q.r-source-release.zip
 svn delete isis-p.q.r-source-release.zip.asc
-svn add isis-x.y.z-source-release.zip
-svn add isis-x.y.z-source-release.zip.asc
-svn commit -m "publishing isis-x.y.z source to dist.apache.org"
+svn add isis-1.2.3-source-release.zip
+svn add isis-1.2.3-source-release.zip.asc
+svn commit -m "publishing isis-1.2.3 source to dist.apache.org"
 </pre>
 
 
@@ -770,7 +798,7 @@ Update the Isis CMS website:
 
   Typically this be will a new page in the core section or for one of the components. Make a note of the URL of this new page (for use in the mailing list announcement).
 
-  For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-x.y.z.html`
+  For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-1.2.3.html`
 
 * On the core/component's about page, provide a link to release notes providing details of the contents of the release.
 
@@ -786,14 +814,14 @@ Announce the release to dev@isis.apache.org mailing list.
 For example, for a release of Apache Isis Core, use the following subject:
 
 <pre>
-Subject: [ANN] Apache Isis version x.y.z Released
+Subject: [ANN] Apache Isis version 1.2.3 Released
 </pre>
 
 And use the following body (summarizing the main points as required):
 
 <pre>
 The Isis team is pleased to announce the release of
-Apache Isis Core version x.y.z
+Apache Isis Core version 1.2.3
 
 <i>summary of the main points of the release</i>
 
@@ -806,7 +834,7 @@ Enjoy!
 
 -The Isis team
 
-[1] http://isis.apache.org/core/release-notes-x.y.z.html
+[1] http://isis.apache.org/core/release-notes-1.2.3.html
 [2] http://search.maven.org
 [3] http://isis.apache.org/download.html
 </pre>
@@ -825,10 +853,10 @@ Because we release from a branch, the changes made in the branch (changes to `po
 <pre>
 git checkout master                # update master with latest
 git pull
-git checkout prepare/core/x.y.z    # apply branch commits onto master
+git checkout isis-1.2.3    # apply branch commits onto master
 git rebase master
 git checkout master
-git branch -D prepare/core/x.y.z   # branch no longer needed
+git branch -D isis-1.2.3   # branch no longer needed
 </pre>
 
 Next, do a sanity check that everything builds ok:
@@ -869,7 +897,7 @@ Open up the `src/main/resources/archetype-resources/pom.xml` in the `oai:quickst
 
 <pre>
 &lt;properties&gt;
-    &lt;isis.version&gt;x.y.z-SNAPSHOT&lt;/isis.version&gt;
+    &lt;isis.version&gt;1.2.3-SNAPSHOT&lt;/isis.version&gt;
 &lt;/properties&gt;
 </pre>
 
@@ -882,7 +910,7 @@ Open up the `src/site/site.xml` in the `oai:isis` parent module, and update the 
 <pre>
 &lt;skin&gt;
     ...
-    &lt;version&gt;x.y.z-SNAPSHOT&lt;/version&gt;
+    &lt;version&gt;1.2.3-SNAPSHOT&lt;/version&gt;
 &lt;/skin&gt;
 </pre>
 
