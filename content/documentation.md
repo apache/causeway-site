@@ -48,7 +48,7 @@ Title: Documentation
 - [Using Git](contributors/using-git.html)
 - [Git Workflow](contributors/git-workflow.html)
 - [Coding Conventions](contributors/coding-conventions.html)
-- [Versioning Policy](versioning-policy.html)
+- [Versioning Policy](contributors/versioning-policy.html)
 
 ###  Committers
 
