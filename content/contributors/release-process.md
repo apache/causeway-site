@@ -91,7 +91,7 @@ git checkout master
 git pull --ff-only
 </pre>
 
-Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](release-semantic-versioning.html).
+Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](versioning-policy.html).
 
 Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.0.0 of `core`, use:
 

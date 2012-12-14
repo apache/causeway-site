@@ -6,6 +6,7 @@ Title: Contributors
 - [Using Git](using-git.html)
 - [Git Workflow](git-workflow.html)
 - [Coding Conventions](coding-conventions.html)
+- [Versioning Policy](versioning-policy.html)
 
 ###  Committers
 
@@ -14,4 +15,4 @@ Title: Contributors
 - [Release process](release-process.html)
 - [Release branch and tag names](release-branch-and-tag-names.html)
 - [Verifying releases](verifying-releases.html)
-- [Key Generation](key-generation.html)
+- [Key generation](key-generation.html)
