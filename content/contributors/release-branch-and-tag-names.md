@@ -12,10 +12,6 @@ The table below shows the tag name to use when running the `release:prepare` com
 
 * The branch name to use is not actually that important, because it would not usually be pushed to the origin (unless you were preparing the release with some other committer).  However, we recommend that is similar (though not identical to) the tag name. 
 
-{note
-In fact, git allows the same name to be used for both branches and for tags; within git they are namespaced to be unique.  However, using the same name for the branch confuses `maven-release-plugin`; thus the branch name is slightly different from the tag name.
-}
-
 <table>
 <tr>
 <th>Releasable module</th>
@@ -31,4 +27,8 @@ In fact, git allows the same name to be used for both branches and for tags; wit
 </table>
 
 where `xxx` represents a specific component or archetype being released.
+
+{note
+In fact, git allows the same name to be used for both branches and for tags; within git they are namespaced to be unique.  However, using the same name for the branch confuses `maven-release-plugin`; thus the branch name is slightly different from the tag name.
+}
 
