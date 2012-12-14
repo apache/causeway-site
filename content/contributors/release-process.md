@@ -93,10 +93,10 @@ git pull --ff-only
 
 Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](versioning-policy.html).
 
-Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.0.0 of `core`, use:
+Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.2.3 of `core`, use:
 
 <pre>
-git checkout -b isis-1.0.0
+git checkout -b isis-1.2.3
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -292,7 +292,7 @@ In particular, in the root pom of the component, ensure that *the version of cor
 &lt;parent&gt;
     &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
     &lt;artifactId&gt;isis&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;version&gt;1.2.3&lt;/version&gt;
     &lt;relativePath&gt;&lt;/relativePath&gt;
 &lt;/parent&gt;
 </pre>
@@ -433,13 +433,13 @@ $ mvn release:prepare -P apache-release -D dryRun=true
 [INFO] Isis Core TCK Fixtures
 [INFO]
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Isis Core 1.0.0-SNAPSHOT
+[INFO] Building Apache Isis Core 1.2.3-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO]
 [INFO] --- maven-release-plugin:2.3.2:prepare (default-cli) @ isis ---
 [INFO] Resuming release from phase 'map-release-versions'
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
-1.0.0: :
+1.2.3: :
 </pre>
 
 Then answer the next three questions.  
@@ -447,17 +447,17 @@ Then answer the next three questions.
 For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
 
 <pre>
-What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.0: :
+What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.3: :
 </pre>
 
 For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above.  This is the same as our [standard](release-branch-and-tag-names.html):
 <pre>
-What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.0.0: :
+What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.2.3: :
 </pre>
 
 For the final question, new development version", the minor 'z' part of the version should be incremented, and `-SNAPSHOT` appended.  Generally you can, once more, accept the default:
 <pre>
-What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.0.1-SNAPSHOT:
+What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.4-SNAPSHOT:
 </pre>
 
 Assuming this completes successfully, delete the generated `release.properties` file:
@@ -530,17 +530,17 @@ The command starts off by checking out the codebase from the tag, then builds th
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
 re
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.0.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.2.3 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.0.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.2.3 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Executing: cmd.exe /X /C "git ls-remote file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
 [INFO] Executing: cmd.exe /X /C "git fetch file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C "git checkout isis-1.0.0"
+[INFO] Executing: cmd.exe /X /C "git checkout isis-1.2.3"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
 [INFO] Executing: cmd.exe /X /C "git ls-files"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
