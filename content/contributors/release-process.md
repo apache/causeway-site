@@ -123,11 +123,11 @@ For example, if releasing `core` version `1.2.3`, the POM should read:
 &lt;version&gt;1.2.3-SNAPSHOT&lt;/version&gt;
 </pre>
 
-### Update Apache parent (Isis Core only)
+### Update parent (Isis Core)
 
 If releasing Isis Core, check (via [http://search.maven.org](http://search.maven.org)) whether there is a newer version of the Apache parent `org.apache:apache`.
 
-If there is, update the `<version>` in the `<parent>` element in the parent POM `org.apache.isis.core:isis`:
+If there is, update the `<version>` in the `<parent>` element in the parent POM to match the newer version:
 
 <pre>
 &lt;parent&gt;
@@ -139,6 +139,34 @@ If there is, update the `<version>` in the `<parent>` element in the parent POM 
 </pre>
 
 where `NN` is the updated version number.
+
+### Update parent (non core components)
+
+If releasing a non-core component, then check and if necessary update the `<version>` in the `<parent>` element in the parent POM to match the released (non-SNAPSHOT) version of `org.apache.isis.core:isis`:
+
+<pre>
+&lt;parent&gt;
+    &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
+    &lt;artifactId&gt;isis&lt;/artifactId&gt;
+    &lt;version&gt;1.2.3&lt;/version&gt;
+    &lt;relativePath&gt;&lt;/relativePath&gt;
+&lt;/parent&gt;
+</pre>
+
+{note
+This obviously requires that the core has been released previously.  If you 
+also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
+}
+
+Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it is also updated.
+
+All components have a small handful of modules, so it's probably easiest to load up and inspect each in turn:
+
+<pre>
+vi `find . -name pom.xml | grep -v target`
+</pre>
+
+... and search for `SNAPSHOT`.
 
 ### Update dependency versions
 
@@ -284,25 +312,7 @@ Confirm that the versions of the Isis artifacts now cached in your local reposit
 
 ### Sanity check for non-`core` components
 
-First, check that there are *NO SNAPSHOT* dependencies in any of the `pom.xml` of the modules of the component.
-
-In particular, in the root pom of the component, ensure that *the version of core specified as the parent is correct and IS NOT A SNAPSHOT*.  For example:
-
-<pre>
-&lt;parent&gt;
-    &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-    &lt;artifactId&gt;isis&lt;/artifactId&gt;
-    &lt;version&gt;1.2.3&lt;/version&gt;
-    &lt;relativePath&gt;&lt;/relativePath&gt;
-&lt;/parent&gt;
-</pre>
-
-{note
-This obviously requires that the core has been released previously.  If you 
-also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
-}
-
-Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it is also updated.
+You should already have changed the parent POM of the releasable module to reference a released version of `org.apache.isis.core:isis`.  Now, also check that there are remaining *NO SNAPSHOT* dependencies in any of the `pom.xml` of the modules of the component.
 
 Next, delete all Isis artifacts from your local Maven repo:
 

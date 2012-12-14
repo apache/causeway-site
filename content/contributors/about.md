@@ -2,9 +2,10 @@ Title: Contributors
 
 ###  Contributors
 
-- [Building Isis](building-isis.html)
-- [Using Git](using-git.html)
-- [Git Workflow](git-workflow.html)
+- [Contributing](contributing.html)
+- [Development Environment](development-environment.html)
+- [Git Policy](git-policy.html)
+- [Git Cookbook](git-cookbook.html)
 - [Coding Conventions](coding-conventions.html)
 - [Versioning Policy](versioning-policy.html)
 

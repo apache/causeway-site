@@ -44,9 +44,10 @@ Title: Documentation
 
 ###  Contributors
 
-- [Building Isis](contributors/building-isis.html)
-- [Using Git](contributors/using-git.html)
-- [Git Workflow](contributors/git-workflow.html)
+- [Contributing](contributors/contributing.html)
+- [Development Environment](contributors/development-environment.html)
+- [Git Policy](contributors/git-policy.html)
+- [Git Cookbook](contributors/git-cookbook.html)
 - [Coding Conventions](contributors/coding-conventions.html)
 - [Versioning Policy](contributors/versioning-policy.html)
 

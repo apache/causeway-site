@@ -1,129 +1,12 @@
-Title: Using Git
+Title: Git Cookbook
 
-*There is some overlap between this material and that in [Git workflow](git-workflow.html).  We intend to merge the two pages; for now please read both.*
+This page describes the commands often used while working with git.
 
-## Introduction
+In addition to these basic commands, please make sure you have read:
 
-These notes recommend how contributors should work with git.  To understand these notes, the only real concepts that you need to grok are:
-
-- git commits form an acyclic graph, with each commit pointing to its parent commit (or commit**s**, if a merge)
-
-- a branch is merely a pointer to one of these commits; git calls the main branch `master`
-
-- git commits happen in two steps: first they are added to the index (also called the staging area), then they are committed.
-
-For more background reading, see:
-
-- [Pro Git](http://git-scm.com/book) book (free in electronic form)
-- [Git community book](https://github.s3.amazonaws.com/media/book.pdf)
-- [git reset demystified](http://git-scm.com/2011/07/11/reset.html) - differentiating the working directory vs index/staging area
-
-And, of course, there is loads of good advice on [stackoverflow.com](http://stackoverflow.com/questions/tagged/git)
-
-## General principle
-
-There are many ways of using Git, but the only real prescriptive advice here is that commits should only have one parent.  Doing this keeps the commit history clean; even though work actually happens in parallel, in the commit history it will look like all work was done serially.
-
-This is accomplished using `git rebase`; the idea being that any changes that you make locally are re-applied on top of the latest fetch from the `master` branch.  Many other projects also work this way; a good write-up of how SpringSocial use git can be found [here](https://github.com/SpringSource/spring-social/wiki/Contributing).
-
-## Basics
-
-#### Installing Git
-
-The easiest place to get hold of command-line git is probably the [github download page](http://git-scm.com/downloads).
-
-On Windows, this also installs the rather good mSysGit Unix shell.  We recommend that you enable git for both the mSysgit and the Windows command prompt:
-
-<img src="resources/setting-up-git.png" width="500px"></img>
-
-
-Once git is installed, the two main command line tools to note are:
-
-- `git` command line tool
-- `gitk` for viewing the commit history
-
-Three commands in particular worth knowing:
-
-<pre>git help <i>command</i></pre>
-
-   will open the man page in your web browser
-
-<pre>git gui</pre>
-
-   will open up a basic GUI client to staging changes and making commits
-
-<pre>gitk --all</pre>
-
-   will open the commit history for all branches.  In particular, you should be able to see the local `master`, which branch you are working on (the `HEAD`), and also the last known position of the `master` branch from the central repo, called `origin/master`.
-
-If using Windows, note that github also have a dedicated [Windows client](https://help.github.com/articles/set-up-git).  With a little [hacking around](http://haacked.com/archive/2012/05/30/using-github-for-windows-with-non-github-repositories.aspx), it can also be made to work with non-github repositories.
-
-If using Mac, you might also want to check out Atlassian's [Sourcetree](http://www.atlassian.com/software/sourcetree/overview).
-
-
-#### Cloning the Isis repo and Configuring
-
-First, clone the Isis repo:
-
-<pre>
-git clone https://git-wip-us.apache.org/repos/asf/isis.git
-</pre>
-
-As per [Apache's Git page](https://git-wip-us.apache.org/), you should then configure your user name and password:
-
-<pre>
-git config user.name "<i>My Name Here</i>"
-git config user.email <i>myusername@apache.org</i>
-</pre>
-
-And (again as recommended by [Apache's Git page](https://git-wip-us.apache.org/)), you should also configure the `core.autocrlf` so that line endings are normalized to LF (Unix style) in the repo.
-
-- on Windows, use:
-<pre>git config core.autocrlf auto   
-</pre>
-
-- on Mac/Linux, use:
-<pre>
-git config core.autocrlf input
-</pre>
-
-The Windows setting means that files are converted back to CRLF on checkout; the Mac/Linux setting means that the file is left as LF on checkout.
-
-We also recommend setting `core.safecrlf`, which aims to ensure that any line ending conversion is repeatable.  Do this on all platforms:
-
-<pre>
-git config core.safecrlf true
-</pre>
-
-Note that these settings are supplemented in the repo by the `.gitattributes` file and that explicitly specifies line handling treatment for most of the common file types that we have.
-
-One final configuration that we recommend is for `git pull` to perform a rebase by default, rather than a merge.  This results in a linear log history.  If you want to explicitly have branches in the history, then you can always create a topic branch, discussed below:
-<pre>
-git config branch.autosetuprebase always
-</pre>
-
-If you don't use git outside of Apache, you can add the `--global` flag so that the above settings apply for all repos managed by git on your PC.
-
-For further reading, see:
-
-- [git config man page](http://www.kernel.org/pub/software/scm/git/docs/git-config.html)
-- [.gitattributes man page](http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html)
-- [.gitattributes git-scm.com docs](http://git-scm.com/docs/gitattributes)
-
-#### Commit message format
-
-Commit messages should follow the format:
-
-<pre>
-ISIS-nnn: brief summary here
-
-- optionally, longer details
-- should be written here
-- in bullet points
-</pre>
-
-where `ISIS-nnn` is a ticket raised in our [JIRA issue tracker](https://issues.apache.org/jira/browse/ISIS).
-
+* [development environment](development-environment.html)
+* [git policy](git-policy.html)
+* [contributing](contributing.html)
 
 #### Modifying existing files
 
@@ -174,11 +57,13 @@ git commit -m "ISIS-nnn: yada yada"
 </pre>
 
 
-## Common Workflows
+## Common Workflows (Committers only)
 
-### Working on master
+The [contributing](contributing.html) page describes the workflow for non-committers.  This section is therefore primarily for the benefit of Isis **committers**.
 
-With this option, you do nothing special locally, just commit to the `master` branch.
+### Working on `master`
+
+The easiest way of working is to make your commits directly on your local `master`.  This is perhaps somewhat hacky, but acceptable for very small changes.
 
 When you are ready to push your changes, use:
 
@@ -344,3 +229,33 @@ git push origin master --force
 </pre>
 
 If this doesn't work, it may be that the remote repo has disabled this feature.  There are other hacks to get around this, see for example [here](http://stackoverflow.com/questions/1377845/git-reset-hard-and-a-remote-repository).
+
+
+
+
+
+## If you've accidentally worked on `master` branch
+
+If at any time the `git pull` from your upstream fails, it most likely means that you must have made commits on the `master` branch.  You can use `gitk --all` to confirm; at some point in time both `master` and `origin\master` will have a common ancestor.
+
+You can retrospectively create a topic branch for the work you've accidentally done on `master`.  
+
+First, create a branch for your current commit:
+<pre>
+git branch <i>newbranch</i>
+</pre>
+
+Next, make sure you have no outstanding edits.  If you do, you should commit them or stash them:
+
+<pre>
+git stash
+</pre>
+
+Finally, locate the shaId of the commit you want to roll back to (easily obtained in `gitk -all`), and wind `master` branch back to that commit:
+<pre>
+git checkout master
+git reset --hard <i>shaId</i>      # move master branch shaId of common ancestor
+</pre>
+
+
+
