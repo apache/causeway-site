@@ -18,7 +18,7 @@ mvn clean install -o
 </pre>
 
 
-## Checkcode
+## Check code
 
 Parent version, SNAPSHOTS, also tck
 <pre>
@@ -41,7 +41,7 @@ Missing/spurious `supplemental-models.xml`:
 <pre>
 mvn license:download-licenses
 groovy ../scripts/checkmissinglicenses.groovy
-
+</pre>
 
 ## Release
 
