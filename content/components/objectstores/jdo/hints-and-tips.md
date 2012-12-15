@@ -37,7 +37,43 @@ Then turn on Auto-Enhancement:
 
 Update domain object model's classpath to reference DataNucleus JARs:
 
-<img src="resources/eclipse-040-classpath.png"/>
+<pre>
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
+        &lt;artifactId&gt;isis-core-applib&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.isis.objectstore&lt;/groupId&gt;
+        &lt;artifactId&gt;isis-objectstore-jdo-applib&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- DataNucleus (horrid, but needed to run the enhancer)--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.jdo&lt;/groupId&gt;
+        &lt;artifactId&gt;jdo-api&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+        &lt;artifactId&gt;datanucleus-core&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+        &lt;artifactId&gt;datanucleus-enhancer&lt;/artifactId&gt;
+        &lt;exclusions&gt;
+            &lt;exclusion&gt;
+                &lt;groupId&gt;org.ow2.asm&lt;/groupId&gt;
+                &lt;artifactId&gt;asm&lt;/artifactId&gt;
+            &lt;/exclusion&gt;
+        &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+        &lt;artifactId&gt;datanucleus-api-jdo&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</pre>
 
 And tell DataNucleus to use the project classpath:
 
@@ -55,12 +91,25 @@ When the enhancer runs, it will print out to the console:
 
 in `src/main/java/META-INF` of the domain project:
 
-<img src="resources/eclipse-030-persistence-unit-xml.png"/>
+<img src="resources/eclipse-028-persistence-unit-xml.png"/>
 
-### For Eclipse: Windows &gt; Preferences
+Ensure the `persistence-unit` is as specified in the project properties:
+
+<pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;persistence xmlns=&quot;http://java.sun.com/xml/ns/persistence&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd&quot; version=&quot;1.0&quot;&gt;
+
+    &lt;persistence-unit name=&quot;quickstart&quot;&gt;
+    &lt;/persistence-unit&gt;
+&lt;/persistence&gt;
+</pre>
 
 
-<img src="resources/eclipse-020-windows-preferences.png"  width="600px"/>
+Then specify the `persistence-unit` in the project properties:
+
+<img src="resources/eclipse-025-project-properties.png"  width="500px"/>
 
 
 ## Workaround for DN versions: using a profile
