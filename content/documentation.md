@@ -219,18 +219,13 @@ Title: Documentation
 {row-odd
 
 {span-one-third
-
-###In-memory `0.2.0-incubating`
-
-- [About](components/objectstores/inmemory/about.html) [stub]
-
-}
-
-{span-one-third
 ###XML `0.2.0-incubating`
 
 - [About](components/objectstores/xml/about.html) [stub]
 
+}
+
+{span-one-third
 }
 
 {span-one-third
@@ -282,14 +277,6 @@ Title: Documentation
 
 {span-one-third
 
-###In-memory `0.2.0-incubating`
-
-- [About](components/profilestores/inmemory/about.html) [stub]
-
-}
-
-{span-one-third
-
 ###XML `0.2.0-incubating`
 
 - [About](components/profilestores/xml/about.html) [stub]
@@ -302,6 +289,9 @@ Title: Documentation
 
 - [About](components/profilestores/sql/about.html) [stub]
 
+}
+
+{span-one-third
 }
 
 }
