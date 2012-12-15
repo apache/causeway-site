@@ -26,11 +26,11 @@ In addition, Eclipse's enhancer needs some special care over the classpath.
 
 for the domain object model project, first add DataNucleus support:
 
-<img src="resources/eclipse-100-project-support.png"  width="400px"/>
+<img src="resources/eclipse-100-project-support.png"  width="600px"/>
 
 Then turn on Auto-Enhancement:
 
-<img src="resources/eclipse-110-project-support.png"  width="400px"/>
+<img src="resources/eclipse-110-project-support.png"  width="600px"/>
 
 
 ### For Eclipse: classpath considerations
@@ -77,11 +77,11 @@ Update domain object model's classpath to reference DataNucleus JARs:
 
 And tell DataNucleus to use the project classpath:
 
-<img src="resources/eclipse-010-windows-preferences.png" width="400px"/>
+<img src="resources/eclipse-010-windows-preferences.png" width="600px"/>
 
 When the enhancer runs, it will print out to the console:
 
-<img src="resources/eclipse-120-console.png"/>
+<img src="resources/eclipse-120-console.png" width="500px"/>
 
 
 
@@ -91,7 +91,7 @@ When the enhancer runs, it will print out to the console:
 
 in `src/main/java/META-INF` of the domain project:
 
-<img src="resources/eclipse-028-persistence-unit-xml.png"/>
+<img src="resources/eclipse-028-persistence-unit-xml.png" width="250px"/>
 
 Ensure the `persistence-unit` is as specified in the project properties:
 
@@ -109,7 +109,7 @@ Ensure the `persistence-unit` is as specified in the project properties:
 
 Then specify the `persistence-unit` in the project properties:
 
-<img src="resources/eclipse-025-project-properties.png"  width="500px"/>
+<img src="resources/eclipse-025-project-properties.png"  width="600px"/>
 
 
 ## Workaround for DN versions: using a profile
@@ -193,4 +193,4 @@ At any rate, you'll know you've encountered this error if you see the following 
 
 The best solution is to remove DataNucleus support and then to re-add it:
 
-<img src="resources/eclipse-220-enhancer-fails-duplicates.png"  width="400px"/>
+<img src="resources/eclipse-220-enhancer-fails-duplicates.png"  width="600px"/>

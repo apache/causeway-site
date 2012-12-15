@@ -1,5 +1,9 @@
 Title: Formal Release Process
 
+This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [1-pager](release-process-one-pager.html).
+
+## Intro
+
 Apache Isis consists of a number of separately releasable modules.  Relative to the root of the [source code repo](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree), these are:
 
 - `core`
