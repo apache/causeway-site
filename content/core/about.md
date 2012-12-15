@@ -12,7 +12,7 @@ Title: Core Modules
 ### Bundled Components
 
 - [Bytecode Enhancers](bytecode.html)
-- [No-op Security](noop-security.html)
+- [Bypass Security](bypass-security.html)
 - [In-memory Object Store](inmemory-objectstore.html)
 - [In-memory Profile Store](inmemory-profilestore.html)
 

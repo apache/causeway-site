@@ -86,7 +86,7 @@ Title: Documentation
 ### Bundled Components
 
 - [Bytecode Enhancers](core/bytecode.html) [stub]
-- [No-op Security](core/noop-security.html) [stub]
+- [Bypass Security](core/bypass-security.html) [stub]
 - [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 - [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 
@@ -247,10 +247,6 @@ Title: Documentation
 {row-even
 
 {span-one-third
-
-### Noop `0.2.0-incubating`
-
-- [About](components/security/noop/about.html) [stub]
 
 ### File `0.2.0-incubating`
 
