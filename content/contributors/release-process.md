@@ -621,14 +621,21 @@ Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See 
 
 ### Push changes
 
-Finally, push the tag that was created locally to the central origin server, for example:
+Finally, push both the branch and the tag created locally to the central origin server.  For the tag, we append an `-RCn` suffix until the vote succeeds.  
+
+To push the branch, for example:
 <pre>
-git push origin tag release/core/1.2.3
+git checkout prepare/isis-1.2.3
+git push -u origin prepare/1.2.3
 </pre>
 
-{note
-The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary)
-}
+To push the tag, with the `-RCn` suffix, for example:
+<pre>
+git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3-RC1
+</pre>
+
+The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
+
 ## Voting
 
 Once the artifacts have been uploaded, you can call a vote.
@@ -680,7 +687,7 @@ For example, use the following subject for a vote on Isis Core:
 [RESULT] [VOTE] Apache Isis Core release 1.2.3
 </pre>
 
-for a successful vote, using the body:
+using the body (alter last line as appropriate):
 
 <pre>
 The vote has completed with the following result :
@@ -691,11 +698,42 @@ The vote has completed with the following result :
   -1 (binding): <i>list of names</i>
   -1 (non binding): <i>list of names</i>
 
-The vote is SUCCESSFUL.
+The vote is (UN)SUCCESSFUL.
 </pre>
 
+### For a successful vote
+
+If the vote has been successful, then replace the `-RCn` tag with another without the qualifier:
+
+* checkout the tag locally, for example:
+
+<pre>
+  git checkout isis-1.2.3
+</pre>
+
+* add the new remote tag, for example:
+
+<pre>
+  git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3
+</pre>
+
+* delete the `-RCn` remote tag, for example:
+
+<pre>
+  git push origin --delete refs/tags/isis-1.2.3-RC1
+</pre>
+
+Then, continue onto the next section for the steps to promote and announce the release.
+
+### For an unsuccessful vote
 
 If the vote has been unsuccessful, then:
+
+* delete the remote branch, for example:
+
+<pre>
+  git push --origin --delete prepare/isis-1.2.3
+</pre>
 
 * delete your local branch, for example:
 
@@ -703,16 +741,16 @@ If the vote has been unsuccessful, then:
   git branch -D prepare/isis-1.2.3
 </pre>
 
+* delete the remote origin server's tag, for example:
+
+<pre>
+  git push origin --delete refs/tags/isis-1.2.3-RC1
+</pre>
+
 * delete the tag that was created locally, for example:
 
 <pre>
   git tag -d isis-1.2.3
-</pre>
-
-* delete the remote origin server's tag, for example:
-
-<pre>
-  git push origin --delete tag isis-1.2.3
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
