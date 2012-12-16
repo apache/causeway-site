@@ -632,6 +632,7 @@ git push -u origin prepare/isis-1.2.3
 To push the tag, with the `-RCn` suffix, for example:
 <pre>
 git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3-RC1
+git fetch
 </pre>
 
 The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
@@ -715,12 +716,14 @@ If the vote has been successful, then replace the `-RCn` tag with another withou
 
 <pre>
   git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3
+  git fetch
 </pre>
 
 * delete the `-RCn` remote tag, for example:
 
 <pre>
   git push origin --delete refs/tags/isis-1.2.3-RC1
+  git fetch
 </pre>
 
 Then, continue onto the next section for the steps to promote and announce the release.
