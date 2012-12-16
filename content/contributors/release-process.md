@@ -626,7 +626,7 @@ Finally, push both the branch and the tag created locally to the central origin 
 To push the branch, for example:
 <pre>
 git checkout prepare/isis-1.2.3
-git push -u origin prepare/1.2.3
+git push -u origin prepare/isis-1.2.3
 </pre>
 
 To push the tag, with the `-RCn` suffix, for example:
