@@ -42,10 +42,11 @@ The above steps are the bare minimum you should perform before casting a vote.  
 
 Optionally, you can verify the binary releases (in the Maven staging repository).  For this it is necessary to download each artifact from Nexus and its corresponding .ASC file.  Since there are many such artifacts, just verify one or two at random.
 
+## Using the Creadur Tools
 
-<!--
-TODO: use the other creadur tools
--->
+The [Apache Creadur](http://creadur.apache.org) project exists to provide a set of tools to ensure compliance with Apache's licensing standards.  The main release auditing tool, [Apache RAT](http://creadur.apache.org/rat), is used in the preparation of the release (as documented [here](release-process.html)).  Creadur's remaining tools are to support the verification process.
+
+At the time of writing, these additional tools are quite young and haven't been formally released; so to use them will take a little bit of work.  See [here](verifying-releases-using-creadur-tools.html) for more details.
 
 
 ## Casting a Vote
