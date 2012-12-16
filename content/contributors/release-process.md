@@ -1,6 +1,6 @@
 Title: Formal Release Process
 
-This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [1-pager](release-process-one-pager.html).
+This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).
 
 ## Intro
 

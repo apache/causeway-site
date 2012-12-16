@@ -20,7 +20,7 @@ mvn clean install -o
 
 ## Check code
 
-Parent version, SNAPSHOTS, also tck
+Update parent version to non-`SNAPSHOT` (including tck project, if any):
 <pre>
 vi `find . -name pom.xml | grep -v target`
 </pre>
