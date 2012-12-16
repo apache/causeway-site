@@ -732,7 +732,7 @@ If the vote has been unsuccessful, then:
 * delete the remote branch, for example:
 
 <pre>
-  git push --origin --delete prepare/isis-1.2.3
+  git push origin --delete prepare/isis-1.2.3
 </pre>
 
 * delete your local branch, for example:
@@ -903,12 +903,13 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
 <pre>
-git checkout master                # update master with latest
+git checkout master                           # update master with latest
 git pull
-git checkout prepare/isis-1.2.3    # apply branch commits onto master
+git checkout prepare/isis-1.2.3               # apply branch commits onto master
 git rebase master
 git checkout master
-git branch -D prepare/isis-1.2.3   # branch no longer needed
+git branch -D prepare/isis-1.2.3              # branch no longer needed
+git push origin --delete prepare/isis-1.2.3   # remote branch no longer needed
 </pre>
 
 Next, do a sanity check that everything builds ok:
