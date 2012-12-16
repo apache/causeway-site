@@ -660,12 +660,12 @@ The artifacts have been staged to staging repository on repository.apache.org:
 * https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
 * https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
 
-In the source code repo the code has been tagged as isis-1.2.3.
+In the source code repo the code has been tagged as isis-1.2.3-RC1.
 
 Our website contains some suggestions of how to verify the release, see
 http://isis.apache.org/contributors/verifying-releases.html
 
-Please verify the release and cast your vote.  The vote will be open for 72 hours.
+Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
 
 [ ] +1
 [ ]  0
