@@ -845,7 +845,7 @@ Close all JIRA tickets for the release, or moved to future releases if not yet a
 
 Use JIRA to [generate release notes](http://confluence.atlassian.com/display/JIRA/Creating+Release+Notes):
 
-<img src="resources/jira-create-release-notes.png"></img>
+<img src="resources/jira-create-release-notes.png" width="400px"></img>
 
 If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
 
