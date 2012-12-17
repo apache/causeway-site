@@ -1,9 +1,5 @@
 Title: NoSQL object store
 
-{stub
-This page is a stub.
-}
+The nosql objectstore module provides an implementation of the object store API that persists domain objects using JSON.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
-
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

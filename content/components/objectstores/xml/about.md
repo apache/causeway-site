@@ -1,9 +1,7 @@
 Title: XML object store
 
-{stub
-This page is a stub.
-}
+The xml object store provides a simple way to persist domain objects to file storage. The format of this file is a proprietary XML schema.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+Note that the XML object store is suitable for single-user standalone apps, but is not intended for multi-user deployments.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

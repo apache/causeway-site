@@ -1,9 +1,7 @@
 Title: BDD Concordion viewer
 
-{stub
-This page is a stub.
-}
+The bdd viewer provides the ability to story-test the functionality in your domain objects, using a behaviour-driven design (BDD) framework.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+Currently the only framework supported is [Concordion](http://concordion.org), though others may be supported in the future.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

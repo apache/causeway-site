@@ -1,47 +1,91 @@
-Title: Isis Core v1.0.0
+Title: `isis-1.0.0`
+                
+<h2>        New Feature
+</h2>
+<ul>
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-240'>ISIS-240</a>] -         Provide a bookmark service in order to lookup any object
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-242'>ISIS-242</a>] -         Provide support for JODA LocalDate and LocalDateTime as value types.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-250'>ISIS-250</a>] -         Change MetaModelValidator such that multiple validation errors can be reported in a single shot....
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-263'>ISIS-263</a>] -         Introduce a new @CommonlyUsed annotation as a hint for the UI.  To be implemented by Wicket viewer (as a minimum)
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-264'>ISIS-264</a>] -         Add @Paged annotation (for use by viewer-side paging as a minimum).  Implement in Wicket as a minimum
+</li>
+</ul>
 
-## Bug
-    * [ISIS-184] - PasswordValueSemanticsProvider.doEncode threw exception when I provided a defaultXXX method
-    * [ISIS-255] - Test in Runtime TestSupport component fails due to TimeZone
-    * [ISIS-265] - NullPointerException when storing new objects
-    * [ISIS-266] - BoundedFacetAbstract was invalidating using disabledReason()
-
-
-
-## Improvement
-    * [ISIS-89] - Finish off updating documentation post the first (pre 1.0) release of Isis.
-    * [ISIS-131] - Archive off (and no longer support) the default runtime's client/server remoting
-    * [ISIS-188] - Stabilization for isis-1.0.0 release.
-    * [ISIS-192] - Change the default config files for file-based authentication and file-based authorization
-    * [ISIS-202] - Rename @Stable to @ViewModel
-    * [ISIS-203] - Improve the logging at startup
-    * [ISIS-216] - Make OIDs immutable and self-describing (ie make OidWithSpecification the norm, using an ObjectTypeFacet as a way of determining the type).
-    * [ISIS-227] - Separate out Eclipse (m2e) target classes from Maven cli,so co-exist better.
-    * [ISIS-228] - Use JUnit categories to distinguish between tests that can be run on CI server and those that cannot.
-    * [ISIS-243] - Remove the Maybe type from the Isis applib.
-    * [ISIS-245] - Collapse the Version hierarchy
-    * [ISIS-248] - Perform concurrency checking within the persistor (rather than rely on every viewer/client to do the check)
-    * [ISIS-252] - Use enums instead of booleans in FacetFactory's/Facets/ValueSemanticsProvider
-    * [ISIS-253] - Get rid of DateValueFacet#getLevel(), since unused
-    * [ISIS-257] - Remove the @Executed annotation from the applib (and corresponding metadata stuff) since remoting no longer supported.
-    * [ISIS-258] - Extend @Hidden and @Disabled to specify Where the object member should be hidden/disabled.
-    * [ISIS-259] - Replace @QueryOnly and @Idempotent with a new @ActionSemantics annotation.
-    * [ISIS-260] - If a property is annotated as @Title, then by default it should not appear as a column in tables.
-    * [ISIS-261] - Remove obsolete code (Enumeration interface, AnnotationBasedFacetFactory)
-    * [ISIS-262] - Real composite for ResourceSourceStream
-    * [ISIS-267] - Handle "recreating" object adapters which are already resolved
-    * [ISIS-274] - Simplify the bootstrapping of Isis so that there are fewer configuration properties to set in isis.properties
-    * [ISIS-280] - More consistent support for @Prototype and @Exploration, by utilizing the existing HidingInteractionAdvisor API
-    * [ISIS-281] - Provide support for integration testing using a JUnit rule.
-    * [ISIS-283] - Provide the ability to use fixtures as domain objects, eg within demo apps
-    * [ISIS-285] - Add additional MetaModelValidators so that orphaned prefixes are treated as a validation error.
-    * [ISIS-286] - Make sure pending changes are stored before issuing a query
-
-## New Feature
-    * [ISIS-52] - Extend the NoSQL Object Store to properly support MongoDB.
-    * [ISIS-240] - Provide a bookmark service in order to lookup any object
-    * [ISIS-242] - Provide support for JODA LocalDate and LocalDateTime as value types.
-    * [ISIS-250] - Change MetaModelValidator such that multiple validation errors can be reported in a single shot....
-    * [ISIS-263] - Introduce a new @CommonlyUsed annotation as a hint for the UI.  To be implemented by Wicket viewer (as a minimum)
-    * [ISIS-264] - Add @Paged annotation (for use by viewer-side paging as a minimum).  Implement in Wicket as a minimum
-
+           
+<h2>        Improvement
+</h2>
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-89'>ISIS-89</a>] -         Finish off updating documentation post the first (pre 1.0) release of Isis.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-131'>ISIS-131</a>] -         Archive off (and no longer support) the default runtime&#39;s client/server remoting
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-188'>ISIS-188</a>] -         Stabilization for isis-1.0.0 release.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-192'>ISIS-192</a>] -         Change the default config files for file-based authentication and file-based authorization
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-202'>ISIS-202</a>] -         Rename @Stable to @ViewModel
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-203'>ISIS-203</a>] -         Improve the logging at startup
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-216'>ISIS-216</a>] -         Make OIDs immutable and self-describing (ie make OidWithSpecification the norm, using an ObjectTypeFacet as a way of determining the type).
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-227'>ISIS-227</a>] -         Separate out Eclipse (m2e) target classes from Maven cli,so co-exist better.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-228'>ISIS-228</a>] -         Use JUnit categories to distinguish between tests that can be run on CI server and those that cannot.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-243'>ISIS-243</a>] -         Remove the Maybe type from the Isis applib.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-245'>ISIS-245</a>] -         Collapse the Version hierarchy
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-248'>ISIS-248</a>] -         Perform concurrency checking within the persistor (rather than rely on every viewer/client to do the check)
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-252'>ISIS-252</a>] -         Use enums instead of booleans in FacetFactory&#39;s/Facets/ValueSemanticsProvider
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-253'>ISIS-253</a>] -         Get rid of DateValueFacet#getLevel(), since unused
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-257'>ISIS-257</a>] -         Remove the @Executed annotation from the applib (and corresponding metadata stuff) since remoting no longer supported.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-258'>ISIS-258</a>] -         Extend @Hidden and @Disabled to specify Where the object member should be hidden/disabled.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-259'>ISIS-259</a>] -         Replace @QueryOnly and @Idempotent with a new @ActionSemantics annotation.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-260'>ISIS-260</a>] -         If a property is annotated as @Title, then by default it should not appear as a column in tables.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-261'>ISIS-261</a>] -         Remove obsolete code (Enumeration interface, AnnotationBasedFacetFactory)
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-262'>ISIS-262</a>] -         Real composite for ResourceSourceStream
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-267'>ISIS-267</a>] -         Handle &quot;recreating&quot; object adapters which are already resolved
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-274'>ISIS-274</a>] -         Simplify the bootstrapping of Isis so that there are fewer configuration properties to set in isis.properties
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-280'>ISIS-280</a>] -         More consistent support for @Prototype and @Exploration, by utilizing the existing HidingInteractionAdvisor API
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-281'>ISIS-281</a>] -         Provide support for integration testing using a JUnit rule.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-283'>ISIS-283</a>] -         Provide the ability to use fixtures as domain objects, eg within demo apps
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-285'>ISIS-285</a>] -         Add additional MetaModelValidators so that orphaned prefixes are treated as a validation error.
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-286'>ISIS-286</a>] -         Make sure pending changes are stored before issuing a query
+</li>
+</ul>
+    
+<h2>        Bug
+</h2>
+<ul>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-184'>ISIS-184</a>] -         PasswordValueSemanticsProvider.doEncode threw exception when I provided a defaultXXX method
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-255'>ISIS-255</a>] -         Test in Runtime TestSupport component fails due to TimeZone
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-265'>ISIS-265</a>] -         NullPointerException when storing new objects
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-266'>ISIS-266</a>] -         BoundedFacetAbstract was invalidating using disabledReason()
+</li>
+</ul>
+                                             

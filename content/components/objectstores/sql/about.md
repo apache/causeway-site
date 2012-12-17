@@ -1,9 +1,5 @@
 Title: SQL object store
 
-{stub
-This page is a stub.
-}
+The SQL object store module provides the ability to persist domain objects into an RDBMS. It has no external dependencies, using simply JDBC.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
-
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

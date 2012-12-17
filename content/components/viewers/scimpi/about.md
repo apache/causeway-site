@@ -1,9 +1,13 @@
 Title: Scimpi viewer
 
-{stub
-This page is a stub.
-}
+The scimpi module provides a webapp viewer that out-of-the-box provides a similar interface to that provided by the [HTML viewer](../html/about.html).
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+However, unlike the HTML viewer it allows the user interface to be extensively customized.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+### Customization
+
+Scimpi works by searching for a specific page to render the domain object, eg `Customer.shtml` to render a `Customer` object. If none is found, it always falls back to a generic page, which can render any object.
+
+Customization therefore is accomplished by providing a specific page. The elements of this page can be any of the tags that Scimpi understands.
+
+- [Releases](release-notes/about.html).

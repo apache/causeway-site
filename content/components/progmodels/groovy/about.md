@@ -1,9 +1,7 @@
 Title: Groovy Programming Model
 
-{stub
-This page is a stub.
-}
+A 'programming model' means the support for various programming conventions and annotations used by Isis to build up its internal metamodel.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+The groovy progmodel implementation, which extends the default programming model provided with [core](../../../core/about.html) is intended to allow domain objects to be written in [Groovy](http://groovy.codehaus.org).
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

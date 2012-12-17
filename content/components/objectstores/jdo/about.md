@@ -1,8 +1,9 @@
-Title: JDO DataNucleus object store
+Title: JDO (DataNucleus) Object Store
 
-{stub
-This page is a stub.
-}
+The JDO objectstore enables the persistence of domain objects using the JDO API. [DataNucleues](http://datanucleus.org) - the reference implementation for JDO - is used as the backing implementation.
 
-Additional reading:
-* [Hints and Tips](hints-and-tips.html)
+- [Releases](release-notes/about.html)
+
+Hints and tips:
+
+- [Maven and Eclipse](hints-and-tips.html)

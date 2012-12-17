@@ -1,9 +1,9 @@
 Title: HTML Viewer
 
-{stub
-This page is a stub.
-}
+The HTML viewer provides a simple webapp interface for interacting with an Isis domain model.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+It renders each domain object or collection of domain objects as a web page, with hyperlinks used to navigate between objects. In addition, object actions can also be invoked, with hyperlinks bringing up a page for action parameters if required.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+The HTML viewer offers only very limited customization opportunities; the CSS can be altered, but that's about it.
+
+- [Releases](release-notes/about.html)

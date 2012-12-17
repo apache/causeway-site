@@ -1,9 +1,9 @@
 Title: Restful Objects viewer
 
-{stub
-This page is a stub.
-}
+The restfulobjects viewer provides a RESTful interface to the domain object model, running over the HTTP protocol, and implemented as a webapp (servlet).
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+Each domain object (or part of object) is exposed as a RESTful resource, in a JSON representation.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+The viewer is an implementation of the [Restful Objects](http://restfulobjects.org) specification, intended to allow other server-side frameworks to be implemented to support the same protocol.  It currently implements **v0.56** of the spec.
+
+- [Releases](release-notes/about.html).

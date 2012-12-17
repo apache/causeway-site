@@ -1,9 +1,9 @@
 Title: Drag-n-Drop viewer
 
-{stub
-This page is a stub.
-}
+The Drag and Drop (DnD) viewer is non-web graphical user interface that employs a desktop metaphor for interacting with domain objects.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+It renders each domain object as an icon or a window and allows the user to manage and manipulate them using the mouse and keyboard. Dragging and dropping domain objects plays a major role in this interface, hence its name.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+The DnD viewer defines its own API to allow new views to be defined. These can be for entities, for entity properties (and action parameters), for entity collections, and for collections of entities.
+
+- [Releases](release-notes/about.html)

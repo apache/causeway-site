@@ -1,9 +1,7 @@
 Title: File-based Security
 
-{stub
-This page is a stub.
-}
+Security implementations provide authentication and authorization services. They do not providing services such as auditing, encryption, non-repudiation or confidentiality.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+The file implementation uses simple flat files to store user account/password (authentication) and permissions (authorization) data.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)

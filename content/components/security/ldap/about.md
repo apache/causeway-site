@@ -1,9 +1,7 @@
 Title: LDAP Security
 
-{stub
-This page is a stub.
-}
+Security implementations provide authentication and authorization services. They do not providing services such as auditing, encryption, non-repudiation or confidentiality.
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+The ldap implementation provides integration with an LDAP provider.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+- [Releases](release-notes/about.html)
