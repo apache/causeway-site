@@ -4,4 +4,6 @@ A 'programming model' means the support for various programming conventions and 
 
 The groovy progmodel implementation, which extends the default programming model provided with [core](../../../core/about.html) is intended to allow domain objects to be written in [Groovy](http://groovy.codehaus.org).
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

@@ -4,4 +4,6 @@ The xml object store provides a simple way to persist domain objects to file sto
 
 Note that the XML object store is suitable for single-user standalone apps, but is not intended for multi-user deployments.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

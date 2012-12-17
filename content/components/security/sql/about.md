@@ -4,4 +4,6 @@ Security implementations provide authentication and authorization services. They
 
 The sql implementation provides basic integration with a SQL database.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

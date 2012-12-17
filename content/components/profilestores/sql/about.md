@@ -4,4 +4,6 @@ A 'profile store' is a mechanism to store information about a current user of th
 
 The SQL profile store stores profiles in a number of RDBMS tables.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

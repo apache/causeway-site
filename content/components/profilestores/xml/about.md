@@ -4,4 +4,6 @@ A 'profile store' is a mechanism to store information about a current user of th
 
 The xml profile store provides a simple way to persist user profiles to file storage. The format of this file is a proprietary XML schema.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

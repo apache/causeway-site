@@ -4,4 +4,6 @@ The bdd viewer provides the ability to story-test the functionality in your doma
 
 Currently the only framework supported is [Concordion](http://concordion.org), though others may be supported in the future.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

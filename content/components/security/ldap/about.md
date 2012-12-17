@@ -4,4 +4,6 @@ Security implementations provide authentication and authorization services. They
 
 The ldap implementation provides integration with an LDAP provider.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

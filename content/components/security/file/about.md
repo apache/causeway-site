@@ -4,4 +4,6 @@ Security implementations provide authentication and authorization services. They
 
 The file implementation uses simple flat files to store user account/password (authentication) and permissions (authorization) data.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

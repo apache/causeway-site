@@ -6,4 +6,6 @@ It renders each domain object as an icon or a window and allows the user to mana
 
 The DnD viewer defines its own API to allow new views to be defined. These can be for entities, for entity properties (and action parameters), for entity collections, and for collections of entities.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).

@@ -10,4 +10,6 @@ Scimpi works by searching for a specific page to render the domain object, eg `C
 
 Customization therefore is accomplished by providing a specific page. The elements of this page can be any of the tags that Scimpi understands.
 
-- [Releases](release-notes/about.html).
+### Releases
+
+- See [release notes](release-notes/about.html).

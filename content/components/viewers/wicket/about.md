@@ -17,5 +17,7 @@ The wicket viewer allows you to customize the GUI in 3 ways:
 * third, you can register your own pages for a particular object type
 This allows you to render certain objects (eg a DashBoard object) using a completely customized web page if required.
 
-- [Releases](release-notes/about.html).
+### Releases
+
+- See [release notes](release-notes/about.html).
 

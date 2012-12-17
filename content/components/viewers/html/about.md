@@ -6,4 +6,6 @@ It renders each domain object or collection of domain objects as a web page, wit
 
 The HTML viewer offers only very limited customization opportunities; the CSS can be altered, but that's about it.
 
-- [Releases](release-notes/about.html)
+### Releases
+
+- See [release notes](release-notes/about.html).
