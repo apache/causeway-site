@@ -9,7 +9,7 @@ Title: Documentation
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
-- [Examples](getting-started/examples.html) (`1.0.0-SNAPSHOT`)
+- [Examples](getting-started/examples.html) (`master` branch)
 - [Editor templates](getting-started/editor-templates.html)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
@@ -66,7 +66,7 @@ Title: Documentation
 
 {group
 
-## Core `[1.0.0-RC1](core/release-notes/about.html)`
+## Core [1.0.0-RC1](core/release-notes/about.html)
 
 {row-even
 
@@ -113,7 +113,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Wicket ## `[1.0.0-RC1](components/viewers/wicket/release-notes/about.html)`
+###  Wicket [1.0.0-RC1](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html) [stub]
 
@@ -121,7 +121,7 @@ Title: Documentation
 
 {span-one-third
 
-###  RestfulObjects `[1.0.0-RC1](components/viewers/restfulobjects/release-notes/about.html)`
+###  RestfulObjects [1.0.0-RC1](components/viewers/restfulobjects/release-notes/about.html)
 
 - [About](components/viewers/restfulobjects/about.html) [stub]
 
@@ -129,7 +129,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Scimpi `0.2.0-incubating`
+###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
 - [About](components/viewers/scimpi/about.html) [stub]
 
@@ -141,7 +141,7 @@ Title: Documentation
 
 {span-one-third
 
-###  DnD `0.2.0-incubating`
+###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 
 - [About](components/viewers/dnd/about.html) [stub]
 
@@ -149,7 +149,7 @@ Title: Documentation
 
 {span-one-third
 
-### HTML `0.2.0-incubating`
+### HTML [0.2.0-incubating](components/viewers/html/release-notes/about.html)
 
 - [About](components/viewers/html/about.html) [stub]
 
@@ -157,7 +157,7 @@ Title: Documentation
 
 {span-one-third
 
-### JUnit `0.2.0-incubating`
+### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
 - [About](components/viewers/junit/about.html) [stub]
 
@@ -169,7 +169,7 @@ Title: Documentation
 
 {span-one-third
 
-### BDD (Concordion) `0.2.0-incubating`
+### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
 
 - [About](components/viewers/bdd/about.html) [stub]
 
@@ -193,7 +193,7 @@ Title: Documentation
 
 {span-one-third
 
-###  JDO `[1.0.0-RC1](components/objectstores/jdo/release-notes/about.html)`
+###  JDO [1.0.0-RC1](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html) [stub]
 - [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
@@ -201,14 +201,14 @@ Title: Documentation
 }
 
 {span-one-third
-###  NoSQL `0.2.0-incubating`
+###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html) [stub]
 
 }
 
 {span-one-third
-###  SQL `0.2.0-incubating`
+###  SQL [0.2.0-incubating](components/objectstores/sql/release-notes/about.html)
 
 - [About](components/objectstores/sql/about.html) [stub]
 
@@ -219,7 +219,7 @@ Title: Documentation
 {row-odd
 
 {span-one-third
-###XML `0.2.0-incubating`
+###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 
 - [About](components/objectstores/xml/about.html) [stub]
 
@@ -243,7 +243,7 @@ Title: Documentation
 
 {span-one-third
 
-### File `[1.0.0-RC1](components/security/file/release-notes/about.html)`
+### File [1.0.0-RC1](components/security/file/release-notes/about.html)
 
 - [About](components/security/file/about.html) [stub]
 
@@ -251,7 +251,7 @@ Title: Documentation
 
 {span-one-third
 
-### SQL `0.2.0-incubating`
+### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
 
 - [About](components/security/sql/about.html) [stub]
 
@@ -259,7 +259,7 @@ Title: Documentation
 
 {span-one-third
 
-### LDAP `0.2.0-incubating`
+### LDAP [0.2.0-incubating](components/security/ldap/release-notes/about.html)
 
 - [About](components/security/ldap/about.html) [stub]
 
@@ -277,7 +277,7 @@ Title: Documentation
 
 {span-one-third
 
-###XML `0.2.0-incubating`
+###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
 - [About](components/profilestores/xml/about.html) [stub]
 
@@ -285,7 +285,7 @@ Title: Documentation
 
 {span-one-third
 
-###SQL `0.2.0-incubating`
+###SQL [0.2.0-incubating](components/profilestores/sql/release-notes/about.html)
 
 - [About](components/profilestores/sql/about.html) [stub]
 
@@ -306,7 +306,7 @@ Title: Documentation
 
 {span-one-third
 
-###Groovy `0.2.0-incubating`
+###Groovy [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html) [stub]
 
@@ -314,7 +314,7 @@ Title: Documentation
 
 {span-one-third
 
-###Wrapper `0.2.0-incubating`
+###Wrapper [0.2.0-incubating](components/progmodels/wrapper/release-notes/about.html)
 
 - [About](components/progmodels/wrapper/about.html) [stub]
 
