@@ -115,7 +115,7 @@ Title: Documentation
 
 ###  Wicket [1.0.0-RC1](components/viewers/wicket/release-notes/about.html)
 
-- [About](components/viewers/wicket/about.html) [stub]
+- [About](components/viewers/wicket/about.html)
 
 }
 
@@ -123,7 +123,7 @@ Title: Documentation
 
 ###  RestfulObjects [1.0.0-RC1](components/viewers/restfulobjects/release-notes/about.html)
 
-- [About](components/viewers/restfulobjects/about.html) [stub]
+- [About](components/viewers/restfulobjects/about.html)
 
 }
 
@@ -131,7 +131,7 @@ Title: Documentation
 
 ###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
-- [About](components/viewers/scimpi/about.html) [stub]
+- [About](components/viewers/scimpi/about.html)
 
 }
 
@@ -143,7 +143,7 @@ Title: Documentation
 
 ###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 
-- [About](components/viewers/dnd/about.html) [stub]
+- [About](components/viewers/dnd/about.html)
 
 }
 
@@ -151,7 +151,7 @@ Title: Documentation
 
 ### HTML [0.2.0-incubating](components/viewers/html/release-notes/about.html)
 
-- [About](components/viewers/html/about.html) [stub]
+- [About](components/viewers/html/about.html)
 
 }
 
@@ -159,7 +159,7 @@ Title: Documentation
 
 ### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
-- [About](components/viewers/junit/about.html) [stub]
+- [About](components/viewers/junit/about.html)
 
 }
 
@@ -171,7 +171,7 @@ Title: Documentation
 
 ### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
 
-- [About](components/viewers/bdd/about.html) [stub]
+- [About](components/viewers/bdd/about.html)
 
 }
 
@@ -195,7 +195,7 @@ Title: Documentation
 
 ###  JDO [1.0.0-RC1](components/objectstores/jdo/release-notes/about.html)
 
-- [About](components/objectstores/jdo/about.html) [stub]
+- [About](components/objectstores/jdo/about.html)
 - [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
 
 }
@@ -203,14 +203,14 @@ Title: Documentation
 {span-one-third
 ###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
-- [About](components/objectstores/nosql/about.html) [stub]
+- [About](components/objectstores/nosql/about.html)
 
 }
 
 {span-one-third
 ###  SQL [0.2.0-incubating](components/objectstores/sql/release-notes/about.html)
 
-- [About](components/objectstores/sql/about.html) [stub]
+- [About](components/objectstores/sql/about.html)
 
 }
 
@@ -221,7 +221,7 @@ Title: Documentation
 {span-one-third
 ###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 
-- [About](components/objectstores/xml/about.html) [stub]
+- [About](components/objectstores/xml/about.html)
 
 }
 
@@ -245,7 +245,7 @@ Title: Documentation
 
 ### File [1.0.0-RC1](components/security/file/release-notes/about.html)
 
-- [About](components/security/file/about.html) [stub]
+- [About](components/security/file/about.html)
 
 }
 
@@ -253,7 +253,7 @@ Title: Documentation
 
 ### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
 
-- [About](components/security/sql/about.html) [stub]
+- [About](components/security/sql/about.html)
 
 }
 
@@ -261,7 +261,7 @@ Title: Documentation
 
 ### LDAP [0.2.0-incubating](components/security/ldap/release-notes/about.html)
 
-- [About](components/security/ldap/about.html) [stub]
+- [About](components/security/ldap/about.html)
 
 }
 
@@ -279,7 +279,7 @@ Title: Documentation
 
 ###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
-- [About](components/profilestores/xml/about.html) [stub]
+- [About](components/profilestores/xml/about.html)
 
 }
 
@@ -287,7 +287,7 @@ Title: Documentation
 
 ###SQL [0.2.0-incubating](components/profilestores/sql/release-notes/about.html)
 
-- [About](components/profilestores/sql/about.html) [stub]
+- [About](components/profilestores/sql/about.html)
 
 }
 
@@ -308,7 +308,7 @@ Title: Documentation
 
 ###Groovy [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
-- [About](components/progmodels/groovy/about.html) [stub]
+- [About](components/progmodels/groovy/about.html)
 
 }
 
@@ -316,7 +316,7 @@ Title: Documentation
 
 ###Wrapper [0.2.0-incubating](components/progmodels/wrapper/release-notes/about.html)
 
-- [About](components/progmodels/wrapper/about.html) [stub]
+- [About](components/progmodels/wrapper/about.html)
 
 }
 
