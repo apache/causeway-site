@@ -66,15 +66,11 @@ For the [scimpi](../component/viewer/scimpi/about.html), [html](../component/vie
 
 If running these viewers using the [WebServer](https://raw.github.com/apache/isis/master/core/webserver/src/main/java/org/apache/isis/core/webserver/WebServer.java), then the `deploymentType` can be overridden at the command line:
 
-<pre>
--t server_prototype
-</pre>
+    -t server_prototype
 
 or using the long form:
 
-<pre>
---type server_exploration
-</pre>
+    --type server_exploration
 
 Only `server_*`-style `deploymentType`s should be specified (it has a bearing on the way that Isis does its session management).
 
@@ -100,15 +96,11 @@ The Wicket mode is set in the usual way for a Wicket application:
 
 For the [dnd](../component/viewer/dnd/about.html) viewer, the `deploymentType` is specified at the command-line, for example:
 
-<pre>
--t prototype
-</pre>
+    -t prototype
 
 or using the long form:
 
-<pre>
---type exploration
-</pre>
+    --type exploration
 
 The default if not specified is `PROTOTYPE`.
 
@@ -122,8 +114,8 @@ For example:
 <pre>
 isis.authentication=ldap
 isis.authorization=file
-isis.persistence=datanucleus
-isis.profilestore=in-memory    # the default anyway
+isis.persistor=datanucleus           # ie object store
+isis.user-profile-store=in-memory    # ie profile store
 </pre>
 
 The available values are registered in [installer-registry.properties](https://raw.github.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  

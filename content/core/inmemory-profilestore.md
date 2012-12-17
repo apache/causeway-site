@@ -1,4 +1,4 @@
-Title: In-memory Object Store
+Title: In-memory Profile Store
 
 {stub
 This page is a stub.
