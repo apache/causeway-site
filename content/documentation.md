@@ -74,6 +74,7 @@ Title: Documentation
 
 ###  Applib & Runtime
 
+- [Deployment Types](core/deployment-type.html)
 - [Applib](core/applib.html)
 - [Core Metamodel](core/metamodel.html) [stub]
 - [Core Runtime](core/runtime.html) [stub]
