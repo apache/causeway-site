@@ -50,7 +50,7 @@ SINGLE_USER</td>
 </tr>
 </table>
 
-## Specifying the `deploymentType` explicitly
+## Specifying the deploymentType explicitly
 
 ### Scimpi, HTML, Restful Objects
 
