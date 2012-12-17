@@ -843,7 +843,11 @@ Close all JIRA tickets for the release, or moved to future releases if not yet a
 
 ### Generate Release Notes in JIRA
 
-Use JIRA to generate draft release notes using the procedure documented [here](http://confluence.atlassian.com/display/JIRA/Creating+Release+Notes).  If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
+Use JIRA to [generate release notes](http://confluence.atlassian.com/display/JIRA/Creating+Release+Notes):
+
+<img src="resources/jira-create-release-notes.png"></img>
+
+If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
 
 ### Update ISIS website with release notes
 
