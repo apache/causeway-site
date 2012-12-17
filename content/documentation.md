@@ -9,7 +9,7 @@ Title: Documentation
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
-- [Examples](getting-started/examples.html) (`0.3.1-SNAPSHOT`)
+- [Examples](getting-started/examples.html) (`1.0.0-SNAPSHOT`)
 - [Editor templates](getting-started/editor-templates.html)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
@@ -66,7 +66,7 @@ Title: Documentation
 
 {group
 
-## Core `0.2.0-incubating`
+## Core `[1.0.0-RC1](core/release-notes/about.html)`
 
 {row-even
 
@@ -113,7 +113,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Wicket `0.2.0-incubating`
+###  Wicket ## `[1.0.0-RC1](components/viewers/wicket/release-notes/about.html)`
 
 - [About](components/viewers/wicket/about.html) [stub]
 
@@ -121,7 +121,7 @@ Title: Documentation
 
 {span-one-third
 
-###  RestfulObjects `0.2.0-incubating`
+###  RestfulObjects `[1.0.0-RC1](components/viewers/restfulobjects/release-notes/about.html)`
 
 - [About](components/viewers/restfulobjects/about.html) [stub]
 
@@ -193,7 +193,7 @@ Title: Documentation
 
 {span-one-third
 
-###  JDO `no release`
+###  JDO `[1.0.0-RC1](components/objectstores/jdo/release-notes/about.html)`
 
 - [About](components/objectstores/jdo/about.html) [stub]
 - [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
@@ -243,7 +243,7 @@ Title: Documentation
 
 {span-one-third
 
-### File `0.2.0-incubating`
+### File `[1.0.0-RC1](components/security/file/release-notes/about.html)`
 
 - [About](components/security/file/about.html) [stub]
 
