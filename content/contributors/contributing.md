@@ -1,6 +1,8 @@
 Title: Contributing
 
-This page explains how you can contribute to Apache Isis.  Thanks for considering to help out, your contributions are appreciated!
+This page explains how you can contribute to Apache Isis.  You'll probably also want to read how to [set up your development environment](development-environment.html) and how to [build Isis](building-isis.html). 
+
+Thanks for considering to help out, your contributions are appreciated!
 
 ## Workflow
 
