@@ -162,4 +162,4 @@ In addition:
 
 ## What's Next
 
-The next thing to do is probably to build Isis; see [here](building-isis.html).
+Now you've set up your development environment the next thing to do is to [build Isis](building-isis.html).

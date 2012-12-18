@@ -8,7 +8,7 @@ Per this [ASF documentation](http://www.apache.org/dev/release.html), the legal 
 
 * a source zip file + corresponding signature (signed by me, which is in the ASF web of trust and in our KEYS file)
 * all source files have the Apache license (this is ensured by the running of the rat plugin prior to release; you could run it on the unzipped source)
-* all dependencies are appropriately licensed; see the DEPENDENCIES file which is automatically generated from the POMs plus the supplemental-models.xml file
+* all dependencies are appropriately licensed; see the `DEPENDENCIES` file which is automatically generated from the POMs plus the supplemental-models.xml file
 
 Note that the binaries are *not* an ASF release, they merely exist on the Maven central repo as a convenience.
 
