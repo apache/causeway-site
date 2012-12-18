@@ -46,9 +46,9 @@ Title: Documentation
 
 - [Contributing](contributors/contributing.html)
 - [Development Environment](contributors/development-environment.html)
+- [Building Isis](contributors/building-isis.html)
 - [Git Policy](contributors/git-policy.html)
 - [Git Cookbook](contributors/git-cookbook.html)
-- [Coding Conventions](contributors/coding-conventions.html)
 - [Versioning Policy](contributors/versioning-policy.html)
 
 ###  Committers

@@ -4,9 +4,9 @@ Title: Contributors
 
 - [Contributing](contributing.html)
 - [Development Environment](development-environment.html)
+- [Building Isis](building-isis.html)
 - [Git Policy](git-policy.html)
 - [Git Cookbook](git-cookbook.html)
-- [Coding Conventions](coding-conventions.html)
 - [Versioning Policy](versioning-policy.html)
 
 ###  Committers

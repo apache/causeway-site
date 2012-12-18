@@ -1,47 +1,38 @@
 Title: Development Environment
 
-#### Installing Git
+## Git
+
+The Isis source code lives in a git repo.
+
+### Installation
 
 The easiest place to get hold of command-line git is probably the [github download page](http://git-scm.com/downloads).
 
 On Windows, this also installs the rather good mSysGit Unix shell.  We recommend that you enable git for both the mSysgit and the Windows command prompt:
 
-<img src="resources/setting-up-git.png" width="400px"></img>
+<img src="resources/setting-up-git.png" width="350px"></img>
 
 Once git is installed, the two main command line tools to note are:
 
 - `git` command line tool
 - `gitk` for viewing the commit history
 
-Three commands in particular worth knowing:
-
-<pre>git help <i>command</i></pre>
-
-   will open the man page in your web browser
-
-<pre>git gui</pre>
-
-   will open up a basic GUI client to staging changes and making commits
-
-<pre>gitk --all</pre>
-
-   will open the commit history for all branches.  In particular, you should be able to see the local `master`, which branch you are working on (the `HEAD`), and also the last known position of the `master` branch from the central repo, called `origin/master`.
-
 If using Windows, note that github also have a dedicated [Windows client](https://help.github.com/articles/set-up-git).  With a little [hacking around](http://haacked.com/archive/2012/05/30/using-github-for-windows-with-non-github-repositories.aspx), it can also be made to work with non-github repositories.
 
 If using Mac, you might also want to check out Atlassian's [Sourcetree](http://www.atlassian.com/software/sourcetree/overview).
 
 
-
 #### Cloning the Isis repo and Configuring
 
-First, clone the Isis repo.  If you are **not a committer**, please see the [contributing](contributing.html) page for details on which repo to clone from.
+First, clone the Isis repo.
 
-**Committers**, meanwhile, should clone from the Apache read/write repo:
+If you are a **committer**, then clone from the Apache read/write repo:
 
 <pre>
 git clone https://git-wip-us.apache.org/repos/asf/isis.git
 </pre>
+
+If you are **not a committer**, please see the [contributing](contributing.html) page for details on which repo to clone from.
 
 You should then configure your user name and password; see also [Apache's git](https://git-wip-us.apache.org/) docs:
 
@@ -78,6 +69,23 @@ git config branch.autosetuprebase always
 
 If you don't use git outside of Apache, you can add the `--global` flag so that the above settings apply for all repos managed by git on your PC.
 
+### Getting help
+
+Three commands of git that in particular worth knowing:
+
+<pre>git help <i>command</i></pre>
+
+   will open the man page in your web browser
+
+<pre>git gui</pre>
+
+   will open up a basic GUI client to staging changes and making commits
+
+<pre>gitk --all</pre>
+
+   will open the commit history for all branches.  In particular, you should be able to see the local `master`, which branch you are working on (the `HEAD`), and also the last known position of the `master` branch from the central repo, called `origin/master`.
+
+
 For further reading, see:
 
 - [git config man page](http://www.kernel.org/pub/software/scm/git/docs/git-config.html)
@@ -95,22 +103,63 @@ Set `MAVEN_OPTS` environment variable:
 MAVEN_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=128m
 </pre>
 
+## Installing and Configuring Eclipse
 
+You can use any IDE to work with Isis, but most of the Isis committers tend to use Eclipse.
+
+Make sure you are using a version of Eclipse that includes both the `m2e` feature (Maven integration) and the `eGit` feature (Git integration).  Both 3.8 (2011) and 4.2 (2012) have these features bundled as part of the Java and JEE editions; or you can always install using `Help > Install New Software`.
+
+### Importing Projects
+
+Next thing to do is to import the Isis projects into your workspace.  This is done using `File > Import >Project`:
+
+<img src="resources/importing-projects-1.png" width="500px"></img>
+
+On the next page, specify the root directory where you cloned the Isis repo.  Eclipse will recursively find all the projects that make up Isis:
+
+<img src="resources/importing-projects-2.png" width="500px"></img>
+
+Hit `Finish`; Eclipse should automatically build the entire codebase.
+
+### Sharing Projects
+
+The next thing to do is to configure eGit so that you can use git commands within Eclipse.  This is done by selecting all the projects in the `Package Explorer`, then right clicking `Team > Share Project`:
+
+<img src="resources/sharing-projects-1.png" width="500px"></img>
+
+On the next page, choose the `Use or create repository in parent folder of project` checkbox:
+
+<img src="resources/sharing-projects-2.png" width="500px"></img>
+
+Hit `Finish` and you are done.
+
+### Coding Conventions
+
+Isis provides a number of Eclipse templates to help ensure that code is formatted according to our standards:
+
+- `Windows > Preferences > Java > Code Style > Code Templates` 
+ - Import [Apache-code-style-template.xml](resources/Apache-code-style-template.xml)
+- `Windows > Preferences > Java > Code Style > Formatter` 
+  - Import [Apache-code-style-formatting.xml](resources/Apache-code-style-formatting.xml)
+- `Windows > Preferences > Java > Code Style > Organize Imports` 
+  - Import [isis.importorder](resources/isis.importorder)
+- `Windows > Preferences > Java > Code Style > Clean Up` 
+  - Import [Apache-Isis-code-style-cleanup.xml](resources/Apache-Isis-code-style-cleanup.xml)
+  - (this performs both code formatting and organizing imports)
+
+In addition, you will probably want to import the Java editor templates, as described in the [getting started](../getting-started/editor-templates.html) section.
 
 <!--
-TODO: x-ref importing-projects
-TODO: x-ref sharing projects
+TODO: to add from the original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+
+In addition:
+
+- checkstyle, as per sec.Checkstyle
+- PMD, as per sec.PMD
+- findbugs, as per sec.FindBugs
 -->
 
 
+## What's Next
 
-
-## Building the Source Code
-
-To build the source code, simply go to the root directory and type:
-
-<pre>
-mvn clean install
-</pre>
-
-Alternatively, you can go to the root of any of the components (eg as documented [here](release-process.html) and build each individually.
+The next thing to do is probably to build Isis; see [here](building-isis.html).
