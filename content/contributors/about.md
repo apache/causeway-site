@@ -5,6 +5,7 @@ Title: Contributors
 - [Contributing](contributing.html)
 - [Development Environment](development-environment.html)
 - [Building Isis](building-isis.html)
+- [Recreating an archetype](contributors/recreating-an-archetype.html)
 - [Git Policy](git-policy.html)
 - [Git Cookbook](git-cookbook.html)
 - [Versioning Policy](versioning-policy.html)

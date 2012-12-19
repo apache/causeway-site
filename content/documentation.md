@@ -47,6 +47,7 @@ Title: Documentation
 - [Contributing](contributors/contributing.html)
 - [Development Environment](contributors/development-environment.html)
 - [Building Isis](contributors/building-isis.html)
+- [Recreating an archetype](contributors/recreating-an-archetype.html)
 - [Git Policy](contributors/git-policy.html)
 - [Git Cookbook](contributors/git-cookbook.html)
 - [Versioning Policy](contributors/versioning-policy.html)
