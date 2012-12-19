@@ -75,7 +75,7 @@ cd viewer-wicket
 mvn antrun:run
 </pre>
 
-# Check the archetype source code into git
+### Check the archetype source code into git
 
 Back in the *original session* (at `example/application/quickstart_wicket_restful_jdo`), we are ready to check the archetype source code into git.
 
