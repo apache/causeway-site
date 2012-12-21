@@ -40,6 +40,13 @@ cp target/docbkx/html/guide/isis-applib.html $SITE/content/core/guides/.
 cp target/docbkx/pdf/isis-applib.pdf         $SITE/content/core/guides/.
 </pre>
 
+Don't forget to commit the change in the `$SITE` directory:
+
+<pre>
+cd $SITE
+svn commit -m "isis site - updating applib docs"
+</pre>
+
 <!--
 <pre>
 cd $SITE/core/applib/docs
