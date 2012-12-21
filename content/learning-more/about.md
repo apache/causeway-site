@@ -4,7 +4,7 @@ Title: Learning More
 - [Presentations](presentations.html)
 - [Hexagonal Architecture](hexagonal-architecture.html)
 - [Books](books.html)
-- [Articles](articles.html)
+- [Articles and Presentations](articles-and-presentations.html)
 - [Tutorials](tutorials.html)
 - [Integration Testing](integtest.html)
 - [Richard Pawson's Naked Objects thesis](resources/Pawson-Naked-Objects-thesis.pdf)

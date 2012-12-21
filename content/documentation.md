@@ -34,7 +34,7 @@ Title: Documentation
 - [Hexagonal Architecture](learning-more/hexagonal-architecture.html) [stub]
 - [Isis Reference Documentation](learning-more/isis-reference-documentation.html)
 - [Books](learning-more/books.html)
-- [Articles](learning-more/articles.html) [stub]
+- [Articles and Presentations](learning-more/articles-and-presentations.html)
 - [Tutorials](learning-more/tutorials.html)
 - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
 
