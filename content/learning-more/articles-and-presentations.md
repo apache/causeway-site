@@ -1,10 +1,10 @@
 Title: Articles and Presentations
 
-Some articles and presentations relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've *highlighted* some of the better ones...
+Some articles and presentations relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've **highlighted** some of the better ones...
 
 2012
 
-* Article: *[Introducing Restful Objects (InfoQ 2012)](http://www.infoq.com/articles/Intro_Restful_Objects)*
+* Article, InfoQ: **[Introducing Restful Objects](http://www.infoq.com/articles/Intro_Restful_Objects)**
 * Presentation, Skillsmatter: [Restful Objects - A Hypermedia API For Domain Object Models](http://skillsmatter.com/podcast/java-jee/restful-objects)
 
 2011
