@@ -47,6 +47,8 @@ cd $SITE
 svn commit -m "isis site - updating applib docs"
 </pre>
 
+And once you've committed and promoted the site, make sure that the docs appear correctly, linked from the [applib page](../core/applib.html).
+
 <!--
 <pre>
 cd $SITE/core/applib/docs
