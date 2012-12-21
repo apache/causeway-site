@@ -16,7 +16,7 @@ Some articles and presentations relating to either Apache Isis (or its predecess
 
 * Presentation, Skillsmatter: [How to have your domain-driven design cake and eat it, too](http://skillsmatter.com/podcast/java-jee/have-your-ddd-cake-eat-it-too)
 * Article, InfoQ: [Fulfilling the Promise of MVC](http://www.infoq.com/articles/Nacked-MVC) (Naked Objects .NET)
-* Podcast, Hanselminutes: [Inside the Naked Objects Framework with Richard Pawson](http://www.hanselman.com/blog/HanselminutesPodcast233InsideTheNakedObjectsFrameworkWithRichardPawson.aspx)
+* Podcast, Hanselminutes: [Inside the Naked Objects Framework with Richard Pawson](http://www.hanselman.com/blog/HanselminutesPodcast233InsideTheNakedObjectsFrameworkWithRichardPawson.aspx) (Naked Objects .NET)
 
 2009
 
