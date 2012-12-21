@@ -1,9 +1,5 @@
 Title: Articles
 
-{stub
-This page is a stub.
-}
+Some articles relating to either Apache Isis or its predecessor, the Naked Objects framework:
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
-
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+* [Understanding Apache Isis (InfoQ 2010)](articles/understanding-isis-infoq-2010.html)

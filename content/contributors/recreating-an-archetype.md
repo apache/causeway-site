@@ -21,7 +21,12 @@ Finally, double check that the app is running satisfactorily.
 
 Before we generate the archetype, we clear out all non source code artifacts.
 
-To view the files/directories that needs removing, use:
+Start by doing the regular `mvn clean`:
+<pre>
+mvn clean
+</pre>
+
+To view the remaining files/directories that needs removing, use:
 <pre>
 for a in .project .classpath .settings bin target-ide; do find . -name $a -print; done
 find . -name "*.log" -print
@@ -36,10 +41,11 @@ find . -name "*.log" -exec rm {} \;
 Now we can create the archetype:
 
 <pre>
-mvn clean archetype:create-from-project
-groovy ../../../scripts/updateGeneratedArchetypeSources.groovy
+mvn archetype:create-from-project
+groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -v 1.2.3
 </pre>
 
+where `1.2.3` is the version of isis core that is to be the parent of the generated archetype.
 
 ### Test the archetype
 
@@ -112,7 +118,7 @@ If this a new archetype, then add a reference to the archetype to the root `pom.
 
 Finally, commit the changes:
 <pre>
-git commit -m "ISIS-nnn: updating archetype"
+git commit -am "ISIS-nnn: updating archetype"
 </pre>
 
 ### Setting up Eclipse IDE
