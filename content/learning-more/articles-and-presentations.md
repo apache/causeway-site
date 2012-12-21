@@ -33,7 +33,7 @@ Some articles and presentations relating to either Apache Isis (or its predecess
 
 * Article series, TheServerSide
   * Part 1 - [The Case for Naked Objects - Getting Back to the Object-Oriented Ideal](http://www.theserverside.com/news/1365562/Part-1-The-Case-for-Naked-Objects-Getting-Back-to-the-Object-Oriented-Ideal)
-  * **Part 2 [Challenging the Dominant Design of the 4-Layer Architecture](http://www.theserverside.com/news/1365568/Part-2-Challenging-the-Dominant-Design-of-the-4-Layer-Architecture)**
+  * **Part 2 - [Challenging the Dominant Design of the 4-Layer Architecture](http://www.theserverside.com/news/1365568/Part-2-Challenging-the-Dominant-Design-of-the-4-Layer-Architecture)**
   * Part 3 - [Write an application in Java and deploy it on .Net](http://www.theserverside.com/news/1365570/Part-3-Write-an-application-in-Java-and-deploy-it-on-Net)
   * Part 4 - [Modeling simultaneously in UML, Java, and User Perspectives](http://www.theserverside.com/news/1366868/Part-4-Modeling-simultaneously-in-UML-Java-and-User-Perspectives)
   * Part 5 - [Building Rich Internet Applications with Naked Objects](http://www.theserverside.com/news/1366871/Part-5-Building-Rich-Internet-Applications-with-Naked-Objects)
