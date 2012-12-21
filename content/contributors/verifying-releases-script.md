@@ -1,3 +1,5 @@
+Title: Verify releases using a script
+
 To save some time in verifying an Isis release we've assembled a script to automate the process. The script is tested on Mac OSX and should work on Linux too. Windows users can use Cygwin. It's **recommended** that you start this process in an empty directory:
 
 	$ mkdir ~/verify-isis-release
