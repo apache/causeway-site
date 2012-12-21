@@ -1,5 +1,4 @@
-Title: Verifying Releases
-
+Title: Verifying releases using a script
 Whenever a committer announces a vote on a release on the [dev mailing list](../support.html), it is the responsibility of the project's PMC to cast their vote on the release.  Any other ASF member may also vote.
 
 This page provides some guidance on what a voter is expected to verify before casting their vote.
