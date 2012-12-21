@@ -1,7 +1,8 @@
-Title: Verifying releases using a script
+Title: Verifying Releases
+
 Whenever a committer announces a vote on a release on the [dev mailing list](../support.html), it is the responsibility of the project's PMC to cast their vote on the release.  Any other ASF member may also vote.
 
-This page provides some guidance on what a voter is expected to verify before casting their vote.
+This page provides some guidance on what a voter is expected to verify before casting their vote. There is a [script](/contributors/verifying-releases-script.html) available but please read this page before executing that.
 
 Per this [ASF documentation](http://www.apache.org/dev/release.html), the legal requirements for an ASF release are:
 
@@ -55,7 +56,6 @@ Optionally, you can verify the binary releases (in the Maven staging repository)
 The [Apache Creadur](http://creadur.apache.org) project exists to provide a set of tools to ensure compliance with Apache's licensing standards.  The main release auditing tool, [Apache RAT](http://creadur.apache.org/rat), is used in the preparation of the release (as documented [here](release-process.html)).  Creadur's remaining tools are to support the verification process.
 
 At the time of writing, these additional tools are quite young and haven't been formally released; so to use them will take a little bit of work.  See [here](verifying-releases-using-creadur-tools.html) for more details.
-
 
 ## Casting a Vote
 
