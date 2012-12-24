@@ -19,7 +19,7 @@ Components:
 
 Archetypes:
 
-* [Quickstart Wicket/Restful/JDO](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip) [asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip.asc)
+* [quickstart_wicket_restful_jdo-archetype-1.0.0](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip) [asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip.asc)
 
 ## Source Code
 
