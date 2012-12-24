@@ -2,8 +2,6 @@ Title: Downloads
 
 ## Formal Releases
 
-**See also the [release matrix](release-matrix.html) for details of which components run against which versions of core.**
-
 The formal releases of Isis can be downloaded here:
 
 Core:
@@ -20,6 +18,8 @@ Components:
 Archetypes:
 
 * [quickstart_wicket_restful_jdo-archetype-1.0.0](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip) [asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip.asc)
+
+*See also the [release matrix](release-matrix.html) for details of which components run against which versions of core.*
 
 ## Source Code
 
