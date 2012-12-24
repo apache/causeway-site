@@ -768,9 +768,7 @@ Address the problems identified in the vote, and go again.
 
 From the Nexus pages, select the staging repository and select 'release' from the top menu.
 
-<!--
-TODO: adda screenshot
--->
+<img src="resources/nexus-release-1.png" width="600px"/>
 
 This moves the release artifacts into an Apache releases repository; from there they will be automatically moved to the Maven repository.
 
@@ -912,13 +910,13 @@ Because we release from a branch, the changes made in the branch (changes to `po
 <pre>
 git checkout master                           # update master with latest
 git pull
-git checkout prepare/isis-1.2.3               # apply branch commits onto master
-git rebase master
-git checkout master
-git branch -D prepare/isis-1.2.3              # branch no longer needed
+git merge prepare/isis-1.2.3                  # merge branch onto master
+git branch -d prepare/isis-1.2.3              # branch no longer needed
 git push origin --delete prepare/isis-1.2.3   # remote branch no longer needed
 </pre>
 
+If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.
+ 
 Next, do a sanity check that everything builds ok:
 
 <pre>
@@ -941,41 +939,6 @@ Finally, push the changes up to origin:
 git fetch    # check no new commits on origin/master
 git push
 </pre>
-
-
-
-<!--
-TODO: may need to reinstate something like this
-
-### Manually update versions to snapshot versions
-
-After the release there are a couple of locations where the version must be bumped up manually to the next SNAPSHOT version.
-
-#### Update `<version>` in archetype resources
-
-Open up the `src/main/resources/archetype-resources/pom.xml` in the `oai:quickstart-archetype` module, and update the `<isis.version>` property:
-
-<pre>
-&lt;properties&gt;
-    &lt;isis.version&gt;1.2.3-SNAPSHOT&lt;/isis.version&gt;
-&lt;/properties&gt;
-</pre>
-
-Then commit the `pom.xml` file.
-
-#### Update skin <version>
-
-Open up the `src/site/site.xml` in the `oai:isis` parent module, and update the `<version>`:
-
-<pre>
-&lt;skin&gt;
-    ...
-    &lt;version&gt;1.2.3-SNAPSHOT&lt;/version&gt;
-&lt;/skin&gt;
-</pre>
-
-Then commit the `site.xml` file.
--->
 
 
 <!--

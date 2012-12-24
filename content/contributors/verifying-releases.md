@@ -6,7 +6,7 @@ This page provides some guidance on what a voter is expected to verify before ca
 
 Per this [ASF documentation](http://www.apache.org/dev/release.html), the legal requirements for an ASF release are:
 
-* a source zip file + corresponding signature (signed by me, which is in the ASF web of trust and in our KEYS file)
+* a source zip file + corresponding signature (signed by the release manager, which is in the ASF web of trust and in our KEYS file)
 * all source files have the Apache license (this is ensured by the running of the rat plugin prior to release; you could run it on the unzipped source)
 * all dependencies are appropriately licensed; see the `DEPENDENCIES` file which is automatically generated from the POMs plus the supplemental-models.xml file
 
@@ -60,3 +60,4 @@ At the time of writing, these additional tools are quite young and haven't been 
 ## Casting a Vote
 
 When you have made the above checks (and any other checks you think may be relevant), cast your vote by replying to the email thread on the mailing list.  If you are casting `-1`, please provide details of the problem(s) you have found.
+

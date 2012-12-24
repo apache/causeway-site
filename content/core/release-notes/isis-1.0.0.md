@@ -74,6 +74,8 @@ Title: `isis-1.0.0`
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-286'>ISIS-286</a>] -         Make sure pending changes are stored before issuing a query
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-288'>ISIS-288</a>] -         During start up the configuration files are read in repeatedly making it confusing to track down configuration issues
+</li>
 </ul>
     
 <h2>        Bug

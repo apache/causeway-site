@@ -16,12 +16,11 @@ Title: Documentation
 
 ### Archetypes
 
-- [Quickstart Archetype](getting-started/quickstart-archetype.html) (`1.0.0-RC1`)
-<!--
-- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype-wicket-restful-jdo.html)
-- [Scimpi/NoSQL Archetype](getting-started/quickstart-archetype-scimpi-nosql.html)
-- [DnD/XML Archetype](getting-started/quickstart-archetype-dnd-xml.html)
--->
+- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) (`1.0.0`)
+
+### Releases
+
+- [Release Matrix](release-matrix.html)
 
 }
 
@@ -68,7 +67,7 @@ Title: Documentation
 
 {group
 
-## Core [1.0.0-RC2](core/release-notes/about.html)
+## Core [1.0.0](core/release-notes/about.html)
 
 {row-even
 
@@ -116,7 +115,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Wicket [1.0.0-RC2](components/viewers/wicket/release-notes/about.html)
+###  Wicket [1.0.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
 
@@ -124,7 +123,7 @@ Title: Documentation
 
 {span-one-third
 
-###  RestfulObjects [1.0.0-RC2](components/viewers/restfulobjects/release-notes/about.html)
+###  RestfulObjects [1.0.0](components/viewers/restfulobjects/release-notes/about.html)
 
 - [About](components/viewers/restfulobjects/about.html)
 
@@ -196,7 +195,7 @@ Title: Documentation
 
 {span-one-third
 
-###  JDO [1.0.0-RC2](components/objectstores/jdo/release-notes/about.html)
+###  JDO [1.0.0](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html)
 - [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
@@ -246,7 +245,7 @@ Title: Documentation
 
 {span-one-third
 
-### File [1.0.0-RC2](components/security/file/release-notes/about.html)
+### File [1.0.0](components/security/file/release-notes/about.html)
 
 - [About](components/security/file/about.html)
 

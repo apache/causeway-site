@@ -1,0 +1,84 @@
+Title: Release Matrix
+
+<table>
+<tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th span="1">Security</th>
+    <th span="1">Objectstores</th>
+    <th span="2">Viewers</th>
+</tr>
+<tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>Core</th>
+    <th>File</th>
+    <th>JDO</th>
+    <th>Wicket</th>
+    <th>Restful</th>
+</tr>
+<tr>
+    <td>Core</td>
+    <td>&nbsp;</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Security</td>
+    <td>File</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Objectstore</td>
+    <td>JDO</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Viewer</td>
+    <td>Wicket</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Viewer</td>
+    <td>Restful</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>Archetype</td>
+    <td>WRJ</td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+</tr>
+</table>
+
