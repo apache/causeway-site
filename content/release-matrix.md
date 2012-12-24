@@ -1,29 +1,22 @@
 Title: Release Matrix
 
+The table below lists dependencies between core, components and archetypes.
+
 <table>
 <tr>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
-    <th>&nbsp;</th>
-    <th span="1">Security</th>
-    <th span="1">Objectstores</th>
-    <th span="2">Viewers</th>
-</tr>
-<tr>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
     <th>Core</th>
-    <th>File</th>
-    <th>JDO</th>
-    <th>Wicket</th>
-    <th>Restful</th>
+    <th>File Sec</th>
+    <th>JDO OS</th>
+    <th>Wicket V</th>
+    <th>Restful V</th>
 </tr>
 <tr>
-    <td>Core</td>
+    <td><b>Core</b></td>
     <td>&nbsp;</td>
-    <td>1.0.0</td>
+    <td><b>1.0.0</b></td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -31,19 +24,9 @@ Title: Release Matrix
     <td>-</td>
 </tr>
 <tr>
-    <td>Security</td>
-    <td>File</td>
-    <td>1.0.0</td>
-    <td>1.0.0</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-</tr>
-<tr>
-    <td>Objectstore</td>
-    <td>JDO</td>
-    <td>1.0.0</td>
+    <td><b>Security</b></td>
+    <td><b>File</b></td>
+    <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
     <td>-</td>
@@ -51,9 +34,9 @@ Title: Release Matrix
     <td>-</td>
 </tr>
 <tr>
-    <td>Viewer</td>
-    <td>Wicket</td>
-    <td>1.0.0</td>
+    <td><b>Objectstore</b></td>
+    <td><b>JDO</b></td>
+    <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
     <td>-</td>
@@ -61,9 +44,19 @@ Title: Release Matrix
     <td>-</td>
 </tr>
 <tr>
-    <td>Viewer</td>
-    <td>Restful</td>
+    <td><b>Viewer</td>
+    <td><b>Wicket</b></td>
+    <td><b>1.0.0</b></td>
     <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td><b>Restful</b></td>
+    <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
     <td>-</td>
@@ -73,7 +66,7 @@ Title: Release Matrix
 <tr>
     <td>Archetype</td>
     <td>WRJ</td>
-    <td>1.0.0</td>
+    <td><b>1.0.0</b></td>
     <td>-</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
