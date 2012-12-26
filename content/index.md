@@ -1,4 +1,4 @@
-Isis graduated from the Apache incubator in October 2012; we [released](downloads.html) Isis Core 1.0.0 plus 4 supporting components in December 2012.
+Isis graduated from the Apache incubator in October 2012; we [released](download.html) Isis Core 1.0.0 plus 4 supporting components in December 2012.
 
-Our original [incubator website](http://incubator.apache.org/isis) will remain accessible until we have migrated all the relevant content.
+Our [documentation](documentation.html) page now has plenty of useful content.  You can also check out our original [incubator website](http://incubator.apache.org/isis).
 
