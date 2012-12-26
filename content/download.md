@@ -1,8 +1,12 @@
 Title: Downloads
 
+## Getting Started
+
+If you just want to get going quickly, see the Maven [archetype](getting-started/quickstart-archetype.html).
+
 ## Formal Releases
 
-The formal releases of Isis can be downloaded here:
+If you want to build Isis from formally released source tarballs, you can download from here:
 
 Core:
 
