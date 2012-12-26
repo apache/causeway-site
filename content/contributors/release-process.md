@@ -891,7 +891,7 @@ Enjoy!
 
 -The Isis team
 
-[1] http://isis.apache.org/core/release-notes-1.2.3.html
+[1] http://isis.apache.org/core/release-notes/isis-1.2.3.html
 [2] http://search.maven.org
 [3] http://isis.apache.org/download.html
 </pre>

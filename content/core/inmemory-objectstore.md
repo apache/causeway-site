@@ -1,9 +1,7 @@
-Title: In-memory Object Store
+Title: Core (in-memory) Object Store
 
 {stub
 This page is a stub.
 }
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
-
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+The core in-memory object store provides a simple implementation of the `ObjectStore` API, suitable for prototyping and unit testing.  Objects state is stored only in-memory and is not persisted between runs.

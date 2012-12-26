@@ -4,9 +4,13 @@ Title: Isis Reference Documentation
 Many of the links on this page refers to the 0.2.0-incubating release on the original incubator site.
 }
 
-### Documentation
+### TLP Documentation
 
-If you're just starting out with Isis, we recommend you look first at:
+We recommend that you look at the links from the [documentation](documentation.html) page first.
+
+### Incubator Documentation
+
+If you cannot find the information you want on the current website, then you may want to look at our old incubator website:
 
 - the applib documentation ([PDF](http://incubator.apache.org/isis/applib/docbkx/pdf/isis-applib.pdf), [HTML](http://incubator.apache.org/isis/applib/docbkx/html/guide/isis-applib.html))
 - the core documentation ([PDF](http://incubator.apache.org/isis/core/docbkx/pdf/isis-core.pdf), [HTML](http://incubator.apache.org/isis/core/docbkx/html/guide/isis-core.html))

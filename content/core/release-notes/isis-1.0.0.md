@@ -1,4 +1,4 @@
-Title: `isis-1.0.0`
+Title: isis-1.0.0
                 
 <h2>        New Feature
 </h2>

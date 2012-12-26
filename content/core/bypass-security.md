@@ -4,6 +4,6 @@ Title: Bypass Security
 This page is a stub.
 }
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
+The bypass security component consists of an implementation of both the `AuthenticationManager` and `AuthorizationManager` APIs, and are intended for prototyping use only.
 
-In the meantime you can access our original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").
+The authentication manager allows access with any credentials (in a sense, "bypassing" authentication), while the authorization manager provides access to all class members (in a sense, "bypassing" authorization).
