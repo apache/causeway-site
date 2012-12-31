@@ -58,3 +58,4 @@ To tell Isis to use your new programming model, use (something like):
 isis.reflector.facets=com.mycompany.myapp.isis.IsisProgrammingModel
 </pre>
 
+Again, the code that implements this logic is [JavaReflectorInstallerNoDecorators](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/progmodels/dflt/JavaReflectorInstallerNoDecorators.java).
