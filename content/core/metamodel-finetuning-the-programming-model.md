@@ -6,23 +6,23 @@ The core metamodel defines APIs and implementations for building the Isis metamo
 
 The description of each domain class consists of a number of elements:
 
-* [ObjectSpecification]()
+* [ObjectSpecification](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/spec/ObjectSpecification.java)
 
   Analogous to `java.lang.Class`; holds information about the class itself and holds collections of each of the three types of class' members (below);
 
-* [OneToOneAssociation]()
+* [OneToOneAssociation](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/spec/feature/OneToOneAssociation.java)
 
   Represents a class member that is a single-valued property of the class.  The property's type is either a reference to another entity, or is a value type.
 
-* [OneToManyAssociation]()
+* [OneToManyAssociation](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/spec/feature/OneToManyAssociation.java)
 
   Represents a class member that is a collection of references to other entities.  Note that Isis does not currently support collections of values.
 
-* [ObjectAction]()
+* [ObjectAction](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/spec/feature/ObjectAction.java)
 
   Represents a class member that is an operation that can be performed on the action.  Returns either a single value, a collection of entities, or is `void`.
 
-The metamodel is built up through the [ProgrammingModel](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/progmodel/ProgrammingModel.java), which defines an API for registering a set of [FacetFactory]()s.   Two special `FacetFactory` implementations - [PropertyAccessorFacetFactory](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/progmodel/facets/properties/accessor/PropertyAccessorFacetFactory.java) and [CollectionAccessorFacetFactory](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/progmodel/facets/collections/accessor/CollectionAccessorFacetFactory.java) - are used to identify the class members.  All the other `FacetFactory`s are responsible for installing [Facet](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/facetapi/Facet.java)s onto the metamodel elements.  There are many many such `Facet`s, and are used to do such things get values from properties or collections, modify properties or collections, invoke action, hide or disable class members, provide UI hints for class members, and so on.  In short, the `FacetFactory`s registered defines the Isis programming conventions.
+The metamodel is built up through the [ProgrammingModel](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/progmodel/ProgrammingModel.java), which defines an API for registering a set of [FacetFactory](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/facets/FacetFactory.java)s.  Two special `FacetFactory` implementations - [PropertyAccessorFacetFactory](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/progmodel/facets/properties/accessor/PropertyAccessorFacetFactory.java) and [CollectionAccessorFacetFactory](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/progmodel/facets/collections/accessor/CollectionAccessorFacetFactory.java) - are used to identify the class members.  Pretty much all the other `FacetFactory`s are responsible for installing [Facet](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/core/metamodel/facetapi/Facet.java)s onto the metamodel elements.  There are many many such `Facet`s, and are used to do such things get values from properties or collections, modify properties or collections, invoke action, hide or disable class members, provide UI hints for class members, and so on.  In short, the `FacetFactory`s registered defines the Isis programming conventions.
 
 ## Modifying the Programming Model
 
