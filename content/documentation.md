@@ -77,7 +77,7 @@ Title: Documentation
 
 - [Deployment Types](core/deployment-type.html)
 - [Applib](core/applib.html)
-- [Core Metamodel](core/metamodel.html) [stub]
+- [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html) [stub]
 - [Core Runtime](core/runtime.html) [stub]
 - [Webserver](core/webserver.html) [stub]
 
