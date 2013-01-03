@@ -864,6 +864,29 @@ Update the Isis CMS website:
 * Update the version listed on the [documentation page](../documentation.html).
 
 
+## Update website
+
+### Update Download page
+
+The [download page](../download.html) lists the current release of each component.  Update this as required.
+
+### Update Release Matrix
+
+The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
+
+### Update `DOAP` file
+
+The Isis site contains a [DOAP RDF](../doap_isis.rdf) file which provides a machine-parseable description of the project.  This file should be updated with details of the new release.
+
+For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
+
+<!--
+### Update CMS site with generated Maven site
+
+TODO: some sort of process required here...
+-->
+
+
 ## Announce the release
 
 Announce the release to dev@isis.apache.org mailing list.
@@ -931,6 +954,7 @@ mvn clean install
 
 The trunk holds a [STATUS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=STATUS;hb=HEAD) file which is a brief summary of the current status of the project.  Update this file with details of the release.
 
+
 ### Push changes
 
 Finally, push the changes up to origin:
@@ -941,9 +965,4 @@ git push
 </pre>
 
 
-<!--
-### Update CMS site with generated Maven site
-
-TODO: some sort of process required here...
--->
 
