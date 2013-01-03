@@ -30,10 +30,12 @@ The markmail archives span both our current mailing lists and our original incub
 
 ### Other Resources
 
+- [Source code repo](download.html)
 - [JIRA](https://issues.apache.org/jira/browse/ISIS)
 - [wiki](https://cwiki.apache.org/confluence/display/ISIS/Index)
 - [CI Builds](https://builds.apache.org/job/isis-framework-ubuntu)
 - [Fisheye](https://fisheye6.atlassian.com/changelog/isis)
+- [DOAP RDF file](doap_isis.rdf) (as per [Apache requirements](http://projects.apache.org/doap.html))
 <!--
 - [Apache ML archives](http://mail-archives.apache.org/mod_mbox/incubator-isis-users/)
 - [Gmane](http://blog.gmane.org/gmane.comp.apache.incubator.isis.users)

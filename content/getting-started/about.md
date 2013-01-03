@@ -1,8 +1,8 @@
 Title: Getting started
 
-- [Demo application](demo-app.html)
-- [Examples](examples.html)
-- [Quickstart archetype](quickstart-archetype.html)
+- [Demo App](demo-app.html) (`0.2.0-incubating`)
+- [Wicket/Restful/JDO Archetype](quickstart-archetype.html) (`1.0.0`)
 - [Editor templates](editor-templates.html)
-- [Cheat sheet](cheat-sheet.html)
+- [Cheat Sheet](cheat-sheet.html)
 - [Icons](icons.html)
+- [Other Examples](examples.html) (`master` branch)

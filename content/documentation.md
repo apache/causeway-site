@@ -9,14 +9,11 @@ Title: Documentation
 ### Getting started
 
 - [Demo App](getting-started/demo-app.html) (`0.2.0-incubating`)
-- [Examples](getting-started/examples.html) (`master` branch)
+- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) (`1.0.0`)
 - [Editor templates](getting-started/editor-templates.html)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
-
-### Archetypes
-
-- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) (`1.0.0`)
+- [Other Examples](getting-started/examples.html) (`master` branch)
 
 ### Releases
 
