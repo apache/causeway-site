@@ -866,19 +866,15 @@ Update the Isis CMS website:
 
 ## Update website
 
-### Update Download page
+The website must be updated in several places:
 
-The [download page](../download.html) lists the current release of each component.  Update this as required.
+* The [download page](../download.html) lists the current release of each component.  Update this as required.
 
-### Update Release Matrix
+* The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
 
-The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
+* The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.
 
-### Update `DOAP` file
-
-The Isis site contains a [DOAP RDF](../doap_isis.rdf) file which provides a machine-parseable description of the project.  This file should be updated with details of the new release.
-
-For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
+  For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
 
 <!--
 ### Update CMS site with generated Maven site
