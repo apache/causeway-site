@@ -1,5 +1,8 @@
 Title: Downloads
 
+Apache Isis is a framework for rapidly developing domain-driven apps in Java.
+Write your business logic in entities, domain services and repositories, and the framework dynamically (at runtime) generates a representation of that domain model as a webapp or as a RESTful API.  Use for prototyping or production.
+
 ## Getting Started
 
 If you just want to get going quickly, see the Maven [archetype](getting-started/quickstart-archetype.html).
