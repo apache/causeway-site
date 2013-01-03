@@ -26,13 +26,9 @@ Archetypes:
 
 * [quickstart_wicket_restful_jdo-archetype-1.0.0](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip) [asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.0-source-release.zip.asc)
 
-## Release Matrix
-
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 
 ## Verifying Releases
-
-### Verifying Releases
 
 It is essential that you verify the integrity of any downloaded files using
 the PGP or MD5 signatures.  For more information on signing artifacts and
