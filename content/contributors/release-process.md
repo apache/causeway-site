@@ -82,7 +82,7 @@ During the release process the `maven-deploy-plugin` uploads the generated artif
 where `xxxxxxx` and `yyyyyyy` are your Apache LDAP username and password.   For more information, see these [ASF docs](http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env).
 
 {note
-It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://incubator.apache.org/bval/cwiki/release-setup.html).
+It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://bval.apache.org/release-setup.html).
 }
 
 

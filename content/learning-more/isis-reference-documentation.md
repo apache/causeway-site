@@ -1,12 +1,13 @@
 Title: Isis Reference Documentation
 
 {stub
-Many of the links on this page refers to the 0.2.0-incubating release on the original incubator site.
+This page previously referred to documentation on Isis' incubator website.  However, as of 1 Jan 2013 the old website has been removed.
 }
 
+<!--
 ### TLP Documentation
 
-We recommend that you look at the links from the [documentation](documentation.html) page first.
+We recommend that you look at the links from the [documentation](documentation.html) page.
 
 ### Incubator Documentation
 
@@ -63,3 +64,5 @@ Thereafter, we've broken Isis documentation out by component. That means that an
 <td>viewers:bdd</td><td>BDD Integration</td><td>Acceptance Testing using BDD Frameworks</td><td><a href="../testing/bdd.html">see here</a></td><td><a href="http://incubator.apache.org/isis/viewer/bdd/docbkx/pdf/isis-bdd-integration.pdf">PDF</a>&nbsp;<a href="http://incubator.apache.org/isis/viewer/bdd/docbkx/html/guide/isis-bdd-integration.html">HTML</a></td><td>Done</td><td>Dan</td>
 </tr>
 </table>
+
+-->

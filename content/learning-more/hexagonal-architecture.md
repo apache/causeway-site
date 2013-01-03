@@ -4,8 +4,7 @@ Title: Hexagonal Architecture
 This page is a stub.
 }
 
-Isis graduated from the Apache incubator in October 2012; we are currently setting ourselves up as a top-level project.
-
+Apache Isis follows the *hexagonal architecture* pattern (also known as the *onion architecture* or *ports-and-adapters* architecture).  It places the domain model in the middle, with presentation, persistence and other services dependent upon the domain model.
 
 
 <!--
