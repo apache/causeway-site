@@ -30,6 +30,42 @@ Archetypes:
 
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 
+## Verifying Releases
+
+### Verifying Releases
+
+It is essential that you verify the integrity of any downloaded files using
+the PGP or MD5 signatures.  For more information on signing artifacts and
+why we do it, check out the
+[Release Signing FAQ](http://www.apache.org/dev/release-signing.html).
+
+The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=KEYS;hb=master) as well as the asc signature file for the artifact.  Make sure you get these files from the [main distribution directory](http://www.apache.org/dist/isis/), rather than from a mirror.
+
+Then verify the signatures using:
+
+    $ pgpk -a KEYS
+    $ pgpv bval-parent-0.4-source-release.zip.asc
+
+or
+
+    $ pgp -ka KEYS
+    $ pgp bval-parent-0.4-source-release.zip.asc
+
+or
+
+    $ gpg --import KEYS
+    $ gpg --verify bval-parent-0.4-source-release.zip.asc
+
+Alternatively, you can verify the MD5 signature on the files. A Unix/Linux
+program called `md5` or `md5sum` is included in most distributions.  It is
+also available as part of
+[GNU Textutils](http://www.gnu.org/software/textutils/textutils.html).
+Windows users can get binary md5 programs from these (and likely other) places:
+
+ * <http://www.md5summer.org/>
+ * <http://www.fourmilab.ch/md5/>
+ * <http://www.pc-tools.net/win32/md5sums/>
+
 
 ## Source Code
 
