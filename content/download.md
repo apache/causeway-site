@@ -39,18 +39,22 @@ The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](
 
 Then verify the signatures using:
 
-    $ pgpk -a KEYS
-    $ pgpv bval-parent-0.4-source-release.zip.asc
+<pre>
+pgpk -a KEYS
+pgpv isis-1.0.0-source-release.zip.asc
+</pre>
 
 or
-
-    $ pgp -ka KEYS
-    $ pgp bval-parent-0.4-source-release.zip.asc
+<pre>
+pgp -ka KEYS
+pgp isis-1.0.0-source-release.zip.asc
+</pre>
 
 or
-
-    $ gpg --import KEYS
-    $ gpg --verify bval-parent-0.4-source-release.zip.asc
+<pre>
+gpg --import KEYS
+gpg --verify isis-1.0.0-source-release.zip.asc
+</pre>
 
 Alternatively, you can verify the MD5 signature on the files. A Unix/Linux
 program called `md5` or `md5sum` is included in most distributions.  It is
