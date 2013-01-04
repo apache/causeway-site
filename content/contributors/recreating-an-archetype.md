@@ -52,7 +52,7 @@ where `1.2.3` is the version of isis core that is to be the parent of the genera
 First, build the archetype:
 
 <pre>
-cd target/generated-resources/archetype
+cd target/generated-sources/archetype
 mvn clean install
 cd ../../..
 </pre>
@@ -77,7 +77,7 @@ mvn clean install
 
 And test.  For example:
 <pre>
-cd viewer-wicket
+cd viewer-webapp
 mvn antrun:run
 </pre>
 
@@ -91,6 +91,8 @@ If this is an update to an existing archetype:
 git rm -rf ../../archetype/quickstart_wicket_restful_jdo
 rm -rf ../../archetype/quickstart_wicket_restful_jdo
 </pre>
+
+Make sure that the `archetype/quickstart_wicket_restful_jdo` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
 
 Then, copy over the generated source of the archetype:
 

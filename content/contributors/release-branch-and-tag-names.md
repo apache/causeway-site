@@ -15,15 +15,51 @@ The table below shows the tag name to use when running the `release:prepare` com
 <table>
 <tr>
 <th>Releasable module</th>
-<th>Branch name to use while readying the release locally</th>
-<th>Tag name pushed.</th>
+    <th>Branch name to use while readying the release locally</th>
+    <th>Tag name for <tt>release:prepare</tt></th>
+    <th>Tag name manually pushed.</th>
 </tr>
-<tr><td>core</td><td>prepare/isis-x.y.z</td><td>isis-x.y.z</td></tr>
-<tr><td>objectstore/xxx</td><td>prepare/isis-objectstore-xxx-x.y.z</td><td>isis-objectstore-xxx-x.y.z</td></tr>
-<tr><td>profilestore/xxx</td><td>prepare/isis-profilestore-xxx-x.y.z</td><td>isis-profilestore-xxx-x.y.z</td></tr>
-<tr><td>progmodel/xxx</td><td>prepare/isis-progmodel-xxx-x.y.z</td><td>isis-progmodel-xxx-x.y.z</td></tr>
-<tr><td>security/xxx</td><td>prepare/isis-security-xxx-x.y.z</td><td>isis-security-xxx-x.y.z</td></tr>
-<tr><td>viewer/xxx</td><td>prepare/isis-viewer-xxx-x.y.z</td><td>isis-viewer-xxx-x.y.z</td></tr>
+<tr>
+    <td>core</td>
+    <td>prepare/isis-x.y.z-RCn</td>
+    <td>isis-x.y.z</td>
+    <td>isis-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>objectstore/xxx</td>
+    <td>prepare/isis-objectstore-xxx-x.y.z-RCn</td>
+    <td>isis-objectstore-xxx-x.y.z</td>
+    <td>isis-objectstore-xxx-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>profilestore/xxx</td>
+    <td>prepare/isis-profilestore-xxx-x.y.z-RCn</td>
+    <td>isis-profilestore-xxx-x.y.z</td>
+    <td>isis-profilestore-xxx-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>progmodel/xxx</td>
+    <td>prepare/isis-progmodel-xxx-x.y.z-RCn</td>
+    <td>isis-progmodel-xxx-x.y.z</td>
+    <td>isis-progmodel-xxx-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>security/xxx</td>
+    <td>prepare/isis-security-xxx-x.y.z-RCn</td>
+    <td>isis-security-xxx-x.y.z</td>
+    <td>isis-security-xxx-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>viewer/xxx</td>
+    <td>prepare/isis-viewer-xxx-x.y.z-RCn</td>
+    <td>isis-viewer-xxx-x.y.z</td>
+    <td>isis-viewer-xxx-x.y.z-RCn</td>
+</tr>
+<tr>
+    <td>example/archetype/quickstart_aaa_bbb_ccc</td>
+    <td>prepare/quickstart_abc-archetype-x.y.z-RCn</td>
+    <td>quickstart_abc-archetype-x.y.z</td></tr>
+    <td>quickstart_abc-archetype-x.y.z-RCn</td></tr>
 </table>
 
 where `xxx` represents a specific component or archetype being released.

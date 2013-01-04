@@ -97,10 +97,10 @@ git pull --ff-only
 
 Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](versioning-policy.html).
 
-Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare a release 1.2.3 of `core`, use:
+Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare release candidate #1 for a release 1.2.3 of `core`, use:
 
 <pre>
-git checkout -b prepare/isis-1.2.3
+git checkout -b prepare/isis-1.2.3-RC1
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -464,7 +464,7 @@ For the first, release version, you can generally accept the default; Maven just
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.3: :
 </pre>
 
-For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above.  This is the same as our [standard](release-branch-and-tag-names.html):
+For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*.  This is the same as our [standard](release-branch-and-tag-names.html):
 <pre>
 What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.2.3: :
 </pre>
@@ -625,8 +625,8 @@ Finally, push both the branch and the tag created locally to the central origin 
 
 To push the branch, for example:
 <pre>
-git checkout prepare/isis-1.2.3
-git push -u origin prepare/isis-1.2.3
+git checkout prepare/isis-1.2.3-RC1
+git push -u origin prepare/isis-1.2.3-RC1
 </pre>
 
 To push the tag, with the `-RCn` suffix, for example:
@@ -735,13 +735,13 @@ If the vote has been unsuccessful, then:
 * delete the remote branch, for example:
 
 <pre>
-  git push origin --delete prepare/isis-1.2.3
+  git push origin --delete prepare/isis-1.2.3-RC1
 </pre>
 
 * delete your local branch, for example:
 
 <pre>
-  git branch -D prepare/isis-1.2.3
+  git branch -D prepare/isis-1.2.3-RC1
 </pre>
 
 * delete the remote origin server's tag, for example:
@@ -927,11 +927,11 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
 <pre>
-git checkout master                           # update master with latest
+git checkout master                               # update master with latest
 git pull
-git merge prepare/isis-1.2.3                  # merge branch onto master
-git branch -d prepare/isis-1.2.3              # branch no longer needed
-git push origin --delete prepare/isis-1.2.3   # remote branch no longer needed
+git merge prepare/isis-1.2.3-RC1                  # merge branch onto master
+git branch -d prepare/isis-1.2.3-RC1              # branch no longer needed
+git push origin --delete prepare/isis-1.2.3-RC1   # remote branch no longer needed
 </pre>
 
 If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.

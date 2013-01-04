@@ -8,7 +8,7 @@ Pull down latest, create branch:
 <pre>
 git checkout master
 git pull --ff-only
-git checkout -b prepare/isis-1.2.3
+git checkout -b prepare/isis-1.2.3-RC1
 </pre>
 
 Sanity check:
@@ -17,6 +17,14 @@ rm -rf ~/.m2/repository/org/apache/isis
 mvn clean install -o
 </pre>
 
+
+## Switch to correct directory
+
+Switch to the directory containing the (parent of the) artifact(s) to be released, eg:
+
+<pre>
+cd core
+</pre>
 
 ## Check code
 
