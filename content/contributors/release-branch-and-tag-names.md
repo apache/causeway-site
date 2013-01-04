@@ -15,7 +15,7 @@ The table below shows the tag name to use when running the `release:prepare` com
 <table>
 <tr>
 <th>Releasable module</th>
-    <th>Branch name to use while readying the release locally</th>
+    <th>Branch name to use while <br/>readying the release locally</th>
     <th>Tag name for <tt>release:prepare</tt></th>
     <th>Tag name manually pushed.</th>
 </tr>
