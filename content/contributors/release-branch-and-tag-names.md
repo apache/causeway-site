@@ -58,8 +58,8 @@ The table below shows the tag name to use when running the `release:prepare` com
 <tr>
     <td>example/archetype/<br/>&nbsp;&nbsp;quickstart_aaa_bbb_ccc</td>
     <td>prepare/quickstart_abc-archetype-x.y.z-RCn</td>
-    <td>quickstart_abc-archetype-x.y.z</td>
-    <td>quickstart_abc-archetype-x.y.z-RCn</td>
+    <td>quickstart_aaa_bbb_ccc-archetype-x.y.z</td>
+    <td>quickstart_aaa_bbb_ccc-archetype-x.y.z-RCn</td>
 </tr>
 </table>
 
