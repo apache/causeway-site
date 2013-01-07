@@ -202,6 +202,7 @@ Title: Documentation
 ###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html)
+- [Configuring the SQL OS](components/security/sql/configuring-the-sql-os-objectstore-with-the-quickstart-archetype.html)
 
 }
 
@@ -272,7 +273,6 @@ Title: Documentation
 ### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
 
 - [About](components/security/sql/about.html)
-- [Configuring the SQL OS](components/security/sql/configuring-the-sql-os-objectstore-with-the-quickstart-archetype.html)
 
 }
 
