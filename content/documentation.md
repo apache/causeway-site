@@ -249,9 +249,9 @@ Title: Documentation
 
 {span-one-third
 
-### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
+### Shiro (not released)
 
-- [About](components/security/sql/about.html)
+- [About](components/security/shiro/about.html)
 
 }
 
@@ -265,13 +265,33 @@ Title: Documentation
 
 }
 
+{row-odd
+
+{span-one-third
+
+### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
+
+- [About](components/security/sql/about.html)
+
+}
+
+{span-one-third
+
+}
+
+{span-one-third
+
+}
+
+}
+
 }
 
 {group
 
 ## Profile Stores
 
-{row-odd
+{row-even
 
 {span-one-third
 
@@ -300,7 +320,7 @@ Title: Documentation
 
 ## Programming Models
 
-{row-even
+{row-odd
 
 {span-one-third
 
