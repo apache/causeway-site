@@ -847,7 +847,7 @@ Use JIRA to [generate release notes](http://confluence.atlassian.com/display/JIR
 
 If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
 
-### Update ISIS website with release notes
+### Update ISIS website
 
 Update the Isis CMS website:
 
@@ -859,18 +859,14 @@ Update the Isis CMS website:
 
 * On the core/component's about page, provide a link to release notes providing details of the contents of the release.
 
-* Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/dist/isis](http://dist.apache.org/dist/isis))
-
 * Update the version listed on the [documentation page](../documentation.html).
 
-
-## Update website
-
-The website must be updated in several places:
-
-* The [download page](../download.html) lists the current release of each component.  Update this as required.
-
 * The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
+
+
+And once the release has been approved:
+
+* Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/dist/isis](http://dist.apache.org/dist/isis))
 
 * The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.
 

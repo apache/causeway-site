@@ -8,15 +8,17 @@ The table below lists dependencies between core, components and archetypes.
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>Core</th>
+    <th>Shiro Sec</th>
     <th>File Sec</th>
     <th>JDO OS</th>
-    <th>Wicket V</th>
-    <th>Restful V</th>
+    <th>Wicket Vwr</th>
+    <th>Restful Vwr</th>
 </tr>
 <tr>
     <td><b>Core</b></td>
     <td>&nbsp;</td>
     <td><b>1.0.0</b></td>
+    <td>-</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -32,12 +34,25 @@ The table below lists dependencies between core, components and archetypes.
     <td>-</td>
     <td>-</td>
     <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><b>Security</b></td>
+    <td><b>Shiro</b></td>
+    <td><b>1.0.0</b></td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
 </tr>
 <tr>
     <td><b>Objectstore</b></td>
     <td><b>JDO</b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
+    <td>-</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -52,6 +67,7 @@ The table below lists dependencies between core, components and archetypes.
     <td>-</td>
     <td>-</td>
     <td>-</td>
+    <td>-</td>
 </tr>
 <tr>
     <td>&nbsp;</td>
@@ -62,11 +78,24 @@ The table below lists dependencies between core, components and archetypes.
     <td>-</td>
     <td>-</td>
     <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><b>Archetype</b></td>
+    <td><b>WRJ</b></td>
+    <td><b>1.0.1-RC1</b></td>
+    <td>-</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
 </tr>
 <tr>
     <td><b>Archetype</b></td>
     <td><b>WRJ</b></td>
     <td><b>1.0.0</b></td>
+    <td>-</td>
     <td>-</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
