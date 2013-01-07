@@ -250,7 +250,7 @@ Title: Documentation
 
 {span-one-third
 
-### Shiro (not released)
+### Shiro [1.0.0-RC1](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
 
