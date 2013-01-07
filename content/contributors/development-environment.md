@@ -160,6 +160,18 @@ In addition:
 -->
 
 
+### Whitespace
+
+It's a good idea to configure Eclipse's editors so that they highlight any accidental use of tabs instead of spaces, using:
+
+* `Windows > Preferences > General > Editor > Text Editors`
+* and then fine-tune the `whitespace characters`:
+
+<img src="resources/eclipse-preferences-white-space-1.png" width="500px"></img>
+
+
+<img src="resources/eclipse-preferences-white-space-2.png" width="400px"></img>
+
 ## What's Next
 
 Now you've set up your development environment the next thing to do is to [build Isis](building-isis.html).

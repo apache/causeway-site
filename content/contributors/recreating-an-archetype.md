@@ -15,6 +15,12 @@ Make sure that the app's `pom.xml`:
 - has the correct `-SNAPSHOT` version
 - references *released* versions of Isis core and the other components
 
+Check for and fix any missing license header notices:
+<pre>
+mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
+for a in `find . -name rat.txt -print`; do grep '!???' $a; done
+</pre>
+
 Finally, double check that the app is running satisfactorily.  
 
 ### Create the archetype
