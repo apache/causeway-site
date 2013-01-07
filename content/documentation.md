@@ -42,8 +42,6 @@ Title: Documentation
 - [Contributing](contributors/contributing.html)
 - [Development Environment](contributors/development-environment.html)
 - [Building Isis](contributors/building-isis.html)
-- [Recreating an archetype](contributors/recreating-an-archetype.html)
-- [Updating the applib docs](contributors/updating-the-applib-docs.html)
 - [Git Policy](contributors/git-policy.html)
 - [Git Cookbook](contributors/git-cookbook.html)
 - [Versioning Policy](contributors/versioning-policy.html)
@@ -51,6 +49,8 @@ Title: Documentation
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
+- [Updating the applib docs](contributors/updating-the-applib-docs.html)
+- [Recreating an archetype](contributors/recreating-an-archetype.html)
 - [Snapshot process](contributors/snapshot-process.html)
 - [Release process](contributors/release-process.html)
 - [Release branch and tag names](contributors/release-branch-and-tag-names.html)
