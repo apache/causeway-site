@@ -868,7 +868,7 @@ And once the release has been approved:
 
 * Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/dist/isis](http://dist.apache.org/dist/isis))
 
-* The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.
+* The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.  Validate using the [W3C RDF Validator](http://www.w3.org/RDF/Validator/) service.
 
   For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
 

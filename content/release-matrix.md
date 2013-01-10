@@ -83,7 +83,7 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <td><b>Archetype</b></td>
     <td><b>WRJ</b></td>
-    <td><b>1.0.1-RC1</b></td>
+    <td><b>1.0.1</b></td>
     <td>-</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
