@@ -8,14 +8,14 @@ The table below lists dependencies between core, components and archetypes.
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>Core</th>
-    <th>Shiro Sec</th>
-    <th>File Sec</th>
-    <th>JDO OS</th>
-    <th>Wicket Vwr</th>
-    <th>Restful Vwr</th>
+    <th>Shiro<br/>Security</th>
+    <th>File<br/>Security</th>
+    <th>JDO<br/>Objectstore</th>
+    <th>Wicket<br/>Viewer</th>
+    <th>Restful<br/>Viewer</th>
 </tr>
 <tr>
-    <td><b>Core</b></td>
+    <td><b><a href="core/about.html">Core</a></b></td>
     <td>&nbsp;</td>
     <td><b>1.0.0</b></td>
     <td>-</td>
@@ -27,7 +27,7 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td><b>Security</b></td>
-    <td><b>File</b></td>
+    <td><b><a href="components/security/file/about.html">File</a></b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -38,7 +38,7 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td><b>Security</b></td>
-    <td><b>Shiro</b></td>
+    <td><b><a href="components/security/shiro/about.html">Shiro</a></b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -49,7 +49,7 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td><b>Objectstore</b></td>
-    <td><b>JDO</b></td>
+    <td><b><a href="components/objectstores/jdo/about.html">JDO</a></b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -60,7 +60,7 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td><b>Viewer</td>
-    <td><b>Wicket</b></td>
+    <td><b><a href="components/viewers/wicket/about.html">Wicket</a></b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -71,7 +71,7 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td>&nbsp;</td>
-    <td><b>Restful</b></td>
+    <td><b><a href="components/viewers/restfulobjects/about.html">Restful</a></b></td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -82,21 +82,10 @@ The table below lists dependencies between core, components and archetypes.
 </tr>
 <tr>
     <td><b>Archetype</b></td>
-    <td><b>WRJ</b></td>
+    <td><b><a href="getting-started/quickstart-archetype.html">WRJ</a></b></td>
     <td><b>1.0.1</b></td>
     <td>-</td>
     <td>1.0.0</td>
-    <td>1.0.0</td>
-    <td>1.0.0</td>
-    <td>1.0.0</td>
-    <td>1.0.0</td>
-</tr>
-<tr>
-    <td><b>Archetype</b></td>
-    <td><b>WRJ</b></td>
-    <td><b>1.0.0</b></td>
-    <td>-</td>
-    <td>-</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
