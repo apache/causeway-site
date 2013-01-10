@@ -2,7 +2,7 @@ Title: Shiro Security
 
 Security implementations provide authentication and authorization services. They do not providing services such as auditing, encryption, non-repudiation or confidentiality.
 
-The shiro implementation provides integration with [Apache Shiro](http://shiro.apache.org].
+The shiro implementation provides integration with [Apache Shiro](http://shiro.apache.org).
 
 ### Releases
 
@@ -15,6 +15,19 @@ The [quickstart archetype](../../../getting-started/quickstart-archetype.html) i
 Shiro itself reads this file and is bootstrapped using the following settings to be added near the top of the `WEB-INF/web.xml` file:
 
 <pre>
+&lt;listener&gt;
+    &lt;listener-class&gt;org.apache.shiro.web.env.EnvironmentLoaderListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+
+&lt;filter&gt;
+    &lt;filter-name&gt;ShiroFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.apache.shiro.web.servlet.ShiroFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;ShiroFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
 </pre>
 
 ### Format of Permissions
@@ -52,7 +65,8 @@ com.mycompany.myapp                          # ditto
 </pre>
 
 
+<!--
 ### Configuring 
 
 - [Using Apache DS for authentication](using-apache-ds-for-authentication.html)
-
+-->
