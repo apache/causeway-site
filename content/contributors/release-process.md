@@ -886,7 +886,7 @@ Announce the release to dev@isis.apache.org mailing list.
 For example, for a release of Apache Isis Core, use the following subject:
 
 <pre>
-Subject: [ANN] Apache Isis version 1.2.3 Released
+[ANN] Apache Isis version 1.2.3 Released
 </pre>
 
 And use the following body (summarizing the main points as required):
