@@ -42,7 +42,7 @@ where `myapp` is the `artifactId` entered above.
 
 ### Running the App
 
-The `quickstart_wicket_restful_jdo` archetype generates a single WAR files, configured to run both the [wicket viewer](../components/viewers/wicket/about.html) and the [restfulobjects viewer](../components/viewers/wicket/about.html).  The archetype also configures the [JDO objectstore](../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
+The `quickstart_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../components/viewers/wicket/about.html) and the [Restful Objects viewer](../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
 
 Once you've built the app, you can run the WAR in a variety of ways. 
 
