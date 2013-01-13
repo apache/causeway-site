@@ -15,5 +15,11 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="480" height="360" src="http://www.youtube.com/embed/1_vc01LIBUU" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
+  <tr>
+    <td>Importing into Eclipse</td>
+    <td>
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
 <table>
 
