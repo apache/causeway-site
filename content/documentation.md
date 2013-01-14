@@ -252,7 +252,7 @@ Title: Documentation
 ### Shiro [1.0.0](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
-- [Using Apache DS for authentication](components/security/shiro/using-apache-ds-for-authentication.html)
+- [Using LDAP](components/security/shiro/using-ldap.html)
 
 }
 

@@ -65,8 +65,6 @@ com.mycompany.myapp                          # ditto
 </pre>
 
 
-<!--
-### Configuring 
+### Configuring LDAP
 
-- [Using Apache DS for authentication](using-apache-ds-for-authentication.html)
--->
+Details of configuring the Shiro integration to work against an LDAP server can be found [here](using-ldap.html).
