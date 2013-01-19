@@ -7,43 +7,43 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
   <tr>
     <td>Welcome Page<br/><br/><i>The archetype's welcome page describes how the application is configured, and the most significant files</i></td>
     <td>
-      <img src="resources/screencast-01-welcome-page.png" width="630" height="473"></img>
+      <img src="resources/screencast-01-welcome-page.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Wicket Home Page<br/><br/><i>The Wicket viewer displays a home page with welcome text (easily changed for your own app).  The default text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>.</i></td>
     <td>
-      <img src="resources/screencast-02-wicket-home-page.png" width="630" height="473"></img>
+      <img src="resources/screencast-02-wicket-home-page.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Domain class source code<br/><br/><i>Most of the functionality of the quickstart app is inferred from the <tt>ToDoItem</tt> class.</i></td>
     <td>
-      <img src="resources/screencast-03-github-source-code.png" width="630" height="473"></img>
+      <img src="resources/screencast-03-github-source-code.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Install Fixtures<br/><br/><i>The quickstart app is configured to run using the JDO objectstore, but with an in-memory database.  The <tt>Fixtures</tt> domain service allows the administrator (user: sven, password: pass) to install sample data.</i></td>
     <td>
-      <img src="resources/screencast-04-fixture-install.png" width="630" height="473"></img>
+      <img src="resources/screencast-04-fixture-install.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Fixtures Installed<br/><br/><i>Invoking an action that returns a scalar value, such as the information message, is displayed on the page.</i></td>
     <td>
-      <img src="resources/screencast-05-fixture-installed.png" width="630" height="473"></img>
+      <img src="resources/screencast-05-fixture-installed.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Query using a domain service<br/><br/><i>Domain services more usually act as both repositories and factories.  In this case the <tt>ToDoItems</tt> domain service can be used to lookup existing <tt>ToDoItem</tt>s, or to create new ones.</i></td>
     <td>
-      <img src="resources/screencast-06-todos-not-yet-complete.png" width="630" height="473"></img>
+      <img src="resources/screencast-06-todos-not-yet-complete.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Results shown in table<br/><br/><i>Actions that return collections of entities are shown in a table.  In this case the action has returned a list of <tt>ToDoItem</tt>s.  Not every property of the entity need be shown.</i></td>
     <td>
-      <img src="resources/screencast-07-todos-result.png" width="630" height="473"></img>
+      <img src="resources/screencast-07-todos-result.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -57,19 +57,19 @@ public class ToDoItem {
     ...
 }</pre></td>
     <td>
-      <img src="resources/screencast-08-collection-action.png" width="630" height="473"></img>
+      <img src="resources/screencast-08-collection-action.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td>
-      <img src="resources/screencast-09-collection-action-invoked.png" width="630" height="473"></img>
+      <img src="resources/screencast-09-collection-action-invoked.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Follow Link<br/><br/><i>Navigation to an entity's detailed page is by following the hyperlink.  This navigation is consistent throughout the UI.</i></td>
     <td>
-      <img src="resources/screencast-10-follow-link.png" width="630" height="473"></img>
+      <img src="resources/screencast-10-follow-link.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -109,13 +109,13 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-11-todo-entity.png" width="630" height="473"></img>
+      <img src="resources/screencast-11-todo-entity.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Edit entity<br/><br/><i>The entity's properties can be edited through the 'Edit' button</i></td>
     <td>
-      <img src="resources/screencast-12-todo-entity-edit.png" width="630" height="473"></img>
+      <img src="resources/screencast-12-todo-entity-edit.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -128,7 +128,7 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-13-todo-edit-enum.png" width="630" height="473"></img>
+      <img src="resources/screencast-13-todo-edit-enum.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -157,7 +157,7 @@ public class ToDoItem implements Comparable<ToDoItem> {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-14-optimistic-locking.png" width="630" height="473"></img>
+      <img src="resources/screencast-14-optimistic-locking.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -172,7 +172,7 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-15-invoke-action.png" width="630" height="473"></img>
+      <img src="resources/screencast-15-invoke-action.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -186,7 +186,7 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-16-invoke-action-disabled.png" width="630" height="473"></img>
+      <img src="resources/screencast-16-invoke-action-disabled.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -216,7 +216,7 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-17-invoke-action-grouped-params.png" width="630" height="473"></img>
+      <img src="resources/screencast-17-invoke-action-grouped-params.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -236,7 +236,7 @@ public class ToDoItems {
 </pre>
 </td>
     <td>
-      <img src="resources/screencast-18-invoke-action-args.png" width="630" height="473"></img>
+      <img src="resources/screencast-18-invoke-action-args.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -259,7 +259,7 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-19-collection.png" width="630" height="473"></img>
+      <img src="resources/screencast-19-collection.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -273,7 +273,7 @@ public class ToDoItems {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-20-breadcrumbs.png" width="630" height="473"></img>
+      <img src="resources/screencast-20-breadcrumbs.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
@@ -290,86 +290,86 @@ public class AuditServiceDemo implements AuditService {
 }
 </pre></td>
     <td>
-      <img src="resources/screencast-21-audit-list.png" width="630" height="473"></img>
+      <img src="resources/screencast-21-audit-list.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Audit Records<br/><br/><i>The demo audit service simply persists an audit entry for each update.</i></td>
     <td>
-      <img src="resources/screencast-22-audit-records.png" width="630" height="473"></img>
+      <img src="resources/screencast-22-audit-records.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Multi-User<br/><br/><i>Apache Isis is a multi-user system.  The administrator (sven/pass) has the permissions to be able to install fixtures for other users.</i></td>
     <td>
-      <img src="resources/screencast-23-fixtures-install-for.png" width="630" height="473"></img>
+      <img src="resources/screencast-23-fixtures-install-for.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
-      <img src="resources/screencast-24-fixtures-install-args.png" width="630" height="473"></img>
+      <img src="resources/screencast-24-fixtures-install-args.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
-      <img src="resources/screencast-25-fixtures-installed-for-guest.png" width="630" height="473"></img>
+      <img src="resources/screencast-25-fixtures-installed-for-guest.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Login as user<br/><br/><i>The quickstart app provides a 'guest' user that has a limited set of permissions....</i></td>
     <td>
-      <img src="resources/screencast-26-login-as-guest.png" width="630" height="473"></img>
+      <img src="resources/screencast-26-login-as-guest.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Permissions<br/><br/><i>... the guest user can use the 'ToDoItems' domain service, but the other services are not available.  In the case of the quickstart this is specified in </i><tt>WEB-INF/shiro.ini</tt><i> configuration file.</i></td>
     <td>
-      <img src="resources/screencast-27a-guests-todos.png" width="630" height="473"></img>
+      <img src="resources/screencast-27a-guests-todos.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr><td span=2><h3>RestfulObjects Viewer</h3></td></tr>
   <tr>
     <td>Access the RESTful API<br/><br/><i>The Restful Objects viewer exposes the domain object model through a JSON-based RESTful API.  Typically access will be restricted, in this case using HTTP BASIC authentication (though this is configurable).</i></td>
     <td>
-      <img src="resources/screencast-28-restful-login.png" width="630" height="473"></img>
+      <img src="resources/screencast-28-restful-login.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>List domain services<br/><br/><i>Most interactions with the RESTful API start by accessing the resource that represents the list of domain services.  However, the Restful Objects viewer also exposes templated URLs (as per the <a href="http://restfulobjects.org">Restful Objects spec</a> that it implements).</i></td>
     <td>
-      <img src="resources/screencast-29-restful-services.png" width="630" height="473"></img>
+      <img src="resources/screencast-29-restful-services.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Domain service members<br/><br/><i>Navigating to a particular domain service returns a representation of the members provided by that domain service.</i></td>
     <td>
-      <img src="resources/screencast-30-restful-todoitems-service.png" width="630" height="473"></img>
+      <img src="resources/screencast-30-restful-todoitems-service.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Domain service action<br/><br/><i>A detailed representation of each individual action can be accessed; this can be considered as analogous to the action parameter prompt page in the Wicket viewer.</i></td>
     <td>
-      <img src="resources/screencast-31-restful-todoitems-notyetcomplete.png" width="630" height="473"></img>
+      <img src="resources/screencast-31-restful-todoitems-notyetcomplete.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Invoking a domain service action<br/><br/><i>One of the links provided in the detailed representation is to invoke the action.  Note that the link specifies the HTTP method to use, along with the arguments (if any) to be provided.</i></td>
     <td>
-      <img src="resources/screencast-32-restful-todoitems-notyetcomplete-invoke.png" width="630" height="473"></img>
+      <img src="resources/screencast-32-restful-todoitems-notyetcomplete-invoke.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Action returning a list<br/><br/><i>Invoking an action will return a scalar value, or a reference to an entity, or (as in this case) a list of references to entities.</i></td>
     <td>
-      <img src="resources/screencast-33-restful-todoitems-notyetcomplete-results.png" width="630" height="473"></img>
+      <img src="resources/screencast-33-restful-todoitems-notyetcomplete-results.png" width="525" height="394"></img>
     </td>
   </tr>
   <tr>
     <td>Representation of an entity<br/><br/><i>The entity's representation shows the state of its (scalar) properties, links to its (vector) collections contents, and also links to invoke the entity's actions.</i></td>
     <td>
-      <img src="resources/screencast-34-restful-entity.png" width="630" height="473"></img>
+      <img src="resources/screencast-34-restful-entity.png" width="525" height="394"></img>
     </td>
   </tr>
 <table>
