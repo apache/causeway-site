@@ -47,12 +47,6 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
     </td>
   </tr>
   <tr>
-    <td>Follow Link<br/><br/><i>Navigation to an entity's detailed page is by following the hyperlink.  This navigation is consistent throughout the UI.</i></td>
-    <td>
-      <img src="resources/screencast-08-collection-action.png" width="420" height="315"></img>
-    </td>
-  </tr>
-  <tr>
     <td>Bulk collections<br/><br/><i>Bulk actions can be invoked on all selected elements.  Bulk actions are indicated using <tt>@Bulk</tt> annotation:</i><pre>
 public class ToDoItem {
     ...
@@ -64,162 +58,312 @@ public class ToDoItem {
 }
 </pre></td>
     <td>
+      <img src="resources/screencast-08-collection-action.png" width="420" height="315"></img>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
       <img src="resources/screencast-09-collection-action-invoked.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Follow Link<br/><br/><i>Navigation to an entity's detailed page is by following the hyperlink.  This navigation is consistent throughout the UI.</i></td>
     <td>
       <img src="resources/screencast-10-follow-link.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Entity detail pages<br/><br/><i>The Wicket viewer shows an icon and title for the entity top left; (scalar) properties are displayed underneath , and (vector) collections on the right.  This is all inferred form the domain class's structure:</i><pre>
+public class ToDoItem {
+    public String title() {
+        final TitleBuffer buf = new TitleBuffer();
+        buf.append(getDescription());
+        if (isComplete()) {
+            buf.append(" - Completed!");
+        } else {
+            if (getDueBy() != null) {
+                buf.append(" due by ", getDueBy());
+            }
+        }
+        return buf.toString();
+    }
+    ...
+    @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
+    @MemberOrder(sequence = "1")
+    public String getDescription() { ... }
+    public void setDescription(String description) { ... }
+    ...
+    @Disabled
+    @MemberOrder(sequence = "1")
+    @Resolve(Type.EAGERLY)
+    public List<ToDoItem> getDependencies() { ... }
+    public void setDependencies(List<ToDoItem>) { ... }
+    ...
+}
+</pre></i><br/><i>Actions are shown top right, and near to collections:</i><pre>
+public class ToDoItem {
+    ...
+    @Named("Clone")
+    @MemberOrder(sequence = "3")
+    public ToDoItem duplicate() { ... }
+}
+</pre></td>
     <td>
       <img src="resources/screencast-11-todo-entity.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Edit entity<br/><br/><i>The entity's properties can be edited through the 'Edit' button</i></td>
     <td>
       <img src="resources/screencast-12-todo-entity-edit.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Drop downs<br/><br/><i>Drop downs are provided for enums (such as Category):</i><pre>
+public class ToDoItem {
+    public static enum Category {
+        Professional, Domestic, Other;
+    }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-13-todo-edit-enum.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Optimistic locking<br/><br/><i>Updating the entity bumps up its version number.  Behind the scenes this is done by the JDO objectstore</i><pre>
+@javax.jdo.annotations.Version(
+    strategy=VersionStrategy.VERSION_NUMBER, 
+    column="VERSION")
+...
+public class ToDoItem implements Comparable<ToDoItem> {
+    ...
+    @Hidden(where=Where.ALL_TABLES)
+    @Disabled
+    @MemberOrder(name="Detail", sequence = "99")
+    @Named("Version")
+    public Long getVersionSequence() {
+        if(!(this instanceof PersistenceCapable)) {
+            return null;
+        } 
+        PersistenceCapable persistenceCapable = 
+            (PersistenceCapable) this;
+        final Long version = 
+            (Long) JDOHelper.getVersion(persistenceCapable);
+        return version;
+    }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-14-optimistic-locking.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Invoking actions<br/><br/><i>Actions can be invoked; there may or may not be arguments:</i><pre>
+public class ToDoItem {
+    ...
+    public ToDoItem completed() {
+        setComplete(true);
+        return this;
+    }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-15-invoke-action.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Disabling actions<br/><br/><i>Actions can be disabled (as can editing properties) using supporting methods:</i><pre>
+public class ToDoItem {
+    ...
+    public ToDoItem completed() { ... }
+    public String disableCompleted() {
+        return complete ? "Already completed" : null;
+    }
+}
+</pre></td>
     <td>
       <img src="resources/screencast-16-invoke-action-disabled.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Actions grouped<br/><br/><i>Often actions relate to a particular colleciton of an entity.  The Wicket viewer renders such actions next to that collection.  For example:</i><pre>
+public class ToDoItem {
+    ...
+    @MemberOrder(name="dependencies", sequence = "3")
+    public ToDoItem add(final ToDoItem toDoItem) { ... }
+        getDependencies().add(toDoItem);
+        return this;
+    }
+    ...
+    // }}
+</pre><i>There might also be validation logic:</i><pre>
+public class ToDoItem {
+    ...
+    public String validateAdd(final ToDoItem toDoItem) {
+        if(getDependencies().contains(toDoItem)) {
+            return "Already a dependency";
+        }
+        if(toDoItem == this) {
+            return "Can't set up a dependency to self";
+        }
+        return null;
+    }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-17-invoke-action-grouped-params.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Actions can take arguments<br/><br/><i>In the case of arguments (or indeed when editing properties) that are references to entities, these can be looked up using an autocomplete action on a repository:</i><pre>
+@AutoComplete(repository=ToDoItems.class, action="autoComplete")
+public class ToDoItem { ... }
+</pre><i>and:</i>
+<pre>
+public class ToDoItems {
+    ...
+    @Hidden
+    public List<ToDoItem> autoComplete(final String description) {
+        return ... 
+    }
+    ...
+}
+</pre>
+</td>
     <td>
       <img src="resources/screencast-18-invoke-action-args.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Collections (and properties) can be derived<br/><br/><i>The viewer will render the state of the object, which can be persisted state or derived on the fly.  A common pattern is to delegate to an (automatically injected) domain service:</i><pre>
+public class ToDoItem {
+    ...
+    @MemberOrder(sequence = "5")
+    @NotPersisted
+    @Resolve(Type.EAGERLY)
+    public List<ToDoItem> getSimilarItems() {
+        return toDoItems.similarTo(this);
+    }
+    ...
+    private ToDoItems toDoItems;
+    // automatically injected
+    public void setToDoItems(final ToDoItems toDoItems) {
+        this.toDoItems = toDoItems;
+    }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-19-collection.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Breadcrumbs<br/><br/><i>The Wicket viewer has breadcrumbs which can be used either to get back to a previous entity or to invoke a (query-only) action:</i>
+<pre>
+public class ToDoItems {
+    ...
+    @ActionSemantics(Of.SAFE)
+    public List<ToDoItem> notYetComplete() { ... }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-20-breadcrumbs.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Audit Service<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-21-audit-list.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Audit Records<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-22-audit-records.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Multi-User<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-23-fixtures-install-for.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-24-fixtures-install-args.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-25-fixtures-installed-for-guest.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Login as user<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-26-login-as-guest.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Permissions<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-27a-guests-todos.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Data per user or shared<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-27b-guests-todos.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr><td span=2><h3>RestfulObjects Viewer</h3></td></tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Authenticate<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-28-restful-login.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>List domain services<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-29-restful-services.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Domain service members<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-30-restful-todoitems-service.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Domain service action<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-31-restful-todoitems-notyetcomplete.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Invoking a domain service action<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-32-restful-todoitems-notyetcomplete-invoke.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Action returning a list<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-33-restful-todoitems-notyetcomplete-results.png" width="420" height="315"></img>
     </td>
   </tr>
   <tr>
-    <td>xx<br/><br/><i>yy</i></td>
+    <td>Representation of an entity<br/><br/><i>&nbsp;</i></td>
     <td>
       <img src="resources/screencast-34-restful-entity.png" width="420" height="315"></img>
     </td>
