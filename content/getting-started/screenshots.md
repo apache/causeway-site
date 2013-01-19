@@ -324,20 +324,7 @@ public class AuditServiceDemo implements AuditService {
     </td>
   </tr>
   <tr>
-    <td>Permissions<br/><br/><i>... the guest user can use the 'ToDoItems' domain service, but the other services are not available.  In the case of the quickstart this is specified in </i><tt>WEB-INF/shiro.ini</tt><i> configuration file:</i><pre>
-[users]
-# user = password, role1, role2, role3, ...
-sven = pass, admin_role
-guest = guest, user_role
-
-[roles]
-# role = perm1, perm2, perm3, ...
-# perm in format: packageName:className:memberName:r,w
-user_role =   *:ToDoItemsJdo:*:*,\
-              *:ToDoItem:*:*
-self-install_role = *:ToDoItemsFixturesService:install:*
-admin_role = *
-</pre></td>
+    <td>Permissions<br/><br/><i>... the guest user can use the 'ToDoItems' domain service, but the other services are not available.  In the case of the quickstart this is specified in </i><tt>WEB-INF/shiro.ini</tt><i> configuration file.</i></td>
     <td>
       <img src="resources/screencast-27a-guests-todos.png" width="630" height="473"></img>
     </td>
