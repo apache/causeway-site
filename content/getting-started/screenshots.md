@@ -73,25 +73,34 @@ public class ToDoItem {
     </td>
   </tr>
   <tr>
-    <td>Entity detail pages<br/><br/><i>The Wicket viewer shows an icon and title for the entity top left; (scalar) properties are displayed underneath , and (vector) collections on the right.  This is all inferred form the domain class's structure:</i><pre>
+    <td>Entity detail pages<br/><br/><i>The Wicket viewer builds the UI from the domain class's structure.  It shows an icon and title for the entity top left:</i>
+    <pre>
 public class ToDoItem {
     public String title() {
-        final TitleBuffer buf = new TitleBuffer();
+        final TitleBuffer buf = 
+            new TitleBuffer();
         buf.append(getDescription());
         if (isComplete()) {
             buf.append(" - Completed!");
         } else {
             if (getDueBy() != null) {
-                buf.append(" due by ", getDueBy());
+                buf.append(" due by ", 
+                           getDueBy());
             }
         }
         return buf.toString();
     }
+    ... </pre>
+    <i>...(scalar) properties are displayed underneath:</i><pre>
     ...
-    @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
+    @RegEx(validation = 
+      "\\w[@&:\\-\\,\\.\\+ \\w]*")
     @MemberOrder(sequence = "1")
     public String getDescription() { ... }
-    public void setDescription(String description) { ... }
+    public void setDescription(
+            String description) { ... }
+    ...
+</pre><i>... and (vector) collections on the right:</i><pre>
     ...
     @Disabled
     @MemberOrder(sequence = "1")
@@ -99,13 +108,12 @@ public class ToDoItem {
     public List<ToDoItem> getDependencies() { ... }
     public void setDependencies(List<ToDoItem>) { ... }
     ...
-}
-</pre></i><br/><i>Actions are shown top right, and near to collections:</i><pre>
-public class ToDoItem {
+</pre></i><br/><i>... and actions are shown top right:</i><pre>
     ...
     @Named("Clone")
     @MemberOrder(sequence = "3")
     public ToDoItem duplicate() { ... }
+    ...
 }
 </pre></td>
     <td>
@@ -137,20 +145,23 @@ public class ToDoItem {
     strategy=VersionStrategy.VERSION_NUMBER, 
     column="VERSION")
 ...
-public class ToDoItem implements Comparable<ToDoItem> {
+public class ToDoItem {
     ...
     @Hidden(where=Where.ALL_TABLES)
     @Disabled
-    @MemberOrder(name="Detail", sequence = "99")
+    @MemberOrder(name="Detail", 
+                 sequence = "99")
     @Named("Version")
     public Long getVersionSequence() {
-        if(!(this instanceof PersistenceCapable)) {
+        if(!(this instanceof 
+               PersistenceCapable)) {
             return null;
         } 
-        PersistenceCapable persistenceCapable = 
+        PersistenceCapable pc = 
             (PersistenceCapable) this;
         final Long version = 
-            (Long) JDOHelper.getVersion(persistenceCapable);
+            (Long) JDOHelper.
+                   getVersion(pc);
         return version;
     }
     ...
