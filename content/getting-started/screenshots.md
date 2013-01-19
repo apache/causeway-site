@@ -202,7 +202,8 @@ public class ToDoItem {
     ...
     public ToDoItem completed() { ... }
     public String disableCompleted() {
-        return complete ? "Already completed" : null;
+        return complete ? 
+            "Already completed" : null;
     }
 }
 </pre></td>
@@ -220,7 +221,7 @@ public class ToDoItem {
         return this;
     }
     ...
-    // }}
+}}
 </pre><i>There might also be validation logic:</i><pre>
 public class ToDoItem {
     ...
