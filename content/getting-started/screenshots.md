@@ -114,7 +114,7 @@ public class ToDoItem {
     @MemberOrder(sequence = "3")
     public ToDoItem duplicate() { ... }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-11-todo-entity.png" width="525" height="394"></img>
@@ -130,7 +130,7 @@ public class ToDoItem {
     public void setComplete(
         final boolean complete) { ... }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-12-todo-entity-edit.png" width="525" height="394"></img>
@@ -143,7 +143,7 @@ public class ToDoItem {
         Professional, Domestic, Other;
     }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-13-todo-edit-enum.png" width="525" height="394"></img>
@@ -175,7 +175,7 @@ public class ToDoItem {
         return version;
     }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-14-optimistic-locking.png" width="525" height="394"></img>
@@ -190,7 +190,7 @@ public class ToDoItem {
         return this;
     }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-15-invoke-action.png" width="525" height="394"></img>
@@ -205,7 +205,7 @@ public class ToDoItem {
         return complete ? 
             "Already completed" : null;
     }
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-16-invoke-action-disabled.png" width="525" height="394"></img>
@@ -241,7 +241,7 @@ public class ToDoItem {
         return null;
     }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-17-invoke-action-grouped-params.png" width="525" height="394"></img>
@@ -261,7 +261,7 @@ public class ToDoItems {
         return ... 
     }
     ...
-}
+}}
 </pre>
 </td>
     <td>
@@ -286,7 +286,7 @@ public class ToDoItem {
         this.toDoItems = toDoItems;
     }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-19-collection.png" width="525" height="394"></img>
@@ -300,7 +300,7 @@ public class ToDoItems {
     @ActionSemantics(Of.SAFE)
     public List<ToDoItem> notYetComplete() { ... }
     ...
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-20-breadcrumbs.png" width="525" height="394"></img>
@@ -317,7 +317,7 @@ public class AuditServiceDemo implements AuditService {
         String preValue, String postValue) { 
        ...
     }
-}
+}}
 </pre></td>
     <td>
       <img src="resources/screencast-21-audit-list.png" width="525" height="394"></img>
