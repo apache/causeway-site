@@ -1,6 +1,6 @@
 Title: Downloads
 
-Apache Isis&trade; software is a framework for rapidly developing domain-driven apps in Java. Write your business logic in entities, domain services and repositories, and the framework dynamically (at runtime) generates a representation of that domain model as a webapp or as a RESTful API.  Use for prototyping or production.
+Apache Isis&trade; software is a framework for rapidly developing domain-driven apps in Java. Write your business logic in entities, domain services and repositories, and the framework dynamically (at runtime) generates a representation of that domain model as a webapp or RESTful API.  Use for prototyping or production.
 
 ## Getting Started
 
