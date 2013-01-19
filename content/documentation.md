@@ -252,6 +252,7 @@ Title: Documentation
 ### Shiro [1.0.0](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
+- [Configuring Shiro](components/security/shiro/configuring-shiro.html)
 - [Using LDAP](components/security/shiro/using-ldap.html) (1.1.0-SNAPSHOT)
 
 }
