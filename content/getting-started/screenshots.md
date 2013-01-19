@@ -215,8 +215,11 @@ public class ToDoItem {
     <td>Actions grouped<br/><br/><i>Often actions relate to a particular colleciton of an entity.  The Wicket viewer renders such actions next to that collection.  For example:</i><pre>
 public class ToDoItem {
     ...
-    @MemberOrder(name="dependencies", sequence = "3")
-    public ToDoItem add(final ToDoItem toDoItem) { ... }
+    @MemberOrder(
+        name="dependencies", 
+        sequence = "3")
+    public ToDoItem add(
+        final ToDoItem toDoItem) { ... }
         getDependencies().add(toDoItem);
         return this;
     }
@@ -225,12 +228,15 @@ public class ToDoItem {
 </pre><i>There might also be validation logic:</i><pre>
 public class ToDoItem {
     ...
-    public String validateAdd(final ToDoItem toDoItem) {
-        if(getDependencies().contains(toDoItem)) {
+    public String validateAdd(
+           final ToDoItem toDoItem) {
+        if(getDependencies().
+               contains(toDoItem)) {
             return "Already a dependency";
         }
         if(toDoItem == this) {
-            return "Can't set up a dependency to self";
+            return 
+            "Can't set up a dependency to self";
         }
         return null;
     }
@@ -250,7 +256,8 @@ public class ToDoItem { ... }
 public class ToDoItems {
     ...
     @Hidden
-    public List<ToDoItem> autoComplete(final String description) {
+    public List<ToDoItem> autoComplete(
+            final String description) {
         return ... 
     }
     ...
@@ -274,7 +281,8 @@ public class ToDoItem {
     ...
     private ToDoItems toDoItems;
     // automatically injected
-    public void setToDoItems(final ToDoItems toDoItems) {
+    public void setToDoItems(
+            final ToDoItems toDoItems) {
         this.toDoItems = toDoItems;
     }
     ...
