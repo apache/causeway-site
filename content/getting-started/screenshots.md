@@ -100,7 +100,7 @@ public class ToDoItem {
     public void setDescription(
             String description) { ... }
     ...
-</pre><i>... and (vector) collections on the right:</i><pre>
+</pre><i>... (vector) collections on the right:</i><pre>
     ...
     @Disabled
     @MemberOrder(sequence = "1")
@@ -121,7 +121,17 @@ public class ToDoItem {
     </td>
   </tr>
   <tr>
-    <td>Edit entity<br/><br/><i>The entity's properties can be edited through the 'Edit' button</i></td>
+    <td>Edit entity<br/><br/><i>The entity's properties can be edited through the 'Edit' button.  Some properties may not be editable:</i><pre>
+public class ToDoItem {
+    ...
+    @Disabled
+    @MemberOrder(sequence = "4")
+    public boolean isComplete() { ... }
+    public void setComplete(
+        final boolean complete) { ... }
+    ...
+}
+</pre></td>
     <td>
       <img src="resources/screencast-12-todo-entity-edit.png" width="525" height="394"></img>
     </td>
