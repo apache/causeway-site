@@ -235,8 +235,8 @@ public class ToDoItem {
             return "Already a dependency";
         }
         if(toDoItem == this) {
-            return 
-            "Can't set up a dependency to self";
+            return "Can't set up a " + 
+                   "dependency to self";
         }
         return null;
     }
