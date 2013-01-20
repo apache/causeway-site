@@ -11,7 +11,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
     </td>
   </tr>
   <tr>
-    <td>Wicket Home Page<br/><br/><i>The Wicket viewer displays a home page with welcome text (easily changed for your own app).  The default text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>.</i></td>
+    <td>Wicket Home Page<br/><br/><i>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in </i><tt>WEB-INF/isis.properties</tt><br/><br/><i>The welcome text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>. (You can easily change this text).</i></td>
     <td>
       <img src="resources/screencast-02-wicket-home-page.png" width="525" height="394"></img>
     </td>
@@ -23,7 +23,16 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
     </td>
   </tr>
   <tr>
-    <td>Install Fixtures<br/><br/><i>The quickstart app is configured to run using the JDO objectstore, but with an in-memory database.  The <tt>Fixtures</tt> domain service allows the administrator (user: sven, password: pass) to install sample data.</i></td>
+    <td>Install Fixtures<br/><br/><i>The quickstart app is configured to run using the JDO objectstore, but with an in-memory database.  The <tt>Fixtures</tt> domain service allows the administrator (user: sven, password: pass) to install sample data:</i><pre>
+@Named("Fixtures")
+public class ToDoItemsFixturesService {
+    public String install() { ... }
+    ...
+    public String installFor(
+        @Named("User") String user) { ... }
+    ...
+}}
+</pre></td>
     <td>
       <img src="resources/screencast-04-fixture-install.png" width="525" height="394"></img>
     </td>
@@ -35,7 +44,23 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
     </td>
   </tr>
   <tr>
-    <td>Query using a domain service<br/><br/><i>Domain services more usually act as both repositories and factories.  In this case the <tt>ToDoItems</tt> domain service can be used to lookup existing <tt>ToDoItem</tt>s, or to create new ones.</i></td>
+    <td>Query using a domain service<br/><br/><i>Domain services more usually act as both repositories and factories.  In this case the <tt>ToDoItems</tt> domain service can be used to lookup existing <tt>ToDoItem</tt>s, or to create new ones:</i><pre>
+@Named("ToDos")
+public class ToDoItems {
+    ...
+    @MemberOrder(sequence = "1")
+    public List<ToDoItem> notYetComplete() { ... }
+    ...
+    @MemberOrder(sequence = "2")
+    public List<ToDoItem> complete() { ... }
+    ...
+    @MemberOrder(sequence = "3")
+    public ToDoItem newToDo( ... ) { ... }
+    ...
+    @MemberOrder(sequence = "4")
+    public List<ToDoItem> allToDos() { ... }
+}
+</pre></td>
     <td>
       <img src="resources/screencast-06-todos-not-yet-complete.png" width="525" height="394"></img>
     </td>
@@ -90,7 +115,9 @@ public class ToDoItem {
         }
         return buf.toString();
     }
-    ... </pre>
+    ... 
+}}
+</pre>
     <i>...(scalar) properties are displayed underneath:</i><pre>
     ...
     @RegEx(validation = 
@@ -100,6 +127,7 @@ public class ToDoItem {
     public void setDescription(
             String description) { ... }
     ...
+}}
 </pre><i>... (vector) collections on the right:</i><pre>
     ...
     @Disabled
@@ -108,6 +136,7 @@ public class ToDoItem {
     public List<ToDoItem> getDependencies() { ... }
     public void setDependencies(List<ToDoItem>) { ... }
     ...
+}}
 </pre></i><br/><i>... and actions are shown top right:</i><pre>
     ...
     @Named("Clone")
