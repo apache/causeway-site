@@ -80,7 +80,8 @@ public class ToDoItem {
         setComplete(true);
     }
     ...
-}</pre>nb: 1.0.1-SNAPSHOT of the quickstart app</td>
+}}
+</pre>nb: 1.0.1-SNAPSHOT of the quickstart app</td>
     <td>
       <img src="resources/screencast-08-collection-action.png" width="525" height="394"></img>
     </td>
