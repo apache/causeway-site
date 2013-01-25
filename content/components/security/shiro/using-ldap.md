@@ -20,6 +20,14 @@ ldapRealm.groupObjectClass = groupOfUniqueNames
 ldapRealm.uniqueMemberAttribute = uniqueMember
 ldapRealm.uniqueMemberAttributeValueTemplate = uid={0}
 
+# optional mapping from physical groups to logical application roles
+ldapRealm.rolesByGroup = \
+    LDN_USERS: user_role,\
+    NYK_USERS: user_role,\
+    HKG_USERS: user_role,\
+    GLOBAL_ADMIN: admin_role,\
+    DEMOS: self-install_role
+
 ldapRealm.permissionsByRole=\
    user_role = *:ToDoItemsJdo:*:*,\
                *:ToDoItem:*:*; \
@@ -40,6 +48,8 @@ where:
   * each group has a vector attribute of `uniqueMember`
   * each value of `uniqueMember` is in the form `uid=xxx`, with `xxx` being the uid of the user
   * the group membership is looked up using the specified system user
+* groups looked up from LDAP can be mapped to logical roles
+  * if no group-to-role mapping is provided, then the group names are used as role names with no translation
 
 The above configuration has been tested against [ApacheDS](http://directory.apache.org/apacheds/), v1.5.7.  This can be administered using [Apache Directory Studio](http://directory.apache.org/studio/), v1.5.3.
 
