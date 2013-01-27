@@ -17,6 +17,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <td><b><a href="core/about.html">Core</a></b></td>
     <td>&nbsp;</td>
+    <td><b>1.1.0</b>(RC1)</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td><b>1.0.0</b></td>
     <td>-</td>
     <td>-</td>
@@ -37,8 +48,19 @@ The table below lists dependencies between core, components and archetypes.
     <td>-</td>
 </tr>
 <tr>
-    <td><b>Security</b></td>
+    <td>&nbsp;</td>
     <td><b><a href="components/security/shiro/about.html">Shiro</a></b></td>
+    <td><b>1.1.0</b> (RC1)</td>
+    <td>1.1.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -59,8 +81,19 @@ The table below lists dependencies between core, components and archetypes.
     <td>-</td>
 </tr>
 <tr>
-    <td><b>Viewer</td>
+    <td><b>Viewer</b></td>
     <td><b><a href="components/viewers/wicket/about.html">Wicket</a></b></td>
+    <td><b>1.1.0</b>(RC1)</td>
+    <td>1.1.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td><b>1.0.0</b></td>
     <td>1.0.0</td>
     <td>-</td>
@@ -83,10 +116,21 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <td><b>Archetype</b></td>
     <td><b><a href="getting-started/quickstart-archetype.html">WRJ</a></b></td>
-    <td><b>1.0.1</b></td>
+    <td><b>1.0.2</b>(RC1)</td>
+    <td>1.1.0</td>
+    <td>1.1.0</td>
     <td>-</td>
     <td>1.0.0</td>
+    <td>1.1.0</td>
     <td>1.0.0</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><b>1.0.1</b></td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>-</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
     <td>1.0.0</td>

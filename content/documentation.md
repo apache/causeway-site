@@ -9,7 +9,7 @@ Title: Documentation
 ### Getting started
 
 - [Screencasts](getting-started/screencasts.html)
-- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.1](getting-started/release-notes/about.html))
+- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.2](getting-started/release-notes/about.html)) (RC1)
 - [Editor templates](getting-started/editor-templates.html)
 - [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
@@ -62,7 +62,7 @@ Title: Documentation
 
 {group
 
-## Core [1.0.0](core/release-notes/about.html)
+## Core [1.1.0](core/release-notes/about.html) (RC1)
 
 {row-even
 
@@ -110,7 +110,7 @@ Title: Documentation
 
 {span-one-third
 
-###  Wicket [1.0.0](components/viewers/wicket/release-notes/about.html)
+###  Wicket [1.1.0](components/viewers/wicket/release-notes/about.html) (RC1)
 
 - [About](components/viewers/wicket/about.html)
 
@@ -249,7 +249,7 @@ Title: Documentation
 
 {span-one-third
 
-### Shiro [1.0.0](components/security/shiro/release-notes/about.html)
+### Shiro [1.1.0](components/security/shiro/release-notes/about.html) (RC1)
 
 - [About](components/security/shiro/about.html)
 - [Configuring Shiro](components/security/shiro/configuring-shiro.html)
