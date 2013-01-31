@@ -22,7 +22,7 @@ If using Windows, note that github also have a dedicated [Windows client](https:
 If using Mac, you might also want to check out Atlassian's [Sourcetree](http://www.atlassian.com/software/sourcetree/overview).
 
 
-#### Cloning the Isis repo and Configuring
+#### Cloning the Isis repo 
 
 First, clone the Isis repo.
 
@@ -34,14 +34,16 @@ git clone https://git-wip-us.apache.org/repos/asf/isis.git
 
 If you are **not a committer**, please see the [contributing](contributing.html) page for details on which repo to clone from.
 
-You should then configure your user name and password; see also [Apache's git](https://git-wip-us.apache.org/) docs:
+#### Configuring Git
+
+Next up is to configure your user name and password; see also [Apache's git](https://git-wip-us.apache.org/) docs:
 
 <pre>
 git config user.name "<i>My Name Here</i>"
 git config user.email <i>myusername@apache.org</i>
 </pre>
 
-And, you should also configure the `core.autocrlf` so that line endings are normalized to LF (Unix style) in the rep; again see [Apache's git](https://git-wip-us.apache.org/) page: 
+Next, configure the `core.autocrlf` so that line endings are normalized to LF (Unix style) in the rep; again see [Apache's git](https://git-wip-us.apache.org/) page: 
 
 - on Windows, use:
 <pre>git config core.autocrlf auto   
@@ -61,6 +63,17 @@ git config core.safecrlf true
 </pre>
 
 Note that these settings are supplemented in the repo by the `.gitattributes` file and that explicitly specifies line handling treatment for most of the common file types that we have.
+
+Next, we recommend you setup this a refspec so that you can distinguish remote tags from local ones.  To do that, locate the `[remote "origin"]` section in your `.git/config` and add the third entry shown below:
+
+<pre>
+[remote "origin"]
+    url = ... whatever ...
+    fetch = ... whatever ...
+    fetch = +refs/tags/*:refs/tags/origin/*
+</pre>
+
+This will ensure that a `git fetch` or `git pull` places any remote tags under `origin/xxx.  For example, the `isis-1.0.0` tag on the origin will appear under `origin/isis-1.0.0`.
 
 One final configuration that we recommend is for `git pull` to perform a rebase by default, rather than a merge.  This results in a linear log history.  If you want to explicitly have branches in the history, then you can always create a topic branch, discussed below:
 <pre>

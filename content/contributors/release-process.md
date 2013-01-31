@@ -726,6 +726,13 @@ If the vote has been successful, then replace the `-RCn` tag with another withou
   git fetch
 </pre>
 
+* delete the `-RCn` local tag, for example:
+
+<pre>
+  git tag -d isis-1.2.3-RC1
+  git fetch
+</pre>
+
 Then, continue onto the next section for the steps to promote and announce the release.
 
 ### For an unsuccessful vote
@@ -846,6 +853,10 @@ Use JIRA to [generate release notes](http://confluence.atlassian.com/display/JIR
 <img src="resources/jira-create-release-notes.png" width="400px"></img>
 
 If any of the tickets closed are tasks/subtasks, then please edit the contents of the file to associate them back together again.
+
+### Mark the JIRA versions as released
+
+In JIRA, go to the administration section for the Isis project and update the versions as released.
 
 ### Update ISIS website
 
