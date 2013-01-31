@@ -135,5 +135,16 @@ The table below lists dependencies between core, components and archetypes.
     <td>1.0.0</td>
     <td>1.0.0</td>
 </tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><b>1.0.0</b></td>
+    <td>1.0.0</td>
+    <td>-</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+    <td>1.0.0</td>
+</tr>
 </table>
 
