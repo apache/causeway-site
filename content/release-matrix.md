@@ -17,9 +17,9 @@ The table below lists dependencies between core, components and archetypes.
     <th>Restful<br/>Viewer</th>
 </tr>
 <tr>
-    <td class="heading"><a href="core/about.html">Core</a></td>
-    <td class="heading">&nbsp;</td>
-    <td class="heading">1.1.0</td>
+    <th class="heading"><a href="core/about.html">Core</a></th>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">1.1.0</th>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -86,7 +86,7 @@ The table below lists dependencies between core, components and archetypes.
     <td class="heading">Viewer</td>
     <td class="heading"><a href="components/viewers/wicket/about.html">Wicket</a></td>
     <td class="heading">1.1.0</td>
-    <td>1.1.0</td>
+    <td class="new">1.1.0</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
