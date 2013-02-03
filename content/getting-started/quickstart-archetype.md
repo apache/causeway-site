@@ -12,7 +12,7 @@ Then run the following command:
 mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
-    -D archetypeVersion=1.0.1 \
+    -D archetypeVersion=1.0.2 \
     -D groupId=com.mycompany \
     -D artifactId=myapp
 </pre>
