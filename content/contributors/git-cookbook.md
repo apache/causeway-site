@@ -82,6 +82,12 @@ git rebase origin/master
 
 After the `git fetch`, you will see that `gitk --all` shows the new set of commits as a branch separate from your own commits on branch.  The `git rebase` command then applies all your changes on top of that branch.  (Your original commits are orphaned and are eventually garbage collected by git).
 
+Once you're happy with all your changes, push your local repository onto the central repo:
+<pre>
+git push
+</pre>
+
+
 ### Creating a local branch
 
 If you are working on a branch for a significant period (eg to implement a ticket), then it probably makes sense to create a local branch:
