@@ -946,7 +946,7 @@ If the core was updated, then you'll most likely need to update other POMs to th
 Next, do a sanity check that everything builds ok:
 
 <pre>
-rm -rf ~/.m2/org/apache/isis
+rm -rf ~/.m2/repository/org/apache/isis
 mvn clean install
 </pre>
 

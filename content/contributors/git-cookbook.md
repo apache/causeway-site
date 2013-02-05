@@ -291,4 +291,15 @@ git reset --hard <i>shaId</i>      # move master branch shaId of common ancestor
 </pre>
 
 
+## If you've forgotten to prefix your commits (but not pushed)
 
+One of our committers, Alexander Krasnukhin, has put together some git scripts to help his workflow.  Using one of these, `git prefix`, you:
+
+> can just commit with proper message without bothering about prefix and add prefix only in the end *before* the final push.
+ 
+>For example, to prefix all not yet prefixed commits `master..isis/666` with `ISIS-666` prefix, use:
+<pre>
+  git prefix ISIS-666 master..isis/666
+</pre>
+
+You can grab this utility, and others, from [this repo](https://github.com/themalkolm/git-boots).
