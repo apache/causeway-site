@@ -19,12 +19,12 @@ Over and above this, the service does provide considerable flexibility for fine-
 To indicate that an action should be published, use the `PublishedAction` annotation.  For example:
 
 <pre>
-public class ToDoItem {
+  public class ToDoItem {
     ...
     @PublishedAction
     public void completed() { ... }
     ...
-}}
+  }
 </pre>
 
 Similarly, to indicate that any changes to an object should be published, use the `PublishedObject` annotation:
