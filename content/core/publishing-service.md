@@ -30,10 +30,10 @@ To indicate that an action should be published, use the `PublishedAction` annota
 Similarly, to indicate that any changes to an object should be published, use the `PublishedObject` annotation:
 
 <pre>
-@PublishedObject
-public class ToDoItem {
+  @PublishedObject
+  public class ToDoItem {
     ...
-}}
+  }
 </pre>
 
 Either or both of these annotations can be used.
@@ -45,25 +45,25 @@ As described further down in this article, it is possible to fine-tune the paylo
 The `PublishingService` interface is:
 
 <pre>
-package org.apache.isis.applib.services.publish;
+  package org.apache.isis.applib.services.publish;
 
-public interface PublishingService {
+  public interface PublishingService {
     
     @Hidden
     public void publish(EventMetadata metadata, EventPayload payload);
     
     void setEventSerializer(EventSerializer eventSerializer);
-}}
+  }
 </pre>
 
 Typically implementations will use the injected `EventSerializer` to convert the metadata and payload into a form to be published:
 
 <pre>
-package org.apache.isis.applib.services.publish;
+  package org.apache.isis.applib.services.publish;
 
-public interface EventSerializer {
+  public interface EventSerializer {
     public Object serialize(EventMetadata metadata, EventPayload payload);
-}}
+  }
 </pre>
 
 The serialized form returned by `EventSerializer` will typically be something like JSON, XML or a string.  The signature of `serialize(...)` returns an object 
@@ -76,47 +76,47 @@ lowest common denominator, but in some cases are type-safe equivalent, such as a
 A default implementation of `EventSerializer` will be supplied to the `PublishingService` if none has been specified as a domain service.  This default implementation simply concatenates the metadata and payload together into a single string:
 
 <pre>
-public interface EventSerializer {
+  public interface EventSerializer {
     ...
     public static class Simple implements EventSerializer {
 
-        @Programmatic
-        @Override
-        public Object serialize(EventMetadata metadata, EventPayload payload) {
-            return "PUBLISHED: \n    metadata: " + 
-                      metadata.getGuid() + ":" + 
-                      metadata.getUser() + ":" + 
-                      metadata.getTimestamp() + 
-                   ":    payload:s\n" + 
-                      payload.toString();
-        }
+      @Programmatic
+      @Override
+      public Object serialize(EventMetadata metadata, EventPayload payload) {
+          return "PUBLISHED: \n    metadata: " + 
+                    metadata.getGuid() + ":" + 
+                    metadata.getUser() + ":" + 
+                    metadata.getTimestamp() + 
+                 ":    payload:s\n" + 
+                    payload.toString();
+      }
     }
     ...
-}}
+  }
 </pre>
 
 A simple implementation of `PublishingService` (which must be configured as a domain service) is also available; this simply writes to stderr is also provided:
 
 <pre>
-public interface PublishingService {
-    ...
+  public interface PublishingService {
+  ...
     public static class Stderr implements PublishingService {
     private EventSerializer eventSerializer = new EventSerializer.Simple();
-        @Hidden
-        @Override
-        public void publish(EventMetadata metadata, EventPayload payload) {
-            Object serializedEvent = eventSerializer.serialize(
-                metadata, payload);
-            System.err.println(serializedEvent);
-        }
+      @Hidden
+      @Override
+      public void publish(EventMetadata metadata, EventPayload payload) {
+        Object serializedEvent = eventSerializer.serialize(
+          metadata, payload);
+        System.err.println(serializedEvent);
+      }
 
-        @Override
-        public void setEventSerializer(EventSerializer eventSerializer) {
-            this.eventSerializer = eventSerializer;
-        }
+      @Override
+      public void setEventSerializer(EventSerializer eventSerializer) {
+        this.eventSerializer = eventSerializer;
+      }
     }
     ...
-}}
+  }
 </pre>
 
 Thus, to configure a very simple form of publishing, add the following to `isis.properties`:
@@ -150,61 +150,61 @@ In some circumstances, however, it may make more sense to eagerly "push" informa
 To accomplish this, an implementation of a "`PayloadFactory`" must be specified in the annotation.  For actions, implement `@PublishedAction.PayloadFactory`:
 
 <pre>
-public @interface PublishedAction {
+  public @interface PublishedAction {
     
     public interface PayloadFactory {
-        @Programmatic
-        public EventPayload payloadFor(
-            Identifier actionIdentifier, 
-            Object target, List&lt;Object&gt; arguments, Object result);
+      @Programmatic
+      public EventPayload payloadFor(
+          Identifier actionIdentifier, 
+          Object target, List&lt;Object&gt; arguments, Object result);
     }
     Class&lt;? extends PayloadFactory&gt; value()  default PayloadFactory.class;
-}}
+  }
 </pre>
 
 For objects, the interface to implement is `@PublishedObject.PayloadFactory`:
 
 <pre>
-public @interface PublishedObject {
+  public @interface PublishedObject {
     
     public interface PayloadFactory {
-        @Programmatic
-        public EventPayload payloadFor(Object changed);
+      @Programmatic
+      public EventPayload payloadFor(Object changed);
     }
     Class&lt;? extends PayloadFactory&gt; value()  default PayloadFactory.class;
-}}
+  }
 </pre>
 
 For example, the following will eagerly include the `ToDoItem`'s `description` property whenever it is changed:
 
 <pre>
-@PublishedObject(ToDoItemPayloadFactory.class)
-public class ToDoItem {
+  @PublishedObject(ToDoItemPayloadFactory.class)
+  public class ToDoItem {
     ...
-}}
+  }
 </pre>
 
 where `ToDoItemPayloadFactory` is defined as:
 
 <pre>
-public class ToDoItemChangedPayloadFactory implements PayloadFactory {
+  public class ToDoItemChangedPayloadFactory implements PayloadFactory {
 
     public static class ToDoItemPayload 
-            extends EventPayloadForChangedObject<ToDoItem> {
+        extends EventPayloadForChangedObject<ToDoItem> {
 
-        public ToDoItemPayload(ToDoItem changed) {
-            super(changed);
-        }
+      public ToDoItemPayload(ToDoItem changed) {
+          super(changed);
+      }
         
-        public String getDescription() {
-            return getChanged().getDescription();
-        }
+      public String getDescription() {
+          return getChanged().getDescription();
+      }
     }
     @Override
     public EventPayload payloadFor(Object changedObject) {
-        return new ToDoItemPayload((ToDoItem) changedObject);
+      return new ToDoItemPayload((ToDoItem) changedObject);
     }
-}}
+  }
 </pre>
 
 ### Class Diagram
