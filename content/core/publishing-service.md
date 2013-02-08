@@ -73,7 +73,40 @@ lowest common denominator, but in some cases are type-safe equivalent, such as a
 
 ### Default Implementations
 
-A default implementation of `EventSerializer` will be supplied to the `PublishingService` if none has been specified as a domain service.  This default implementation simply concatenates the metadata and payload together into a single string:
+
+A simple implementation of `PublishingService` (which must be configured as a domain service) is available; it simply writes to stderr.
+
+To configure a very simple form of publishing, add the following to `isis.properties`:
+
+<pre>
+isis.services=<i>...other services...</i>,\
+        org.apache.isis.applib.services.publish.PublishingService$StdErr
+</pre>
+
+The implementation is as follows:
+
+<pre>
+  public interface PublishingService {
+  ...
+    public static class Stderr implements PublishingService {
+    private EventSerializer eventSerializer = new EventSerializer.Simple();
+      @Hidden
+      @Override
+      public void publish(EventMetadata metadata, EventPayload payload) {
+        Object serializedEvent = eventSerializer.serialize(metadata, payload);
+        System.err.println(serializedEvent);
+      }
+
+      @Override
+      public void setEventSerializer(EventSerializer eventSerializer) {
+        this.eventSerializer = eventSerializer;
+      }
+    }
+    ...
+  }
+</pre>
+
+As can be seen, the above implementation in turn uses a default implementation of `EventSerializer`, which simply concatenates the metadata and payload together into a single string:
 
 <pre>
   public interface EventSerializer {
@@ -95,36 +128,8 @@ A default implementation of `EventSerializer` will be supplied to the `Publishin
   }
 </pre>
 
-A simple implementation of `PublishingService` (which must be configured as a domain service) is also available; this simply writes to stderr is also provided:
+The default `PublishingService` (or indeed any implementation) can be configured to run with a different `EventSerializer` by configuring the serializer implementation in the `isis.properties` file.  One alternative serializer is described next.
 
-<pre>
-  public interface PublishingService {
-  ...
-    public static class Stderr implements PublishingService {
-    private EventSerializer eventSerializer = new EventSerializer.Simple();
-      @Hidden
-      @Override
-      public void publish(EventMetadata metadata, EventPayload payload) {
-        Object serializedEvent = eventSerializer.serialize(
-          metadata, payload);
-        System.err.println(serializedEvent);
-      }
-
-      @Override
-      public void setEventSerializer(EventSerializer eventSerializer) {
-        this.eventSerializer = eventSerializer;
-      }
-    }
-    ...
-  }
-</pre>
-
-Thus, to configure a very simple form of publishing, add the following to `isis.properties`:
-
-<pre>
-isis.services=<i>...other services...</i>,\
-        org.apache.isis.applib.services.publish.PublishingService$StdErr
-</pre>
 
 ### Restful Objects (JSON) Serializer
 
@@ -137,7 +142,25 @@ isis.services=<i>...other services...</i>,\
        org.apache.isis.viewer.restfulobjects.rendering.eventserializer.RestfulObjectsSpecEventSerializer
 </pre>
 
-TODO: need to specify the base url via config.
+In addition, the `baseUrl` to use in hyperlinks must be specified, also in `isis.properties`; for example:
+
+<pre>
+org.apache.isis.viewer.restfulobjects.rendering.eventserializer.RestfulObjectsSpecEventSerializer.baseUrl=https://myapp.mycompany.com:8080/restful/.
+</pre>
+
+If no `baseUrl` is specified, then the default URL is `http://localhost:8080/restful/`.
+
+
+If - as described in the previous sections - you configure the default `PublishingService` with the `RestfulObjectsSpecEventSerializer`, then you should see JSON being written to your console.
+
+For example, this is the JSON generated on an action invocation:
+
+ ![](images/action-invocation-published-to-stderr.png)
+
+while this is the object change JSON:
+
+ ![](images/changed-object-published-to-stderr.png)
+
 
 ### Fine-tuning the payload
 
