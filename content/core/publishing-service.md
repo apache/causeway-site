@@ -40,7 +40,7 @@ Either or both of these annotations can be used.
 
 As described further down in this article, it is possible to fine-tune the payload.  However, simply using the above annotations will suffice in many cases.
 
-### Configuring the `PublishingService`
+### Configuring the Publishing Service
 
 The `PublishingService` interface is:
 
