@@ -68,17 +68,36 @@ Title: Documentation
 
 {span-one-third
 
-###  Applib & Runtime
+###  Applib
 
 - [Deployment Types](core/deployment-type.html)
 - [Applib](core/applib.html)
-- [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
-- [Core Runtime](core/runtime.html) [stub]
-- [Webserver](core/webserver.html) [stub]
+
+###  Services
+
+- [Publishing Service](core/publishing-service.html) [not yet released]
 
 }
 
 {span-one-third
+
+### Dev Support
+
+- [Unit Test Support](core/unittestsupport.html) [stub]
+- [Integration Test Support](core/integtestsupport.html) [stub]
+
+###  Programming Model
+
+- [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
+
+}
+
+{span-one-third
+
+### Runtime
+
+- [Core Runtime](core/runtime.html) [stub]
+- [Webserver](core/webserver.html) [stub]
 
 ### Bundled Components
 
@@ -86,15 +105,6 @@ Title: Documentation
 - [Bypass Security](core/bypass-security.html) [stub]
 - [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 - [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
-
-}
-
-{span-one-third
-
-### Development
-
-- [Unit Test Support](core/unittestsupport.html) [stub]
-- [Integration Test Support](core/integtestsupport.html) [stub]
 
 }
 
