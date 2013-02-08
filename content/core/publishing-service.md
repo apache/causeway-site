@@ -24,7 +24,7 @@ public class ToDoItem {
     @PublishedAction
     public void completed() { ... }
     ...
-}
+}}
 </pre>
 
 Similarly, to indicate that any changes to an object should be published, use the `PublishedObject` annotation:
@@ -33,7 +33,7 @@ Similarly, to indicate that any changes to an object should be published, use th
 @PublishedObject
 public class ToDoItem {
     ...
-}
+}}
 </pre>
 
 Either or both of these annotations can be used.
@@ -53,7 +53,7 @@ public interface PublishingService {
     public void publish(EventMetadata metadata, EventPayload payload);
     
     void setEventSerializer(EventSerializer eventSerializer);
-}
+}}
 </pre>
 
 Typically implementations will use the injected `EventSerializer` to convert the metadata and payload into a form to be published:
@@ -63,7 +63,7 @@ package org.apache.isis.applib.services.publish;
 
 public interface EventSerializer {
     public Object serialize(EventMetadata metadata, EventPayload payload);
-}
+}}
 </pre>
 
 The serialized form returned by `EventSerializer` will typically be something like JSON, XML or a string.  The signature of `serialize(...)` returns an object 
@@ -92,7 +92,7 @@ public interface EventSerializer {
         }
     }
     ...
-}
+}}
 </pre>
 
 A simple implementation of `PublishingService` (which must be configured as a domain service) is also available; this simply writes to stderr is also provided:
@@ -116,7 +116,7 @@ public interface PublishingService {
         }
     }
     ...
-}
+}}
 </pre>
 
 Thus, to configure a very simple form of publishing, add the following to `isis.properties`:
@@ -159,7 +159,7 @@ public @interface PublishedAction {
             Object target, List&lt;Object&gt; arguments, Object result);
     }
     Class&lt;? extends PayloadFactory&gt; value()  default PayloadFactory.class;
-}
+}}
 </pre>
 
 For objects, the interface to implement is `@PublishedObject.PayloadFactory`:
@@ -172,7 +172,7 @@ public @interface PublishedObject {
         public EventPayload payloadFor(Object changed);
     }
     Class&lt;? extends PayloadFactory&gt; value()  default PayloadFactory.class;
-}
+}}
 </pre>
 
 For example, the following will eagerly include the `ToDoItem`'s `description` property whenever it is changed:
@@ -181,7 +181,7 @@ For example, the following will eagerly include the `ToDoItem`'s `description` p
 @PublishedObject(ToDoItemPayloadFactory.class)
 public class ToDoItem {
     ...
-}
+}}
 </pre>
 
 where `ToDoItemPayloadFactory` is defined as:
@@ -204,8 +204,7 @@ public class ToDoItemChangedPayloadFactory implements PayloadFactory {
     public EventPayload payloadFor(Object changedObject) {
         return new ToDoItemPayload((ToDoItem) changedObject);
     }
-
-}
+}}
 </pre>
 
 ### Class Diagram
