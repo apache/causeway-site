@@ -39,9 +39,9 @@ The Markmail archives span both our current (TLP) mailing lists and also our ori
 - [wiki](https://cwiki.apache.org/confluence/display/ISIS/Index)
 - [CI Builds](https://builds.apache.org/job/isis-framework-ubuntu)
 - [Sonar (@Apache)](https://analysis.apache.org/dashboard/index/org.apache.isis.core:isis)
-- [Sonar (3rd party)](http://nemo.sonarsource.org/dashboard/index/org.apache.isis:isis-all)
 - [Fisheye](https://fisheye6.atlassian.com/changelog/isis) (broken sync?)
 <!--
+- [Sonar (3rd party)](http://nemo.sonarsource.org/dashboard/index/org.apache.isis:isis-all)
 - [Gmane](http://blog.gmane.org/gmane.comp.apache.incubator.isis.users)
 - [Isis extras](http://code.google.com/a/apache-extras.org/p/isis-extras/)
 -->
