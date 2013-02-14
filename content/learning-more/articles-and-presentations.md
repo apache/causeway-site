@@ -4,7 +4,7 @@ Some articles and presentations relating to either Apache Isis (or its predecess
 
 2013
 
-* **Article, SDJournal : [Introducing Apache Isis](http://sdjournal.org/software-developers-journal-open-012013-2/)**
+* **Article, SDJournal : [Introducing Isis](http://sdjournal.org/software-developers-journal-open-012013-2/)**
 * Article, SDJournal: [Restful Objects on Apache Isis](http://sdjournal.org/software-developers-journal-open-012013-2/)
 
 2012
