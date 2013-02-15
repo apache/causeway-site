@@ -11,20 +11,16 @@ Moreover, these datatypes are *not* in the default fetch group, meaning that JDO
 For example, the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) defines the `dueBy` property as follows:
 
 <pre>
-  public class ToDoItem ... {
-    ...
-    @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
-    private LocalDate dueBy;
+  @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
+  private LocalDate dueBy;
 
-    @MemberOrder(name="Detail", sequence = "3")
-    @Optional
-    public LocalDate getDueBy() {
-      return dueBy;
-    }
-    public void setDueBy(final LocalDate dueBy) {
-      this.dueBy = dueBy;
-    }
-    ...
+  @MemberOrder(name="Detail", sequence = "3")
+  @Optional
+  public LocalDate getDueBy() {
+    return dueBy;
+  }
+  public void setDueBy(final LocalDate dueBy) {
+    this.dueBy = dueBy;
   }
 </pre>
 
@@ -41,22 +37,17 @@ Again, this requires the `@javax.jdo.annotations.Persistent` annotation.  Howeve
 For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property is as follows:
 
 <pre>
-  public class ToDoItem ... {
+  @javax.jdo.annotations.Persistent(defaultFetchGroup="false")
+  private Blob attachment;
 
-    ...
-    @javax.jdo.annotations.Persistent(defaultFetchGroup="false")
-    private Blob attachment;
-
-    @Optional
-    @MemberOrder(name="Detail", sequence = "7")
-    @Hidden(where=Where.STANDALONE_TABLES)
-    public Blob getAttachment() {
-      return attachment;
-    }
-    public void setAttachment(final Blob attachment) {
-      this.attachment = attachment;
-    }
-    ...
+  @Optional
+  @MemberOrder(name="Detail", sequence = "7")
+  @Hidden(where=Where.STANDALONE_TABLES)
+  public Blob getAttachment() {
+    return attachment;
+  }
+  public void setAttachment(final Blob attachment) {
+    this.attachment = attachment;
   }
 </pre>
 
@@ -71,24 +62,19 @@ However, even in the case of collections that have annotated with `@Render(Type.
 For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `dependencies` collection is as follows:
 
 <pre>
-  public class ToDoItem ... {
+  @javax.jdo.annotations.Persistent(table="TODO_DEPENDENCIES")
+  @javax.jdo.annotations.Join(column="DEPENDING_TODO_ID")
+  @javax.jdo.annotations.Element(column="DEPENDENT_TODO_ID")
+  private SortedSet<ToDoItem> dependencies = new TreeSet<ToDoItem>();
 
-    ...
-    @javax.jdo.annotations.Persistent(table="TODO_DEPENDENCIES")
-    @javax.jdo.annotations.Join(column="DEPENDING_TODO_ID")
-    @javax.jdo.annotations.Element(column="DEPENDENT_TODO_ID")
-    private SortedSet<ToDoItem> dependencies = new TreeSet<ToDoItem>();
-
-    @Disabled
-    @MemberOrder(sequence = "1")
-    @Render(Type.EAGERLY)
-    public SortedSet<ToDoItem> getDependencies() {
-      return dependencies;
-    }
-    public void setDependencies(final SortedSet<ToDoItem> dependencies) {
-      this.dependencies = dependencies;
-    }
-    ...
+  @Disabled
+  @MemberOrder(sequence = "1")
+  @Render(Type.EAGERLY)
+  public SortedSet<ToDoItem> getDependencies() {
+    return dependencies;
+  }
+  public void setDependencies(final SortedSet<ToDoItem> dependencies) {
+    this.dependencies = dependencies;
   }
 </pre>
 
