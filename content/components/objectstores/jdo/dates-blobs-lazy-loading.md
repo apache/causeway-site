@@ -39,7 +39,7 @@ In DataNucleus 3.2, it will no longer be necessary to specify the "default fetch
 
 ### Blobs and Clobs
 
-In addition to the support for JODA types, Isis also configures JDO/DataNucleus so that the properties of type `org.apache.isis.applib.value.Blob` and `org.apache.isis.applib.value.Clob` can also be persisted.
+In addition to the support for Joda types, Isis also configures JDO/DataNucleus so that the properties of type `org.apache.isis.applib.value.Blob` and `org.apache.isis.applib.value.Clob` can also be persisted.
 
 Again, this requires the `@javax.jdo.annotations.Persistent` annotation.  However, whereas for dates one would always expect this value to be retrieved eagerly, for blobs and clobs it is not so clear cut.
 
