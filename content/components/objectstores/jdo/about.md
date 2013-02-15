@@ -4,7 +4,8 @@ The JDO objectstore enables the persistence of domain objects using the JDO API.
 
 Hints and tips:
 
-- [Maven and Eclipse](hints-and-tips.html)
+- [Maven and Eclipse](maven-and-eclipse.html)
+- [Dates, Blobs and Lazy Loading](dates-blobs-lazy-loading.html)
 
 ### Releases
 

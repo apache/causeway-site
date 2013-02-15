@@ -204,7 +204,8 @@ Title: Documentation
 ###  JDO [1.0.0](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html)
-- [Maven and Eclipse](components/objectstores/jdo/hints-and-tips.html)
+- [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
+- [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 
 }
 
