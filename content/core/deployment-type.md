@@ -104,20 +104,3 @@ or using the long form:
 
 The default if not specified is `PROTOTYPE`.
 
-
-## Specifying components explicitly
-
-To specify the various components explicitly, add an entry to `isis.properties` config file (in the `WEB-INF` directory for the web viewers, or the `config` directory for the DnD viewer).
-
-For example:
-
-<pre>
-isis.authentication=ldap
-isis.authorization=file
-isis.persistor=datanucleus           # ie object store
-isis.user-profile-store=in-memory    # ie profile store
-</pre>
-
-The available values are registered in [installer-registry.properties](https://raw.github.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  
-
-In either case the appropriate component must of course be added as a dependency to the `pom.xml` file.  

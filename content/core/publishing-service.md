@@ -145,7 +145,7 @@ isis.services=<i>...other services...</i>,\
 In addition, the `baseUrl` to use in hyperlinks must be specified, also in `isis.properties`; for example:
 
 <pre>
-org.apache.isis.viewer.restfulobjects.rendering.eventserializer.RestfulObjectsSpecEventSerializer.baseUrl=https://myapp.mycompany.com:8080/restful/.
+isis.viewer.restfulobjects.RestfulObjectsSpecEventSerializer.baseUrl=https://myapp.mycompany.com:8080/restful/.
 </pre>
 
 If no `baseUrl` is specified, then the default URL is `http://localhost:8080/restful/`.

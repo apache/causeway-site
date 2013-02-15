@@ -70,6 +70,7 @@ Title: Documentation
 
 ###  Applib
 
+- [Configuration Files](core/configuration-files.html)
 - [Deployment Types](core/deployment-type.html)
 - [Applib](core/applib.html)
 

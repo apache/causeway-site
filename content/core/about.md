@@ -4,27 +4,28 @@ Title: Core Modules
 
 ###  Applib
 
-- [Deployment Types](core/deployment-type.html)
-- [Applib](core/applib.html)
+- [Configuration Files](configuration-files.html)
+- [Deployment Types](deployment-type.html)
+- [Applib](applib.html)
 
 ###  Services
 
-- [Publishing Service](core/publishing-service.html) [not yet released]
+- [Publishing Service](publishing-service.html) [not yet released]
 
 ### Development
 
-- [Unit Test Support](core/unittestsupport.html) [stub]
-- [Integration Test Support](core/integtestsupport.html) [stub]
+- [Unit Test Support](unittestsupport.html) [stub]
+- [Integration Test Support](integtestsupport.html) [stub]
 
 ###  Programming Model
 
-- [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
+- [Finetuning the Programming Model](metamodel-finetuning-the-programming-model.html)
 
 
 ### Runtime
 
-- [Core Runtime](core/runtime.html) [stub]
-- [Webserver](core/webserver.html) [stub]
+- [Core Runtime](runtime.html) [stub]
+- [Webserver](webserver.html) [stub]
 
 ### Bundled Components
 
