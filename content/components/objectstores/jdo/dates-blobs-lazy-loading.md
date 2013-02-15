@@ -34,7 +34,7 @@ public class ToDoItem ... {
 </pre>
 
 {note
-In DataNucleus 3.2, it will no longer be necessary to specify the "default fetc group" because this flag is [switched on](http://datanucleus.svn.sourceforge.net/viewvc/datanucleus/platform/store.types.jodatime/trunk/plugin.xml?revision=16602&content-type=text%2Fplain).  See [ISIS-303](https://issues.apache.org/jira/browse/ISIS-303) as to when this is incorporated into Isis JDO Objectstore.
+In DataNucleus 3.2, it will no longer be necessary to specify the "default fetch group" because this flag is [switched on](http://datanucleus.svn.sourceforge.net/viewvc/datanucleus/platform/store.types.jodatime/trunk/plugin.xml?revision=16602&content-type=text%2Fplain).  See [ISIS-303](https://issues.apache.org/jira/browse/ISIS-303) as to when this is incorporated into Isis JDO Objectstore.
 }
 
 ### Blobs and Clobs
