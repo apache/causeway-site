@@ -11,26 +11,21 @@ Moreover, these datatypes are *not* in the default fetch group, meaning that JDO
 For example, the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) defines the `dueBy` property as follows:
 
 <pre>
-public class ToDoItem ... {
-
+  public class ToDoItem ... {
     ...
-
-    // {{ DueBy (property)
     @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
     private LocalDate dueBy;
 
     @MemberOrder(name="Detail", sequence = "3")
     @Optional
     public LocalDate getDueBy() {
-        return dueBy;
+      return dueBy;
     }
-
     public void setDueBy(final LocalDate dueBy) {
-        this.dueBy = dueBy;
+      this.dueBy = dueBy;
     }
-
     ...
-}
+  }
 </pre>
 
 {note
@@ -46,10 +41,9 @@ Again, this requires the `@javax.jdo.annotations.Persistent` annotation.  Howeve
 For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property is as follows:
 
 <pre>
-public class ToDoItem ... {
+  public class ToDoItem ... {
 
     ...
-    // {{ Attachment (property)
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false")
     private Blob attachment;
 
@@ -57,16 +51,13 @@ public class ToDoItem ... {
     @MemberOrder(name="Detail", sequence = "7")
     @Hidden(where=Where.STANDALONE_TABLES)
     public Blob getAttachment() {
-        return attachment;
+      return attachment;
     }
-
     public void setAttachment(final Blob attachment) {
-        this.attachment = attachment;
+      this.attachment = attachment;
     }
-    // }}
-
     ...
-}
+  }
 </pre>
 
 Here we can see that the property is hidden in standalone tables, and so there's no need to retrieve it eagerly.  The converse of this the object is rendered by itself, then the attachment property will be retrieved as a one separate query; this seems like a reasonable compromise.
@@ -80,10 +71,9 @@ However, even in the case of collections that have annotated with `@Render(Type.
 For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `dependencies` collection is as follows:
 
 <pre>
-public class ToDoItem ... {
+  public class ToDoItem ... {
 
     ...
-    // {{ dependencies (Collection)
     @javax.jdo.annotations.Persistent(table="TODO_DEPENDENCIES")
     @javax.jdo.annotations.Join(column="DEPENDING_TODO_ID")
     @javax.jdo.annotations.Element(column="DEPENDENT_TODO_ID")
@@ -93,15 +83,13 @@ public class ToDoItem ... {
     @MemberOrder(sequence = "1")
     @Render(Type.EAGERLY)
     public SortedSet<ToDoItem> getDependencies() {
-        return dependencies;
+      return dependencies;
     }
-
     public void setDependencies(final SortedSet<ToDoItem> dependencies) {
-        this.dependencies = dependencies;
+      this.dependencies = dependencies;
     }
-    // }}
     ...
-}
+  }
 </pre>
 
 Even though `@Render(Type.EAGERLY)`, the `@javax.jdo.annotations.Persistent` annotation leaves the `defaultFetchGroup` as its default, which for collections is "false".
