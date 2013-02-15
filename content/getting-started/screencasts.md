@@ -27,5 +27,11 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="420" height="315" src="http://www.youtube.com/embed/ludOLyi6VyY" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
+  <tr>
+    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i> </td>
+    <td>
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
 <table>
 
