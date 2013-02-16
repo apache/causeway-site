@@ -15,16 +15,16 @@ Apache Isis has two public mailing lists, archived by [Markmail](http://markmail
 <tr>
 	<td>Users</t>
 	<td><a href="mailto:users@isis.apache.org">users@isis.apache.org</a></td>
-	<td><a href="http://mail-archives.apache.org/mod_mbox/isis-users/">ASF archives</a>
-	<td><a href="http://markmail.org/search/isis-users+list:org.apache.incubator.isis-users">Markmail archives</a>
+	<td><a href="http://mail-archives.apache.org/mod_mbox/isis-users/">TLP only</a>
+	<td><a href="http://markmail.org/search/isis-users+list:org.apache.incubator.isis-users">TLP + incubating</a>
 	</td>
 	<td><a href="mailto:users-subscribe@isis.apache.org">users-subscribe@isis.apache.org</a></td>
 </tr>
 <tr>
 	<td>Contributors</t>
 	<td><a href="mailto:dev@isis.apache.org">dev@isis.apache.org</a></td>
-	<td><a href="http://mail-archives.apache.org/mod_mbox/isis-dev/">ASF archives</a>
-	<td><a href="http://markmail.org/search/isis-dev+list:org.apache.incubator.isis-dev">Markmail archives</a>
+	<td><a href="http://mail-archives.apache.org/mod_mbox/isis-dev/">TLP only</a>
+	<td><a href="http://markmail.org/search/isis-dev+list:org.apache.incubator.isis-dev">TLP + incubating</a>
 	</td>
 	<td><a href="mailto:dev-subscribe@isis.apache.org">dev-subscribe@isis.apache.org</a></td></tr>
 </table>
