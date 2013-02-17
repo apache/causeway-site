@@ -155,7 +155,10 @@ gpg> showpref
 gpg>
 </pre>
 
-The Digest line should list SHA-512 first and SHA-1 last.
+The Digest line should list SHA-512 first and SHA-1 last. If it doesn't, use the "setpref" command:
+<pre>
+setpref SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
+</pre>
 
 Finally, remember to take a backup of your key and the keyring (ie, backup the `.gnupg` directory and its contents).
 
