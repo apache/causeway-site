@@ -81,7 +81,7 @@ public class ToDoItem {
     }
     ...
 }}
-</pre>nb: 1.0.1-SNAPSHOT of the quickstart app</td>
+</pre></td>
     <td>
       <img src="resources/screencast-08-collection-action.png" width="525" height="349"></img>
     </td>
