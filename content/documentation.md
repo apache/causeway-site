@@ -265,7 +265,7 @@ Title: Documentation
 
 - [About](components/security/shiro/about.html)
 - [Configuring Shiro](components/security/shiro/configuring-shiro.html)
-- [Using LDAP](components/security/shiro/using-ldap.html) (1.1.0-SNAPSHOT)
+- [Using LDAP](components/security/shiro/using-ldap.html)
 
 }
 
