@@ -66,12 +66,11 @@ If the external configuration directory is fixed for all environments, then you 
 
 ###Shiro
 
-If using Shiro authentication and/or authorization, note that it reads from the `shiro.ini` configuration file.  By default this also resides in `WEB-INF`.
+If using Isis' [Shiro integration](../components/security/shiro/about.html) for authentication and/or authorization, note that it reads from the `shiro.ini` configuration file.  By default this also resides in `WEB-INF`.
 
 Similar to Isis, Shiro lets this configuration directory be altered, by specifying the `shiroConfigLocations` context parameter.
 
 You can therefore override the default location using the same technique as described above for Isis' `isis.config.dir` context parameter.
-
 
 
 
