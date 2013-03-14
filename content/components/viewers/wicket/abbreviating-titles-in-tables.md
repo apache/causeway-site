@@ -17,9 +17,7 @@ To have Isis pick up this configuration file, add the following to `WEB-INF/web.
 &lt;/context-param&gt;
 </pre>
 
-{note
 If there is more than one viewer configured in the webapp, specify them as a comma-separated list, eg `wicket,restfulobjects`.
-}
 
 
 ### The configuration properties
