@@ -17,9 +17,7 @@ isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionUserName=sa
 isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword=
 </pre>
 
-{note
 Those configuration properties that start with the prefix `isis.persistor.datanucleus.impl.` are passed through directly to DataNucleus (with the prefix removed).
-}
 
 #### Container managed (JNDI) datasource
 
@@ -31,9 +29,7 @@ Firstly, specify the name of the datasource in the `WEB-INF\persistor_datanucleu
 isis.persistor.datanucleus.impl.datanucleus.ConnectionFactoryName=java:comp/env/jdbc/quickstart
 </pre>
 
-{note
 If connection pool settings are also present in this file, they will simply be ignored.  Any other configuration properties that start with the prefix `isis.persistor.datanucleus.impl.` are passed through directly to DataNucleus (with the prefix removed).
-}
 
 Secondly, in the `WEB-INF/web.xml`, declare the resource reference:
 
