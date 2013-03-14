@@ -44,14 +44,17 @@ This will cause Isis to search and read for `viewer_wicket.properties` and `view
 
 As noted above, by default Isis will look for configuration files in the `WEB-INF` directory.  If you wish to vary the configuration by environment (eg systest vs production), then this can be altered by specifying the `isis.config.dir` context parameter.
 
-If the external configuration directory will change from one environment to another, then specify the context parameter according to the documentation of your chosen servlet container.  For example, if using Tomcat 7.0, the context parameter can be specified by adding the following to the parameter:
+If the external configuration directory will change from one environment to another, then specify the context parameter according to the documentation of your chosen servlet container.
+
+For example, if using Tomcat 7.0, you would typically copy the empty `$TOMCAT_HOME/webapps/conf/context.xml` to a file specific to the webapp, for example `$TOMCAT_HOME/webapps/conf/todo.xml`.  The context parameter would then be specified by adding the following:
 
 <pre>
-&lt;Parameter name="isis.config.dir" value="/usr/local/tomcat/conf/"
-         override="true"/&gt;
+&lt;Parameter name="isis.config.dir"
+           value="/usr/local/tomcat/conf/"
+           override="true"/&gt;
 </pre>
 
-For more detail see the [Tomcat documentation](http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Context_Parameters).
+For more detail, see the Tomcat documentation on [defining a context](http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Defining_a_context) and on [context parameters](http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Context_Parameters).
      
 If the external configuration directory is fixed for all environments, then you can specify within the `web.xml` itself:
 

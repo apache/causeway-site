@@ -124,6 +124,8 @@ Title: Documentation
 ###  Wicket [1.1.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
+- [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
+- [Abbreviating titles in tables](components/viewers/wicket/abbreviating-titles-in-tables.html) (1.2.0-SNAPSHOT)
 
 }
 
@@ -206,6 +208,7 @@ Title: Documentation
 - [About](components/objectstores/jdo/about.html)
 - [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
+- [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) (1.1.0-SNAPSHOT)
 
 }
 

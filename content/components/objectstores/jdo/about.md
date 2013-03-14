@@ -6,6 +6,7 @@ Hints and tips:
 
 - [Maven and Eclipse](maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](dates-blobs-lazy-loading.html)
+- [Using a JNDI Datasource](using-jndi-datasource.html) (1.1.0-SNAPSHOT)
 
 ### Releases
 
