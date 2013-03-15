@@ -6,7 +6,7 @@ Isis' Wicket viewer has an About page that, by default, will provide a dump of t
 
 Here's what the About page looks like with this configuration added:
 
-![](images/about-page.png)
+<img src="images/about-page.png" width="800"></img>
 
 Note that the `Build-Time` attribute has been used as the version number.  The Wicket viewer is hard-coded to search for specific attributes and use as the application version.  In order, it searches for:
 
