@@ -26,7 +26,7 @@ public class Order {
     public String getOtherInfo() { ... }
     
     ...
-}
+}}
 </pre>
 
 In this case, if we view the `Order` from the context of `Customer` (that is, within a parented collection's table) then the customer's property will be automatically excluded from the title of the `Order`.
@@ -41,7 +41,7 @@ public class Order {
     public Customer getCustomer() { ... }
     
     ...
-}
+}}
 </pre>
 
 The above annotations mean that titles usually "just work", altering according to the context in which they are viewed.

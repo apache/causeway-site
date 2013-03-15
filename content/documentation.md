@@ -126,7 +126,7 @@ Title: Documentation
 - [About](components/viewers/wicket/about.html)
 - [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
 - [Titles in tables](components/viewers/wicket/titles-in-tables.html) (1.2.0-SNAPSHOT)
-- [Configuring the about page](components/viewers/wicket/configuring-the-about-page.html) (1.2.0-SNAPSHOT)
+- [The About page](components/viewers/wicket/configuring-the-about-page.html) (1.2.0-SNAPSHOT)
 
 }
 
