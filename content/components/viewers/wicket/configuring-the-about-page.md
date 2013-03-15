@@ -21,7 +21,7 @@ If none of these are found, then no version is displayed.
 
 #### Adding attributes to the WAR's manifest 
 
-Add the following to the webapp's `pom.xml`:
+Add the following to the webapp's `pom.xml` (under `&lt;build&gt;&lt;plugins&gt;`):
 
 <pre>
 &lt;plugin&gt;
