@@ -15,7 +15,7 @@ For example, suppose we have:
 where the `Order` class references both `Customer` and `Product`.  It's title might involve each of these:
 
 <pre>
-public class Order {
+  public class Order {
     @Title(sequence="1")
     public Customer getCustomer() { ... }
 
@@ -26,7 +26,7 @@ public class Order {
     public String getOtherInfo() { ... }
     
     ...
-}}
+  }
 </pre>
 
 In this case, if we view the `Order` from the context of `Customer` (that is, within a parented collection's table) then the customer's property will be automatically excluded from the title of the `Order`.
@@ -35,13 +35,13 @@ Incidentally, this feature is closely related to the
 `@Hidden(where=Where.REFERENCES_PARENT)` annotation, which will cause the property itself to be hidden as a column in the table.  An Isis idiom is therefore:
 
 <pre>
-public class Order {
+  public class Order {
     @Title(sequence="1")
     @Hidden(where=Where.REFERENCES_PARENT)
     public Customer getCustomer() { ... }
     
     ...
-}}
+  }
 </pre>
 
 The above annotations mean that titles usually "just work", altering according to the context in which they are viewed.
