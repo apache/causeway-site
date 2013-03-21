@@ -31,7 +31,7 @@ Add `;sqllog=3` to the end of the JDBC URL.
 In `postgresql\9.2\data\postgresql.conf`:
 
 <pre>
-#log_statement = 'all'
+log_statement = 'all'
 </pre>
 
 Will then log to `postgresql\9.2\data\pg_log` directory.
