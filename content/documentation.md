@@ -45,16 +45,7 @@ Title: Documentation
 - [Git Cookbook](contributors/git-cookbook.html)
 - [Versioning Policy](contributors/versioning-policy.html)
 
-###  Committers
-
-- [Updating the CMS site](contributors/updating-the-cms-site.html)
-- [Updating the applib docs](contributors/updating-the-applib-docs.html)
-- [Recreating an archetype](contributors/recreating-an-archetype.html)
-- [Snapshot process](contributors/snapshot-process.html)
-- [Release process](contributors/release-process.html)
-- [Release branch and tag names](contributors/release-branch-and-tag-names.html)
-- [Verifying releases](contributors/verifying-releases.html)
-- [Key generation](contributors/key-generation.html)
+Guidance for committers is at the bottom of this page.
 
 }
 
@@ -372,10 +363,28 @@ Title: Documentation
 
 {span-one-third
 
+###  Committers
+
+- [Updating the CMS site](contributors/updating-the-cms-site.html)
+- [Updating the applib docs](contributors/updating-the-applib-docs.html)
+- [Recreating an archetype](contributors/recreating-an-archetype.html)
+- [Snapshot process](contributors/snapshot-process.html)
+- [Release process](contributors/release-process.html)
+- [Release branch and tag names](contributors/release-branch-and-tag-names.html)
+- [Verifying releases](contributors/verifying-releases.html)
+- [Key generation](contributors/key-generation.html)
+
+
+
+}
+
+{span-one-third
+
 ### Plugins
 
 - [Maven Plugin](other/maven.html) [stub]
 - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+
 
 }
 
@@ -385,9 +394,6 @@ Title: Documentation
 - [DSL](other/dsl.html) [stub]
 -->
 
-}
-
-{span-one-third
 }
 
 }
