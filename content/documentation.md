@@ -305,6 +305,24 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
+### Plugins
+
+- [Maven Plugin](other/maven.html) [stub]
+- [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+
+}
+
+{span-one-third
+
+<!--
+- [DSL](other/dsl.html) [stub]
+-->
+
+
+}
+
+{span-one-third
+
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
@@ -315,26 +333,6 @@ Guidance for committers is at the bottom of this page.
 - [Release branch and tag names](contributors/release-branch-and-tag-names.html)
 - [Verifying releases](contributors/verifying-releases.html)
 - [Key generation](contributors/key-generation.html)
-
-
-
-}
-
-{span-one-third
-
-### Plugins
-
-- [Maven Plugin](other/maven.html) [stub]
-- [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
-
-
-}
-
-{span-one-third
-
-<!--
-- [DSL](other/dsl.html) [stub]
--->
 
 }
 
