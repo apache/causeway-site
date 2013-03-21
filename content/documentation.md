@@ -67,7 +67,7 @@ Guidance for committers is at the bottom of this page.
 
 ###  Services
 
-- [Publishing Service](core/publishing-service.html) [not yet released]
+- [Publishing Service](core/publishing-service.html) [1.2.0-SNAPSHOT]
 
 }
 
