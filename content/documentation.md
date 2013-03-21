@@ -127,49 +127,9 @@ Guidance for committers is at the bottom of this page.
 
 - [About](components/viewers/restfulobjects/about.html)
 
-}
-
-{span-one-third
-
-###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
-
-- [About](components/viewers/scimpi/about.html)
-
-}
-
-}
-
-{row-even
-
-{span-one-third
-
-###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-
-- [About](components/viewers/dnd/about.html)
-
-}
-
-{span-one-third
-
-### HTML [0.2.0-incubating](components/viewers/html/release-notes/about.html)
-
-- [About](components/viewers/html/about.html)
-
-}
-
-{span-one-third
-
 ### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
 - [About](components/viewers/junit/about.html)
-
-}
-
-}
-
-{row-odd
-
-{span-one-third
 
 ### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
 
@@ -178,12 +138,23 @@ Guidance for committers is at the bottom of this page.
 }
 
 {span-one-third
+
+###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
+
+- [About](components/viewers/scimpi/about.html)
+
+###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+
+- [About](components/viewers/dnd/about.html)
+
+### HTML [0.2.0-incubating](components/viewers/html/release-notes/about.html)
+
+- [About](components/viewers/html/about.html)
+
 }
 
-{span-one-third
 }
 
-}
 
 }
 
@@ -236,14 +207,6 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
-### File [1.0.0](components/security/file/release-notes/about.html)
-
-- [About](components/security/file/about.html)
-
-}
-
-{span-one-third
-
 ### Shiro [1.1.0](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
@@ -254,29 +217,21 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
+### File [1.0.0](components/security/file/release-notes/about.html)
+
+- [About](components/security/file/about.html)
+
+}
+
+{span-one-third
+
 ### LDAP [0.2.0-incubating](components/security/ldap/release-notes/about.html)
 
 - [About](components/security/ldap/about.html)
 
-}
-
-}
-
-{row-odd
-
-{span-one-third
-
 ### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
 
 - [About](components/security/sql/about.html)
-
-}
-
-{span-one-third
-
-}
-
-{span-one-third
 
 }
 
