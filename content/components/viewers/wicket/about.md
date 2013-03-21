@@ -7,8 +7,8 @@ Like the [HTML viewer](../html/about.html), the wicket viewer provides a generic
 ### Further reading:
 
 - [Customizing the viewer](customizing-the-viewer.html)
-- [Titles in tables](titles-in-tables.html) (1.2.0-SNAPSHOT)
-- [The About page](configuring-the-about-page.html) (1.2.0-SNAPSHOT)
+- [Titles in tables](titles-in-tables.html) [1.2.0-SNAPSHOT]
+- [The About page](configuring-the-about-page.html) [1.2.0-SNAPSHOT]
 
 ### Releases
 
