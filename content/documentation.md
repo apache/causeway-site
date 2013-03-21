@@ -210,6 +210,7 @@ Title: Documentation
 - [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) (1.1.0-SNAPSHOT)
+- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) (1.1.0-SNAPSHOT)
 
 }
 
