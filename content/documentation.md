@@ -173,7 +173,9 @@ Guidance for committers is at the bottom of this page.
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) [1.1.0-SNAPSHOT]
 - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
-- [Enabling Logging](components/objectstores/jdo/enabling-logging.html) [stub]
+- [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
+- [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+
 }
 
 {span-one-third

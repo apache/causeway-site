@@ -1,9 +1,5 @@
 Title: Enabling Logging
 
-{note
-this article is just a stub
-}
-
 Sometimes you just need to see what is going on.  There are various ways in which logging can be enabled, here are some ideas.
 
 ### In Apache Isis
