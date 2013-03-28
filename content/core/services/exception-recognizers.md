@@ -16,7 +16,7 @@ If the implementation recognizes the exception then it returns a user-friendly m
 
 Typically implementations of `ExceptionRecognizer` are registered as services (in the `isis.properties` configuration file). More than one recognizer can be registered; all we be checked if an exception is thrown.
 
-> At the time of writing the rendering of the message is only supported by the [Wicket viewer](../components/viewers/wicket/about.html); check documentation of other viewers to see if they provide this capability.
+> At the time of writing the rendering of the message is only supported by the [Wicket viewer](../../components/viewers/wicket/about.html); check documentation of other viewers to see if they provide this capability.
 
 ### Core Implementations
 
