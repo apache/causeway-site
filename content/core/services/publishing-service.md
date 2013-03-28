@@ -76,7 +76,6 @@ lowest common denominator, but in some cases are type-safe equivalent, such as a
 
 ### Default Implementations
 
-
 A simple implementation of `PublishingService` (which must be configured as a domain service) is available; it simply writes to stderr.
 
 To configure a very simple form of publishing, add the following to `isis.properties`:
@@ -131,7 +130,9 @@ As can be seen, the above implementation in turn uses a default implementation o
   }
 </pre>
 
-The default `PublishingService` (or indeed any implementation) can be configured to run with a different `EventSerializer` by configuring the serializer implementation in the `isis.properties` file.  One alternative serializer is described next.
+The default `PublishingService` (or indeed any implementation) can be configured to run with a different `EventSerializer` by configuring the serializer implementation in the `isis.properties` file. 
+
+### Alternative Implementations
 
 An alternative implementation of the `PublishingService` is provided by the [JDO Objectstore](../../components/objectstores/jdo/publishing-service-jdo.html).  This implementation persists the events to a table.
 
