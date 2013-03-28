@@ -2,7 +2,7 @@ Title: Exception Recognizers (1.2.0-SNAPSHOT)
 
 The `ExceptionRecognizer` API (in the `org.apache.isis.applib.services.exceprecog` package) provides the mechanism for both the domain programmer and also for components to be able to recognize and handle certain exceptions that may be thrown by the system.
 
-For example, the [JDO Objectstore](../components/objectstores/jdo/about.html) provides a set of recognizers to recognize and handle SQL constraint exceptions such as uniqueness violations.  These can then be rendered back to the user as expected errors, rather than fatal stacktraces.
+For example, the [JDO Objectstore](../../components/objectstores/jdo/about.html) provides a set of recognizers to recognize and handle SQL constraint exceptions such as uniqueness violations.  These can then be rendered back to the user as expected errors, rather than fatal stacktraces.
 
 The `ExceptionRecognizer` interface is defined as:
 
