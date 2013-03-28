@@ -67,7 +67,7 @@ Guidance for committers is at the bottom of this page.
 
 ###  Applib Services
 
-- [Initializing Services](core/services/initializing-service.html) [1.2.0-SNAPSHOT]
+- [Initializing Services](core/services/initializing-services.html) [1.2.0-SNAPSHOT]
 - [Auditing Service](core/services/auditing-service.html)
 - [Bookmark Service](services/bookmark-service.html)
 - [Exception Recognizers](services/exception-recognizers.html) [1.2.0-SNAPSHOT]
