@@ -1,4 +1,4 @@
-Title: Auditing Service using JDO (1.1.0-SNAPSHOT)
+Title: Auditing Service using JDO [1.1.0-SNAPSHOT]
 
 The JDO objectstore provides a simple implementation of the applib [AuditingService](../../../core/services/auditing-service.html) that simply persists the event data into a `AuditEntry` entity.
 
