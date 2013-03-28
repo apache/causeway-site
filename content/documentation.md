@@ -61,13 +61,17 @@ Guidance for committers is at the bottom of this page.
 
 ###  Applib
 
+- [Programmers' Guide](core/applib.html)
 - [Configuration Files](core/configuration-files.html)
 - [Deployment Types](core/deployment-type.html)
-- [Applib](core/applib.html)
 
-###  Services
+###  Applib Services
 
-- [Publishing Service](core/publishing-service.html) [1.2.0-SNAPSHOT]
+- [Initializing Services](core/services/initializing-service.html) [1.2.0-SNAPSHOT]
+- [Auditing Service](core/services/auditing-service.html)
+- [Bookmark Service](services/bookmark-service.html)
+- [Exception Recognizers](services/exception-recognizers.html) [1.2.0-SNAPSHOT]
+- [Publishing Service](core/services/publishing-service.html) [1.2.0-SNAPSHOT]
 
 }
 
@@ -172,9 +176,15 @@ Guidance for committers is at the bottom of this page.
 - [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) [1.1.0-SNAPSHOT]
-- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+
+### JDO Services
+
+- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
+- [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) [1.1.0-SNAPSHOT]
+- [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html) [1.1.0-SNAPSHOT]
+- [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html) [1.1.0-SNAPSHOT]
 
 }
 

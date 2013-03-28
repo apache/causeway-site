@@ -2,15 +2,19 @@ Title: Core Modules
 
 - [Releases](release-notes/about.html)
 
-###  Applib
+###  Applib & Services
 
+- [Programmers' Guide](applib.html)
 - [Configuration Files](configuration-files.html)
 - [Deployment Types](deployment-type.html)
-- [Applib](applib.html)
 
 ###  Services
 
-- [Publishing Service](publishing-service.html) [not yet released]
+- [Initializing Services](services/initializing-services.html) [1.2.0-SNAPSHOT]
+- [Auditing Service](services/auditing-service.html)
+- [Bookmark Service](services/bookmark-service.html)
+- [Exception Recognizers](services/exception-recognizers.html) [1.2.0-SNAPSHOT]
+- [Publishing Service](services/publishing-service.html) [1.2.0-SNAPSHOT]
 
 ### Development
 
