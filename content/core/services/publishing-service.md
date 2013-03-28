@@ -3,8 +3,6 @@ Title: Publishing Service [1.2.0-SNAPSHOT]
 
 The Publishing Service enables Isis to publish both changes to domain objects, and also action invocations to third parties.  A typical use case is to publish onto a pub/sub bus such as [ServiceMix](http://servicemix.apache.org/) or [ActiveMQ](http://activemq.apache.org/) to keep other systems up to date.
 
-> Publishing of action invocations is supported by all objectstores.  Publishing of changed objects is currently only supported by the [JDO objectstore](../../components/objectstores/jdo/about.html).
-
 Publishing requires at minimum two things:
 
 *  domain classes annotated with `PublishedAction` or `PublishedObject`
@@ -16,6 +14,8 @@ Publishing requires at minimum two things:
    This is done in the usual way, registering the service in the `isis.properties` config file
 
 Over and above this, the service does provide considerable flexibility for fine-tuning the serialized form and the contents (payload) of the event.
+
+> Publishing of action invocations is supported by all objectstores.  Publishing of changed objects is currently only supported by the [JDO objectstore](../../components/objectstores/jdo/about.html).
 
 ### Annotating the Domain Model
 
@@ -40,8 +40,6 @@ Similarly, to indicate that any changes to an object should be published, use th
 </pre>
 
 Either or both of these annotations can be used.
-
-> At the time of writing, only the [JDO Objectstore](../../components/objectstores/jdo/about.html) supports the publishing of objects.  (Published actions are supported by all object stores).
 
 As described further down in this article, it is possible to fine-tune the payload.  However, simply using the above annotations will suffice in many cases.
 
