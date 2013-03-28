@@ -1,8 +1,8 @@
 Title: Auditing Service
 
-> This service is currently only supported by the [JDO objectstore](../../components/objectstores/jdo/about.html).
-
 The `AuditingService` provides a simple mechanism to capture changes to data.  It is called for each property that has changed on any domain object, as a set of pre- and post-values.
+
+> This service is currently only supported by the [JDO objectstore](../../components/objectstores/jdo/about.html).
 
 > You may prefer to use the [Publishing Service](publishing-service.html) rather than the Auditing Service, since it is considerably more flexible.
 
