@@ -69,8 +69,8 @@ Guidance for committers is at the bottom of this page.
 
 - [Initializing Services](core/services/initializing-services.html) [1.2.0-SNAPSHOT]
 - [Auditing Service](core/services/auditing-service.html)
-- [Bookmark Service](services/bookmark-service.html)
-- [Exception Recognizers](services/exception-recognizers.html) [1.2.0-SNAPSHOT]
+- [Bookmark Service](core/services/bookmark-service.html)
+- [Exception Recognizers](core/services/exception-recognizers.html) [1.2.0-SNAPSHOT]
 - [Publishing Service](core/services/publishing-service.html) [1.2.0-SNAPSHOT]
 
 }
