@@ -1,4 +1,4 @@
-Title: Event Serializer for the RO Spec [1.2.0-SNAPSHOT]
+Title: Event Serializer for the RO Spec [1.1.0-SNAPSHOT]
 
 The [Publishing Service](../../../core/services/publishing-service.html) enables Isis to publish action invocations and also changes of domain objects to third party systems.
 
