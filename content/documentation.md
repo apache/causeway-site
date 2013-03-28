@@ -131,13 +131,11 @@ Guidance for committers is at the bottom of this page.
 
 - [About](components/viewers/restfulobjects/about.html)
 
-### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
-- [About](components/viewers/junit/about.html)
+##### Applib Service Implementations
 
-### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
+- [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) [1.1.0-SNAPSHOT]
 
-- [About](components/viewers/bdd/about.html)
 
 }
 
@@ -151,9 +149,14 @@ Guidance for committers is at the bottom of this page.
 
 - [About](components/viewers/dnd/about.html)
 
-### HTML [0.2.0-incubating](components/viewers/html/release-notes/about.html)
+### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
-- [About](components/viewers/html/about.html)
+- [About](components/viewers/junit/about.html)
+
+### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
+
+- [About](components/viewers/bdd/about.html)
+
 
 }
 
@@ -179,7 +182,7 @@ Guidance for committers is at the bottom of this page.
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
-### JDO Services
+##### Applib Service Implementations
 
 - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
 - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) [1.1.0-SNAPSHOT]
@@ -237,13 +240,6 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
-### LDAP [0.2.0-incubating](components/security/ldap/release-notes/about.html)
-
-- [About](components/security/ldap/about.html)
-
-### SQL [0.2.0-incubating](components/security/sql/release-notes/about.html)
-
-- [About](components/security/sql/about.html)
 
 }
 
@@ -345,6 +341,20 @@ Guidance for committers is at the bottom of this page.
 - [Release branch and tag names](contributors/release-branch-and-tag-names.html)
 - [Verifying releases](contributors/verifying-releases.html)
 - [Key generation](contributors/key-generation.html)
+
+}
+
+{span-one-third
+
+###  Mothballed Components
+
+These are no longer under active development
+
+- [HTML Viewer](components/viewers/html/about.html) (use Wicket)
+
+- [LDAP Security](components/security/ldap/about.html) (use Shiro)
+
+- [SQL Security](components/security/sql/about.html) (use Shiro)
 
 }
 

@@ -10,7 +10,7 @@ The JDO objectstore enables the persistence of domain objects using the JDO API.
 - [Enabling Logging](enabling-logging.html)
 - [Deploying on the Google App Engine](deploying-on-the-google-app-engine.html)
 
-### JDO Services:
+### Applib Service Implementations:
 
 - [Eagerly Registering Entities](eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
 - [Publishing Service on JDO](publishing-service-jdo.html) [1.1.0-SNAPSHOT]

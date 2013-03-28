@@ -13,7 +13,7 @@ Publishing requires at minimum two things:
 
 * an implementation of the `org.apache.isis.applib.services.publish.PublishingService` interface must be registered as a domain services
 
-   This is done in the usual way, under the `isis.properties` config file
+   This is done in the usual way, registering the service in the `isis.properties` config file
 
 Over and above this, the service does provide considerable flexibility for fine-tuning the serialized form and the contents (payload) of the event.
 
@@ -40,6 +40,8 @@ Similarly, to indicate that any changes to an object should be published, use th
 </pre>
 
 Either or both of these annotations can be used.
+
+> At the time of writing, only the [JDO Objectstore](../../components/objectstores/jdo/about.html) supports the publishing of objects.  (Published actions are supported by all object stores).
 
 As described further down in this article, it is possible to fine-tune the payload.  However, simply using the above annotations will suffice in many cases.
 
@@ -133,40 +135,9 @@ As can be seen, the above implementation in turn uses a default implementation o
 
 The default `PublishingService` (or indeed any implementation) can be configured to run with a different `EventSerializer` by configuring the serializer implementation in the `isis.properties` file.  One alternative serializer is described next.
 
+An alternative implementation of the `PublishingService` is provided by the [JDO Objectstore](../../components/objectstores/jdo/publishing-service-jdo.html).  This implementation persists the events to a table.
 
-### Restful Objects (JSON) Serializer
-
-An alternative serializer is provided by the `isis-viewer-restfulobjects-rendering` module.  This converts the provided `EventPayload` into the form specified by the [Restful Objects spec](http://restfulobjects.org).
-
-To configure this serializer, add the following to `isis.properties`:
-
-<pre>
-isis.services=<i>...other services...</i>,\
-       org.apache.isis.viewer.restfulobjects.rendering.eventserializer.RestfulObjectsSpecEventSerializer
-</pre>
-
-In addition, the `baseUrl` to use in hyperlinks must be specified, also in `isis.properties`; for example:
-
-<pre>
-isis.viewer.restfulobjects.RestfulObjectsSpecEventSerializer.baseUrl=https://myapp.mycompany.com:8080/restful/.
-</pre>
-
-If no `baseUrl` is specified, then the default URL is `http://localhost:8080/restful/`.
-
-{note
-Because the `baseUrl` will be different in production vs development, you will probably want to [configure Isis](configuration-files.html) to pick up its configuration file
-from an external directory.
-}
-
-If - as described in the previous sections - you configure the default `PublishingService` with the `RestfulObjectsSpecEventSerializer`, then you should see JSON being written to your console.
-
-For example, this is the JSON generated on an action invocation:
-
- ![](images/action-invocation-published-to-stderr.png)
-
-while this is the object change JSON:
-
- ![](images/changed-object-published-to-stderr.png)
+An alternative implementation of the `EventSerializer` is provided by the [Restful Objects viewer](../../components/viewers/restfulobjects/event-serializer-rospec.html).  This implementation serializes the payload using the conventions of the [Restful Objects spec](http://restfulobjects.org).
 
 
 ### Fine-tuning the payload
