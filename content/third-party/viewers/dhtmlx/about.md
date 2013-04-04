@@ -12,7 +12,7 @@ The viewer has some innovative features, including:
 
 You can try out the online demo of the viewer (running on Google App Engine) [here](http://isis-viewer-dhtmlx.appspot.com).  You should see an app that (as of Apr 2013) looks something like:
 
-![](images/isis-dhtmlx-viewer-screenshot-01.png)
+<img src="images/isis-dhtmlx-viewer-screenshot-01.png" width="700" height="449"></img>
 
 The intention *is* for this viewer to be open sourced, though the dependency on DHTMLX (dual licensed as GPL/commercial) means that it cannot be rolled into the Isis codebase.
 
