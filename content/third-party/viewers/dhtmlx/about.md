@@ -2,6 +2,8 @@ Title: DHTMLX (third-party) viewer
 
 The DHTMLX viewer integrates the [DHTMLX](http://dhtmlx.com) Javascript library with Apache Isis.  The viewer (being developed by [Mylaensys](http://www.mylaensys.com/)) has so far been as a prototype to validate the approach; we now expect it to be taken through to production-ready code later this year (2013).
 
+### Online Demo
+
 You can try out the online demo of the viewer (running on Google App Engine) [here](http://isis-viewer-dhtmlx.appspot.com).  
 
 ### Features
