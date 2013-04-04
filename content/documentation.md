@@ -145,9 +145,16 @@ Guidance for committers is at the bottom of this page.
 
 - [About](components/viewers/scimpi/about.html)
 
-###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 
-- [About](components/viewers/dnd/about.html)
+
+}
+
+}
+
+
+{row-even
+
+{span-one-third
 
 ### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
 
@@ -160,7 +167,32 @@ Guidance for committers is at the bottom of this page.
 
 }
 
+{span-one-third
+
+###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+
+- [About](components/viewers/dnd/about.html)
+
 }
+
+{span-one-third
+
+### DHTMLX viewer 
+
+- [About](third-party/viewers/dhtmlx/about.html)
+
+Note: this viewer is open source but is third-party (outside of Apache)
+
+
+}
+
+}
+
+
+
+
+
+
 
 
 }
