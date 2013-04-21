@@ -205,12 +205,13 @@ Note: this viewer is open source but is third-party (outside of Apache)
 
 {span-one-third
 
-###  JDO [1.0.0](components/objectstores/jdo/release-notes/about.html)
+###  DataNucleus (JDO) [1.0.0](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html)
 - [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) [1.1.0-SNAPSHOT]
+- [Workarounds](components/objectstores/jdo/workarounds.html) [1.1.0-SNAPSHOT]
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
