@@ -1,4 +1,4 @@
-Title: Workarounds (the `IsisJdoSupport` service) [1.1.0-SNAPSHOT]
+Title: Workarounds [1.1.0-SNAPSHOT]
 
 There are a number of limitations in DataNucleus' implementation of JDO, specifically with regard to 1:m bidirectional relationships.  
 
