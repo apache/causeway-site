@@ -4,6 +4,8 @@ There are a number of limitations in DataNucleus' implementation of JDO, specifi
 
 * loading the children from the parent does not fire the `jdoPostLoad` callback (either on the entity via `javax.jdo.listener.LoadCallback` nor `javax.jdo.listener.LoadLifecycleListener`)
 
+  More precisely, this doesn't occur if the child being loaded has subclasses, and the subclasses has fields/properties that are part of the default fetch group.
+
 * persisting a child entity does not cause the parent's collection to be updated.
 
   Note that this is documented behaviour; see this [DataNucleus page](http://www.datanucleus.org/products/datanucleus/jdo/orm/relationships.html).
@@ -41,19 +43,29 @@ The service will then be automatically injected as normal.
                     
 ## Workaround for Lazy Loading
 
-In a bidir 1:m, we have found that the post-load callback for the children is not fired.
+In a bidir 1:m, we have found that in certain circumstances the post-load callback for the children is not fired.  Specifically, if the child has subclasses, and the subclass has fields/properties that are in the [default fetch group](http://db.apache.org/jdo/fetchgroups.html).
+
+A test case illustrating the problem (*though whether with the spec or the DN implementation, we are not yet sure*) can be found [here on github](https://github.com/danhaywood/test-jdo).
 
 The consequence of this is that any domain services used by the child object (including `DomainObjectContainer`) are not injected into the child.
 
 The workaround is to have the parent inject the services when returning the children.
 
-For example, suppose we have a Customer <->* Order bidir relationship.  In Customer, we would have:
+For example, suppose we have a `Customer` <->* `Order` bidir relationship, and where `Order` my have subclasses, eg `RushedOrder`.  In `Customer`, we would add a new method `getOrdersWorkaround()`:
 
     // {{ Orders (Collection)
     private SortedSet<Order> orders = new TreeSet<Order>();
 
     @Persistent(mappedBy = "customer")
     public SortedSet<Order> getOrders() {
+        return this.orders;
+    }
+
+    public void setOrders(final SortedSet<Order> orders) {
+        this.orders = orders;
+    }
+
+    public SortedSet<Order> getOrdersWorkaround() {
         
         if (this.orders == null) {
             // this can happen, it would seem, by JDO/DN when it is 
@@ -63,17 +75,13 @@ For example, suppose we have a Customer <->* Order bidir relationship.  In Custo
             // inject each element before returning it
             return Sets.newTreeSet(
                 Iterables.transform(
-                    this.orders, 
+                    this.getOrders(), 
                     new Function<Order, Order>(){
                         public Order apply(Order order) {
                             return isisJdoSupport.injected(order);                        
                         }
                     }));
         }
-    }
-
-    public void setOrders(final SortedSet<Order> orders) {
-        this.orders = orders;
     }
 
 Alternatively, you can reload each child object.  Change:
