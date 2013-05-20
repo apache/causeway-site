@@ -15,7 +15,7 @@ Title: Documentation
 - [Icons](getting-started/icons.html)
 
 ### Releases
-
+D
 - [Release Matrix](release-matrix.html)
 
 }
@@ -124,6 +124,14 @@ Guidance for committers is at the bottom of this page.
 - [Titles in tables](components/viewers/wicket/titles-in-tables.html) [1.2.0-SNAPSHOT]
 - [The About page](components/viewers/wicket/configuring-the-about-page.html) [1.2.0-SNAPSHOT]
 
+----------
+
+### DHTMLX
+
+- [About](third-party/viewers/dhtmlx/about.html)
+
+Note: this viewer is third-party open source (outside Apache)
+
 }
 
 {span-one-third
@@ -158,14 +166,6 @@ Guidance for committers is at the bottom of this page.
 ### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
 
 - [About](components/viewers/bdd/about.html)
-
-----------
-
-### DHTMLX
-
-- [About](third-party/viewers/dhtmlx/about.html)
-
-Note: this viewer is third-party open source (outside Apache)
 
 }
 
@@ -233,11 +233,13 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 {group
 
-## Security
+## Other Components
 
 {row-even
 
 {span-one-third
+
+## Security
 
 ### Shiro [1.1.0](components/security/shiro/release-notes/about.html)
 
@@ -245,9 +247,7 @@ all the above are released only in [1.1.0-SNAPSHOT]
 - [Configuring Shiro](components/security/shiro/configuring-shiro.html)
 - [Using LDAP](components/security/shiro/using-ldap.html)
 
-}
-
-{span-one-third
+----------
 
 ### File [1.0.0](components/security/file/release-notes/about.html)
 
@@ -257,57 +257,16 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 {span-one-third
 
-
-}
-
-}
-
-}
-
-{group
-
-## Profile Stores
-
-{row-even
-
-{span-one-third
-
-###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
-
-- [About](components/profilestores/xml/about.html)
-
-}
-
-{span-one-third
-
-
-}
-
-{span-one-third
-}
-
-}
-
-}
-
-{group
-
 ## Programming Models
-
-{row-odd
-
-{span-one-third
 
 ###Groovy [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html)
 
-}
-
-{span-one-third
-
-
 <!--
+
+----------
+
 ###Kemble
 - [About](components/progmodels/kemble/about.html) [stub]
 -->
@@ -315,11 +274,19 @@ all the above are released only in [1.1.0-SNAPSHOT]
 }
 
 {span-one-third
-}
+
+## Profile Stores
+
+###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
+
+- [About](components/profilestores/xml/about.html)
 
 }
 
 }
+
+}
+
 
 {group
 
