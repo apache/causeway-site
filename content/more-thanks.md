@@ -1,4 +1,3 @@
-
 Title: More Thanks
 
 In addition to the [support given to Apache Foundation as a whole](http://www.apache.org/foundation/thanks.html), the Isis community would also like to extend our thanks to:
