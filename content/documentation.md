@@ -233,8 +233,6 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 {group
 
-## Other Components
-
 {row-even
 
 {span-one-third
