@@ -226,13 +226,14 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 - [About](components/objectstores/nosql/about.html)
 
-##
+
+----------
 ###  SQL [0.2.0-incubating](components/objectstores/sql/release-notes/about.html)
 
 - [About](components/objectstores/sql/about.html)
 - [Configuring the SQL OS](components/objectstores/sql/configuring-the-sql-os-objectstore-with-the-quickstart-archetype.html)
 
-##
+----------
 ###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 
 - [About](components/objectstores/xml/about.html)
