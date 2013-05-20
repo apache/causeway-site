@@ -10,4 +10,7 @@ Development usage:
 
 - [DnD viewer](dnd/about.html)
 - [BDD viewer](bdd/about.html)
-- [JUnit viewer](junit/about.html)
+
+Third-party:
+
+- [DHTMLX viewer](dhtmlx/about.html)

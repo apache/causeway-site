@@ -81,6 +81,7 @@ Guidance for committers is at the bottom of this page.
 
 - [Unit Test Support](core/unittestsupport.html) [stub]
 - [Integration Test Support](core/integtestsupport.html) [stub]
+- [Wrapper Service](core/wrapper.html) [stub]
 
 ###  Programming Model
 
@@ -146,7 +147,6 @@ Guidance for committers is at the bottom of this page.
 - [About](components/viewers/scimpi/about.html)
 
 
-
 }
 
 }
@@ -156,14 +156,20 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
-### JUnit [0.2.0-incubating](components/viewers/junit/release-notes/about.html)
+### DHTMLX
 
-- [About](components/viewers/junit/about.html)
+- [About](third-party/viewers/dhtmlx/about.html)
+
+Note: this viewer is third-party open source (outside Apache)
+
+
+}
+
+{span-one-third
 
 ### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
 
 - [About](components/viewers/bdd/about.html)
-
 
 }
 
@@ -175,24 +181,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span-one-third
-
-### DHTMLX viewer 
-
-- [About](third-party/viewers/dhtmlx/about.html)
-
-Note: this viewer is open source but is third-party (outside of Apache)
-
-
 }
-
-}
-
-
-
-
-
-
 
 
 }
@@ -215,28 +204,34 @@ Note: this viewer is open source but is third-party (outside of Apache)
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
+}
+
+{span-one-third
+###  DataNucleus (ctd)
+
 ##### Applib Service Implementations
 
-- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
+J- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
 - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) [1.1.0-SNAPSHOT]
 - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html) [1.1.0-SNAPSHOT]
 - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html) [1.1.0-SNAPSHOT]
 
+
 }
 
 {span-one-third
+
 ###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html)
 
-}
-
-{span-one-third
+###
 ###  SQL [0.2.0-incubating](components/objectstores/sql/release-notes/about.html)
 
 - [About](components/objectstores/sql/about.html)
 - [Configuring the SQL OS](components/objectstores/sql/configuring-the-sql-os-objectstore-with-the-quickstart-archetype.html)
 
+###
 ###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 
 - [About](components/objectstores/xml/about.html)
@@ -325,9 +320,6 @@ Note: this viewer is open source but is third-party (outside of Apache)
 
 {span-one-third
 
-###Wrapper [0.2.0-incubating](components/progmodels/wrapper/release-notes/about.html)
-
-- [About](components/progmodels/wrapper/about.html)
 
 }
 
