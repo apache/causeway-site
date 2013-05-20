@@ -147,14 +147,19 @@ Guidance for committers is at the bottom of this page.
 - [About](components/viewers/scimpi/about.html)
 
 
-}
+----------
 
-}
+###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 
+- [About](components/viewers/dnd/about.html)
 
-{row-even
+----------
 
-{span-one-third
+### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
+
+- [About](components/viewers/bdd/about.html)
+
+----------
 
 ### DHTMLX
 
@@ -162,27 +167,9 @@ Guidance for committers is at the bottom of this page.
 
 Note: this viewer is third-party open source (outside Apache)
 
-
-}
-
-{span-one-third
-
-### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
-
-- [About](components/viewers/bdd/about.html)
-
-}
-
-{span-one-third
-
-###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-
-- [About](components/viewers/dnd/about.html)
-
 }
 
 }
-
 
 }
 
@@ -293,9 +280,6 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 {span-one-third
 
-###SQL [0.2.0-incubating](components/profilestores/sql/release-notes/about.html)
-
-- [About](components/profilestores/sql/about.html)
 
 }
 
@@ -323,6 +307,11 @@ all the above are released only in [1.1.0-SNAPSHOT]
 {span-one-third
 
 
+<!--
+###Kemble
+- [About](components/progmodels/kemble/about.html) [stub]
+-->
+
 }
 
 {span-one-third
@@ -349,9 +338,6 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 {span-one-third
 
-<!--
-- [DSL](other/dsl.html) [stub]
--->
 
 
 }
@@ -382,6 +368,8 @@ These are no longer under active development
 - [LDAP Security](components/security/ldap/about.html) (use Shiro)
 
 - [SQL Security](components/security/sql/about.html) (use Shiro)
+
+- [SQL Profile Store](components/profilestores/sql/about.html)
 
 }
 
