@@ -211,11 +211,12 @@ Note: this viewer is third-party open source (outside Apache)
 
 ##### Applib Service Implementations
 
-J- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html) [1.1.0-SNAPSHOT]
-- [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) [1.1.0-SNAPSHOT]
-- [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html) [1.1.0-SNAPSHOT]
-- [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html) [1.1.0-SNAPSHOT]
+- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
+- [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
+- [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
+- [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
 
+all the above are released only in [1.1.0-SNAPSHOT]
 
 }
 
@@ -225,13 +226,13 @@ J- [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-regist
 
 - [About](components/objectstores/nosql/about.html)
 
-###
+##
 ###  SQL [0.2.0-incubating](components/objectstores/sql/release-notes/about.html)
 
 - [About](components/objectstores/sql/about.html)
 - [Configuring the SQL OS](components/objectstores/sql/configuring-the-sql-os-objectstore-with-the-quickstart-archetype.html)
 
-###
+##
 ###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 
 - [About](components/objectstores/xml/about.html)
