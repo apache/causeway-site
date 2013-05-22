@@ -262,7 +262,7 @@ To capture the missing license information, use:
 mvn license:download-licenses
 </pre>
 
-This Maven plugin creates a `licensexml` file in the `target/generated-resources` directory of each module.
+This Maven plugin creates a `license.xml` file in the `target/generated-resources` directory of each module.
 
 Then, run the following script (shown here relative to the `core` module).
 

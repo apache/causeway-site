@@ -1,0 +1,324 @@
+Recognized Methods and Prefixes
+===============================
+
+The following table lists all of the methods or method prefixes that are
+recognized by *Apache Isis*' default programming model:
+
+<table>
+<tr>
+    <th>Prefix</th>
+    <th>Object</th>
+    <th>Property</th>
+    <th>Collection</th>
+    <th>Action</th>
+    <th>Action Param</th>
+    <th>See also</th>
+</tr>
+<tr>
+    <td>addTo</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>removeFrom</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>choices</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clear</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>modify</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>created</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>default</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+</tr>
+<tr>
+    <td>disable</td>
+    <td>Y</td>
+    <td>Y</td>
+    <td>Y</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>get</td>
+    <td></td>
+    <td>Y</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>set</td>
+</tr>
+<tr>
+    <td>getId</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>(services only)</td>
+</tr>
+<tr>
+    <td>hide</td>
+    <td></td>
+    <td>Y</td>
+    <td>Y</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>iconName</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>loaded</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>loading</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>modify</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>clear</td>
+</tr>
+<tr>
+    <td>persisted</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>persisting</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>removing</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>removed</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>removeFrom</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>addTo</td>
+</tr>
+<tr>
+    <td>set</td>
+    <td></td>
+    <td>Y</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>get</td>
+</tr>
+<tr>
+    <td>toString</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>title</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>updating</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>updated</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>validate</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td>Y</td>
+    <td></td>
+</tr>
+<tr>
+    <td>validateAddTo</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>validateRemoveFrom</td>
+</tr>
+<tr>
+    <td>validateRemoveFrom</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>validateAddTo</td>
+</tr>
+</table>
+
+
+There are also a number of deprecated methods:
+
+<table>
+<tr>
+    <th>Prefix</th>
+    <th>Object</th>
+    <th>Property</th>
+    <th>Collection</th>
+    <th>Action</th>
+    <th>Action Param</th>
+    <th>See also</th>
+</tr>
+<tr>
+    <td>deleted</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>removed</td>
+</tr>
+<tr>
+    <td>deleting</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>removing</td>
+</tr>
+<tr>
+    <td>saved</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>persisted</td>
+</tr>
+<tr>
+    <td>saving</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>persisting</td>
+</tr>
+</table>
+
+In order to be recognized, all methods must be `public`. Any methods
+that do not match are deemed to be action methods that the user can
+invoke from the user interface.
