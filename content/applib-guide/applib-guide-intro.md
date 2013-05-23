@@ -14,7 +14,9 @@ This guide to the programming model breaks into three main parts:
 
   * [Value Types](./value-types/000-about.html)
 
-* [Supporting Features](./supporting-features/000-about.html)
+* Supporting Features
+
+  * [Clock, Fixtures, etc](./supporting-features/000-about.html)
 
 * Reference:
 
@@ -25,7 +27,7 @@ This guide to the programming model breaks into three main parts:
     * [Applib Utility Classes](./reference/Utility.html)
     * [Applib Events](./reference/Event.html)
 
-You will note that to a large extent the conventions of the programming 
+To a large extent the conventions of the programming 
 model can be described as 'intentional' - they convey an intention as to 
 how domain objects, their properties and behaviours, are to be made 
 available to users. But the
