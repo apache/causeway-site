@@ -10,12 +10,16 @@ Title: Documentation
 
 - [Screencasts](getting-started/screencasts.html)
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.2](getting-started/release-notes/about.html))
+- [Programming Model and How-tos](applib-guide/applib-guide-intro.html)
+- [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
+
+### Resources
+
 - [Editor templates](getting-started/editor-templates.html)
-- [Cheat Sheet](getting-started/cheat-sheet.html)
 - [Icons](getting-started/icons.html)
 
 ### Releases
-D
+
 - [Release Matrix](release-matrix.html)
 
 }
@@ -61,7 +65,6 @@ Guidance for committers is at the bottom of this page.
 
 ###  Applib
 
-- [Programmers' Guide](core/applib.html)
 - [Configuration Files](core/configuration-files.html)
 - [Deployment Types](core/deployment-type.html)
 
@@ -312,7 +315,6 @@ all the above are released only in [1.1.0-SNAPSHOT]
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
-- [Updating the applib docs](contributors/updating-the-applib-docs.html)
 - [Recreating an archetype](contributors/recreating-an-archetype.html)
 - [Snapshot process](contributors/snapshot-process.html)
 - [Release process](contributors/release-process.html)

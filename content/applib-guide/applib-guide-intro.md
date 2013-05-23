@@ -1,14 +1,10 @@
-Apache Isis Programming Model
-=======
+Title: Apache Isis Programming Model
 
-*Apache Isis* is designed to allow programmers rapidly develop domain-driven applications following the [Naked Objects](http://en.wikipedia.org/wiki/Naked_Objects) pattern. It is made up of a core plus a number of components for each of the main APIs: objectstores, viewers, and security.
+*Apache Isis* works using convention-over-configuration; you write your domain objects following a set of conventions, and these are interpreted by the framework in order to render, persist, remote or otherwise interact with your domain model.
 
-This guide is written for programmers looking to understand the
-*Apache Isis* programming mode: the programming conventions, annotations 
-and supporting utilities supplied within the *Apache Isis* application library 
-(or *applib*).  Applications that follow these conventions enable the framework to correctly pick up and render the business rules and logic encoded within their domain objects.
+These conventions are together known as the Apache Isis Programming Model. The Apache Isis Application Library - or AppLib - constitutes those elements of the programming model that are declarative (such as annotations and interfaces). It also contains the `DomainObjectContainer` interface, which is normally injected into your domain objects and represents the only point of coupling from your domain into the framework.
 
-The guide breaks into three main parts:
+This guide to the programming model breaks into three main parts:
 
 * How-tos
 
