@@ -1,11 +1,6 @@
 title: How-tos
 
-How to write a basic Domain Entity or Service
-=============================================
-
-> How-to write a basic domain entity or service, specifying its
-> properties, collections and actions, and using some of the most
-> commonly-used additional semantics.
+##How to write a basic Domain Entity or Service
 
 Domain entities are instances of some class, usually (the vast majority)
 being persisted. Domain services are singletons that act typically act
@@ -17,11 +12,11 @@ and services have behaviour, in the form of actions.
 
 * [How to have a domain service be a POJO](./how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
 
-* [How to add a property to a domain entity](./how-to-01-030-How-to-add a property to a domain entity.html)
+* [How to add a property to a domain entity](./how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 
 * [How to specify a title for a domain entity](./how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 
-* [How to add a collection to a domain entity](./how-to-01-050-How-to-add-a-collection-to-a-domain entity.html)
+* [How to add a collection to a domain entity](./how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
 
 * [How to add an action to a domain entity or service](./how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
 
@@ -37,7 +32,7 @@ and services have behaviour, in the form of actions.
 
 * [How to specify the size of String properties](./how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 
-* [How to specify the size of String action parameters](./how-to-01-130-How-to-specify-the-size-of-String-action parameters.html)
+* [How to specify the size of String action parameters](./how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
 
 * [How to specify names or descriptions for an action parameter](./how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
 
@@ -46,12 +41,7 @@ and services have behaviour, in the form of actions.
 * [How to create or delete objects within your code](./how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
 
 
-How to add business rules
-=========================
-
-> How-to add business rules to domain entities and services, controlling
-> whether a domain entity or service's class members are visible, if
-> they are enabled, and to validate arguments.
+##How to add business rules
 
 Business rules can be added to domain objects in a number of ways. As
 well as the business logic encapsulated by domain object actions, the
@@ -90,11 +80,7 @@ Or, in other words: "see it, use it, do it".
 * [How to validate declaratively using MustSatisfy](./how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
 
 
-How to provide drop-downs and default values
-============================================
-
-> How-to make actions easier to use from an end-user perspective, by
-> providing sets of choices and defaults.
+##How to provide drop-downs and default values
 
 Invoking actions or setting properties requires that the user specify a
 valid value; of the correct type, and that passes any validation rules
@@ -104,7 +90,6 @@ drop-down list box.
 
 In a similar vein, there may be a default value for an action parameter;
 this can also be specified.
-
 
 * [How to specify a set of choices for a property](./how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html)
 
@@ -117,8 +102,7 @@ this can also be specified.
 * [How to specify default values for an action parameter](./how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
 
 
-How to derive properties and collections, and other side-effects
-========
+##How to derive properties and collections, and other side-effects
 
 The *Isis* viewers will automatically render the state of properties and
 collections, but the values of such need not be persisted; they can be
@@ -132,15 +116,12 @@ derived from other information available to the object.
 
 * [How to trigger other behaviour when a property is changed](./how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
 
-* [How to trigger other behaviour when an object is added or removed](./how-to-04-050-How to trigger other behaviour when an object is added or removed.html)
+* [How to trigger other behaviour when an object is added or removed](./how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
 * [How to set up and maintain bidirectional relationships](./how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 
 
-How to provide additional UI hints
-==================================
-
-> How to override Isis' defaults for presentation.
+##How to provide additional UI hints
 
 With the exception of value types for action parameters <!--(see ?)-->, Isis
 can normally infer a reasonable name for entity/service and its class
@@ -158,7 +139,7 @@ been placed vs one that has been shipped.
 
 * [How to specify a name or description for a property](./how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
 
-* [How to specify a name or description for a collection](./how-to-05-030-How to specify a name or description for a collection.html)
+* [How to specify a name or description for a collection](./how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
 
 * [How to specify names or description for an action](./how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 
@@ -166,10 +147,7 @@ been placed vs one that has been shipped.
 
 
 
-How to deal with errors
-=======================
-
-> How to inform the user if an error occurs.
+##How to deal with errors
 
 Things go wrong. *Isis* handles many of the usual error conditions, but
 your app may also wish to notify the user also when something goes awry.
@@ -181,11 +159,7 @@ your app may also wish to notify the user also when something goes awry.
 * [How to deal with an unexpected error](./how-to-06-020-How-to-deal-with-an-unexpected-error.html)
 
 
-How to handle the entity persistence lifecycle
-==============================================
-
-> How to hook into the entity persistence lifecycle and handle specific
-> scenarios
+##How to handle the entity persistence lifecycle
 
 *Isis* automatically persists domain entities, performing both lazy
 loading and dirty object tracking. As an application programmer you can
@@ -205,13 +179,7 @@ get visibility into and influence this behaviour.
 * [How to perform dirty object tracking](./how-to-07-060-How-to-perform-dirty-object-tracking.html)
 
 
-How to handle security concerns
-===============================
-
-> Further validation how-to's that apply across all class members
-
-This chapter has some additional recipes/how-tos relating to
-implementing business rules. They apply across all class members.
+##How to handle security concerns
 
 * [Hiding, disabling or validating for specific users or roles](./how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
 

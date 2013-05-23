@@ -1,9 +1,6 @@
 Value Types
 ===========
 
-> Built-in value types, writing your own value types, and supporting
-> third-party value types.
-
 The state of any given entity is characterized by properties <!--(?)--> and
 collections <!--(?)-->. A collections is a one-to-many reference to another
 entities, while a property is either a one-to-one reference to another
@@ -24,11 +21,11 @@ value types.  *Isis* provides one such integration, with
 
 For more information, see:
 
-* [Built-in Value Types](./value-types/020-Built-in-Value-Types.html)
+* [Built-in Value Types](./010-Built-in-Value-Types.html)
 
-* [Custom Value Types](./value-types/030-Custom-Value-Types]
+* [Custom Value Types](./020-Custom-Value-Types.html]
 
-* [Third-party Value Types](./value-types/04-Third-party-Value-Types.html)
+* [Third-party Value Types](./030-Third-party-Value-Types.html)
 
 > **Note**
 >
@@ -38,7 +35,7 @@ For more information, see:
 > expected to have equal-by-content semantics, and is expected to be
 > immutable. It may also be parseable from a string.
 
-> **Note**
+
 >
 > Also, if using the JDO/DataNucleus ObjectStore, you may also need to perform additional DataNucleus-specific configuration if you want the data to be persisted in a SQL datatype other than SQL Blob (ie a serializable byte array).
 

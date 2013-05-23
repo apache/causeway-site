@@ -8,21 +8,21 @@ This guide to the programming model breaks into three main parts: how-tos, suppo
 
 ##How-tos
 
-* [How-to write Domain Entities](./how-tos/000-about.html)
+* [How-to write Domain Entities](./how-tos/about.html)
 
-* [Domain Services, Repositories and Factories](./domain-services/000-about.html)
+* [Domain Services, Repositories and Factories](./domain-services/about.html)
 
-* [Value Types](./value-types/000-about.html)
+* [Value Types](./value-types/about.html)
 
 ##Supporting Features
 
-* [Clock, Fixtures, etc](./supporting-features/000-about.html)
+* [Clock, Fixtures, etc](./supporting-features/about.html)
 
 ##Reference
 
 * [Recognized Methods and Prefixes](./reference/Recognized-Methods-and-Prefixes.html)
 
-* [Recognized Annotations](./reference/recognized-annotations/000-about.html)
+* [Recognized Annotations](./reference/recognized-annotations/about.html)
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 
