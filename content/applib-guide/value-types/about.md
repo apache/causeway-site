@@ -23,7 +23,7 @@ For more information, see:
 
 * [Built-in Value Types](./010-Built-in-Value-Types.html)
 
-* [Custom Value Types](./020-Custom-Value-Types.html]
+* [Custom Value Types](./020-Custom-Value-Types.html)
 
 * [Third-party Value Types](./030-Third-party-Value-Types.html)
 
@@ -36,7 +36,6 @@ For more information, see:
 > immutable. It may also be parseable from a string.
 
 
->
 > Also, if using the JDO/DataNucleus ObjectStore, you may also need to perform additional DataNucleus-specific configuration if you want the data to be persisted in a SQL datatype other than SQL Blob (ie a serializable byte array).
 
 
