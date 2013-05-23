@@ -24,11 +24,11 @@ value types.  *Isis* provides one such integration, with
 
 For more information, see:
 
-* [Built-in Value Types](./value-types/020-Built-in Value Types.html)
+* [Built-in Value Types](./value-types/020-Built-in-Value-Types.html)
 
-* [Custom Value Types](./value-types/030-Custom Value Types]
+* [Custom Value Types](./value-types/030-Custom-Value-Types]
 
-* [Third-party Value Types](./value-types/04-Third-party Value Types.html)
+* [Third-party Value Types](./value-types/04-Third-party-Value-Types.html)
 
 > **Note**
 >

@@ -22,7 +22,7 @@ The guide breaks into three main parts:
 
 * Reference:
 
-    * [Recognized Methods and Prefixes](./reference/Recognized Methods and Prefixes.html)
+    * [Recognized Methods and Prefixes](./reference/Recognized-Methods-and-Prefixes.html)
     * [Recognized Annotations](./reference/recognized-annotations/000-about.html)
     * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
     * [Security](./reference/Security.html)
