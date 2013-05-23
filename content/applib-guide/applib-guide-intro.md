@@ -1,25 +1,38 @@
 Apache Isis Programming Model
 =======
 
-*Apache Isis* is designed to allow programmers rapidly develop domain-driven applications following the [Naked
-Objects](http://en.wikipedia.org/wiki/Naked_Objects) pattern. It is made
-up of a core plus a number of components for each of the main APIs:
-objectstores, security, viewers and profilestores.
+*Apache Isis* is designed to allow programmers rapidly develop domain-driven applications following the [Naked Objects](http://en.wikipedia.org/wiki/Naked_Objects) pattern. It is made up of a core plus a number of components for each of the main APIs: objectstores, viewers, and security.
 
 This guide is written for programmers looking to understand the
-programming conventions, annotations and supporting utilities within the
-*Apache Isis* application library (or *applib*), in order that the
-framework can correctly pick up and render the business rules and logic
-encoded within their domain objects.
+*Apache Isis* programming mode: the programming conventions, annotations 
+and supporting utilities supplied within the *Apache Isis* application library 
+(or *applib*).  Applications that follow these conventions enable the framework to correctly pick up and render the business rules and logic encoded within their domain objects.
 
-*Apache Isis* is hosted at the [Apache
-Foundation](http://incubator.apache.org/isis), and is licensed under
-[Apache Software License
-v2](http://www.apache.org/licenses/LICENSE-2.0.html).
+The guide breaks into three main parts:
 
-The conventions of the programming model are best described as
-'intentional' - they convey an intention as to how domain objects, their
-properties and behaviours, are to be made available to users. The
+* How-tos
+
+  * [How-to write Domain Entities](./how-tos/000-about.html)
+
+  * [Domain Services, Repositories and Factories](./domain-services/000-about.html)
+
+  * [Value Types](./value-types/000-about.html)
+
+* [Supporting Features](./supporting-features/000-about.html)
+
+* Reference:
+
+    * [Recognized Methods and Prefixes](./reference/Recognized Methods and Prefixes.html)
+    * [Recognized Annotations](./reference/recognized-annotations/000-about.html)
+    * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
+    * [Security](./reference/Security.html)
+    * [Applib Utility Classes](./reference/Utility.html)
+    * [Applib Events](./reference/Event.html)
+
+You will note that to a large extent the conventions of the programming 
+model can be described as 'intentional' - they convey an intention as to 
+how domain objects, their properties and behaviours, are to be made 
+available to users. But the
 specific way in which those intentions are interpreted or implemented
 will depend upon the framework, and/or the particular components or
 options selected within that framework.
@@ -34,7 +47,3 @@ has *not* been defined as `@DropDownList` because any equivalent
 mechanism will suffice: a viewer might not support drop-down-lists but
 instead might provide a capability to select from an `@Bounded` class by
 typing the initial letters of the desired instance.
-
-This part of the guide is a set of chapters that provides how-to's for
-writing domain objects, by which we mean domain entities, value types,
-services and repositories/factories.

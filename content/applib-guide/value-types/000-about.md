@@ -4,8 +4,8 @@ Value Types
 > Built-in value types, writing your own value types, and supporting
 > third-party value types.
 
-The state of any given entity is characterized by properties (?) and
-collections (?). A collections is a one-to-many reference to another
+The state of any given entity is characterized by properties <!--(?)--> and
+collections <!--(?)-->. A collections is a one-to-many reference to another
 entities, while a property is either a one-to-one reference to another
 entity, or it is a value.
 
@@ -15,11 +15,20 @@ immutable (though some system value types, such as java.util.Date,
 famously are not).
 
 *Isis* supports all the standard JDK value types, and defines a number
-of its own (eg Percentage and Color).   *Isis* also allows you to define your own value types, such as `LastName`, or `Celsius`, or `ComplexNumber`.
+of its own (eg Percentage and Color).   *Isis* also allows you to define 
+your own value types, such as `LastName`, or `Celsius`, or `ComplexNumber`.
 
 It's also possible to make Isis integrate with third-party
-value types.  *Isis* provides one such integration, with as [JodaTime](http://joda-time.sourceforge.net/).
+value types.  *Isis* provides one such integration, with 
+[JodaTime](http://joda-time.sourceforge.net/).
 
+For more information, see:
+
+* [Built-in Value Types](./value-types/020-Built-in Value Types.html)
+
+* [Custom Value Types](./value-types/030-Custom Value Types]
+
+* [Third-party Value Types](./value-types/04-Third-party Value Types.html)
 
 > **Note**
 >
@@ -29,7 +38,12 @@ value types.  *Isis* provides one such integration, with as [JodaTime](http://jo
 > expected to have equal-by-content semantics, and is expected to be
 > immutable. It may also be parseable from a string.
 
-
-
+> **Note**
 >
 > Also, if using the JDO/DataNucleus ObjectStore, you may also need to perform additional DataNucleus-specific configuration if you want the data to be persisted in a SQL datatype other than SQL Blob (ie a serializable byte array).
+
+
+
+
+
+
