@@ -12,7 +12,6 @@ Title: Contributors
 ###  Committers
 
 - [Updating the CMS site](updating-the-cms-site.html)
-- [Updating the applib docs](updating-the-applib-docs.html)
 - [Recreating an archetype](recreating-an-archetype.html)
 - [Snapshot process](snapshot-process.html)
 - [Release process](release-process.html)
