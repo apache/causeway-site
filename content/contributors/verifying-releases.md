@@ -2,7 +2,7 @@ Title: Verifying Releases
 
 Whenever a committer announces a vote on a release on the [dev mailing list](../support.html), it is the responsibility of the project's PMC to cast their vote on the release.  Any other ASF member may also vote.
 
-This page provides some guidance on what a voter is expected to verify before casting their vote. There is a [script](/contributors/verifying-releases-script.html) available but please read this page before executing that.
+This page provides some guidance on what a voter is expected to verify before casting their vote. 
 
 Per this [ASF documentation](http://www.apache.org/dev/release.html), the legal requirements for an ASF release are:
 
@@ -12,8 +12,20 @@ Per this [ASF documentation](http://www.apache.org/dev/release.html), the legal 
 
 Note that the binaries are *not* an ASF release, they merely exist on the Maven central repo as a convenience.
 
+## Prerequisites
+
+To verify the source ZIP files, you will need to have imported the public keys used for signing Isis releases.  These can be downloaded from the root of the Isis source tree.
+
+Since the Isis source is mirrored on github.com, you can just use:
+
+<pre>
+curl https://raw.github.com/apache/isis/master/KEYS > /tmp/KEYS
+gpg --import /tmp/KEYS
+</pre>
 
 ## Verifying the source release artifacts
+
+> Note: to automate this next stage, there is also a [script](/contributors/verifying-releases-script.html) available; but read what follows first before using the script.
 
 Download both the ZIP and .ASC files from the location specified in the voting email. To verify that the signature is correct, use:
 

@@ -21,7 +21,14 @@ mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
 for a in `find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
-Finally, double check that the app is running satisfactorily.  
+Finally, double check that the app is running satisfactorily:
+  
+<pre>
+mvn clean install
+mvn antrun:run     # runs as standalone app using webconsole
+cd webapp
+mvn jetty:run      # runs as mvn jetty plugin
+</pre>
 
 ### Create the archetype
 
@@ -75,16 +82,13 @@ mvn archetype:generate  \
     -D artifactId=myapp
 </pre>
 
-Build the newly generated app:
+Build the newly generated app and test:
 <pre>
 cd myapp
 mvn clean install
-</pre>
-
-And test.  For example:
-<pre>
-cd viewer-webapp
-mvn antrun:run
+mvn antrun:run     # runs as standalone app using webconsole
+cd webapp
+mvn jetty:run      # runs as mvn jetty plugin
 </pre>
 
 ### Check the archetype source code into git
