@@ -27,7 +27,7 @@ Christian wrote this demo part-time over the course of a few weeks.  He commente
 in time using 'conventional' development with database, GUI etc...
 
 >
-Because this is a demo, everything is a "bit shaky" and there is a lot of room for improvement, but it does show how a relatively simple domain model can be brought 'alive' using Isis.
+> Because this is a demo, everything is a "bit shaky" and there is a lot of room for improvement, but it does show how a relatively simple domain model can be brought 'alive' using Isis.
 
 If you want to try out the application, grab the [source code](https://www.assembla.com/code/transportplanner/git/nodes) and use this [script](TransportPlanner/script.html).  Note that the app was written against a snapshot version of Isis; ask on the [mailing list](../support.html) for help.
 
