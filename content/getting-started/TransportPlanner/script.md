@@ -38,4 +38,4 @@ Title: TransportPlanner Script
 - See the file TpmFixture.java for how the main domain objects link.
 
 ###Caveats
-> The software is not as streamlined as it should be and it contains bugs. ;-)  But, remember, it was a quickly written demo.
+The software is not as streamlined as it should be and it contains bugs. ;-)  But, remember, it was a quickly written demo.

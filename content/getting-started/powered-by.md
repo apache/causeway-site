@@ -32,19 +32,19 @@ If you want to try out the application, grab the [source code](https://www.assem
   <tr>
     <td>TransportPlanner allows schedules of journeys to be planned.  It uses Isis' integration with <a href="https://github.com/danhaywood/isis-wicket-gmap3">Google Maps</a> to provide the map.</td>
     <td>
-      <img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TransportDemand.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420" height="315"></img>
+      <a href="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TransportDemand.png"><img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TransportDemand.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420" height="315"></img></a>
     </td>
   </tr>
   <tr>
     <td>TransportPlanner uses Isis' <a href="https://github.com/danhaywood/isis-wicket-wickedcharts">Wicked Charts</a> integration to provide custom graphs</td>
     <td>
-      <img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TPM_CostPie.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420"></img>
+      <a href="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TPM_CostPie.png"><img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TPM_CostPie.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420"></img></a>
     </td>
   </tr>
   <tr>
     <td>Another example of TransportPlanner's use of <i>Wicked Charts</i></td>
     <td>
-      <img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/Tpm_ResourceUsage.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420"></img>
+      <a href="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/Tpm_ResourceUsage.png"><img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/Tpm_ResourceUsage.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="420"></img></a>
     </td>
   </tr>
 <table>
