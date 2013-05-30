@@ -32,7 +32,7 @@ Deploying on Isis means that the framework also manages object persistence.  Sev
 
 REST (Representation State Transfer) is an architectural style for building highly scalable distributed systems, using the same principles as the World Wide Web. Many commercial web APIs (twitter, facebook, Amazon) are implemented as either pure REST APIs or some approximation therein.
 
-The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../viewers/restfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
+The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../components/viewers/restfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
 
 There are two main use cases for deploying Isis as a RESTful web service are:
 

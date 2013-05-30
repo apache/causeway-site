@@ -877,7 +877,7 @@ Update the Isis CMS website:
 
 And once the release has been approved:
 
-* Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/repos/dist/release/isis](http://dist.apache.org/repos/dist/release/isis))
+* Update the [download page](../download.html) with a link to the source release zip file (under [https://dist.apache.org/repos/dist/release/isis](https://dist.apache.org/repos/dist/release/isis))
 
 * The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.  Validate using the [W3C RDF Validator](http://www.w3.org/RDF/Validator/) service.
 

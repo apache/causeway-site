@@ -43,8 +43,8 @@ UNIT_TESTING<br/>
 SINGLE_USER</td>
     <td><a href="../components/security/file/about.html">File-based</a></td>
     <td><a href="../components/security/file/about.html">File-based</a></td>
-    <td><a href="../components/objectstore/xml/about.html">XML</a></td>
-    <td><a href="../components/profilestore/xml/about.html">XML</a></td>
+    <td><a href="../components/objectstores/xml/about.html">XML</a></td>
+    <td><a href="../components/profilestores/xml/about.html">XML</a></td>
     <td>Not visible</td>
     <td>Not visible</td>
 </tr>

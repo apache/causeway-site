@@ -35,7 +35,7 @@ the PGP or MD5 signatures.  For more information on signing artifacts and
 why we do it, check out the
 [Release Signing FAQ](http://www.apache.org/dev/release-signing.html).
 
-The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=KEYS;hb=master) as well as the asc signature file for the artifact.  Make sure you get these files from the [main distribution directory](http://dist.apache.org/repos/dist/release/isis/), rather than from a mirror.
+The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=KEYS;hb=master) as well as the asc signature file for the artifact.  Make sure you get these files from the [main distribution directory](https://dist.apache.org/repos/dist/release/isis/), rather than from a mirror.
 
 Then verify the signatures using:
 
