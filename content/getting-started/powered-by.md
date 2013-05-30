@@ -25,6 +25,7 @@ Christian wrote this demo part-time over the course of a few weeks.  He commente
 
 > I did not have too much time to get 'something done' ... But although I had a hard time in the beginning with Isis I don't think I would have made it
 in time using 'conventional' development with database, GUI etc...
+
 >
 Because this is a demo, everything is a "bit shaky" and there is a lot of room for improvement, but it does show how a relatively simple domain model can be brought 'alive' using Isis.
 
