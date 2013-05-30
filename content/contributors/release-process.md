@@ -11,16 +11,12 @@ Apache Isis consists of a number of separately releasable modules.  Relative to 
 - `component/objectstore/nosql`
 - `component/objectstore/sql`
 - `component/objectstore/xml`
-- `component/profilestore/sql`
 - `component/profilestore/xml`
 - `component/progmodel/groovy`
-- `component/progmodel/wrapper`
 - `component/security/ldap`
-- `component/security/sql`
 - `component/viewer/bdd`
 - `component/viewer/dnd`
-- `component/viewer/html`
-- `component/viewer/junit`
+- `component/viewer/restfulobjects`
 - `component/viewer/scimpi`
 - `component/viewer/wicket`
 
@@ -704,13 +700,15 @@ The vote is (UN)SUCCESSFUL.
 
 ### For a successful vote
 
-If the vote has been successful, then replace the `-RCn` tag with another without the qualifier:
+If the vote has been successful, then replace the `-RCn` tag with another without the qualifier.
 
-* checkout the tag locally, for example:
+You can do this using the `scripts/promoterctag.sh` script; for example:
 
 <pre>
-  git checkout isis-1.2.3
+sh scripts/promoterctag isis-1.2.3 RC1
 </pre>
+
+Or, if you like to execute the steps in that script by hand:
 
 * add the new remote tag, for example:
 
@@ -828,17 +826,30 @@ If necessary, checkout this directory structure:
 svn co https://dist.apache.org/repos/dist/release/isis isis-dist
 </pre>
 
-Next, add the new release into the approprite directory, and delete any previous release.  For example, if releasing Apache Isis Core `1.2.3`, superceding a previous release `p.q.r`, use:
+Next, add the new release into the approprite directory, and delete any previous release.  
+
+To help with this, use the `upd.sh` script in each directory.  For example:
+
+<pre>
+sh upd.sh 1.2.3 1.2.2
+</pre>
+
+will replace a previous release 1.2.2 with the new release 1.2.3.
+
+Or, if you want to do same steps by hand, use:
 
 <pre>
 cd core
-svn delete isis-p.q.r-source-release.zip
-svn delete isis-p.q.r-source-release.zip.asc
-svn add isis-1.2.3-source-release.zip
 svn add isis-1.2.3-source-release.zip.asc
-svn commit -m "publishing isis-1.2.3 source to dist.apache.org"
+svn add isis-1.2.3-source-release.zip
+svn delete isis-1.2.2-source-release.zip.asc
+svn delete isis-1.2.2-source-release.zip
 </pre>
 
+At the end, commit the changes:
+<pre>
+svn commit -m "publishing isis source releases to dist.apache.org"
+</pre>
 
 ## Update JIRA and generate Release notes
 
