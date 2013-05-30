@@ -8,12 +8,10 @@ Here are some freely accessible (and sometimes open source) applications that ar
 
 TransportPlanner is a demo done by [Marintek AS](http://marintek.no) to show a possible 'solution' to a multimodal transport planning problem. It's a small part of a bigger European funded project.
 
-The author, Christian Steinebach, explains it as follows:
+The domain is that:
 
-> The domain is that:
->
-> -  some cargo should be transported from a pickup destination to a delivery destination.
->-  A 'client' creates a transport demand
+-  some cargo should be transported from a pickup destination to a delivery destination.
+-  A 'client' creates a transport demand
 -  A 'logistics service provider' plans a route from pickup to delivery using a shortest path algorithm.
 -  The route's waypoints (where cargo is loaded from one providere to another) may be shown on a map.
 -  The costs associated with each leg may be shown as a pie chart
@@ -21,7 +19,7 @@ The author, Christian Steinebach, explains it as follows:
 -  An event may be generated (e.g. some customs papers are missing, therefore transport execution stops and a replan
 is necessary).
 
-Christian wrote this demo part-time over the course of a few weeks.  He commented:
+The author, Christian Steinebach, wrote this demo part-time over the course of a few weeks.  He commented:
 
 > I did not have too much time to get 'something done' ... But although I had a hard time in the beginning with Isis I don't think I would have made it
 in time using 'conventional' development with database, GUI etc...
