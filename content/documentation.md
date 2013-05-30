@@ -146,7 +146,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 ##### Applib Service Implementations
 
-- [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) [1.1.0-SNAPSHOT]
+- [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
 
 
 }
@@ -297,7 +297,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 ### Plugins
 
-- [Maven Plugin](other/maven.html) [stub]
+- [Maven Plugin](other/maven-plugin.html) [stub]
 - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
 
 }

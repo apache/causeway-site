@@ -6,7 +6,7 @@ Thanks for considering to help out, your contributions are appreciated!
 
 ## Workflow
 
-Isis' source code is hosted in an Apache git repo ([https](https://git-wip-us.apache.org/repos/asf/isis.git), [http](http://git-wip-us.apache.org/repos/asf/isis.git)), with a clone on github ([https](https://github.com/apache/isis.git), [ssh](git@github.com:apache/isis.git)).
+Isis' source code is hosted in an Apache git repo ([https](https://git-wip-us.apache.org/repos/asf/isis.git), [http](http://git-wip-us.apache.org/repos/asf/isis.git)), with a clone on github ([https](https://github.com/apache/isis.git), or ssh: `git@github.com:apache/isis.git`.
 
 As you might imagine, only committers are permitted to push changes to the central git repo.  As a contributor, we recommend that you fork the [apache/isis](https://github.com/apache/isis.git) repo in github, and then use your fork as a way of publishing your patches for the Isis committers to apply.
 

@@ -2,7 +2,7 @@ Title: TransportPlanner Script
 
 ###Log in
 - log in with chris/pass
-- a user with less priviliges is arne/pass (Arne is not allowed to plan. He represents a customer who only is able to create a transport demand)
+- a user with less privileges is arne/pass (Arne is not allowed to plan. He represents a customer who only is able to create a transport demand)
 
 ###Fixtures
 - System/Install to have some predefined objects. Give it some time to complete...

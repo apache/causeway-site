@@ -1,6 +1,6 @@
 Title: Books
 
-Although it has evolved since, the Apache Isis framework started out as an open source implementation of the naked objects pattern.  Indeed, the generic user interfaces provided by Isis [Wicket](../viewers/wicket/about.html) and [Scimpi](../viewers/scimpi/about.html) viewers just naked objects systems, providing a default generic representation of domain objects.  The [Restful Objects](../viewers/restfulobjects/about.html) viewer is also a naked objects system; it's just that the representation is intended for machines rather than human beings.
+Although it has evolved since, the Apache Isis framework started out as an open source implementation of the naked objects pattern.  Indeed, the generic user interfaces provided by Isis [Wicket](../components/viewers/wicket/about.html) and [Scimpi](../components/viewers/scimpi/about.html) viewers just naked objects systems, providing a default generic representation of domain objects.  The [Restful Objects](../components/viewers/restfulobjects/about.html) viewer is also a naked objects system; it's just that the representation is intended for machines rather than human beings.
 
 If the idea of naked objects is of interest, then there are a couple of books on the topic that you might want to read.
 

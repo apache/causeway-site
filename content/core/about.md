@@ -4,7 +4,7 @@ Title: Core Modules
 
 ###  Applib & Services
 
-- [Programmers' Guide](applib.html)
+- [Programming Model and How-tos](../applib-guide/about.html)
 - [Configuration Files](configuration-files.html)
 - [Deployment Types](deployment-type.html)
 

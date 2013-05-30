@@ -8,7 +8,7 @@ By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. H
 
 If working from the Maven command line, JDO enhancement is done using the `maven-datanucleus-plugin`.
 
-If working in Eclipse, then JDO enhancement is done by installing [DataNucleus' plugin](http://www.datanucleus.org/products/datanucleus/guides/eclipse/index.html#preferences_enhancer).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.
+If working in Eclipse, then JDO enhancement is done by installing [DataNucleus' plugin](http://www.datanucleus.org/plugins/ide.eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.
 
 There are two distinct sets of problems you may encounter:
 

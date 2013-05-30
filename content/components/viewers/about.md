@@ -13,4 +13,4 @@ Development usage:
 
 Third-party:
 
-- [DHTMLX viewer](dhtmlx/about.html)
+- [DHTMLX viewer](../../third-party/viewers/dhtmlx/about.html)

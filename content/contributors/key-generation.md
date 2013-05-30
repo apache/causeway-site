@@ -468,7 +468,7 @@ Finally, commit your changes.
 
 ### Save to `KEYS`
 
-The armored representation of the public key should be saved to Isis' `KEYS` file, [https://svn.apache.org/repo/asf/isis/KEYS](https://svn.apache.org/repo/asf/isis/KEYS) (ie, parent of `trunk`).
+The armored representation of the public key should be saved to Isis' `KEYS` file, [https://github.com/apache/isis/blob/master/KEYS](https://github.com/apache/isis/blob/master/KEYS) (ie, in the [root](https://github.com/apache/isis) directory).
 
 First, in a new directory, checkout this file:
 

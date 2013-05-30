@@ -26,7 +26,7 @@ Isis provides two alternative user interface webapps:
 
 - the [Scimpi viewer](../viewers/scimpi/about.html) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
 
-Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO objectstore](../objectstores/jdo/about.html) and the [NoSQL objectstore](../objectstores/nosql/about.html).
+Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO objectstore](../components/objectstores/jdo/about.html) and the [NoSQL objectstore](../components/objectstores/nosql/about.html).
 
 ### Deploy on Isis as a RESTful web service
 

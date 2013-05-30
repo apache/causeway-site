@@ -29,7 +29,7 @@ UTILITY</td>
     <td>PROTOTYPING</td>
     <td>SERVER_PROTOTYPE<br/>
 PROTOTYPE</td>
-    <td><a href="../component/security/file/about.html">File-based</a></td>
+    <td><a href="../components/security/file/about.html">File-based</a></td>
     <td><a href="bypass-security.html">Bypass</a></td>
     <td><a href="inmemory-objectstore.html">In-memory</a></td>
     <td><a href="inmemory-profilestore.html">In-memory</a></td>
@@ -41,8 +41,8 @@ PROTOTYPE</td>
     <td>SERVER<br/>
 UNIT_TESTING<br/>
 SINGLE_USER</td>
-    <td><a href="../component/security/file/about.html">File-based</a></td>
-    <td><a href="../component/security/file/about.html">File-based</a></td>
+    <td><a href="../components/security/file/about.html">File-based</a></td>
+    <td><a href="../components/security/file/about.html">File-based</a></td>
     <td><a href="../component/objectstore/xml/about.html">XML</a></td>
     <td><a href="../component/profilestore/xml/about.html">XML</a></td>
     <td>Not visible</td>
@@ -54,7 +54,7 @@ SINGLE_USER</td>
 
 ### Scimpi, HTML, Restful Objects
 
-For the [scimpi](../component/viewer/scimpi/about.html), [html](../component/viewer/html/about.html) and [restfulobjects](../component/viewer/restfulobjects/about.html) viewers, the `deploymentType` is specified in the `<web.xml>` file:
+For the [scimpi](../components/viewers/scimpi/about.html) and [restfulobjects](../components/viewers/restfulobjects/about.html) viewers, the `deploymentType` is specified in the `<web.xml>` file:
 
 <pre>
 &lt;context-param&gt;
@@ -78,7 +78,7 @@ The default if not specified is `SERVER`.
 
 ### Wicket
 
-For the [wicket](../component/viewer/wicket/about.html) viewer, the Isis `deploymentType` is inferred from [Apache Wicket](http://wicket.apache.org)'s own [deployment mode](https://cwiki.apache.org/WICKET/faqs.html#FAQs-Deployment):
+For the [wicket](../components/viewers/wicket/about.html) viewer, the Isis `deploymentType` is inferred from [Apache Wicket](http://wicket.apache.org)'s own [deployment mode](https://cwiki.apache.org/WICKET/faqs.html#FAQs-Deployment):
 
 * Wicket's `DEVELOPMENT` mode corresponds to Isis' `PROTOTYPING` mode
 * Wicket's `DEPLOYMENT` mode corresponds to Isis' `PRODUCTION` mode
@@ -94,7 +94,7 @@ The Wicket mode is set in the usual way for a Wicket application:
 
 ### DnD
 
-For the [dnd](../component/viewer/dnd/about.html) viewer, the `deploymentType` is specified at the command-line, for example:
+For the [dnd](../components/viewers/dnd/about.html) viewer, the `deploymentType` is specified at the command-line, for example:
 
     -t prototype
 

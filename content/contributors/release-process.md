@@ -201,7 +201,7 @@ For these artifacts you will need to search [Maven central repo](http://search.m
 
 ### Code cleanup / formatting
 
-Make sure that all source code has been cleaned up and formatted according to the Apache Isis and ASF conventions.  Full details are in [Isis coding conventions](coding-conventions.html).
+Make sure that all source code has been cleaned up and formatted according to the Apache Isis and ASF conventions.  Use [this](resources/Apache-code-style-formatting.xml) Eclipse template and [this](resources/isis.importorder) import order.
 
 ### License header notices (RAT tool)
 
@@ -877,7 +877,7 @@ Update the Isis CMS website:
 
 And once the release has been approved:
 
-* Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/dist/isis](http://dist.apache.org/dist/isis))
+* Update the [download page](../download.html) with a link to the source release zip file (under [http://dist.apache.org/repos/dist/release/isis](http://dist.apache.org/repos/dist/release/sis))
 
 * The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.  Validate using the [W3C RDF Validator](http://www.w3.org/RDF/Validator/) service.
 

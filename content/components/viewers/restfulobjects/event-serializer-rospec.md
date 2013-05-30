@@ -34,7 +34,7 @@ isis.viewer.restfulobjects.RestfulObjectsSpecEventSerializer.baseUrl=https://mya
 If no `baseUrl` is specified, then the default URL is `http://localhost:8080/restful/`.
 
 {note
-Because the `baseUrl` will be different in production vs development, you will probably want to [configure Isis](configuration-files.html) to pick up its configuration file
+Because the `baseUrl` will be different in production vs development, you will probably want to [configure Isis](../../core/configuration-files.html) to pick up its configuration file
 from an external directory.
 }
 
