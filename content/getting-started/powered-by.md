@@ -2,7 +2,7 @@ Title: Powered by
 
 Here are some freely accessible (and sometimes open source) applications that are powered by Isis.
 
->If you have written an app in Isis that you'd like to share, please mention it on the [mailing list](support.html).
+>If you have written an app in Isis that you'd like to share, please mention it on the [mailing list](../support.html).
 
 ## TransportPlanner
 
