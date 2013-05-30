@@ -9,7 +9,7 @@ Title: Documentation
 ### Getting started
 
 - [Screencasts](getting-started/screencasts.html)
-- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.2](getting-started/release-notes/about.html))
+- [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.3](getting-started/release-notes/about.html))
 - [Programming Model and How-tos](applib-guide/about.html)
 - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
 
@@ -57,7 +57,7 @@ Guidance for committers is at the bottom of this page.
 
 {group
 
-## Core [1.1.0](core/release-notes/about.html)
+## Core [1.2.0](core/release-notes/about.html)
 
 {row-even
 
@@ -70,11 +70,11 @@ Guidance for committers is at the bottom of this page.
 
 ###  Applib Services
 
-- [Initializing Services](core/services/initializing-services.html) [1.2.0-SNAPSHOT]
+- [Initializing Services](core/services/initializing-services.html)
 - [Auditing Service](core/services/auditing-service.html)
 - [Bookmark Service](core/services/bookmark-service.html)
-- [Exception Recognizers](core/services/exception-recognizers.html) [1.2.0-SNAPSHOT]
-- [Publishing Service](core/services/publishing-service.html) [1.2.0-SNAPSHOT]
+- [Exception Recognizers](core/services/exception-recognizers.html)
+- [Publishing Service](core/services/publishing-service.html)
 
 }
 
@@ -120,12 +120,12 @@ Guidance for committers is at the bottom of this page.
 
 {span-one-third
 
-###  Wicket [1.1.0](components/viewers/wicket/release-notes/about.html)
+###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
 - [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
-- [Titles in tables](components/viewers/wicket/titles-in-tables.html) [1.2.0-SNAPSHOT]
-- [The About page](components/viewers/wicket/configuring-the-about-page.html) [1.2.0-SNAPSHOT]
+- [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+- [The About page](components/viewers/wicket/configuring-the-about-page.html)
 
 ----------
 
@@ -139,7 +139,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {span-one-third
 
-###  RestfulObjects [1.0.0](components/viewers/restfulobjects/release-notes/about.html)
+###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
 
 - [About](components/viewers/restfulobjects/about.html)
 
@@ -184,13 +184,13 @@ Note: this viewer is third-party open source (outside Apache)
 
 {span-one-third
 
-###  DataNucleus (JDO) [1.0.0](components/objectstores/jdo/release-notes/about.html)
+###  DataNucleus (JDO) [1.1.0](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html)
 - [Maven and Eclipse](components/objectstores/jdo/maven-and-eclipse.html)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
-- [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html) [1.1.0-SNAPSHOT]
-- [Workarounds](components/objectstores/jdo/workarounds.html) [1.1.0-SNAPSHOT]
+- [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
+- [Workarounds](components/objectstores/jdo/workarounds.html)
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
@@ -205,8 +205,6 @@ Note: this viewer is third-party open source (outside Apache)
 - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
 - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
 - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
-
-all the above are released only in [1.1.0-SNAPSHOT]
 
 }
 
@@ -242,7 +240,7 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 ## Security
 
-### Shiro [1.1.0](components/security/shiro/release-notes/about.html)
+### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
 - [Configuring Shiro](components/security/shiro/configuring-shiro.html)
@@ -250,7 +248,7 @@ all the above are released only in [1.1.0-SNAPSHOT]
 
 ----------
 
-### File [1.0.0](components/security/file/release-notes/about.html)
+### File [1.0.1](components/security/file/release-notes/about.html)
 
 - [About](components/security/file/about.html)
 
