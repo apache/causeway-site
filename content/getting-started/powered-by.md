@@ -18,13 +18,13 @@ The author, Christian Steinebach, explains it as follows:
 - The resource usage, i.e. costs and time for each leg, may be shown as a bar chart.
 -  An event may be generated (e.g. some customs papers are missing, therefore transport execution stops and a replan
 is necessary).
->
-Because this is a demo, everything is a "bit shaky" and there is a lot of room for improvement, but it does show how a relatively simple domain model can be brought 'alive' using Isis.
 
 Christian wrote this demo part-time over the course of a few weeks.  He commented:
 
 > I did not have too much time to get 'something done' ... But although I had a hard time in the beginning with Isis I don't think I would have made it
 in time using 'conventional' development with database, GUI etc...
+>
+Because this is a demo, everything is a "bit shaky" and there is a lot of room for improvement, but it does show how a relatively simple domain model can be brought 'alive' using Isis.
 
 If you want to try out the application, grab the [source code](https://www.assembla.com/code/transportplanner/git/nodes) and use this [script](TransportPlanner/script.html).  Note that the app was written against a snapshot version of Isis; ask on the [mailing list](../support.html) for help.
 
