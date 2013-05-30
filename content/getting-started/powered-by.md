@@ -2,7 +2,9 @@ Title: Powered by
 
 Here are some freely accessible (and sometimes open source) applications that are powered by Isis.
 
-### TransportPlanner
+>If you have written an app in Isis that you'd like to share, please mention it on the [mailing list](support.html).
+
+## TransportPlanner
 
 TransportPlanner is a demo done by [Marintek AS](http://marintek.no) to show a possible 'solution' to a multimodal transport planning problem. It's a small part of a bigger European funded project.
 
