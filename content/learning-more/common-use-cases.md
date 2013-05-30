@@ -22,9 +22,9 @@ One of the original motivations for Isis itself was to be able automatically gen
 
 Isis provides two alternative user interface webapps:
 
-- the [Wicket viewer](../viewers/wicket/about.html) provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components
+- the [Wicket viewer](../components/viewers/wicket/about.html) provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components
 
-- the [Scimpi viewer](../viewers/scimpi/about.html) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
+- the [Scimpi viewer](../components/viewers/scimpi/about.html) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
 
 Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO objectstore](../components/objectstores/jdo/about.html) and the [NoSQL objectstore](../components/objectstores/nosql/about.html).
 
@@ -44,4 +44,4 @@ There are two main use cases for deploying Isis as a RESTful web service are:
 
   REST is designed to be machine-readable, and so is an excellent choice for synchronous data interchange scenarios.
 
-As for the auto-generated webapps, the framework manages object persistence, either the [JDO objectstore](../objectstores/jdo/about.html) objectstore and the [NoSQL objectstore](../objectstores/nosql/about.html).  It is also perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
+As for the auto-generated webapps, the framework manages object persistence, either the [JDO objectstore](../components/objectstores/jdo/about.html) objectstore and the [NoSQL objectstore](../components/objectstores/nosql/about.html).  It is also perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
