@@ -1,4 +1,4 @@
-Title: Titles in Tables (1.2.0-SNAPSHOT)
+Title: Titles in Tables
 
 Object titles can often be quite long if the intention is to uniquely identify the object.  While this is appropriate for the object view, it can be cumbersome within tables.
 

@@ -123,9 +123,10 @@ Guidance for committers is at the bottom of this page.
 ###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
-- [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
 - [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+- [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html) [1.3.0-SNAPSHOT]
 - [The About page](components/viewers/wicket/configuring-the-about-page.html)
+- [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
 
 ----------
 

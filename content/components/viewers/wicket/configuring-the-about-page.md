@@ -1,4 +1,4 @@
-Title: Configuring the About page (1.2.0-SNAPSHOT)
+Title: Configuring the About page
 
 Isis' Wicket viewer has an About page that, by default, will provide a dump of the JARs that make up the webapp.  This page will also show the manifest attributes of the WAR archive itself, if there are any.  One of these attributes may also be used as the application version number.
 

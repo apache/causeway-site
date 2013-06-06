@@ -1,4 +1,4 @@
-Title: Publishing Service [1.2.0-SNAPSHOT]
+Title: Publishing Service
 
 
 The Publishing Service enables Isis to publish both changes to domain objects, and also action invocations to third parties.  A typical use case is to publish onto a pub/sub bus such as [ServiceMix](http://servicemix.apache.org/) or [ActiveMQ](http://activemq.apache.org/) to keep other systems up to date.

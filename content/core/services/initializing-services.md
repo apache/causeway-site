@@ -1,4 +1,4 @@
-Title: Initializing Services (1.2.0-SNAPSHOT)
+Title: Initializing Services
 
 All services registered in `isis.properties` can optionally declare lifecycle callbacks to initialize them (when the app is deployed) and to shut them down (when the app is undeployed).
 
