@@ -10,16 +10,17 @@ Title: Core Modules
 
 ###  Services
 
-- [Initializing Services](services/initializing-services.html) [1.2.0-SNAPSHOT]
+- [Initializing Services](services/initializing-services.html)
 - [Auditing Service](services/auditing-service.html)
 - [Bookmark Service](services/bookmark-service.html)
-- [Exception Recognizers](services/exception-recognizers.html) [1.2.0-SNAPSHOT]
-- [Publishing Service](services/publishing-service.html) [1.2.0-SNAPSHOT]
+- [Exception Recognizers](services/exception-recognizers.html)
+- [Publishing Service](services/publishing-service.html)
 
 ### Development
 
-- [Unit Test Support](unittestsupport.html) [stub]
-- [Integration Test Support](integtestsupport.html) [stub]
+- [Unit Test Support](unittestsupport.html)
+- [Integration Test Support](integtestsupport.html)
+- [Wrapper Factory](wrapper.html) [stub]
 
 ###  Programming Model
 

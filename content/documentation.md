@@ -84,7 +84,7 @@ Guidance for committers is at the bottom of this page.
 
 - [Unit Test Support](core/unittestsupport.html)
 - [Integration Test Support](core/integtestsupport.html)
-- [Wrapper Service](core/wrapper.html) [stub]
+- [Wrapper Factory](core/wrapper.html) [stub]
 
 ###  Programming Model
 
