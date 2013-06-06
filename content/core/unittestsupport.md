@@ -44,7 +44,7 @@ As you can see, for some of the types an `Instantiator` must be provided.  This 
 
 So you can see what's going on, this will log all tests to `System.out`.  This can be disabled by removing the call to `withLoggingTo()`.
 
-
+The example tests can be found [here](https://github.com/apache/isis/tree/master/core/unittestsupport/src/test/java/org/apache/isis/core/unittestsupport/bidir).
 
 ##JUnitRuleMockery2
 
