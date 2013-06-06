@@ -19,4 +19,3 @@ Title: viewer-restfulobjects-2.0.0
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-387'>ISIS-387</a>] -         Enhance PublishingService and AuditingService for created and deleted objects (as well as just updated objects).
 </li>
 </ul>                          
-

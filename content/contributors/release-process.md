@@ -914,23 +914,36 @@ For example, for a release of Apache Isis Core, use the following subject:
 And use the following body (summarizing the main points as required):
 
 <pre>
-The Isis team is pleased to announce the release of
-Apache Isis Core version 1.2.3
+The Isis team is pleased to announce the release of:
+- Apache Isis Core version 1.2.0
+- Wicket Viewer 1.2.0
+- Restful Objects Viewer 2.0.0
+- JDO Object Store 1.1.0
+- Shiro Security 1.1.1
+- File Security 1.0.1
+- Quickstart Archetype 1.0.3
 
-<i>summary of the main points of the release</i>
+New features in this release include:
+- ...
 
-Full release notes are available at [1] on the Isis website.
+Full release notes are available at [1,2,3,4,5,6,7] on the Isis website.
 
-You can access this release directly from the Maven central repo [2], 
-or download the release and build it from source [3].
+You can access this release directly from the Maven central repo [8], 
+or download the release and build it from source [9].
 
 Enjoy!
 
 -The Isis team
 
-[1] http://isis.apache.org/core/release-notes/isis-1.2.3.html
-[2] http://search.maven.org
-[3] http://isis.apache.org/download.html
+[1] http://isis.apache.org/core/release-notes/isis-1.2.0.html
+[2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.2.0.html
+[3] http://isis.apache.org/components/viewers/restfulobjects/release-notes/isis-viewer-restfulobjects-2.0.0.html
+[4] http://isis.apache.org/components/objectstores/jdo/release-notes/isis-objectstore-jdo-1.1.0.html
+[5] http://isis.apache.org/components/security/shiro/release-notes/isis-security-shiro-1.1.1.html
+[6] http://isis.apache.org/components/security/file/release-notes/isis-security-file-1.0.1.html
+[7] http://isis.apache.org/getting-started/release-notes/quickstart_wrj-archetype-1.0.3.html
+[8] http://search.maven.org
+[9] http://isis.apache.org/download.html
 </pre>
 
 ### Blog post
