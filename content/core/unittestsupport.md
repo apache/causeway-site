@@ -4,11 +4,12 @@ This module provides unit test helpers for use by all other modules.  There are 
 
 To use, update the `pom.xml`:
 
+<pre>
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
         &lt;artifactId&gt;isis-core-unittestsupport&lt;/artifactId&gt;
     &lt;/dependency&gt;
-
+</pre>
 
 ##Bidirectional Contract Tests [1.3.0-SNAPSHOT]
 

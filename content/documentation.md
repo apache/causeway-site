@@ -82,8 +82,8 @@ Guidance for committers is at the bottom of this page.
 
 ### Dev Support
 
-- [Unit Test Support](core/unittestsupport.html) [stub]
-- [Integration Test Support](core/integtestsupport.html) [stub]
+- [Unit Test Support](core/unittestsupport.html)
+- [Integration Test Support](core/integtestsupport.html)
 - [Wrapper Service](core/wrapper.html) [stub]
 
 ###  Programming Model
