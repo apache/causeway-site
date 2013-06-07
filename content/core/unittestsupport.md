@@ -46,7 +46,7 @@ To see what's going on (and to identify any skipped relationships), use the `wit
 
 The example tests can be found [here](https://github.com/apache/isis/tree/master/core/unittestsupport/src/test/java/org/apache/isis/core/unittestsupport/bidir).
 
-##JUnitRuleMockery2
+##JUnitRuleMockery2 (enhanced in [1.3.0-SNAPSHOT])
 
 An extension to the JMock's `JunitRuleMockery`, providing a simpler API and also providing support for autowiring.
 
@@ -63,16 +63,18 @@ For example, here we see that the class under test, an instance of `Collaboratin
         @ClassUnderTest
         private CollaboratingUsingSetterInjection collaborating;
     
-        @Before
-        public void setUp() throws Exception {
-        	collaborating = context.getClassUnderTest();
-        }
-        
         @Test
         public void wiring() {
         	assertThat(collaborating.collaborator, is(not(nullValue())));
         }
     }
+
+Prior to 1.3.0-SNAPSHOT, it is necessary to manually lookup the `@ClassUnderTest` instance from the `context`:
+
+        @Before
+        public void setUp() throws Exception {
+        	collaborating = context.getClassUnderTest();
+        }
 
 
 The example tests can be found [here](https://github.com/apache/isis/tree/master/core/unittestsupport/src/test/java/org/apache/isis/core/unittestsupport/jmocking)
