@@ -1,4 +1,4 @@
-Title: Exception Recognizers [1.1.0-SNAPSHOT]
+Title: Exception Recognizers
 
 The JDO objectstore provides a number of implementations of the applib [ExceptionRecognizer](../../../core/services/exception-recognizers.html) API that will recognize SQL constraint exceptions and convert them into user-friendly error messages.  The `ExceptionRecognizerCompositeForJdoObjectStore` wraps these up into a single implementation.
 

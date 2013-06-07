@@ -8,7 +8,7 @@ The viewer is an implementation of the [Restful Objects](http://restfulobjects.o
 
 ### Applib Service Implementations
 
-- [Event Serializer per RO Spec](event-serializer-rospec.html) [1.1.0-SNAPSHOT]
+- [Event Serializer per RO Spec](event-serializer-rospec.html)
 
 
 

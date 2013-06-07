@@ -1,4 +1,4 @@
-Title: Publishing Service using JDO [1.1.0-SNAPSHOT]
+Title: Publishing Service using JDO
 
 The JDO objectstore provides a simple implementation of the applib [PublishingService](../../../core/services/publishing-service.html) that simply persists the event data into a `PublishedEvent` entity.
 

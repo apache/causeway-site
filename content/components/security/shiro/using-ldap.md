@@ -1,4 +1,4 @@
-Title: Using Shiro with an LDAP Server (1.1.0-SNAPSHOT)
+Title: Using Shiro with an LDAP Server
 
 Isis ships with an implementation of [Apache Shiro](http://shiro.apache.org)'s `Realm` class that allows user authentication and authorization to be performed against an LDAP server.
 

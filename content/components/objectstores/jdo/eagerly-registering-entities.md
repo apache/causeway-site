@@ -1,4 +1,4 @@
-Title: Eagerly Registering Entity Types [1.1.0-SNAPSHOT]
+Title: Eagerly Registering Entity Types
 
 Both Apache Isis and DataNucleus have their own metamodels of the domain entities.  Isis builds its metamodel by walking the graph of types from the services registered in `isis.properties`.  The JDO objectstore then takes these types and registers them with DataNucleus.
 

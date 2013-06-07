@@ -75,6 +75,7 @@ Guidance for committers is at the bottom of this page.
 - [Bookmark Service](core/services/bookmark-service.html)
 - [Exception Recognizers](core/services/exception-recognizers.html)
 - [Publishing Service](core/services/publishing-service.html)
+- [Settings Services](core/services/settings-services.html) [1.3.0-SNAPSHOT]
 
 }
 
@@ -206,6 +207,7 @@ Note: this viewer is third-party open source (outside Apache)
 - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
 - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
 - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
+- [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
 
 }
 
