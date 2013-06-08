@@ -8,4 +8,5 @@ Title: Applib Services
 - [Bookmark Service](bookmark-service.html)
 - [Exception Recognizers](exception-recognizers.html)
 - [Publishing Service](publishing-service.html)
+- [Settings Services](settings-services.html) [1.3.0-SNAPSHOT]
 
