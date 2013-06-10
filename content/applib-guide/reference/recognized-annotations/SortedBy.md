@@ -37,8 +37,8 @@ For example, this is taken from the [quickstart archetype](../../../getting-star
         ...
     }
 
-When the `Dependencies collection is rendered, the elements are sorted by the `description` property first:
+When the `dependencies` collection is rendered, the elements are sorted by the `description` property first:
 
 ![](images/sortedby-dependencies.png)
 
-Without this annotation, the order would have been inverted (because the natural ordering places items not completed before items that have been completed.
+Without this annotation, the order would have been inverted (because the natural ordering places items not completed before those items that have been completed.
