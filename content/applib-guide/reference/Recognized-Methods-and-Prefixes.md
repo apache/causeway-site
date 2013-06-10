@@ -42,7 +42,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
 </tr>
 <tr>
-    <td>autoComplete</td>
+    <td>autoComplete<br/>[1.3.0-SNAPSHOT]</td>
     <td></td>
     <td>Y</td>
     <td></td>
