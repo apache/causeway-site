@@ -17,7 +17,6 @@ For example:
         ....
     }
 
-> Note
-The [@AutoComplete](../reference/recognized-annotations/AutoComplete.html) allows autocomplete functionality to be associated with the domain type (eg `Product` in the example above).  If both are present, then the per-property autocomplete takes preference.
+> The [@AutoComplete](../reference/recognized-annotations/AutoComplete.html) also allows autocomplete functionality to be associated with the domain type (eg `Product` in the example above).  If both are present, then the per-property autocomplete takes preference.
 
  

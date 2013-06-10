@@ -1,9 +1,7 @@
-@SortedBy
+@SortedBy [1.3.0-SNAPSHOT]
 -------
 
-> **Support**
-> 
-> * Supported by: Wicket viewer; not yet supported by other viewers.
+> Supported by: Wicket viewer; not yet supported by other viewers.
 
 The `@SortedBy` annotation is an instruction hint for (`SortedSet`) collections to use the specified comparator rather than the natural ordering of the entity
 (as would usually be the case).

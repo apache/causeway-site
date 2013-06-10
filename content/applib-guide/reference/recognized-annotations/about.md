@@ -45,7 +45,7 @@ Recognized Annotations
 * [RegEx](./RegEx.html)
 * [Render](./Render.html)
 * [Resolve](./Resolve.html)
-* [SortedBy](./SortedBy.html)
+* [SortedBy](./SortedBy.html) [1.3.0-SNAPSHOT]
 * [Title](./Title.html)
 * [TypeOf](./TypeOf.html)
 * [TypicalLength](./TypicalLength.html)
