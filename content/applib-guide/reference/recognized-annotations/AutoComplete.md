@@ -30,6 +30,6 @@ where:
         ...
     }
 
-{note
-As an alternative to this annotation, you may also use the `autoComplete` method prefix; see [this HOWTO](../../how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html) and [this HOWTO](../../how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html)
+>{note
+In many cases you may require additional control.  For this, you can use the `autoComplete` method prefix, associated either with [action parameter](../../how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html) or with the [property](../../how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html).
 }
