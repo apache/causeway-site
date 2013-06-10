@@ -316,6 +316,7 @@ Note: this viewer is third-party open source (outside Apache)
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
+- [Applying Patches](contributors/applying-patches.html)
 - [Recreating an archetype](contributors/recreating-an-archetype.html)
 - [Snapshot process](contributors/snapshot-process.html)
 - [Release process](contributors/release-process.html)

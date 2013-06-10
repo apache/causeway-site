@@ -42,6 +42,15 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
 </tr>
 <tr>
+    <td>autoComplete</td>
+    <td></td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td>Y</td>
+    <td><a href="../recognized-annotations/AutoComplete.html">@AutoComplete </a> annotation</td>
+</tr>
+<tr>
     <td>clear</td>
     <td></td>
     <td>Y</td>
@@ -219,7 +228,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td><a href="../recognized-annotations/Title.html">@Title </a> annotation</td>
 </tr>
 <tr>
     <td>updating</td>

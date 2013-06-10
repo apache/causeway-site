@@ -93,7 +93,11 @@ this can also be specified.
 
 * [How to specify a set of choices for a property](./how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html)
 
+* [How to specify an auto-complete for a property](./how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html)
+
 * [How to specify a set of choices for an action parameter](./how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
+
+* [How to specify an auto-complete for an action parameter](./how-to-03-025-How-to-specify-a-set-of-an-autocomplete-for-an-action-parameter.html)
 
 * [How to specify that a class of objects has a limited number of instances](./how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
 
