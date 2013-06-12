@@ -24,7 +24,7 @@ That is:
 
 The diagram also indicates the [JIRA](https://issues.apache.org/jira/browse/ISIS) ticket; all work in Isis should tracked in JIRA.  Before you decide to start hacking with Isis, it's always worth creating a ticket in JIRA and then have a discussion about it on the [mailing lists](http://isis.apache.org/support.html).  
 
-Assuming you have a JIRA ticket, generally speaking all you need to do once you have your patch is to add a comment with the URL to your patch on your github fork; the Isis committer can then pull down your change.  
+Assuming you have a JIRA ticket, generally speaking all you need to do once you have your patch is to add a comment with the URL to your patch on your github fork; the Isis committer can then download your patch from the JIRA ticket, review it, and apply your patch.  
 
 As a slight simplification to the above, you may decide to clone directly from [github.com/apache/isis](https://github.com/apache/isis.git) rather than create your own fork:
 
@@ -87,6 +87,18 @@ why this is a problem, and how the patch fixes the problem when applied.
 </pre>
 
 Once your git repo is setup, the next thing you'll most likely want to do is to setup your development environment.  See [here](development-environment.html) for more details.
+
+##Creating the patch file
+
+If you are working off your own github fork, then you can use github to generate your patch files.  Attach them to the relevant JIRA.
+
+If you are working without a github fork, then you can create the patches from your own local git repository.
+
+As per [this stackoverflow question](http://stackoverflow.com/questions/6658313/generate-a-git-patch-for-a-specific-commit), create the patch using `git format-patch`:
+
+    git format-patch -10 HEAD --stdout > 0001-last-10-commits.patch
+
+Here `-10` is the last 10 commits you have done. You need to change that integer according to the commits you need to apply into the patch.
 
 ##Sample Contribution Workflow
 
