@@ -11,7 +11,9 @@ If a diff file has been provided, then it can easily be applied using eGit's wiz
 
 ## Patch files
 
-If a patch file has been povided, then it can be applied using command line tools.
+If a patch file has been provided, then it can be applied using command line tools.
+
+### Inspect the patch
 
 First, take a look at what changes are in the patch. You can do this easily with `git apply`
 
@@ -25,17 +27,26 @@ Next, you’re interested in how troublesome the patch is going to be. Git allow
 
 If you don’t get any errors, the patch can be applied cleanly. Otherwise you may see what trouble you’ll run into.
 
-To apply the patch, use:
+### Apply a (clean) patch
 
-    git apply ISIS-xxx.patch
-
-Review changes.  Then commit the changes, using the `--signoff` flag to indicate that you reviewed and were happy with the contributed changes:
-
-    git commit -m "..." --signoff
-
-Alternatively, if you want to do the apply and commit/signoff in a single step, use `git am`:
+To apply a clean patch (adding the items and commit/signoff in a single step), use `git am`:
 
     git am --signoff < ISIS-xxx.patch
 
-Information adapted from [this blog post](https://ariejan.net/2009/10/26/how-to-create-and-apply-a-patch-with-git/)
+This preserves the original author's commit message.
+
+### Apply a (non-clean) patch
+
+If the patch does not apply cleanly, then the original authors commit message cannot be preserved.  This sequence in this case is:
+
+    git apply ISIS-xxx.patch
+
+Fix up any issues.  The add and commit as usual
+
+    git add .
+    git commit am "<original authors' commit message>" --signoff
+
+The `--signoff` simply adds a line to the commit message indicating you have signed off the commit.
+
+Information adapted from [this blog post](https://ariejan.net/2009/10/26/how-to-create-and-apply-a-patch-with-git/) and [this wiki page](http://wiki.eclipse.org/Jetty/Contributor/Contributing_Patches).
 
