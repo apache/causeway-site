@@ -76,20 +76,20 @@ Add the following to your `pom.xml`:
 </pre>
 
 Then, tell DataNucleus to use the project classpath:
->
+
 <img src="resources/eclipse-010-windows-preferences.png" width="600px"/>
 
 When the enhancer runs, it will print out to the console:
->
+
 <img src="resources/eclipse-120-console.png" width="500px"/>
 
 
 
-## Workaround for path limits: Configuring the DataNucleus plugin to use the `persistence.xml`
+## Workaround for path limits (the DN plugin to use the persistence.xml)
 
 As noted above, if running on Windows then the DataNucleus plugin is very likely to hit the Windows path limit.
 
-To fix this, we configure the enhancer to read from the `persistence.xml` file.  (This fix is also required if [working with Maven](./datanucleus-and-maven.html).
+To fix this, we configure the enhancer to read from the `persistence.xml` file.  (This fix is also required if [working with Maven](./datanucleus-and-maven.html)).
 
 As a prerequisite, first make sure that your domain object has a `persistence.xml` file.  The details of how to do this can be found [here](./persistence_xml.html).
 
