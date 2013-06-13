@@ -16,3 +16,8 @@ For example, the Isis templates all have the prefix "`is`"; simply enter "is" an
 Similarly, the JUnit templates are prefixed "`ju`".
 
 And the JMock templates are prefixed "`jm`".
+
+
+### Notes
+
+The `ispauto` and `isaauto` (for auto-complete of properties or of action parameters) only apply from v1.3.0-SNAPSHOT.
