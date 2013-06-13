@@ -50,5 +50,5 @@ If just using released versions of Isis, then there is nothing to be done.
 However, if building Isis from source code and in Eclipse, and if using either of these services, then you must also configure Eclipse's DataNucleus plugin; details can be found [here](./datanucleus-and-eclipse.html).
 
 As the screenshot below shows, the `persistence-unit` name to configure is called `jdo-applib`:
->
+
 ![](resources/jdo-applib-persistence-xml.png)
