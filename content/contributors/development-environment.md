@@ -136,6 +136,8 @@ Hit `Finish`; Eclipse should automatically build the entire codebase.
 
 ### Sharing Projects
 
+> In the Juno release and later, this is now done automatically.
+
 The next thing to do is to configure eGit so that you can use git commands within Eclipse.  This is done by selecting all the projects in the `Package Explorer`, then right clicking `Team > Share Project`:
 
 <img src="resources/sharing-projects-1.png" width="500px"></img>
@@ -185,6 +187,19 @@ It's a good idea to configure Eclipse's editors so that they highlight any accid
 
 <img src="resources/eclipse-preferences-white-space-2.png" width="400px"></img>
 
+
+## Setting up DataNucleus enhancer
+
+If you are either contributing to the JDO Objectstore, or even if you simply intend to use the latest-n-greatest version and build from source, then you should also configure the DataNucleus plugin for Eclipse.  This does the job of bytecode-enhancing your domain objects.
+
+See [this page](../components/objectstores/jdo/datanucleus-and-eclipse.html) for details on how to setup the plugin.
+
+You will also see that the page describes how to configure the `isis-objectstore-jdo-applib` domain project with the DataNucleus enhancer.
+
+If you fail to do this, then the JDO ObjectStore's implementation of the [Publishing Service](../components/objectstores/jdo/publishing-service-jdo.html) and the [Settings Services](../components/objectstores/jdo/settings-services-jdo.html) will throw runtime exceptions.
+
+
 ## What's Next
 
-Now you've set up your development environment the next thing to do is to [build Isis](building-isis.html).
+Now you've set up your development environment the next thing to do is to [build Isis](building-isis.html) from the command line.
+

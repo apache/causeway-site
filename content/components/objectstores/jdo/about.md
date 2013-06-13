@@ -4,7 +4,9 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 
 ### Hints and tips:
 
-- [Maven and Eclipse](maven-and-eclipse.html)
+- [DataNucleus and Eclipse](datanucleus-and-eclipse.html)
+- [DataNucleus and Maven](datanucleus-and-maven.html)
+- [`persistence.xml` file](persistence_xml.html)
 - [Dates, Blobs and Lazy Loading](dates-blobs-lazy-loading.html)
 - [Using a JNDI Datasource](using-jndi-datasource.html)
 - [Workarounds (the `IsisJdoSupport` service)](workarounds.html)
