@@ -2,8 +2,8 @@ Title: Configuring the persistence.xml file
 
 > See also:
 >
-> * [how to use JDO/DataNucleus with Maven](../datanucleus-and-maven.html).  
-> * [how to use JDO/DataNucleus with Eclipse](../datanucleus-and-eclipse.html).  
+> * [how to use JDO/DataNucleus with Maven](./datanucleus-and-maven.html).  
+> * [how to use JDO/DataNucleus with Eclipse](./datanucleus-and-eclipse.html).  
 
 By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. However, with such power comes a little bit of complexity to the development environment: all domain objects must be enhanced through the [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  So the enhancer must, in one way or another, be integrated into your development environment.
 
