@@ -58,7 +58,7 @@ istered, and you are trying to register an identical plugin located at URL "file
 ch.
 </pre>
 
-The fix is to use a Maven profile:
+The fix is to use a Maven profile.  The following is correct as of the JDO ObjectStore v1.1.0:
 
 <pre>
     &lt;profiles&gt;
@@ -73,13 +73,7 @@ The fix is to use a Maven profile:
                 &lt;dependency&gt;
                     &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
                     &lt;artifactId&gt;datanucleus-core&lt;/artifactId&gt;
-                    &lt;version&gt;(3.0.99, 3.1.99)&lt;/version&gt;
-                    &lt;scope&gt;runtime&lt;/scope&gt;
-                &lt;/dependency&gt;
-                &lt;dependency&gt;
-                    &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
-                    &lt;artifactId&gt;datanucleus-enhancer&lt;/artifactId&gt;
-                    &lt;version&gt;(3.0.99, 3.1.99)&lt;/version&gt;
+                    &lt;version&gt;(3.2.0-m1, 3.2.99)&lt;/version&gt;
                     &lt;scope&gt;runtime&lt;/scope&gt;
                 &lt;/dependency&gt;
             &lt;/dependencies&gt;
