@@ -75,7 +75,13 @@ The archetype provides a welcome page that explains the classes and files genera
 
 The app itself is configured to run using shiro security, as configured in the `WEB-INF/shiro.ini` config file.  To log in, use `sven/pass`.
 
-### App Structure
+### Modifying the App
+
+Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site (check out the [getting started](../documentation.html) section first).
+
+If you use Eclipse, do also install the [Eclipse templates](../editor-templates.html); these will help you follow the Isis naming conventions.  
+
+#### App Structure
 
 As noted above, the generated app is a very simple application consisting of a single domain object for tracking to-do items. The intention is not to showcase all of Isis' capabilities; rather it is to allow you to very easily modify the generated application (eg rename `ToDoItem` to `Customer`) without having to waste time deleting lots of generated code.
 
@@ -84,8 +90,9 @@ As noted above, the generated app is a very simple application consisting of a s
 <tr><td>myapp</td><td>The parent (aggregator) module</td></tr>
 <tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> (repository) interface.</td></tr>
 <tr><td>myapp-fixture</td><td>Domain object fixtures used for initializing the system when being demo'ed or for unit testing.</td></tr>
+<tr><td>myapp-integtests</td><td>End-to-end <a href="../core/integtestsupport.html">integration tests</a>, that exercise from the UI through to the database</td></tr>
 <tr><td>myapp-objstore-jdo</td><td>Implementation of <tt>ToDoItems</tt> repository, using JDO objectstore.</td></tr>
-<tr><td>myapp-viewer-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>
+<tr><td>myapp-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>
 </table>
 
 If you run into issues, please don't hesitate to ask for help on the [users mailing list](../support.html).
