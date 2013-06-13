@@ -79,7 +79,7 @@ The app itself is configured to run using shiro security, as configured in the `
 
 Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site (check out the [getting started](../documentation.html) section first).
 
-If you use Eclipse, do also install the [Eclipse templates](../editor-templates.html); these will help you follow the Isis naming conventions.  
+If you use Eclipse, do also install the [Eclipse templates](../getting-started/editor-templates.html); these will help you follow the Isis naming conventions.  
 
 #### App Structure
 
