@@ -10,7 +10,7 @@ By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. H
 Whether working with [Maven](../datanucleus-and-maven.html) or with [Eclipse](../datanucleus-and-eclipse.html) and on the Windows, there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). The workaround is straight-forward: configure a `persistence.xml` file.
 
 
-## Create `persistence.xml` for the domain project
+## Create persistence.xml for the domain project
 
 In `src/main/java/META-INF` of the domain project:
 
