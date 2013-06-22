@@ -37,23 +37,23 @@ why we do it, check out the
 
 The PGP signatures can be verified using PGP or GPG.  First download the [KEYS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=KEYS;hb=master) as well as the asc signature file for the artifact.  Make sure you get these files from the [main distribution directory](https://dist.apache.org/repos/dist/release/isis/), rather than from a mirror.
 
-Then verify the signatures using:
+Then verify the signatures using a command such as:
 
 <pre>
 pgpk -a KEYS
-pgpv isis-1.1.0-source-release.zip.asc
+pgpv isis-1.2.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 pgp -ka KEYS
-pgp isis-1.1.0-source-release.zip.asc
+pgp isis-1.2.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 gpg --import KEYS
-gpg --verify isis-1.1.0-source-release.zip.asc
+gpg --verify isis-1.2.0-source-release.zip.asc
 </pre>
 
 Alternatively, you can verify the MD5 signature on the files. A Unix/Linux
