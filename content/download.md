@@ -12,19 +12,19 @@ If you want to build Isis from formally released source tarballs, you can downlo
 
 Core:
 
-* [isis-1.1.0](https://dist.apache.org/repos/dist/release/isis/core/isis-1.1.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/core/isis-1.1.0-source-release.zip.asc))
+* [isis-1.2.0](https://dist.apache.org/repos/dist/release/isis/core/isis-1.2.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/core/isis-1.2.0-source-release.zip.asc))
 
 Components:
 
-* [isis-security-file-1.0.0](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.0-source-release.zip.asc))
-* [isis-security-shiro-1.1.0](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.1.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.1.0-source-release.zip.asc))
-* [isis-objectstore-jdo-1.0.0](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.0.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.0.0-source-release.zip.asc))
-* [isis-viewer-wicket-1.1.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.1.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.1.0-source-release.zip.asc))
-* [isis-viewer-restfulobjects-1.0.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-1.0.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-1.0.0-source-release.zip.asc))
+* [isis-security-file-1.0.1](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.1-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.1-source-release.zip.asc))
+* [isis-security-shiro-1.1.1](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.1.1-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.1.1-source-release.zip.asc))
+* [isis-objectstore-jdo-1.1.0](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.1.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.1.0-source-release.zip.asc))
+* [isis-viewer-wicket-1.2.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.2.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.2.0-source-release.zip.asc))
+* [isis-viewer-restfulobjects-2.0.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.0.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.0.0-source-release.zip.asc))
 
 Archetypes:
 
-* [quickstart_wicket_restful_jdo-archetype-1.0.2](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.2-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.2-source-release.zip.asc))
+* [quickstart_wicket_restful_jdo-archetype-1.0.3](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.3-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.0.3-source-release.zip.asc))
 
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 
