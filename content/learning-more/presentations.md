@@ -1,4 +1,4 @@
-Title: Presentations
+Title: Downloadable Presentations
 
 The following presentation, available in multiple formats, provides some background on Isis:
 

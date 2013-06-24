@@ -1,6 +1,6 @@
-Title: Articles and Presentations
+Title: Articles, Conference Sessions, Podcasts
 
-Some articles and presentations relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've **highlighted** some of the better ones...
+Some articles and recorded material relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've **highlighted** some of the better ones...
 
 2013
 
