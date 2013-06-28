@@ -58,6 +58,68 @@ istered, and you are trying to register an identical plugin located at URL "file
 ch.
 </pre>
 
+
+
+
+### Preferred solution
+
+> This solution fixes is now version of DataNucleus to be the version referenced by the JDO ObjectStore.  
+> 
+> This is the solution used from the Isis Core 1.3.0-SNAPSHOT onwards.
+
+In the root project's `pom.xml`, specify the property:
+
+    <properties>
+        <datanucleus-core.version>3.2.4</datanucleus-core.version>
+        ...
+    </properties>
+
+where the version should be the same as the one referenced by the JDO Objectstore.
+
+Then, in the `dom` project's `pom.xml`, update the DataNucleus enhancer plugin to force it to use a specific version of the DataNucleus core: 
+
+
+    <plugins>
+        <plugin>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-maven-plugin</artifactId>
+            <version>3.2.0-release</version>
+            <dependencies>
+                <dependency>
+                        <!-- Force the enhancer to use the same version 
+                        of core that's already on the classpath -->
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-core</artifactId>
+                        <version>${datanucleus-core.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+            	<fork>false</fork>
+                <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
+                <verbose>true</verbose>
+                <props>${basedir}/datanucleus.properties</props>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>enhance</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+       ...
+    </plugins>
+
+ 
+
+### Original solution
+
+> This solution attempts to use the latest-n-greatest version of DataNucleus, and was the approach used in Isis Core 1.2.0 and earlier.  However, it has been found to be flawed if a new version of the DataNucleus enhancer was released that had an incompatibility with the version of DN referenced by the JDO ObjectStore.  
+> 
+> Use the preferred solution, above, instead.
+
+
 The fix is to use a Maven profile.  The following is correct as of the JDO ObjectStore v1.1.0:
 
 <pre>
