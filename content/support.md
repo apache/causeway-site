@@ -38,7 +38,7 @@ The Markmail archives span both our current (TLP) mailing lists and also our ori
 - [DOAP RDF file](doap_isis.rdf) (as per [Apache requirements](http://projects.apache.org/doap.html))
 - [wiki](https://cwiki.apache.org/confluence/display/ISIS/Index)
 - [CI Builds](https://builds.apache.org/job/isis-core-ubuntu/)
-- [Fisheye](https://fisheye6.atlassian.com/changelog/isis) (sync of site, not code)
+- [Fisheye](https://fisheye6.atlassian.com/changelog/isis-git)
 - [Sonar (@Apache)](https://analysis.apache.org/dashboard/index/org.apache.isis.core:isis) (core module only)
 - [Sonar (3rd party)](http://nemo.sonarsource.org/dashboard/index/org.apache.isis:isis-all) (all modules)
 <!--
