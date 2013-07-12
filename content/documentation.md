@@ -166,11 +166,6 @@ Note: this viewer is third-party open source (outside Apache)
 
 - [About](components/viewers/dnd/about.html)
 
-----------
-
-### BDD (Concordion) [0.2.0-incubating](components/viewers/bdd/release-notes/about.html)
-
-- [About](components/viewers/bdd/about.html)
 
 }
 
@@ -334,7 +329,9 @@ Note: this viewer is third-party open source (outside Apache)
 
 These are no longer under active development
 
-- [HTML Viewer](components/viewers/html/about.html) (use Wicket)
+-   [HTML Viewer](components/viewers/html/about.html) (use Wicket)
+
+-   [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
 
 - [LDAP Security](components/security/ldap/about.html) (use Shiro)
 
