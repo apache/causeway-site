@@ -331,13 +331,16 @@ These are no longer under active development
 
 -   [HTML Viewer](components/viewers/html/about.html) (use Wicket)
 
--   [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
-
 - [LDAP Security](components/security/ldap/about.html) (use Shiro)
 
 - [SQL Security](components/security/sql/about.html) (use Shiro)
 
 - [SQL Profile Store](components/profilestores/sql/about.html)
+
+-   [BDD (Concordion)](components/viewers/bdd/about.html)
+   
+    (use Cucumber-JVM in unittestsupport and integtestsupport)
+
 
 }
 
