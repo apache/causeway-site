@@ -337,9 +337,7 @@ These are no longer under active development
 
 - [SQL Profile Store](components/profilestores/sql/about.html)
 
--   [BDD (Concordion)](components/viewers/bdd/about.html)
-   
-    (use Cucumber-JVM in unittestsupport and integtestsupport)
+-   [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
 
 
 }
