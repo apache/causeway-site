@@ -85,6 +85,7 @@ Guidance for committers is at the bottom of this page.
 
 - [Unit Test Support](core/unittestsupport.html)
 - [Integration Test Support](core/integtestsupport.html)
+- [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) (1.3.0-SNAPSHOT)
 - [Wrapper Factory](core/wrapper.html) [stub]
 
 ###  Programming Model

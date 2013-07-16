@@ -20,6 +20,7 @@ Title: Core Modules
 
 - [Unit Test Support](unittestsupport.html)
 - [Integration Test Support](integtestsupport.html)
+- [BDD/Integ Test Support](specsupport-and-integtestsupport.html) (1.3.0-SNAPSHOT)
 - [Wrapper Factory](wrapper.html) [stub]
 
 ###  Programming Model
