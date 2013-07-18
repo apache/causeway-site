@@ -38,10 +38,17 @@ Of relevance only to BDD specs, the `ScenarioExecution`'s `getVar()` and `putVar
 
 Like the `IsisSystemForTest` class, the `ScenarioExecution` class also binds an instance of itself onto a `ThreadLocal`.  It can then be accessed in both BDD step defs and in integration tests using `ScenarioExecution.current()` static method.
 
-### CukeStepDefsAbstract and IntegrationTestAbstract ###
+### CukeGlueAbstract and IntegrationTestAbstract ###
 
-The `CukeStepDefsAbstract` acts as a convenience superclass for writing BDD step definitions.  Similarly, the `IntegrationTestAbstract` acts as a convenience subclass for writing integration tests.  These two classes are very similar in that they both delegate to an underlying `ScenarioExecution`.
+The `CukeGlueAbstract` acts as a convenience superclass for writing BDD step definitions.  Similarly, the `IntegrationTestAbstract` acts as a convenience subclass for writing integration tests.  These two classes are very similar in that they both delegate to an underlying `ScenarioExecution`.
 
+### Separate Glue from Specs ###
+
+The "glue" (step definitions) are intended to be reused across features.  We therefore recommend that they reside in a separate package, and are organized by the entity type upon which they act.  
+
+For example, given a feature that involves `Customer` and `Order`, have the step definitions pertaining to `Customer` reside in `CustomerGlue`, and the step definitions pertaining to `Order` reside in `OrderGlue`.
+
+The Cucumber-JVM spec runner allows you to indicate which package(s) should be recursively searched to find any glue.
 
 ### Integration- vs Unit- Scope
 
@@ -189,13 +196,13 @@ BDD specifications contain a few more parts:
 
 * a `XxxSpec.feature` file, describing the feature and the scenarios (given/when/then)s that constitute its acceptance criteria
 
-* a `XxxSpec.java` class file to run the specification (all boilerplate).  This must have the same basename as the `.feature` file
+* a `RunSpecs.java` class file to run the specification (all boilerplate).  This will run all `.feature` files in the same package or subpackages.
 
-* one or several `XxxStepDefs` constituting the step definitions to be matched against.  (I believe...) these must reside in the same package as the specification.
+* one or several `XxxGlue` constituting the step definitions to be matched against.  These are normally placed in a separate package(s) to the specifications; the `glue` attribute of the Cucumber-JVM JUnit runner indicates which package(s) to search in.
 
 * a system initializer class.  This can be reused with any integration tests (eg the `ToDoSystemInitializer` class, shown above).
 
-It's usually more convenient to place the `.feature` files in `src/test/java`, rather than `src/test/resources`.  If you wish to do this, then your integration test module's `pom.xml` must contain:
+You may find it more convenient to place the `.feature` files in `src/test/java`, rather than `src/test/resources`.  If you wish to do this, then your integration test module's `pom.xml` must contain:
  
     <build>
         <testResources>
@@ -218,6 +225,7 @@ It's usually more convenient to place the `.feature` files in `src/test/java`, r
 
 Let's now look at the a specification for the `ToDoItem'`s "completed" feature.  Firstly, the [`ToDoItemSpec_findAndComplete.feature`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/ToDoItemSpec_findAndComplete.feature):
 
+    @ToDoItemsFixture
     Feature: Find And Complete ToDo Items
 
         @integration
@@ -227,22 +235,29 @@ Let's now look at the a specification for the `ToDoItem'`s "completed" feature. 
           And   mark the item as complete
           Then  the item is no longer listed as incomplete 
 
-The corresponding [`ToDoItemSpec_findAndComplete`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/ToDoItemSpec_findCompletedAndMarkAsNotYetComplete.java) class is just boilerplate:
+The `@ToDoItemsFixture` is a custom tag we've specified to indicate the prerequisite fixtures to be loaded; more on this in a moment.  The `@integration` tag, meanwhile, says that this feature should be run with integration-level scope.  (If we wanted to run at unit-level scope, the tag would be `@unit`).
+
+The [`RunSpecs`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/RunSpecs.java) class to run this feature (and any other features in this package or subpackages) is just boilerplate:
 
     @RunWith(Cucumber.class)
     @Cucumber.Options(
             format = {
-                    "html:target/cucumber-html-report"
+                    "html:target/cucumber-html-report",
+                    "json:target/cucumber.json"
             },
+            glue={"classpath:com.mycompany.integration.glue"},
             strict = true,
             tags = { "~@backlog", "~@ignore" })
-    public class ToDoItemSpec_findAndComplete {
+    public class RunSpecs {
+        // intentionally empty 
     }
-    
-The heavy lifting is done in the [`ToDoItemStepDefs`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/ToDoItemStepDefs.java) class:
 
-    public class ToDoItemStepDefs extends CukeStepDefsAbstract {
-       
+The JSON formatter allows integration with enhanced reports, for example as provided by [Masterthought.net](http://www.masterthought.net/section/cucumber-reporting) (screenshots at end of page).  (Commented out) configuration for this is provided in the example todo app `integtests` module's [pom.xml](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/pom.xml).
+
+The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/BootstrappingGlue.java) step definition:
+
+    public class BootstrappingGlue extends CukeGlueAbstract {
+    
         @Before(value={"@integration"}, order=100)
         public void beforeScenarioIntegrationScope() {
             PropertyConfigurator.configure("logging.properties");
@@ -256,13 +271,28 @@ The heavy lifting is done in the [`ToDoItemStepDefs`](https://github.com/apache/
             assertMocksSatisfied();
             after(sc);
         }
-    
-        @Before(value={"@integration"}, order=20000)
+
+        // bootstrapping of @unit scope omitted
+    }
+
+The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/CatalogOfFixturesGlue.java):
+
+    public class CatalogOfFixturesGlue extends CukeGlueAbstract {
+            
+        @Before(value={"@integration", "@ToDoItemsFixture"}, order=20000)
         public void integrationFixtures() throws Throwable {
             scenarioExecution().install(new ToDoItemsFixture());
-        }
-        
-        // //////////////////////////////////////
+        }        
+
+        // fixture for @unit, @ToDoItemsFixture omitted
+    
+    }
+
+Note that this is annotated with a tag (`@ToDoItemsFixture`) so that the correct fixture runs.  (We might have a whole variety of these).
+     
+The step definitions pertaining to `ToDoItem` then reside in the [`ToDoItemGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/todoitem/ToDoItemGlue.java) class.  This is where the heavy lifting gets done:
+
+    public class ToDoItemGlue extends CukeGlueAbstract {
     
         @Given("^there are a number of incomplete ToDo items$")
         public void there_are_a_number_of_incomplete_ToDo_items() throws Throwable {
