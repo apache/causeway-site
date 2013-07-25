@@ -28,6 +28,12 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
+    <td>Dynamic layouts in the Wicket viewer<br/><br/><i>How to layout properties and collections dynamically (1.3.0-SNAPSHOT)</i> </td>
+    <td>
+      <iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
     <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i> </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
