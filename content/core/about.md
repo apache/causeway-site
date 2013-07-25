@@ -13,8 +13,10 @@ Title: Core Modules
 - [Initializing Services](services/initializing-services.html)
 - [Auditing Service](services/auditing-service.html)
 - [Bookmark Service](services/bookmark-service.html)
+- [Developer Utilities Service](services/developer-utilities-service.html) [1.3.0-SNAPSHOT]
 - [Exception Recognizers](services/exception-recognizers.html)
 - [Publishing Service](services/publishing-service.html)
+- [Settings Services](services/settings-services.html) [1.3.0-SNAPSHOT]
 
 ### Development
 

@@ -73,9 +73,11 @@ Guidance for committers is at the bottom of this page.
 - [Initializing Services](core/services/initializing-services.html)
 - [Auditing Service](core/services/auditing-service.html)
 - [Bookmark Service](core/services/bookmark-service.html)
+- [Developer Utilities Service](core/services/developer-utilities-service.html) [1.3.0-SNAPSHOT]
 - [Exception Recognizers](core/services/exception-recognizers.html)
 - [Publishing Service](core/services/publishing-service.html)
 - [Settings Services](core/services/settings-services.html) [1.3.0-SNAPSHOT]
+
 
 }
 
