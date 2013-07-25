@@ -5,6 +5,7 @@ Title: Core Modules
 ###  Applib & Services
 
 - [Programming Model and How-tos](../applib-guide/about.html)
+- [Static and dynamic layouts](dynamic-layouts.html)
 - [Configuration Files](configuration-files.html)
 - [Deployment Types](deployment-type.html)
 

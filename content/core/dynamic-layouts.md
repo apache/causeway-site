@@ -1,10 +1,10 @@
-Title: Dynamic Layouts
+Title: Static and Dynamic Layouts
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.
 
-## Specifying layout using Annotations
+## Specifying layout using annotations
 
-### `@MemberOrder`
+### @MemberOrder Annotation ###
 
 To specify the relative order of domain class properties and classes, the `@MemberOrder` annotation is used.  For example:
 
@@ -71,7 +71,7 @@ If the `name` attribute is omitted, then the action is rendered near the header.
 Finally, note that the `@MemberOrder`'s `name` attribute has no meaning for collections.
 
 
-### `@MemberGroupLayout`
+### @MemberGroupLayout Annotation
 
 The `@MemberGroupLayout` annotation specifies the relative positioning of  property groups as being either in a left column, a middle column or in a right column.  It also specifies the relative width: 
 
