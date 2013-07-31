@@ -90,7 +90,7 @@ For example:
 This contract test automatically checks that bidirectional 1:m or 1:1 associations are being maintained correctly (assuming that they follow the [mutual registration pattern](../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 
 >
-**Note:** 
+>**Note:** 
 >
 >If using the [JDO Object Store](../components/objectstores/jdo/about.html), then there is generally no need to programmatically maintain 1:m relationships (indeed it may introduce subtle errors).  For more details, see [here](../components/objectstores/jdo/managed-1-to-m-relationships.html).
 >
