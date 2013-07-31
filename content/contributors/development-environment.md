@@ -113,8 +113,10 @@ Install Maven 3.0.x, downloadable [here](http://maven.apache.org/download.html).
 Set `MAVEN_OPTS` environment variable:
 
 <pre>
-MAVEN_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=128m
+MAVEN_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=256m
 </pre>
+
+> Previous we suggested `128m` for the `MaxPermSize`, but that would no longer seem to be sufficient.
 
 ## Installing and Configuring Eclipse
 
