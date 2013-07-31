@@ -11,13 +11,91 @@ To use, update the `pom.xml`:
     &lt;/dependency&gt;
 </pre>
 
-##Bidirectional Contract Tests [1.3.0-SNAPSHOT]
 
-Automatically tests that bidirectional 1:m or 1:1 associations are being maintained correctly (assuming that they follow the [mutual registration pattern](../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
+##SortedSets Contract Test [1.3.0-SNAPSHOT]
 
-{note
-Isis provides [Eclipse templates](../getting-started/editor-templates.html) to help generate the necessary boilerplate.
-}
+This contract test automatically checks that all fields of type `java.util.Collection` are declared as `java.util.SortedSet`.  In other words, it precludes either `java.util.List` or `java.util.Set` from being used as a collection.
+
+
+For example, the following passes the contract test:
+
+    public class Department {
+        
+        private SortedSet<Employee> employees = new TreeSet<Employee>();
+    
+        ...
+    }
+
+whereas this would not:
+
+    public class SomeDomainObject {
+        
+        private List<Employee> employees = new ArrayList<Employee>();
+    
+        ...
+    }
+
+If using the JDO Objectstore then we strongly recommend that you implement this test, for several reasons:
+
+* First, `Set`s align more closely to the relational model than do `List`s.  A `List` must have an additional index to specify order.
+
+* Second, `SortedSet` is preferable to `Set` because then the order is well-defined and predictable (to an end user, to the programmer).
+
+    The [ObjectContracts](../applib-guide/reference/Utility.html) utility class substantially simplifies the task of implementing `Comparable` in your domain classes. 
+
+* Third, if the relationship is bidirectional then JDO/Objectstore will automatically maintain the relationship.  See [here](../components/objectstores/jdo/managed-1-to-m-relationships.html) for further discussion.    
+
+To use the contract test, subclass `SortedSetsContractTestAbstract`, specifying the root package to search for domain classes.
+
+For example:
+
+    public class SortedSetsContractTestAll extends SortedSetsContractTestAbstract {
+    
+        public SortedSetsContractTestAll() {
+            super("org.estatio.dom");
+            withLoggingTo(System.out);
+        }
+    }
+
+##Injected Services Method Contract Test [1.3.0-SNAPSHOT]
+
+It is quite common for some basic services to be injected in a project-specific domain object superclass; for example a `ClockService` might generally be injected everywhere:
+
+    public abstract class EstatioDomainObject {
+        protected ClockService clockService;
+        public void injectClockService(ClockService clockService) {
+            this.clockService = clockService;
+        }
+    }
+
+If a subclass inadvertantly overrides this method and provides its own `ClockService` field, then the field in the superclass will never initialized.  As you might imagine, `NullPointerException`s could then arise.
+
+This contract test automatically checks that the `injectXxx(...)` method, to allow for injected services, is not overridable, ie `final`.
+
+To use the contract test, , subclass `SortedSetsContractTestAbstract`, specifying the root package to search for domain classes.
+
+For example:
+
+    public class InjectServiceMethodMustBeFinalContractTestAll extends InjectServiceMethodMustBeFinalContractTestAbstract {
+    
+        public InjectServiceMethodMustBeFinalContractTestAll() {
+            super("org.estatio.dom");
+            withLoggingTo(System.out);
+        }
+    }
+
+
+##Bidirectional Contract Test [1.3.0-SNAPSHOT]
+
+This contract test automatically checks that bidirectional 1:m or 1:1 associations are being maintained correctly (assuming that they follow the [mutual registration pattern](../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
+
+>
+**Note:** 
+>
+If using the [JDO Object Store](../components/objectstores/jdo/about.html), then there is generally no need to programmatically maintain 1:m relationships (indeed it may introduce subtle errors).  For more details, see [here](../components/objectstores/jdo/managed-1-to-m-relationships.html).
+
+>If *not* using the JDO Object Store, note that *Isis* provides [Eclipse templates](../getting-started/editor-templates.html) to help generate the necessary boilerplate.
+
 
 For example, suppose that `ParentDomainObject` and `ChildDomainObject` have a 1:m relationship (`ParentDomainObject#children` / `ChildDomainObject#parent`), and also `PeerDomainObject` has a 1:1 relationship with itself (`PeerDomainObject#next` / `PeerDomainObject#previous`).  
 

@@ -8,6 +8,7 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 - [DataNucleus and Maven](datanucleus-and-maven.html)
 - [`persistence.xml` file](persistence_xml.html)
 - [Dates, Blobs and Lazy Loading](dates-blobs-lazy-loading.html)
+- [Managed 1:m bidirectional relationships](managed-1-to-m-relationships.html)
 - [Using a JNDI Datasource](using-jndi-datasource.html)
 - [Workarounds (the `IsisJdoSupport` service)](workarounds.html)
 - [Enabling Logging](enabling-logging.html)
