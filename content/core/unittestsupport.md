@@ -92,9 +92,9 @@ This contract test automatically checks that bidirectional 1:m or 1:1 associatio
 >
 **Note:** 
 >
-If using the [JDO Object Store](../components/objectstores/jdo/about.html), then there is generally no need to programmatically maintain 1:m relationships (indeed it may introduce subtle errors).  For more details, see [here](../components/objectstores/jdo/managed-1-to-m-relationships.html).
+>If using the [JDO Object Store](../components/objectstores/jdo/about.html), then there is generally no need to programmatically maintain 1:m relationships (indeed it may introduce subtle errors).  For more details, see [here](../components/objectstores/jdo/managed-1-to-m-relationships.html).
 >
-If *not* using the JDO Object Store, note that *Isis* provides [Eclipse templates](../getting-started/editor-templates.html) to help generate the necessary boilerplate.
+>If *not* using the JDO Object Store, note that *Isis* provides [Eclipse templates](../getting-started/editor-templates.html) to help generate the necessary boilerplate.
 
 
 For example, suppose that `ParentDomainObject` and `ChildDomainObject` have a 1:m relationship (`ParentDomainObject#children` / `ChildDomainObject#parent`), and also `PeerDomainObject` has a 1:1 relationship with itself (`PeerDomainObject#next` / `PeerDomainObject#previous`).  
