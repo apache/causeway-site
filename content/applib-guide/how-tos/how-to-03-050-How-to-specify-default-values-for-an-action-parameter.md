@@ -50,9 +50,7 @@ For example:
                 int quantity) {
             ...
         }
-        public Object[] defaultPlaceOrder(
-                Product product,
-                int quantity) {
+        public Object[] defaultPlaceOrder() {
             return new Object[] {
                 productMostRecentlyOrderedBy(this.getCustomer()),
                 1
@@ -61,3 +59,4 @@ For example:
         ...
     }
 
+Note that the `defaultXxx()` method has no parameters.  This does mean that overloaded actions (more than one action with the same name but differing only in its parameter types) are not supported if using this construct.  This is not advisable in any case, since it would cause confusion to the users when rendered in the UI.
