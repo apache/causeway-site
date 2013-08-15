@@ -200,6 +200,7 @@ Note: this viewer is third-party open source (outside Apache)
 ##### JDO Mapping Hints
 - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
 - [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
+- [Mapping BigDecimals](components/objectstores/jdo/mapping-bigdecimals.html)
 - [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
 - [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
 - [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
