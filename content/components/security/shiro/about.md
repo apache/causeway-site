@@ -12,11 +12,8 @@ The shiro implementation provides integration with [Apache Shiro](http://shiro.a
 ### Further Reading
 
 - [Configuring Isis to use Shiro](configuring-shiro.html)
-
-  How to configure an Isis webapp to use the Shiro-based security mechanism
-
 - [Configuring Shiro to work with LDAP](using-ldap.html)
-
-  How to configure Shiro itself to work against an LDAP server for both authentication (users/roles) and authorization (roles/permissions).
+- [Shiro Realm Mappings](components/security/shiro/realm-mappings.html)
+- [Format of Isis Permissions](components/security/shiro/realm-mappings.html)
 
 
