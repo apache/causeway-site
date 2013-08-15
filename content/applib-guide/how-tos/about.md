@@ -100,6 +100,8 @@ this can also be specified.
 
 * [How to specify an auto-complete for a property](./how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html)
 
+* [How to specify the default value of an object property](./how-to-03-017-How-to-specify-default-value-of-an-object-property.html)
+
 * [How to specify a set of choices for an action parameter](./how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
 
 * [How to specify an auto-complete for an action parameter](./how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html)
@@ -109,6 +111,7 @@ this can also be specified.
 * [How to find an entity (for an action parameter or property) using auto-complete](./how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
 
 * [How to specify default values for an action parameter](./how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
+
 
 
 ##How to derive properties and collections, and other side-effects
