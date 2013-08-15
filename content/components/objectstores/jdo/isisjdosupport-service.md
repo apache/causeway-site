@@ -1,12 +1,32 @@
-Title: Workarounds
+Title: Using the IsisJdoSupport service
 
-The `IsisJdoSupport` service  provides a number of methods to fill in the gaps either of the Isis framework or of DataNucleus.
+The `IsisJdoSupport` service  provides a number of general purpose methods for working with DataNucleus.
+
+## Executing arbitrary SQL
+
+The `executeSql(...)` method allows arbitrary queries to be submitted:
+
+    List<Map<String, Object>> executeSql(String sql);
+
+while `executeUpdate(...)` allows arbitrary updates to be performed. 
+
+    Integer executeUpdate(String sql);
+
+A common use of these is to setup fixture data for integration tests.
+
+## Fixture support
+
+The `deleteAll(...)` method is provided pretty much exclusively for tearing down fixture data: 
+
+    void deleteAll(Class<?>... pcClasses);
+
+
 
 ## Reloading entities
 
 A [known limitation](http://www.datanucleus.org/products/datanucleus/jdo/orm/relationships.html) of DataNucleus' implementation of JDO is that persisting a child entity (in a 1:n bidirectional relationship) does not cause the parent's collection to be updated.
 
-The `IsisJdoSupport#refresh(T domainObject)` method can be used to reload the parent object (or indeed any object).
+The `refresh(T domainObject)` method can be used to reload the parent object (or indeed any object).
 
 For example:
 
@@ -47,7 +67,7 @@ In the domain entity or service, add:
 
     // {{
     private IsisJdoSupport isisJdoSupport;
-    public void setIsisJdoSupport(IsisJdoSupport isisJdoSupport) {
+    public void injectIsisJdoSupport(IsisJdoSupport isisJdoSupport) {
         this.isisJdoSupport = isisJdoSupport;
     }
     // }}

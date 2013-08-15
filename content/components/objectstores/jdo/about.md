@@ -10,7 +10,7 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 - [Dates, Blobs and Lazy Loading](dates-blobs-lazy-loading.html)
 - [Managed 1:m bidirectional relationships](managed-1-to-m-relationships.html)
 - [Using a JNDI Datasource](using-jndi-datasource.html)
-- [Workarounds (the `IsisJdoSupport` service)](workarounds.html)
+- [Using the `IsisJdoSupport` service](isisjdosupport-service.html)
 - [Enabling Logging](enabling-logging.html)
 - [Deploying on the Google App Engine](deploying-on-the-google-app-engine.html)
 
