@@ -259,7 +259,7 @@ Note: this viewer is third-party open source (outside Apache)
 - [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
 - [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
 - [Shiro Realm Mappings](components/security/shiro/realm-mappings.html)
-- [Format of Isis Permissions](components/security/shiro/realm-mappings.html)
+- [Format of Isis Permissions](components/security/shiro/format-of-permissions.html)
 
 ----------
 
