@@ -57,3 +57,4 @@ They are:
     <td><tt>deleted()</tt> is also supported, but is deprecated</td>
 </tr>
 </table>
+

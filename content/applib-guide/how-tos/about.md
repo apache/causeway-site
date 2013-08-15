@@ -190,6 +190,8 @@ get visibility into and influence this behaviour.
 
 * [How to perform dirty object tracking](./how-to-07-060-How-to-perform-dirty-object-tracking.html)
 
+* [How to hook into the object lifecycle using callbacks](./how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
+
 
 ##How to handle security concerns
 

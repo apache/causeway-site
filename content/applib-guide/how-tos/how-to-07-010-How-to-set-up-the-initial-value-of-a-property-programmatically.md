@@ -29,6 +29,25 @@ Alternatively, the domain object may choose to initialize its property
 values in the `created()` lifecycle method <!--(see ?)-->. This is called after
 any `defaultXxx()` methods are called.
 
+
+An alternative to using the `defaultXxx()` supporting methods is to use the `created()` callback.  This is sometimes preferable because it centralizes all the default logic into a single location.
+
+For example:
+
+    public class Customer {
+
+        public void created() {
+            setRegistered(clockService.now());
+        }
+
+        private LocalDate registered;
+        public LocalDate getRegistered() { ... }
+        public void setRegistered(LocalDate registered) { ... }
+        ...
+    }
+
+For more details of callbacks, see [How to hook into the object lifecycle using callbacks](./how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html). 
+
 ### Programmatically, by the creator
 
 Third, and perhaps most obviously, the creator of the object could
