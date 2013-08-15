@@ -195,7 +195,7 @@ Note: this viewer is third-party open source (outside Apache)
 - [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
 - [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
-- [Workarounds](components/objectstores/jdo/workarounds.html)
+- [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
