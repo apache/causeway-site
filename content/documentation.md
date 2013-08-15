@@ -184,7 +184,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row-even
 
-{span-one-third
+{span-one-thirds
 
 ###  DataNucleus (JDO) [1.1.0](components/objectstores/jdo/release-notes/about.html)
 
@@ -192,12 +192,18 @@ Note: this viewer is third-party open source (outside Apache)
 - [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
 - [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
 - [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
-- [Dates, Blobs and Lazy Loading](components/objectstores/jdo/dates-blobs-lazy-loading.html)
-- [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
 - [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 - [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+
+##### JDO Mapping Hints
+- [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
+- [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
+- [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
+- [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
+- [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
+ 
 
 }
 
