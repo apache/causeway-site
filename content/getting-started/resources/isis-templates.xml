@@ -1,13 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java-members" deleted="false" description="Action" enabled="true" name="isa">// {{ ${actionName} (action)&#13;
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  
+         http://www.apache.org/licenses/LICENSE-2.0
+         
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<templates><template autoinsert="true" context="java-members" deleted="false" description="Action" enabled="true" name="isa">// {{ ${actionName} (action)&#13;
 ${:import(org.apache.isis.applib.annotation.MemberOrder)}@MemberOrder(sequence="1")&#13;
 public ${ReturnType} ${actionName}(final ${ParameterType} ${parameterType}) {&#13;
 	return ${cursor}null; // TODO: business logic here&#13;
 }&#13;
 // }}&#13;
 &#13;
-</template><template autoinsert="true" context="java-members" deleted="false" description="Action argument N autoComplete" enabled="true" name="isaauto">${:import(java.util.Collections,java.util.List)}public List&lt;${ParameterType}&gt; autoComplete${ParameterNumThenCapitalizedActionName}(final String searchArg) {&#13;
-	return ${cursor}Collections.emptyList(); // TODO: return list of choices for argument N, based on the provided search argument&#13;
-}</template><template autoinsert="true" context="java-members" deleted="false" description="Action argument N choices" enabled="true" name="isacho">${:import(java.util.Collections,java.util.List)}public List&lt;${ParameterType}&gt; choices${ParameterNumThenCapitalizedActionName}() {&#13;
+</template><template autoinsert="true" context="java-members" deleted="false" description="Action argument N choices" enabled="true" name="isacho">${:import(java.util.Collections,java.util.List)}public List&lt;${ParameterType}&gt; choices${ParameterNumThenCapitalizedActionName}() {&#13;
 	return ${cursor}Collections.emptyList(); // TODO: return list of choices for argument N&#13;
 }</template><template autoinsert="true" context="java-members" deleted="false" description="Action argument defaults" enabled="true" name="isadef">public ${ParameterType} default${ParameterNumThenCapitalizedActionName}() {&#13;
 	return ${cursor}null; // TODO: return default for argument N&#13;
@@ -42,7 +59,71 @@ public void removeFrom${ChildCollectionName}(final ${ChildElementType} ${childEl
 	get${ChildCollectionName}().remove(${childElementName});&#13;
 	// additional business logic&#13;
 	onRemoveFrom${ChildCollectionName}(${childElementName});&#13;
-}</template><template autoinsert="true" context="java-members" deleted="false" description="Collection (m:m bidir child)" enabled="true" name="isc-mmc">public void addTo${ParentCollectionName}(final ${ParentElementType} ${parentElementName}) {&#13;
+}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - 1:n bidir, foreign key)" enabled="true" name="isc-jdo-1n-b-fk">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Persistent)}@Persistent(mappedBy="${elementNameInChild}", dependentElement="${trueOrFalse}")
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();
+@MemberOrder(sequence="1")
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - 1:n bidir, join table)" enabled="true" name="isc-jdo-1n-b-jt">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Persitent,javax.jdo.annotations.Join)}@Persistent(mappedBy="${elementNameInChild}", dependentElement="${trueOrFalse}")
+@Join
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();
+@MemberOrder(sequence="1")
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - 1:n unidir, foreign key)" enabled="true" name="isc-jdo-1n-u-fk">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Element)}
+@Element(column="${ColumnName}", dependent="${trueOrFalse}")
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();
+@MemberOrder(sequence="1")
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - 1:n unidir, join table)" enabled="true" name="isc-jdo-1n-u-jt">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Join,javax.jdo.annotations.Element)}@Join
+@Element(dependent="${trueOrFalse}")
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();
+@MemberOrder(sequence="1")
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - m:n bidir - child)" enabled="true" name="isc-jdo-mn-ub-c">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Persistent)}@Persistent(mappedBy="${ChildCollectionNameInParent}")
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="JDO Collection (set - m:n unidir &amp; bidir - parent)" enabled="true" name="isc-jdo-mn-ub-p">// {{ ${CollectionName} (Collection)
+${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder,javax.jdo.annotations.Persistent,javax.jdo.annotations.Join,javax.jdo.annotations.Element)}@Persistent(table="${TableName}")
+@Join(column="${ThisEntityFieldName}")
+@Element(column="${RelatedEntityFieldName}")
+private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();@MemberOrder(sequence="1")
+
+public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {
+	return ${collectionName};
+}
+public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {
+	this.${collectionName} = ${collectionName};
+}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="Collection (m:m bidir child)" enabled="true" name="isc-mmc">public void addTo${ParentCollectionName}(final ${ParentElementType} ${parentElementName}) {&#13;
 	// check for no-op&#13;
 	if (${parentElementName} == null || &#13;
 		get${ParentCollectionName}().contains(${parentElementName})) {&#13;
@@ -128,48 +209,6 @@ public void removeFrom${CollectionName}(final ${ElementType} ${elementName}) {&#
 protected void onAddTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
 }&#13;
 protected void onRemoveFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-}</template><template autoinsert="true" context="java-members" deleted="false" description="Collection modify (with actions)" enabled="true" name="iscmoda">${:import(org.apache.isis.applib.annotation.MemberOrder)}// Action.&#13;
-@MemberOrder(name="${collectionName}", sequence="1")&#13;
-public ${enclosing_type} insertInto${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    addTo${CollectionName}(${elementName});&#13;
-    return this;&#13;
-}&#13;
-&#13;
-// Programming model.&#13;
-public void addTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    // check for no-op&#13;
-    if (${elementName} == null ||&#13;
-            get${CollectionName}().contains(${elementName})) {&#13;
-            return;&#13;
-    }&#13;
-    // associate new&#13;
-    get${CollectionName}().add(${elementName});&#13;
-    // additional business logic&#13;
-    onAddTo${CollectionName}(${elementName});&#13;
-}&#13;
-&#13;
-// Action.&#13;
-@MemberOrder(name="${collectionName}", sequence="2")&#13;
-public ${enclosing_type} deleteFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    removeFrom${CollectionName}(${elementName});&#13;
-    return this;&#13;
-}&#13;
-&#13;
-// Programming model.&#13;
-public void removeFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    // check for no-op&#13;
-    if (${elementName} == null ||&#13;
-            !get${CollectionName}().contains(${elementName})) {&#13;
-            return;&#13;
-    }&#13;
-    // dissociate existing&#13;
-    get${CollectionName}().remove(${elementName});&#13;
-    // additional business logic&#13;
-    onRemoveFrom${CollectionName}(${elementName});&#13;
-}&#13;
-protected void onAddTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-}&#13;
-protected void onRemoveFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
 }</template><template autoinsert="true" context="java-members" deleted="false" description="Collection (set)" enabled="true" name="iscs">// {{ ${CollectionName} (Collection)&#13;
 ${:import(java.util.Set,java.util.LinkedHashSet,org.apache.isis.applib.annotation.MemberOrder)}private Set&lt;${ElementType}&gt; ${collectionName} = new LinkedHashSet&lt;${ElementType}&gt;();&#13;
 @MemberOrder(sequence="1")&#13;
@@ -181,68 +220,7 @@ public void set${CollectionName}(final Set&lt;${ElementType}&gt; ${collectionNam
 }&#13;
 // }}&#13;
 &#13;
-</template><template autoinsert="true" context="java-members" deleted="false" description="Collection (set-sorted)" enabled="true" name="iscss">// {{ ${CollectionName} (Collection)&#13;
-${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder)}private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();&#13;
-@MemberOrder(sequence="1")&#13;
-public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {&#13;
-    return ${collectionName};&#13;
-}&#13;
-public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {&#13;
-    this.${collectionName} = ${collectionName};&#13;
-}&#13;
-// }}</template><template autoinsert="true" context="java-members" deleted="false" description="Collection (set-sorted-with actions)" enabled="true" name="iscssa">// {{ ${CollectionName} (Collection)&#13;
-${:import(java.util.SortedSet,java.util.TreeSet,org.apache.isis.applib.annotation.MemberOrder)}private SortedSet&lt;${ElementType}&gt; ${collectionName} = new TreeSet&lt;${ElementType}&gt;();&#13;
-@MemberOrder(sequence="1")&#13;
-public SortedSet&lt;${ElementType}&gt; get${CollectionName}() {&#13;
-    return ${collectionName};&#13;
-}&#13;
-public void set${CollectionName}(final SortedSet&lt;${ElementType}&gt; ${collectionName}) {&#13;
-    this.${collectionName} = ${collectionName};&#13;
-}&#13;
-&#13;
-@MemberOrder(name="${collectionName}", sequence="1")&#13;
-public ${enclosing_type} insertInto${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    addTo${CollectionName}(${elementName});&#13;
-    return this;&#13;
-}&#13;
-&#13;
-// Programming model.&#13;
-public void addTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    // check for no-op&#13;
-    if (${elementName} == null ||&#13;
-            get${CollectionName}().contains(${elementName})) {&#13;
-            return;&#13;
-    }&#13;
-    // associate new&#13;
-    get${CollectionName}().add(${elementName});&#13;
-    // additional business logic&#13;
-    onAddTo${CollectionName}(${elementName});&#13;
-}&#13;
-&#13;
-// Action.&#13;
-@MemberOrder(name="${collectionName}", sequence="2")&#13;
-public ${enclosing_type} deleteFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    removeFrom${CollectionName}(${elementName});&#13;
-    return this;&#13;
-}&#13;
-&#13;
-// Programming model.&#13;
-public void removeFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-    // check for no-op&#13;
-    if (${elementName} == null ||&#13;
-        !get${CollectionName}().contains(${elementName})) {&#13;
-        return;&#13;
-    }&#13;
-    // dissociate existing&#13;
-    get${CollectionName}().remove(${elementName});&#13;
-    // additional business logic&#13;
-    onRemoveFrom${CollectionName}(${elementName});&#13;
-}&#13;
-protected void onAddTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-}&#13;
-protected void onRemoveFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
-}&#13;
-// }}</template><template autoinsert="true" context="java-members" deleted="false" description="Collection validation" enabled="true" name="iscval">public String validateAddTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
+</template><template autoinsert="true" context="java-members" deleted="false" description="Collection validation" enabled="true" name="iscval">public String validateAddTo${CollectionName}(final ${ElementType} ${elementName}) {&#13;
 	return ${cursor}null; // TODO: return reason why argument cannot be added, null if ok to add&#13;
 }&#13;
 public String validateRemoveFrom${CollectionName}(final ${ElementType} ${elementName}) {&#13;
@@ -329,15 +307,12 @@ public void set${PropertyName}(final ${PropertyType} ${propertyName}) {&#13;
 		${parentPropertyName}.equals(current${ParentPropertyName})) {&#13;
 		return;&#13;
 	}&#13;
-	// delegate to parent(s) to (re-)associate&#13;
-    if(current${ParentPropertyName}!=null) {&#13;
-        current${ParentPropertyName}.clear${ChildPropertyNameInParent}();&#13;
-    }&#13;
+	// delegate to parent to associate&#13;
 	${parentPropertyName}.modify${ChildPropertyNameInParent}(this);&#13;
 	// additional business logic&#13;
 	onModify${ParentPropertyName}(current${ParentPropertyName}, ${parentPropertyName});&#13;
 }&#13;
-public void clear${ParentPropertyName}() {&#13;
+public void clear${PropertyName}() {&#13;
     ${ParentPropertyType} current${ParentPropertyName} = get${ParentPropertyName}();&#13;
 	// check for no-op&#13;
 	if (current${ParentPropertyName} == null) {&#13;
@@ -395,8 +370,6 @@ public void clear${ParentPropertyName}() {&#13;
 	current${ParentPropertyName}.removeFrom${ChildCollectionNameInParent}(this);&#13;
 	// additional business logic&#13;
 	onClear${ParentPropertyName}(current${ParentPropertyName});&#13;
-}</template><template autoinsert="true" context="java-members" deleted="false" description="Property autocomplete" enabled="true" name="ispauto">${:import(java.util.List)}public List&lt;${PropertyType}&gt; autoComplete${PropertyName}(final String searchArg) {&#13;
-	return ${cursor}null; // TODO: return list of choices for property based on the provided search argument&#13;
 }</template><template autoinsert="true" context="java-members" deleted="false" description="Property choices" enabled="true" name="ispcho">${:import(java.util.List)}public List&lt;${PropertyType}&gt; choices${PropertyName}() {&#13;
 	return ${cursor}null; // TODO: return list of choices for property&#13;
 }</template><template autoinsert="true" context="java-members" deleted="false" description="Property defaults" enabled="true" name="ispdef">public ${PropertyType} default${PropertyName}() {&#13;
@@ -434,7 +407,9 @@ protected void onClear${PropertyName}(final ${PropertyType} old${PropertyName}) 
 }</template><template autoinsert="true" context="java-members" deleted="false" description="Property validation" enabled="true" name="ispval">public String validate${PropertyName}(final ${PropertyType} ${propertyName}) {&#13;
 	if (${propertyName} == null) return null;&#13;
 	return ${cursor}null; // TODO: return reason why proposed value is invalid, null if valid&#13;
-}</template><template autoinsert="true" context="java-members" deleted="false" description="Search for all" enabled="true" name="issa">// {{ all ${TypePlural}&#13;
+}</template><template autoinsert="true" context="java-members" deleted="false" description="Isis Section" enabled="true" name="iss">// {{ ${SectionName}
+${cursor}
+// }}</template><template autoinsert="true" context="java-members" deleted="false" description="Search for all" enabled="true" name="issa">// {{ all ${TypePlural}&#13;
 ${:import(org.apache.isis.applib.annotation.Exploration,java.util.List)}@Exploration&#13;
 public List&lt;${Type}&gt; all${TypePlural}() {&#13;
 	return allInstances(${Type}.class);&#13;
