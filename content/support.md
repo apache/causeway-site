@@ -31,12 +31,17 @@ Apache Isis has two public mailing lists, archived by [Markmail](http://markmail
 
 The Markmail archives span both our current (TLP) mailing lists and also our original mailing lists while in the Apache incubator; the ASF archives span just our TLP mailing lists.
 
+### Commonly-used Resources
+
+- Browse [Github mirror](http://github.com/apache/isis)
+- [JIRA](https://issues.apache.org/jira/browse/ISIS)
+- Stackoverflow [Tag](http://stackoverflow.com/questions/tagged/isis) and [RSS feed](http://stackoverflow.com/feeds/tag/isis)
+
 ### Other Resources
 
-- [Source code repo](download.html)
-- [JIRA](https://issues.apache.org/jira/browse/ISIS)
+- [Source code repo](download.html) (on Apache)
+- [Confluence Wiki](https://cwiki.apache.org/confluence/display/ISIS/Index) (register then request perms via mailing list)
 - [DOAP RDF file](doap_isis.rdf) (as per [Apache requirements](http://projects.apache.org/doap.html))
-- [wiki](https://cwiki.apache.org/confluence/display/ISIS/Index)
 - [CI Builds](https://builds.apache.org/job/isis-core-ubuntu/)
 - [Fisheye](https://fisheye6.atlassian.com/changelog/isis-git)
 - [Sonar (@Apache)](https://analysis.apache.org/dashboard/index/org.apache.isis.core:isis) (core module only)
