@@ -1,6 +1,6 @@
 Title: Customizing the Viewer
 
-The Wicket viewer allows you to customize the GUI in 3 ways:
+The Wicket viewer allows you to customize the GUI in several ways:
 
 * through CSS
 * through Javascript snippets (eg JQuery)
