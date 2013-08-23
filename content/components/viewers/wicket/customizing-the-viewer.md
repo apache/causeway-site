@@ -1,11 +1,12 @@
 Title: Customizing the Viewer
 
-The Wicket viewer allows you to customize the GUI in several ways:
+The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:
 
 * through CSS
 * through Javascript snippets (eg JQuery)
 * by replacing elements of the page
 * by providing additional views of collections
+* by providing customized views of entities
 * by providing new pages
 
 Each of these is described in more detail below.
@@ -136,11 +137,6 @@ Finally (as for other customizations), you need to adjust the Guice bindings in 
     bind(ComponentFactoryRegistrar.class)
         .to(MyComponentFactoryRegistrar.class);
 
-##### Replacing an Object View (eg a Dashboard)
-
-One replacement in particular is worth highlighting; the rendering of an entire entity.  Normally this is done using `EntityCombinedPanelFactory`, this being the first `ComponentFactory` for the `ComponentType.ENTITY` that is registered in Isis default `ComponentFactoryRegistrarDefault`.
-
-You could, though, register your own `ComponentFactory` for entities that is targeted at a particular class of entity - some sort of object representing a dashboard, for example.  It can use the `EntityModel` (provided to it) to determine the class of the entity to inspect whether it is of the appropriate type.  It should also be registered before the `EntityCombinedPanelFactory` so that it gets a chance to render in its stead.
 
 ### Additional Views of Collections
 
@@ -160,6 +156,24 @@ Registering these custom views is just a matter of adding the appropriate Maven 
 If you want to write your own alternative component and auto-register, then include a file `META-INF/services/org.apache.isis.viewer.wicket.ui.ComponentFactory` whose contents is the fully-qualified class name of the custom `ComponentFactory` that you have written.
 
 Wicket itself has lots of components available at its [wicketstuff.org](http://wicketstuff.org) companion website; you might find some of these useful for your own customizations.
+
+### Adding a Custom Object View (eg a Dashboard)
+
+One further use case in particular is worth highlighting; the rendering of an entire entity.  Normally this is done using `EntityCombinedPanelFactory`, this being the first `ComponentFactory` for the `ComponentType.ENTITY` that is registered in Isis default `ComponentFactoryRegistrarDefault`.
+
+You could, though, register your own `ComponentFactory` for entities that is targeted at a particular class of entity - some sort of object representing a dashboard, for example.  It can use the `EntityModel` (provided to it) to determine the class of the entity to inspect whether it is of the appropriate type.  It should also be registered before the `EntityCombinedPanelFactory` so that it is checked whether it `appliesTo(IModel)` prior to the default `EntityCombinedPanelFactory`:
+
+    @Singleton
+    public class MyComponentFactoryRegistrar extends ComponentFactoryRegistrarDefault {
+        @Override
+        public void addComponentFactories(ComponentFactoryList componentFactories) {
+            componentFactories.add(new DashboardEntityFactory());
+            ...
+            super.addComponentFactories(componentFactories);
+            ...
+        }
+    }
+
 
 ### Custom Pages ###
 
