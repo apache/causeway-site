@@ -81,7 +81,7 @@ In some cases there are several factories for a given `ComponentType`; this is m
 
 Thus, the `BooleanPanelFactory` checks that the `ScalarModel` holds a boolean, while the `JodaLocalDatePanelFactory` checks to see if it holds  `org.joda.time.LocalDate`.  
 
-There will typically be only one `ComponentFactory` capable of rendering a particular `ComponentType`/`ScalarModel` combination; at any rate, the framework stops as soon as one is found.  (*There is one exception to this design, discussed in the next section*).
+There will typically be only one `ComponentFactory` capable of rendering a particular `ComponentType`/`ScalarModel` combination; at any rate, the framework stops as soon as one is found.  (*There is one exception to this design, discussed below in the next section "Additional Views of Collections"*).
 
 ##### How to replace a component 
 This design (the [chain of responsibility](http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) design pattern) makes it quite straightforward to change the rendering of any element of the page.  For example, you might switch out Isis' sliding bookmark panel and replace it with one that presents the bookmarks in some different fashion.
@@ -136,7 +136,7 @@ Finally (as for other customizations), you need to adjust the Guice bindings in 
     bind(ComponentFactoryRegistrar.class)
         .to(MyComponentFactoryRegistrar.class);
 
-#### Replacing an Object View (eg a Dashboard)
+##### Replacing an Object View (eg a Dashboard)
 
 One replacement in particular is worth highlighting; the rendering of an entire entity.  Normally this is done using `EntityCombinedPanelFactory`, this being the first `ComponentFactory` for the `ComponentType.ENTITY` that is registered in Isis default `ComponentFactoryRegistrarDefault`.
 
