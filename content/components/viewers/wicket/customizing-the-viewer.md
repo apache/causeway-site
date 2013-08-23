@@ -177,7 +177,7 @@ You could, though, register your own `ComponentFactory` for entities that is tar
 
 ### Custom Pages ###
 
-In addition to replacing elements of a page, it is also possible to define completely new pages.  
+In addition to replacing elements of a page, it is also possible to define replace entire pages.  
 
 Isis defines precisely five page types
 
