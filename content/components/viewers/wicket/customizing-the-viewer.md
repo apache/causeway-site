@@ -159,9 +159,9 @@ Wicket itself has lots of components available at its [wicketstuff.org](http://w
 
 ### Adding a Custom Object View (eg a Dashboard)
 
-One further use case in particular is worth highlighting; the rendering of an entire entity.  Normally this is done using `EntityCombinedPanelFactory`, this being the first `ComponentFactory` for the `ComponentType.ENTITY` that is registered in Isis default `ComponentFactoryRegistrarDefault`.
+One further use case in particular is worth highlighting; the rendering of an entire entity.  Normally entities this is done using `EntityCombinedPanelFactory`, this being the first `ComponentFactory` for the `ComponentType.ENTITY` that is registered in Isis default `ComponentFactoryRegistrarDefault`.
 
-You could, though, register your own `ComponentFactory` for entities that is targeted at a particular class of entity - some sort of object representing a dashboard, for example.  It can use the `EntityModel` (provided to it) to determine the class of the entity to inspect whether it is of the appropriate type.  It should also be registered before the `EntityCombinedPanelFactory` so that it is checked whether it `appliesTo(IModel)` prior to the default `EntityCombinedPanelFactory`:
+You could, though, register your own `ComponentFactory` for entities that is targeted at a particular class of entity - some sort of object representing a dashboard, for example.  It can use the `EntityModel` provided to it to determine the class of the entity, checking if it is of the appropriate type.  Your custom factory should also be registered before the `EntityCombinedPanelFactory` so that it is checked prior to the default `EntityCombinedPanelFactory`:
 
     @Singleton
     public class MyComponentFactoryRegistrar extends ComponentFactoryRegistrarDefault {
