@@ -21,7 +21,7 @@ The most straight-forward way to customize the Wicket viewer's UI is to use CSS.
 
 These customizations should be added to `src/main/webapp/css/application.css`; this file is included by default in every webpage served up by the Wicket viewer.
 
-If for some reason you wanted to name it differently, then adjust the Guice bindings (part of Isis' bootstrapping) in your custom subclass of `IsisWicketApplication`:
+If for some reason you wanted to name the CSS file differently (eg `stylesheets/myapp.css`), then adjust the Guice bindings (part of Isis' bootstrapping) in your custom subclass of `IsisWicketApplication`:
 
     public class MyAppApplication extends IsisWicketApplication {
         @Override
@@ -33,7 +33,7 @@ If for some reason you wanted to name it differently, then adjust the Guice bind
                     ...
                     bind(String.class)
                         .annotatedWith(Names.named("applicationCss"))
-                        .toInstance("css/application.css");
+                        .toInstance("stylesheets/myapp.css");
                     ...
                 }
             };
