@@ -73,9 +73,7 @@ from fine-grained widgets for property/parameter fields, to much larger componen
 
 ##### How the Wicket viewer selects components
 Components are created using Isis' `ComponentFactory` interface, which are registered in turn through the `ComponentFactoryRegistrar` interface.  Every
-component is categorizes by type (the `ComponentType` enum).  Isis uses this to determine which `ComponentFactory` to use.  For example, the `ComponentType.BOOKMARKED_PAGES` is used to locate the `ComponentFactory` that will build the bookmarked pages panel.
-
-In many cases, though, additional information is needed.  For example,  is the type to render a scalar property or parameter.  But there are many different `ComponentFactory` implementations; one for a string, one for a boolean, one for a date etc.  
+component is categorizes by type (the `ComponentType` enum), and Isis uses this to determine which `ComponentFactory` to use.  For example, the `ComponentType.BOOKMARKED_PAGES` is used to locate the `ComponentFactory` that will build the bookmarked pages panel.
 
 Each factory is also handed a model (an implementation of `org.apache.wicket.IModel`) appropriate to its `ComponentType`; this holds the data to be rendered.  For example, `ComponentType.BOOKMARKED_PAGES` is given a `BookmarkedPagesModel`, while `ComponentType.SCALAR_NAME_AND_VALUE` factories are provided a model of type of type `ScalarModel` .   
 
