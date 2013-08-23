@@ -142,7 +142,7 @@ Finally (as for other customizations), you need to adjust the Guice bindings in 
 
 As explained above, in most cases Isis' Wicket viewer will search for the first `ComponentFactory` that can render an element, and use it.  In the case of (either standalone or parented) collections, though, Isis will show all available views.
 
-For example, out-of-the-box Isis provides an table view, a summary view (totals/sums/averages of any data), and a collapsed view (for `@Render(LAZILY)` collections).  These are selected by clicking on the toolbar by each collection.
+For example, out-of-the-box Isis provides a table view, a summary view (totals/sums/averages of any data), and a collapsed view (for `@Render(LAZILY)` collections).  These are selected by clicking on the toolbar by each collection.
 
 Additional views though could render the objects in the collection as a variety of ways.  Indeed, some third-party implementations already exist:
 
