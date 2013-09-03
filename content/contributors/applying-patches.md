@@ -25,7 +25,7 @@ Next, you’re interested in how troublesome the patch is going to be. Git allow
 
     git apply --check ISIS-xxx.patch
 
-If you don’t get any errors, the patch can be applied cleanly. Otherwise you may see what trouble you’ll run into.
+If you don’t get any errors, the patch has no conflicts. Otherwise you may see what trouble you’ll run into.
 
 ### Apply a (clean) patch
 
@@ -34,6 +34,12 @@ To apply a clean patch (adding the items and commit/signoff in a single step), u
     git am --signoff < ISIS-xxx.patch
 
 This preserves the original author's commit message.
+
+However, this can fail if the patch file does not contain the original committers email address.  In this case you will need to abort the `am` session:
+
+    git am abort
+
+and continue on by applying a non-clean patch, as described next.
 
 ### Apply a (non-clean) patch
 
@@ -44,7 +50,7 @@ If the patch does not apply cleanly, then the original authors commit message ca
 Fix up any issues.  The add and commit as usual
 
     git add .
-    git commit am "<original authors' commit message>" --signoff
+    git commit -am "<original authors' commit message>" --signoff
 
 The `--signoff` simply adds a line to the commit message indicating you have signed off the commit.
 
