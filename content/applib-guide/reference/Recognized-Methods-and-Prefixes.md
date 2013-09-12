@@ -201,7 +201,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Used as the fallback title for an object if there is <a href="../how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html">no <tt>title()</tt> method</a> or properties annotated with <a href="recognized-annotations/Title.html"><tt>@Title</tt></a></td>
+    <td>Used as the fallback title for an object if there is <a href="../how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html">no <tt>title()</tt> method</a> or properties annotated with the <a href="recognized-annotations/Title.html"><tt>@Title</tt> annotation.</a></td>
 </tr>
 <tr>
     <td>title</td>
@@ -210,7 +210,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Provides a title for the object. <p>Alternatively, use the <a href="../recognized-annotations/Title.html">@Title </a> annotation.</td>
+    <td>Provides a title for the object. <p>Alternatively, use the <a href="recognized-annotations/Title.html">@Title</a> annotation.</td>
 </tr>
 <tr>
     <td>updated</td>
