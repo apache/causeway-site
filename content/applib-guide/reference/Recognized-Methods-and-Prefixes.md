@@ -12,7 +12,7 @@ recognized by *Apache Isis*' default programming model:
     <th>Collection</th>
     <th>Action</th>
     <th>Action Param</th>
-    <th>See also</th>
+    <th>Description</th>
 </tr>
 <tr>
     <td>addTo</td>
@@ -21,7 +21,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>add object to a collection (nb: not currently supported by Wicket viewer)<p>See also <tt>removeFrom</tt></td>
 </tr>
 <tr>
     <td>removeFrom</td>
@@ -30,7 +30,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>remove object from a collection (nb: not currently supported by Wicket viewer)<p>See also <tt>addTo</tt></td>
 </tr>
 <tr>
     <td>choices</td>
@@ -39,16 +39,16 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td>Y</td>
-    <td></td>
+    <td>Provide list of choices for a <a href="../how-tos/how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html">property</a> or <a href="../how-tos/how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html">action</a> <a href="../how-tos/how-to-03-022-How-to-specify-dependent-choices-for-action-parameters.html">parameter</a><p>See also <tt>autoComplete</tt>.</td>
 </tr>
 <tr>
-    <td>autoComplete<br/>[1.3.0-SNAPSHOT]</td>
+    <td>autoComplete<p/>[1.3.0-SNAPSHOT]</td>
     <td></td>
     <td>Y</td>
     <td></td>
     <td></td>
     <td>Y</td>
-    <td><a href="../recognized-annotations/AutoComplete.html">@AutoComplete </a> annotation</td>
+    <td>Return a list of matching elements for a <a href="../how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html">property</a> or an <a href="../how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html">action parameter</a>.  <p>Alternatively, can specify for a class using the <a href="../recognized-annotations/AutoComplete.html">@AutoComplete </a> annotation.<p>See also <tt>choices</tt></td>
 </tr>
 <tr>
     <td>clear</td>
@@ -57,7 +57,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Clear a property (set it to null).  Allows business logic to be placed apart from the setter.<p>See also <tt>modify</tt></td>
 </tr>
 <tr>
     <td>modify</td>
@@ -66,7 +66,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Modify a property (set it to a non-null) value.  Allows business logic to be placed apart from the setter.<p>See also <tt>clear</tt>.</td>
 </tr>
 <tr>
     <td>created</td>
@@ -75,7 +75,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">created</a> using <tt>newTransientInstance()</tt></td>
 </tr>
 <tr>
     <td>default</td>
@@ -84,7 +84,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td>Y</td>
-    <td></td>
+    <td>Default value for a <a href="../how-tos/how-to-03-017-How-to-specify-default-value-of-an-object-property.html">property</a> or an <a href="../how-tos/how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html">action parameter</a>.</td>
 </tr>
 <tr>
     <td>disable</td>
@@ -93,7 +93,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td>Y</td>
     <td></td>
-    <td></td>
+    <td>Disables (makes read-only) a <a href="../how-tos/how-to-02-050-How-to-prevent-a-property-from-being-modified.html">property</a>, a <a href="../how-tos/how-to-02-060-How-to-prevent-a-collection-from-being-modified.html">collection</a> or an <a href="../how-tos/how-to-02-070-How-to-prevent-an-action-from-being-invoked.html">action</a>.</td>
 </tr>
 <tr>
     <td>get</td>
@@ -102,7 +102,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td></td>
     <td></td>
-    <td>set</td>
+    <td>Access the value of a property or collection.<p>See also <tt>set</tt>.</td>
 </tr>
 <tr>
     <td>getId</td>
@@ -111,7 +111,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>(services only)</td>
+    <td>Provides an optional unique identifier of a service.<p>If not provided, the services fully-qualified class name is used.</td>
 </tr>
 <tr>
     <td>hide</td>
@@ -120,7 +120,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td>Y</td>
     <td></td>
-    <td></td>
+    <td>Hides a <a href="../how-tos/how-to-02-010-How-to-hide-a-property.html">property</a>, a <a href="../how-tos/how-to-02-020-How-to-hide-a-collection.html">collection</a> or an <a href="../how-tos/how-to-02-030-How-to-hide-an-action.html">action</a>.</td>
 </tr>
 <tr>
     <td>iconName</td>
@@ -129,7 +129,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Provides the name of the image to render, usually alongside the title, to represent the object.  If not provided, then the class name is used to locate an image.<p>See also <tt>title</tt></td>
 </tr>
 <tr>
     <td>loaded</td>
@@ -138,7 +138,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
 </tr>
 <tr>
     <td>loading</td>
@@ -147,16 +147,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>modify</td>
-    <td></td>
-    <td>Y</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>clear</td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
 </tr>
 <tr>
     <td>persisted</td>
@@ -165,7 +156,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store.<p>NB: this may not called by the JDO ObjectStore</td>
 </tr>
 <tr>
     <td>persisting</td>
@@ -174,7 +165,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>removing</td>
@@ -183,7 +174,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">deleted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>removed</td>
@@ -192,16 +183,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>removeFrom</td>
-    <td></td>
-    <td>Y</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>addTo</td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>set</td>
@@ -210,7 +192,7 @@ recognized by *Apache Isis*' default programming model:
     <td>Y</td>
     <td></td>
     <td></td>
-    <td>get</td>
+    <td>Sets the value of a propery or a collection.</td>
 </tr>
 <tr>
     <td>toString</td>
@@ -219,7 +201,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Used as the fallback title for an object if there is <a href="../how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html">no <tt>title()</tt> method</a> or properties annotated with <a href="../recognized-annotations/Title.html"><tt>@Title</tt></a></td>
 </tr>
 <tr>
     <td>title</td>
@@ -228,7 +210,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td><a href="../recognized-annotations/Title.html">@Title </a> annotation</td>
+    <td>Provides a title for the object. <p>Alternatively, use the <a href="../recognized-annotations/Title.html">@Title </a> annotation.</td>
 </tr>
 <tr>
     <td>updating</td>
@@ -237,7 +219,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>updated</td>
@@ -246,7 +228,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>validate</td>
@@ -255,7 +237,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td>Y</td>
     <td>Y</td>
-    <td></td>
+    <td>Check that a proposed value of a <a href="../how-tos/how-to-02-100-How-to-validate-user-input-for-a-property.html>property</a> or an <a href="../how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html>action parameter> is valid.<p>See also <tt>validateAddTo</tt> and <tt>validateRemoveFrom</tt> for collections.</td>
 </tr>
 <tr>
     <td>validateAddTo</td>
@@ -264,7 +246,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>validateRemoveFrom</td>
+    <td>Check that a proposed object to add to a <a href="../how-tos/how-to-02-110-How-to-validate-an-object-being-added-or-removed-from-a-collection.html">collection</a> is valid.<p>See also <tt>validateRemoveFrom</tt>, and <tt>validate</tt> for properties and collections.</td>
 </tr>
 <tr>
     <td>validateRemoveFrom</td>
@@ -273,12 +255,12 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>validateAddTo</td>
+    <td>Check that a proposed object to add to a <a href="../how-tos/how-to-02-110-How-to-validate-an-object-being-added-or-removed-from-a-collection.html">collection</a> is valid.<p>See also <tt>validateAddTo</tt>, and <tt>validate</tt> for properties and collections.</td>
 </tr>
 </table>
 
 
-There are also a number of deprecated methods:
+There are also a number of deprecated methods (for lifecycle callbacks):
 
 <table>
 <tr>
@@ -297,7 +279,7 @@ There are also a number of deprecated methods:
     <td></td>
     <td></td>
     <td></td>
-    <td>removed</td>
+    <td>Replaced by <tt>removed</tt></td>
 </tr>
 <tr>
     <td>deleting</td>
@@ -306,7 +288,7 @@ There are also a number of deprecated methods:
     <td></td>
     <td></td>
     <td></td>
-    <td>removing</td>
+    <td>Replaced by <tt>removing</tt></td>
 </tr>
 <tr>
     <td>saved</td>
@@ -315,7 +297,7 @@ There are also a number of deprecated methods:
     <td></td>
     <td></td>
     <td></td>
-    <td>persisted</td>
+    <td>Replaced by <tt>persisted</tt></td>
 </tr>
 <tr>
     <td>saving</td>
@@ -324,7 +306,7 @@ There are also a number of deprecated methods:
     <td></td>
     <td></td>
     <td></td>
-    <td>persisting</td>
+    <td>Replaced by <tt>persisting</tt></td>
 </tr>
 </table>
 

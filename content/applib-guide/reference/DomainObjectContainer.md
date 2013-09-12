@@ -8,6 +8,8 @@ The `DomainObjectContainer` interface provides a single point of contact
 from domain objects into the *Isis* framework. It can also be used as a
 lightweight general purpose repository during prototyping.
 
+The following table lists the most important (ie non deprecated) methods in this interface.
+
 <table>
 <tr>
     <th>Category</th>
@@ -16,17 +18,13 @@ lightweight general purpose repository during prototyping.
 </tr>
 <tr>
     <td>Object creation</td>
-    <td>newTransientInstance(Class\<T\>)</td>
-    <td>Creates new non-persisted object</td>
+    <td>newTransientInstance(Class&lt;T>)</td>
+    <td>Creates new non-persisted object.  
+        <p>While it is also possible to simply <i>new()</i> up an object, that object will not have any services injected into it, nor will any properties be defaulted nor will any <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html"><i>created()</i></a> callback be invoked.</td>
 </tr>
 <tr>
     <td></td>
-    <td>newPersistentInstance(Class\<T\>)</td>
-    <td>Creates new object, will be persisted at end of action</td>
-</tr>
-<tr>
-    <td></td>
-    <td>newInstance(Class\<T\>, Object)</td>
+    <td>newInstance(Class&lt;T>, Object)</td>
     <td>Creates object in state persistence state as that provided</td>
 </tr>
 <tr>
@@ -41,7 +39,7 @@ lightweight general purpose repository during prototyping.
 </tr>
 <tr>
     <td>Generic Repository</td>
-    <td>allInstances(Class\<T\>)</td>
+    <td>allInstances(Class&lt;T>)</td>
     <td>All persisted instances of specified type</td>
 </tr>
 <tr>

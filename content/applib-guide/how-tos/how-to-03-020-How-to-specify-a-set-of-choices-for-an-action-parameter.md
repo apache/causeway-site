@@ -12,6 +12,8 @@ will automatically be offered the full set to choose from.
 If this isn't the case, then - as for defaults - there are two different
 ways to specify parameters; either per parameter, or for all parameters.
 
+> **Note** Dependent choices, whereby the values are dependent on another action parameter, are [also supported](how-to-03-022-How-to-specify-dependent-choices-for-action-parameters.html).
+
 ### Per parameter syntax (preferred)
 
 The per-parameter form is simpler and generally preferred.
