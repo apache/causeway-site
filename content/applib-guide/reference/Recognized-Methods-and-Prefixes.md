@@ -237,7 +237,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td>Y</td>
     <td>Y</td>
-    <td>Check that a proposed value of a <a href="../how-tos/how-to-02-100-How-to-validate-user-input-for-a-property.html">property</a> or an <a href="../how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html">action parameter> is valid.<p>See also <tt>validateAddTo</tt> and <tt>validateRemoveFrom</tt> for collections.</td>
+    <td>Check that a proposed value of a <a href="../how-tos/how-to-02-100-How-to-validate-user-input-for-a-property.html">property</a> or an <a href="../how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html">action parameter</a> is valid.<p>See also <tt>validateAddTo</tt> and <tt>validateRemoveFrom</tt> for collections.</td>
 </tr>
 <tr>
     <td>validateAddTo</td>
