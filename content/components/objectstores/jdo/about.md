@@ -17,7 +17,7 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 - [Mapping Mandatory and Optional Properties](mapping-mandatory-and-optional-properties.html)
 - [Mapping JODA Dates](mapping-joda-dates.html)
 - [Mapping BigDecimals](mapping-bigdecimals.html)
-- [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
+- [Mapping Blobs](mapping-blobs.html)
 - [Lazy Loading](lazy-loading.html)
 - [Managed 1:m bidirectional relationships](managed-1-to-m-relationships.html)
 

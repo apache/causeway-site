@@ -7,7 +7,7 @@ Title: Configuring the persistence.xml file
 
 By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. However, with such power comes a little bit of complexity to the development environment: all domain objects must be enhanced through the [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  So the enhancer must, in one way or another, be integrated into your development environment.
 
-Whether working with [Maven](../datanucleus-and-maven.html) or with [Eclipse](../datanucleus-and-eclipse.html) and on the Windows, there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). The workaround is straight-forward: configure a `persistence.xml` file.
+Whether working with [Maven](datanucleus-and-maven.html) or with [Eclipse](datanucleus-and-eclipse.html) and on the Windows, there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). The workaround is straight-forward: configure a `persistence.xml` file.
 
 
 ## Create persistence.xml for the domain project

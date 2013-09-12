@@ -174,8 +174,6 @@ been placed vs one that has been shipped.
 Things go wrong. *Isis* handles many of the usual error conditions, but
 your app may also wish to notify the user also when something goes awry.
 
-* [How to deal with errors](./how-to-06-000-How-to-deal-with-errors.html)
-
 * [How to pass a messages and errors back to the user](./how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
 
 * [How to deal with an unexpected error](./how-to-06-020-How-to-deal-with-an-unexpected-error.html)

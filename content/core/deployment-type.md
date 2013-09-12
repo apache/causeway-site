@@ -78,7 +78,7 @@ The default if not specified is `SERVER`.
 
 ### Wicket
 
-For the [wicket](../components/viewers/wicket/about.html) viewer, the Isis `deploymentType` is inferred from [Apache Wicket](http://wicket.apache.org)'s own [deployment mode](https://cwiki.apache.org/WICKET/faqs.html#FAQs-Deployment):
+For the [wicket](../components/viewers/wicket/about.html) viewer, the Isis `deploymentType` is inferred from [Apache Wicket](http://wicket.apache.org)'s own [deployment mode](http://ci.apache.org/projects/wicket/apidocs/6.x/org/apache/wicket/Application.html#getConfigurationType()):
 
 * Wicket's `DEVELOPMENT` mode corresponds to Isis' `PROTOTYPING` mode
 * Wicket's `DEPLOYMENT` mode corresponds to Isis' `PRODUCTION` mode

@@ -6,7 +6,7 @@ Here are some freely accessible (and sometimes open source) applications that ar
 
 ## TransportPlanner
 
-TransportPlanner is a demo done by [Marintek AS](http://marintek.no) to show a possible 'solution' to a multimodal transport planning problem. It's a small part of a bigger European funded project.
+TransportPlanner is a demo done by [Marintek AS](http://www.sintef.no/home/MARINTEK/) to show a possible 'solution' to a multimodal transport planning problem. It's a small part of a bigger European funded project.
 
 The domain is that:
 

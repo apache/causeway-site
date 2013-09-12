@@ -40,7 +40,7 @@ Suppose that for some reason you wanted to disable support for the `@Aggregated`
 isis.reflector.facets.exclude=org.apache.isis.core.progmodel.facets.object.aggregated.annotation.AggregatedAnnotationFacetFactory
 </pre>
 
-Or, suppose you wanted to use the example ["namefile"](https://github.com/apache/isis/blob/master/example/misc/metamodel/namefile/src/main/java/org/apache/isis/example/metamodel/namefile/facets/NameFileFacetFactory.java) `FacetFactory` as part of your programming conventions, use:
+Or, suppose you wanted to use the example ["namefile"](https://github.com/apache/isis/blob/master/mothballed/misc/metamodel/namefile/src/main/java/org/apache/isis/example/metamodel/namefile/facets/NameFileFacetFactory.java) `FacetFactory` as part of your programming conventions, use:
 
 <pre>
 isis.reflector.facets.include=org.apache.isis.example.metamodel.namefile.facets.NameFileFacetFactory
