@@ -25,10 +25,6 @@ objects:
     object view) or programmatically by calling `persist(Object
                 transientObject)`
 
--   `<T> T newPersistentInstance(final Class<T> ofClass)`
-
-    Creates a new object already persisted.
-
 -   `boolean isPersistent()`
 
     Checks whether an object has already been persisted. This is often
