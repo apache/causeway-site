@@ -108,11 +108,12 @@ For actions:
 
 * [How to specify a set of choices for an action parameter](./how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
 
+* [How to specify dependent choices for action parameters (eg category/subcategory)](./how-to-03-022-How-to-specify-dependent-choices-for-action-parameters.html)
+
 * [How to specify an auto-complete for an action parameter](./how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html)
 
 * [How to specify default values for an action parameter](./how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
 
-* [How to specify conditional choices for action parameters (eg category/subcategory](./how-to-03-029-How-to-specify-conditional-choices-for-action-parameters.html)
 
 
 For both:

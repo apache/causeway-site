@@ -10,7 +10,7 @@ Title: Documentation
 
 - [Screencasts](getting-started/screencasts.html)
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.3](getting-started/release-notes/about.html))
-- [Programming Model and How-tos](applib-guide/about.html)
+- **[Programming Model and How-tos](applib-guide/about.html)**
 - [Applib utility classes](applib-guide/reference/Utility.html)
 - [Static and dynamic layouts](core/dynamic-layouts.html)
 - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
