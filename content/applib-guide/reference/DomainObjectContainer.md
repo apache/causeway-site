@@ -20,12 +20,7 @@ The following table lists the most important (ie non deprecated) methods in this
     <td>Object creation</td>
     <td>newTransientInstance(Class&lt;T>)</td>
     <td>Creates new non-persisted object.  
-        <p>While it is also possible to simply <i>new()</i> up an object, that object will not have any services injected into it, nor will any properties be defaulted nor will any <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html"><i>created()</i></a> callback be invoked.</td>
-</tr>
-<tr>
-    <td></td>
-    <td>newInstance(Class&lt;T>, Object)</td>
-    <td>Creates object in state persistence state as that provided</td>
+        <p>While it is also possible to simply <i>new()</i> up an object, that object will not have any services injected into it, nor will any properties be <a href="../how-tos/how-to-03-017-How-to-specify-default-value-of-an-object-property.html">defaulted</a> nor will any <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html"><i>created()</i></a> callback be invoked.</td>
 </tr>
 <tr>
     <td>Validation</td>
@@ -44,22 +39,22 @@ The following table lists the most important (ie non deprecated) methods in this
 </tr>
 <tr>
     <td></td>
-    <td>allMatches(Class\<T\>, Filter\<T\>)</td>
-    <td>All persistenced instances of specified type matching filter</td>
+    <td>allMatches(Class&lt;T>, Predicate&lt;T>)</td>
+    <td>All persistenced instances of specified type matching predicate</td>
 </tr>
 <tr>
     <td></td>
-    <td>allMatches(Class\<T\>, String)</td>
+    <td>allMatches(Class&lt;T>, String)</td>
     <td>All persisted instances with the specified string as their title</td>
 </tr>
 <tr>
     <td></td>
-    <td>allMatches(Class\<T\>, Object)</td>
+    <td>allMatches(Class&lt;T>, Object)</td>
     <td>All persisted instances matching object (query-by-example)</td>
 </tr>
 <tr>
     <td></td>
-    <td>allMatches(Query\<T\>)</td>
+    <td>allMatches(Query&lt;T>)</td>
     <td>All instances satisfying the provided query</td>
 </tr>
 <tr>
@@ -133,29 +128,10 @@ The following table lists the most important (ie non deprecated) methods in this
     <td>All configuration properties available</td>
 </tr>
 <tr>
-    <td>Lazy loading, dirty object tracking (\*)</td>
-    <td>resolve(Object)</td>
-    <td>Lazy load object (overloaded to optionally load a property of object)</td>
-</tr>
-<tr>
-    <td></td>
-    <td>objectChanged(Object)</td>
-    <td>Mark object as dirty</td>
-</tr>
-<tr>
-    <td>Object store control (\*\*)</td>
+    <td>Object store control</td>
     <td>flush()</td>
     <td>Flush all pending changes to object store</td>
-</tr>
-<tr>
-    <td></td>
-    <td>commit()</td>
-    <td>Commit all pending changes to object store</td>
 </tr>
 </table>
 
 
-> **Note**
->
-> (\*) generally not necessary to call - performed by bytecode proxies
-> (\*\*) the use of these methods is discouraged - they are typically used only for tests
