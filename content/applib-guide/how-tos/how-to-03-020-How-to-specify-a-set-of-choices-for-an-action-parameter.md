@@ -20,7 +20,7 @@ The syntax is:
 
     public List<ParameterType> choicesNActionName()
 
-where N indicates the 0-based parameter number.
+where N indicates the 0-based parameter number.  Any subtype of `Collection` may also be used.
 
 For example:
 

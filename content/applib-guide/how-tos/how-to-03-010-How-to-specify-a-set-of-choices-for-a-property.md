@@ -18,7 +18,7 @@ or alternatively
 
     public PropertyType[] choicesPropertyName()
 
-where `PropertyType` is the same type as that of the property itself.
+where `PropertyType` is the same type as that of the property itself.  Any subtype of `Collection` may also be used.
 
 For example:
 

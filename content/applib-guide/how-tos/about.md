@@ -96,21 +96,30 @@ drop-down list box.
 In a similar vein, there may be a default value for an action parameter;
 this can also be specified.
 
+For properties:
+
 * [How to specify a set of choices for a property](./how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html)
 
 * [How to specify an auto-complete for a property](./how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html)
 
 * [How to specify the default value of an object property](./how-to-03-017-How-to-specify-default-value-of-an-object-property.html)
 
+For actions:
+
 * [How to specify a set of choices for an action parameter](./how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
 
 * [How to specify an auto-complete for an action parameter](./how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html)
 
-* [How to specify that a class of objects has a limited number of instances](./how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
+* [How to specify default values for an action parameter](./how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
+
+* [How to specify conditional choices for action parameters (eg category/subcategory](./how-to-03-029-How-to-specify-conditional-choices-for-action-parameters.html)
+
+
+For both:
+
+* [How to specify (for an action parameter or property) that a class has a limited number of instances](./how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
 
 * [How to find an entity (for an action parameter or property) using auto-complete](./how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
-
-* [How to specify default values for an action parameter](./how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
 
 
 
@@ -193,11 +202,13 @@ get visibility into and influence this behaviour.
 * [How to hook into the object lifecycle using callbacks](./how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 
 
-##How to handle security concerns
+##How to control access to entity features
 
-* [Hiding, disabling or validating for specific users or roles](./how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
+*Isis* allows you to control access to entities either using application logic or through a pluggable authorisation manager.
 
-* [How to use Isis authorization manager](./how-to-08-020-How-to-use-Isis-authorization-manager.html)
+* [How to write application logic to hide, disable and validate for specific users/roles](./how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
+
+* [How to use Isis' authorization manager](./how-to-08-020-How-to-use-Isis-authorization-manager.html)
 
 
 
