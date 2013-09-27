@@ -179,3 +179,28 @@ The format of the `.layout.json` file is:
  
 
 Although advisable, it is not necessary to list all class members in this file.  Any members not listed with be ordered according either to annotations (if present) or fallback/default values.
+
+
+### Required updates to the dom project's pom.xml
+
+If using the `.layout.json` files, these must be compiled and available in the CLASSPATH.  When using an IDE such as Eclipse+M2E, any `.layout.json` files in `src/main/java` or `src/main/resources` will be part of the CLASSPATH automatically.  However, unless the `pom.xml` is changed, these will not be part of the compiled WAR.
+
+Therefore, make sure the following is added to the dom project's `pom.xml`:
+
+    <resources>
+        <resource>
+            <filtering>false</filtering>
+            <directory>src/main/resources</directory>
+        </resource>
+        <resource>
+            <filtering>false</filtering>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**</include>
+            </includes>
+            <excludes>
+                <exclude>**/*.java</exclude>
+            </excludes>
+        </resource>
+    </resources>
+ 
