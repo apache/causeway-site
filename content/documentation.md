@@ -12,7 +12,7 @@ Title: Documentation
 - [Wicket/Restful/JDO Archetype](getting-started/quickstart-archetype.html) ([1.0.3](getting-started/release-notes/about.html))
 - **[Programming Model and How-tos](applib-guide/about.html)**
 - [Applib utility classes](applib-guide/reference/Utility.html)
-- [Static and dynamic layouts](core/dynamic-layouts.html)
+- [Static and dynamic layouts](core/dynamic-layouts.html) [1.3.0-SNAPSHOT]
 - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
 
 ### Resources
@@ -89,7 +89,7 @@ Guidance for committers is at the bottom of this page.
 
 - [Unit Test Support](core/unittestsupport.html)
 - [Integration Test Support](core/integtestsupport.html)
-- [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) (1.3.0-SNAPSHOT)
+- [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) [1.3.0-SNAPSHOT]
 - [Wrapper Factory](core/wrapper.html) [stub]
 
 ###  Programming Model
@@ -130,6 +130,7 @@ Guidance for committers is at the bottom of this page.
 
 - [About](components/viewers/wicket/about.html)
 - [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+- [Static and dynamic layouts](core/dynamic-layouts.html) [1.3.0-SNAPSHOT]
 - [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html) [1.3.0-SNAPSHOT]
 - [The About page](components/viewers/wicket/configuring-the-about-page.html)
 - [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
