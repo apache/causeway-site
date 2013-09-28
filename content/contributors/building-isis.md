@@ -2,6 +2,12 @@ Title: Building Isis
 
 Isis is build using Maven; details of setting up your development environment can be found [here](development-environment.html).
 
+In particular, note that you'll need to set up `MAVEN_OPTS`:
+
+<pre>
+MAVEN_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=256m
+</pre>
+
 ###Building all of Isis
 To build the source code from the command line, simply go to the root directory and type:
 
