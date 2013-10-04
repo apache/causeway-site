@@ -8,7 +8,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
   <div id="this-carousel-id" class="carousel slide">
     <div class="carousel-inner">
       <div class="item active">
-        <a href="http://hubblesite.org/gallery/album/entire/pr2006046a/xlarge_web/npp/128/">  <img src="img/antennae.jpg" alt="Antennae Galaxies" />
+        <a href="http://hubblesite.org/gallery/album/entire/pr2006046a/xlarge_web/npp/128/">  <img src="../screenshots2/img/antennae.jpg" alt="Antennae Galaxies" />
         </a>
         <div class="carousel-caption">
           <p>The Antennae Galaxies</p>
@@ -17,7 +17,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
       </div>
       <div class="item">
         <a href="http://hubblesite.org/gallery/album/entire/pr2007016e/xlarge_web/npp/128/">
-          <img src="img/carina.jpg" alt="Carina Caterpillar" />
+          <img src="../screenshots2/img/carina.jpg" alt="Carina Caterpillar" />
         </a>
         <div class="carousel-caption">
           <p>Carina Nebula: The Caterpillar</p>
@@ -26,7 +26,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
       </div>
       <div class="item">
         <a href="http://hubblesite.org/gallery/album/entire/pr2003010i/npp/128/">
-          <img src="img/echo.jpg" alt="Light Echo" />
+          <img src="../screenshots2/img/echo.jpg" alt="Light Echo" />
         </a>
         <div class="carousel-caption">
           <p>Light Echo From Star V838 Monocerotis</p>
@@ -35,7 +35,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
       </div>
       <div class="item">
         <a href="http://hubblesite.org/gallery/album/entire/pr2006024a/xlarge_web/npp/128/">
-          <img src="img/ngc5866.jpg" alt="Galaxy NGC5866" />
+          <img src="../screenshots2/img/ngc5866.jpg" alt="Galaxy NGC5866" />
         </a>
         <div class="carousel-caption">
           <p>Galaxy NGC 5866</p>
