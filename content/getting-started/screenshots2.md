@@ -8,11 +8,11 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
   <div id="this-carousel-id" class="carousel slide">
     <div class="carousel-inner">
       <div class="item active">
-        <a href="http://hubblesite.org/gallery/album/entire/pr2006046a/xlarge_web/npp/128/">  <img src="../screenshots2/img/antennae.jpg" alt="Antennae Galaxies" />
+        <img src="resources/screencast-01-welcome-page.png"></img>
         </a>
         <div class="carousel-caption">
-          <p>The Antennae Galaxies</p>
-          <p><a href="http://hubblesite.org/gallery/album/entire/pr2006046a/xlarge_web/npp/128/">Hubblesite.org &raquo;</a></p>
+          <p>Welcome Page</p>
+          <p><i>The archetype's welcome page describes how the application is configured, and the most significant files</i></p>
         </div>
       </div>
       <div class="item">
@@ -50,6 +50,23 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
   </div><!-- .carousel -->
   <!-- end carousel -->
 
+        <div class="row">
+        <div class="span4">
+          <h2>Heading</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Heading</h2>
+           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
 
 <table>
   <tr><td span=2><h3>Wicket Viewer</h3></td></tr>
