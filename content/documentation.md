@@ -5,7 +5,6 @@ Title: Documentation
 {row
 
 {span4
-
 ### Getting started
 
 - [Screencasts](getting-started/screencasts.html)
@@ -27,7 +26,6 @@ Title: Documentation
 }
 
 {span4
-
 ###  Learning More
 
 - [Common Use Cases](learning-more/common-use-cases.html)
@@ -41,7 +39,6 @@ Title: Documentation
 }
 
 {span4
-
 ###  Contributors
 
 - [Contributing](contributors/contributing.html)
@@ -59,10 +56,11 @@ Guidance for committers is at the bottom of this page.
 
 {row
 
-{span4
-
+{span12
 ## Core [1.2.0](core/release-notes/about.html)
+}
 
+{span4
 ###  Applib
 
 - [Configuration Files](core/configuration-files.html)
