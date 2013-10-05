@@ -11,10 +11,12 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
         <a href="resources/isis-logo-940x560.png">
           <img src="resources/isis-logo-940x560.png"></img>
         </a>
+        <!--
         <div class="carousel-caption">
           <p>Welcome Page</p>
           <p><i>The archetype's welcome page describes how the application is configured, and the most significant files</i></p>
         </div>
+        -->
       </div>
 
     <div class="item">
