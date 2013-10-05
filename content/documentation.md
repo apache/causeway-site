@@ -2,9 +2,9 @@ Title: Documentation
 
 {documentation
 
-{row-odd
+{row
 
-{span-one-third
+{span4
 
 ### Getting started
 
@@ -26,7 +26,7 @@ Title: Documentation
 
 }
 
-{span-one-third
+{span4
 
 ###  Learning More
 
@@ -40,7 +40,7 @@ Title: Documentation
 
 }
 
-{span-one-third
+{span4
 
 ###  Contributors
 
@@ -57,13 +57,11 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{group
+{row
+
+{span4
 
 ## Core [1.2.0](core/release-notes/about.html)
-
-{row-even
-
-{span-one-third
 
 ###  Applib
 
@@ -83,7 +81,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span-one-third
+{span4
 
 ### Dev Support
 
@@ -98,7 +96,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span-one-third
+{span4
 
 ### Runtime
 
@@ -116,15 +114,12 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-}
 
-{group
+{row
+
+{span4
 
 ## Viewers
-
-{row-odd
-
-{span-one-third
 
 ###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
 
@@ -145,7 +140,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
 
@@ -159,7 +154,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
@@ -177,15 +172,12 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-}
 
-{group
+{row
+
+{span4s
 
 ## Object Stores
-
-{row-even
-
-{span-one-thirds
 
 ###  DataNucleus (JDO) [1.1.0](components/objectstores/jdo/release-notes/about.html)
 
@@ -209,7 +201,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 ###  DataNucleus (ctd)
 
 ##### Applib Service Implementations
@@ -222,7 +214,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
@@ -239,13 +231,10 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-}
 
-{group
+{row
 
-{row-even
-
-{span-one-third
+{span4
 
 ## Security
 
@@ -265,7 +254,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ## Programming Models
 
@@ -283,7 +272,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ## Profile Stores
 
@@ -295,16 +284,13 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-}
 
 
-{group
+{row
+
+{span4
 
 ##  Other Topics
-
-{row-even
-
-{span-one-third
 
 ### Plugins
 
@@ -313,13 +299,13 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 
 
 }
 
-{span-one-third
+{span4
 
 ###  Committers
 
@@ -334,7 +320,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span-one-third
+{span4
 
 ###  Mothballed Components
 
@@ -347,8 +333,6 @@ These are no longer under active development
 - [SQL Object Store](components/objectstores/sql/about.html) (use JDO)
 - [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
 
-
-}
 
 }
 
