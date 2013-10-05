@@ -10,11 +10,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
   <div id="this-carousel-id" class="carousel slide">
     <div class="carousel-inner">
       <div class="item active">
-          <img src="resources/isis-logo-940x560.png"></img>
-        <!--
-        <a href="resources/isis-logo-940x560.png">
-        </a>
-        -->
+        <img src="resources/isis-logo-940x560.png"></img>
       </div>
 
     <div class="item">
@@ -32,40 +28,22 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
           <img src="resources/screencast-02-wicket-home-page.png"></img>
         </a>
         <div class="carousel-caption">
+          <p>Wicket Home Page<p/>
+          <p><i>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in </i><tt>WEB-INF/isis.properties</tt><br/><br/><i>The welcome text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>. (You can easily change this text).</i>
+          </p>
+        </div>
+      </div>
+
+    <div class="item">
+        <a href="#">
+          <img src="resources/screencast-03-github-source-code.png"></img>
+        </a>
+        <div class="carousel-caption">
           <p>Domain class source code<br/></p>
           <p><i>Most of the functionality of the quickstart app is inferred from the <tt>ToDoItem</tt> class.</i></p>
         </div>
       </div>
-      
-      
-      <!--
-      <div class="item">
-        <a href="http://hubblesite.org/gallery/album/entire/pr2007016e/xlarge_web/npp/128/">
-          <img src="../screenshots2/img/carina.jpg" alt="Carina Caterpillar" />
-        </a>
-        <div class="carousel-caption">
-          <p>Carina Nebula: The Caterpillar</p>
-          <p><a href="http://hubblesite.org/gallery/album/entire/pr2007016e/xlarge_web/npp/128/">Hubblesite.org &raquo;</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <a href="http://hubblesite.org/gallery/album/entire/pr2003010i/npp/128/">
-          <img src="../screenshots2/img/echo.jpg" alt="Light Echo" />
-        </a>
-        <div class="carousel-caption">
-          <p>Light Echo From Star V838 Monocerotis</p>
-          <p><a href="http://hubblesite.org/gallery/album/entire/pr2003010i/npp/128/">Hubblesite.org &raquo;</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <a href="http://hubblesite.org/gallery/album/entire/pr2006024a/xlarge_web/npp/128/">
-          <img src="../screenshots2/img/ngc5866.jpg" alt="Galaxy NGC5866" />
-        </a>
-        <div class="carousel-caption">
-          <p>Galaxy NGC 5866</p>
-          <p><a href="http://hubblesite.org/gallery/album/entire/pr2006024a/xlarge_web/npp/128/">Hubblesite.org &raquo;</a></p>
-        </div>
-        -->
+
       </div>
     </div><!-- .carousel-inner -->
     <!--  next and previous controls here
@@ -77,20 +55,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
 
 
 <table>
-  <tr><td span=2><h3>Wicket Viewer</h3></td></tr>
-  <tr>
-    <td>Welcome Page<br/><br/><i>The archetype's welcome page describes how the application is configured, and the most significant files</i></td>
-    <td>
-      <img src="resources/screencast-01-welcome-page.png" width="525" height="349"></img>
-    </td>
-  </tr>
 
-  <tr>
-    <td>Wicket Home Page<br/><br/><i>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in </i><tt>WEB-INF/isis.properties</tt><br/><br/><i>The welcome text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>. (You can easily change this text).</i></td>
-    <td>
-      <img src="resources/screencast-02-wicket-home-page.png" width="525" height="349"></img>
-    </td>
-  </tr>
   
   
   <tr>
