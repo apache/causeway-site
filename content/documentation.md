@@ -76,11 +76,9 @@ Guidance for committers is at the bottom of this page.
 - [Publishing Service](core/services/publishing-service.html)
 - [Settings Services](core/services/settings-services.html) [1.3.0-SNAPSHOT]
 
-
 }
 
 {span4
-
 ### Dev Support
 
 - [Unit Test Support](core/unittestsupport.html)
@@ -114,9 +112,11 @@ Guidance for committers is at the bottom of this page.
 
 {row
 
-{span4
+{span12
 ## Viewers
+}
 
+{span4
 ###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
@@ -125,14 +125,6 @@ Guidance for committers is at the bottom of this page.
 - [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html) [1.3.0-SNAPSHOT]
 - [The About page](components/viewers/wicket/configuring-the-about-page.html)
 - [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
-
-----------
-
-### DHTMLX
-
-- [About](third-party/viewers/dhtmlx/about.html)
-
-Note: this viewer is third-party open source (outside Apache)
 
 }
 
@@ -145,8 +137,6 @@ Note: this viewer is third-party open source (outside Apache)
 ##### Applib Service Implementations
 
 - [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
-
-
 }
 
 {span4
@@ -154,12 +144,17 @@ Note: this viewer is third-party open source (outside Apache)
 
 - [About](components/viewers/scimpi/about.html)
 
-
 ----------
 
 ###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 - [About](components/viewers/dnd/about.html)
 
+----------
+
+### DHTMLX
+- [About](third-party/viewers/dhtmlx/about.html)
+
+Note: this viewer is third-party open source (outside Apache)
 
 }
 
@@ -226,8 +221,11 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row
 
-{span4
+{span12
 ## Security
+}
+
+{span4
 
 ### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
 
@@ -236,33 +234,42 @@ Note: this viewer is third-party open source (outside Apache)
 - [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
 - [Shiro Realm Mappings](components/security/shiro/shiro-realm-mappings.html)
 - [Format of Isis Permissions](components/security/shiro/format-of-permissions.html)
+}
 
-----------
-
+{span4
 ### File [1.0.1](components/security/file/release-notes/about.html)
 - [About](components/security/file/about.html)
 
 }
 
 {span4
-## Programming Models
+}
 
-###Groovy [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
+}
+
+{row
+
+{span12
+## Other Components
+}
+
+{span4
+###Groovy Programming Model[0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html)
 }
 
 {span4
-## Profile Stores
-
-###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
+###XML Profile Store [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
 - [About](components/profilestores/xml/about.html)
 
 }
 
+{span4
 }
 
+}
 
 {row
 
