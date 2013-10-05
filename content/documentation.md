@@ -140,17 +140,6 @@ Guidance for committers is at the bottom of this page.
 }
 
 {span4
-###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
-
-- [About](components/viewers/scimpi/about.html)
-
-----------
-
-###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-- [About](components/viewers/dnd/about.html)
-
-----------
-
 ### DHTMLX
 - [About](third-party/viewers/dhtmlx/about.html)
 
@@ -164,11 +153,11 @@ Note: this viewer is third-party open source (outside Apache)
 {row
 
 {span12
-## Object Stores
+## JDO/DataNucleus Object Store [1.1.0](components/objectstores/jdo/release-notes/about.html)
 }
 
 {span4
-###  DataNucleus (JDO) [1.1.0](components/objectstores/jdo/release-notes/about.html)
+###  Configuration
 
 - [About](components/objectstores/jdo/about.html)
 - [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
@@ -178,8 +167,10 @@ Note: this viewer is third-party open source (outside Apache)
 - [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
 - [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+}
 
-##### JDO Mapping Hints
+{span4
+###  JDO Mapping Hints
 - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
 - [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
 - [Mapping BigDecimals](components/objectstores/jdo/mapping-bigdecimals.html)
@@ -187,32 +178,16 @@ Note: this viewer is third-party open source (outside Apache)
 - [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
 - [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
  
-
 }
 
 {span4
-###  DataNucleus (ctd)
-
-##### Applib Service Implementations
+### Applib Service Implementations
 
 - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
 - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
 - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
 - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
 - [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
-
-}
-
-{span4
-###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
-
-- [About](components/objectstores/nosql/about.html)
-
-
-
-----------
-###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
-- [About](components/objectstores/xml/about.html)
 
 }
 
@@ -226,7 +201,6 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {span4
-
 ### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
@@ -250,23 +224,45 @@ Note: this viewer is third-party open source (outside Apache)
 {row
 
 {span12
-## Other Components
+## Unreleased Components
 }
 
 {span4
-###Groovy Programming Model[0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
+###  NoSQL Object Store [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
+
+- [About](components/objectstores/nosql/about.html)
+
+----------
+
+###XML Object Store [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
+- [About](components/objectstores/xml/about.html)
+
+}
+
+{span4
+###  Scimpi Viewer [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
+
+- [About](components/viewers/scimpi/about.html)
+
+----------
+
+###  DnD Viewer [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+- [About](components/viewers/dnd/about.html)
+
+}
+
+
+{span4
+###Groovy Programming Model [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html)
-}
 
-{span4
+----------
+
 ###XML Profile Store [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
 - [About](components/profilestores/xml/about.html)
 
-}
-
-{span4
 }
 
 }
