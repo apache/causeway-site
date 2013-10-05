@@ -28,13 +28,13 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
           <img src="resources/screencast-02-wicket-home-page.png"></img>
         </a>
         <div class="carousel-caption">
-          <p>Wicket Home Page<p/>
-          <p><i>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in </i><tt>WEB-INF/isis.properties</tt><br/><br/><i>The welcome text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>. (You can easily change this text).</i>
+          <p>TODO
+          
           </p>
         </div>
       </div>
 
-    <div class="item">
+      <div class="item">
         <a href="#">
           <img src="resources/screencast-03-github-source-code.png"></img>
         </a>
@@ -42,7 +42,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
           <p>Domain class source code<br/></p>
           <p><i>Most of the functionality of the quickstart app is inferred from the <tt>ToDoItem</tt> class.</i></p>
         </div>
-    </div>
+      </div>
 
     </div><!-- .carousel-inner -->
     <!--  next and previous controls here
@@ -55,6 +55,12 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
 
 <table>
 
+  <tr>
+    <td>Wicket Home Page<br/><br/><i>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in </i><tt>WEB-INF/isis.properties</tt><br/><br/><i>The welcome text links to the main <tt>ToDoItem</tt> domain class over on <a href="https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">github</a>. (You can easily change this text).</i></td>
+    <td>
+      <img src="resources/screencast-02-wicket-home-page.png" width="525" height="349"></img>
+    </td>
+  </tr>
   
   
   <tr>
