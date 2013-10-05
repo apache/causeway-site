@@ -19,9 +19,6 @@ Title: Documentation
 - [Editor templates](getting-started/editor-templates.html)
 - [Icons](getting-started/icons.html)
 
-### Releases
-
-- [Release Matrix](release-matrix.html)
 
 }
 
@@ -35,6 +32,10 @@ Title: Documentation
 - [Articles and Conference Sessions](learning-more/articles-and-presentations.html)
 - [Tutorials](learning-more/tutorials.html)
 - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
+
+### Releases
+
+- [Release Matrix](release-matrix.html)
 
 }
 
