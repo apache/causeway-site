@@ -95,7 +95,6 @@ Guidance for committers is at the bottom of this page.
 }
 
 {span4
-
 ### Runtime
 
 - [Core Runtime](core/runtime.html) [stub]
@@ -116,7 +115,6 @@ Guidance for committers is at the bottom of this page.
 {row
 
 {span4
-
 ## Viewers
 
 ###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
@@ -139,7 +137,6 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {span4
-
 ###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
 
 - [About](components/viewers/restfulobjects/about.html)
@@ -153,7 +150,6 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {span4
-
 ###  Scimpi [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
 - [About](components/viewers/scimpi/about.html)
@@ -162,7 +158,6 @@ Note: this viewer is third-party open source (outside Apache)
 ----------
 
 ###  DnD [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-
 - [About](components/viewers/dnd/about.html)
 
 
@@ -173,10 +168,11 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row
 
-{span4s
-
+{span12
 ## Object Stores
+}
 
+{span4
 ###  DataNucleus (JDO) [1.1.0](components/objectstores/jdo/release-notes/about.html)
 
 - [About](components/objectstores/jdo/about.html)
@@ -213,7 +209,6 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {span4
-
 ###  NoSQL [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html)
@@ -222,7 +217,6 @@ Note: this viewer is third-party open source (outside Apache)
 
 ----------
 ###XML [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
-
 - [About](components/objectstores/xml/about.html)
 
 }
@@ -233,7 +227,6 @@ Note: this viewer is third-party open source (outside Apache)
 {row
 
 {span4
-
 ## Security
 
 ### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
@@ -247,31 +240,19 @@ Note: this viewer is third-party open source (outside Apache)
 ----------
 
 ### File [1.0.1](components/security/file/release-notes/about.html)
-
 - [About](components/security/file/about.html)
 
 }
 
 {span4
-
 ## Programming Models
 
 ###Groovy [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html)
-
-<!--
-
-----------
-
-###Kemble
-- [About](components/progmodels/kemble/about.html) [stub]
--->
-
 }
 
 {span4
-
 ## Profile Stores
 
 ###XML [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
@@ -283,28 +264,30 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 
-
 {row
 
-{span4
-
+{span12
 ##  Other Topics
+}
 
+{span4
 ### Plugins
 
 - [Maven Plugin](other/maven-plugin.html) [stub]
 - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
 
+<!--
+
+----------
+
+###Kemble
+- [About](components/progmodels/kemble/about.html) [stub]
+-->
+
+
 }
 
 {span4
-
-
-
-}
-
-{span4
-
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
@@ -319,7 +302,6 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {span4
-
 ###  Mothballed Components
 
 These are no longer under active development
