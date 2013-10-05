@@ -9,7 +9,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
     <div class="carousel-inner">
       <div class="item active">
         <a href="resources/screencast-01-welcome-page.png">
-          <img src="resources/screencast-01-welcome-page.png"  width="900"></img>
+          <img src="resources/screencast-01-welcome-page.png"></img>
         </a>
         <div class="carousel-caption">
           <p>Welcome Page</p>
@@ -19,7 +19,7 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
 
       <div class="item">
         <a href="resources/screencast-02-wicket-home-page.png">
-          <img src="resources/screencast-02-wicket-home-page.png" width="900"></img>
+          <img src="resources/screencast-02-wicket-home-page.png"></img>
         </a>
         <div class="carousel-caption">
           <p>Domain class source code<br/></p>
