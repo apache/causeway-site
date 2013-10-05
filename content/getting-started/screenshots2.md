@@ -42,9 +42,8 @@ The following screenshots show the Wicket and Restful Objects viewers running a 
           <p>Domain class source code<br/></p>
           <p><i>Most of the functionality of the quickstart app is inferred from the <tt>ToDoItem</tt> class.</i></p>
         </div>
-      </div>
+    </div>
 
-      </div>
     </div><!-- .carousel-inner -->
     <!--  next and previous controls here
           href values must reference the id for this carousel -->
