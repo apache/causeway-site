@@ -13,11 +13,11 @@ Title: Apache Isis
 
     <div class="carousel-inner">
       <div class="item active">
-        <img src="resources/isis-logo-940x560.png"></img>
+        <img src="images/isis-logo-940x560.png"></img>
       </div>
 
       <div class="item">
-          <img src="images/screencasts/01-welcome-page.png"></img>
+          <img src="images/screenshots/01-welcome-page.png"></img>
           <div class="carousel-caption">
             <h3>Welcome Page</h3>
             <p>The archetype's welcome page describes how the application is configured, and the most significant files</p>
@@ -25,7 +25,7 @@ Title: Apache Isis
         </div>
 
       <div class="item">
-        <img src="images/screencasts/02-wicket-home-page.png"></img>
+        <img src="images/screenshots/02-wicket-home-page.png"></img>
         <div class="carousel-caption">
           <h3>Wicket Home Page</h3>
           <p>The Wicket viewer displays a home page showing the domain services as menu items.  These are registered in <tt>WEB-INF/isis.properties</tt></td>
@@ -35,7 +35,7 @@ Title: Apache Isis
 
       <div class="item">
         <a href="#">
-          <img src="images/screencasts/03-github-source-code.png"></img>
+          <img src="images/screenshots/03-github-source-code.png"></img>
         </a>
         <div class="carousel-caption">
           <h3>Domain class source code</h3>
@@ -67,13 +67,13 @@ public class ToDoItemsFixturesService {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/04-fixture-install.png" width="525" height="349"></img>
+      <img src="images/screenshots/04-fixture-install.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Fixtures Installed<br/><br/><i>Invoking an action that returns a scalar value, such as the information message, is displayed on the page.</i></td>
     <td>
-      <img src="images/screencasts/05-fixture-installed.png" width="525" height="349"></img>
+      <img src="images/screenshots/05-fixture-installed.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -95,13 +95,13 @@ public class ToDoItems {
 }
 </pre></td>
     <td>
-      <img src="images/screencasts/06-todos-not-yet-complete.png" width="525" height="349"></img>
+      <img src="images/screenshots/06-todos-not-yet-complete.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Results shown in table<br/><br/><i>Actions that return collections of entities are shown in a table.  In this case the action has returned a list of <tt>ToDoItem</tt>s.  Not every property of the entity need be shown.</i></td>
     <td>
-      <img src="images/screencasts/07-todos-result.png" width="525" height="349"></img>
+      <img src="images/screenshots/07-todos-result.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -116,19 +116,19 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/08-collection-action.png" width="525" height="349"></img>
+      <img src="images/screenshots/08-collection-action.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td>
-      <img src="images/screencasts/09-collection-action-invoked.png" width="525" height="349"></img>
+      <img src="images/screenshots/09-collection-action-invoked.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Follow Link<br/><br/><i>Navigation to an entity's detailed page is by following the hyperlink.  This navigation is consistent throughout the UI.</i></td>
     <td>
-      <img src="images/screencasts/10-follow-link.png" width="525" height="349"></img>
+      <img src="images/screenshots/10-follow-link.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -180,7 +180,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/11-todo-entity.png" width="525" height="349"></img>
+      <img src="images/screenshots/11-todo-entity.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -196,7 +196,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/12-todo-entity-edit.png" width="525" height="349"></img>
+      <img src="images/screenshots/12-todo-entity-edit.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -209,7 +209,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/13-todo-edit-enum.png" width="525" height="349"></img>
+      <img src="images/screenshots/13-todo-edit-enum.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -241,7 +241,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/14-optimistic-locking.png" width="525" height="349"></img>
+      <img src="images/screenshots/14-optimistic-locking.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -256,7 +256,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/15-invoke-action.png" width="525" height="349"></img>
+      <img src="images/screenshots/15-invoke-action.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -271,7 +271,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/16-invoke-action-disabled.png" width="525" height="349"></img>
+      <img src="images/screenshots/16-invoke-action-disabled.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -307,7 +307,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/17-invoke-action-grouped-params.png" width="525" height="349"></img>
+      <img src="images/screenshots/17-invoke-action-grouped-params.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -328,7 +328,7 @@ public class ToDoItems {
 </pre>
 </td>
     <td>
-      <img src="images/screencasts/18-invoke-action-args.png" width="525" height="349"></img>
+      <img src="images/screenshots/18-invoke-action-args.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -352,7 +352,7 @@ public class ToDoItem {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/19-collection.png" width="525" height="349"></img>
+      <img src="images/screenshots/19-collection.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -366,7 +366,7 @@ public class ToDoItems {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/20-breadcrumbs.png" width="525" height="349"></img>
+      <img src="images/screenshots/20-breadcrumbs.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
@@ -383,86 +383,86 @@ public class AuditServiceDemo implements AuditService {
 }}
 </pre></td>
     <td>
-      <img src="images/screencasts/21-audit-list.png" width="525" height="349"></img>
+      <img src="images/screenshots/21-audit-list.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Audit Records<br/><br/><i>The demo audit service simply persists an audit entry for each update.</i></td>
     <td>
-      <img src="images/screencasts/22-audit-records.png" width="525" height="349"></img>
+      <img src="images/screenshots/22-audit-records.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Multi-User<br/><br/><i>Apache Isis is a multi-user system.  The administrator (sven/pass) has the permissions to be able to install fixtures for other users.</i></td>
     <td>
-      <img src="images/screencasts/23-fixtures-install-for.png" width="525" height="349"></img>
+      <img src="images/screenshots/23-fixtures-install-for.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
-      <img src="images/screencasts/24-fixtures-install-args.png" width="525" height="349"></img>
+      <img src="images/screenshots/24-fixtures-install-args.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>&nbsp;<br/><br/><i>&nbsp;</i></td>
     <td>
-      <img src="images/screencasts/25-fixtures-installed-for-guest.png" width="525" height="349"></img>
+      <img src="images/screenshots/25-fixtures-installed-for-guest.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Login as user<br/><br/><i>The quickstart app provides a 'guest' user that has a limited set of permissions....</i></td>
     <td>
-      <img src="images/screencasts/26-login-as-guest.png" width="525" height="349"></img>
+      <img src="images/screenshots/26-login-as-guest.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Permissions<br/><br/><i>... the guest user can use the 'ToDoItems' domain service, but the other services are not available.  In the case of the quickstart this is specified in </i><tt>WEB-INF/shiro.ini</tt><i> configuration file.</i></td>
     <td>
-      <img src="images/screencasts/27a-guests-todos.png" width="525" height="349"></img>
+      <img src="images/screenshots/27a-guests-todos.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr><td span=2><h3>RestfulObjects Viewer</h3></td></tr>
   <tr>
     <td>Access the RESTful API<br/><br/><i>The Restful Objects viewer exposes the domain object model through a JSON-based RESTful API.  Typically access will be restricted, in this case using HTTP BASIC authentication (though this is configurable).</i></td>
     <td>
-      <img src="images/screencasts/28-restful-login.png" width="525" height="349"></img>
+      <img src="images/screenshots/28-restful-login.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>List domain services<br/><br/><i>Most interactions with the RESTful API start by accessing the resource that represents the list of domain services.  However, the Restful Objects viewer also exposes templated URLs (as per the <a href="http://restfulobjects.org">Restful Objects spec</a> that it implements).</i></td>
     <td>
-      <img src="images/screencasts/29-restful-services.png" width="525" height="349"></img>
+      <img src="images/screenshots/29-restful-services.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Domain service members<br/><br/><i>Navigating to a particular domain service returns a representation of the members provided by that domain service.</i></td>
     <td>
-      <img src="images/screencasts/30-restful-todoitems-service.png" width="525" height="349"></img>
+      <img src="images/screenshots/30-restful-todoitems-service.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Domain service action<br/><br/><i>A detailed representation of each individual action can be accessed; this can be considered as analogous to the action parameter prompt page in the Wicket viewer.</i></td>
     <td>
-      <img src="images/screencasts/31-restful-todoitems-notyetcomplete.png" width="525" height="349"></img>
+      <img src="images/screenshots/31-restful-todoitems-notyetcomplete.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Invoking a domain service action<br/><br/><i>One of the links provided in the detailed representation is to invoke the action.  Note that the link specifies the HTTP method to use, along with the arguments (if any) to be provided.</i></td>
     <td>
-      <img src="images/screencasts/32-restful-todoitems-notyetcomplete-invoke.png" width="525" height="349"></img>
+      <img src="images/screenshots/32-restful-todoitems-notyetcomplete-invoke.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Action returning a list<br/><br/><i>Invoking an action will return a scalar value, or a reference to an entity, or (as in this case) a list of references to entities.</i></td>
     <td>
-      <img src="images/screencasts/33-restful-todoitems-notyetcomplete-results.png" width="525" height="349"></img>
+      <img src="images/screenshots/33-restful-todoitems-notyetcomplete-results.png" width="525" height="349"></img>
     </td>
   </tr>
   <tr>
     <td>Representation of an entity<br/><br/><i>The entity's representation shows the state of its (scalar) properties, links to its (vector) collections contents, and also links to invoke the entity's actions.</i></td>
     <td>
-      <img src="images/screencasts/34-restful-entity.png" width="525" height="349"></img>
+      <img src="images/screenshots/34-restful-entity.png" width="525" height="349"></img>
     </td>
   </tr>
 <table>
