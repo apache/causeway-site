@@ -4,7 +4,7 @@ Title: Documentation
 
 {row
 
-{span4
+{col-md-4
 ### Getting started
 
 - [Screencasts](getting-started/screencasts.html)
@@ -22,7 +22,7 @@ Title: Documentation
 
 }
 
-{span4
+{col-md-4
 ###  Learning More
 
 - [Common Use Cases](learning-more/common-use-cases.html)
@@ -39,7 +39,7 @@ Title: Documentation
 
 }
 
-{span4
+{col-md-4
 ###  Contributors
 
 - [Contributing](contributors/contributing.html)
@@ -57,11 +57,11 @@ Guidance for committers is at the bottom of this page.
 
 {row
 
-{span12
+{col-md-12
 ## Core [1.2.0](core/release-notes/about.html)
 }
 
-{span4
+{col-md-4
 ###  Applib
 
 - [Configuration Files](core/configuration-files.html)
@@ -79,7 +79,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span4
+{col-md-4
 ### Dev Support
 
 - [Unit Test Support](core/unittestsupport.html)
@@ -93,7 +93,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span4
+{col-md-4
 ### Runtime
 
 - [Core Runtime](core/runtime.html) [stub]
@@ -113,11 +113,11 @@ Guidance for committers is at the bottom of this page.
 
 {row
 
-{span12
+{col-md-12
 ## Viewers
 }
 
-{span4
+{col-md-4
 ###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
 
 - [About](components/viewers/wicket/about.html)
@@ -129,7 +129,7 @@ Guidance for committers is at the bottom of this page.
 
 }
 
-{span4
+{col-md-4
 ###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
 
 - [About](components/viewers/restfulobjects/about.html)
@@ -140,7 +140,7 @@ Guidance for committers is at the bottom of this page.
 - [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
 }
 
-{span4
+{col-md-4
 ### DHTMLX
 - [About](third-party/viewers/dhtmlx/about.html)
 
@@ -153,11 +153,11 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row
 
-{span12
+{col-md-12
 ## JDO/DataNucleus Object Store [1.1.0](components/objectstores/jdo/release-notes/about.html)
 }
 
-{span4
+{col-md-4
 ###  Configuration
 
 - [About](components/objectstores/jdo/about.html)
@@ -170,7 +170,7 @@ Note: this viewer is third-party open source (outside Apache)
 - [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 }
 
-{span4
+{col-md-4
 ###  JDO Mapping Hints
 - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
 - [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
@@ -181,7 +181,7 @@ Note: this viewer is third-party open source (outside Apache)
  
 }
 
-{span4
+{col-md-4
 ### Applib Service Implementations
 
 - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
@@ -197,11 +197,11 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row
 
-{span12
+{col-md-12
 ## Security
 }
 
-{span4
+{col-md-4
 ### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
 
 - [About](components/security/shiro/about.html)
@@ -211,24 +211,24 @@ Note: this viewer is third-party open source (outside Apache)
 - [Format of Isis Permissions](components/security/shiro/format-of-permissions.html)
 }
 
-{span4
+{col-md-4
 ### File [1.0.1](components/security/file/release-notes/about.html)
 - [About](components/security/file/about.html)
 
 }
 
-{span4
+{col-md-4
 }
 
 }
 
 {row
 
-{span12
+{col-md-12
 ## Unreleased Components
 }
 
-{span4
+{col-md-4
 ###  NoSQL Object Store [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html)
@@ -240,7 +240,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span4
+{col-md-4
 ###  Scimpi Viewer [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
 - [About](components/viewers/scimpi/about.html)
@@ -253,7 +253,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 
-{span4
+{col-md-4
 ###Groovy Programming Model [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 - [About](components/progmodels/groovy/about.html)
@@ -270,11 +270,11 @@ Note: this viewer is third-party open source (outside Apache)
 
 {row
 
-{span12
+{col-md-12
 ##  Other Topics
 }
 
-{span4
+{col-md-4
 ### Plugins
 
 - [Maven Plugin](other/maven-plugin.html) [stub]
@@ -291,7 +291,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span4
+{col-md-4
 ###  Committers
 
 - [Updating the CMS site](contributors/updating-the-cms-site.html)
@@ -305,7 +305,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 }
 
-{span4
+{col-md-4
 ###  Mothballed Components
 
 These are no longer under active development
