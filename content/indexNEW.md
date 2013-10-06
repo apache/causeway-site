@@ -1,8 +1,17 @@
-Title: Apache Isis
+{% extends "isis-template.html" %}
+
+{% block content %}
+
+  <div class="row">
+    <div span="col-md-12">
+      <p>Apache Isis&trade; software is a framework for rapidly developing domain-driven apps in Java. Write your business logic in entities, domain services and repositories, and the framework dynamically generates a representation of that domain model as a webapp or a RESTful API. For prototyping or production.
+      </p>
+    </div>
+  </div>
 
   <!--  Carousel -->
   <!--  consult Bootstrap docs at 
-        http://twitter.github.com/bootstrap/javascript.html#carousel -->
+        http://getbootstrap.com/javascript/#carousel -->
   <div id="this-carousel-id" class="carousel slide">
   
     <ol class="carousel-indicators">
@@ -52,7 +61,7 @@ Title: Apache Isis
   </div><!-- .carousel -->
   <!-- end carousel -->
 
-
+ <!--
 <table>
 
   <tr>
@@ -466,19 +475,17 @@ public class AuditServiceDemo implements AuditService {
     </td>
   </tr>
 <table>
+ -->
+
+{{ content|markdown }}
+
+<script>
+  $(document).ready(function(){
+    $('.carousel').carousel({
+      interval: 4000
+    });
+  });
+</script>
 
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../screenshots2/js/jquery-1.7.2.min.js"><\/script>')</script>
-    <!-- Bootstrap jQuery plugins compiled and minified -->
-    <script src="../screenshots2/js/bootstrap.min.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('.carousel').carousel({
-          interval: 4000
-        });
-      });
-    </script>
+{% endblock %}
