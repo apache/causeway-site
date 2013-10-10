@@ -81,7 +81,7 @@ Guidance for committers is at the bottom of this page.
 
 {col-md-4
 ### Dev Support
-&nbsp;
+<p class="display:none"/>
 
   * [Unit Test Support](core/unittestsupport.html)
   * [Integration Test Support](core/integtestsupport.html)
@@ -97,7 +97,7 @@ Guidance for committers is at the bottom of this page.
 
 {col-md-4
 ### Runtime
-&nbsp;
+<p class="display:none"/>
 
   * [Core Runtime](core/runtime.html) [stub]
   * [Webserver](core/webserver.html) [stub]
