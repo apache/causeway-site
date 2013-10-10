@@ -69,7 +69,6 @@ Guidance for committers is at the bottom of this page.
 
 ###  Applib Services
 
-<ul>
   - [Initializing Services](core/services/initializing-services.html)
   - [Auditing Service](core/services/auditing-service.html)
   - [Bookmark Service](core/services/bookmark-service.html)
@@ -77,19 +76,16 @@ Guidance for committers is at the bottom of this page.
   - [Exception Recognizers](core/services/exception-recognizers.html)
   - [Publishing Service](core/services/publishing-service.html)
   - [Settings Services](core/services/settings-services.html) [1.3.0-SNAPSHOT]
-</ul>
 
 }
 
 {col-md-4
 ### Dev Support
 
-<ul>
-  - [Unit Test Support](core/unittestsupport.html)
-  - [Integration Test Support](core/integtestsupport.html)
-  - [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) [1.3.0-SNAPSHOT]
-  - [Wrapper Factory](core/wrapper.html) [stub]
-</ul>
+  * [Unit Test Support](core/unittestsupport.html)
+  * [Integration Test Support](core/integtestsupport.html)
+  * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) [1.3.0-SNAPSHOT]
+  * [Wrapper Factory](core/wrapper.html) [stub]
 
 ###  Programming Model
 
@@ -100,8 +96,8 @@ Guidance for committers is at the bottom of this page.
 {col-md-4
 ### Runtime
 
-  - [Core Runtime](core/runtime.html) [stub]
-  - [Webserver](core/webserver.html) [stub]
+  * [Core Runtime](core/runtime.html) [stub]
+  * [Webserver](core/webserver.html) [stub]
 
 ### Bundled Components
 
@@ -191,13 +187,11 @@ Note: this viewer is third-party open source (outside Apache)
 {col-md-4
 ### Applib Service Implementations
 
-<ul>
   - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
   - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
   - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
   - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
   - [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
-</ul>
 
 }
 
