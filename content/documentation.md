@@ -135,7 +135,7 @@ Guidance for committers is at the bottom of this page.
 
 {col-md-4
 ###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
-
+<p class="display:none"/>
 
   - [About](components/viewers/restfulobjects/about.html)
 
@@ -179,7 +179,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {col-md-4
 ###  JDO Mapping Hints
-
+<p class="display:none"/>
 
   - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
   - [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
@@ -193,7 +193,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {col-md-4
 ### Applib Service Implementations
-
+<p class="display:none"/>
 
   - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
   - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
@@ -226,6 +226,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {col-md-4
 ### File [1.0.1](components/security/file/release-notes/about.html)
+<p class="display:none"/>
 
   - [About](components/security/file/about.html)
 
