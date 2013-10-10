@@ -82,11 +82,14 @@ Guidance for committers is at the bottom of this page.
 {col-md-4
 ### Dev Support
 
+&nbsp;
+
   * [Unit Test Support](core/unittestsupport.html)
   * [Integration Test Support](core/integtestsupport.html)
   * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) [1.3.0-SNAPSHOT]
   * [Wrapper Factory](core/wrapper.html) [stub]
 
+  
 ###  Programming Model
 
   - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
@@ -96,9 +99,11 @@ Guidance for committers is at the bottom of this page.
 {col-md-4
 ### Runtime
 
+
   * [Core Runtime](core/runtime.html) [stub]
   * [Webserver](core/webserver.html) [stub]
 
+  
 ### Bundled Components
 
   - [Bytecode Enhancers](core/bytecode.html) [stub]
@@ -131,6 +136,7 @@ Guidance for committers is at the bottom of this page.
 
 {col-md-4
 ###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
+
 
   - [About](components/viewers/restfulobjects/about.html)
 
@@ -175,17 +181,20 @@ Note: this viewer is third-party open source (outside Apache)
 {col-md-4
 ###  JDO Mapping Hints
 
+
   - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
   - [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
   - [Mapping BigDecimals](components/objectstores/jdo/mapping-bigdecimals.html)
   - [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
   - [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
   - [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
- 
+
+  
 }
 
 {col-md-4
 ### Applib Service Implementations
+
 
   - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
   - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
@@ -193,6 +202,7 @@ Note: this viewer is third-party open source (outside Apache)
   - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
   - [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
 
+  
 }
 
 }
