@@ -11,9 +11,12 @@ use ASF::Value;
 
 our @patterns = (
 
-	[qr!/index.md(text)?$!, basic => { template => "index.html" }]
-
-	,[qr!\.md(text)?$!, basic => { template => "basic.html" }]
+	[qr!/index.md(text)?$!, 
+          basic => { template => "index.html" }]
+	,[qr!/screenshot-tutorial.md(text)?$!, 
+          basic => { template => "screenshot-tutorial.html" }]
+	,[qr!\.md(text)?$!, 
+          basic => { template => "basic.html" }]
 
 # an attempt (failed) to render something sensible for index pages...  
 #	,[qr!\/$!,          basic => { indexpage => "index.html", template => "basic.html" }]
