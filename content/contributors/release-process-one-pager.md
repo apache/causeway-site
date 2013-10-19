@@ -24,10 +24,16 @@ mvn clean install -o
 Switch to the directory containing the (parent of the) artifact(s) to be released
 }
 
-eg:
+... if for `core`:
 
 <pre>
 cd core
+</pre>
+
+... if for a `component/xxx/xx`:
+
+<pre>
+cd component/xxx/xxx
 </pre>
 
 ## Check code
