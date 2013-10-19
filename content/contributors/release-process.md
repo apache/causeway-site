@@ -8,17 +8,22 @@ Apache Isis consists of a number of separately releasable modules.  Relative to 
 
 - `core`
 - `component/objectstore/jdo`
+- `component/security/file`
+- `component/security/shiro`
+- `component/viewer/restfulobjects`
+- `component/viewer/wicket`
+- `component/example/archetypes/quickstart_wicket_restful_jdo`
+- `component/example/archetypes/simple_wicket_restful_jdo`
+
+Other components, not yet released (but not mothballed yet either) are:
+
 - `component/objectstore/nosql`
-- `component/objectstore/sql`
 - `component/objectstore/xml`
 - `component/profilestore/xml`
 - `component/progmodel/groovy`
-- `component/security/ldap`
-- `component/viewer/bdd`
 - `component/viewer/dnd`
-- `component/viewer/restfulobjects`
 - `component/viewer/scimpi`
-- `component/viewer/wicket`
+
 
 All the non-core components depend on the `core`, and use the `core`'s parent `pom.xml` as their parent pom.
 
@@ -53,9 +58,8 @@ The most important configuration you require is to set up public/private key pai
 
 In order to prepare the release, you'll (need to) have a `~/.gnupg` directory with the relevant files (`gpg.conf`, `pubring.gpg`, `secring.gpg` etc), and have `gpg` on your operating system PATH.
 
-{note
-If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin. In other words, even if you normally use mSysGit bash, you may need to cut the release using `cmd.exe`.
-}
+> If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin. In other words, even if you normally use mSysGit bash, you may need to cut the release using `cmd.exe`.
+
 
 #### Maven `settings.xml`
 
@@ -77,8 +81,7 @@ During the release process the `maven-deploy-plugin` uploads the generated artif
 
 where `xxxxxxx` and `yyyyyyy` are your Apache LDAP username and password.   For more information, see these [ASF docs](http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env).
 
-{note
-It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://bval.apache.org/release-setup.html).
+> It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://bval.apache.org/release-setup.html).
 }
 
 
@@ -99,15 +102,17 @@ Next, create a release branch in your local Git repo, using the version number d
 git checkout -b prepare/isis-1.2.3-RC1
 </pre>
 
-All release preparation is done locally; if we are successful, this branch will be pushed back to master.
+>or, as a variation on this, you might just create a branch based on the JIRA ticket, eg ISIS-666.  This is probably easiest if using a single branch to release core plus a bunch of components.
 
-{note
-Unless otherwise stated, you should assume that all remaining steps should be performed in the base directory of the module being released.
-}
+All release preparation is done locally; if we are successful, this branch will be pushed back to master.
 
 Finally, make sure you have a JIRA ticket open against which to perform all commits.
 
 ## Code Prerequisites
+
+{note
+Unless otherwise stated, you should assume that all remaining steps should be performed in the base directory of the module being released.
+}
 
 Before making any formal release, there are a number of prerequisites that should always be checked.
 
@@ -153,17 +158,15 @@ If releasing a non-core component, then check and if necessary update the `<vers
 &lt;/parent&gt;
 </pre>
 
-{note
-This obviously requires that the core has been released previously.  If you 
+> This obviously requires that the core has been released previously.  If you 
 also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
-}
 
 Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it is also updated.
 
 All components have a small handful of modules, so it's probably easiest to load up and inspect each in turn:
 
 <pre>
-vi `find . -name pom.xml | grep -v target`
+vi `/bin/find . -name pom.xml | grep -v target`
 </pre>
 
 ... and search for `SNAPSHOT`.
@@ -174,10 +177,10 @@ The `maven-versions-plugin` should be used to determine if there are newer versi
 
 <pre>
 mvn versions:display-dependency-updates > /tmp/foo
-grep "\->" /tmp/foo | sort -u
+grep "\->" /tmp/foo | /bin/sort -u
 </pre>
 
-Update any of the dependencies that are out-of-date.  That said, do note that some dependencies may show up with with a new dependency, when in fact the dependency is for an old, badly named version.  Also, there may be new dependencies that you do not wish to move to, eg release candidates or milestones.
+Update any of the dependencies that are out-of-date.  That said, do note that some dependencies may show up with a new dependency, when in fact the dependency is for an old, badly named version.  Also, there may be new dependencies that you do not wish to move to, eg release candidates or milestones.
 
 For example, here is a report showing both of these cases:
 <pre>
@@ -211,13 +214,11 @@ mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
 
 where `rat.numUnapprovedLicenses` property is set to a high figure, temporarily overriding the default value of 0.  This will allow the command to run over all submodules, rather than failing after the first one. 
 
-{note
-Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete `mvn-rat-plugin` from the Codehaus repo.
-}
+> Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete `mvn-rat-plugin` from the Codehaus repo.
 
 All being well the command should complete.  For each failing submodule, it will have written out a `target\rat.txt`; missing license notes are indicated using the key `!???`.  You can collate these together using something like:
 <pre>
-for a in `find . -name rat.txt -print`; do grep '!???' $a; done
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
 Investigate and fix any reported violations, typically by either:
@@ -282,9 +283,7 @@ licenses to remove from supplemental-models.xml (are spurious):
 
 If any missing entries are listed or are spurious, then update `supplemental-models.xml` and try again.
 
-{note
-Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg `isis-viewer-bdd-concordion-tck`) depending on the TCK dom, fixtures etc.
-}
+> Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg `isis-viewer-bdd-concordion-tck`) depending on the TCK dom, fixtures etc.
 
 ## Sanity check
 
@@ -330,78 +329,9 @@ mvn clean install
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
 
-
-<!--
-- site builds ok
-
-<pre>
-sh msdf.sh -o
-</pre>
-
-- archetype is ok
-s
-  - archetype runs ok
-
-     using `-D archetypeCatalog=local`
-
-  - app generated from the archetype runs ok
--->
-
-
 ## Preparing a Release (`mvn release:prepare`)
 
 Most of the work is done using the `mvn release:prepare` goal.  Since this makes a lot of changes, we run it first in "dry run" mode; only if that works do we run the goal for real.
-
-<!--
-TODO: a section like this will be required when considering archetypes and/or maven sites.
-
-### Manually update versions to the release version
-
-There are a couple of locations where the version must be bumped up manually.
--->
-
-
-
-
-<!--
-TODO: something equivalent to this will need to be documented for the archetype modules.
-
-#### Update <version> in archetype resources
-
-The release plugin (used in the sections that follow) will automatically bump up the `<version>` of all of the POMs (first to remove the `-SNAPSHOT` prefix while the release is being cut, and then update to the next iterations `-SNAPSHOT` after that). However, what it doesn't do, unfortunately, is to update the `<isis.version>` property in the archetype resources for the quickstart archetype.
-
-Therefore, open up the `src/main/resources/archetype-resources/pom.xml` in the `oai:quickstart-archetype` module, and update the `<isis.version>` property:
-
-<pre>
-&lt;properties&gt;
-    &lt;isis.version&gt;0.x.x-incubating&lt;/isis.version&gt;
-&lt;/properties&gt;
-</pre>
-Then commit the pom.xml file.
--->
-
-
-
-<!--
-TODO: something like this will be need to be considered when we get Maven site running again.
-
-#### Update skin `<version>`
-
-The parent module's `site.xml` file defines the skin that is used by the parent module and every inheriting child module. Since the Maven release process does not automatically increment this version, it must be updated manually first.
-
-Therefore, open up the `src/site/site.xml` in the `oai.core:isis` parent module, and update the `<version>`:
-
-<pre>
-&lt;skin&gt;
-    ...
-    &lt;version&gt;0.x.x-incubating&lt;/version&gt;
-&lt;/skin&gt;
-</pre>
-Then commit the `site.xml` file.
--->
-
-
-
 
 
 ### Dry-run
@@ -416,7 +346,7 @@ Run the dry-run as follows:
 mvn release:prepare -P apache-release -D dryRun=true
 </pre>
 
-Some modules might have additional profiles to be activated.  For example, the sql OS requires `-P apache-release,integration-tests` so that its integration tests are also run.
+Some modules might have additional profiles to be activated.  For example, the (now mothballed) SQL ObjectStore required `-P apache-release,integration-tests` so that its integration tests are also run.
 
 This should generate something like:
 
@@ -568,9 +498,7 @@ If the `mvn release:perform` has worked then it will have put release artifacts 
 
 Log onto [repository.apache.org](http://repository.apache.org) (using your ASF LDAP account) and check that the release has been staged:
 
-<!--
-TODO: update screenshot
--->
+> screenshot below is out of date
 
 <img src="resources/nexus-staging-1.png" width="600px"/>
 
@@ -585,17 +513,13 @@ After checking that the staging repository contains the artifacts that you expec
 
 Press the Close button and complete the dialog:
 
-<!--
-TODO: update screenshot
--->
+> screenshot below is out of date
 
 <img src="resources/nexus-staging-2.png" width="600px"/>
 
 All being well, the close should complete successfully:
 
-<!--
-TODO: update screenshot
--->
+> screenshot below is out of date
 
 <img src="resources/nexus-staging-3.png" width="600px"/>
 
@@ -603,17 +527,13 @@ The Nexus repository manager will also email you with confirmation of a successf
 
 If Nexus has problems with the key signature, however, then the close will be aborted:
 
-<!--
-TODO: update screenshot
--->
+> screenshot below is out of date
 
 <img src="resources/nexus-staging-4.png" width="600px"/>
 
 Use `gpg --keyserver hkp://pgp.mit.edu --recv-keys nnnnnnnn` to confirm that the key is available.
 
-{note
-Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See [Key Generation](key-generation.html) for more details.
-}
+> Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See [Key Generation](key-generation.html) for more details.
 
 ### Push changes
 

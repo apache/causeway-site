@@ -20,7 +20,11 @@ mvn clean install -o
 
 ## Switch to correct directory
 
-Switch to the directory containing the (parent of the) artifact(s) to be released, eg:
+{note
+Switch to the directory containing the (parent of the) artifact(s) to be released
+}
+
+eg:
 
 <pre>
 cd core
@@ -30,22 +34,22 @@ cd core
 
 Update parent version to non-`SNAPSHOT` (including tck project, if any):
 <pre>
-vi `find . -name pom.xml | grep -v target`
+vi `/bin/find . -name pom.xml | grep -v target`
 </pre>
 
 Newer dependencies:
 <pre>
 mvn versions:display-dependency-updates > /tmp/foo
-grep "\->" /tmp/foo | sort -u
+grep "\->" /tmp/foo | /bin/sort -u
 </pre>
 
 Missing license headers in files:
 <pre>
 mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
-for a in `find . -name rat.txt -print`; do grep '!???' $a; done
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
-Missing/spurious `supplemental-models.xml`:
+Missing/spurious `supplemental-models.xml` (adjust path to the groovy file as required):
 <pre>
 mvn license:download-licenses
 groovy ../scripts/checkmissinglicenses.groovy
@@ -53,7 +57,11 @@ groovy ../scripts/checkmissinglicenses.groovy
 
 ## Release
 
-Prepare then perform (switch to `cmd.exe` if on Windows):
+{note
+Switch to `cmd.exe` if on Windows
+}
+
+Prepare then perform:
 <pre>
 mvn release:prepare -P apache-release -D dryRun=true
 rm release.properties
