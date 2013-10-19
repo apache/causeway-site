@@ -49,10 +49,18 @@ mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
 for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
-Missing/spurious `supplemental-models.xml` (adjust path to the groovy file as required):
+Missing/spurious `supplemental-models.xml`
+
+... if in `core`:
 <pre>
 mvn license:download-licenses
 groovy ../scripts/checkmissinglicenses.groovy
+</pre>
+
+... if for a `component/xxx/xxx`:
+<pre>
+mvn license:download-licenses
+groovy ../../../scripts/checkmissinglicenses.groovy
 </pre>
 
 ## Release
