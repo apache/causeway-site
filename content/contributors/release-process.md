@@ -161,13 +161,19 @@ also releasing core at the same time as the component, then you will need to go 
 
 Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it is also updated.
 
-All components have a small handful of modules, so it's probably easiest to load up and inspect each in turn:
+### Check no SNAPSHOT dependencies
+
+There should be no snapshot dependencies; the only mention of `SNAPSHOT` should be for the Isis modules about to be released.  
+
+It's probably easiest to load up each `pom.xml` and inspect manually:
 
 <pre>
 vi `/bin/find . -name pom.xml | grep -v target`
 </pre>
 
 ... and search for `SNAPSHOT`.
+
+> Obviously, don't update Isis' `SNAPSHOT` references; these get updated by the `mvn release:prepare` command we run later.
 
 ### Update dependency versions
 
