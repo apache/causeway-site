@@ -102,8 +102,6 @@ Next, create a release branch in your local Git repo, using the version number d
 git checkout -b prepare/isis-1.2.3-RC1
 </pre>
 
->or, as a variation on this, you might just create a branch based on the JIRA ticket, eg ISIS-666.  This is probably easiest if using a single branch to release core plus a bunch of components.
-
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
 
 Finally, make sure you have a JIRA ticket open against which to perform all commits.
