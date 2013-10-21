@@ -59,8 +59,9 @@ groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n quickstart -v 
 </pre>
 
 where:
-* `quickstart` is the name of the source application, and 
-* `1.2.3` is the version of isis core that is to be the parent of the generated archetype.
+
+- `quickstart` is the name of the source application, and 
+- `1.2.3` is the version of isis core that is to be the parent of the generated archetype.
 
 ### Test the archetype
 
