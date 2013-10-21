@@ -18,7 +18,7 @@ Make sure that the app's `pom.xml`:
 Check for and fix any missing license header notices:
 <pre>
 mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
-for a in `find . -name rat.txt -print`; do grep '!???' $a; done
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 </pre>
 
 Finally, double check that the app is running satisfactorily:
@@ -41,14 +41,14 @@ mvn clean
 
 To view the remaining files/directories that needs removing, use:
 <pre>
-for a in .project .classpath .settings bin target-ide; do find . -name $a -print; done
-find . -name "*.log" -print
+for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -print; done
+/bin/find . -name "*.log" -print
 </pre>
 
 To actually delete these files, use:
 <pre>
-for a in .project .classpath .settings bin target-ide; do find . -name $a -exec rm -r {} \;; done
-find . -name "*.log" -exec rm {} \;
+for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -exec rm -r {} \;; done
+/bin/find . -name "*.log" -exec rm {} \;
 </pre>
 
 Now we can create the archetype:
