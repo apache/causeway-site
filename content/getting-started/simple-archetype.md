@@ -1,10 +1,8 @@
-Title: ToDo App (Quickstart) Archetype
+Title: Simple Archetype
 
-The todo app (quickstart) archetype will generate a reasonably complete application for tracking to-do items, based around a single domain class `ToDoItem` and repository, `ToDoItems`.
+The quickest way to get started with Apache Isis is to run the simple archetype.  This will generate a very simple one-class domain model, called `SimpleObject`, with a single property `name`.  There is also a corresponding `SimpleObjectRepository` domain service.  From this you can easily rename these initial classes, and extend to build up your own Isis domain application.
 
-While not quite a "kitchen-sink" example (there is, after all, just a single domain class), the app nevertheless demonstrates a good number of Isis' capabilities.  In particular, the use of contributed actions etc is demonstrated by `ToDoItemContributions`; view models are demonstrated by `ToDoItemsByCategoryViewModel` and `ToDoItemsByDateRangeViewModel`; a dashboard is demonstrated by `ToDoAppDashboard`. 
-
-Running this archetype is a good way to get familiar with the structure of a not-too-complex Isis application.  However, to get started with your own application, we generally recommend that you can run the alternative [simple archetype](simple-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this ToDo app to guide your own development.
+If you want to see a more functionally complete example, also check out the [ToDo app (quickstart) archetype](quickstart-archetype.html); this will give you a good idea of what makes up a not-too-complex Isis application.  In fact, we recommend that you run both archetypes: this simple archetype generates a very simple application for you to refactor and extend, while the ToDo app provides to guide your own development.
 
 ### Generating the App
 
@@ -15,8 +13,8 @@ Then run the following command:
 <pre>
 mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
-    -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
-    -D archetypeVersion=1.0.3 \
+    -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
+    -D archetypeVersion=1.3.0 \
     -D groupId=com.mycompany \
     -D artifactId=myapp
 </pre>
@@ -46,7 +44,7 @@ where `myapp` is the `artifactId` entered above.
 
 ### Running the App
 
-The `quickstart_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../components/viewers/wicket/about.html) and the [Restful Objects viewer](../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
+The `simple_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../components/viewers/wicket/about.html) and the [Restful Objects viewer](../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
 
 Once you've built the app, you can run the WAR in a variety of ways. 
 
@@ -87,12 +85,12 @@ If you use Eclipse, do also install the [Eclipse templates](../getting-started/e
 
 #### App Structure
 
-As noted above, the generated app is a reasonably complete application for tracking to-do items.  It consists of the following modules: 
+As noted above, the generated app is a very simple application consisting of a single domain object that can be easily renamed and extended. The intention is not to showcase all of Isis' capabilities; rather it is to allow you to very easily modify the generated application (eg rename `SimpleObject` to `Customer`) without having to waste time deleting lots of generated code.
 
 <table>
 <tr><th>Module</th><th>Description</th></tr>
 <tr><td>myapp</td><td>The parent (aggregator) module</td></tr>
-<tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> (repository) domain service.</td></tr>
+<tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>SimpleObject</tt> and <tt>SimpleObjects</tt> (repository) domain service.</td></tr>
 <tr><td>myapp-fixture</td><td>Domain object fixtures used for initializing the system when being demo'ed or for unit testing.</td></tr>
 <tr><td>myapp-integtests</td><td>End-to-end <a href="../core/integtestsupport.html">integration tests</a>, that exercise from the UI through to the database</td></tr>
 <tr><td>myapp-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>
