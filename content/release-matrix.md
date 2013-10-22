@@ -65,17 +65,6 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Security</th>
     <th class="heading"><a href="components/security/file/about.html">File</a></th>
-    <th class="heading">1.3.0(*)</th>
-    <td>1.3.0</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-</tr>
-<tr>
-    <th class="heading">&nbsp;</th>
-    <th class="heading">&nbsp;</th>
     <th class="heading">1.0.1</th>
     <td>1.2.0</td>
     <td>-</td>

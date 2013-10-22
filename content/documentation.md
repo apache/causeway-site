@@ -16,12 +16,6 @@ Title: Documentation
   - [Static and dynamic layouts](core/dynamic-layouts.html) [1.3.0-SNAPSHOT]
   - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
 
-### Resources
-
-  - [Editor templates](getting-started/editor-templates.html)
-  - [Icons](getting-started/icons.html)
-
-
 }
 
 {col-md-4
@@ -35,9 +29,10 @@ Title: Documentation
   - [Tutorials](learning-more/tutorials.html)
   - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
 
-### Releases
+### Resources
 
-- [Release Matrix](release-matrix.html)
+  - [Editor templates](getting-started/editor-templates.html)
+  - [Icons](getting-started/icons.html)
 
 }
 
@@ -52,6 +47,10 @@ Title: Documentation
   - [Versioning Policy](contributors/versioning-policy.html)
 
 Guidance for committers is at the bottom of this page.
+
+### Releases
+
+- [Release Matrix](release-matrix.html)
 
 }
 
