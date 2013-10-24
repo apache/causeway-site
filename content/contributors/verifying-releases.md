@@ -43,15 +43,20 @@ First, delete all Isis artifacts from your local Maven repo:
 rm -rf ~/.m2/repository/org/apache/isis
 </pre>
 
-The build process depends on whether the artifact is of Isis core or of one of its components:
+The build process depends on whether the artifact is of Isis core or of one of its components.
 
-* For Isis core, build using the `-o` offline flag:
+**For Isis core**, first download any dependencies:
+
+  `mvn dependency:go-offline`
+  
+Check that no Isis artifacts have yet been downloaded, ie there is no `~/.m2/org/repository/org/apache/isis` directory.  If there are, it could indicate that the release being verified incorrectly references previous versions of Isis core.
+Assuming all is ok, build using the `-o` offline flag:
 
   `mvn clean install -o`
 
-  Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
-* For an Isis component, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
+**For an Isis component**, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
 
   `mvn clean install`
 
