@@ -45,7 +45,7 @@ rm -rf ~/.m2/repository/org/apache/isis
 
 The build process depends on whether the artifact is of Isis core or of one of its components.
 
-### Isis Core
+#### Isis Core
 
 To build Isis core, first download any dependencies:
 
@@ -63,7 +63,7 @@ mvn clean install -o
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
-### Isis Component
+#### Isis Component
 
 To build an Isis component, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
 
