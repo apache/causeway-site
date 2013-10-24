@@ -45,22 +45,33 @@ rm -rf ~/.m2/repository/org/apache/isis
 
 The build process depends on whether the artifact is of Isis core or of one of its components.
 
-**For Isis core**, first download any dependencies:
+### Isis Core
 
-  `mvn dependency:go-offline`
+To build Isis core, first download any dependencies:
+
+<pre>
+mvn dependency:go-offline
+</pre>
   
 Check that no Isis artifacts have yet been downloaded, ie there is no `~/.m2/org/repository/org/apache/isis` directory.  If there are, it could indicate that the release being verified incorrectly references previous versions of Isis core.
+
 Assuming all is ok, build using the `-o` offline flag:
 
-  `mvn clean install -o`
+<pre>
+mvn clean install -o
+</pre>
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
-**For an Isis component**, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
+### Isis Component
 
-  `mvn clean install`
+To build an Isis component, build without the offline flag; Maven should pull down the component's dependencies from the Maven central repo:
 
-  Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
+<pre>
+mvn clean install
+</pre>
+
+Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).
 
 The above steps are the bare minimum you should perform before casting a vote.  Ideally, you should also run an Isis application (eg one of the examples) against the new code (either against a new version of core, or configured to use the new version of the component).
 
