@@ -33,7 +33,7 @@ Download both the ZIP and .ASC files from the location specified in the voting e
 gpg --verify isis-x.y.z.zip.asc isis-x.y.z.zip
 </pre>
 
-### Building the source release artifacts
+## Building the source release artifacts
 
 Assuming the ZIP file verifies, it should be unpacked, and then the artifact built from source.
 
