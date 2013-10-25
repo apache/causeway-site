@@ -4,7 +4,7 @@ Title: Getting started
 
 - [Screenshot tutorial](screenshots.html)
 - [Screencasts](screencasts.html)
-- **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.0](release-notes/about.html))**
+- **[Simple Archetype](simple-archetype.html) ([1.3.0](release-notes/about.html))**
 - [ToDo App (Quickstart) Archetype](quickstart-archetype.html) ([1.3.0](release-notes/about.html))
 - **[Programming Model and How-tos](../applib-guide/about.html)**
 - [Applib utility classes](../applib-guide/reference/Utility.html)
