@@ -12,7 +12,7 @@ To use, update the `pom.xml`:
 </pre>
 
 
-##SortedSets Contract Test [1.3.0-SNAPSHOT]
+##SortedSets Contract Test
 
 This contract test automatically checks that all fields of type `java.util.Collection` are declared as `java.util.SortedSet`.  In other words, it precludes either `java.util.List` or `java.util.Set` from being used as a collection.
 
@@ -57,7 +57,7 @@ For example:
         }
     }
 
-##Injected Services Method Contract Test [1.3.0-SNAPSHOT]
+##Injected Services Method Contract Test
 
 It is quite common for some basic services to be injected in a project-specific domain object superclass; for example a `ClockService` might generally be injected everywhere:
 
@@ -85,7 +85,7 @@ For example:
     }
 
 
-##Bidirectional Contract Test [1.3.0-SNAPSHOT]
+##Bidirectional Contract Test
 
 This contract test automatically checks that bidirectional 1:m or 1:1 associations are being maintained correctly (assuming that they follow the [mutual registration pattern](../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 
@@ -123,7 +123,7 @@ To see what's going on (and to identify any skipped relationships), use the `wit
 
 The example tests can be found [here](https://github.com/apache/isis/tree/master/core/unittestsupport/src/test/java/org/apache/isis/core/unittestsupport/bidir).
 
-##JUnitRuleMockery2 (enhanced in [1.3.0-SNAPSHOT])
+##JUnitRuleMockery2
 
 An extension to the JMock's `JunitRuleMockery`, providing a simpler API and also providing support for autowiring.
 

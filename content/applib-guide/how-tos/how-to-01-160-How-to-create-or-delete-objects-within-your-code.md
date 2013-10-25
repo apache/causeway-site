@@ -6,9 +6,9 @@ important that the framework is made aware of the existence of this new
 object - in order that it may be persisted to the object store, and in
 order that any services that the new object needs are injected into it.
 
-Just specifying `new Customer()`, for example, will create a `Customer` object, but that object will *not* be known to the framework.  Such an object *can* (as of `1.3.0-SNAPSHOT`) be persisted by the framework.  However any services will not be injected into the object until such time.  Also, the [default value for any properties](how-to-03-017-How-to-specify-default-value-of-an-object-property.html) will not be setup, nor will the [created callback](how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html) be called.
+Just specifying `new Customer()`, for example, will create a `Customer` object, but that object will *not* be known to the framework.  Such an object *can* be persisted by the framework.  However any services will not be injected into the object until such time.  Also, the [default value for any properties](how-to-03-017-How-to-specify-default-value-of-an-object-property.html) will not be setup, nor will the [created callback](how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html) be called.
 
-Therefore, the recommended way to instantiate an object (and mandatory prior to `1.3.0-SNAPSHOT`) is to do so through the framework.  However, since we do
+Therefore, the recommended way to instantiate an object is to do so through the framework.  However, since we do
 not want to couple our domain objects too closely to Isis, we use the
 idea of a 'container' to mediate, specified by the
 `org.apache.isis.applib.DomainObjectContainer` interface. The

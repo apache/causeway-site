@@ -24,7 +24,7 @@ recognized by *Apache Isis*' default programming model:
     <td>add object to a collection (nb: not currently supported by Wicket viewer)<p>See also <tt>removeFrom</tt></td>
 </tr>
 <tr>
-    <td>autoComplete<p/>[1.3.0-SNAPSHOT]</td>
+    <td>autoComplete</td>
     <td></td>
     <td>Y</td>
     <td></td>

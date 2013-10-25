@@ -1,4 +1,4 @@
-Title: Settings Services using JDO [jdo-1.2.0-SNAPSHOT]
+Title: Settings Services using JDO
 
 The JDO objectstore provides simple implementations of the two applib [Settings Services](../../../core/services/settings-services.html).
 

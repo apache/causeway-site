@@ -58,6 +58,8 @@ Title: isis-objectstore-jdo-1.0.0
 <h2>        Dependency upgrade
 </h2>
 <ul>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-477'>ISIS-477</a>] -         Update JDO/DataNucleus objectstore to DN 3.2.6 and other latest dependencies
+</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-501'>ISIS-501</a>] -         Maven error with DN enhancer: required artifact missing
 </li>
 </ul>

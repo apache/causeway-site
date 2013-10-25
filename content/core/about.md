@@ -14,16 +14,16 @@ Title: Core Modules
 - [Initializing Services](services/initializing-services.html)
 - [Auditing Service](services/auditing-service.html)
 - [Bookmark Service](services/bookmark-service.html)
-- [Developer Utilities Service](services/developer-utilities-service.html) [1.3.0-SNAPSHOT]
+- [Developer Utilities Service](services/developer-utilities-service.html)
 - [Exception Recognizers](services/exception-recognizers.html)
 - [Publishing Service](services/publishing-service.html)
-- [Settings Services](services/settings-services.html) [1.3.0-SNAPSHOT]
+- [Settings Services](services/settings-services.html)
 
 ### Development
 
 - [Unit Test Support](unittestsupport.html)
 - [Integration Test Support](integtestsupport.html)
-- [BDD/Integ Test Support](specsupport-and-integtestsupport.html) (1.3.0-SNAPSHOT)
+- [BDD/Integ Test Support](specsupport-and-integtestsupport.html)
 - [Wrapper Factory](wrapper.html) [stub]
 
 ###  Programming Model

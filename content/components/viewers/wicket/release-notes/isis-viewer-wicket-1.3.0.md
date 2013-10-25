@@ -92,6 +92,8 @@ Title: isis-viewer-wicket-1.3.0
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-449'>ISIS-449</a>] -         Error handling when transaction aborted incorrect
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-502'>ISIS-502</a>] -         wicket componentList order sensitivity
+</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-551'>ISIS-551</a>] -         Not forwarding onto the error page correctly if any of the application actions (ie menus) hit the object store when the transaction has been set to ABORT due to an earlier failure.
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-552'>ISIS-552</a>] -         Upgrade to Wicket 6.11.0 and disable HTML5 functionality that caused interference between required text fields and the Wicket viewer&#39;s veil.

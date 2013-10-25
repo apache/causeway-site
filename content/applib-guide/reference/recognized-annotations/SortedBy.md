@@ -1,4 +1,4 @@
-@SortedBy [1.3.0-SNAPSHOT]
+@SortedBy
 -------
 
 > Supported by: Wicket viewer; not yet supported by other viewers.

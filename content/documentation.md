@@ -13,7 +13,7 @@ Title: Documentation
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.0](getting-started/release-notes/about.html))
   - **[Programming Model and How-tos](applib-guide/about.html)**
   - [Applib utility classes](applib-guide/reference/Utility.html)
-  - [Static and dynamic layouts](core/dynamic-layouts.html) [1.3.0-SNAPSHOT]
+  - [Static and dynamic layouts](core/dynamic-layouts.html)
   - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
 
 }
@@ -59,7 +59,7 @@ Guidance for committers is at the bottom of this page.
 {row
 
 {col-md-12
-## Core [1.2.0](core/release-notes/about.html)
+## Core [1.3.0](core/release-notes/about.html)
 }
 
 {col-md-4
@@ -73,10 +73,10 @@ Guidance for committers is at the bottom of this page.
   - [Initializing Services](core/services/initializing-services.html)
   - [Auditing Service](core/services/auditing-service.html)
   - [Bookmark Service](core/services/bookmark-service.html)
-  - [Developer Utilities Service](core/services/developer-utilities-service.html) [1.3.0-SNAPSHOT]
+  - [Developer Utilities Service](core/services/developer-utilities-service.html)
   - [Exception Recognizers](core/services/exception-recognizers.html)
   - [Publishing Service](core/services/publishing-service.html)
-  - [Settings Services](core/services/settings-services.html) [1.3.0-SNAPSHOT]
+  - [Settings Services](core/services/settings-services.html)
 
 }
 
@@ -86,7 +86,7 @@ Guidance for committers is at the bottom of this page.
 
   * [Unit Test Support](core/unittestsupport.html)
   * [Integration Test Support](core/integtestsupport.html)
-  * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html) [1.3.0-SNAPSHOT]
+  * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
   * [Wrapper Factory](core/wrapper.html) [stub]
 
   
@@ -123,19 +123,19 @@ Guidance for committers is at the bottom of this page.
 }
 
 {col-md-4
-###  Wicket [1.2.0](components/viewers/wicket/release-notes/about.html)
+###  Wicket [1.3.0](components/viewers/wicket/release-notes/about.html)
 
   - [About](components/viewers/wicket/about.html)
   - [Titles in tables](components/viewers/wicket/titles-in-tables.html)
-  - [Static and dynamic layouts](core/dynamic-layouts.html) [1.3.0-SNAPSHOT]
-  - [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html) [1.3.0-SNAPSHOT]
+  - [Static and dynamic layouts](core/dynamic-layouts.html)
+  - [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
   - [The About page](components/viewers/wicket/configuring-the-about-page.html)
   - [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
 
 }
 
 {col-md-4
-###  RestfulObjects [2.0.0](components/viewers/restfulobjects/release-notes/about.html)
+###  RestfulObjects [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 <p class="display:none"/>
 
   - [About](components/viewers/restfulobjects/about.html)
@@ -161,7 +161,7 @@ Note: this viewer is third-party open source (outside Apache)
 {row
 
 {col-md-12
-## JDO/DataNucleus Object Store [1.1.0](components/objectstores/jdo/release-notes/about.html)
+## JDO/DataNucleus Object Store [1.3.0](components/objectstores/jdo/release-notes/about.html)
 }
 
 {col-md-4
@@ -200,7 +200,7 @@ Note: this viewer is third-party open source (outside Apache)
   - [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
   - [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
   - [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
-  - [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
+  - [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html) [1.3.0]
 
   
 }
@@ -215,7 +215,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### Shiro [1.1.1](components/security/shiro/release-notes/about.html)
+### Shiro [1.3.0](components/security/shiro/release-notes/about.html)
 
   - [About](components/security/shiro/about.html)
   - [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)

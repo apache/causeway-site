@@ -714,30 +714,23 @@ isis/
     objectstore/
       jdo/
       nosql/
-      sql/
       xml/
     profilestore/
-      sql/
       xml/
     progmodel/
       groovy/
-      wrapper/
     security/
       file/
-      ldap/
-      sql/
+      shiro/
     viewer/
-      bdd/
       dnd/
-      html/
-      junit/
       restfulobjects/
       scimpi/
       wicket/
   example/
     archetype/
       quickstart_jdo_restful_wicket/
-      quickstart_dnd_bdd_junit/
+      simple_jdo_restful_wicket/
   site-skin/
   tool/
     maven-isis-plugin/
@@ -750,9 +743,7 @@ If necessary, checkout this directory structure:
 svn co https://dist.apache.org/repos/dist/release/isis isis-dist
 </pre>
 
-Next, add the new release into the approprite directory, and delete any previous release.  
-
-To help with this, use the `upd.sh` script in each directory.  For example:
+Next, add the new release into the approprite directory, and delete any previous release.  Use the `upd.sh` script (in each directory) for this; it will download the artifacts from the Nexus release repository and perform other necessary tasks.  For example:
 
 <pre>
 sh upd.sh 1.2.3 1.2.2
@@ -839,35 +830,37 @@ And use the following body (summarizing the main points as required):
 
 <pre>
 The Isis team is pleased to announce the release of:
-- Apache Isis Core version 1.2.0
-- Wicket Viewer 1.2.0
-- Restful Objects Viewer 2.0.0
-- JDO Object Store 1.1.0
-- Shiro Security 1.1.1
+- Apache Isis Core version 1.3.0
+- Wicket Viewer 1.3.0
+- Restful Objects Viewer 2.1.0
+- JDO Object Store 1.3.0
+- Shiro Security 1.3.0
 - File Security 1.0.1
-- Quickstart Archetype 1.0.3
+- Simple Archetype 1.3.0
+- Quickstart Archetype 1.3.0
 
 New features in this release include:
 - ...
 
-Full release notes are available at [1,2,3,4,5,6,7] on the Isis website.
+Full release notes are available at [1,2,3,4,5,6,7,8] on the Isis website.
 
-You can access this release directly from the Maven central repo [8], 
-or download the release and build it from source [9].
+You can access this release directly from the Maven central repo [9], 
+or download the release and build it from source [10].
 
 Enjoy!
 
 -The Isis team
 
-[1] http://isis.apache.org/core/release-notes/isis-1.2.0.html
-[2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.2.0.html
-[3] http://isis.apache.org/components/viewers/restfulobjects/release-notes/isis-viewer-restfulobjects-2.0.0.html
-[4] http://isis.apache.org/components/objectstores/jdo/release-notes/isis-objectstore-jdo-1.1.0.html
-[5] http://isis.apache.org/components/security/shiro/release-notes/isis-security-shiro-1.1.1.html
+[1] http://isis.apache.org/core/release-notes/isis-1.3.0.html
+[2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.3.0.html
+[3] http://isis.apache.org/components/viewers/restfulobjects/release-notes/isis-viewer-restfulobjects-2.1.0.html
+[4] http://isis.apache.org/components/objectstores/jdo/release-notes/isis-objectstore-jdo-1.3.0.html
+[5] http://isis.apache.org/components/security/shiro/release-notes/isis-security-shiro-1.3.0.html
 [6] http://isis.apache.org/components/security/file/release-notes/isis-security-file-1.0.1.html
-[7] http://isis.apache.org/getting-started/release-notes/quickstart_wrj-archetype-1.0.3.html
-[8] http://search.maven.org
-[9] http://isis.apache.org/download.html
+[7] http://isis.apache.org/getting-started/release-notes/quickstart_wrj-archetype-1.3.0.html
+[8] http://isis.apache.org/getting-started/release-notes/simple_wrj-archetype-1.3.0.html
+[9] http://search.maven.org
+[10] http://isis.apache.org/download.html
 </pre>
 
 ### Blog post

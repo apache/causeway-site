@@ -7,7 +7,7 @@ Like the [HTML viewer](../html/about.html), the wicket viewer provides a generic
 ### Further reading:
 
 - [Titles in tables](titles-in-tables.html)
-- [Suppressing 'remember me'](suppressing-remember-me.html) [1.3.0-SNAPSHOT]
+- [Suppressing 'remember me'](suppressing-remember-me.html)
 - [The About page](configuring-the-about-page.html)
 - [Customizing the viewer](customizing-the-viewer.html)
 

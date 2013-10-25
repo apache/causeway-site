@@ -1,4 +1,4 @@
-Title: BDD Specs and Integration testing Support (1.3.0-SNAPSHOT)
+Title: BDD Specs and Integration testing Support
 
 > This new feature replaces the integration test support provided in 1.2.0.  Please note that some small changes to your tests will be required.
 

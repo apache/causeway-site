@@ -20,4 +20,4 @@ And the JMock templates are prefixed "`jm`".
 
 ### Notes
 
-The `ispauto` and `isaauto` (for auto-complete of properties or of action parameters) only apply from v1.3.0-SNAPSHOT.
+The `ispauto` and `isaauto` (for auto-complete of properties or of action parameters) only apply from v1.3.0+.

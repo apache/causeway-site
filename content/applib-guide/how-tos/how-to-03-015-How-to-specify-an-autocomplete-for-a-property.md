@@ -1,5 +1,5 @@
-How to specify an auto-complete for a property [1.3.0-SNAPSHOT]
--------------------------------------------------------
+How to specify an auto-complete for a property
+----------------------------------------------
 
 Using the auto-complete method you can allow the user to search for objects based on a single string.  These will be made available to the user through a device such as a drop-down list.
 

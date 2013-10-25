@@ -28,7 +28,7 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 - [Publishing Service on JDO](publishing-service-jdo.html)
 - [Auditing Service on JDO](auditing-service-jdo.html)
 - [Exception Recognizers](exception-recognizers-jdo.html)
-- [Settings Services](settings-services-jdo.html) [jdo-1.2.0-SNAPSHOT]
+- [Settings Services](settings-services-jdo.html)
 
 ### Releases
 

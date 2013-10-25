@@ -40,7 +40,7 @@ For example:
     }
 
 
-## Accessing the JDO `PersistenceManager` [jdo-1.2.0-SNAPSHOT]
+## Accessing the JDO `PersistenceManager`
 
 Isis currently only supports JDO named queries.  If you require more flexibility than this, eg for dynamically constructed queries, then the `IsisJdoSupport` interface can be used to obtain access to the underlying JDO `PersistenceManager`.
 

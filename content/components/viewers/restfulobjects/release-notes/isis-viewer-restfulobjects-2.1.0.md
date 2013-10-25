@@ -29,6 +29,10 @@ Title: viewer-restfulobjects-2.1.0
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-464'>ISIS-464</a>] -         Some trivial cleanup
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-479'>ISIS-479</a>] -         Properties not getting updated as per 14.2 in RO Spec
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-481'>ISIS-481</a>] -         Quickstart RO viewer - some links are broken
+</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-496'>ISIS-496</a>] -         Quickstart RO viewer - a link is broken
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-526'>ISIS-526</a>] -         Action Resource Parameters representation
