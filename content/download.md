@@ -19,7 +19,7 @@ Components:
 * [isis-security-file-1.0.1](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.1-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/file/isis-security-file-1.0.1-source-release.zip.asc))
 * [isis-security-shiro-1.3.0](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/security/shiro/isis-security-shiro-1.3.0-source-release.zip.asc))
 * [isis-objectstore-jdo-1.3.0](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/objectstore/jdo/isis-objectstore-jdo-1.3.0-source-release.zip.asc))
-* [isis-viewer-wicket-1.3.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.2.0-source-release.zip.asc))
+* [isis-viewer-wicket-1.3.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/wicket/isis-viewer-wicket-1.3.0-source-release.zip.asc))
 * [isis-viewer-restfulobjects-2.1.0](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.1.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.1.0-source-release.zip.asc))
 
 Archetypes:
