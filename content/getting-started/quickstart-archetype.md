@@ -18,18 +18,15 @@ mvn archetype:generate  \
     -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
     -D archetypeVersion=1.0.3 \
     -D groupId=com.mycompany \
-    -D artifactId=myapp
+    -D artifactId=myapp \
+    -D version=1.0-SNAPSHOT \
+    -B
 </pre>
 where:
 
 - `groupId` represents your own organization, and
 - `artifactId` is a unique identifier for this app within your organization.
-
-You'll then be prompted for some further properties; you can generally leave these as the default:
-
-- enter a version, eg `1.0-SNAPSHOT`
-- enter a package
-- confirm the entry
+- `version` is the initial (snapshot) version of your app.
 
 The archetype generation process will then run; it only takes a few seconds.
 
