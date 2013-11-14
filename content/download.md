@@ -4,7 +4,22 @@ Apache Isis&trade; software is a framework for rapidly developing domain-driven 
 
 ## Getting Started
 
-If you just want to get going quickly, see the Maven [archetype](getting-started/quickstart-archetype.html).
+If you just want to get going quickly, we suggest using one of our Maven archetypes.
+
+For example:
+
+<pre>
+mvn archetype:generate  \
+    -D archetypeGroupId=org.apache.isis.archetype \
+    -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
+    -D archetypeVersion=1.3.1 \
+    -D groupId=com.mycompany \
+    -D artifactId=myapp \
+    -D version=1.0-SNAPSHOT \
+    -B
+</pre>
+
+For more information, see [here](getting-started/simple-archetype.html) and [here](getting-started/quickstart-archetype.html).
 
 ## Formal Releases
 
@@ -92,5 +107,5 @@ Committers should use the read/write repo:
 https://git-wip-us.apache.org/repos/asf/isis.git
 </pre>
 
-You can browse the repo [here](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary)
+You can browse the repo [here](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
 
