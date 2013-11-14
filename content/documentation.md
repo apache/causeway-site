@@ -292,6 +292,24 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
+###  Committers
+
+  - [Updating the CMS site](contributors/updating-the-cms-site.html)
+  - [Applying Patches](contributors/applying-patches.html)
+  - [Recreating an archetype](contributors/recreating-an-archetype.html)
+  - [Snapshot process](contributors/snapshot-process.html)
+  - [Release process](contributors/release-process.html)
+  - [Release branch and tag names](contributors/release-branch-and-tag-names.html)
+  - [Verifying releases](contributors/verifying-releases.html)
+  - [Key generation](contributors/key-generation.html)
+
+###  PMC
+
+  - [Notes](contributors/pmc-notes.html)
+
+}
+
+{col-md-4
 ### Plugins
 
   - [Maven Plugin](other/maven-plugin.html) [stub]
@@ -305,20 +323,6 @@ Note: this viewer is third-party open source (outside Apache)
 - [About](components/progmodels/kemble/about.html) [stub]
 -->
 
-
-}
-
-{col-md-4
-###  Committers
-
-  - [Updating the CMS site](contributors/updating-the-cms-site.html)
-  - [Applying Patches](contributors/applying-patches.html)
-  - [Recreating an archetype](contributors/recreating-an-archetype.html)
-  - [Snapshot process](contributors/snapshot-process.html)
-  - [Release process](contributors/release-process.html)
-  - [Release branch and tag names](contributors/release-branch-and-tag-names.html)
-  - [Verifying releases](contributors/verifying-releases.html)
-  - [Key generation](contributors/key-generation.html)
 
 }
 
