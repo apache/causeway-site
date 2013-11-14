@@ -17,7 +17,7 @@ Title: Documentation
 
 ### Tutorials and Screencasts
   - [RRRADD!!! - 3 domain class tutorial](https://github.com/danhaywood/rrraddd-isis-131)
-      - a github project, with a tag for each of 22 steps
+      - a github project, 22 steps
   - [Screencasts](getting-started/screencasts.html)
 
 
