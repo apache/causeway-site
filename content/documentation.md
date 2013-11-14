@@ -5,34 +5,43 @@ Title: Documentation
 {row
 
 {col-md-4
-### Getting started
+### Elevator Pitch
 
-  - [Screenshot tutorial](getting-started/screenshots.html)
-  - [Screencasts](getting-started/screencasts.html)
+  - [What's Isis? - in pictures](getting-started/screenshots.html)
+  - [Common Use Cases](learning-more/common-use-cases.html)
+
+### Getting Statred
+
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
-  - **[Programming Model and How-tos](applib-guide/about.html)**
-  - [Applib utility classes](applib-guide/reference/Utility.html)
-  - [Static and dynamic layouts](core/dynamic-layouts.html)
-  - [Programming Model Cheat Sheet](getting-started/cheat-sheet.html)
+
+### Tutorials and Screencasts
+  - [RRRADD!!! Github tutorial](getting-started/screenshots.html)
+  - [Screencasts](getting-started/screencasts.html)
+
 
 }
 
 {col-md-4
-###  Learning More
+### Framework Reference
 
-  - [Common Use Cases](learning-more/common-use-cases.html)
+  - **[Programming Model and How-tos](applib-guide/about.html)**
+  - [Applib utility classes](applib-guide/reference/Utility.html)
+  - [Static and dynamic layouts](core/dynamic-layouts.html)
+
+### Going Deeper
+
+  - [Articles and Talks](learning-more/articles-and-presentations.html)
+  - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
+  - [Books](learning-more/books.html)
   - [Downloadable Presentations](learning-more/presentations.html)
   - [Hexagonal Architecture](learning-more/hexagonal-architecture.html) [stub]
-  - [Books](learning-more/books.html)
-  - [Articles and Conference Sessions](learning-more/articles-and-presentations.html)
-  - [Tutorials](learning-more/tutorials.html)
-  - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
 
 ### Resources
 
   - [Editor templates](getting-started/editor-templates.html)
   - [Icons](getting-started/icons.html)
+  - **[Programming Model Cheat Sheet](getting-started/cheat-sheet.html)**
 
 }
 
