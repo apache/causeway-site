@@ -9,8 +9,8 @@ Title: Documentation
 
   - [Screenshot tutorial](getting-started/screenshots.html)
   - [Screencasts](getting-started/screencasts.html)
-  - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.0](getting-started/release-notes/about.html))**
-  - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.0](getting-started/release-notes/about.html))
+  - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
+  - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
   - **[Programming Model and How-tos](applib-guide/about.html)**
   - [Applib utility classes](applib-guide/reference/Utility.html)
   - [Static and dynamic layouts](core/dynamic-layouts.html)
@@ -123,7 +123,7 @@ Guidance for committers is at the bottom of this page.
 }
 
 {col-md-4
-###  Wicket [1.3.0](components/viewers/wicket/release-notes/about.html)
+###  Wicket [1.3.1](components/viewers/wicket/release-notes/about.html)
 
   - [About](components/viewers/wicket/about.html)
   - [Titles in tables](components/viewers/wicket/titles-in-tables.html)

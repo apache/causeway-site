@@ -162,6 +162,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Viewer</th>
     <th class="heading"><a href="components/viewers/wicket/about.html">Wicket</a></th>
+    <th class="heading">1.3.1</th>
+    <td>1.3.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading"></th>
+    <th class="heading"></th>
     <th class="heading">1.3.0</th>
     <td>1.3.0</td>
     <td>-</td>
@@ -239,6 +250,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Archetype</th>
     <th class="heading"><a href="getting-started/quickstart-archetype.html">Simple</a></th>
+    <th class="heading">1.3.1</th>
+    <td>1.3.0</td>
+    <td>1.3.0</td>
+    <td>-</td>
+    <td>1.3.0</td>
+    <td>1.3.1</b></td>
+    <td>2.1.0</td>
+</tr>
+<tr>
+    <th class="heading"></th>
+    <th class="heading"></th>
     <th class="heading">1.3.0</th>
     <td>1.3.0</td>
     <td>1.3.0</td>
@@ -250,6 +272,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Archetype</th>
     <th class="heading"><a href="getting-started/quickstart-archetype.html">Quickstart</a></th>
+    <th class="heading">1.3.1</th>
+    <td>1.3.0</td>
+    <td>1.3.0</td>
+    <td>-</td>
+    <td>1.3.0</td>
+    <td>1.3.1</b></td>
+    <td>2.1.0</td>
+</tr>
+<tr>
+    <th class="heading"></th>
+    <th class="heading"></th>
     <th class="heading">1.3.0</th>
     <td>1.3.0</td>
     <td>1.3.0</td>

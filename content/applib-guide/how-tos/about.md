@@ -25,6 +25,10 @@ and services have behaviour, in the form of actions.
 
 * [How to add an action to a domain entity or service](./how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
 
+* [How to decouple dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* 
+* [How to add an action to be called on every entity within a list](./how-to-01-065-How-to-add-an-action-to-be-called-on-every-entity-within-a-list.html)
+
 * [How to specify the icon for a domain entity](./how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 
 * [How to specify the order in which properties or collections are displayed](./how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)

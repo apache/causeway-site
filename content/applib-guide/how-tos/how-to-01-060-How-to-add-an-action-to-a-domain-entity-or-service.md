@@ -1,5 +1,5 @@
-How to add an action (or bulk action) to a domain entity or service
----------------------------------------------------------
+How to add an action to a domain entity or service
+--------------------------------------------------
 
 An 'action' is a method that we expect the user to be able to invoke on
 a domain entity via the user interface, though it may also be invoked
@@ -30,31 +30,9 @@ user-action you can either:
 
 -   make it non-`public` (eg `protected` or `private`)
 
--   annotate it with @Ignore
+-   annotate it with `@Ignore`
 
--   annotate it with @Hidden (discussed further in ?)
+-   annotate it with `@Hidden`
 
 Note also that `static` methods are ignored: such functionality should
-reside in a service, such as a repository or factory (see ?).
-
-If the action is a bulk action - meaning that it should only be applied
-to a collection of instances of the entity - then annotate using @Bulk:
-
-    @Bulk
-    public void actionName() { ... }
-
-Note that bulk actions have a couple of important restrictions.
-
--   entity actions cannot take any arguments, while contributed actions
-    can take only a single parameter (the contributee)
-
-    This restriction might be lifted in the future;
-
--   any business rules for hiding, disabling or validating the action
-    are ignored.
-
-See ? for more details on writing business rules.
-
-At the time of writing, only the Wicket viewer recognizes bulk actions;
-other viewers treat the action as a regular action.
-
+reside instead as instance methods on a domain service, repository or factory.

@@ -175,6 +175,17 @@ vi `/bin/find . -name pom.xml | grep -v target`
 
 > Obviously, don't update Isis' `SNAPSHOT` references; these get updated by the `mvn release:prepare` command we run later.
 
+### Update plugin versions
+
+The `maven-versions-plugin` should be used to determine if there are newer versions of any of the plugins used to build Isis.  Since this goes off to the internet, it may take a minute or two to run:
+
+<pre>
+mvn versions:display-plugin-updates > /tmp/foo
+cat /tmp/foo
+</pre>
+
+Review the generated output and make updates as you see fit.  (However, if updating, please check by searching for known issues with newer versions).
+
 ### Update dependency versions
 
 The `maven-versions-plugin` should be used to determine if there are newer versions of any of Isis' dependencies.  Since this goes off to the internet, it may take a minute or two to run:

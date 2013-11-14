@@ -1,4 +1,4 @@
-Title: simple-wrj-archetype-1.0.3
+Title: simple-wrj-archetype-1.3.0
 
 Uses:
 
