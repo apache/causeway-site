@@ -4,6 +4,18 @@ Here are some freely accessible (and sometimes open source) applications that ar
 
 >If you have written an app in Isis that you'd like to share, please mention it on the [mailing list](../support.html).
 
+## Estatio
+
+Estatio is an open source estate management application, available on [github](https://github.com/estatio/estatio).
+
+<img src="https://raw.github.com/estatio/estatio/master/docs/20130715/2.png" width="530"></img>
+
+
+Much of Isis' recent development has been driven out by the requirements of this application, so you can see for yourself how many of the features in Isis are used in real life.
+
+Estatio is being deployed by [Eurocommercial Properties](http://www.eurocommercialproperties.com/), who sponsored the development of the framework in order to make Estatio a reality.  Our heart-felt thanks to them for their investment.  
+
+
 ## TransportPlanner
 
 TransportPlanner is a demo done by [Marintek AS](http://www.sintef.no/home/MARINTEK/) to show a possible 'solution' to a multimodal transport planning problem. It's a small part of a bigger European funded project.
