@@ -20,13 +20,17 @@ Isis' own runtime injects an (implementation of this) interface into each and ev
 
 One of the original motivations for Isis itself was to be able automatically generate a user interface for a domain object model.
 
-Isis provides two alternative user interface webapps:
+Isis' has a pluggable architecture allowing different user interface technologies.  The principal implementation (as configured by the [simple](../getting-started/simple-archetype.html) and [quickstart](../getting-started/quickstart-archetype.html) archetypes) is the [Wicket viewer](../components/viewers/wicket/about.html).  This provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components.  Some third-party components can be found on github, integrating the Wicket viewer with [google maps](https://github.com/danhaywood/isis-wicket-gmap3), [a full calendar](github.com/danhaywood/isis-wicket-fullcalendar2), [a charting library](https://github.com/danhaywood/isis-wicket-wickedcharts) and a [export to Excel](https://github.com/danhaywood/isis-wicket-excel) component.
 
-- the [Wicket viewer](../components/viewers/wicket/about.html) provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components
+Another viewer (though as yet unreleased) is the [Scimpi viewer](../components/viewers/scimpi/about.html) (not yet released) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
 
-- the [Scimpi viewer](../components/viewers/scimpi/about.html) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
+It is also possible to write your own viewers:
 
-Deploying on Isis means that the framework also manages object persistence.  Several object stores are provided, the main alternatives are the [JDO objectstore](../components/objectstores/jdo/about.html) and the [NoSQL objectstore](../components/objectstores/nosql/about.html).
+* One of Isis' committers has developed a viewer based on [DHTMLX](), also available on [github](https://github.com/madytyoo/dhtmlx-isis-viewer).  An online demo can be found [here](isis-viewer-dhtmlx.appspot.com).
+
+* Another of Isis' committers has a (closed source) viewer based on [Wavemaker](http://www.wavemaker.com/).
+
+Deploying on Isis means that the framework also manages object persistence.  Again this is pluggable, but the principal implementation is the [JDO objectstore](../components/objectstores/jdo/about.html).  Because JDO supports both SQL and NoSQL databases, you can then deploy on a variety of platforms, including the [Google App Engine (GAE)](https://developers.google.com/appengine/).
 
 ### Deploy on Isis as a RESTful web service
 

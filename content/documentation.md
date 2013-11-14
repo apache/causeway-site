@@ -10,13 +10,14 @@ Title: Documentation
   - [What's Isis? - in pictures](getting-started/screenshots.html)
   - [Common Use Cases](learning-more/common-use-cases.html)
 
-### Getting Statred
+### Getting Started
 
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
 ### Tutorials and Screencasts
-  - [RRRADD!!! Github tutorial](getting-started/screenshots.html)
+  - [RRRADD!!! - 3 domain class tutorial](https://github.com/danhaywood/rrraddd-isis-131)
+      - a github project, with a tag for each of 22 steps
   - [Screencasts](getting-started/screencasts.html)
 
 
