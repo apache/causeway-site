@@ -58,13 +58,16 @@ mvn antrun:run
 </pre>
 The first is to simply deploying the generated WAR (`webapp/target/myapp-webapp-1.0-SNAPSHOT.war`) to a servlet container.
 
-Alternatively, you could run the WAR in a Maven-hosted Jetty instance, using:
+Alternatively, you could run the WAR in a Maven-hosted Jetty instance, though you need to `cd` into the `webapp` module:
 
 <pre>
-mvn jetty:run
+cd webapp
+mvn jetty:run -D jetty.port=9090
 </pre>
 
-If you do this, note that the context path changes; check the console output.
+In the above, we've passed in a property to indicate a different port from the default port (8080).
+
+Note that if you use `mvn jetty:run`, then the context path changes; check the console output (eg [http://localhost:9090/myapp-webapp](http://localhost:9090/myapp-webapp)).
 
 Finally, you can also run the app by deploying to a standalone servlet container such as [Tomcat](http://tomcat.apache.org).
 
