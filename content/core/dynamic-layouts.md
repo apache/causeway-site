@@ -161,10 +161,13 @@ The format of the `.layout.json` file is:
             {
                 span: 6,
                 collections: {                          // ordered map of collections
-                    dependencies: {                     // collection, with associated actions
+                    dependencies: {                     // collection, with associated    actions
                         actions: {                      
                             add:{},
                             delete: {}
+                        },
+                        paged: {                        // pagination hint [new in 1.4.0-SNAPSHOT]
+                            value: 10                   // 10 items to a page 
                         }
                     },
                     similarItems: {}                    // collection, no associated actions
@@ -204,3 +207,4 @@ Therefore, make sure the following is added to the dom project's `pom.xml`:
         </resource>
     </resources>
  
+If using either of Isis' [two](../getting-started/simple-archetype.html) [archetypes](getting-started/quickstart-archetype.html), then the POM is already correctly configured.
