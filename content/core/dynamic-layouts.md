@@ -138,7 +138,11 @@ The format of the `.layout.json` file is:
                             category: {},               
                             complete: {                 // property, with associated actions
                                 actions: {              
-                                    completed: {},      // associated actions 
+                                    completed: {
+                                        named: {        // naming UI hint [new in 1.4.0-SNAPSHOT]
+                                            value: "Done"
+                                        }
+                                    },       
                                     notYetCompleted: {}
                                 }
                             }
@@ -179,7 +183,11 @@ The format of the `.layout.json` file is:
         ],
         actions: {                                      // actions not associated with any member
             delete: {},
-            duplicate: {}
+            duplicate: {
+                named: {                                // naming UI hint [new in 1.4.0-SNAPSHOT]
+                    value: "Clone"
+                }
+            }
         }
     }
  
