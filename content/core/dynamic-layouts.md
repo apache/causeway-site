@@ -161,13 +161,16 @@ The format of the `.layout.json` file is:
             {
                 span: 6,
                 collections: {                          // ordered map of collections
-                    dependencies: {                     // collection, with associated    actions
+                    dependencies: {                     // collection, with associated actions
                         actions: {                      
                             add:{},
                             delete: {}
                         },
                         paged: {                        // pagination hint [new in 1.4.0-SNAPSHOT]
                             value: 10                   // 10 items to a page 
+                        },
+                        render: {                       // rendering hint [new in 1.4.0-SNAPSHOT]
+                            value: EAGERLY
                         }
                     },
                     similarItems: {}                    // collection, no associated actions
