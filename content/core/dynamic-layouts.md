@@ -131,83 +131,83 @@ The JSON layout file takes the name `Xxx.layout.json`, and resides in the same p
 The format of the `.layout.json` file is:
 
     {
-        columns: [                                                   // list of columns
-            {
-                span: 6,                                             // span of the left-hand property column
-                memberGroups: {                                      // ordered map of member (property) groups
-                    General: {                                       // member group name
-                        members: {           
-                            description: {                           // property, no associated actions, but with UI hint
-                                typicalLength: {                     // UI hint for size of field [new in 1.4.0-SNAPSHOT]
-                                    value: 50
-                                }
-                            },            
-                            category: {},               
-                            complete: {                              // property, with associated actions
-                                actions: {              
-                                    completed: {
-                                        named: {                     // naming UI hint [new in 1.4.0-SNAPSHOT]
-                                            value: "Done"
-                                        }
-                                        cssClass: {                  // CSS UI hint [new in 1.4.0-SNAPSHOT] 
-                                            value: "x-highlight"
-                                        },
-                                    },       
-                                notYetCompleted: {
-                                    named: { value: "Not done" }
-                                },
-                                describedAs: {
-                                    value: "Whether this todo item has been completed"
-                                }
-                            }
-                        }
-                    },
-                    Misc: {
-                        members: {
-                            notes: {
-                                multiLine: {                         // UI hint for text area
-                                    numberOfLines: 5
-                                }
-                            },
-                            versionSequence: {}
-                        }
-                    }
+      columns: [                                   // list of columns
+        {
+          span: 6,                                 // span of the left-hand property column
+          memberGroups: {                          // ordered map of member (property) groups
+            General: {                             // member group name
+              members: {           
+                description: {                     // property, no associated actions, but with UI hint
+                  typicalLength: {                 // UI hint for size of field [new in 1.4.0-SNAPSHOT]
+                    value: 50
+                  }
+                },            
+                category: {},               
+                complete: {                        // property, with associated actions
+                  actions: {              
+                    completed: {
+                      named: {                     // naming UI hint [new in 1.4.0-SNAPSHOT]
+                        value: "Done"
+                      }
+                      cssClass: {                  // CSS UI hint [new in 1.4.0-SNAPSHOT] 
+                        value: "x-highlight"
+                      },
+                    },       
+                  notYetCompleted: {
+                    named: { value: "Not done" }
+                  },
+                  describedAs: {
+                    value: "Whether this todo item has been completed"
+                  }
                 }
+              }
             },
-            {
-                span: 6,                                             // span of the middle property column
-                memberGroups: { ... }
-            },
-            {
-                span: 0                                              // span of the right property column (if any)
-            },
-            {
-                span: 6,
-                collections: {                                       // ordered map of collections
-                    dependencies: {                                  // collection, with associated actions
-                        actions: {                      
-                            add:{},
-                            delete: {}
-                        },
-                        paged: {                                     // pagination UI hint [new in 1.4.0-SNAPSHOT]
-                            value: 10                                // 10 items to a page 
-                        },
-                        render: {                                    // lazy-loading UI hint [new in 1.4.0-SNAPSHOT]
-                            value: EAGERLY
-                        }
-                    },
-                    similarItems: {}                                 // collection, no associated actions
-                }
+            Misc: {
+              members: {
+                notes: {
+                  multiLine: {                     // UI hint for text area
+                      numberOfLines: 5
+                  }
+                },
+                versionSequence: {}
+              }
             }
-        ],
-        actions: {                                                   // actions not associated with any member
-            delete: {},
-            duplicate: {
-                named: {                                             
-                    value: "Clone"
-                }
-            }
+          }
+        },
+        {
+          span: 6,                                 // span of the middle property column
+          memberGroups: { ... }
+        },
+        {
+          span: 0                                  // span of the right property column (if any)
+        },
+        {
+          span: 6,
+          collections: {                           // ordered map of collections
+            dependencies: {                        // collection, with associated actions
+              actions: {                      
+                add:{},
+                delete: {}
+              },
+              paged: {                             // pagination UI hint [new in 1.4.0-SNAPSHOT]
+                value: 10                          // 10 items to a page 
+              },
+              render: {                            // lazy-loading UI hint [new in 1.4.0-SNAPSHOT]
+                value: EAGERLY
+              }
+            },
+            similarItems: {}                       // collection, no associated actions
+          }
         }
+      ],
+      actions: {                                   // actions not associated with any member
+        delete: {},
+        duplicate: {
+          named: {                                             
+            value: "Clone"
+          }
+        }
+      }
     }
  
 
