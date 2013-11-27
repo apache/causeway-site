@@ -8,27 +8,28 @@ Isis is quite happy for the metamodel to be lazily created, and - to be fair - D
 
 In any case, it's probably not good practice to have DataNucleus work this way.  The `RegisterEntities` service can therefore be registered in order to do the eager registration.  It searches for all `@PersistenceCapable` entities under specified package(s), and registers them all.
 
-> ***We strongly recommend that you register this service 
-> as a matter of course***
+> in 1.3.x, it is not mandatory to eagerly register entity types; however we strongly recommend it.
+> in 1.4.0-SNAPSHOT, it *is* mandatory to eager register entity types.
 
-### Register the Service
+### Specify the Package Prefix(es)
 
-Register like any other service in `isis.properties`:
+In the `persistor_datanucleus.properties`, specify the package prefix(es) of your application, to provide a hint for finding the `@PersistenceCapable` classes.  
+
+<pre>
+isis.persistor.datanucleus.RegisterEntities.packagePrefix=com.mycompany.dom
+</pre>
+
+The value of this property can be a comma-separated list (if there is more than one package or Maven module that holds persistable entities).
+
+
+### Register the Service (1.3.x only)
+
+> In 1.4.0-SNAPSHOT this step is no longer required.
+
+(If using 1.3.x), register like any other service in `isis.properties`:
 
 <pre>
 isis.services=<i>...other services...</i>,\
               org.apache.isis.objectstore.jdo.service.RegisterEntities,\
               ...
 </pre>
-
-
-### Specify the Package Prefix(es)
-
-In the `persistor_datanucleus.properties`, specify the package prefix(es) of your application, to provide a hint for finding the `@PersistenceCapable` classes.  
-
-
-<pre>
-isis.persistor.datanucleus.RegisterEntities.packagePrefix=com.mycompany.dom
-</pre>
-
-The value of this property can be a comma-separated list, if you wish.
