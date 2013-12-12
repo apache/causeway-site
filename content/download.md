@@ -27,7 +27,7 @@ If you want to build Isis from formally released source tarballs, you can downlo
 
 Core:
 
-* [isis-1.3.0](https://dist.apache.org/repos/dist/release/isis/core/isis-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/core/isis-1.3.0-source-release.zip.asc))
+* [isis-1.3.0](https://dist.apache.org/repos/dist/release/isis/isis-core/isis-1.3.0-source-release.zip) ([asc](https://dist.apache.org/repos/dist/release/isis/isis-core/isis-1.3.0-source-release.zip.asc))
 
 Components:
 
