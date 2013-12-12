@@ -40,7 +40,7 @@ Title: Documentation
 
 ### Resources
 
-  - **[Editor templates](getting-started/editor-templates.html)
+  - **[Editor templates](getting-started/editor-templates.html)**
   - [Icons](getting-started/icons.html)
   - **[Programming Model Cheat Sheet](getting-started/cheat-sheet.html)**
 
