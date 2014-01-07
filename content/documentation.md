@@ -15,10 +15,10 @@ Title: Documentation
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
-### Tutorials and Screencasts
+### Tutorials, Screencasts, Demos
   - [Tutorials](learning-more/tutorials.html)
   - [Screencasts](getting-started/screencasts.html)
-
+  - online demo of the [ToDo App](http://isisdemo.mmyco.co.uk/) (v1.2.0)
 
 }
 
