@@ -16,7 +16,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Importing into Eclipse<br/><br/><i>How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore</i></td>
+    <td>Importing into Eclipse<br/><br/><i>How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore</i><br/><br/>NB: when configuring DataNucleus for the *dom* project, make sure you are in the 'Java perspective', not the 'Java EE perspective').</td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
     </td>
