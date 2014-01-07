@@ -2,7 +2,7 @@ Title: Screencasts
 
 We've prepared some screencasts to help you quickly see what Apache Isis has to offer.
 
-<table>
+<table class="table table-bordered table-hover">
   <tr>
     <td>Quickstart Archetype<br/><br/><i>How to use the Apache Isis quickstart archetype to generate your first Apache Isis application</i></td>
     <td>
