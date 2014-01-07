@@ -31,7 +31,7 @@ Title: Documentation
 
 ### Going Deeper
 
-  - [Articles, Conference Sessions, Podcasts](learning-more/articles-and-presentations.html)
+  - [Articles, Conferences, Podcasts](learning-more/articles-and-presentations.html)
   - [Books](learning-more/books.html)
   - [Naked Objects PhD thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf) (Pawson)
   - [Downloadable Presentations](learning-more/presentations.html)
