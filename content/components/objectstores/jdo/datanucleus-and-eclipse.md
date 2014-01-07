@@ -22,9 +22,8 @@ To the detail...
 
 ## Configuring a domain project with the DataNucleus enhancer
 
-{note
-Make sure you are in the 'Java' Perspective, not the 'Java EE' Perspective.  
-}
+> note:
+> Make sure you are in the 'Java' Perspective, not the 'Java EE' Perspective.  
 
 In Eclipse, for the *domain object model* project, first add DataNucleus support:
 
