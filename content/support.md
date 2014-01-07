@@ -2,9 +2,9 @@ Title: Support
 
 ### Mailing Lists
 
-Apache Isis has two public mailing lists, archived by [Markmail](http://markmail.org).
+Apache Isis has two public mailing lists.
 
-<table>
+<table class="table table-bordered table-hover">
 <tr>
 	<th>Mailing list</th>
 	<th>Email</th>
