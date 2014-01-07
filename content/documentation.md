@@ -7,7 +7,7 @@ Title: Documentation
 {col-md-4
 ### Elevator Pitch
 
-  - [What's Isis? - in pictures](getting-started/screenshots.html)
+  - [What's Isis?](getting-started/screenshots.html) ... in pictures
   - [Common Use Cases](learning-more/common-use-cases.html)
 
 ### Getting Started
@@ -16,8 +16,7 @@ Title: Documentation
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
 ### Tutorials and Screencasts
-  - [RRRADD!!! - 3 domain class tutorial](https://github.com/danhaywood/rrraddd-isis-131)
-      - a github project, 22 steps
+  - [Tutorials](learning-more/tutorials.html)
   - [Screencasts](getting-started/screencasts.html)
 
 
@@ -32,11 +31,10 @@ Title: Documentation
 
 ### Going Deeper
 
-  - [Articles and Talks](learning-more/articles-and-presentations.html)
-  - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
+  - [Articles, Conference Sessions, Podcasts](learning-more/articles-and-presentations.html)
   - [Books](learning-more/books.html)
+  - [Richard Pawson's Naked Objects thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf)
   - [Downloadable Presentations](learning-more/presentations.html)
-  - [Hexagonal Architecture](learning-more/hexagonal-architecture.html) [stub]
 
 ### Resources
 
