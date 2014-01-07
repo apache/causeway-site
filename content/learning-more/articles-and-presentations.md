@@ -4,7 +4,7 @@ Some articles and recorded material relating to either Apache Isis (or its prede
 
 2013
 
-* **Presentation, Oredev: [RRRADDD! Ridiculously Rapid Domain-driven (and Restful) Apps With Apache Isis](http://vimeo.com/79377116) (50 min. video) and [original blurb](http://oredev.org/2013/wed-fri-conference/rrraddd-ridiculously-rapid-domain-driven-and-restful-apps-with-apache-isis)
+* Presentation, Oredev: [RRRADDD! Ridiculously Rapid Domain-driven (and Restful) Apps With Apache Isis](http://oredev.org/2013/wed-fri-conference/rrraddd-ridiculously-rapid-domain-driven-and-restful-apps-with-apache-isis)  (50 min. video)
 
 * **Article, Methods and Tools : [Introducing Apache Isis](http://www.methodsandtools.com/PDF/mt201302.pdf)**
 * Article, SDJournal : [Introducing Isis](http://sdjournal.org/software-developers-journal-open-012013-2/)
