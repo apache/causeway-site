@@ -754,23 +754,8 @@ If necessary, checkout this directory structure:
 svn co https://dist.apache.org/repos/dist/release/isis isis-dist
 </pre>
 
-Next, add the new release into the appropriate directory, and delete any previous release.  You can use [the upd.sh scripts](upd_sh) to help; they each download the artefacts from the Nexus release repository and perform other necessary tasks.  For example:
+Next, add the new release into the appropriate directory, and delete any previous release.  You can use [the upd.sh script](upd_sh) to help; this downloads the artefacts from the Nexus release repository, adds the artefacts to subsversion and deletes the previous version.
 
-<pre>
-sh upd.sh 1.2.3 1.2.2
-</pre>
-
-will replace a previous release 1.2.2 with the new release 1.2.3.
-
-Or, if you want to do same steps by hand, use:
-
-<pre>
-cd core
-svn add isis-1.2.3-source-release.zip.asc
-svn add isis-1.2.3-source-release.zip
-svn delete isis-1.2.2-source-release.zip.asc
-svn delete isis-1.2.2-source-release.zip
-</pre>
 
 At the end, commit the changes:
 <pre>
