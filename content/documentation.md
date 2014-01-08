@@ -18,7 +18,7 @@ Title: Documentation
 ### Tutorials, Screencasts, Demos
   - [Tutorials](learning-more/tutorials.html)
   - [Screencasts](getting-started/screencasts.html)
-  - [online demo](http://isisdemo.mmyco.co.uk/) (ToDo app, v1.2.0)
+  - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
 }
 
