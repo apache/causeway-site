@@ -19,7 +19,7 @@ To verify the source ZIP files, you will need to have imported the public keys u
 Since the Isis source is mirrored on github.com, you can just use:
 
 <pre>
-curl https://raw.github.com/apache/isis/master/KEYS > /tmp/KEYS
+curl http://www.apache.org/dist/isis/KEYS > /tmp/KEYS
 gpg --import /tmp/KEYS
 </pre>
 
