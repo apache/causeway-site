@@ -1,6 +1,6 @@
 Title: Joda Dates
 
-Isis' JDO objectstore bundles DataNucleus' [built-in support](http://www.datanucleus.org/plugins/store.types.jodatime.html) for Joda `LocalDate` and `LocalDateTime` datatypes, meaning that entity properties of these types will be persisted as appropriate data types in the database tables.
+Isis' JDO objectstore bundles DataNucleus' [built-in support](http://www.datanucleus.org/documentation/products/plugins.html) for Joda `LocalDate` and `LocalDateTime` datatypes, meaning that entity properties of these types will be persisted as appropriate data types in the database tables.
 
 It is, however, necessary to annotate your properties with `@javax.jdo.annotations.Persistent`, otherwise the data won't actually be persisted.  (See the [JDO docs](http://db.apache.org/jdo/field_types.html) for more details on this).
 
