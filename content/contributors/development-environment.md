@@ -46,7 +46,7 @@ git config user.email <i>myusername@apache.org</i>
 Next, configure the `core.autocrlf` so that line endings are normalized to LF (Unix style) in the rep; again see [Apache's git](https://git-wip-us.apache.org/) page: 
 
 - on Windows, use:
-<pre>git config core.autocrlf auto   
+<pre>git config core.autocrlf true   
 </pre>
 
 - on Mac/Linux, use:
