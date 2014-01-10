@@ -23,6 +23,10 @@ There is no additional configuration required in any Maven `pom.xml`; you are do
 
 ## Workaround for DN versioning issues: using a Maven profile
 
+{Note
+This workaround applies to v1.3.0 and previous releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0-SNAPSHOT and later.
+}
+
 Every so often there will be a new release of DataNucleus plugins to the [Maven central repo](http://search.maven.org).  For better or for worse, the Maven DataNucleus enhancer plugin defines a range dependency: it will always use the latest version of the DN modules available.
 
 The DataNucleus plugin for Eclipse on the other hand is configured to use the project classpath, and so it will remain compatible with the version referenced by Isis' own JDO objectstore.
@@ -59,13 +63,15 @@ ch.
 </pre>
 
 
+### v1.4.0-SNAPSHOT and later
 
+v1.4.0-SNAPSHOT of Isis uses DN 3.3.x, which means that this problem should no longer occur.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0-SNAPSHOT and later.
 
-### Preferred solution
+If you create your app from the v1.4.x archetypes (not released at time of writing), then the pom.xml files will be set up correctly.
 
-> The preferred solution (in use from Isis Core 1.3.0+ onwards) forces the 
-> version of DataNucleus and jdo-api to be the version referenced by the 
-> JDO ObjectStore.  
+### Recommended solution for v1.3.0
+
+The preferred solution forces the version of DataNucleus and jdo-api to be the version referenced by the JDO ObjectStore.    If you have created your app from the v1.3.x archetypes, then they will be set up correctly.
 
 In the root project's `pom.xml`, specify the properties:
 
@@ -122,12 +128,9 @@ Then, in the `dom` project's `pom.xml`, update the DataNucleus enhancer plugin t
 
  
 
-### Original solution
+### Solution used prior to v1.3.0
 
-> This solution attempts to use the latest-n-greatest version of DataNucleus, and was the approach used in Isis Core 1.2.0 and earlier.  However, it has been found to be flawed if a new version of the DataNucleus enhancer was released that had an incompatibility with the version of DN referenced by the JDO ObjectStore.  
-> 
-> Use the preferred solution, above, instead.
-
+This solution attempts to use the latest-n-greatest version of DataNucleus, and was the approach used in Isis Core 1.2.0 and earlier.  However, it has been found to be flawed if a new version of the DataNucleus enhancer was released that had an incompatibility with the version of DN referenced by the JDO ObjectStore.
 
 The fix is to use a Maven profile.  The following is correct as of the JDO ObjectStore v1.1.0:
 
