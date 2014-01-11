@@ -50,9 +50,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## How-tos
-
-*Apache Isis* works using convention-over-configuration; you write your domain objects following a set of conventions, and these are interpreted by the framework in order to render, persist, remote or otherwise interact with your domain model.  These conventions are together known as the *Apache Isis Programming Model*. 
+## Apache Isis Programming Model
 
 }
 
