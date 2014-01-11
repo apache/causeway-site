@@ -285,15 +285,15 @@ For both:
 * [Publishing Service](core/services/publishing-service.html)
 * [Settings Services](core/services/settings-services.html)
 
+}
+
+{col-md-4
+
 ###Supporting Features
 
 * [Security](./applib-guide/reference/Security.html)
 * [Applib Events](./applib-guide/reference/Event.html)
 * [Applib utility classes](applib-guide/reference/Utility.html)
-
-}
-
-{col-md-4
 
 ### Customisation
 
