@@ -81,6 +81,9 @@ Title: Documentation
 ###Value Types
 
 * [About value Types](./applib-guide/value-types/about.html)
+* [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
+* [Custom Value Types](./applib-guide/value-types/020-Custom-Value-Types.html)
+* [Third-party Value Types](./applib-guide/value-types/030-Third-party-Value-Types.html)
 
 ###Supporting Features
 
