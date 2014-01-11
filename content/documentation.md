@@ -50,11 +50,9 @@ Title: Documentation
 {row
 
 {col-md-12
-## Core [1.3.0](core/release-notes/about.html)
-
+## How-tos
 
 *Apache Isis* works using convention-over-configuration; you write your domain objects following a set of conventions, and these are interpreted by the framework in order to render, persist, remote or otherwise interact with your domain model.  These conventions are together known as the *Apache Isis Programming Model*. 
-
 
 }
 
@@ -63,6 +61,10 @@ Title: Documentation
 ###Entities
 
 * [How-to write Domain Entities](./applib-guide/how-tos/about.html)
+
+}
+
+{col-md-4
 
 ###Domain Services
 
@@ -85,6 +87,10 @@ Title: Documentation
 * [Custom Value Types](./applib-guide/value-types/020-Custom-Value-Types.html)
 * [Third-party Value Types](./applib-guide/value-types/030-Third-party-Value-Types.html)
 
+}
+
+{col-md-4
+
 ###Supporting Features
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
@@ -98,9 +104,20 @@ Title: Documentation
 
 }
 
+}
+
+{row
+
+{col-md-12
+## Reference
+
+}
+
+{row
+
 {col-md-4
 
-###Reference
+###  Applib
 
 * [Deployment Types](core/deployment-type.html)
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
@@ -110,6 +127,11 @@ Title: Documentation
 * [Applib Utility Classes](./applib-guide/reference/Utility.html)
 * [Applib Events](./applib-guide/reference/Event.html)
 
+}
+
+{row
+
+{col-md-4
 
 ###  Services
 
@@ -123,7 +145,28 @@ Title: Documentation
 
 }
 
+{row
+
 {col-md-4
+
+### Customisation
+
+  - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
+
+}
+
+
+}
+
+{row
+
+{col-md-12
+## Core [1.3.0](core/release-notes/about.html)
+
+}
+
+{col-md-4
+
 ### Dev Support
 <p class="display:none"/>
 
@@ -132,10 +175,9 @@ Title: Documentation
   * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
   * [Wrapper Factory](core/wrapper.html) [stub]
 
-  
-###  Programming Model
+}
 
-  - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
+{col-md-4
 
 ### Runtime
 <p class="display:none"/>
@@ -143,6 +185,9 @@ Title: Documentation
   * [Core Runtime](core/runtime.html) [stub]
   * [Webserver](core/webserver.html) [stub]
 
+}
+
+{col-md-4
   
 ### Bundled Components
 
