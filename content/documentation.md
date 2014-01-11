@@ -5,13 +5,13 @@ Title: Documentation
 {row
 
 {col-md-4
-### Elevator Pitch
+### Elevator pitch
 
-  - [What's Isis?](getting-started/screenshots.html) ... in pictures
+  - **[What's Isis?](getting-started/screenshots.html) ... in pictures**
   - [Common Use Cases](learning-more/common-use-cases.html)
   - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
-### Getting Started
+### Getting started
 
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
@@ -19,11 +19,11 @@ Title: Documentation
 }
 
 {col-md-4
-### Tutorials, Screencasts
+### Tutorials, screencasts
   - [Tutorials](learning-more/tutorials.html)
-  - [Screencasts](getting-started/screencasts.html)
+  - **[Screencasts](getting-started/screencasts.html)**
 
-### Learning More
+### Learning more
 
   - [Articles, Conferences, Podcasts](learning-more/articles-and-presentations.html)
   - [Books](learning-more/books.html)
@@ -66,7 +66,7 @@ Title: Documentation
 * [About domain services](./applib-guide/domain-services/about.html)
 * [About value Types](./applib-guide/value-types/about.html)
 
-###Domain objects
+###Pojos
 
 * [Pojo as domain entity](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
 * [Pojo as domain service](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
@@ -79,7 +79,7 @@ Title: Documentation
 * [Names/description of action param](./applib-guide/how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
 * [Injecting services](./applib-guide/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
 
-### Services
+### Object management
 
 * [Finding objects](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
 * [Instantiating and persisting objects](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
@@ -89,7 +89,7 @@ Title: Documentation
 
 {col-md-4
 
-###Common UI hints
+###UI hints
 
 * [Entity icons](./applib-guide/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * [Ordering prop/colls in the UI](./applib-guide/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
@@ -119,14 +119,14 @@ Validity ("do it")
 
 {col-md-4
 
-### Common Constraints
+### Common constraints
 
 * [Optional property](./applib-guide/how-tos/how-to-01-100-How-to-make-a-property-optional.html)
 * [Optional action ](./applib-guide/how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
 * [Size of string properties](./applib-guide/how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 * [Size of string action params](./applib-guide/how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
 
-###Drop-downs and defaults
+###Drop-downs &amp; defaults
 
 For properties:
 
@@ -164,7 +164,7 @@ For both:
 
 {col-md-4
 
-###Idioms and Patterns
+###Idioms and patterns
 
 * [A typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
 * [Decoupling dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
@@ -179,7 +179,7 @@ For both:
 * [Trigger other behaviour on property change](./applib-guide/how-tos/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
 * [Trigger other behaviour on collection change](./applib-guide/how-tos/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
-###Business Rules
+###Business rules
 
 * [All members hidden](./applib-guide/how-tos/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
 * [All members unmodifiable](./applib-guide/how-tos/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
@@ -191,7 +191,7 @@ For both:
 
 {col-md-4
 
-###  UI Layout & Hints
+### UI layout & hints
 
 * [Static and dynamic layouts](core/dynamic-layouts.html)
 * [Name/description of an object](./applib-guide/how-tos/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
@@ -269,7 +269,7 @@ For both:
 
 {col-md-4
 
-###  Applib Services
+###  Applib service APIs
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 * [Auditing Service](core/services/auditing-service.html)
@@ -283,7 +283,7 @@ For both:
 
 {col-md-4
 
-###Supporting Features
+###Supporting features
 
 * [Security](./applib-guide/reference/Security.html)
 * [Applib Events](./applib-guide/reference/Event.html)
@@ -310,7 +310,7 @@ For both:
 
 {col-md-4
 
-### Dev Support
+### Dev support
 <p class="display:none"/>
 
   * [Unit Test Support](core/unittestsupport.html)
@@ -332,7 +332,7 @@ For both:
 
 {col-md-4
   
-### Bundled Components
+### Bundled components
 
   - [Bytecode Enhancers](core/bytecode.html) [stub]
   - [Bypass Security](core/bypass-security.html) [stub]
@@ -369,7 +369,7 @@ For both:
   - [About](components/viewers/restfulobjects/about.html)
 
 
-##### Applib Service Implementations
+##### Applib service impl.
 
 - [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
 }
@@ -407,7 +407,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-###  JDO Mapping Hints
+###  JDO mapping hints
 <p class="display:none"/>
 
   - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
@@ -421,7 +421,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### Applib Service Implementations
+### Applib service impl.
 <p class="display:none"/>
 
   - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
@@ -469,7 +469,7 @@ Note: this viewer is third-party open source (outside Apache)
 {row
 
 {col-md-12
-## Unreleased Components
+## Unreleased components
 }
 
 {col-md-4
