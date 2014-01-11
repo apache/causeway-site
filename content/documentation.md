@@ -50,7 +50,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## Programming Model Basics
+## Isis programming model
 
 }
 
