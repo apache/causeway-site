@@ -68,31 +68,31 @@ Title: Documentation
 
 ###How to write a basic Domain Entity or Service
 
-* [How to have a domain entity be a POJO](./how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
+* [How to have a domain entity be a POJO](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
 
-* [How to have a domain service be a POJO](./how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
+* [How to have a domain service be a POJO](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
 
-* [How to add a property to a domain entity](./how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
+* [How to add a property to a domain entity](./applib-guide/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 
-* [How to specify a title for a domain entity](./how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
+* [How to specify a title for a domain entity](./applib-guide/how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 
-* [How to add a collection to a domain entity](./how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
+* [How to add a collection to a domain entity](./applib-guide/how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
 
-* [How to add an action to a domain entity or service](./how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
+* [How to add an action to a domain entity or service](./applib-guide/how-tos/how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
 
 * [How to decouple dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 
-* [How to add an action to be called on every object within a list](./how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
+* [How to add an action to be called on every object within a list](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 
-* [How to specify the icon for a domain entity](./how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [How to specify the icon for a domain entity](./applib-guide/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 
-* [How to specify the order in which properties or collections are displayed](./how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
+* [How to specify the order in which properties or collections are displayed](./applib-guide/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
 
-* [How to specify the order in which actions appear on the menu](./how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
+* [How to specify the order in which actions appear on the menu](./applib-guide/how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
 
 * [How to make a property optional](./how-to-01-100-How-to-make-a-property-optional.html)
 
-* [How to make an action parameter optional](./how-to-01-110-How-to-make-an-action-parameter-optional.html)
+* [How to make an action parameter optional](./applib-guide/how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
 
 * [How to specify the size of String properties](./how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 
