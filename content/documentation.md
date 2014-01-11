@@ -56,6 +56,10 @@ Title: Documentation
 
 }
 
+}
+
+{row
+
 {col-md-4
 
 ###Entities
@@ -113,6 +117,8 @@ Title: Documentation
 
 }
 
+}
+
 {row
 
 {col-md-4
@@ -129,8 +135,6 @@ Title: Documentation
 
 }
 
-{row
-
 {col-md-4
 
 ###  Services
@@ -145,8 +149,6 @@ Title: Documentation
 
 }
 
-{row
-
 {col-md-4
 
 ### Customisation
@@ -154,7 +156,6 @@ Title: Documentation
   - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
 
 }
-
 
 }
 
@@ -164,6 +165,10 @@ Title: Documentation
 ## Core [1.3.0](core/release-notes/about.html)
 
 }
+
+}
+
+{row
 
 {col-md-4
 
