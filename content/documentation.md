@@ -200,15 +200,14 @@ For both:
 * [Name/description of an action](./applib-guide/how-tos/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 * [Entity icons reflecting object's state](./applib-guide/how-tos/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
-
-###Prototyping tips
-
-* [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
-
 ### Services & cfg
 
 * [Initializing Services](core/services/initializing-services.html)
 * [Configuration Files](core/configuration-files.html)
+
+###Prototyping tips
+
+* [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
 
 
 }
