@@ -51,12 +51,45 @@ Title: Documentation
 
 {col-md-12
 ## Core [1.3.0](core/release-notes/about.html)
+
+
+*Apache Isis* works using convention-over-configuration; you write your domain objects following a set of conventions, and these are interpreted by the framework in order to render, persist, remote or otherwise interact with your domain model.  These conventions are together known as the *Apache Isis Programming Model*. 
+
+
 }
 
 {col-md-4
-### Framework Reference
 
-  - **[Programming Model and How-tos](applib-guide/about.html)**
+##How-tos
+
+* [How-to write Domain Entities](./applib-guide/how-tos/about.html)
+
+* [Domain Services, Repositories and Factories](./applib-guide/domain-services/about.html)
+
+* [Value Types](./applib-guide/value-types/about.html)
+
+##Supporting Features
+
+* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
+
+##Reference
+
+* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
+
+* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
+
+* [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
+
+* [Security](./applib-guide/reference/Security.html)
+
+* [Applib Utility Classes](./applib-guide/reference/Utility.html)
+
+* [Applib Events](./applib-guide/reference/Event.html)
+
+
+
+### Programming Model
+
   - [Applib utility classes](applib-guide/reference/Utility.html)
   - [Static and dynamic layouts](core/dynamic-layouts.html)
 
@@ -65,7 +98,11 @@ Title: Documentation
   - [Configuration Files](core/configuration-files.html)
   - [Deployment Types](core/deployment-type.html)
 
-###  Applib Services
+}
+
+{col-md-4
+
+###  Services
 
   - [Initializing Services](core/services/initializing-services.html)
   - [Auditing Service](core/services/auditing-service.html)
@@ -91,9 +128,6 @@ Title: Documentation
 
   - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
 
-}
-
-{col-md-4
 ### Runtime
 <p class="display:none"/>
 
