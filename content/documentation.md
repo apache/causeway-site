@@ -225,7 +225,6 @@ For both:
 
 * [Initial value of property](./applib-guide/how-tos/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
 * [Lifecycle hooks](./applib-guide/how-tos/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
-* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 * [Ensuring object in valid state](./applib-guide/how-tos/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
 * [Non-persistable entities](./applib-guide/how-tos/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
 * [Lazy loading](./applib-guide/how-tos/how-to-07-050-How-to-perform-lazy-loading.html)
@@ -265,6 +264,7 @@ For both:
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
 * [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
+* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 
 }
 

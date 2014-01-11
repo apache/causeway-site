@@ -1,5 +1,5 @@
-How to hook into the object lifecycle using callbacks
------------------------------------------------------
+Object lifecycle callbacks
+--------------------------
 
 Isis supports a number of callback methods corresponding to the persistence lifecycle of the object.
 
