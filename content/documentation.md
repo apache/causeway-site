@@ -66,8 +66,7 @@ Title: Documentation
 
 ###Domain Services
 
-Domain services are singletons, automatically injected
-services into every domain entity.
+* [About domain services](./applib-guide/domain-services/about.html)
 
 * [How to register domain services, repositories and factories](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 
@@ -81,7 +80,7 @@ services into every domain entity.
 
 ###Value Types
 
-* [Value Types](./applib-guide/value-types/about.html)
+* [About value Types](./applib-guide/value-types/about.html)
 
 ###Supporting Features
 
