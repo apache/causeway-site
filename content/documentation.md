@@ -60,33 +60,26 @@ Title: Documentation
 
 {col-md-4
 
-##How-tos
+###How-tos
 
 * [How-to write Domain Entities](./applib-guide/how-tos/about.html)
 
-* [Domain Services, Repositories and Factories](./applib-guide/domain-services/about.html)
+
+* [How to register domain services, repositories and factories](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
+
+* [How to write a typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
+
+* [How to use a generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
+
+* [How to write a custom repository](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
+
+* [How to use Factories](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
 
 * [Value Types](./applib-guide/value-types/about.html)
 
-##Supporting Features
+###Supporting Features
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
-
-##Reference
-
-* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
-
-* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
-
-* [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
-
-* [Security](./applib-guide/reference/Security.html)
-
-* [Applib Utility Classes](./applib-guide/reference/Utility.html)
-
-* [Applib Events](./applib-guide/reference/Event.html)
-
-
 
 ### Programming Model
 
@@ -101,6 +94,16 @@ Title: Documentation
 }
 
 {col-md-4
+
+###Reference
+
+* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
+* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
+* [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
+* [Security](./applib-guide/reference/Security.html)
+* [Applib Utility Classes](./applib-guide/reference/Utility.html)
+* [Applib Events](./applib-guide/reference/Event.html)
+
 
 ###  Services
 
