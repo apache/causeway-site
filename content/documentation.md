@@ -191,12 +191,9 @@ For both:
 
 {col-md-4
 
-###  UI Layout
+###  UI Layout & Hints
 
 * [Static and dynamic layouts](core/dynamic-layouts.html)
-
-###Additional UI hints
-
 * [Name/description of an object](./applib-guide/how-tos/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
 * [Name/description of a property](./applib-guide/how-tos/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
 * [Name/description of a collection](./applib-guide/how-tos/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
