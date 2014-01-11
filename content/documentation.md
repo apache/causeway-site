@@ -9,42 +9,40 @@ Title: Documentation
 
   - [What's Isis?](getting-started/screenshots.html) ... in pictures
   - [Common Use Cases](learning-more/common-use-cases.html)
+  - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
 ### Getting Started
 
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
-### Tutorials, Screencasts, Demos
-  - [Tutorials](learning-more/tutorials.html)
-  - [Screencasts](getting-started/screencasts.html)
-  - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
+### Releases
+
+- [Release Matrix](release-matrix.html)
 
 }
 
 {col-md-4
-### Framework Reference
+### Tutorials, Screencasts
+  - [Tutorials](learning-more/tutorials.html)
+  - [Screencasts](getting-started/screencasts.html)
 
-  - **[Programming Model and How-tos](applib-guide/about.html)**
-  - [Applib utility classes](applib-guide/reference/Utility.html)
-  - [Static and dynamic layouts](core/dynamic-layouts.html)
-
-### Going Deeper
+### Learning More
 
   - [Articles, Conferences, Podcasts](learning-more/articles-and-presentations.html)
   - [Books](learning-more/books.html)
   - [Naked Objects PhD thesis](learning-more/resources/Pawson-Naked-Objects-thesis.pdf) (Pawson)
   - [Downloadable Presentations](learning-more/presentations.html)
 
+}
+
+{col-md-4
 ### Resources
 
   - **[Editor templates](getting-started/editor-templates.html)**
   - [Icons](getting-started/icons.html)
   - **[Programming Model Cheat Sheet](getting-started/cheat-sheet.html)**
 
-}
-
-{col-md-4
 ###  Contributors
 
   - [Contributing](contributors/contributing.html)
@@ -55,10 +53,6 @@ Title: Documentation
   - [Versioning Policy](contributors/versioning-policy.html)
 
 Guidance for committers is at the bottom of this page.
-
-### Releases
-
-- [Release Matrix](release-matrix.html)
 
 }
 
@@ -71,6 +65,12 @@ Guidance for committers is at the bottom of this page.
 }
 
 {col-md-4
+### Framework Reference
+
+  - **[Programming Model and How-tos](applib-guide/about.html)**
+  - [Applib utility classes](applib-guide/reference/Utility.html)
+  - [Static and dynamic layouts](core/dynamic-layouts.html)
+
 ###  Applib
 
   - [Configuration Files](core/configuration-files.html)
