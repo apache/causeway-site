@@ -64,221 +64,188 @@ Title: Documentation
 
 ###Principles
 
-* [About writing domain entities](./applib-guide/how-tos/about.html)
+* [About domain entities](./applib-guide/how-tos/about.html)
 * [About domain services](./applib-guide/domain-services/about.html)
+* [About value Types](./applib-guide/value-types/about.html)
 
 ###Basics
 
 * [Pojo as domain entity](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
-
 * [Pojo as domain service](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
-
 * [Registering a domain service](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
-
 * [Entity property](./applib-guide/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
-
+* [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
 * [Entity title](./applib-guide/how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
-
 * [Entity collection](./applib-guide/how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
-
 * [Entity or service action](./applib-guide/how-tos/how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
-
-* [Decoupling dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
-
-* [Bulk actions, acting upon lists](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
-
 * [Names/description of action param](./applib-guide/how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
-
-* [Finding objects](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
-
-* [Instantiating and persisting objects](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
-
 * [Injecting services](./applib-guide/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
 
+### Services
+
+* [Finding objects](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
+* [Instantiating and persisting objects](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
 * [Create/delete objects](./applib-guide/how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
 
+}
+
+{col-md-4
 
 ###Common UI hints
 
 * [Entity icons](./applib-guide/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-
 * [Ordering prop/colls in the UI](./applib-guide/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
-
 * [Ordering actions in the UI](./applib-guide/how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
-
-
-
-
-### Common Constraints
-
-* [Optional property](./applib-guide/how-tos/how-to-01-100-How-to-make-a-property-optional.html)
-
-* [Optional action ](./applib-guide/how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
-
-* [Size of string properties](./applib-guide/how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
-
-* [Size of string action params](./applib-guide/how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
-
-* [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
-
-
-
-{col-md-4
 
 ###Business rules
 
 Visibility ("see it")
 
 * [Hide a property](./applib-guide/how-tos/how-to-02-010-How-to-hide-a-property.html)
-
 * [Hide a collection](./applib-guide/how-tos/how-to-02-020-How-to-hide-a-collection.html)
-
 * [Hide an action](./applib-guide/how-tos/how-to-02-030-How-to-hide-an-action.html)
-
-* [All members hidden](./applib-guide/how-tos/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
 
 Usability ("use it")
 
 * [Unmodifiable property](./applib-guide/how-tos/how-to-02-050-How-to-prevent-a-property-from-being-modified.html)
-
 * [Unmodifiable collection](./applib-guide/how-tos/how-to-02-060-How-to-prevent-a-collection-from-being-modified.html)
-
 * [Uninvokable action](./applib-guide/how-tos/how-to-02-070-How-to-prevent-an-action-from-being-invoked.html)
-
-* [All members unmodifiable](./applib-guide/how-tos/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
-
-* [Immutable object](./applib-guide/how-tos/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
 
 Validity ("do it")
 
 * [Validate property](./applib-guide/how-tos/how-to-02-100-How-to-validate-user-input-for-a-property.html)
-
 * [Validate collection add/remove](./applib-guide/how-tos/how-to-02-110-How-to-validate-an-object-being-added-or-removed-from-a-collection.html)
-
 * [Validate action params](./applib-guide/how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html)
 
-* [Declarative validation using @MustSatisfy](./applib-guide/how-tos/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
+}
 
+{col-md-4
+
+### Common Constraints
+
+* [Optional property](./applib-guide/how-tos/how-to-01-100-How-to-make-a-property-optional.html)
+* [Optional action ](./applib-guide/how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
+* [Size of string properties](./applib-guide/how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
+* [Size of string action params](./applib-guide/how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
 
 ###Drop-downs and defaults
 
 For properties:
 
 * [Choices for property](./applib-guide/how-tos/how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html)
-
 * [Auto-complete for property](./applib-guide/how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html)
-
 * [Default for property](./applib-guide/how-tos/how-to-03-017-How-to-specify-default-value-of-an-object-property.html)
 
 For actions:
 
 * [Choices for action param](./applib-guide/how-tos/how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
-
 * [Dependent choices for action params](./applib-guide/how-tos/how-to-03-022-How-to-specify-dependent-choices-for-action-parameters.html)
-
 * [Auto-complete for action param](./applib-guide/how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html)
-
 * [Default for action param](./applib-guide/how-tos/how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html)
 
 For both:
 
 * [Drop-down for limited # instances](./applib-guide/how-tos/how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
-
 * [Auto-complete (repository-based)](./applib-guide/how-tos/how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
 
+}
 
+}
+
+
+{row
+
+{col-md-12
+## More advanced topics
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+###Idioms and Patterns
+
+* [A typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
+* [Decoupling dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* [Bulk actions, acting upon lists](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
+* [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 
 ###Derived props/colls
 
 * [Derived property](./applib-guide/how-tos/how-to-04-010-How-to-make-a-derived-property.html)
-
 * [Derived collection](./applib-guide/how-tos/how-to-04-020-How-to-make-a-derived-collection.html)
-
 * [Inlining query-only repository action](./applib-guide/how-tos/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
-
 * [Trigger other behaviour on property change](./applib-guide/how-tos/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
-
 * [Trigger other behaviour on collection change](./applib-guide/how-tos/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
+###Business Rules
+
+* [All members hidden](./applib-guide/how-tos/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
+* [All members unmodifiable](./applib-guide/how-tos/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
+* [Immutable object](./applib-guide/how-tos/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
+* [Declarative validation using @MustSatisfy](./applib-guide/how-tos/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
+
+
+}
+
+{col-md-4
+
+###  UI Layout
+
+* [Static and dynamic layouts](core/dynamic-layouts.html)
 
 ###Additional UI hints
 
 * [Name/description of an object](./applib-guide/how-tos/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-
 * [Name/description of a property](./applib-guide/how-tos/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-
 * [Name/description of a collection](./applib-guide/how-tos/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-
 * [Name/description of an action](./applib-guide/how-tos/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-
 * [Entity icons reflecting object's state](./applib-guide/how-tos/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
 
+###Prototyping tips
+
+* [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
+
+### Services & cfg
+
+* [Initializing Services](core/services/initializing-services.html)
+* [Configuration Files](core/configuration-files.html)
+
+
+}
+
+{col-md-4
 
 ###Error handling
 
 * [Raise message to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-
 * [Unexpected errors](./applib-guide/how-tos/how-to-06-020-How-to-deal-with-an-unexpected-error.html)
 
 
 ###Persistence lifecycle
 
 * [Initial value of property](./applib-guide/how-tos/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
-
 * [Lifecycle hooks](./applib-guide/how-tos/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
-
 * [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
-
 * [Ensuring object in valid state](./applib-guide/how-tos/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
-
 * [Non-persistable entities](./applib-guide/how-tos/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
-
 * [Lazy loading](./applib-guide/how-tos/how-to-07-050-How-to-perform-lazy-loading.html)
-
 * [Dirty object tracking](./applib-guide/how-tos/how-to-07-060-How-to-perform-dirty-object-tracking.html)
-
 
 
 ###Permissions
 
 * [Hide/disable/validate per user/role](./applib-guide/how-tos/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
-
 * [The authorization manager](./applib-guide/how-tos/how-to-08-020-How-to-use-Isis-authorization-manager.html)
-
-}
-
-
-###Domain Services
-
-* [A typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
-
 
 ###Value Types
 
-* [About value Types](./applib-guide/value-types/about.html)
-* [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
 * [Custom Value Types](./applib-guide/value-types/020-Custom-Value-Types.html)
 * [Third-party Value Types](./applib-guide/value-types/030-Third-party-Value-Types.html)
-
-###Prototyping tips
-
-* [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
-
-}
-
-{col-md-4
-
-###Supporting Features
-
-* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
-* [Applib utility classes](applib-guide/reference/Utility.html)
-
-
-###  Config Files
-
-* [Configuration Files](core/configuration-files.html)
-* [Static and dynamic layouts](core/dynamic-layouts.html)
 
 }
 
@@ -303,23 +270,26 @@ For both:
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
 * [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
-* [Security](./applib-guide/reference/Security.html)
-* [Applib Utility Classes](./applib-guide/reference/Utility.html)
-* [Applib Events](./applib-guide/reference/Event.html)
 
 }
 
 {col-md-4
 
-###  Services
+###  Applib Services
 
-  - [Initializing Services](core/services/initializing-services.html)
-  - [Auditing Service](core/services/auditing-service.html)
-  - [Bookmark Service](core/services/bookmark-service.html)
-  - [Developer Utilities Service](core/services/developer-utilities-service.html)
-  - [Exception Recognizers](core/services/exception-recognizers.html)
-  - [Publishing Service](core/services/publishing-service.html)
-  - [Settings Services](core/services/settings-services.html)
+* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
+* [Auditing Service](core/services/auditing-service.html)
+* [Bookmark Service](core/services/bookmark-service.html)
+* [Developer Utilities Service](core/services/developer-utilities-service.html)
+* [Exception Recognizers](core/services/exception-recognizers.html)
+* [Publishing Service](core/services/publishing-service.html)
+* [Settings Services](core/services/settings-services.html)
+
+###Supporting Features
+
+* [Security](./applib-guide/reference/Security.html)
+* [Applib Events](./applib-guide/reference/Event.html)
+* [Applib utility classes](applib-guide/reference/Utility.html)
 
 }
 
