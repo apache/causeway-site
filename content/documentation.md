@@ -60,10 +60,14 @@ Title: Documentation
 
 {col-md-4
 
-###How-tos
+###Entities
 
 * [How-to write Domain Entities](./applib-guide/how-tos/about.html)
 
+###Domain Services
+
+Domain services are singletons, automatically injected
+services into every domain entity.
 
 * [How to register domain services, repositories and factories](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 
@@ -75,21 +79,20 @@ Title: Documentation
 
 * [How to use Factories](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
 
+###Value Types
+
 * [Value Types](./applib-guide/value-types/about.html)
 
 ###Supporting Features
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
+* [Applib utility classes](applib-guide/reference/Utility.html)
 
-### Programming Model
 
-  - [Applib utility classes](applib-guide/reference/Utility.html)
-  - [Static and dynamic layouts](core/dynamic-layouts.html)
+###  Config Files
 
-###  Applib
-
-  - [Configuration Files](core/configuration-files.html)
-  - [Deployment Types](core/deployment-type.html)
+* [Configuration Files](core/configuration-files.html)
+* [Static and dynamic layouts](core/dynamic-layouts.html)
 
 }
 
@@ -97,6 +100,7 @@ Title: Documentation
 
 ###Reference
 
+* [Deployment Types](core/deployment-type.html)
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
 * [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
