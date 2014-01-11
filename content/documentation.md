@@ -62,15 +62,18 @@ Title: Documentation
 
 {col-md-4
 
-###Entities
+###Principles
 
 * [About writing domain entities](./applib-guide/how-tos/about.html)
+* [About domain services](./applib-guide/domain-services/about.html)
 
 ###Basics
 
 * [Pojo as domain entity](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
 
 * [Pojo as domain service](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
+
+* [Registering a domain service](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 
 * [Entity property](./applib-guide/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 
@@ -86,7 +89,11 @@ Title: Documentation
 
 * [Names/description of action param](./applib-guide/how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
 
-* [Injecting services into entity or other service](./applib-guide/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
+* [Finding objects](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
+
+* [Instantiating and persisting objects](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
+
+* [Injecting services](./applib-guide/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
 
 * [Create/delete objects](./applib-guide/how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
 
@@ -114,6 +121,9 @@ Title: Documentation
 
 * [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 
+
+
+{col-md-4
 
 ###Business rules
 
@@ -238,21 +248,11 @@ For both:
 
 }
 
-{col-md-4
 
 ###Domain Services
 
-* [About domain services](./applib-guide/domain-services/about.html)
+* [A typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
 
-* [How to register domain services, repositories and factories](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
-
-* [How to write a typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
-
-* [How to use a generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
-
-* [How to write a custom repository](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
-
-* [How to use Factories](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
 
 ###Value Types
 
@@ -260,6 +260,10 @@ For both:
 * [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
 * [Custom Value Types](./applib-guide/value-types/020-Custom-Value-Types.html)
 * [Third-party Value Types](./applib-guide/value-types/030-Third-party-Value-Types.html)
+
+###Prototyping tips
+
+* [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
 
 }
 
