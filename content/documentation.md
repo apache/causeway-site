@@ -50,7 +50,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## Apache Isis Programming Model
+## Programming Model Basics
 
 }
 
@@ -66,7 +66,7 @@ Title: Documentation
 * [About domain services](./applib-guide/domain-services/about.html)
 * [About value Types](./applib-guide/value-types/about.html)
 
-###Basics
+###Domain objects
 
 * [Pojo as domain entity](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
 * [Pojo as domain service](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
