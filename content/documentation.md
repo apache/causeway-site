@@ -16,10 +16,6 @@ Title: Documentation
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
   - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
-### Releases
-
-- [Release Matrix](release-matrix.html)
-
 }
 
 {col-md-4
@@ -43,16 +39,9 @@ Title: Documentation
   - [Icons](getting-started/icons.html)
   - **[Programming Model Cheat Sheet](getting-started/cheat-sheet.html)**
 
-###  Contributors
+### Releases
 
-  - [Contributing](contributors/contributing.html)
-  - [Development Environment](contributors/development-environment.html)
-  - [Building Isis](contributors/building-isis.html)
-  - [Git Policy](contributors/git-policy.html)
-  - [Git Cookbook](contributors/git-cookbook.html)
-  - [Versioning Policy](contributors/versioning-policy.html)
-
-Guidance for committers is at the bottom of this page.
+- [Release Matrix](release-matrix.html)
 
 }
 
@@ -300,6 +289,19 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
+
+###  Contributors
+
+  - [Contributing](contributors/contributing.html)
+  - [Development Environment](contributors/development-environment.html)
+  - [Building Isis](contributors/building-isis.html)
+  - [Git Policy](contributors/git-policy.html)
+  - [Git Cookbook](contributors/git-cookbook.html)
+  - [Versioning Policy](contributors/versioning-policy.html)
+
+}
+
+{col-md-4
 ###  Committers
 
   - [Updating the CMS site](contributors/updating-the-cms-site.html)
@@ -314,6 +316,7 @@ Note: this viewer is third-party open source (outside Apache)
 ###  PMC
 
   - [Notes](contributors/pmc-notes.html)
+
 
 }
 
@@ -332,9 +335,6 @@ Note: this viewer is third-party open source (outside Apache)
 -->
 
 
-}
-
-{col-md-4
 ###  Mothballed Components
 
 These are no longer under active development
