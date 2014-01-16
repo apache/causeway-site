@@ -74,3 +74,5 @@ Note also that instead of using `@CssClass` annotation, you can also specify the
     ...
 
 This is in fact how the `ToDoItem` class has been refactored to, as shown [here](https://github.com/apache/isis/blob/5e5b07c4691cbd651023c6ed8b7b756bc8370e09/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.layout.json#L94).
+
+<hr/>
