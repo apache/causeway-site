@@ -194,6 +194,7 @@ For both:
 ### UI layout & hints
 
 * [Static and dynamic layouts](core/dynamic-layouts.html)
+* [Tweaking CSS classes](./applib-guide/how-tos/how-to-tweak-the-ui-using-css-classes.html)
 * [Name/description of an object](./applib-guide/how-tos/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
 * [Name/description of a property](./applib-guide/how-tos/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
 * [Name/description of a collection](./applib-guide/how-tos/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
