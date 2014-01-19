@@ -68,7 +68,7 @@ Title: Documentation
 
 ###Pojos
 
-* [Pojo vs framework abstract classe](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
+* [Pojo vs Inheriting from framework](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 * [Registering a domain service](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 * [Entity property](./applib-guide/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 * [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
@@ -165,7 +165,7 @@ For both:
 
 ###Idioms and patterns
 
-* [A typical domain service](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
+* [Singleton &amp; request-scoped services](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
 * [Decoupling dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 * [Bulk actions, acting upon lists](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)

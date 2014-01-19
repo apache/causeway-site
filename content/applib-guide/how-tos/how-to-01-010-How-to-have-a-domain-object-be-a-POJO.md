@@ -1,4 +1,4 @@
-Pojos vs framework superclasses
+Pojos vs Inheriting from framework superclasses
 -------------------------------------------------------------------------------
 
 It isn't mandatory for either domain entities or domain services to inherit from any framework superclass; they can be plain old java objects (pojos) if required.

@@ -15,9 +15,7 @@ other.
 
 How-to's:
 
-* [How to register domain services, repositories and factories](./how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
-
-* [How to write a typical domain service](./how-to-09-020-How-to-write-a-typical-domain-service.html)
+* [Singleton &amp; request-scoped services](./how-to-09-020-How-to-write-a-typical-domain-service.html)
 
 * [How to use a generic repository](./how-to-09-030-How-to-use-a-generic-repository.html)
 

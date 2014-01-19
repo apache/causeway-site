@@ -1,17 +1,49 @@
-How to write a typical domain service
--------------------------------------
+Singleton &amp; request-scoped domain services
+-----------------------------------------------
 
-Services consist of a set of logically grouped actions, and as such follow the same conventions as for entities <!--(see ?)-->. However, a service cannot have (persisted) properties, nor can it have (persisted) collections.
+Services consist of a set of logically grouped actions, and as such follow the same conventions as for entities. However, a service cannot have (persisted) properties, nor can it have (persisted) collections.
 
-For convenience you can inherit from `AbstractService` or one of its subclasses <!--(see ?)-->, but this is not mandatory.
+For convenience you can [inherit](../how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html) from `AbstractService` or one of its subclasses, but this is not mandatory.
 
-### The getId() method
+### Registering domain services
 
-Optionally, a service may provide a `getId()` method:
+All noted [elsewhere](../how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html), domain services (which includes repositories and factories) should be registered in the `isis.properties` configuration file, under `isis.services` key (a comma-separated list):
 
-    public String getId()
+For example:
 
-This method returns a logical identifier for a service, independent of its implementation. Currently it used only by perspectives, providing a label by which to record the services that are available for a current user's profile. <!--See ? for more about profiles and perspectives.-->
+    isis.services = com.mycompany.myapp.employee.Employees\,
+                    com.mycompany.myapp.claim.Claims\,
+                    ...
+
+This will then result in the framework instantiating a single instance of each of the services listed.
+
+If all services reside under a common package, then the `isis.services.prefix` can specify this prefix:
+
+    isis.services.prefix = com.mycompany.myapp
+    isis.services = employee.Employees,\
+                    claim.Claims,\
+                    ...
+
+This is quite rare, however; you will often want to use default implementations of domain services that are provided by the framework and so will not reside under this prefix.
+
+Examples of framework-provided services (as defined in the applib) can be found referenced from the main [documentation](../../documentation.html) page.   They include clock, auditing, publishing, exception handling, view model support, snapshots/mementos, and user/application settings management.
+
+
+### Service scopes
+
+By default all domain services are considered to be singletons, and thread-safe.
+
+Sometimes though a service's lifetime is applicable only to a single request; in other words it is request-scoped.
+
+The CDI annotation `@javax.enterprise.context.RequestScoped` is used to indicate this fact:
+
+     @javax.enterprise.context.RequestScoped
+     public class MyService extends AbstractService {
+         ...
+     }
+
+The framework provides a number of request-scoped services; these can be found referenced from the main [documentation](../../documentation.html) page.   They include scratchpad service, query results caching, and support for co-ordinating bulk actions. 
+
 
 ### (Suppressing) contributed actions
 
@@ -79,4 +111,12 @@ For example:
         public void sendEmail(String to, String from, String subject, String body);
         public void forwardEmail(String to, String from, String subject, String body);
     }
+
+### The getId() method
+
+Optionally, a service may provide a `getId()` method:
+
+    public String getId()
+
+This method returns a logical identifier for a service, independent of its implementation. Currently it used only by perspectives, providing a label by which to record the services that are available for a current user's profile. <!--See ? for more about profiles and perspectives.-->
 
