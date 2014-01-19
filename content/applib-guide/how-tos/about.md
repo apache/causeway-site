@@ -13,9 +13,7 @@ as factories and repositories. Domain entities have state in the form of
 properties and collections; domain services do not. Both domain entities
 and services have behaviour, in the form of actions.
 
-* [How to have a domain entity be a POJO](./how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
-
-* [How to have a domain service be a POJO](./how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
+* [How to have a domain entity/service be a POJO](./how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 
 * [How to add a property to a domain entity](./how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 

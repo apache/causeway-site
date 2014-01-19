@@ -68,8 +68,7 @@ Title: Documentation
 
 ###Pojos
 
-* [Pojo as domain entity](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-entity-be-a-POJO.html)
-* [Pojo as domain service](./applib-guide/how-tos/how-to-01-020-How-to-have-a-domain-service-be-a-POJO.html)
+* [Pojo vs framework abstract classe](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 * [Registering a domain service](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 * [Entity property](./applib-guide/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 * [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
