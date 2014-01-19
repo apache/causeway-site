@@ -166,9 +166,10 @@ For both:
 ###Idioms and patterns
 
 * [Singleton &amp; request-scoped services](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
-* [Decoupling dependencies using contributions](how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* [Decoupling dependencies using contributions](./applib-guide/how-tos/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 * [Bulk actions, acting upon lists](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
+* [View models]()
 
 ###Derived props/colls
 
@@ -276,9 +277,9 @@ For both:
 
 ### Request-scoped services
 
+* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
-* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT, stub]
-* [Bulk Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
+* [Bulk.Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
 
 }
 

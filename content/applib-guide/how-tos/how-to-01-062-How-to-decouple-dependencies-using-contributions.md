@@ -2,9 +2,9 @@ How to decouple dependencies using contributions
 ------------------------------------------------
 
 In a small application (a dozen or less entities, say) there is little risk in having cyclic
-dependencies between entities, but as your application gets larger this coupling will cause problems - the inevitable [big ball of mud](***TODO).
+dependencies between entities, but as your application gets larger this coupling will cause problems - the inevitable [big ball of mud](http://en.wikipedia.org/wiki/Big_ball_of_mud).
 
-You should, therefore, use packages to group related entities together, and then make sure that the package dependencies are acyclic.  There are tools available that can help you visualize this and detect violations.  Some tools can even plug into your build so that your build can fail if the architectural layering defined between your packages is violated.  In DDD terms we are grouping our entities into [module](***TODO)s.
+You should, therefore, use packages to group related entities together, and then make sure that the package dependencies are acyclic.  There are tools available that can help you visualize this and detect violations.  Some tools can even plug into your build so that your build can fail if the architectural layering defined between your packages is violated.  In DDD terms we are grouping our entities into [module](http://domainlanguage.com/ddd/patterns)s.
 
 On the other hand, although the dependencies between your modules should be well-defined and acyclic, you might want the UI to show the relationship as if it were bidirectional.
 
