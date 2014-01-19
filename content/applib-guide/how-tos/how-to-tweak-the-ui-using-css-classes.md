@@ -74,3 +74,15 @@ Note also that instead of using `@CssClass` annotation, you can also specify the
     ...
 
 This is in fact how the `ToDoItem` class has been refactored to, as shown [here](https://github.com/apache/isis/blob/5e5b07c4691cbd651023c6ed8b7b756bc8370e09/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.layout.json#L94).
+
+### Application-specific 'theme' class [1.4.0-SNAPSHOT]
+
+The application name (as defined in the `IsisWicketApplication` subclass) is also used (in sanitized form) as the CSS class in a `<div>` that wraps all the rendered content of every page.
+
+For example, if the application name is "ToDo App", then the `<div>` generated is:
+
+    <div class="todo-app">
+        ...
+    </div>
+
+You can therefore use this CSS class as a way of building your own theme for the various elements of the wicket viewer pages.
