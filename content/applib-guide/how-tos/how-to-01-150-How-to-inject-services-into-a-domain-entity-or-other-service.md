@@ -31,7 +31,7 @@ or alternatively, using 'inject' as the prefix:
 
 Note that the method name can be anything; it doesn't need to be related to the type being injected.
 
-### Field Injection
+### Field Injection [1.4.0-SNAPSHOT]
 
 Field injection is also supported, using the `javax.inject.Inject annotation`.  For example:
 
@@ -47,3 +47,8 @@ Although this has the least boilerplate, do note that the `private` visibility o
 
 Simply to note that constructor injection is *not* supported by Isis (and is unlikely to be, because the JDO specification for entities requires a no-arg constructor).
 
+### Qualified services
+
+Isis currently does not support qualified injection of services; the domain service of each type must be distinct from any other.  
+
+If you find a requirement to inject two instances of type `SomeService`, say, then the work-around is to create trivial subclasses `SomeServiceA` and `SomeServiceB` and inject these instead.

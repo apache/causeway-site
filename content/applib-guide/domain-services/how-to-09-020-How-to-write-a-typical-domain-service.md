@@ -112,6 +112,47 @@ For example:
         public void forwardEmail(String to, String from, String subject, String body);
     }
 
+### Initializing Services
+
+Services can optionally declare lifecycle callbacks to initialize them (when the app is deployed) and to shut them down (when the app is undeployed).
+
+An Isis session *is* available when initialization occurs (so services can interact with the object store, for example). [1.4.0-SNAPSHOT].
+
+#### Initialization
+
+The framework will call any `public` method annotated with `@javax.annotation.PostConstruct` and with either no arguments of an argument of type `Map<String,String>`:
+
+<pre>
+  @PostConstruct
+  public void init() {
+    ..
+  }
+</pre>
+
+or
+
+<pre>
+  @PostConstruct
+  public void init(Map<String,String> props) {
+    ..
+  }
+</pre>
+
+In the latter case, the framework passes in the configuration (`isis.properties` and any other component-specific configuration files).
+
+
+#### Shutdown
+
+Shutdown is similar; the framework will call any method annotated with `@javax.annotation.PreDestroy`:
+
+<pre>
+  @PreDestroy
+  public void shutdown() {
+    ..
+  }
+</pre>
+
+
 ### The getId() method
 
 Optionally, a service may provide a `getId()` method:

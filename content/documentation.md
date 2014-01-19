@@ -175,8 +175,8 @@ For both:
 * [Derived property](./applib-guide/how-tos/how-to-04-010-How-to-make-a-derived-property.html)
 * [Derived collection](./applib-guide/how-tos/how-to-04-020-How-to-make-a-derived-collection.html)
 * [Inlining query-only repository action](./applib-guide/how-tos/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
-* [Trigger other behaviour on property change](./applib-guide/how-tos/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
-* [Trigger other behaviour on collection change](./applib-guide/how-tos/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
+* [Trigger on property change](./applib-guide/how-tos/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
+* [Trigger on collection change](./applib-guide/how-tos/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
 ###Business rules
 
@@ -200,10 +200,10 @@ For both:
 * [Name/description of an action](./applib-guide/how-tos/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 * [Entity icons reflecting object's state](./applib-guide/how-tos/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
-### Services & cfg
+###Error handling
 
-* [Initializing Services](core/services/initializing-services.html)
-* [Configuration Files](core/configuration-files.html)
+* [Raise message to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
+* [Unexpected errors](./applib-guide/how-tos/how-to-06-020-How-to-deal-with-an-unexpected-error.html)
 
 ###Prototyping tips
 
@@ -213,12 +213,6 @@ For both:
 }
 
 {col-md-4
-
-###Error handling
-
-* [Raise message to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Unexpected errors](./applib-guide/how-tos/how-to-06-020-How-to-deal-with-an-unexpected-error.html)
-
 
 ###Persistence lifecycle
 
@@ -247,7 +241,7 @@ For both:
 {row
 
 {col-md-12
-## Reference
+## Applib
 
 }
 
@@ -257,19 +251,20 @@ For both:
 
 {col-md-4
 
-###  Applib
+###  Reference
 
+* [Configuration Files](core/configuration-files.html)
 * [Deployment Types](core/deployment-type.html)
+* [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
-* [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
 * [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 
 }
 
 {col-md-4
 
-###  Applib service APIs
+###  Singleton service APIs
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 * [Auditing Service](core/services/auditing-service.html)
@@ -278,6 +273,12 @@ For both:
 * [Exception Recognizers](core/services/exception-recognizers.html)
 * [Publishing Service](core/services/publishing-service.html)
 * [Settings Services](core/services/settings-services.html)
+
+### @RequestScoped service APIs [1.4.0-SNAPSHOT]
+
+* [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
+* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT, stub]
+* [Bulk Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
 
 }
 
