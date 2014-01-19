@@ -10,7 +10,7 @@ However, they do at a minimum need to have a
         this.container = container;
     }
 
-Other syntaxes supported for dependency injection are described [here](../how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html).
+Other syntaxes supported for dependency injection are described [here](./how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html).
 
 If you don't have a requirement to inherit from any other superclass,
 then it usually makes sense to inherit from one of the abstract classes providede in the applib.
