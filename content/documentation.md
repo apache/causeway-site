@@ -274,7 +274,7 @@ For both:
 * [Publishing Service](core/services/publishing-service.html)
 * [Settings Services](core/services/settings-services.html)
 
-### @RequestScoped service APIs [1.4.0-SNAPSHOT]
+### Request-scoped service APIs
 
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
 * [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT, stub]
