@@ -264,7 +264,7 @@ For both:
 
 {col-md-4
 
-###  Singleton service APIs
+###  Singleton services
 
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 * [Auditing Service](core/services/auditing-service.html)
@@ -274,7 +274,7 @@ For both:
 * [Publishing Service](core/services/publishing-service.html)
 * [Settings Services](core/services/settings-services.html)
 
-### Request-scoped service APIs
+### Request-scoped services
 
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
 * [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT, stub]
