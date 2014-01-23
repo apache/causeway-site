@@ -34,6 +34,12 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
+    <td>Isis' integration with JRebel<br/><br/><i>Develop your app without having to redeploy</i> </td>
+    <td>
+      <iframe width="420" height="236" src="//www.youtube.com/embed/PxVgbz3ae_g" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
     <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i> </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
