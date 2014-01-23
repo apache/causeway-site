@@ -1,4 +1,4 @@
-Title: Configuring Isis to Shiro
+Title: Configuring Isis to use Shiro
 
 ### Example Configuration
 
