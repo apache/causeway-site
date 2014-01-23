@@ -4,38 +4,36 @@ Isis ships with an implementation of [Apache Shiro](http://shiro.apache.org)'s `
 
 The configuration required in the `WEB-INF/shiro.ini` file is:
 
-<pre>
-contextFactory = org.apache.isis.security.shiro.IsisLdapContextFactory
-contextFactory.url = ldap://localhost:10389
-contextFactory.authenticationMechanism = CRAM-MD5
-contextFactory.systemAuthenticationMechanism = simple
-contextFactory.systemUsername = uid=admin,ou=system
-contextFactory.systemPassword = secret
-
-ldapRealm = org.apache.isis.security.shiro.IsisLdapRealm
-ldapRealm.contextFactory = $contextFactory
-
-ldapRealm.searchBase = ou=groups,o=mojo
-ldapRealm.groupObjectClass = groupOfUniqueNames
-ldapRealm.uniqueMemberAttribute = uniqueMember
-ldapRealm.uniqueMemberAttributeValueTemplate = uid={0}
-
-# optional mapping from physical groups to logical application roles
-ldapRealm.rolesByGroup = \
-    LDN_USERS: user_role,\
-    NYK_USERS: user_role,\
-    HKG_USERS: user_role,\
-    GLOBAL_ADMIN: admin_role,\
-    DEMOS: self-install_role
-
-ldapRealm.permissionsByRole=\
-   user_role = *:ToDoItemsJdo:*:*,\
-               *:ToDoItem:*:*; \
-   self-install_role = *:ToDoItemsFixturesService:install:* ; \
-   admin_role = *
-
-securityManager.realms = $ldapRealm
-</pre>
+    contextFactory = org.apache.isis.security.shiro.IsisLdapContextFactory
+    contextFactory.url = ldap://localhost:10389
+    contextFactory.authenticationMechanism = CRAM-MD5
+    contextFactory.systemAuthenticationMechanism = simple
+    contextFactory.systemUsername = uid=admin,ou=system
+    contextFactory.systemPassword = secret
+    
+    ldapRealm = org.apache.isis.security.shiro.IsisLdapRealm
+    ldapRealm.contextFactory = $contextFactory
+    
+    ldapRealm.searchBase = ou=groups,o=mojo
+    ldapRealm.groupObjectClass = groupOfUniqueNames
+    ldapRealm.uniqueMemberAttribute = uniqueMember
+    ldapRealm.uniqueMemberAttributeValueTemplate = uid={0}
+    
+    # optional mapping from physical groups to logical application roles
+    ldapRealm.rolesByGroup = \
+        LDN_USERS: user_role,\
+        NYK_USERS: user_role,\
+        HKG_USERS: user_role,\
+        GLOBAL_ADMIN: admin_role,\
+        DEMOS: self-install_role
+    
+    ldapRealm.permissionsByRole=\
+       user_role = *:ToDoItemsJdo:*:*,\
+                   *:ToDoItem:*:*; \
+       self-install_role = *:ToDoItemsFixturesService:install:* ; \
+       admin_role = *
+    
+    securityManager.realms = $ldapRealm
 
 where:
 
@@ -79,3 +77,24 @@ Configure the users into the groups.
 
 ![ActiveDS LDAP Users](resources/activeds-ldap-groups.png)
 
+
+## Shiro Realm Mappings
+
+When configuring role based permission mapping, there can only be one of these entries per realm:
+
+    realm.groupToRolesMappings = ...
+
+and
+
+    realm.roleToPermissionsMappings = ...
+
+This forces you to put everything on one line for each of the above.
+
+This is, unfortunately, a Shiro "feature".  The only solution to this is to use '\' to separate the mappings onto separate lines in the file so that it is at least maintainable. 
+
+Use this technique for both group to roles mapping and role to permission mapping. If you use the '\' after the "," that separates the key:value pairs it is more readable.
+
+If you repeat the entries above then it's "last one wins".
+
+
+> **Note** you can't use a [roles] section because that triggers Shiro to use the simple "INI" realm and not your defined realm (in most cases you are going to use an LDAP realm in an enterprise environment and the "simple" realm in Shiro isn't much use beyond prototyping work).

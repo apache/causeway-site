@@ -34,7 +34,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Isis' integration with <a id="jrebel" name="jrebel">JRebel</a><br/><br/><i>Develop your app without having to redeploy</i><br/><br/>(Apologies for the slightly flaky audio on this screencast)</td>
+    <td>Isis' integration with <a id="jrebel" name="jrebel">JRebel</a><br/><br/><i>Develop your app without having to redeploy using <a href="https://github.com/danhaywood/isis-jrebel-plugin">this plugin</a>.</i><br/><br/>(Apologies for the slightly flaky audio on this screencast)</td>
     <td>
       <iframe width="420" height="236" src="//www.youtube.com/embed/PxVgbz3ae_g" frameborder="0" allowfullscreen></iframe>
     </td>
