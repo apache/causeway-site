@@ -34,7 +34,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Isis' integration with JRebel<br/><br/><i>Develop your app without having to redeploy</i> </td>
+    <td>Isis' integration with <a id="jrebel" name="jrebel">JRebel</a><br/><br/><i>Develop your app without having to redeploy</i> </td>
     <td>
       <iframe width="420" height="236" src="//www.youtube.com/embed/PxVgbz3ae_g" frameborder="0" allowfullscreen></iframe>
     </td>

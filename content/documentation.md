@@ -22,6 +22,7 @@ Title: Documentation
 ### Tutorials, screencasts
   - [Tutorials](learning-more/tutorials.html)
   - **[Screencasts](getting-started/screencasts.html)**
+  - [Using JRebel](getting-started/screencasts.html#jrebel)**
 
 ### Learning more
 
