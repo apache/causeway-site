@@ -14,7 +14,6 @@ Title: Documentation
 ### Getting started
 
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
-  - [ToDo App (Quickstart) Archetype](getting-started/quickstart-archetype.html) ([1.3.1](getting-started/release-notes/about.html))
 
 }
 
