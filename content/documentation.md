@@ -5,25 +5,25 @@ Title: Documentation
 {row
 
 {col-md-4
-### Elevator pitch
+#### Elevator pitch
 
   - **[What's Isis?](getting-started/screenshots.html) ... in pictures**
   - [Common Use Cases](learning-more/common-use-cases.html)
   - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
-### Getting started
+#### Getting started
 
   - **[Simple Archetype](getting-started/simple-archetype.html) ([1.3.1](getting-started/release-notes/about.html))**
 
 }
 
 {col-md-4
-### Tutorials, screencasts
+#### Tutorials, screencasts
   - [Tutorials](learning-more/tutorials.html)
   - **[Screencasts](getting-started/screencasts.html)**
   - [Using JRebel](getting-started/screencasts.html#jrebel)
 
-### Learning more
+#### Learning more
 
   - [Articles, Conferences, Podcasts](learning-more/articles-and-presentations.html)
   - [Books](learning-more/books.html)
@@ -33,13 +33,13 @@ Title: Documentation
 }
 
 {col-md-4
-### Resources
+#### Resources
 
   - **[Editor templates](getting-started/editor-templates.html)**
   - [Icons](getting-started/icons.html)
   - **[Programming Model Cheat Sheet](getting-started/cheat-sheet.html)**
 
-### Releases
+#### Releases
 
 - [Release Matrix](release-matrix.html)
 
@@ -60,13 +60,13 @@ Title: Documentation
 
 {col-md-4
 
-###Principles
+#### Principles
 
 * [About domain entities](./applib-guide/how-tos/about.html)
 * [About domain services](./applib-guide/domain-services/about.html)
 * [About value Types](./applib-guide/value-types/about.html)
 
-###Pojos
+#### Pojos
 
 * [Pojo vs Inheriting from framework](./applib-guide/how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 * [Registering a domain service](./applib-guide/domain-services/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
@@ -78,7 +78,7 @@ Title: Documentation
 * [Names/description of action param](./applib-guide/how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
 * [Injecting services](./applib-guide/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
 
-### Object management
+#### Object management
 
 * [Finding objects](./applib-guide/domain-services/how-to-09-040-How-to-write-a-custom-repository.html)
 * [Instantiating and persisting objects](./applib-guide/domain-services/how-to-09-050-How-to-use-Factories.html)
@@ -88,13 +88,13 @@ Title: Documentation
 
 {col-md-4
 
-###UI hints
+#### UI hints
 
 * [Entity icons](./applib-guide/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * [Ordering prop/colls in the UI](./applib-guide/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
 * [Ordering actions in the UI](./applib-guide/how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
 
-###Business rules
+#### Business rules
 
 Visibility ("see it")
 
@@ -118,14 +118,14 @@ Validity ("do it")
 
 {col-md-4
 
-### Common constraints
+#### Common constraints
 
 * [Optional property](./applib-guide/how-tos/how-to-01-100-How-to-make-a-property-optional.html)
 * [Optional action ](./applib-guide/how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
 * [Size of string properties](./applib-guide/how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 * [Size of string action params](./applib-guide/how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
 
-###Drop-downs &amp; defaults
+#### Drop-downs &amp; defaults
 
 For properties:
 
@@ -163,7 +163,7 @@ For both:
 
 {col-md-4
 
-###Idioms and patterns
+#### Idioms and patterns
 
 * [Singleton &amp; request-scoped services](./applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)
 * [Decoupling dependencies using contributions](./applib-guide/how-tos/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
@@ -171,7 +171,7 @@ For both:
 * [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./applib-guide/reference/ViewModel.html)
 
-###Derived props/colls
+#### Derived props/colls
 
 * [Derived property](./applib-guide/how-tos/how-to-04-010-How-to-make-a-derived-property.html)
 * [Derived collection](./applib-guide/how-tos/how-to-04-020-How-to-make-a-derived-collection.html)
@@ -179,7 +179,7 @@ For both:
 * [Trigger on property change](./applib-guide/how-tos/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
 * [Trigger on collection change](./applib-guide/how-tos/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
-###Business rules
+#### Business rules
 
 * [All members hidden](./applib-guide/how-tos/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
 * [All members unmodifiable](./applib-guide/how-tos/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
@@ -191,7 +191,7 @@ For both:
 
 {col-md-4
 
-### UI layout & hints
+#### UI layout & hints
 
 * [Static and dynamic layouts](core/dynamic-layouts.html)
 * [Tweaking CSS classes](./applib-guide/how-tos/how-to-tweak-the-ui-using-css-classes.html)
@@ -201,12 +201,12 @@ For both:
 * [Name/description of an action](./applib-guide/how-tos/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 * [Entity icons reflecting object's state](./applib-guide/how-tos/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
-###Error handling
+#### Error handling
 
 * [Raise message to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
 * [Unexpected errors](./applib-guide/how-tos/how-to-06-020-How-to-deal-with-an-unexpected-error.html)
 
-###Prototyping tips
+#### Prototyping tips
 
 * [Generic repository](./applib-guide/domain-services/how-to-09-030-How-to-use-a-generic-repository.html)
 
@@ -215,7 +215,7 @@ For both:
 
 {col-md-4
 
-###Persistence lifecycle
+#### Persistence lifecycle
 
 * [Initial value of property](./applib-guide/how-tos/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
 * [Lifecycle hooks](./applib-guide/how-tos/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
@@ -225,12 +225,12 @@ For both:
 * [Dirty object tracking](./applib-guide/how-tos/how-to-07-060-How-to-perform-dirty-object-tracking.html)
 
 
-###Permissions
+#### Permissions
 
 * [Hide/disable/validate per user/role](./applib-guide/how-tos/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
 * [The authorization manager](./applib-guide/how-tos/how-to-08-020-How-to-use-Isis-authorization-manager.html)
 
-###Value Types
+#### Value Types
 
 * [Custom Value Types](./applib-guide/value-types/020-Custom-Value-Types.html)
 * [Third-party Value Types](./applib-guide/value-types/030-Third-party-Value-Types.html)
@@ -252,7 +252,7 @@ For both:
 
 {col-md-4
 
-###Common
+#### Common
 
 * [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
 * [Exception Recognizers](core/services/exception-recognizers.html)
@@ -290,7 +290,7 @@ SNAPSHOT, stub]
 * [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
 * [Bulk.Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
 
-### Other:
+#### Other:
 
 * [Settings Services](core/services/settings-services.html)
 * [Developer Utilities Service](core/services/developer-utilities-service.html)
@@ -312,12 +312,12 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-### Files and Types
+#### Files and Types
 
 * [Configuration Files](core/configuration-files.html)
 * [Deployment Types](core/deployment-type.html)
 
-###  Reference
+####  Reference
 
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
@@ -327,7 +327,7 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-###Supporting features
+#### Supporting features
 
 * [Security](./applib-guide/reference/Security.html)
 * [Applib Events](./applib-guide/reference/Event.html)
@@ -338,7 +338,7 @@ SNAPSHOT, stub]
 {col-md-4
 
 
-### Customisation
+#### Customisation
 
   - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)
 
@@ -359,7 +359,7 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-### Dev support
+#### Dev support
 <p class="display:none"/>
 
   * [Unit Test Support](core/unittestsupport.html)
@@ -371,7 +371,7 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-### Runtime
+#### Runtime
 <p class="display:none"/>
 
   * [Core Runtime](core/runtime.html) [stub]
@@ -381,7 +381,7 @@ SNAPSHOT, stub]
 
 {col-md-4
   
-### Bundled components
+#### Bundled components
 
   - [Bytecode Enhancers](core/bytecode.html) [stub]
   - [Bypass Security](core/bypass-security.html) [stub]
@@ -400,7 +400,7 @@ SNAPSHOT, stub]
 }
 
 {col-md-4
-###  Wicket [1.3.1](components/viewers/wicket/release-notes/about.html)
+####  Wicket [1.3.1](components/viewers/wicket/release-notes/about.html)
 
   - [About](components/viewers/wicket/about.html)
   - [Titles in tables](components/viewers/wicket/titles-in-tables.html)
@@ -412,7 +412,7 @@ SNAPSHOT, stub]
 }
 
 {col-md-4
-###  RestfulObjects [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
+####  RestfulObjects [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 <p class="display:none"/>
 
   - [About](components/viewers/restfulobjects/about.html)
@@ -424,7 +424,7 @@ SNAPSHOT, stub]
 }
 
 {col-md-4
-### DHTMLX
+#### DHTMLX
 
   - [About](third-party/viewers/dhtmlx/about.html)
 
@@ -442,7 +442,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-###  Configuration
+####  Configuration
 
   - [About](components/objectstores/jdo/about.html)
   - [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
@@ -456,7 +456,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-###  JDO mapping hints
+####  JDO mapping hints
 <p class="display:none"/>
 
   - [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
@@ -470,7 +470,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### Applib service impl.
+#### Applib service impl.
 <p class="display:none"/>
 
   - [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
@@ -492,7 +492,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### Shiro [1.3.0](components/security/shiro/release-notes/about.html)
+#### Shiro [1.3.0](components/security/shiro/release-notes/about.html)
 
   - [About](components/security/shiro/about.html)
   - [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
@@ -502,7 +502,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### File [1.0.1](components/security/file/release-notes/about.html)
+#### File [1.0.1](components/security/file/release-notes/about.html)
 <p class="display:none"/>
 
   - [About](components/security/file/about.html)
@@ -521,25 +521,25 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-###  NoSQL Object Store [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
+#### NoSQL Object Store [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 
 - [About](components/objectstores/nosql/about.html)
 
 ----------
 
-###XML Object Store [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
+#### XML Object Store [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 - [About](components/objectstores/xml/about.html)
 
 }
 
 {col-md-4
-###  Scimpi Viewer [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
+####  Scimpi Viewer [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 
   - [About](components/viewers/scimpi/about.html)
 
 ----------
 
-###  DnD Viewer [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+#### DnD Viewer [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 
   - [About](components/viewers/dnd/about.html)
 
@@ -547,13 +547,13 @@ Note: this viewer is third-party open source (outside Apache)
 
 
 {col-md-4
-###Groovy Programming Model [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
+#### Groovy Programming Model [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
   - [About](components/progmodels/groovy/about.html)
 
 ----------
 
-###XML Profile Store [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
+#### XML Profile Store [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
   - [About](components/profilestores/xml/about.html)
 
@@ -569,7 +569,7 @@ Note: this viewer is third-party open source (outside Apache)
 
 {col-md-4
 
-###  Contributors
+#### Contributors
 
   - [Contributing](contributors/contributing.html)
   - [Development Environment](contributors/development-environment.html)
@@ -581,7 +581,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-###  Committers
+#### Committers
 
   - [Updating the CMS site](contributors/updating-the-cms-site.html)
   - [Applying Patches](contributors/applying-patches.html)
@@ -592,7 +592,7 @@ Note: this viewer is third-party open source (outside Apache)
   - [Verifying releases](contributors/verifying-releases.html)
   - [Key generation](contributors/key-generation.html)
 
-###  PMC
+#### PMC
 
   - [Notes](contributors/pmc-notes.html)
 
@@ -600,7 +600,7 @@ Note: this viewer is third-party open source (outside Apache)
 }
 
 {col-md-4
-### Plugins
+#### Plugins
 
   - [Maven Plugin](other/maven-plugin.html) [stub]
   - [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
@@ -609,12 +609,12 @@ Note: this viewer is third-party open source (outside Apache)
 
 ----------
 
-###Kemble
+#### Kemble
 - [About](components/progmodels/kemble/about.html) [stub]
 -->
 
 
-###  Mothballed Components
+#### Mothballed Components
 
 These are no longer under active development
 
