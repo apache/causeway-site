@@ -203,8 +203,8 @@ For both:
 
 #### Error handling
 
-* [Raise message to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Unexpected errors](./applib-guide/how-tos/how-to-06-020-How-to-deal-with-an-unexpected-error.html)
+* [Raise message/errors to users](./applib-guide/how-tos/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
+* [Exception Recognizer](core/services/exception-recognizers.html) service
 
 #### Prototyping tips
 

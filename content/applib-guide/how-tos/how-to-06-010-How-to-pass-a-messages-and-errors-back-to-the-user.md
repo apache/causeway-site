@@ -21,14 +21,37 @@ successful ('No Customer found with name John Smith').
 
 -   `raiseError(String message)`
 
-    Indicate that a serious application error has occurred. The viewer
+    Indicate that an application exception has occurred. The viewer
     should again require the user to acknowledge the message, and quite
     possibly indicate further steps that the user should perform (eg
     notify the help desk).
 
-    In this last case, no changes will be made to any objects (the
-    transaction is aborted).
 
 The precise mechanics of how each of these messages is rendered visible
 to the user is determined by the viewer being used.
 
+
+Alternative way to raise an error
+---------------------------------
+
+An alternative to calling `DomainObjectContainer#raiseError()` <!--(see ?)-->
+is to simply throw an `org.apache.isis.applib.ApplicationException`. Which
+you use is a matter of style, because the behaviour is exactly the same; internally `raiseError()` just throws the `ApplicationException`.
+
+As of [1.4.0-SNAPSHOT], can also throw `org.apache.isis.applib.RecoverableException`.
+
+
+How to deal with an unrecoverable and unexpected error
+------------------------------------------------------
+
+Throw any exception that isn't a subclass of `ApplicationException` (or `RecoverableException` as of 1.4.0-SNAPSHOT).
+
+The `org.apache.isis.applib.UnrecoverableException` is provided as a convenient superclass to use, but this is not required.
+
+
+Handling aborted transactions [1.4.0-SNAPSHOT]
+-----------------------------
+
+If underlying transaction is aborted by the framework - for example as the result of a constraint violation in the objectstore - then the application code should *not* throw `ApplicationException` (or `RecoverableException`), it should throw some other (non-recoverable) exception.
+
+However, the wrong type of exception being thrown will be automatically detected, and a non-recoverable exception will be thrown instead.
