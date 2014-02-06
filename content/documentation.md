@@ -169,7 +169,7 @@ For both:
 * [Decoupling dependencies using contributions](./applib-guide/how-tos/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 * [Bulk actions, acting upon lists](./applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
-* [View models]()
+* [View models](./applib-guide/reference/ViewModel.html)
 
 ###Derived props/colls
 
@@ -265,21 +265,37 @@ For both:
 
 {col-md-4
 
-###  Singleton services
 
-* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
-* [Auditing Service](core/services/auditing-service.html)
+bookmark/memento services:
+
 * [Bookmark Service](core/services/bookmark-service.html)
-* [Developer Utilities Service](core/services/developer-utilities-service.html)
-* [Exception Recognizers](core/services/exception-recognizers.html)
+* [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT, stub]
+* [XmlSnapshot Service](core/services/xmlsnapshot-service.html)
+
+profiling/background execution:
+
+* [Command Context/Service](core/services/command-context.html) [1.4.0-SNAPSHOT, stub]
+* [Background Service / Background Command Service](core/services/background-service.html) [1.4.0-SNAPSHOT, stub]
+SNAPSHOT, stub]
+
+publishing/auditing:
+
+* [Auditing Service](core/services/auditing-service.html)
 * [Publishing Service](core/services/publishing-service.html)
-* [Settings Services](core/services/settings-services.html)
 
-### Request-scoped services
+performance tuning/co-ordination:
 
-* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
+* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
 * [Bulk.Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
+
+other:
+
+* [Settings Services](core/services/settings-services.html)
+* [Exception Recognizers](core/services/exception-recognizers.html)
+* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
+* [Developer Utilities Service](core/services/developer-utilities-service.html)
+
 
 }
 

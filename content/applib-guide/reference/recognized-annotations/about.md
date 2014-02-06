@@ -8,6 +8,7 @@ Recognized Annotations
 * [AutoComplete](./AutoComplete.html)
 * [Bounded](./Bounded.html)
 * [Bulk](./Bulk.html)
+* [Command](./Command.html)
 * [Debug](./Debug.html)
 * [Defaulted](./Defaulted.html)
 * [DescribedAs](./DescribedAs.html)
@@ -50,4 +51,3 @@ Recognized Annotations
 * [TypeOf](./TypeOf.html)
 * [TypicalLength](./TypicalLength.html)
 * [Value](./Value.html)
-* [ViewModel](./ViewModel.html)

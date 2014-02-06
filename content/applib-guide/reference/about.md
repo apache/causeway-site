@@ -6,6 +6,8 @@ Title: Programming Model Reference
 
 * [DomainObjectContainer interface](./DomainObjectContainer.html)
 
+* [ViewModel interface](./ViewModel.html)
+
 * [Security](./Security.html)
 
 * [Applib Utility Classes](./Utility.html)

@@ -1,19 +1,33 @@
 Title: Applib Services
 
 
-###  Singleton service APIs
+bookmark/memento services:
 
-* [Clock, Fixtures, etc](../../applib-guide/supporting-features/about.html)
-* [Auditing Service](./auditing-service.html)
 * [Bookmark Service](./bookmark-service.html)
-* [Developer Utilities Service](./developer-utilities-service.html)
-* [Exception Recognizers](./exception-recognizers.html)
-* [Publishing Service](./publishing-service.html)
-* [Settings Services](./settings-services.html)
+* [Memento Service](./memento-service.html) [1.4.0-SNAPSHOT]
+* [XmlSnapshot Service](./xmlsnapshot-service.html)
 
-### @RequestScoped service APIs [1.4.0-SNAPSHOT]
+profiling/background execution:
+
+* [Command Context / Command Service](./command-context.html) [1.4.0-SNAPSHOT, stub]
+* [Background Service / Background Command Service](./background-service.html) [1.4.0-SNAPSHOT, stub]
+
+publishing/auditing:
+
+* [Auditing Service](./auditing-service.html)
+* [Publishing Service](./publishing-service.html)
+
+performance tuning/co-ordination:
 
 * [QueryResultsCache](./query-results-cache.html) [1.4.0-SNAPSHOT]
 * [Scratchpad](./scratchpad.html) [1.4.0-SNAPSHOT]
-* [Bulk Interaction](./bulk-interaction.html) [1.4.0-SNAPSHOT]
+* [Bulk Interaction](./bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
+
+other:
+
+* [Settings Services](./settings-services.html)
+* [Exception Recognizers](./exception-recognizers.html)
+* [Clock, Fixtures, etc](../../applib-guide/supporting-features/about.html)
+* [Developer Utilities Service](./developer-utilities-service.html)
+
 

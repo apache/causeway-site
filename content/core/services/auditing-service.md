@@ -2,7 +2,23 @@ Title: Auditing Service
 
 The auditing service provides a simple mechanism to capture changes to data.  It is called for each property that has changed on any domain object, as a set of pre- and post-values.
 
-### API
+### API [1.4.0-SNAPSHOT]
+
+The API for the service is:
+
+    public interface AuditingService3 {
+    
+        @Programmatic
+        public void audit(
+                final UUID transactionId, String targetClassName, final Bookmark target, 
+                String memberIdentifier, final String propertyName, 
+                final String preValue, final String postValue, 
+                final String user, final java.sql.Timestamp timestamp);
+      }
+
+> **BREAKING CHANGE!!!** The previous APIs for this service (`AuditingService` and `AuditingService2`) have been removed.  The new API is a superset of these previous APIs.  The change was made so that the auditing service would be consistent with the related [Publishing](./publishing-service.html) and the [Command Context](./command-context.html) services.
+
+### API [1.3.0]
 
 The API for the service is:
 
@@ -18,35 +34,25 @@ The API for the service is:
 
 > Note that the original API for this service was called `AuditingService`.  This original API has been deprecated because it accidentally omitted the `propertyId` parameter.
 
-### Register the Service
-
-To use, simply register your service implementation as you would any other service, in `isis.properties`:
-
-Register like any other service in `isis.properties`:
-
-<pre>
-isis.services=<i>...other services...</i>,\
-              com.mycompany.myapp.isis.MyAuditingService,\
-              ...
-</pre>
-
-
-### Existing Implementations
+### Implementations
 
 A simple implementation of the service that writes to stderr, is available, useful for debugging:
 
-<pre>
-isis.services=<i>...other services...</i>,\
-              org.apache.isis.applib.services.audit.AuditingService2$Stderr,\
-              ...
-</pre>
+* `org.apache.isis.applib.services.audit.AuditingService3$Stderr` [1.4.0-SNAPSHOT]
+* `org.apache.isis.applib.services.audit.AuditingService2$Stderr` [1.3.0]
+
+An alternative implementation, that persists audit records to a database, is the [JDO Publishing Service](../../components/objectstores/jdo/publishing-service-jdo.html).   This implementation is only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
 
 
-### Limitations
+### Register the Service
 
-This service is currently only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
+Register like any other service in `isis.properties`:
+
+    isis.services=...,\
+                  com.mycompany.myapp.isis.SomeAuditingService,\
+                  ...
 
 
-### Alternatives
+### Related Services
 
-A similar service that you may prefer to use is the [Publishing Service](publishing-service.html).  While a little more complex, it is also considerably more flexible.
+A similar service that you may want to use alongside or instead of the auditing service is the [Publishing Service](publishing-service.html).

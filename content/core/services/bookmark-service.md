@@ -2,32 +2,47 @@ Title: Bookmark Service
 
 The `BookmarkService` provides the ability to obtain a serializable `org.apache.isis.applib.bookmarks.Bookmark` for any (persisted) domain object, and to lookup domain objects given a `Bookmark`.
 
+This is a good way of storing a reference to an arbitrary object (a polymorphic relationship).  The downside is that there is no way for the objectstore (eg JDO objectstore) to enforce any kind of referental integrity.
+
+
+###API
+
 The API defined by `BookmarkService` is:
 
-<pre>
-  @Named("Bookmarks")
-  public interface BookmarkService {
+    @Named("Bookmarks")
+    public interface BookmarkService {
 
-    @NotInServiceMenu
-    Object lookup(BookmarkHolder bookmarkHolder);
+      @NotInServiceMenu
+      Object lookup(BookmarkHolder bookmarkHolder);
 
-    @Hidden
-    Object lookup(Bookmark bookmark);
+      @Hidden
+      Object lookup(Bookmark bookmark);
 
-    @Hidden
-    Bookmark bookmarkFor(Object domainObject);
-  }
-</pre>
+      @Hidden
+      Bookmark bookmarkFor(Object domainObject);
+    }
 
 If a domain class implements the `org.apache.isis.applib.bookmarks.BookmarkHolder` interface then the `BookmarkService` will appear as a contributed action.  Otherwise the service is hidden from view, intended to be injected into domain objects as a supporting domain service.
 
 
+###Usage within the framework
+
+Bookmarks are used [1.4.0-SNAPSHOT onwards] by the [BackgroundCommandService](./background-service.html), which uses a bookmark to capture the target object on which an action will be invoked subsequently.
+
+Bookmarks are also used by the [PublishingService](./publishing-service.html) and the [AuditingService](./auditing-service.html).
+
+
+###Implementations
+
+The core framework provides a default implementation of this API:
+
+* `org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault`
+
+
 ### Register the Service
 
-An implementation of this service is provided by Isis core.  Register this service like any other service, in `isis.properties`:
+Register this service like any other service, in `isis.properties`, eg:
 
-<pre>
-isis.services=<i>...other services...</i>,\
-              org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault,\
-              ...
-</pre>
+    isis.services=...,\
+                  org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault,\
+                  ...

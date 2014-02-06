@@ -2,20 +2,24 @@ Title: Scratchpad [1.4.0-SNAPSHOT]
 
 The Scratchpad service is a [request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
 
+### API & Implementation
+
 The API of `Scratchpad` service is:
 
     @RequestScoped
     public class Scratchpad {
-        
         public Object get(Object key) { ... }
-
         public void put(Object key, Object value) { ... }
-
         public void clear() { ... }
-
     }
 
-... as you can see, it is just a wrapper around a `java.util.Map`.
+... as you can see, just a wrapper around a `java.util.Map`.
+
+In fact, this is a concrete class:
+
+* `org.apache.isis.applib.services.scratchpad.Scratchpad`
+
+### Usage
 
 The most common use-case is for [Bulk](../../applib-guide/reference/recognized-annotations/Bulk.html) actions that [act upon multiple objects in a list](../../applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html).  The (same) `Scratchpad` service is injected into each of these objects, and they can use pass information.
 
@@ -72,3 +76,19 @@ The bulk action in the objects simply adds the selected item to the view model:
     }
  
 If using the Wicket viewer, the `ToDoItemBulkUpdate` view model returned from the last action invoked will be displayed.  Thereafter this view model can be used to perform a bulk update of the "enlisted" items.
+
+
+### Registering the Service
+
+Register like any other service in `isis.properties`:
+
+    isis.services=...,\
+                  com.mycompany.myapp.isis.SomeAuditingService,\
+                  ...
+
+### Related Services
+
+The [Bulk.Interaction](./bulk-interaction.html) service allows [@Bulk](../../applib-guide/reference/recognized-annotations/Bulk.html) actions to co-ordinate with each other.
+
+The [QueryResultsCache](./query-results-cache.html) is useful for caching the results of expensive method calls.
+
