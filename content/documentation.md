@@ -261,19 +261,17 @@ For both:
 #### Bookmark/memento
 
 * [Bookmark Service](core/services/bookmark-service.html)
-* [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT, stub]
+* [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT]
 * [XmlSnapshot Service](core/services/xmlsnapshot-service.html)
-
 
 }
 
 {col-md-4
 
-#### Profiling/background execution
+#### Profiling/background execution [1.4.0-snapshot]
 
-* [Command Context/Service](core/services/command-context.html) [1.4.0-SNAPSHOT, stub]
-* [Background Service / Background Command Service](core/services/background-service.html) [1.4.0-SNAPSHOT, stub]
-SNAPSHOT, stub]
+* [Command Context/Service](core/services/command-context.html) [stub]
+* [Background Service / Background Command Service](core/services/background-service.html) [stub]
 
 #### Publishing/auditing:
 
@@ -284,11 +282,11 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-#### Performance tuning/co-ordination:
+#### Performance tuning/co-ordination [1.4.0-snapshot]
 
-* [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
-* [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
-* [Bulk.Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
+* [QueryResultsCache](core/services/query-results-cache.html)
+* [Scratchpad](core/services/scratchpad.html)
+* [Bulk.Interaction](core/services/bulk-interaction.html) [stub]
 
 #### Other:
 
