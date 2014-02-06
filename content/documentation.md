@@ -258,7 +258,7 @@ For both:
 * [Exception Recognizers](core/services/exception-recognizers.html)
 * [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 
-### Bookmark/memento
+#### Bookmark/memento
 
 * [Bookmark Service](core/services/bookmark-service.html)
 * [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT, stub]
@@ -269,13 +269,13 @@ For both:
 
 {col-md-4
 
-### Profiling/background execution
+#### Profiling/background execution
 
 * [Command Context/Service](core/services/command-context.html) [1.4.0-SNAPSHOT, stub]
 * [Background Service / Background Command Service](core/services/background-service.html) [1.4.0-SNAPSHOT, stub]
 SNAPSHOT, stub]
 
-### Publishing/auditing:
+#### Publishing/auditing:
 
 * [Auditing Service](core/services/auditing-service.html)
 * [Publishing Service](core/services/publishing-service.html)
@@ -284,7 +284,7 @@ SNAPSHOT, stub]
 
 {col-md-4
 
-### Performance tuning/co-ordination:
+#### Performance tuning/co-ordination:
 
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
 * [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
@@ -302,7 +302,7 @@ SNAPSHOT, stub]
 {row
 
 {col-md-12
-## Applib (Other)
+## Applib (other)
 
 }
 
