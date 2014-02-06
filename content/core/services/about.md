@@ -1,5 +1,10 @@
 Title: Applib Services
 
+common services:
+
+* [DomainObjectContainer interface](../../applib-guide/reference/DomainObjectContainer.html)
+* [Exception Recognizers](./exception-recognizers.html)
+* [Clock, Fixtures, etc](../../applib-guide/supporting-features/about.html)
 
 bookmark/memento services:
 
@@ -26,8 +31,6 @@ performance tuning/co-ordination:
 other:
 
 * [Settings Services](./settings-services.html)
-* [Exception Recognizers](./exception-recognizers.html)
-* [Clock, Fixtures, etc](../../applib-guide/supporting-features/about.html)
 * [Developer Utilities Service](./developer-utilities-service.html)
 
 

@@ -242,7 +242,7 @@ For both:
 {row
 
 {col-md-12
-## Applib
+## Applib Services
 
 }
 
@@ -252,50 +252,76 @@ For both:
 
 {col-md-4
 
-###  Reference
+###Common
 
-* [Configuration Files](core/configuration-files.html)
-* [Deployment Types](core/deployment-type.html)
 * [DomainObjectContainer interface](./applib-guide/reference/DomainObjectContainer.html)
-* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
-* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
-* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
+* [Exception Recognizers](core/services/exception-recognizers.html)
+* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 
-}
-
-{col-md-4
-
-
-bookmark/memento services:
+### Bookmark/memento
 
 * [Bookmark Service](core/services/bookmark-service.html)
 * [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT, stub]
 * [XmlSnapshot Service](core/services/xmlsnapshot-service.html)
 
-profiling/background execution:
+
+}
+
+{col-md-4
+
+### Profiling/background execution
 
 * [Command Context/Service](core/services/command-context.html) [1.4.0-SNAPSHOT, stub]
 * [Background Service / Background Command Service](core/services/background-service.html) [1.4.0-SNAPSHOT, stub]
 SNAPSHOT, stub]
 
-publishing/auditing:
+### Publishing/auditing:
 
 * [Auditing Service](core/services/auditing-service.html)
 * [Publishing Service](core/services/publishing-service.html)
 
-performance tuning/co-ordination:
+}
+
+{col-md-4
+
+### Performance tuning/co-ordination:
 
 * [QueryResultsCache](core/services/query-results-cache.html) [1.4.0-SNAPSHOT, stub]
 * [Scratchpad](core/services/scratchpad.html) [1.4.0-SNAPSHOT]
 * [Bulk.Interaction](core/services/bulk-interaction.html) [1.4.0-SNAPSHOT, stub]
 
-other:
+### Other:
 
 * [Settings Services](core/services/settings-services.html)
-* [Exception Recognizers](core/services/exception-recognizers.html)
-* [Clock, Fixtures, etc](./applib-guide/supporting-features/about.html)
 * [Developer Utilities Service](core/services/developer-utilities-service.html)
 
+}
+
+}
+
+{row
+
+{col-md-12
+## Applib (Other)
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+### Files and Types
+
+* [Configuration Files](core/configuration-files.html)
+* [Deployment Types](core/deployment-type.html)
+
+###  Reference
+
+* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
+* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
+* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 
 }
 
@@ -306,6 +332,11 @@ other:
 * [Security](./applib-guide/reference/Security.html)
 * [Applib Events](./applib-guide/reference/Event.html)
 * [Applib utility classes](applib-guide/reference/Utility.html)
+
+}
+
+{col-md-4
+
 
 ### Customisation
 
