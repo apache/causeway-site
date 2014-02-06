@@ -262,7 +262,7 @@ For both:
 
 * [Bookmark Service](core/services/bookmark-service.html)
 * [Memento Service](core/services/memento-service.html) [1.4.0-SNAPSHOT]
-* [XmlSnapshot Service](core/services/xmlsnapshot-service.html)
+* [XmlSnapshot Service](core/services/xmlsnapshot-service.html) [1.4.0-SNAPSHOT, stub]
 
 }
 

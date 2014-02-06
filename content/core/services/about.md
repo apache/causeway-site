@@ -10,7 +10,7 @@ bookmark/memento services:
 
 * [Bookmark Service](./bookmark-service.html)
 * [Memento Service](./memento-service.html) [1.4.0-SNAPSHOT]
-* [XmlSnapshot Service](./xmlsnapshot-service.html)
+* [XmlSnapshot Service](./xmlsnapshot-service.html) [1.4.0-SNAPSHOT, stub]
 
 profiling/background execution:
 
