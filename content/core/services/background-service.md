@@ -278,7 +278,9 @@ and the entry in `web.xml` for the Quartz servlet:
          <load-on-startup>1</load-on-startup>
      </servlet>
 
+
 All of this stuff is configured in the example todo app, found on github:
+
 * [BackgroundCommandExecutionQuartzJob]()
 * [AbstractIsisQuartzJob]()
 * [quartz-config.xml]()

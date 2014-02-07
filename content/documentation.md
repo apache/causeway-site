@@ -271,7 +271,7 @@ For both:
 #### Profiling/background execution [1.4.0-snapshot]
 
 * [Command Context/Service](core/services/command-context.html) [stub]
-* [Background Service / Background Command Service](core/services/background-service.html) [stub]
+* [Background Service / Background Command Service](core/services/background-service.html)
 
 #### Publishing/auditing:
 
