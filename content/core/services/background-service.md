@@ -227,7 +227,9 @@ This can be configured to run using Quartz' `quartz-config.xml` file:
     		<job>
     			<name>BackgroundCommandExecutionJob</name>
     			<group>Isis</group>
-    			<description>Poll and execute any background actions persisted by the BackgroundActionServiceJdo domain service</description>
+    			<description>
+                    Poll and execute any background actions persisted by the BackgroundActionServiceJdo domain service
+                </description>
     			<job-class>webapp.scheduler.BackgroundCommandExecutionQuartzJob</job-class>
     			<job-data-map>
     				<entry>
