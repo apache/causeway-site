@@ -9,7 +9,7 @@ The JDO objectstore provides a simple implementation of the applib [AuditingServ
 Register like any other service in `isis.properties`:
 
 <pre>
-isis.services=<i>...other services...</i>,\
+isis.services=...,\
               org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdo,\
               ...
 </pre>

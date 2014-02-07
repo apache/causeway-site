@@ -25,10 +25,12 @@ The DataNucleus objectstore enables the persistence of domain objects using the 
 ### Applib Service Implementations:
 
 - [Eagerly Registering Entities](eagerly-registering-entities.html)
-- [Publishing Service on JDO](publishing-service-jdo.html)
-- [Auditing Service on JDO](auditing-service-jdo.html)
 - [Exception Recognizers](exception-recognizers-jdo.html)
 - [Settings Services](settings-services-jdo.html)
+- [Command Service on JDO](command-service-jdo.html) [1.4.0-snapshot, stub]
+- [Background Command Service on JDO](command-service-jdo.html) [1.4.0-snapshot, stub]
+- [Publishing Service on JDO](publishing-service-jdo.html)
+- [Auditing Service on JDO](auditing-service-jdo.html)
 
 ### Releases
 

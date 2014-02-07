@@ -46,10 +46,10 @@ An alternative implementation, that persists audit records to a database, is the
 
 ### Register the Service
 
-Register like any other service in `isis.properties`:
+Register like any other service in `isis.properties`.  For example, if using the [JDO auditing implementation](../../components/objectstores/jdo/auditing-service.html) then it would be:
 
     isis.services=...,\
-                  com.mycompany.myapp.isis.SomeAuditingService,\
+                  org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdo,\
                   ...
 
 
