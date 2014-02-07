@@ -315,12 +315,12 @@ For both:
 * [Configuration Files](core/configuration-files.html)
 * [Deployment Types](core/deployment-type.html)
 
-####  Reference
-
 
 }
 
 {col-md-4
+
+####  Reference
 
 * [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
 * [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
