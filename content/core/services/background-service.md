@@ -175,7 +175,9 @@ where `AbstractIsisQuartzJob` is the following boilerplate:
         public AbstractIsisQuartzJob(AbstractIsisSessionTemplate isisRunnable) {
             this(isisRunnable, ConcurrentInstancesPolicy.SINGLE_INSTANCE_ONLY);
         }
-        public AbstractIsisQuartzJob(AbstractIsisSessionTemplate isisRunnable, ConcurrentInstancesPolicy concurrentInstancesPolicy) {
+        public AbstractIsisQuartzJob(
+                AbstractIsisSessionTemplate isisRunnable, 
+                ConcurrentInstancesPolicy concurrentInstancesPolicy) {
             this.isisRunnable = isisRunnable;
             this.concurrentInstancesPolicy = concurrentInstancesPolicy;
         }
@@ -186,7 +188,8 @@ where `AbstractIsisQuartzJob` is the following boilerplate:
                 throws JobExecutionException {
             final AuthenticationSession authSession = newAuthSession(context);
             try {
-                if(concurrentInstancesPolicy == ConcurrentInstancesPolicy.SINGLE_INSTANCE_ONLY && executing) {
+                if(concurrentInstancesPolicy == ConcurrentInstancesPolicy.SINGLE_INSTANCE_ONLY && 
+                   executing) {
                     return;
                 }
                 executing = true;
