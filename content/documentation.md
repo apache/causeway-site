@@ -317,24 +317,25 @@ For both:
 
 ####  Reference
 
-* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
-* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
-* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 
 }
 
 {col-md-4
 
-#### Supporting features
-
-* [Security](./applib-guide/reference/Security.html)
-* [Applib Events](./applib-guide/reference/Event.html)
+* [Recognized Methods and Prefixes](./applib-guide/reference/Recognized-Methods-and-Prefixes.html)
+* [Recognized Annotations](./applib-guide/reference/recognized-annotations/about.html)
+* [Lifecycle callbacks](./applib-guide/how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html)
 * [Applib utility classes](applib-guide/reference/Utility.html)
 
 }
 
 {col-md-4
 
+
+#### Supporting features
+
+* [Security](./applib-guide/reference/Security.html)
+* [Applib Events](./applib-guide/reference/Event.html)
 
 #### Customisation
 
