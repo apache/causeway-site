@@ -1,6 +1,6 @@
 Title: Scratchpad [1.4.0-SNAPSHOT]
 
-The Scratchpad service is a [request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
+The `Scratchpad` service is a [request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
 
 ### API & Implementation
 
