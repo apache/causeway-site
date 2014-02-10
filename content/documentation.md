@@ -205,7 +205,7 @@ For both:
 #### Prototyping tips
 
 * [Generic repository](./how-tos2/how-to-09-030-How-to-use-a-generic-repository.html)
-* [Fixtures](./how-tos2/about.html)
+* [Fixtures](./how-tos2/03-Fixtures-and-SwitchUser.html)
 * [Deployment Types](how-tos2/deployment-type.html)
 
 #### Customisation
