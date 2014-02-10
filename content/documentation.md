@@ -179,10 +179,6 @@ For both:
 * [Immutable object](./how-tos2/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
 * [Declarative validation using @MustSatisfy](./how-tos2/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
 
-#### Domain services
-
-* [Factories](./how-tos2/how-to-09-050-How-to-use-Factories.html)
-
 }
 
 {col-md-4
