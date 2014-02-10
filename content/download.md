@@ -19,7 +19,7 @@ mvn archetype:generate  \
     -B
 </pre>
 
-For more information, see [here](getting-started/simple-archetype.html) and [here](getting-started/quickstart-archetype.html).
+For more information, see [here](intro/getting-started/simple-archetype.html).
 
 ## Formal Releases
 
@@ -39,8 +39,8 @@ Components:
 
 Archetypes:
 
-* [quickstart_wicket_restful_jdo-archetype-1.3.1](https://www.apache.org/dyn/closer.cgi/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip.md5))
 * [simple_wicket_restful_jdo-archetype-1.3.1](https://www.apache.org/dyn/closer.cgi/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.3.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.3.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.3.1-source-release.zip.md5))
+* [quickstart_wicket_restful_jdo-archetype-1.3.1](https://www.apache.org/dyn/closer.cgi/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.3.1-source-release.zip.md5))
 
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 

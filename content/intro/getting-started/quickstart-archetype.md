@@ -6,7 +6,7 @@ While not quite a "kitchen-sink" example (there is, after all, just a single dom
 
 The archetype also (from 1.4.0-SNAPSHOT onwards) demonstrates Isis' support for in-built profiling, auditing, event publishing and background actions.  The last of these integrates with the Quartz scheduler, executing queued-up actions every 10 seconds.
 
-Running this archetype is a good way to get familiar with the structure of a not-too-complex Isis application.  However, to get started with your own application, we generally recommend that you run the alternative [simple archetype](simple-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this ToDo app to guide your own development.
+Running this archetype is a good way to get familiar with the structure of a not-too-complex Isis application.  However, to get started with your own application, we generally recommend that you run the alternative [simple archetype](./simple-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this ToDo app to guide your own development.
 
 ### Generating the App
 

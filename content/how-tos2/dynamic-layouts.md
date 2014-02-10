@@ -1,6 +1,6 @@
 Title: Static and Dynamic Layouts
 
-> You can also watch a [screencast](../getting-started/screencasts.html) demonstrating static and dynamic layouts. 
+> You can also watch a [screencast](../intro/getting-started/screencasts.html) demonstrating static and dynamic layouts. 
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  This metadata can be specified statically, using annotations, or dynamically, using a JSON file.
 

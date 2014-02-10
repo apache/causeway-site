@@ -2,7 +2,7 @@ Title: Configuring Isis to use Shiro
 
 ### Example Configuration
 
-The [simple archetype](../../../getting-started/quickstart-archetype.html) and the [quickstart archetype](../../../getting-started/simple-archetype.html) are both configured with Shiro; you should see all the configuration explained below in these.
+The [simple archetype](../../../intro/getting-started/quickstart-archetype.html) and the [quickstart archetype](../../../intro/getting-started/simple-archetype.html) are both configured with Shiro; you should see all the configuration explained below in these.
 
 
 ## Bootstrapping Shiro
@@ -39,7 +39,7 @@ This then installs Isis components (specifically, the `ShiroAuthenticatorOrAutho
 
 ## Knowing your way around the Shiro config files
 
-The `shiro.ini` file as configured in the [simple archetype](../../../getting-started/simple-archetype.html) is configured to simple use the built-in `$iniRealm`, by way of the line:
+The `shiro.ini` file as configured in the [simple archetype](../../../intro/getting-started/simple-archetype.html) is configured to simple use the built-in `$iniRealm`, by way of the line:
 
     securityManager.realms = $iniRealm
 

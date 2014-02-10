@@ -1,5 +1,36 @@
-Built-in Value Types
---------------------
+Title: Value Types
+
+The state of any given entity is characterized by properties <!--(?)--> and
+collections <!--(?)-->. A collections is a one-to-many reference to another
+entities, while a property is either a one-to-one reference to another
+entity, or it is a value.
+
+But what's a value? Well, it's an atomic piece of state. A string is a
+value, so is a number, so is a date. Values should be designed to be
+immutable (though some system value types, such as java.util.Date,
+famously are not).
+
+*Isis* supports all the standard JDK value types, and defines a number
+of its own (eg Percentage and Color).   *Isis* also allows you to define 
+your own value types, such as `LastName`, or `Celsius`, or `ComplexNumber`.
+
+It's also possible to make Isis integrate with third-party
+value types.  *Isis* provides one such integration, with 
+[JodaTime](http://joda-time.sourceforge.net/).
+
+> **Note**
+>
+> *Isis*' support for a particular value type does not necessarily imply
+> that there is a custom widget for that type in a particular viewer.
+> Rather, it means that the state of the object can be serialized, is
+> expected to have equal-by-content semantics, and is expected to be
+> immutable. It may also be parseable from a string.
+
+
+> Also, if using the JDO/DataNucleus ObjectStore, you may also need to perform additional DataNucleus-specific configuration if you want the data to be persisted in a SQL datatype other than SQL Blob (ie a serializable byte array).
+
+
+## Built-in value types
 
 The following are the value types supported by *Isis* out-of-the-box.
 
@@ -43,23 +74,80 @@ The following [Joda](http://joda-time.sourceforge.net/) types are also supported
 #### Isis AppLib
 
 *Isis* itself also provides a number of its own value types. These are
-all in the org.apache.applib.value package:
+all in the `org.apache.applib.value` package:
 
--   Color
+-   `Color`
 
--   Date (date only), DateTime (date and time) and Time (time only)
+-   `Date` (date only), `DateTime` (date and time) and `Time` (time only)
 
--   TimeStamp
+-   `TimeStamp`
 
--   Image
+-   `Image`
 
--   Money
+-   `Money`
 
--   Password
+-   `Password`
 
--   Percentage
+-   `Percentage`
 
-### Value formats
+
+## Custom value types
+
+In addition to the built-in value types it is also possible to define user-defined value types. This is typically done using the `@Value` annotation.
+
+The `@Value` annotation is used to provide an implementation of the `org.apache.isis.applib.adapters.ValueSemanticsProvider` interface. In turn this provides objects that allow the framework to interact with the value, specifically:
+
+-   the `EncoderDecoder` is used to convert the value into and back out of serializable form
+
+    This is used by some object stores (eg the XML Object Store), for by the XML Snapshot capability <!--(see ?)-->;
+
+-   the `Parser` is used to convert Strings into the value type
+
+    This is used as a fallback by viewers that do not have any specific widgets to support the particular value type, and make do with a simple text field instead.
+
+    An obvious example is to parse a date. But it could be used to parse "TRUE" and "FALSE" into a boolean (as opposed to using a checkbox).
+
+-   the `DefaultsProvider` is used to provide a meaningful default for the value
+
+    Not every value type will have a default, but some do (eg false for a boolean, 0 for a number). This is used as the default value for non-`@Optional` properties and parameters.
+
+Each of these interfaces also reside in `org.apache.isis.applib.adapters`.
+
+For more details, explore the built-in types within the applib, for example `org.apache.isis.applib.value.Money`.
+
+    @Value(semanticsProviderName =  "org.apache.isis.core.progmodel.facets.value.MoneyValueSemanticsProvider")
+    public class Money extends Magnitude {
+        ...
+    }
+
+where `MoneyValueSemanticsProvider` is the implementation of
+`ValueSemanticsProvider` described above.
+
+> **Note**
+>
+> Using value types generally removes the need for using `@MustSatisfy` annotation <!--(see ?)-->; the rules can 
+> instead move down into a `validate()` method on the value type itself.
+
+
+## Third-party value types
+
+Third party value types can also supported, again
+through the use of a `ValueSemanticsProvider`. However, since the source code cannot be altered, the provider must be supplied using a key value in `isis.properties` configuration file.
+
+For example, the following would register a semantics provider for `org.jodatime.time.Interval` (not a built-in at the time of this writing):
+
+      isis.core.progmodel.value.org.jodatime.time.DateTime.semanticsProviderName=\
+        com.mycompany.values.JodaIntervalValueSemanticsProvider
+
+
+
+
+
+
+
+## Value formats
+
+> **note** this feature is only partially support by some viewers (eg Wicket viewer)
 
 *Isis* provides default formats for the inbuilt value types, according
 to type. These can be modified using `isis.properties`.
@@ -162,3 +250,4 @@ The format for time stamp values can be set, replacing the default format derive
 
 When a mask is specified it is used to set up a
 `java.text.SimpleDateFormat` formatting object so details of the mask format can be found in the Java documentation.
+

@@ -1,7 +1,14 @@
 Singleton &amp; request-scoped domain services
 -----------------------------------------------
 
-Services consist of a set of logically grouped actions, and as such follow the same conventions as for entities. However, a service cannot have (persisted) properties, nor can it have (persisted) collections.
+Domain services (by which we also mean repositories and factories) consist of a set 
+of logically grouped actions, and as such follow the same conventions as for entities. However, a service cannot have (persisted) properties, nor can it have (persisted) collections.
+
+Domain services are instantiated once and once only by the framework,
+and are used to centralize any domain logic that does not logically
+belong in a domain entity or value. *Isis* will automatically inject
+services into every domain entity that requests them, and into each
+other.
 
 For convenience you can [inherit](../how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html) from `AbstractService` or one of its subclasses, but this is not mandatory.
 
