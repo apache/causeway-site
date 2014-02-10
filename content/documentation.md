@@ -5,7 +5,7 @@ Title: Documentation
 {row
 
 {col-md-4
-#### Elevator pitch
+#### <a id="intro"><a id="elevator-pitch">Elevator pitch</a></a>
 
 - **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
 - [Common Use Cases](intro/elevator-pitch/common-use-cases.html)
