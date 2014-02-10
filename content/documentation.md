@@ -5,11 +5,13 @@ Title: Documentation
 {row
 
 {col-md-4
-#### <a id="intro"><a id="elevator-pitch">Elevator pitch</a></a>
+#### <a id="intro"><a id="elevator-pitch">Elevator pitch
 
 - **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
 - [Common Use Cases](intro/elevator-pitch/common-use-cases.html)
 - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
+
+</a></a>
 
 #### Getting started
 
