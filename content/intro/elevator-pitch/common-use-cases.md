@@ -16,27 +16,24 @@ If you are interested in taking this approach, note that there is one important 
 
 Isis' own runtime injects an (implementation of this) interface into each and every domain object. You will likely need to do something similar within your own framework, (or come up with an equivalent mechanism, eg Service Locator pattern).
 
-### Deploy on Isis as a auto-generated Webapp
+### Deploy on Isis as an auto-generated Webapp
 
 One of the original motivations for Isis itself was to be able automatically generate a user interface for a domain object model.
 
-Isis' has a pluggable architecture allowing different user interface technologies.  The principal implementation (as configured by the [simple](../getting-started/simple-archetype.html) and [quickstart](../getting-started/quickstart-archetype.html) archetypes) is the [Wicket viewer](../components/viewers/wicket/about.html).  This provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components.  Some third-party components can be found on github, integrating the Wicket viewer with [google maps](https://github.com/danhaywood/isis-wicket-gmap3), [a full calendar](github.com/danhaywood/isis-wicket-fullcalendar2), [a charting library](https://github.com/danhaywood/isis-wicket-wickedcharts) and a [export to Excel](https://github.com/danhaywood/isis-wicket-excel) component.
-
-Another viewer (though as yet unreleased) is the [Scimpi viewer](../components/viewers/scimpi/about.html) (not yet released) provides a JSF-like taglib approach for building web pages.  All domain objects have a default representation, but can be customized on a per-type basis.
+Isis' has a pluggable architecture allowing different user interface technologies.  The principal implementation (as configured by the [simple](../getting-started/simple-archetype.html) or [quickstart](../getting-started/quickstart-archetype.html) archetypes) is the [Wicket viewer](../../components/viewers/wicket/about.html).  This provides an appealing default user interface, with the ability to customize the user interface by writing new [Apache Wicket](http://wicket.apache.org) components.  Some third-party components can be found on github, integrating the Wicket viewer with [google maps](https://github.com/danhaywood/isis-wicket-gmap3), [a full calendar](https://github.com/danhaywood/isis-wicket-fullcalendar2), [a charting library](https://github.com/danhaywood/isis-wicket-wickedcharts) and a [export to Excel](https://github.com/danhaywood/isis-wicket-excel) component.
 
 It is also possible to write your own viewers:
 
-* One of Isis' committers has developed a viewer based on [DHTMLX](), also available on [github](https://github.com/madytyoo/dhtmlx-isis-viewer).  An online demo can be found [here](isis-viewer-dhtmlx.appspot.com).
-
+* One of Isis' committers has developed a viewer based on [DHTMLX](), also available on [github](https://github.com/madytyoo/dhtmlx-isis-viewer).
 * Another of Isis' committers has a (closed source) viewer based on [Wavemaker](http://www.wavemaker.com/).
 
-Deploying on Isis means that the framework also manages object persistence.  Again this is pluggable, but the principal implementation is the [JDO objectstore](../components/objectstores/jdo/about.html).  Because JDO supports both SQL and NoSQL databases, you can then deploy on a variety of platforms, including the [Google App Engine (GAE)](https://developers.google.com/appengine/).
+Deploying on Isis means that the framework also manages object persistence.  Again this is pluggable, but the principal implementation is the [JDO objectstore](../../components/objectstores/jdo/about.html).  Because JDO supports both SQL and NoSQL databases, you can then deploy on a variety of platforms, including the [Google App Engine (GAE)](https://developers.google.com/appengine/).
 
 ### Deploy on Isis as a RESTful web service
 
 REST (Representation State Transfer) is an architectural style for building highly scalable distributed systems, using the same principles as the World Wide Web. Many commercial web APIs (twitter, facebook, Amazon) are implemented as either pure REST APIs or some approximation therein.
 
-The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../components/viewers/restfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
+The [Restful Objects specification](http://restfulobjects.org) defines a means by a domain object model can be exposed as RESTful resources using JSON representations over HTTP.  Isis' [RestfulObjects viewer](../../components/viewers/restfulobjects/about.html) is an implementation of that spec, making any Isis domain object automatically available via REST.
 
 There are two main use cases for deploying Isis as a RESTful web service are:
 
@@ -48,4 +45,4 @@ There are two main use cases for deploying Isis as a RESTful web service are:
 
   REST is designed to be machine-readable, and so is an excellent choice for synchronous data interchange scenarios.
 
-As for the auto-generated webapps, the framework manages object persistence, either the [JDO objectstore](../components/objectstores/jdo/about.html) objectstore and the [NoSQL objectstore](../components/objectstores/nosql/about.html).  It is also perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
+As for the auto-generated webapps, the framework manages object persistence, for example using the [JDO objectstore](../../components/objectstores/jdo/about.html) objectstore.  It is perfectly possible to deploy the RESTful API alongside an auto-generated webapp; both work from the same domain object model.
