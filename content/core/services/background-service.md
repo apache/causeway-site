@@ -40,7 +40,13 @@ Using the `BackgroundService` is very straight-forward.  For example:
         container.informUser("Calculating...");
     }
 
-Will create a bunch of background commands executing the `submitInvoice()` method for each of the customers returned from the customer repository.
+Will create a bunch of background commands executing the `submitInvoice()` action for each of the customers returned from the customer repository.
+
+The action method invoked must be part of the Isis metamodel, which is to say it must be public, accept only scalar arguments, and must not be annotated with `@Programmatic` or `@Ignore`.  However, it may be annotated with `@Hidden`, and it will still be invoked.  
+
+In fact, when invoked by the background service, no business rules (hidden, disabled, validation) are enforced; the action method must take responsibility for performing appropriate validation and error checking.
+
+### End-user experience
 
 For the end-user, executing an action that delegates work off to the `BackgroundService` raises the problem of how does the user know the work is complete?
 

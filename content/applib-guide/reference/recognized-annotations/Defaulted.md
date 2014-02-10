@@ -1,5 +1,4 @@
-@Defaulted
-----------
+Title: @Defaulted
 
 The concept of "defaulted" means being able to provide a default value
 for the type by way of the

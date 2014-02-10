@@ -1,5 +1,4 @@
-@Plural
--------
+Title: @Plural
 
 > **Support**
 > 

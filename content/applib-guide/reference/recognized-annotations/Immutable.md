@@ -1,5 +1,4 @@
-@Immutable
-----------
+Title: @Immutable
 
 The `@Immutable` annotation may be applied to a class, and indicates to
 the framework that the state of such objects may not be changed. The

@@ -1,5 +1,4 @@
-@Facets
--------
+Title: @Facets
 
 The `@Facets` annotation specifies `FacetFactory` implementations and so can
 be used to run install arbitrary `Facet`s for a type. Generally this is

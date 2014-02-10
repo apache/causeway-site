@@ -1,5 +1,4 @@
-@EqualByContent
----------------
+Title: @EqualByContent
 
 Equal-by-content is a characteristic of value types, and is implied by
 any class annotated with the the `@Value` annotation (see ? and also ?).

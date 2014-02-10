@@ -1,5 +1,4 @@
-@Debug
-------
+Title: @Debug
 
 > **Support**
 > 

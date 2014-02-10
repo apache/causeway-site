@@ -1,5 +1,4 @@
-@Optional
----------
+Title: @Optional
 
 By default, the system assumes that all properties of an object are
 required, and therefore will not let the user save a new object unless a

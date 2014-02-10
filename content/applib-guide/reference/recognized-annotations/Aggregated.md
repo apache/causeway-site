@@ -1,5 +1,4 @@
-@Aggregated
------------
+Title: @Aggregated
 
 > **Support**
 > 

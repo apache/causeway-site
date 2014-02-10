@@ -337,6 +337,11 @@ For both:
 * [Security](./applib-guide/reference/Security.html)
 * [Applib Events](./applib-guide/reference/Event.html)
 
+####  Non-UI execution [1.4.0-SNAPSHOT]
+
+- [IsisSessionTemplate](./isis-session-template.html)
+- [BackgroundCommandExecution](./background-command-execution.html)
+
 #### Customisation
 
   - [Finetuning the Programming Model](core/metamodel-finetuning-the-programming-model.html)

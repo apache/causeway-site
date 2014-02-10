@@ -1,5 +1,4 @@
-@Command
-----------
+Title: @Command
 
 The `@Command` annotation lets you change the way in which the framework invokes an action, most notably to invoke the action in the background.  It works (and influences the behaviour of) the the `CommandContext`, `CommandService`, `BackgroundService` and `BackgroundCommandService` domain services (documented [here](../../../core/services/command-context.html) and [here](../../../core/services/background-service.html)). 
 

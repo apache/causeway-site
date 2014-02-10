@@ -1,5 +1,4 @@
-@Programmatic
--------------
+Title: @Programmatic
 
 The `@Programmatic` annotation can be used to cause Apache Isis to
 complete ignore a class member. This means it won't appear in any

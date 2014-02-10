@@ -1,5 +1,4 @@
-@RegEx
-------
+Title: @RegEx
 
 The `@RegEx` annotation may be applied to any string property, or to any
 parameter within an action method. It can also be applied to any

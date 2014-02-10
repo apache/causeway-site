@@ -1,5 +1,4 @@
-@Exploration
-------------
+Title: @Exploration
 
 > **Support**
 > 

@@ -1,9 +1,4 @@
-@ActionOrder
-------------
-
-> **Support**
-> 
-> * Not supported by: Wicket viewer; use `@MemberOrder` instead.
+Title: @ActionOrder
 
 `@ActionOrder` provides a mechanism to specify the order in which
 actions appear in the user interface, in which the order is specified in

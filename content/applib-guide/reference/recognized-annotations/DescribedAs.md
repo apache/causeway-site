@@ -1,5 +1,4 @@
-@DescribedAs
-------------
+Title: @DescribedAs
 
 The `@DescribedAs` annotation is used to provide a short description of
 something that features on the user interface. How this description is

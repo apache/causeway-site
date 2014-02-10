@@ -1,5 +1,4 @@
-@MustSatisfy
-------------
+Title: @MustSatisfy
 
 The `@MustSatisfy` annotation allows validation to be applied to
 properties and parameters using an (implementation of a)

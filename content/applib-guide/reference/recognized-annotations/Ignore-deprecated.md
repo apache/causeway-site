@@ -1,5 +1,4 @@
-@Ignore (deprecated)
---------------------
+Title: @Ignore (deprecated)
 
 Equivalent to using `@Programmatic`.
 

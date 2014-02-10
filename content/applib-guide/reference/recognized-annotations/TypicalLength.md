@@ -1,5 +1,4 @@
-@TypicalLength
---------------
+Title: @TypicalLength
 
 The `@TypicalLength` annotation indicates the typical length of a
 `String` property or `String` parameter in an action. It can also be

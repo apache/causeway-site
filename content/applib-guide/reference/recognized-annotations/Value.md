@@ -1,5 +1,4 @@
-@Value
-------
+Title: @Value
 
 The `@Value` annotation indicates that a class should be treated as a
 value type rather than as a reference (or entity) type. It does this

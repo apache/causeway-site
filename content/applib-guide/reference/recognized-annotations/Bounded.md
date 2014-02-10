@@ -1,5 +1,4 @@
-@Bounded
---------
+Title: @Bounded
 
 For immutable objects where there is a bounded set of instances, the
 `@Bounded` annotation can be used.

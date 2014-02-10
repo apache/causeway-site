@@ -1,5 +1,4 @@
-@Paged
-------
+Title: @Paged
 
 > **Support**
 > 

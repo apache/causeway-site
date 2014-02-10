@@ -1,5 +1,4 @@
-@Title
-------
+Title: @Title
 
 > **Support**
 > 

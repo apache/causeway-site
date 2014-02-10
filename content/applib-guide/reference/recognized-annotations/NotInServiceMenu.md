@@ -1,5 +1,4 @@
-@NotInServiceMenu
------------------
+Title: @NotInServiceMenu
 
 The `@NotInServiceMenu` annotation applies only to action methods, and
 specifically to the actions of services. If present, it indicates that

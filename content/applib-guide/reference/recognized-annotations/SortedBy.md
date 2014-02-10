@@ -1,5 +1,4 @@
-@SortedBy
--------
+Title: @SortedBy
 
 > Supported by: Wicket viewer; not yet supported by other viewers.
 

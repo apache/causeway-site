@@ -1,5 +1,4 @@
-@NotPersisted
--------------
+Title: @NotPersisted
 
 The `@NotPersisted` annotation indicates that the property is not to be
 persisted.

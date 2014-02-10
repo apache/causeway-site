@@ -1,5 +1,4 @@
-@Hidden
--------
+Title: @Hidden
 
 > **Support**
 > 

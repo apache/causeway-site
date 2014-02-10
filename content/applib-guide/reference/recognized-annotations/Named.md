@@ -1,5 +1,4 @@
-@Named
-------
+Title: @Named
 
 The `@Named` annotation is used when you want to specify the way
 something is named on the user interface i.e. when you do not want to

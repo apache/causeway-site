@@ -1,5 +1,4 @@
-@MaxLength
-----------
+Title: @MaxLength
 
 The `@MaxLength` annotation indicates the maximum number of characters
 that the user may enter into a `String` property, or a `String`

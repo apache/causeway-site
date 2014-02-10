@@ -12,12 +12,12 @@ Title: Core Modules
 ###  Services
 
 - [Initializing Services](services/initializing-services.html)
-- [Auditing Service](services/auditing-service.html)
 - [Bookmark Service](services/bookmark-service.html)
+- [Settings Services](services/settings-services.html)
 - [Developer Utilities Service](services/developer-utilities-service.html)
 - [Exception Recognizers](services/exception-recognizers.html)
+- [Auditing Service](services/auditing-service.html)
 - [Publishing Service](services/publishing-service.html)
-- [Settings Services](services/settings-services.html)
 
 ### Development
 
@@ -26,10 +26,14 @@ Title: Core Modules
 - [BDD/Integ Test Support](specsupport-and-integtestsupport.html)
 - [Wrapper Factory](wrapper.html) [stub]
 
+###  Non-UI execution [1.4.0-SNAPSHOT]
+
+- [IsisSessionTemplate](isis-session-template.html)
+- [BackgroundCommandExecution](background-command-execution.html)
+
 ###  Programming Model
 
 - [Finetuning the Programming Model](metamodel-finetuning-the-programming-model.html)
-
 
 ### Runtime
 

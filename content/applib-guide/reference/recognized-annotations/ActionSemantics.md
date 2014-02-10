@@ -1,5 +1,4 @@
-@ActionSemantics
-----------------
+Title: @ActionSemantics
 
 This annotation, which applies only to actions, describes whether the
 invocation is safe (as no side-effects), is idempotent (may have
