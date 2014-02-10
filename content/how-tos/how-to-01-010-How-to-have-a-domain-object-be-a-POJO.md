@@ -1,6 +1,11 @@
 Pojos vs Inheriting from framework superclasses
 -------------------------------------------------------------------------------
 
+{note
+A lot of the programming conventions described in these how-tos are encapsulated in the [Eclipse templates](../intro/getting-started/editor-templates.html).  If you use Eclipse, do install these first; they will save a lot of time.
+}
+
+
 It isn't mandatory for either domain entities or domain services to inherit from any framework superclass; they can be plain old java objects (pojos) if required.
 
 However, they do at a minimum need to have a

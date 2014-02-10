@@ -14,7 +14,7 @@ For convenience you can [inherit](../how-tos/how-to-01-010-How-to-have-a-domain-
 
 ### Registering domain services
 
-All noted [elsewhere](../how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html), domain services (which includes repositories and factories) should be registered in the `isis.properties` configuration file, under `isis.services` key (a comma-separated list):
+As noted [elsewhere](../../how-tos/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html), domain services (which includes repositories and factories) should be registered in the `isis.properties` configuration file, under `isis.services` key (a comma-separated list):
 
 For example:
 
