@@ -45,7 +45,7 @@ where `myapp` is the `artifactId` entered above.
 
 ### Running the App
 
-The `quickstart_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../components/viewers/wicket/about.html) and the [Restful Objects viewer](../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
+The `quickstart_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../../components/viewers/wicket/about.html) and the [Restful Objects viewer](../../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
 
 Once you've built the app, you can run the WAR in a variety of ways. 
 
@@ -83,9 +83,9 @@ The app itself is configured to run using shiro security, as configured in the `
 
 ### Modifying the App
 
-Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site (check out the [getting started](../documentation.html) section first).
+Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site; check out the 'programming model how-tos' section on the main [documentation](../../documentation.html) page first).
 
-If you use Eclipse, do also install the [Eclipse templates](../getting-started/editor-templates.html); these will help you follow the Isis naming conventions.  
+If you use Eclipse, do also install the [Eclipse templates](../resources/editor-templates.html); these will help you follow the Isis naming conventions.  
 
 #### App Structure
 
@@ -96,8 +96,8 @@ As noted above, the generated app is a reasonably complete application for track
 <tr><td>myapp</td><td>The parent (aggregator) module</td></tr>
 <tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> (repository) domain service.</td></tr>
 <tr><td>myapp-fixture</td><td>Domain object fixtures used for initializing the system when being demo'ed or for unit testing.</td></tr>
-<tr><td>myapp-integtests</td><td>End-to-end <a href="../core/integtestsupport.html">integration tests</a>, that exercise from the UI through to the database</td></tr>
+<tr><td>myapp-integtests</td><td>End-to-end <a href="../../core/integtestsupport.html">integration tests</a>, that exercise from the UI through to the database</td></tr>
 <tr><td>myapp-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>
 </table>
 
-If you run into issues, please don't hesitate to ask for help on the [users mailing list](../support.html).
+If you run into issues, please don't hesitate to ask for help on the [users mailing list](../../support.html).
