@@ -41,7 +41,7 @@ Some articles and recorded material relating to either Apache Isis (or its prede
 
 2004:
 
-* **Richard Pawson's [PhD thesis on Naked Objects](./resources/Pawson-Naked-Objects-Thesis.pdf)**
+* **Richard Pawson's [PhD thesis on Naked Objects](../resources/Pawson-Naked-Objects-Thesis.pdf)**
 * Article series, TheServerSide
   * Part 1 - [The Case for Naked Objects - Getting Back to the Object-Oriented Ideal](http://www.theserverside.com/news/1365562/Part-1-The-Case-for-Naked-Objects-Getting-Back-to-the-Object-Oriented-Ideal)
   * **Part 2 - [Challenging the Dominant Design of the 4-Layer Architecture](http://www.theserverside.com/news/1365568/Part-2-Challenging-the-Dominant-Design-of-the-4-Layer-Architecture)**
