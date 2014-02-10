@@ -6,8 +6,8 @@ The following presentation, available in multiple formats, provides some backgro
 
 Feel free to use/adapt as you see fit.
 
-[1]: resources/presentations/IntroducingApacheIsis.pptx
-[2]: resources/presentations/IntroducingApacheIsis.ppt
-[3]: resources/presentations/IntroducingApacheIsis.odp
-[4]: resources/presentations/IntroducingApacheIsis-slides.pdf
-[5]: resources/presentations/IntroducingApacheIsis-notes.pdf
+[1]: resources/IntroducingApacheIsis.pptx
+[2]: resources/IntroducingApacheIsis.ppt
+[3]: resources/IntroducingApacheIsis.odp
+[4]: resources/IntroducingApacheIsis-slides.pdf
+[5]: resources/IntroducingApacheIsis-notes.pdf
