@@ -24,6 +24,7 @@ Title: Documentation
 - **[Screencasts](intro/tutorials/screencasts.html)**
 
 #### Learning more
+<p class="display:none"/>
 
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
 - [Books](intro/learning-more/books.html)
@@ -40,6 +41,7 @@ Title: Documentation
 - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
 #### Releases
+<p class="display:none"/>
 
 - [Release Matrix](./release-matrix.html)
 
