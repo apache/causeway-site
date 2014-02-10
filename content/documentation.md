@@ -401,7 +401,6 @@ For both:
 
 * [About](components/viewers/wicket/about.html)
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
-* [Static and dynamic layouts](core/dynamic-layouts.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
 * [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
