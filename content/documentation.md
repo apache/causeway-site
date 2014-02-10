@@ -5,27 +5,25 @@ Title: Documentation
 {row
 
 {col-md-4
-#### <a id="intro"><a id="elevator-pitch">Elevator pitch</a></a>
+#### Elevator pitch
 
 - **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
 - [Common Use Cases](intro/elevator-pitch/common-use-cases.html)
 - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
-
-
-#### <a id="getting-started">Getting started</a>
+#### Getting started
 
 - **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
 
 }
 
 {col-md-4
-#### <a id="tutorials">Tutorials, screencasts</a>
+#### Tutorials, screencasts
 
 - [Tutorials](intro/tutorials/tutorials.html)
 - **[Screencasts](intro/tutorials/screencasts.html)**
 
-#### <a id="learning-more">Learning more</a>
+#### Learning more
 <p class="display:none"/>
 
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
@@ -35,7 +33,7 @@ Title: Documentation
 }
 
 {col-md-4
-#### <a id="resources">Resources</a>
+#### Resources
 
 - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
 - **[Editor templates](intro/resources/editor-templates.html)**

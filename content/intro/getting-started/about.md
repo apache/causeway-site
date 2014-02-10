@@ -1,3 +1,3 @@
 Title: Getting started
 
-back to: [documentation](../documentation.html#getting-started) page.
+back to: [documentation](../documentation.html) page.
