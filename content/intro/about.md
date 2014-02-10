@@ -1,3 +1,3 @@
-Title: Getting started
+Title: Intro
 
-back to: [documentation](../documentation.html#getting-started) page.
+back to: [documentation](../documentation.html#intro) page.
