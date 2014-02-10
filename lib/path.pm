@@ -13,8 +13,8 @@ our @patterns = (
 
 	[qr!/index.md(text)?$!, 
           basic => { template => "index.html" }]
-	,[qr!/screenshots.md(text)?$!, 
-          basic => { template => "screenshots.html" }]
+	,[qr!/isis-in-pictures.md(text)?$!, 
+          basic => { template => "isis-in-pictures.html" }]
 	,[qr!\.md(text)?$!, 
           basic => { template => "basic.html" }]
 
