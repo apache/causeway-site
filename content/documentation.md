@@ -325,7 +325,7 @@ For both:
 
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
 * [Annotations](./reference/recognized-annotations/about.html)
-* [Lifecycle callbacks](./how-tos/object-lifecycle-callbacks.html)
+* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
 * [Value types](./reference/value-types.html)
 
 }
