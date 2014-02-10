@@ -20,11 +20,10 @@ Title: Documentation
 {col-md-4
 #### Tutorials, screencasts
 
-- [Tutorials](intro/tutorials/tutorials.html)
-- **[Screencasts](intro/tutorials/screencasts.html)**
+    - [Tutorials](intro/tutorials/tutorials.html)
+    - **[Screencasts](intro/tutorials/screencasts.html)**
 
 #### Learning more
-<p class="display:none"/>
 
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
 - [Books](intro/learning-more/books.html)
@@ -35,13 +34,12 @@ Title: Documentation
 {col-md-4
 #### Resources
 
-- [Downloadable Presentations](intro/resources/downloadable-presentations.html)
-- **[Editor templates](intro/resources/editor-templates.html)**
-- [Icons](intro/resources/icons.html)
-- **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
+    - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
+    - **[Editor templates](intro/resources/editor-templates.html)**
+    - [Icons](intro/resources/icons.html)
+    - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
 #### Releases
-<p class="display:none"/>
 
 - [Release Matrix](./release-matrix.html)
 
