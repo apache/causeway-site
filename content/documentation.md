@@ -13,7 +13,7 @@ Title: Documentation
 
 #### Getting started
 
-- **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](intro/getting-started/release-notes/about.html))**
+- **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
 
 }
 
@@ -65,7 +65,6 @@ Title: Documentation
 * [Pojo vs Inheriting from framework](./how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 * [Registering a domain service](./how-tos/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 * [Entity property](./how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
-* [Built-in Value Types](./applib-guide/value-types/010-Built-in-Value-Types.html)
 * [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * [Entity collection](./how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
 * [Entity or service action](./how-tos/how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
@@ -182,7 +181,6 @@ For both:
 
 #### Domain services
 
-* [Custom repository](./how-tos2/how-to-09-040-How-to-write-a-custom-repository.html)
 * [Factories](./how-tos2/how-to-09-050-How-to-use-Factories.html)
 
 }
