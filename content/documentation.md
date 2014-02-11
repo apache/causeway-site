@@ -470,17 +470,17 @@ For both:
 {col-md-4
 ####  JDO services
 
-* [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
+* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
 
 #### Applib service impl.
 <p class="display:none"/>
 
-* [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
-* [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html)
-* [Command Service on JDO](components/objectstores/jdo/command-service-jdo.html) [1.4.0-snapshot, stub]
-* [Background Command Service on JDO](components/objectstores/jdo/command-service-jdo.html) [1.4.0-snapshot, stub]
-* [Publishing Service on JDO](components/objectstores/jdo/publishing-service-jdo.html) 
-* [Auditing Service on JDO](components/objectstores/jdo/auditing-service-jdo.html)
+* [Exception Recognizers](components/objectstores/jdo/services/exception-recognizers-jdo.html)
+* [Settings Services on JDO](components/objectstores/jdo/services/settings-services-jdo.html)
+* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot, stub]
+* [Background Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot, stub]
+* [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
+* [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
 
   
 }
