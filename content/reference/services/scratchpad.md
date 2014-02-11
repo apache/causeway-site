@@ -21,7 +21,7 @@ In fact, this is a concrete class:
 
 ### Usage
 
-The most common use-case is for [Bulk](../recognized-annotations/Bulk.html) actions that [act upon multiple objects in a list](../../how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html).  The (same) `Scratchpad` service is injected into each of these objects, and they can use pass information.
+The most common use-case is for [Bulk](../recognized-annotations/Bulk.html) actions that [act upon multiple objects in a list](../../more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html).  The (same) `Scratchpad` service is injected into each of these objects, and they can use pass information.
 
 For example, the [ToDo app](../../intro/getting-started/quickstart-archetype.html) demonstrates how the `Scratchpad` service can be used to calculate the total cost of the selected `ToDoItem`s:
 
