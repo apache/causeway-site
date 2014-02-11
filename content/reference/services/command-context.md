@@ -112,7 +112,7 @@ The domain object can still obtain the original ("effective") user that caused t
 
 ### Registering the Services
 
-Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/command-service-jdo.html) of the `CommandService`, then it would be:
+Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/services/command-service-jdo.html) of the `CommandService`, then it would be:
 
     isis.services=...,\
                   org.apache.isis.applib.services.command.CommandContext,\
