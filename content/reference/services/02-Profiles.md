@@ -1,8 +1,6 @@
 Profiles
 ========
 
-> Support for user profiles
-
 As well as allowing domain entities to be persisted into object stores,
 *Apache Isis* also allows user *profiles* to be persisted into a profile
 store.
