@@ -158,26 +158,26 @@ For both:
 
 #### Idioms and patterns
 
-* [Singleton &amp; request-scoped services](./how-tos2/how-to-09-020-How-to-write-a-typical-domain-service.html)
-* [Decoupling dependencies using contributions](./how-tos2/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
-* [Bulk actions, acting upon lists](./how-tos2/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
-* [Bidirectional relationships](./how-tos2/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
-* [View models](./how-tos2/ViewModel.html)
+* [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
+* [Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
+* [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
+* [View models](./more-advanced-topics/ViewModel.html)
 
 #### Derived props/colls
 
-* [Derived property](./how-tos2/how-to-04-010-How-to-make-a-derived-property.html)
-* [Derived collection](./how-tos2/how-to-04-020-How-to-make-a-derived-collection.html)
-* [Inlining query-only repository action](./how-tos2/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
-* [Trigger on property change](./how-tos2/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
-* [Trigger on collection change](./how-tos2/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
+* [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
+* [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
+* [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
+* [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
+* [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
 
 #### Business rules
 
-* [All members hidden](./how-tos2/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
-* [All members unmodifiable](./how-tos2/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
-* [Immutable object](./how-tos2/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
-* [Declarative validation using @MustSatisfy](./how-tos2/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
+* [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
+* [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
+* [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
+* [Declarative validation using @MustSatisfy](./more-advanced-topics/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
 
 }
 
@@ -185,28 +185,28 @@ For both:
 
 #### UI layout & hints
 
-* [Static and dynamic layouts](how-tos2/dynamic-layouts.html)
-* [Tweaking CSS classes](./how-tos2/how-to-tweak-the-ui-using-css-classes.html)
-* [Name/descr. of an object](./how-tos2/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-* [Name/descr. of a property](./how-tos2/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-* [Name/descr. of a collection](./how-tos2/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-* [Name/descr. of an action](./how-tos2/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-* [Entity icons reflecting object's state](./how-tos2/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
+* [Static and dynamic layouts](more-advanced-topics/dynamic-layouts.html)
+* [Tweaking CSS classes](./more-advanced-topics/how-to-tweak-the-ui-using-css-classes.html)
+* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
+* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
+* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
+* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
+* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
 #### Error handling
 
-* [Raise message/errors to users](./how-tos2/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
+* [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
 * [Exception Recognizer](./reference/services/exception-recognizers.html) service
 
 #### Prototyping tips
 
-* [Generic repository](./how-tos2/how-to-09-030-How-to-use-a-generic-repository.html)
-* [Fixtures](./how-tos2/03-Fixtures-and-SwitchUser.html)
-* [Deployment Types](how-tos2/deployment-type.html)
+* [Generic repository](./more-advanced-topics/how-to-09-030-How-to-use-a-generic-repository.html)
+* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
+* [Deployment Types](more-advanced-topics/deployment-type.html)
 
 #### Customisation
 
-* [Finetuning the Programming Model](how-tos2/metamodel-finetuning-the-programming-model.html)
+* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
 }
 
@@ -214,18 +214,18 @@ For both:
 
 #### Persistence lifecycle
 
-* [Initial value of property](./how-tos2/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
-* [Lifecycle hooks](./how-tos2/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
-* [Ensuring object in valid state](./how-tos2/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
-* [Non-persistable entities](./how-tos2/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
-* [Lazy loading](./how-tos2/how-to-07-050-How-to-perform-lazy-loading.html)
-* [Dirty object tracking](./how-tos2/how-to-07-060-How-to-perform-dirty-object-tracking.html)
+* [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
+* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
+* [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
+* [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
+* [Lazy loading](./more-advanced-topics/how-to-07-050-How-to-perform-lazy-loading.html)
+* [Dirty object tracking](./more-advanced-topics/how-to-07-060-How-to-perform-dirty-object-tracking.html)
 
 
 #### Permissions
 
-* [Hide/disable/validate per user/role](./how-tos2/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
-* [The authorization manager](./how-tos2/how-to-08-020-How-to-use-Isis-authorization-manager.html)
+* [Hide/disable/validate per user/role](./more-advanced-topics/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
+* [The authorization manager](./more-advanced-topics/how-to-08-020-How-to-use-Isis-authorization-manager.html)
 
 
 }
