@@ -1,7 +1,5 @@
 Title: Shiro Security
 
-go back to: [documentation](../../../documentation.html)
-
 Security implementations provide authentication and authorization services. They do not providing services such as auditing, encryption, non-repudiation or confidentiality.
 
 The shiro implementation provides integration with [Apache Shiro](http://shiro.apache.org).
