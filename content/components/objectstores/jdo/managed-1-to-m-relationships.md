@@ -2,7 +2,7 @@ Title: Managed 1:m bidirectional relationships
 
 When an object is added to a 1:m bidirectional relationship, the child object must refer to the parent and the child must be added to the parent's children collection.
 
-In general, *Isis* recommends that the mutual registration pattern is ensure that both the parent and child are updated correctly; the framework supports the `modifyXxx()` and `clearXxx()` methods to accomplish this, and this [how-to](../../../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html) describes the boilerplate necessary.  
+In general, *Isis* recommends that the mutual registration pattern is ensure that both the parent and child are updated correctly; the framework supports the `modifyXxx()` and `clearXxx()` methods to accomplish this, and this [how-to](../../../more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html) describes the boilerplate necessary.  
 
 However, in a relational database, these two operations in the domain object model correspond simply to updating the foreign key of the child table to reference the parent's primary key.
 
