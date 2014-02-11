@@ -41,12 +41,12 @@ A simple implementation of the service that writes to stderr, is available, usef
 * `org.apache.isis.applib.services.audit.AuditingService3$Stderr` [1.4.0-SNAPSHOT]
 * `org.apache.isis.applib.services.audit.AuditingService2$Stderr` [1.3.0]
 
-An alternative implementation, that persists audit records to a database, is the [JDO Publishing Service](../../components/objectstores/jdo/publishing-service-jdo.html).   This implementation is only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
+An alternative implementation, that persists audit records to a database, is the [JDO Publishing Service](../../components/objectstores/jdo/services/publishing-service-jdo.html).   This implementation is only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
 
 
 ### Register the Service
 
-Register like any other service in `isis.properties`.  For example, if using the [JDO auditing implementation](../../components/objectstores/jdo/auditing-service-jdo.html) then it would be:
+Register like any other service in `isis.properties`.  For example, if using the [JDO auditing implementation](../../components/objectstores/jdo/services/auditing-service-jdo.html) then it would be:
 
     isis.services=...,\
                   org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdo,\
