@@ -1,5 +1,6 @@
-Title: Third-party Viewers
+title: Third-Party Viewers
+
+go back to: [documentation](../documentation.html)
 
 
-- [DHTMLX Viewer](dhtmlx/about.html)
-- 
+

@@ -1,7 +1,6 @@
-Title: Other Topics
+title: Other Topics
 
-- [Maven Plugin](maven-plugin.html) [stub]
-- [Eclipse IDE Plugin](eclipse-plugin.html) [stub]
-<!--
-- [DSL](dsl.html)
--->
+go back to: [documentation](../documentation.html)
+
+
+
