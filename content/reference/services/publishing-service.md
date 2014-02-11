@@ -134,7 +134,7 @@ The default `PublishingService` (or indeed any implementation) can be configured
 
 ### Alternative Implementations
 
-An alternative implementation of the `PublishingService` is provided by the [JDO Objectstore](../../components/objectstores/jdo/publishing-service-jdo.html).  This implementation persists the events to a table.
+An alternative implementation of the `PublishingService` is provided by the [JDO Objectstore](../../components/objectstores/jdo/services/publishing-service-jdo.html).  This implementation persists the events to a table.
 
 An alternative implementation of the `EventSerializer` is provided by the [Restful Objects viewer](../../components/viewers/restfulobjects/event-serializer-rospec.html).  This implementation serializes the payload using the conventions of the [Restful Objects spec](http://restfulobjects.org).
 
