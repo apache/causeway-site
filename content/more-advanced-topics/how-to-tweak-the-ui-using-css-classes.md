@@ -65,7 +65,7 @@ This can then be targeted, for example using:
     }
 
 
-Note also that instead of using `@CssClass` annotation, you can also specify the CSS style using a [dynamic layout](../../core/dynamic-layouts.html) JSON file:
+Note also that instead of using `@CssClass` annotation, you can also specify the CSS style using a [dynamic layout](./dynamic-layouts.html) JSON file:
 
     ...
     dueBy: {
