@@ -1,6 +1,6 @@
 Title: Scratchpad [1.4.0-SNAPSHOT]
 
-The `Scratchpad` service is a [request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
+The `Scratchpad` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
 
 ### API & Implementation
 
@@ -21,9 +21,9 @@ In fact, this is a concrete class:
 
 ### Usage
 
-The most common use-case is for [Bulk](../../applib-guide/reference/recognized-annotations/Bulk.html) actions that [act upon multiple objects in a list](../../applib-guide/how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html).  The (same) `Scratchpad` service is injected into each of these objects, and they can use pass information.
+The most common use-case is for [Bulk](../recognized-annotations/Bulk.html) actions that [act upon multiple objects in a list](../../how-tos/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html).  The (same) `Scratchpad` service is injected into each of these objects, and they can use pass information.
 
-For example, the [ToDo app](../../getting-started/quickstart-archetype.html) demonstrates how the `Scratchpad` service can be used to calculate the total cost of the selected `ToDoItem`s:
+For example, the [ToDo app](../../intro/getting-started/quickstart-archetype.html) demonstrates how the `Scratchpad` service can be used to calculate the total cost of the selected `ToDoItem`s:
 
     @ActionSemantics(Of.SAFE)
     @Bulk(AppliesTo.BULK_ONLY)
@@ -41,7 +41,7 @@ For example, the [ToDo app](../../getting-started/quickstart-archetype.html) dem
         this.scratchpad = scratchpad;
     }
 
-A more complex example could use a [view model](../../applib-guide/how-tos/how-to-write-a-view-model.html) to enable bulk updates to a set of objects.  The view model's job is to keep track of the items to be updated:
+A more complex example could use a [view model](../../more-advanced-topics/ViewModel.html) to enable bulk updates to a set of objects.  The view model's job is to keep track of the items to be updated:
 
     public class ToDoItemUpdateBulkUpdate extends AbstractViewModel { 
         ...
@@ -88,7 +88,7 @@ Register like any other service in `isis.properties`:
 
 ### Related Services
 
-The [Bulk.Interaction](./bulk-interaction.html) service allows [@Bulk](../../applib-guide/reference/recognized-annotations/Bulk.html) actions to co-ordinate with each other.
+The [Bulk.Interaction](./bulk-interaction.html) service allows [@Bulk](../recognized-annotations/Bulk.html) actions to co-ordinate with each other.
 
 The [QueryResultsCache](./query-results-cache.html) is useful for caching the results of expensive method calls.
 
