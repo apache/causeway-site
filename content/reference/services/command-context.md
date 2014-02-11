@@ -1,6 +1,6 @@
 Title: CommandContext and CommandService [1.4.0-SNAPSHOT]
 
-The `CommandContext` service is a [request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
+The `CommandContext` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
 
 By default, the `Command` is held in-memory only; once the action invocation has completed, the `Command` object is gone.  The optional
  supporting `CommandService` enables the implementation of `Command` to be pluggable, however, enabling the `Command` to be persisted.
@@ -12,7 +12,7 @@ Persistent `Command`s support several use cases:
 - if [auditing](./auditing-service.html) is configured, they provide better audit information as the `Command` (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique `transactionId` GUID
 - if [publishing](./publishing-service.html) is configured, they provide better traceability as the `Command` is also correlated with any published events, again through the unique `transactionId` GUID
 
-Assuming that the `CommandService` supports persistent `Command`s, the associated [@Command](../../applib-guide/reference/recognized-annotations/Command.html) annotation also allows action invocations to be performed in the background.  In this case the act of invoking the action on an object instead returns the `Command` to the user.
+Assuming that the `CommandService` supports persistent `Command`s, the associated [@Command](../recognized-annotations/Command.html) annotation also allows action invocations to be performed in the background.  In this case the act of invoking the action on an object instead returns the `Command` to the user.
 
 
 ### API
@@ -112,7 +112,7 @@ The domain object can still obtain the original ("effective") user that caused t
 
 ### Registering the Services
 
-Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/command-service.html) of the `CommandService`, then it would be:
+Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/command-service-jdo.html) of the `CommandService`, then it would be:
 
     isis.services=...,\
                   org.apache.isis.applib.services.command.CommandContext,\
