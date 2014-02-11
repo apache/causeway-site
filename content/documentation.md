@@ -158,6 +158,12 @@ For both:
 
 {col-md-4
 
+#### Prototyping tips
+
+* [Deployment Types](more-advanced-topics/deployment-type.html)
+* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
+* [Generic repository](./more-advanced-topics/how-to-09-030-How-to-use-a-generic-repository.html)
+
 #### Idioms and patterns
 
 * [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
@@ -166,26 +172,7 @@ For both:
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./more-advanced-topics/ViewModel.html)
 
-#### Derived props/colls
-
-* [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
-* [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
-* [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
-* [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
-* [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
-
-#### Business rules
-
-* [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
-* [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
-* [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
-* [Declarative validation using @MustSatisfy](./more-advanced-topics/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
-
-}
-
-{col-md-4
-
-#### UI layout & hints
+#### More UI layout hints
 
 * [Static and dynamic layouts](more-advanced-topics/dynamic-layouts.html)
 * [Tweaking CSS classes](./more-advanced-topics/how-to-tweak-the-ui-using-css-classes.html)
@@ -195,24 +182,35 @@ For both:
 * [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 * [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
-#### Error handling
-
-* [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Exception Recognizer](./reference/services/exception-recognizers.html) service
-
-#### Prototyping tips
-
-* [Generic repository](./more-advanced-topics/how-to-09-030-How-to-use-a-generic-repository.html)
-* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
-* [Deployment Types](more-advanced-topics/deployment-type.html)
-
-#### Customisation
-
-* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
 }
 
 {col-md-4
+
+#### Business rules
+
+* [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
+* [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
+* [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
+* [Declarative validation using @MustSatisfy](./more-advanced-topics/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
+
+#### Derived props/colls
+
+* [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
+* [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
+* [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
+* [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
+* [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
+
+
+}
+
+{col-md-4
+
+#### Error handling
+
+* [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
+* [Exception Recognizer](./reference/services/exception-recognizers.html) service
 
 #### Persistence lifecycle
 
@@ -223,11 +221,14 @@ For both:
 * [Lazy loading](./more-advanced-topics/how-to-07-050-How-to-perform-lazy-loading.html)
 * [Dirty object tracking](./more-advanced-topics/how-to-07-060-How-to-perform-dirty-object-tracking.html)
 
-
 #### Permissions
 
 * [Hide/disable/validate per user/role](./more-advanced-topics/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
 * [The authorization manager](./more-advanced-topics/how-to-08-020-How-to-use-Isis-authorization-manager.html)
+
+#### Customisation
+
+* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
 
 }
