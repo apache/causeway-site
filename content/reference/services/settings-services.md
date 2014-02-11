@@ -2,7 +2,7 @@ Title: Settings Services
 
 The `ApplicationSettingsService` and the `UserSettingsService` are two similar services that provide the ability to store either configuration settings.  With `ApplicationSettingsService` these settings have global scope; for the `UserSettingsService` the settings are stored per user.
 
-The core applib defines only interfaces and some convenience abstract classes.  The JDO objectstore provides an [implementation](../../components/objectstores/jdo/settings-services-jdo.html), alternatively you could write your own implementation.
+The core applib defines only interfaces and some convenience abstract classes.  The JDO objectstore provides an [implementation](../../components/objectstores/jdo/services/settings-services-jdo.html), alternatively you could write your own implementation.
 
 
 ## ApplicationSettingsService
