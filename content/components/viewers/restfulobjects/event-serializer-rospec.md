@@ -1,6 +1,6 @@
 Title: Event Serializer for the RO Spec
 
-The [Publishing Service](../../../core/services/publishing-service.html) enables Isis to publish action invocations and also changes of domain objects to third party systems.
+The [Publishing Service](../../../reference/services/publishing-service.html) enables Isis to publish action invocations and also changes of domain objects to third party systems.
 
 One of the APIs defined by this service is the `EventSerializer`, such that the event can be rendered into different formats.  The Restful Objects viewer provides an implementation of this API, serializing the the provided `EventPayload` into the form specified by the [Restful Objects spec](http://restfulobjects.org).  The serializer itself is part of the `org.apache.isis.viewer:isis-viewer-restfulobjects-rendering` module.  
 
