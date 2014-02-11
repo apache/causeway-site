@@ -521,54 +521,6 @@ For both:
 {row
 
 {col-md-12
-## Unreleased components
-}
-
-{col-md-4
-#### NoSQL Object Store [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
-
-* [About](components/objectstores/nosql/about.html)
-
-----------
-
-#### XML Object Store [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
-
-* [About](components/objectstores/xml/about.html)
-
-}
-
-{col-md-4
-####  Scimpi Viewer [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
-
-* [About](components/viewers/scimpi/about.html)
-
-----------
-
-#### DnD Viewer [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-
-* [About](components/viewers/dnd/about.html)
-
-}
-
-
-{col-md-4
-#### Groovy Programming Model [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
-
-* [About](components/progmodels/groovy/about.html)
-
-----------
-
-#### XML Profile Store [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
-
-* [About](components/profilestores/xml/about.html)
-
-}
-
-}
-
-{row
-
-{col-md-12
 ##  Other Topics
 }
 
@@ -621,9 +573,48 @@ For both:
 -->
 
 
-#### Mothballed Components
+}
 
-These are no longer under active development
+}
+
+}
+
+
+{row
+
+{col-md-12
+## Unreleased & Mothballed components
+}
+
+{col-md-4
+
+#### Unreleased
+
+Not released since graduation.
+
+* [NoSQL Object Store](components/objectstores/nosql/about.html) [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
+* [XML Object Store](components/objectstores/xml/about.html) [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
+* [XML Profile Store](components/profilestores/xml/about.html) [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
+
+}
+
+{col-md-4
+
+####  Unreleased 
+
+Not released since graduation.
+
+* [Scimpi Viewer](components/viewers/scimpi/about.html) [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
+* [DnD Viewer](components/viewers/dnd/about.html) [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+* [Groovy Programming Model](components/progmodels/groovy/about.html) [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
+
+}
+
+{col-md-4
+
+#### Mothballed
+
+No longer under active development
 
 * [HTML Viewer](components/viewers/html/about.html) (use Wicket)
 * [LDAP Security](components/security/ldap/about.html) (use Shiro)
@@ -636,4 +627,3 @@ These are no longer under active development
 
 }
 
-}
