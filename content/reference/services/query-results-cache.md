@@ -1,6 +1,6 @@
 Title: Query Results Cache [1.4.0-SNAPSHOT]
 
-The purpose of the `QueryResultsCache` is to improve response times to the user, by providing a short-term ([request-scoped](../../applib-guide/domain-services/how-to-09-020-How-to-write-a-typical-domain-service.html)) cache of the value of some (safe or idempotent) method call.  This will typically be as the result of running a query, but could be any expensive operation.
+The purpose of the `QueryResultsCache` is to improve response times to the user, by providing a short-term ([request-scoped](../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)) cache of the value of some (safe or idempotent) method call.  This will typically be as the result of running a query, but could be any expensive operation.
 
 Caching such values is useful for code that loops "naively" through a bunch of stuff, performing an expensive operation each time.  If the data is such that the same expensive operation is made many times, then the query cache is a perfect fit.
 
@@ -102,4 +102,4 @@ Register this service like any other service, in `isis.properties`, eg:
 
 ### Related Services
 
-The [ScratchPad](./scratchpad.html) service is also intended for actions that are called many times, allowing arbitrary information to be shared between them.  Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the [@Bulk](../../applib-guide/reference/recognized-annotations/Bulk.html) annotation. 
+The [ScratchPad](./scratchpad.html) service is also intended for actions that are called many times, allowing arbitrary information to be shared between them.  Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the [@Bulk](../recognized-annotations/Bulk.html) annotation. 
