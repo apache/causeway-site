@@ -1,8 +1,8 @@
 Title: Components
 
-go back to: [documentation](../documentation.html)
-
-* [Object Stores](./objectstores/about.html)
-* [Security](./security/about.html)
-* [Viewers](./viewers/about.html)
+go 
+* back to: [documentation](../documentation.html)
+* to: [Object Stores](./objectstores/about.html)
+* to: [Security](./security/about.html)
+* to: [Viewers](./viewers/about.html)
     
