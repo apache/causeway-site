@@ -13,7 +13,7 @@ while this is the object change JSON:
  ![](images/changed-object-published-to-stderr.png)
 
 
-If you configure the default `PublishingService` (as described [here](../../../core/services/publishing-service.html)) along with the `RestfulObjectsSpecEventSerializer`, then you should see JSON being written to your console.
+If you configure the default [PublishingService](../../../reference/services/publishing-service.html) along with the `RestfulObjectsSpecEventSerializer`, then you should see JSON being written to your console.
 
 
 ### Registering and Configuring the Serializer
@@ -34,7 +34,7 @@ isis.viewer.restfulobjects.RestfulObjectsSpecEventSerializer.baseUrl=https://mya
 If no `baseUrl` is specified, then the default URL is `http://localhost:8080/restful/`.
 
 {note
-Because the `baseUrl` will be different in production vs development, you will probably want to [configure Isis](../../../core/configuration-files.html) to pick up its configuration file
+Because the `baseUrl` will be different in production vs development, you will probably want to [configure Isis](../../../reference/configuration-files.html) to pick up its configuration file
 from an external directory.
 }
 
