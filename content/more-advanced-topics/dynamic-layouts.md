@@ -237,4 +237,4 @@ Therefore, make sure the following is added to the dom project's `pom.xml`:
         </resource>
     </resources>
  
-If using the Isis' (../../getting-started/simple-archetype.html) [archetype], then the POM is already correctly configured.
+If using an Isis [archetype](../../getting-started/simple-archetype.html), then the POM is already correctly configured.
