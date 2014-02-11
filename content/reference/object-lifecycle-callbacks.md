@@ -5,7 +5,7 @@ Isis supports a number of callback methods corresponding to the persistence life
 
 They are:
  
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr>
     <th>Method</th>
     <th>Called?</th>
