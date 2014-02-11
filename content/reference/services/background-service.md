@@ -4,7 +4,7 @@ The `BackgroundService`, and its companion `BackgroundCommandService`, enable ac
  
 The `BackgroundService` is responsible for capturing a memento representing the action invocation, and persisting it.  The default `BackgroundServiceDefault` implementation (provided by isis-core) uses (a private copy of) [MementoService](./memento-service.html), and then delegates the persistence of the memento to the companion `BackgroundCommandService` (discussed further [below](#BackgroundCommandService)).
  
-The JDO objectstore provides an implementation of `BackgroundCommandService` ([BackgroundCommandServiceJdo](../../components/objectstores/jdo/background-command-service-jdo.html)) that persists to an RBMS entities.  You are welcome to write other implementations to other data stores (eg NoSQL) if required.
+The JDO objectstore provides an implementation of `BackgroundCommandService` ([BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)) that persists to an RBMS entities.  You are welcome to write other implementations to other data stores (eg NoSQL) if required.
 
 The persisting of commands is only half the story; there needs to be a separate process  to read the commands and execute them.  The `BackgroundCommandExecution` class (also discussed [below](#BackgroundCommandExecution) provides the mechanism to do this.
 
@@ -110,7 +110,7 @@ The `asMementoString()` method tehrefore lets the `BackgroundCommandService` imp
 
 ### Implementation
 
-The JDO object store provides the [BackgroundCommandServiceJdo](../../components/objectstores/jdo/background-command-service-jdo.html) implementation that persists `Command`s to an RDBMS.
+The JDO object store provides the [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html) implementation that persists `Command`s to an RDBMS.
 
 
 ### Usage
@@ -123,7 +123,7 @@ These services are closely related to the `CommandContext` and `CommandService` 
 
 The core framework provides default implementations of `CommandContext` and also `BackgroundService`, and there is very little reason to use any other implementation.
 
-The implementations of `CommandService` and `BackgroundCommandService` also go together; typically both parent `Command`s and child background `Command`s will be persisted in the same way.  The JDO objectstore provides implementations of both ([CommandServiceJdo](../../components/objectstores/jdo/command-service-jdo.html) and [BackgroundCommandServiceJdo](../../components/objectstores/jdo/background-command-service-jdo.html)).
+The implementations of `CommandService` and `BackgroundCommandService` also go together; typically both parent `Command`s and child background `Command`s will be persisted in the same way.  The JDO objectstore provides implementations of both ([CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) and [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)).
  
 ## BackgroundCommandExecution
 
