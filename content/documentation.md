@@ -559,8 +559,8 @@ For both:
 {col-md-4
 #### Plugins
 
-* [Maven Plugin](other/maven-plugin.html) [stub]
-* [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+* [JRebel Plugin](other/eclipse-plugin.html) [stub]
+
 
 <!--
 
@@ -595,15 +595,6 @@ Not released since graduation.
 * [NoSQL Object Store](components/objectstores/nosql/about.html) [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
 * [XML Object Store](components/objectstores/xml/about.html) [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
 * [XML Profile Store](components/profilestores/xml/about.html) [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
-
-}
-
-{col-md-4
-
-####  Unreleased 
-
-Not released since graduation.
-
 * [Scimpi Viewer](components/viewers/scimpi/about.html) [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
 * [DnD Viewer](components/viewers/dnd/about.html) [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
 * [Groovy Programming Model](components/progmodels/groovy/about.html) [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
@@ -622,6 +613,15 @@ No longer under active development
 * [SQL Profile Store](components/profilestores/sql/about.html)
 * [SQL Object Store](components/objectstores/sql/about.html) (use JDO)
 * [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
+
+}
+
+{col-md-4
+
+#### Incomplete
+
+* [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
+* [Maven Plugin](other/maven-plugin.html) [stub]
 
 }
 
