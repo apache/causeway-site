@@ -1,6 +1,3 @@
-Title: Security Implementations
+Title: Security
 
-- [Shiro Security](shiro/about.html)
-- [File-based Security](file/about.html)
-
-
+go back to: [documentation](../../documentation.html)

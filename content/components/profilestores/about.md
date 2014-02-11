@@ -1,5 +1,3 @@
-Title: Profile Store Implementations
+Title: Profile Stores
 
-- [XML Profile Store](xml/about.html)
-
-
+go back to: [documentation](../../documentation.html)
