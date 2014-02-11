@@ -56,7 +56,7 @@ The permission format is:
 
 and is discussed in more detail [here](./format-of-permissions.html)
 
-The `shiro.ini` file as configured in the [quickstart archetype](../../../getting-started/quickstart-archetype.html) is a little more complex.  Here there are two text-based realms defined, `realm1` and `realm2`.  The `resourcePath` for these realms is in the form:
+The `shiro.ini` file as configured in the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html) is a little more complex.  Here there are two text-based realms defined, `realm1` and `realm2`.  The `resourcePath` for these realms is in the form:
 
     realm1.resourcePath=classpath:webapp/realm1.ini
 
