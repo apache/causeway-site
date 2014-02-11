@@ -14,7 +14,7 @@ This approach allows configuration to be partitioned by component.  To restate t
 
 A running Isis instance requires a persistor (aka objectstore), the authentication mechanism, the authorization mechanism, and a user profile store.  It also requires some sort of viewer or viewers.
 
-The persistor, authentication, authorization and profilestore are specified in the `isis.properties` file.  For example, this is the configuration of the [Wicket/Restful/JDO archetype](../getting-started/quickstart-archetype.html):
+The persistor, authentication, authorization and profilestore are specified in the `isis.properties` file.  For example, this is the configuration of the [simple](../intro/getting-started/simple-archetype.html) archetype:
 
 <pre>
 isis.persistor=datanucleus
