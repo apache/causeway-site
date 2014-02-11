@@ -1,5 +1,4 @@
-DomainObjectContainer interface
-===============================
+title: DomainObjectContainer interface
 
 > Provides a single point of contact from domain objects into the
 > *Apache Isis* framework.
@@ -10,7 +9,7 @@ lightweight general purpose repository during prototyping.
 
 The following table lists the most important (ie non deprecated) methods in this interface.
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr>
     <th>Category</th>
     <th>Method</th>
@@ -20,7 +19,7 @@ The following table lists the most important (ie non deprecated) methods in this
     <td>Object creation</td>
     <td>newTransientInstance(Class&lt;T>)</td>
     <td>Creates new non-persisted object.  
-        <p>While it is also possible to simply <i>new()</i> up an object, that object will not have any services injected into it, nor will any properties be <a href="../how-tos/how-to-03-017-How-to-specify-default-value-of-an-object-property.html">defaulted</a> nor will any <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html"><i>created()</i></a> callback be invoked.</td>
+        <p>While it is also possible to simply <i>new()</i> up an object, that object will not have any services injected into it, nor will any properties be <a href="../how-tos/how-to-03-017-How-to-specify-default-value-of-an-object-property.html">defaulted</a> nor will any <a href="./object-lifecycle-callbacks.html"><i>created()</i></a> callback be invoked.</td>
 </tr>
 <tr>
     <td>Validation</td>
