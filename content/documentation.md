@@ -444,14 +444,16 @@ For both:
 * [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
 * [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
 * [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
+* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
-* [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 
 }
 
 {col-md-4
+
+
 ####  JDO mapping hints
 <p class="display:none"/>
 
@@ -466,10 +468,13 @@ For both:
 }
 
 {col-md-4
+####  JDO services
+
+* [Using the `IsisJdoSupport` service](components/objectstores/jdo/isisjdosupport-service.html)
+
 #### Applib service impl.
 <p class="display:none"/>
 
-* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
 * [Exception Recognizers](components/objectstores/jdo/exception-recognizers-jdo.html)
 * [Settings Services on JDO](components/objectstores/jdo/settings-services-jdo.html)
 * [Command Service on JDO](components/objectstores/jdo/command-service-jdo.html) [1.4.0-snapshot, stub]
