@@ -46,7 +46,7 @@ For example:
         ...
     }
 
-For more details of callbacks, see [How to hook into the object lifecycle using callbacks](./how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html). 
+For more details of callbacks, see [How to hook into the object lifecycle using callbacks](../reference/object-lifecycle-callbacks.html). 
 
 ### Programmatically, by the creator
 
