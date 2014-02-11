@@ -1,6 +1,6 @@
 Title: Static and Dynamic Layouts
 
-> You can also watch a [screencast](../intro/getting-started/screencasts.html) demonstrating static and dynamic layouts. 
+> You can also watch a [screencast](../intro/tutorials/screencasts.html) demonstrating static and dynamic layouts. 
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  This metadata can be specified statically, using annotations, or dynamically, using a JSON file.
 
@@ -124,7 +124,7 @@ The `@Named`, `@DescribedAs`, `@MultiLine`, `@TypicalLength`, `@Render` and `@Cs
 
 While the use of annotations to specify layout metadata is typesafe, it does have the disadvantage that changing the layout means recompiling the code and redeploying.
 
-So, instead, the layout metadata can be specified using a JSON layout file.  The [Developer Utilities Service](services/developer-utilities-service.html) can then be used to refresh the layout (rebuilding the metamodel for the domain class in question).
+So, instead, the layout metadata can be specified using a JSON layout file.  The [Developer Utilities Service](../reference/services/developer-utilities-service.html) can then be used to refresh the layout (rebuilding the metamodel for the domain class in question).
 
 The JSON layout file takes the name `Xxx.layout.json`, and resides in the same package as the class.  For example, the layout for the [ToDoItem](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java) class is [ToDoItem.layout.json](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.layout.json)  
 
@@ -237,4 +237,4 @@ Therefore, make sure the following is added to the dom project's `pom.xml`:
         </resource>
     </resources>
  
-If using either of Isis' [two](../getting-started/simple-archetype.html) [archetypes](getting-started/quickstart-archetype.html), then the POM is already correctly configured.
+If using the Isis' (../../getting-started/simple-archetype.html) [archetype], then the POM is already correctly configured.
