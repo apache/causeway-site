@@ -420,11 +420,11 @@ For both:
 }
 
 {col-md-4
-#### DHTMLX
+#### Third Party
+
+##### DHTMLX
 
 * [About](third-party/viewers/dhtmlx/about.html)
-
-Note: this viewer is third-party open source (outside Apache)
 
 }
 
