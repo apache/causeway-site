@@ -117,7 +117,7 @@ If the sum of all the columns exceeds 12, then the collections are placed undern
  
 ### Other Annotations
 
-The `@Named`, `@DescribedAs`, `@MultiLine`, `@TypicalLength`, `@Render` and `@CssClass` annotations are also all hints that can affect the UI.  See the [reference guide](../applib-guide/reference/recognized-annotations/about.html) for further details.
+The [@Named](../reference/recognized-annotations/Named.html), [@DescribedAs](../reference/recognized-annotations/DescribedAs.html), [@MultiLine](../reference/recognized-annotations/MultiLine.html), [@TypicalLength](../reference/recognized-annotations/TypicalLength.html), [@Render](../reference/recognized-annotations/Render.html) and [@CssClass](../reference/recognized-annotations/CssClass.html) annotations are also all hints that can affect the UI.
 
 
 ## Dynamic Layouts
@@ -237,4 +237,4 @@ Therefore, make sure the following is added to the dom project's `pom.xml`:
         </resource>
     </resources>
  
-If using an Isis [archetype](../../getting-started/simple-archetype.html), then the POM is already correctly configured.
+If using an Isis [archetype](../intro/getting-started/simple-archetype.html), then the POM is already correctly configured.
