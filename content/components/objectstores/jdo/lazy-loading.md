@@ -4,7 +4,7 @@ By default, collections all rendered lazily and are thus also loaded lazily from
 
 However, even in the case of collections that have annotated with `@Render(Type.EAGERLY)`, these should probably still be lazily loaded.  Otherwise, there will always be an unnecessary cost when rendering the object in a table.
 
-For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `dependencies` collection is as follows:
+For example, in the `ToDoItem` (in the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html)) the `dependencies` collection is as follows:
 
 <pre>
   @javax.jdo.annotations.Persistent(table="TODO_DEPENDENCIES")
