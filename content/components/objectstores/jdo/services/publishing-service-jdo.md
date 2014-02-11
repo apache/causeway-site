@@ -1,6 +1,6 @@
 Title: Publishing Service using JDO
 
-The JDO objectstore provides a simple implementation of the applib [PublishingService](../../../core/services/publishing-service.html) that simply persists the event data into a `PublishedEvent` entity.
+The JDO objectstore provides a simple implementation of the applib [PublishingService](../../../../reference/services/publishing-service.html) that simply persists the event data into a `PublishedEvent` entity.
 
 Along with the event data, the `PublishedEvent` also includes a status property with two values: `QUEUED` and `PROCESSED`.  The service also acts as a repository to search for all unprocessed events.
 
@@ -12,10 +12,8 @@ Although a polling architecture introduces some overhead, it avoids the complexi
 
 Register like any other service in `isis.properties`:
 
-<pre>
-isis.services=<i>...other services...</i>,\
-              org.apache.isis.objectstore.jdo.applib.service.publish.PublishingServiceJdo,\
-              ...
-</pre>
+    isis.services=...,\
+                  org.apache.isis.objectstore.jdo.applib.service.publish.PublishingServiceJdo,\
+                  ...
 
 Assuming that you've also configured Isis to use the JDO objectstore, you should be good to go...

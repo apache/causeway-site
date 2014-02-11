@@ -65,12 +65,15 @@ The implementation is `IsisJdoSupportImpl`.  It is registered in `isis.propertie
 
 In the domain entity or service, add:
 
-    // {{
     private IsisJdoSupport isisJdoSupport;
     public void injectIsisJdoSupport(IsisJdoSupport isisJdoSupport) {
         this.isisJdoSupport = isisJdoSupport;
     }
-    // }}
+
+or simply (1.4.0-SNAPSHOT):
+
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport;
 
 The service will then be automatically injected as normal.
                     

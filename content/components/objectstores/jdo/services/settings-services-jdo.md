@@ -1,6 +1,6 @@
 Title: Settings Services using JDO
 
-The JDO objectstore provides simple implementations of the two applib [Settings Services](../../../reference/services/settings-services.html).
+The JDO objectstore provides simple implementations of the two applib [Settings Services](../../../../reference/services/settings-services.html).
 
 ## Application Settings
 
@@ -24,11 +24,9 @@ These actions can be hidden using security if need be.
 
 Register the services as any other service, in `isis.properties`:
 
-<pre>
-isis.services=<i>...other services...</i>,\
-              org.apache.isis.objectstore.jdo.applib.service.settings.ApplicationSettingsServiceJdo,\
-             org.apache.isis.objectstore.jdo.applib.service.settings.UserSettingsServiceJdo,\
-              ...
-</pre>
+    isis.services=...,\
+                  org.apache.isis.objectstore.jdo.applib.service.settings.ApplicationSettingsServiceJdo,\
+                  org.apache.isis.objectstore.jdo.applib.service.settings.UserSettingsServiceJdo,\
+                  ...
 
 Assuming that you've also configured Isis to use the JDO objectstore, you should be good to go...
