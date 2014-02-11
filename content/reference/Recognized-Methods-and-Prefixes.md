@@ -1,10 +1,9 @@
-Recognized Methods and Prefixes
-===============================
+title: Recognized Methods and Prefixes
 
 The following table lists all of the methods or method prefixes that are
 recognized by *Apache Isis*' default programming model:
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr>
     <th>Prefix</th>
     <th>Object</th>
