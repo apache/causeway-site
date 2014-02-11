@@ -287,11 +287,6 @@ For both:
 * [Settings Services](./reference/services/settings-services.html)
 * [Developer Utilities Service](./reference/services/developer-utilities-service.html)
 
-####  Non-UI execution [1.4.0-SNAPSHOT]
-
-- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html) (stub)
-- [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html) (stub)
-
 }
 
 }
@@ -312,6 +307,11 @@ For both:
 #### Config
 
 * [Configuration Files](./reference/configuration-files.html)
+
+####  Non-UI execution [1.4.0-SNAPSHOT]
+
+- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html) (stub)
+- [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html) (stub)
 
 }
 
