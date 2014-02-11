@@ -56,7 +56,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">created</a> using <tt>newTransientInstance()</tt></td>
+    <td>Lifecycle callback for when the object has just been <a href="./object-lifecycle-callbacks.html">created</a> using <tt>newTransientInstance()</tt></td>
 </tr>
 <tr>
     <td>default</td>
@@ -119,7 +119,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="./object-lifecycle-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
 </tr>
 <tr>
     <td>loading</td>
@@ -128,7 +128,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="./object-lifecycle-callbacks.html">loaded</a> from the object store.<p>NB: this may not called by the JDO ObjectStore.</td>
 </tr>
 <tr>
     <td>modify</td>
@@ -146,7 +146,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store.<p>NB: this may not called by the JDO ObjectStore</td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="./object-lifecycle-callbacks.html">persisted</a> from the object store.<p>NB: this may not called by the JDO ObjectStore</td>
 </tr>
 <tr>
     <td>persisting</td>
@@ -155,7 +155,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="./object-lifecycle-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>removeFrom</td>
