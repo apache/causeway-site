@@ -1,6 +1,6 @@
 Title: Mapping BigDecimals
 
-Working with `java.math.BigDecimal` properties takes a little care due to scale/precision issues.  This is certainly the case for HSQL, and (may be the case ) for all other RDBMS' too.
+Working with `java.math.BigDecimal` properties takes a little care due to scale/precision issues.
 
 For example, suppose we have:
 
