@@ -29,7 +29,7 @@ and
         ...
     }
 
-Contrast the above with the programmatic maintenance described in the [how-to](../../../applib-guide/how-tos/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html).
+Contrast the above with the programmatic maintenance described in the [how-to](../../../more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html).
 
 > **Note**
 > 
