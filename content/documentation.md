@@ -470,6 +470,7 @@ For both:
 {col-md-4
 ####  JDO services
 <p class="display:none"/>
+
 * [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
 
 #### Applib service impl.
