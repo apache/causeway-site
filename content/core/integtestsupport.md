@@ -19,7 +19,7 @@ To use, update the `pom.xml`:
     &lt;/dependency&gt;
 </pre>
 
-A full example is provided in the [quickstart archetype](../getting-started/quickstart-archetype.html).  But to briefly explain; the recommended approach is to create an abstract class for all your integration tests.  Here is the one from the quickstart archetype:
+A full example is provided in the [quickstart archetype](../intro/getting-started/quickstart-archetype.html).  But to briefly explain; the recommended approach is to create an abstract class for all your integration tests.  Here is the one from the quickstart archetype:
 
     public abstract class AbstractIntegTest {
     
@@ -123,4 +123,4 @@ Each of the integration tests then inherit from this abstract class.  For exampl
 
 Note that when the `ToDoItem` is wrapped, it is not possible to call `setComplete()` directly on the object; but when it is unwrapped then this call can be made as per normal.
 
-The full source code, plus other example tests, can be found [here](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integtests).
+The full source code, plus other example tests, can be found [here](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java).
