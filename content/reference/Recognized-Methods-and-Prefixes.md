@@ -173,7 +173,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="./object-lifecycle-callbacks.html">persisted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>removing</td>
@@ -182,7 +182,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">deleted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="./object-lifecycle-callbacks.html">deleted</a> from the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>set</td>
@@ -218,7 +218,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object has just been <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
+    <td>Lifecycle callback for when the (persistent) object has just been <a href="./object-lifecycle-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>updating</td>
@@ -227,7 +227,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="../how-tos/how-to-07-070-How-to-hook-into-the-object-lifecycle-using-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
+    <td>Lifecycle callback for when the (persistent) object is just about to be <a href="./object-lifecycle-callbacks.html">updated</a> in the object store<p>NB: this may not called by the JDO ObjectStore in all situations</td>
 </tr>
 <tr>
     <td>validate</td>
