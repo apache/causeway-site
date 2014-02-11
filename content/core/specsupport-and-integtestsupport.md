@@ -64,7 +64,7 @@ To support unit-testing, Isis provides the `InMemoryDB` class; a glorified hashm
 
 ## Usage
 
-The following examples are taken from the [quickstart ("todo") application](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo); in particular from that project's [integration test](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integtests) module.
+The following examples are taken from the [quickstart ("todo") application](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo); in particular from that project's [integration test](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java) module.
 
 
 ### Root pom ###
