@@ -31,5 +31,5 @@ Used in the example [todo app](https://github.com/apache/isis/tree/quickstart_wi
 
 ### Related Services
 
-The [MementoService](../../core/services/memento-service.html) provides a convenient mechanism for view models to build up and parse memento strings (for the implementation of the `viewModelMemento()` and `viewModelInit()` methods.
+The [MementoService](../reference/services/memento-service.html) provides a convenient mechanism for view models to build up and parse memento strings (for the implementation of the `viewModelMemento()` and `viewModelInit()` methods.
  
