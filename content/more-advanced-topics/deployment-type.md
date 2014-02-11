@@ -2,7 +2,7 @@ Title: Deployment Types and Component Defaults
 
 One important configuration setting is the `deploymentType`, which, in turn, specifies the `deploymentCategory`.  If a component implementation is not specified explicitly, then the default is based on the deployment category (see the [InstallerLookupDefault](https://raw.github.com/apache/isis/master/core/runtime/src/main/java/org/apache/isis/core/runtime/installers/InstallerLookupDefault.java) class). Certain other features are based on the category also.
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr>
 <th>Deployment category</th>
 <th>Deployment types</th>
@@ -18,10 +18,10 @@ One important configuration setting is the `deploymentType`, which, in turn, spe
     <td>SERVER_EXPLORATION<br/>
 EXPLORATION<br/>
 UTILITY</td>
-    <td><a href="bypass-security.html">Bypass</a></td>
-    <td><a href="bypass-security.html">Bypass</a></td>
-    <td><a href="inmemory-objectstore.html">In-memory</a></td>
-    <td><a href="inmemory-profilestore.html">In-memory</a></td>
+    <td><a href="../core/bypass-security.html">Bypass</a></td>
+    <td><a href="../core/bypass-security.html">Bypass</a></td>
+    <td><a href="../core/inmemory-objectstore.html">In-memory</a></td>
+    <td><a href="../core/inmemory-profilestore.html">In-memory</a></td>
     <td>Visible</td>
     <td>Not visible</td>
     </tr>
@@ -30,9 +30,9 @@ UTILITY</td>
     <td>SERVER_PROTOTYPE<br/>
 PROTOTYPE</td>
     <td><a href="../components/security/file/about.html">File-based</a></td>
-    <td><a href="bypass-security.html">Bypass</a></td>
-    <td><a href="inmemory-objectstore.html">In-memory</a></td>
-    <td><a href="inmemory-profilestore.html">In-memory</a></td>
+    <td><a href="../core/bypass-security.html">Bypass</a></td>
+    <td><a href="../core/inmemory-objectstore.html">In-memory</a></td>
+    <td><a href="../core/inmemory-profilestore.html">In-memory</a></td>
     <td>Not visible</td>
     <td>Visible</td>
 </tr>
