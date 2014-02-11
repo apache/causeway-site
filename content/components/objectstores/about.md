@@ -1,3 +1,4 @@
 Title: Object Stores
 
-go back to: [documentation](../../documentation.html)
+* [JDO](./jdo/about.html)
+* back to [documentation](../../documentation.html)
