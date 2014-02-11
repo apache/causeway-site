@@ -77,15 +77,16 @@ Title: Documentation
 * [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
 * [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
 
-}
-
-{col-md-4
-
 #### UI hints
 
 * [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
 * [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
+
+}
+
+{col-md-4
+
 
 #### Business rules
 
@@ -107,16 +108,17 @@ Validity ("do it")
 * [Validate collection add/remove](./how-tos/how-to-02-110-How-to-validate-an-object-being-added-or-removed-from-a-collection.html)
 * [Validate action params](./how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html)
 
-}
-
-{col-md-4
-
 #### Common constraints
 
 * [Optional property](./how-tos/how-to-01-100-How-to-make-a-property-optional.html)
 * [Optional action ](./how-tos/how-to-01-110-How-to-make-an-action-parameter-optional.html)
 * [Size of string properties](./how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 * [Size of string action params](./how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
+
+}
+
+{col-md-4
+
 
 #### Drop-downs &amp; defaults
 
