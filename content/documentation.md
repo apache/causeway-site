@@ -313,7 +313,7 @@ For both:
 
 ####  Non-UI execution [1.4.0-SNAPSHOT]
 
-- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html) (stub)
+- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
 - [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html) (stub)
 
 }
