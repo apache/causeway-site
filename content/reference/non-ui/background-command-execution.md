@@ -19,7 +19,7 @@ The JDO service also provides its own (concrete) subclass, `BackgroundCommandExe
 
 
 #### neat!
-The above diagram was created using this [yuml.me](http://yuml.me) DSL [http://yuml.me/edit/e722131c](edit):
+The above diagram was created using this [yuml.me](http://yuml.me) DSL [edit](http://yuml.me/edit/e722131c):
 
     [AbstractIsisSessionTemplate|#doExecute()]^-[BackgroundCommandExecution|#findBackgroundCommandsToExecute()]
     [BackgroundCommandExecution]^-[BackgroundCommandExecutionFromBackgroundCommandServiceJdo]
