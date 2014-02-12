@@ -478,7 +478,7 @@ For both:
 
 * [Exception Recognizers](components/objectstores/jdo/services/exception-recognizers-jdo.html)
 * [Settings Services on JDO](components/objectstores/jdo/services/settings-services-jdo.html)
-* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot, stub]
+* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot]
 * [Background Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot]
 * [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
 * [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
