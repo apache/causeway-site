@@ -483,6 +483,10 @@ For both:
 * [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
 * [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
 
+#### Non-UI
+
+* [Background Command Execution](components/objectstores/jdo/non-ui/background-command-execution-jdo.html)
+
   
 }
 

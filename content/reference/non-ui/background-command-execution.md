@@ -11,29 +11,23 @@ where:
 
 * `findBackgroundCommandsToExecute()` is a mandatory hook method for subclasses to implement.
 
-This allows for different implementations of the `CommandService` and `BackgroundCommandService` to persist to wherever.  
+This allows for different implementations of the `CommandService` and `BackgroundCommandService` to persist to wherever.
+
+The diagram below shows the dependencies between these various classes:
 
 ![](http://yuml.me/25343da1)
 
 
-## Related Classes (JDO implementation)
+## Related Classes
 
-The JDO object store provides its own (concrete) subclass, `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` that queries for persisted `Command`s (created either through [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) or through [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)), using the corresponding repository:
-
-![](http://yuml.me/363b335f)
+The JDO object store provides its own (concrete) subclass, [BackgroundCommandExecutionFromBackgroundCommandServiceJdo](../../components/objectstores/jdo/non-ui/background-command-execution-jdo.html) that queries for persisted `Command`s (created either through [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) or through [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)), using the corresponding repository.
 
 
 #### neat!
-The diagrams on this page were created using [yuml.me](http://yuml.me). 
+The diagram on this page were created using [yuml.me](http://yuml.me). 
 
 DSL ([edit](http://yuml.me/edit/25343da1)):
 
     [AbstractIsisSessionTemplate|#doExecute()]^-[BackgroundCommandExecution|#findBackgroundCommandsToExecute()]
     [BackgroundCommandExecution]->injected[BookmarkService|lookup()]
     [BackgroundCommandExecution]->injected[CommandContext|setCommand()]
-
-DSL ([edit](http://yuml.me/edit/363b335f)):
-    
-    [AbstractIsisSessionTemplate|#doExecute()]^-[BackgroundCommandExecution|#findBackgroundCommandsToExecute()]
-    [BackgroundCommandExecution]^-[BackgroundCommandExecutionFromBackgroundCommandServiceJdo]
-    [BackgroundCommandExecutionFromBackgroundCommandServiceJdo]->injected[BackgroundCommandServiceJdoRepository|findBackgroundCommandsNotYetStarted()]

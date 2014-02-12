@@ -9,7 +9,7 @@ There are two further services that can be used:
 
 ### Executing the `Command`s
 
-The `BackgroundCommandServiceJdo` only persists the `Command`s to a database table, it doesn't actually execute those commands.  For this, you can use  `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` class, a subclass implementation of [BackgroundCommandExecution]().  The intention is that this class is instantiated regularly (eg every 10 seconds) by a scheduler such as [Quartz](http://quartz.org)) to poll for `Command`s to be executed, and then execute them.  As you might imagine, to find new `Ccommand`s it uses the `BackgroundCommandServiceJdoRepository`. 
+The `BackgroundCommandServiceJdo` only persists the `Command`s to a database table, it doesn't actually execute those commands.  For this, you can use  [BackgroundCommandExecutionFromBackgroundCommandServiceJdo](../non-ui/background-command-execution-jdo.html) class, a subclass implementation of [BackgroundCommandExecution](../../../../reference/non-ui/background-command-execution.html).  The intention is that this class is instantiated regularly (eg every 10 seconds) by a scheduler such as [Quartz](http://quartz.org)) to poll for `Command`s to be executed, and then execute them.  As you might imagine, to find new `Ccommand`s it uses the `BackgroundCommandServiceJdoRepository`. 
 
 An example of how to configure the Quartz scheduler can be found on the page that describes the applib [BackgroundService](../../../../reference/services/background-service.html).
 

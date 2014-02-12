@@ -2,8 +2,9 @@ Title: XML Snapshot Service [1.4.0-SNAPSHOT]
 
 The *Apache Isis* framework provides the capability to generate XML snapshots (and if required corresponding XSD schemas) based on graphs of domain objects. 
 
-### API
+## API
 
+The API of `XmlSnapshotService` is:
 
     public interface XmlSnapshotService {
     
@@ -46,27 +47,58 @@ where:
 * `getChildTextValue()` is a convenience method to obtain value of child text node.
 
 
-### Usage
+## Usage
 
-> TO DOCUMENT
+### Simple Usage
 
-### Usage (Deprecated)
+The simplest usage is:
 
-This is done using the
-`org.apache.isis.core.runtime.snapshot.XmlSnapshot` class.
+    XmlSnapshot snapshot = xmlsnapshotService.snapshotFor(customer);
+    Element customerAsXml = snapshot.getXmlElement();
 
+This will return an XML (document) element that contains the names and values of each
+of the customer's value properties, along with the titles of reference properties, and also the number of items in collections.
+
+### Including other Elements
+
+The contents of the snapshot can be adjusted by including "paths" to other references or collections.
+
+For example, suppose that we want the snapshot to also include details of the customer's address, where `address` in this case
+is a reference property to an instance of the `Address` class.  We can "walk-the-graph" by including these references within
+the snapshot:
+
+    XmlSnapshot snapshot = xmlsnapshotService.snapshotFor(customer);
+    ...
+    snapshot.include("address");
+    ...
+    Element customerAsXml = snapshot.getXmlElement();
+
+Or, we could go further and include details of every order in the customer's `orders` collection, and details of every
+product of every order:
+
+    ...
+    snapshot.include("orders/product"); // (2)
+    ...
+    
+> As you might imagine, the resultant XML document can get quite large very quickly with only a few "include"s.
+
+    
+### Using the Builder (fluent API)
+
+An alternative way to build customized snapshots is to use the builder (fluent) API:
+
+    XmlSnapshot.Builder builder = xmlsnapshotService.builderFor(customer)
+                                  .includePath("address")
+                                  .includePath("orders/product");
+    Element customerAsXml = builder.build().getXmlElement();
+   
+    
 #### Generating an XML Snapshot 
 
 The `XmlSnapshot` can be created either directly or using a builder.
 
 #### Basic Usage
 
-The standard usage is to instantiate directly.
-
-    XmlSnapshot snapshot = new XmlSnapshot(customer);
-    Element customerAsXml = snapshot.getXmlElement();
-
-This will return the Customer's fields, titles of simple references, number of items in collections.
 
 In order to use the `XmlSnapshot`, the domain object must implement `org.apache.isis.applib.snapshot.Snapshottable`. This is just a marker interface.
 
