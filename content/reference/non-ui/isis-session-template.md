@@ -35,15 +35,5 @@ One notable feature of `AbstractIsisSessionTemplate` is that it will automatical
 
 ### Related classes
 
-The [BackgroundCommandExecution](./background-command-execution.html) class is a subclass of `AbstractIsisSessionTemplate`, designed to execute [background commands](../services/background-service.html)).  The `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` (a further subclass) obtains the commands from the `BackgroundCommandJdoServiceRepository`:
+The [BackgroundCommandExecution](./background-command-execution.html) class is a subclass of `AbstractIsisSessionTemplate`, designed to execute [background commands](../services/background-service.html)).  The `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` (a further subclass) obtains the commands from the `BackgroundCommandJdoServiceRepository`.
 
-
-![](http://yuml.me/371d0665)
-
-
-##### neat!
-The above diagram was created using this [yuml.me](http://yuml.me] DSL:
-
-    [AbstractIsisSessionTemplate|#doExecute()]^-[BackgroundCommandExecution|#findBackgroundCommandsToExecute()]
-    [BackgroundCommandExecution]^-[BackgroundCommandExecutionFromBackgroundCommandServiceJdo]
-    [BackgroundCommandExecutionFromBackgroundCommandServiceJdo]->injected[BackgroundCommandServiceJdoRepository|findBackgroundCommandsNotYetStarted()]
