@@ -11,9 +11,11 @@ where:
 
 * `findBackgroundCommandsToExecute()` is a mandatory hook method for subclasses to implement.
 
-This allows for different implementations of the `CommandService` and `BackgroundCommandService` to persist to wherever.  The JDO implementations, [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) and [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html) persist both as instances of `CommandJdo` entity to the `IsisCommand` database table.
+This allows for different implementations of the `CommandService` and `BackgroundCommandService` to persist to wherever.  
 
-The JDO service also provides its own (concrete) subclass, `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` that queries its corresponding repository:
+### Related Classes
+
+The JDO object store provides its own (concrete) subclass, `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` that queries for persisted `Command`s (created either through [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) or through [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)), using the corresponding repository:
 
 ![](http://yuml.me/e722131c)
 
