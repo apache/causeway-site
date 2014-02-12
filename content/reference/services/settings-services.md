@@ -4,7 +4,6 @@ The `ApplicationSettingsService` and the `UserSettingsService` are two similar s
 
 The core applib defines only interfaces and some convenience abstract classes.  The JDO objectstore provides an [implementation](../../components/objectstores/jdo/services/settings-services-jdo.html), alternatively you could write your own implementation.
 
-
 ## ApplicationSettingsService
 
 The API defined by `ApplicationSettingsService` is:
@@ -61,3 +60,4 @@ where `UserSetting` in turn is defined as:
     }
 
 This is typesafe following the same pattern as `ApplicationSetting`, discussed above.
+

@@ -49,9 +49,9 @@ where:
 
 ## Usage
 
-### Simple Usage
+### Basic Usage
 
-The simplest usage is:
+The most straight-forward usage of this service is simply:
 
     XmlSnapshot snapshot = xmlsnapshotService.snapshotFor(customer);
     Element customerAsXml = snapshot.getXmlElement();
@@ -61,79 +61,40 @@ of the customer's value properties, along with the titles of reference propertie
 
 ### Including other Elements
 
-The contents of the snapshot can be adjusted by including "paths" to other references or collections.
+The contents of the snapshot can be adjusted by including "paths" to other references or collections.  To do this, the
+builder is used.  We start by obtaining a builder:
 
-For example, suppose that we want the snapshot to also include details of the customer's address, where `address` in this case
+    XmlSnapshot.Builder builder = xmlsnapshotService.builderFor(customer);
+    
+Suppose now that we want the snapshot to also include details of the customer's address, where `address` in this case
 is a reference property to an instance of the `Address` class.  We can "walk-the-graph" by including these references within
-the snapshot:
+the builder.
 
-    XmlSnapshot snapshot = xmlsnapshotService.snapshotFor(customer);
-    ...
-    snapshot.include("address");
-    ...
-    Element customerAsXml = snapshot.getXmlElement();
-
-Or, we could go further and include details of every order in the customer's `orders` collection, and details of every
+    builder.includePath("address");
+    
+We could then go further and include details of every order in the customer's `orders` collection, and details of every
 product of every order:
 
-    ...
-    snapshot.include("orders/product"); // (2)
-    ...
+    builder.includePath("orders/product");
+
+When all paths are included, then the builder can build the snapshot:
+
+    XmlSnapshot snapshot = builder.build();
+    Element customerAsXml = snapshot.getXmlElement();
+    
+All of this can be strung together in a fluent API:
+
+    Element customerAsXml = xmlsnapshotService.builderFor(customer)
+                            .includePath("address")
+                            .includePath("orders/product")
+                            .build()
+                            .getXmlElement();
     
 > As you might imagine, the resultant XML document can get quite large very quickly with only a few "include"s.
-
     
-### Using the Builder (fluent API)
+#### Automatically including other elements
 
-An alternative way to build customized snapshots is to use the builder (fluent) API:
-
-    XmlSnapshot.Builder builder = xmlsnapshotService.builderFor(customer)
-                                  .includePath("address")
-                                  .includePath("orders/product");
-    Element customerAsXml = builder.build().getXmlElement();
-   
-    
-#### Generating an XML Snapshot 
-
-The `XmlSnapshot` can be created either directly or using a builder.
-
-#### Basic Usage
-
-
-In order to use the `XmlSnapshot`, the domain object must implement `org.apache.isis.applib.snapshot.Snapshottable`. This is just a marker interface.
-
-#### Including other Elements
-
-It's also possible to instruct the `XmlSnapshot` to "walk" the object graph and include other information within the generated XML.
-
-For example:
-
-    XmlSnapshot snapshot = new XmlSnapshot(customer);
-    snapshot.include("placeOfBirth");   // (1)
-    snapshot.include("orders/product"); // (2)
-    Element customerAsXml = snapshot.getXmlElement();
-
-In (1), we indicate that we want to also navigate to another domain object represented by simple reference `"placeOfBirth"`; in (2), we indicate that we want to navigate the `"orders"` collection (presumably of `Order`s) and for each referenced `Order`, to navigate in turn its `"product"` reference (presumably to a `Product` class).
-
-Note that `XmlSnapshot` is mutable, in that calls to its `getXmlElement()` may return different XML structures based on whether additional paths have been `include()`d, or whether the state of the domain objects themselves have changed.
-
-#### Using the Fluent API
-
-An `XmlSnapshot` can also be constructed using an alternative "fluent" API:
-
-    XmlSnapshot snapshot = 
-         XmlSnapshot.create(customer)
-                    .includePath("placeOfBirth")
-                    .include("orders/product")
-                    .build();
-    Element customerAsXml = snapshot.getXmlElement();
-
-#### The SnapshottableWithInclusions interface
-
-As already mentioned, in order to be snapshotted a domain object must implement the `Snapshottable` interface. This is just a marker interface, so implementing it is trivial.
-
-Alternatively, the domain object can choose to implement the
-sub-interface, `SnapshottableWithInclusions`. This moves the
+If the domain object being snapshotted implements the `SnapshottableWithInclusions` interace, then this moves the
 responsibility for determining what is included within the snapshot from the caller to the snapshottable object itself:
 
     public interface SnapshottableWithInclusions extends Snapshottable {
@@ -154,24 +115,23 @@ This can be useful for some tools. Note that for the XSD to be correct, the obje
 
 ### Hints and Tips
 
-As an alternative to using `include()`, you might consider building a non-persisted domain object (a "view model") which can reference only the relevant information required for the snapshot.
+As an alternative to using `include()`, you might consider building a view model domain object which can reference only the relevant information required for the snapshot.  For example, if only the 5 most recent Orders for a Customer were required, a `CustomerAndRecentOrders` view model could hold a collection of just those 5 `Order`s.  Typically such view models would implement `SnapshottableWithInclusions`.
 
-For example, if only the 5 most recent Orders for a Customer were required, a `CustomerAndRecentOrders` view model could hold a collection of just those 5 `Order`s.
+One reason for doing this is to provide a stable API between the domain model and whatever it is that might be consuming the XML.  With a view model you can refactor the domain entities but still preserve a view model such that the XML is the same.
 
-Typically such view models would implement `SnapshottableWithInclusions`.
-
-
-
-### Implementation
-
-> TO DOCUMENT
 
 ### Registering the Service
 
-> TO DOCUMENT
+## Registering the services
+
+Register the concrete implementation (from isis-core) in `isis.properties`:
+
+    isis.services=...,\
+                  org.apache.isis.core.runtime.services.xmlsnapshot.XmlSnapshotServiceDefault,\
+                  ...
 
 ### Related Services
 
-> TO DOCUMENT
+The [memento service](./memento-service.html) also provides a mechanism for generating string representations of domain objects.
 
-
+The [bookmark service](./bookmark-service.html) provides a mechanism for obtaining a string representations of a single domain object.

@@ -258,8 +258,8 @@ For both:
 #### Bookmark/memento
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
-* [Memento Service](./reference/services/memento-service.html) [1.4.0-SNAPSHOT]
-* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html) [1.4.0-SNAPSHOT, stub]
+* [Memento Service](./reference/services/memento-service.html) [1.4.0-snapshot]
+* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html) [1.4.0-snapshot]
 
 }
 
@@ -283,7 +283,7 @@ For both:
 
 * [QueryResultsCache](./reference/services/query-results-cache.html)
 * [Scratchpad](./reference/services/scratchpad.html)
-* [Bulk.Interaction](./reference/services/bulk-interaction.html) [stub]
+* [Bulk.Interaction](./reference/services/bulk-interaction.html)
 
 #### Other:
 
@@ -311,7 +311,7 @@ For both:
 
 * [Configuration Files](./reference/configuration-files.html)
 
-####  Non-UI execution [1.4.0-SNAPSHOT]
+####  Non-UI execution [1.4.0-snapshot]
 
 - [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
 - [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html)

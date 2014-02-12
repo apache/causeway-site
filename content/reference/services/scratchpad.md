@@ -80,10 +80,10 @@ If using the Wicket viewer, the `ToDoItemBulkUpdate` view model returned from th
 
 ### Registering the Service
 
-Register like any other service in `isis.properties`:
+Register the concrete implementation (from isis-core) in `isis.properties`:
 
     isis.services=...,\
-                  com.mycompany.myapp.isis.SomeAuditingService,\
+                  org.apache.isis.applib.services.scratchpad.Scratchpad,\
                   ...
 
 ### Related Services
