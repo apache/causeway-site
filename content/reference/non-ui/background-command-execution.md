@@ -20,7 +20,7 @@ This allows for different implementations of the `CommandService` and `Backgroun
 
 The JDO object store provides its own (concrete) subclass, `BackgroundCommandExecutionFromBackgroundCommandServiceJdo` that queries for persisted `Command`s (created either through [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) or through [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)), using the corresponding repository:
 
-![](http://yuml.me/e722131c)
+![](http://yuml.me/363b335f)
 
 
 #### neat!
@@ -32,10 +32,8 @@ DSL ([edit](http://yuml.me/edit/25343da1)):
     [BackgroundCommandExecution]->injected[BookmarkService|lookup()]
     [BackgroundCommandExecution]->injected[CommandContext|setCommand()]
 
-DSL ([edit](http://yuml.me/edit/e722131c)):
+DSL ([edit](http://yuml.me/edit/363b335f)):
     
     [AbstractIsisSessionTemplate|#doExecute()]^-[BackgroundCommandExecution|#findBackgroundCommandsToExecute()]
     [BackgroundCommandExecution]^-[BackgroundCommandExecutionFromBackgroundCommandServiceJdo]
-    [BackgroundCommandExecution]->injected[BookmarkService|lookup()]
-    [BackgroundCommandExecution]->injected[CommandContext|setCommand()]
     [BackgroundCommandExecutionFromBackgroundCommandServiceJdo]->injected[BackgroundCommandServiceJdoRepository|findBackgroundCommandsNotYetStarted()]
