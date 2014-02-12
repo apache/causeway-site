@@ -1,5 +1,4 @@
 Title: AbstractIsisSessionTemplate (1.4.0-snapshot)
-======
 
 {note
 This class is only semi-formalized, and may change (in small ways) over time.
