@@ -1,8 +1,8 @@
 Title: AbstractIsisSessionTemplate (1.4.0-snapshot)
 ======
 
-{ note
-This class is only semi-formalized, it may change in small ways over time.
+{note
+This class is only semi-formalized, and may change (in small ways) over time.
 }
 
 The `AbstractIsisSessionTemplate` class (whose name is inspired by the Spring framework's naming convention for similar classes that query [JDBC](http://docs.spring.io/spring/docs/2.5.x/reference/jdbc.html#jdbc-JdbcTemplate), [JMS](http://docs.spring.io/spring/docs/2.5.x/reference/jms.html#jms-jmstemplate), [JPA](http://docs.spring.io/spring/docs/2.5.x/reference/orm.html#orm-jpa-template) etc) provides the mechanism to open up a 'session' within the Isis framework, in order to resolve and interact with entities.
