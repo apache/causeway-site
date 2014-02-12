@@ -559,7 +559,7 @@ For both:
 {col-md-4
 #### Plugins
 
-* [JRebel Plugin](other/eclipse-plugin.html) [stub]
+* [JRebel Plugin](other/eclipse-plugin.html) (third-party) [stub]
 
 
 <!--
