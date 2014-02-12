@@ -6,8 +6,8 @@ This supports a number of use cases:
 
 * by making action interactions persistent as `Command`s, it enables profiling of actions (eg identify slow actions, or simply to identify the most commonly used transactions)
 * it allows foreground `Command`s to be associated with any background child `Command`s created through the applib [BackgroundService](../../../../reference/services/background-service.html).
-- if [auditing](./auditing-service.html) is configured (for example, the [JDO implementation](./auditing-service-jdo.html)), they provide better audit information as the `Command` (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique `transactionId` GUID
-- if [publishing](./publishing-service.html) is configured (for example the [JDO implementation](./publishing-service.html)), they provide better traceability as the `Command` is also correlated with any published events, again through the unique `transactionId` GUID
+- if [auditing](../../../../reference/services/auditing-service.html) is configured (for example, the [JDO implementation](./auditing-service-jdo.html)), they provide better audit information as the `Command` (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique `transactionId` GUID
+- if [publishing](../../../../reference/services/publishing-service.html) is configured (for example the [JDO implementation](./publishing-service-jdo.html)), they provide better traceability as the `Command` is also correlated with any published events, again through the unique `transactionId` GUID
 
 
 There are a further repository that can also be used:
