@@ -398,32 +398,40 @@ For both:
 {row
 
 {col-md-12
-## Wicket Viewer
+## Wicket Viewer [1.3.1](components/viewers/wicket/release-notes/about.html)
 }
 
 {col-md-4
-####  Wicket [1.3.1](components/viewers/wicket/release-notes/about.html)
+##### About
+<p class="display:none"/>
 
 * [About](components/viewers/wicket/about.html)
+
+#### Configuration
+
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
-* [Customizing the viewer](components/viewers/wicket/customizing-the-viewer.html)
 
 }
 
 {col-md-4
 
-#### Third-party:
+#### Extensions
+
+* [Extending the viewer](components/viewers/wicket/customizing-the-viewer.html)
+
+}
+
+{col-md-4
+
+#### Third-party extensions
 
 * [Excel download](https://github.com/danhaywood/isis-wicket-excel)
 * [Fullcalendar2](https://github.com/danhaywood/isis-wicket-fullcalendar2)
 * [Gmap3](https://github.com/danhaywood/isis-wicket-gmap3)
 * [Wicked charts](https://github.com/danhaywood/isis-wicket-wickedcharts)
 
-}
-
-{col-md-4
 
 }
 
@@ -432,12 +440,13 @@ For both:
 {row
 
 {col-md-12
-## Restful Objects Viewer
+## RestfulObjects Viewer [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 }
+
 
 {col-md-4
 
-####  RestfulObjects [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
+##### About
 <p class="display:none"/>
 
 * [About](components/viewers/restfulobjects/about.html)
@@ -467,11 +476,19 @@ For both:
 }
 
 {col-md-4
-####  Configuration
+
+##### About
+<p class="display:none"/>
 
 * [About](components/objectstores/jdo/about.html)
+
+#### JDO Enhancer
+
 * [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
 * [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
+
+#### Configuration
+
 * [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
 * [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
