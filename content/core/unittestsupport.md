@@ -4,12 +4,10 @@ This module provides unit test helpers for use by all other modules.  There are 
 
 To use, update the `pom.xml`:
 
-<pre>
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-        &lt;artifactId&gt;isis-core-unittestsupport&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-</pre>
+    <dependency>
+        <groupId>org.apache.isis.core</groupId>
+        <artifactId>isis-core-unittestsupport</artifactId>
+    </dependency>
 
 
 ##SortedSets Contract Test
@@ -140,14 +138,6 @@ For example, here we see that the class under test, an instance of `Collaboratin
         	assertThat(collaborating.collaborator, is(not(nullValue())));
         }
     }
-
-Prior to 1.3.0-SNAPSHOT, it is necessary to manually lookup the `@ClassUnderTest` instance from the `context`:
-
-        @Before
-        public void setUp() throws Exception {
-        	collaborating = context.getClassUnderTest();
-        }
-
 
 The example tests can be found [here](https://github.com/apache/isis/tree/master/core/unittestsupport/src/test/java/org/apache/isis/core/unittestsupport/jmocking)
 

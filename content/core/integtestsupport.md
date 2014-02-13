@@ -1,23 +1,21 @@
-Title: Integration testing Support (1.2.0 only)
+Title: Integration testing Support
 
-> Integration test support has been enhanced in 1.3.0-SNAPSHOT to also support BDD (given/when/then) specifications.  See [here](specsupport-and-integtestsupport.html) for more details.
+> See also Isis' [BDD support](specsupport-and-integtestsupport.html).
 
-This `isis-core-integtestsupport` module provides the ability to bootstrap Isis within a JUnit testing framework, using any object store.  This is done using a JUnit rule.
+The `isis-core-integtestsupport` module provides the ability to bootstrap Isis within a JUnit testing framework, using any object store.  This is done using a JUnit rule.
 
 In addition, the UI can be integration tested by "wrapping" each domain object in a proxy.  This proxy ensures that the "see it/use it/do it" rules (ie to hide, disable, or validate) are enforced.  The wrapping is performed using the `WrapperFactory`, part of the [isis-core-wrapper](wrapper.html) module.
 
 To use, update the `pom.xml`:
 
-<pre>
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-        &lt;artifactId&gt;isis-core-integtestsupport&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-        &lt;artifactId&gt;isis-core-wrapper&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-</pre>
+    <dependency>
+        <groupId>org.apache.isis.core</groupId>
+        <artifactId>isis-core-integtestsupport</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.isis.core</groupId>
+        <artifactId>isis-core-wrapper</artifactId>
+    </dependency>
 
 A full example is provided in the [quickstart archetype](../intro/getting-started/quickstart-archetype.html).  But to briefly explain; the recommended approach is to create an abstract class for all your integration tests.  Here is the one from the quickstart archetype:
 

@@ -30,7 +30,7 @@ Isis also provides a `ScenarioExecution` class.  The purpose of this class is to
 
 For both BDD specs and integration tests, the `ScenarioExecution` also provides access to the configured domain services (accessible through the `service(...)` method) and the `DomainObjectContainer` (through the `container()` method).
   
-In addition, UI behaviour can be integration tested by "wrapping" each domain object in a proxy.  This proxy ensures that the "see it/use it/do it" rules (ie to hide, disable, or validate) are enforced.  The wrapping is performed using the `WrapperFactory`, part of the [isis-core-wrapper](wrapper.html) module.    The `ScenarioExecution`'s `wrap()` and `unwrap()` helper methods provide access to this capability.
+In addition, UI behaviour can be integration tested by "wrapping" each domain object in a proxy.  This proxy ensures that the "see it/use it/do it" rules (ie to hide, disable, or validate) are enforced.  The wrapping is performed using the `WrapperFactory`, part of the [isis-core-wrapper](../reference/services/wrapper-factory.html) module.    The `ScenarioExecution`'s `wrap()` and `unwrap()` helper methods provide access to this capability.
 
 The `ScenarioExecution` also provides the `install()` method, allowing fixtures to be installed in the normal way.  If using the JDO Object store, then these fixtures the `IsisJdoSupport` service can be used to run arbitrary SQL against the underlying database (eg to truncate/delete existing tables as need be).
 

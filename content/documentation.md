@@ -238,7 +238,7 @@ For both:
 {row
 
 {col-md-12
-## Applib Services
+## Domain  Services
 
 }
 
@@ -275,20 +275,27 @@ For both:
 * [Auditing Service](./reference/services/auditing-service.html)
 * [Publishing Service](./reference/services/publishing-service.html)
 
-}
-
-{col-md-4
-
 #### Performance tuning/co-ordination [1.4.0-snapshot]
 
 * [QueryResultsCache](./reference/services/query-results-cache.html)
 * [Scratchpad](./reference/services/scratchpad.html)
 * [Bulk.Interaction](./reference/services/bulk-interaction.html)
 
+
+}
+
+{col-md-4
+
 #### Other:
 
+* [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
 * [Settings Services](./reference/services/settings-services.html)
 * [Developer Utilities Service](./reference/services/developer-utilities-service.html)
+
+#### Third-party:
+
+* [Docx Mail merge](https://github.com/danhaywood/isis-domainservice-docx)
+* [Excel download/upload](https://github.com/danhaywood/isis-domainservice-excel)
 
 }
 
@@ -361,7 +368,6 @@ For both:
 * [Unit Test Support](core/unittestsupport.html)
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-* [Wrapper Factory](core/wrapper.html) [stub]
 
 }
 
@@ -392,7 +398,7 @@ For both:
 {row
 
 {col-md-12
-## Viewers
+## Wicket Viewer
 }
 
 {col-md-4
@@ -407,11 +413,38 @@ For both:
 }
 
 {col-md-4
+
+#### Third-party:
+
+* [Excel download](https://github.com/danhaywood/isis-wicket-excel)
+* [Fullcalendar2](https://github.com/danhaywood/isis-wicket-fullcalendar2)
+* [Gmap3](https://github.com/danhaywood/isis-wicket-gmap3)
+* [Wicked charts](https://github.com/danhaywood/isis-wicket-wickedcharts)
+
+}
+
+{col-md-4
+
+}
+
+}
+
+{row
+
+{col-md-12
+## Restful Objects Viewer
+}
+
+{col-md-4
+
 ####  RestfulObjects [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 <p class="display:none"/>
 
 * [About](components/viewers/restfulobjects/about.html)
 
+}
+
+{col-md-4
 
 ##### Applib service impl.
 
@@ -420,15 +453,11 @@ For both:
 }
 
 {col-md-4
-#### Third Party
-
-##### DHTMLX
-
-* [About](third-party/viewers/dhtmlx/about.html)
 
 }
 
 }
+
 
 
 {row
@@ -561,9 +590,15 @@ For both:
 }
 
 {col-md-4
-#### Plugins
+#### Third Party Viewers
 
-* [JRebel Plugin](other/eclipse-plugin.html) (third-party) [stub]
+* [DHTMLX](third-party/viewers/dhtmlx/about.html)
+
+#### Third-party Plugins
+
+* [JRebel Plugin](https://github.com/danhaywood/isis-jrebel-plugin)
+
+)
 
 
 <!--

@@ -41,7 +41,7 @@ The core framework provides a default implementation of this API:
 
 ### Register the Service
 
-Register this service like any other service, in `isis.properties`, eg:
+Register this service in `isis.properties`, eg:
 
     isis.services=...,\
                   org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault,\
