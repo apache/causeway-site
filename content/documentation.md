@@ -446,7 +446,7 @@ For both:
 
 {col-md-4
 
-##### About
+#### About
 <p class="display:none"/>
 
 * [About](components/viewers/restfulobjects/about.html)
@@ -455,7 +455,7 @@ For both:
 
 {col-md-4
 
-##### Applib service impl.
+#### Applib service impl.
 
 * [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
 
@@ -477,7 +477,7 @@ For both:
 
 {col-md-4
 
-##### About
+#### About
 <p class="display:none"/>
 
 * [About](components/objectstores/jdo/about.html)
@@ -549,6 +549,9 @@ For both:
 #### Shiro [1.3.0](components/security/shiro/release-notes/about.html)
 
 * [About](components/security/shiro/about.html)
+
+#### Configuration
+
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
 * [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
 * [Format of Isis Permissions](components/security/shiro/format-of-permissions.html)
@@ -588,7 +591,9 @@ For both:
 }
 
 {col-md-4
+
 #### Committers
+<p class="display:none"/>
 
 * [Updating the CMS site](contributors/updating-the-cms-site.html)
 * [Applying Patches](contributors/applying-patches.html)
@@ -614,8 +619,6 @@ For both:
 #### Third-party Plugins
 
 * [JRebel Plugin](https://github.com/danhaywood/isis-jrebel-plugin)
-
-)
 
 
 <!--
