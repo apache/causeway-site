@@ -18,6 +18,10 @@ The API defined by `BookmarkService` is:
       @Hidden
       Object lookup(Bookmark bookmark);
 
+      // 1.4.0-SNAPSHOT
+      @Hidden
+      <T> T lookup(Bookmark bookmark, Class<T> requiredType);
+
       @Hidden
       Bookmark bookmarkFor(Object domainObject);
     }
