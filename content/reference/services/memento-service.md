@@ -72,7 +72,7 @@ However, you are of course free to write some other implementation of `MementoSe
 
 ### Register the Service
 
-Register this service like any other service, in `isis.properties`, eg:
+The service is registered, like any other, in `isis.properties`:
 
     isis.services=...,\
                   org.apache.isis.core.runtime.services.memento.MementoServiceDefault,\

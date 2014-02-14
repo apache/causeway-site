@@ -160,7 +160,6 @@ For both:
 
 #### Prototyping tips
 
-* [Deployment Types](more-advanced-topics/deployment-type.html)
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
 * [Generic repository](./more-advanced-topics/how-to-09-030-How-to-use-a-generic-repository.html)
 
@@ -329,6 +328,7 @@ For both:
 
 ####  Reference
 
+* [Deployment Types](./reference/deployment-type.html)
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
 * [Annotations](./reference/recognized-annotations/about.html)
 * [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
