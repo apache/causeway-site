@@ -35,7 +35,7 @@ The Markmail archives span both our current (TLP) mailing lists and also our ori
 
 To subscribe to the `users` mailing list:
 
-* send a blank email to <a href="mailto:users-subscribe@isis.apache.org>users-subscribe@isis.apache.org</a>.
+* send a blank email to <a href="mailto:users-subscribe@isis.apache.org">users-subscribe@isis.apache.org</a>.
 * You'll then get back a confirmation email.
 * To confirm, all you generally need to do is to send a blank reply (there are more detailed instructions inside that confirmation mail if that doesn't work)
 
