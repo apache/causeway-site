@@ -31,6 +31,26 @@ Apache Isis has two public mailing lists.
 
 The Markmail archives span both our current (TLP) mailing lists and also our original mailing lists while in the Apache incubator; the ASF archives span just our TLP mailing lists.
 
+### How to subscribe
+
+To subscribe to the `users` mailing list:
+
+* send a blank email to <a href="mailto:users-subscribe@isis.apache.org>users-subscribe@isis.apache.org</a>.
+* You'll then get back a confirmation email.
+* To confirm, all you generally need to do is to send a blank reply (there are more detailed instructions inside that confirmation mail if that doesn't work)
+
+Then, to ask questions, simply mail to <a href="mailto:users@isis.apache.org">users@isis.apache.org</a> (nb: no `-subscribe` suffix this time). 
+
+If you ever want to unsubscribe, then you can send a mail to the `users-unsubscribe` email address.
+
+### Mailing list etiquette
+
+Just a couple of rules/suggestions:
+
+* if you are referencing links, then in the body of the mail, number then [1], [2], [3] etc and then list them at the end.  Here's a [good example]() from the archives.
+* reply to a previous post in the [interleaved style](http://en.wikipedia.org/wiki/Posting_style#Interleaved_style) (adding your replies in-line).  Please don't [top-post](http://en.wikipedia.org/wiki/Posting_style#Top-posting).
+
+
 ### Commonly-used Resources
 
 - Browse [Github mirror](http://github.com/apache/isis)
@@ -50,6 +70,10 @@ The Markmail archives span both our current (TLP) mailing lists and also our ori
 - [Gmane](http://blog.gmane.org/gmane.comp.apache.incubator.isis.users)
 - [Isis extras](http://code.google.com/a/apache-extras.org/p/isis-extras/)
 -->
+
+### Example apps (open-source)
+
+- [Estatio](https://github.com/estatio/estatio)
 
 ### Committers' Blogs
 
