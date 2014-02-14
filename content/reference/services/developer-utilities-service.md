@@ -37,7 +37,7 @@ where:
 
 *  `downloadLayout()` (contributed action) allows the developer can download the `Xxx.layout.json` for an individual object
 
-*  `refreshServices()` allows the developer to rebuild the Isis metamodel of all domain services.  This is particularly useful for picking up changes to [contributed actions](../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+*  `refreshServices()` allows the developer to rebuild the Isis metamodel of all domain services.  This is particularly useful for picking up changes to [contributed actions](../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 
 *  `refreshLayout()` (contributed action) allows the developer to rebuild the Isis metamodel of the current object.  The object's layout may change accordingly.
 
