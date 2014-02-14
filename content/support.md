@@ -31,7 +31,7 @@ Apache Isis has two public mailing lists.
 
 The Markmail archives span both our current (TLP) mailing lists and also our original mailing lists while in the Apache incubator; the ASF archives span just our TLP mailing lists.
 
-### How to subscribe
+#### How to subscribe
 
 To subscribe to the `users` mailing list:
 
@@ -43,7 +43,7 @@ Then, to ask questions, simply mail to <a href="mailto:users@isis.apache.org">us
 
 If you ever want to unsubscribe, then you can send a mail to the `users-unsubscribe` email address.
 
-### Mailing list etiquette
+#### Mailing list etiquette
 
 Just a couple of rules/suggestions:
 
