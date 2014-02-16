@@ -14,7 +14,7 @@ Title: Documentation
 #### Getting started
 
 - **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
-- **[Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html))** 
+- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html))
 
 }
 

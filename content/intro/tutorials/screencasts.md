@@ -4,7 +4,9 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
 
 <table class="table table-bordered table-hover">
   <tr>
-    <td>Quickstart Archetype<br/><br/><i>How to use the Apache Isis quickstart archetype to generate your first Apache Isis application</i></td>
+    <td>Quickstart Archetype<br/><br/><i>How to use the Apache Isis quickstart archetype to generate your first Apache Isis application</i>
+    <br/><br/>
+    Learn more <a href="../getting-started/quickstart-archetype.html>here</a></td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RH6J4gx8OoA" frameborder="0" allowfullscreen></iframe>
     </td>
