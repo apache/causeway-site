@@ -8,6 +8,12 @@ The archetype also (from 1.4.0-SNAPSHOT onwards) demonstrates Isis' support for 
 
 Running this archetype is a good way to get familiar with the structure of a not-too-complex Isis application.  However, to get started with your own application, we generally recommend that you run the alternative [simple archetype](./simple-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this ToDo app to guide your own development.
 
+### <a name="screencast"></a>Screencast
+
+How to use the Apache Isis quickstart archetype to generate your first Apache Isis application.
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/RH6J4gx8OoA" frameborder="0" allowfullscreen></iframe>
+
 ### Generating the App
 
 Create a new directory, and `cd` into that directory.

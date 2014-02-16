@@ -14,17 +14,19 @@ Title: Documentation
 #### Getting started
 
 - **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
+- **[Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html))** 
 
 }
 
 {col-md-4
 #### Tutorials, screencasts
 
-    - [Tutorials](intro/tutorials/tutorials.html)
-    - **[Screencasts](intro/tutorials/screencasts.html)**
+- [Tutorials](intro/tutorials/tutorials.html)
+- **[Screencasts](intro/tutorials/screencasts.html)**
 
 #### Learning more
 
+- Apps [Powered by](intro/powered-by/powered-by.html) Isis
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
 - [Books](intro/learning-more/books.html)
 - [Naked Objects PhD thesis](intro/learning-more/Pawson-Naked-Objects-thesis.pdf) (Pawson)
@@ -34,10 +36,10 @@ Title: Documentation
 {col-md-4
 #### Resources
 
-    - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
-    - **[Editor templates](intro/resources/editor-templates.html)**
-    - [Icons](intro/resources/icons.html)
-    - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
+- [Downloadable Presentations](intro/resources/downloadable-presentations.html)
+- **[Editor templates](intro/resources/editor-templates.html)**
+- [Icons](intro/resources/icons.html)
+- **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
 #### Releases
 
