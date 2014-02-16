@@ -6,7 +6,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
 
 <table class="table table-bordered table-hover">
   <tr>
-  <td columnspan="2">
+  <td colspan="2">
     <h2>Getting Started</h2>
   </td>
   </tr>
