@@ -14,7 +14,7 @@ Title: Documentation
 #### Getting started
 
 - **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
-- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html))
+- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-32.png"></a>
 
 }
 
@@ -429,10 +429,10 @@ For both:
 
 #### Third-party extensions
 
-* [Excel download](https://github.com/danhaywood/isis-wicket-excel)
-* [Fullcalendar2](https://github.com/danhaywood/isis-wicket-fullcalendar2)
-* [Gmap3](https://github.com/danhaywood/isis-wicket-gmap3)
-* [Wicked charts](https://github.com/danhaywood/isis-wicket-wickedcharts)
+* [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html) [stub]
+* [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html) [stub]
+* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) [stub]
+* [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html) [stub]
 
 
 }
@@ -620,7 +620,7 @@ For both:
 
 #### Third-party Plugins
 
-* [JRebel Plugin](https://github.com/danhaywood/isis-jrebel-plugin)
+* [JRebel Plugin](other/jrebel.html) [stub]
 
 
 <!--

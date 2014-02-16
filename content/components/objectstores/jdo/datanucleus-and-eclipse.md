@@ -20,19 +20,18 @@ Over and above this, there are two distinct sets of problems you may encounter:
 
 To the detail...
 
-## <a name="screencast"></a>Screencast
-
-How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore
-
-<iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
-
-> NB: when configuring DataNucleus for the *dom* project, make sure you are in the 'Java perspective', not the 'Java EE perspective'.
-
-
 ## Configuring a domain project with the DataNucleus enhancer
 
 > note:
 > Make sure you are in the 'Java' Perspective, not the 'Java EE' Perspective.  
+
+### <a name="screencast"></a>Screencast
+
+The following screencast shows how import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
+
+### Step-by-step
 
 In Eclipse, for the *domain object model* project, first add DataNucleus support:
 
