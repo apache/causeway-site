@@ -6,6 +6,11 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
 
 <table class="table table-bordered table-hover">
   <tr>
+  <td columnspan="2">
+    <h2>Getting Started</h2>
+  </td>
+  </tr>
+  <tr>
     <td>How it works<br/><br/><i>How Apache Isis builds a webapp from the underlying domain object model</i>
     <br/><br/>
     See <a href="../elevator-pitch/common-use-cases.html#screencast">common use cases</a>
@@ -68,7 +73,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
     <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i>
     <br/><br/>
-    See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-viewer-gmap3.html#screencast">gmap3 extension</a> page
+    See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>

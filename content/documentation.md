@@ -486,7 +486,7 @@ For both:
 
 #### JDO Enhancer
 
-* [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html) <a href="./components/objectstores/jdo/datanucleus-and-eclipse.html.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html) <a href="./components/objectstores/jdo/datanucleus-and-eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
 
 #### Configuration
