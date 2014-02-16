@@ -1,8 +1,13 @@
 Title: Static and Dynamic Layouts
 
-> You can also watch a [screencast](../intro/tutorials/screencasts.html) demonstrating static and dynamic layouts. 
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  This metadata can be specified statically, using annotations, or dynamically, using a JSON file.
+
+## <a name="screencast"></a>Screencast
+
+How to layout properties and collections dynamically, in the Wicket viewer.
+
+<iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
 
 ## Specifying layout statically, using annotations
 
