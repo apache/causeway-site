@@ -2,13 +2,11 @@ Title: Screencasts
 
 We've prepared some screencasts to help you quickly see what Apache Isis has to offer.
 
-## Getting Started
-
 <table class="table table-bordered table-hover">
   <tr>
-  <td colspan="2">
-    <h2>Getting Started</h2>
-  </td>
+      <td colspan="2">
+        <h2>Getting Started</h2>
+      </td>
   </tr>
   <tr>
     <td>How it works<br/><br/><i>How Apache Isis builds a webapp from the underlying domain object model</i>
@@ -37,11 +35,13 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RH6J4gx8OoA" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
-</table>
-
-## JDO Objectstore
-
-<table class="table table-bordered table-hover">
+  
+  
+  <tr>
+      <td colspan="2">
+        <h2>JDO Objectstore</h2>
+      </td>
+  </tr>
   <tr>
     <td>Importing into Eclipse<br/><br/><i>How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore</i><br/><br/>NB: when configuring DataNucleus for the *dom* project, make sure you are in the 'Java perspective', not the 'Java EE perspective').
     <br/><br/>
@@ -51,11 +51,13 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
-</table>
 
-## Wicket Viewer
-
-<table class="table table-bordered table-hover">
+  
+  <tr>
+      <td colspan="2">
+        <h2>Wicket Viewer</h2>
+      </td>
+  </tr>
   <tr>
     <td>Dynamic layouts in the Wicket viewer<br/><br/><i>How to layout properties and collections dynamically</i>
     <br/><br/>
@@ -65,11 +67,13 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
-</table>
 
-## Customizations, Extensions, Plugins
 
-<table class="table table-bordered table-hover">
+  <tr>
+      <td colspan="2">
+        <h2>Customizations, Extensions, Plugins</h2>
+      </td>
+  </tr>
   <tr>
     <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i>
     <br/><br/>
