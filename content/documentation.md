@@ -8,7 +8,7 @@ Title: Documentation
 #### Elevator pitch
 
 - **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
-- [Common Use Cases](intro/elevator-pitch/common-use-cases.html)
+- [Common Use Cases](intro/elevator-pitch/common-use-cases.html)  <a href="intro/elevator-pitch/common-use-cases.html#screencast"><img src="./images/tv_show-25.png"></a>
 - [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
 #### Getting started
@@ -26,7 +26,7 @@ Title: Documentation
 
 #### Learning more
 
-- Apps [powered by](intro/powered-by/powered-by.html) Isis
+- [Powered by Isis](intro/powered-by/powered-by.html)
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
 - [Books](intro/learning-more/books.html)
 - [Naked Objects PhD thesis](intro/learning-more/Pawson-Naked-Objects-thesis.pdf) (Pawson)
@@ -175,7 +175,7 @@ For both:
 
 #### More UI layout hints
 
-* [Static and dynamic layouts](more-advanced-topics/dynamic-layouts.html)
+* [Static and dynamic layouts](more-advanced-topics/dynamic-layouts.html) <a href="more-advanced-topics/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Tweaking CSS classes](./more-advanced-topics/how-to-tweak-the-ui-using-css-classes.html)
 * [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
 * [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
@@ -295,8 +295,8 @@ For both:
 
 #### Third-party:
 
-* [Docx Mail merge](https://github.com/danhaywood/isis-domainservice-docx)
-* [Excel download/upload](https://github.com/danhaywood/isis-domainservice-excel)
+* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html)
+* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel)
 
 }
 
@@ -431,7 +431,7 @@ For both:
 
 * [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html) [stub]
 * [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html) [stub]
-* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) [stub]
+* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
 * [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html) [stub]
 
 
@@ -486,7 +486,7 @@ For both:
 
 #### JDO Enhancer
 
-* [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html)
+* [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html) <a href="./components/objectstores/jdo/datanucleus-and-eclipse.html.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
 
 #### Configuration
@@ -620,7 +620,7 @@ For both:
 
 #### Third-party Plugins
 
-* [JRebel Plugin](other/jrebel.html) [stub]
+* [JRebel Plugin](other/jrebel.html)  <a href="./other/jrebel.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
 
 
 <!--
