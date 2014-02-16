@@ -26,7 +26,7 @@ Title: Documentation
 
 #### Learning more
 
-- Apps [Powered by](intro/powered-by/powered-by.html) Isis
+- Apps [powered by](intro/powered-by/powered-by.html) Isis
 - [Articles, Conferences, Podcasts](intro/learning-more/articles-and-presentations.html)
 - [Books](intro/learning-more/books.html)
 - [Naked Objects PhD thesis](intro/learning-more/Pawson-Naked-Objects-thesis.pdf) (Pawson)

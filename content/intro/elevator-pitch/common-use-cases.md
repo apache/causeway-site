@@ -1,6 +1,12 @@
 Title: Common Use Cases
 
-### Prototyping
+## <a name="screencast"></a>Screencast
+
+How Apache Isis builds a webapp from the underlying domain object model...
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/ludOLyi6VyY" frameborder="0" allowfullscreen></iframe>
+
+## Prototyping
 
 Isis is great for rapid prototyping, because all you need to write in order to get an application up-and-running is the domain model objects.
 
@@ -8,7 +14,7 @@ By focussing just on the domain, you'll also find that you start to develop a ub
 
 Once you've sketched out your domain model, you can then either start-over using your preferred framework, or you might choose to take the domain model forward into more formal specification and testing.
 
-### Deploy on your own App
+## Deploy on your own App
 
 The programming model defined by Isis deliberately minimizes the dependencies on the rest of the framework. In fact, the only hard dependency that the domain model classes have on Isis is through the `org.apache.isis.applib` classes, mostly to pick up annotations such as `@Disabled`. The idea is to make it easy to be able to write take a domain object prototyped and/or tested using Isis, but to deploy on some other framework's runtime.
 
@@ -16,7 +22,7 @@ If you are interested in taking this approach, note that there is one important 
 
 Isis' own runtime injects an (implementation of this) interface into each and every domain object. You will likely need to do something similar within your own framework, (or come up with an equivalent mechanism, eg Service Locator pattern).
 
-### Deploy on Isis as an auto-generated Webapp
+## Deploy on Isis as an auto-generated Webapp
 
 One of the original motivations for Isis itself was to be able automatically generate a user interface for a domain object model.
 
@@ -29,7 +35,7 @@ It is also possible to write your own viewers:
 
 Deploying on Isis means that the framework also manages object persistence.  Again this is pluggable, but the principal implementation is the [JDO objectstore](../../components/objectstores/jdo/about.html).  Because JDO supports both SQL and NoSQL databases, you can then deploy on a variety of platforms, including the [Google App Engine (GAE)](https://developers.google.com/appengine/).
 
-### Deploy on Isis as a RESTful web service
+## Deploy on Isis as a RESTful web service
 
 REST (Representation State Transfer) is an architectural style for building highly scalable distributed systems, using the same principles as the World Wide Web. Many commercial web APIs (twitter, facebook, Amazon) are implemented as either pure REST APIs or some approximation therein.
 
