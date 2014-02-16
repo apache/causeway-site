@@ -75,6 +75,15 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       </td>
   </tr>
   <tr>
+    <td>Bulk updates in Isis<br/><br/><i>Using the Excel domain service and view models to perform bulk updates.</i>
+    <br/><br/>
+    Seel also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
+    </td>
+    <td>
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
     <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i>
     <br/><br/>
     See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
