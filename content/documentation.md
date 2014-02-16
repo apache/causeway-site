@@ -22,7 +22,7 @@ Title: Documentation
 #### Tutorials, screencasts
 
 - [Tutorials](intro/tutorials/tutorials.html)
-- **[Screencasts](intro/tutorials/screencasts.html)**
+- **[Screencasts](intro/tutorials/screencasts.html)** <a href="intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 #### Learning more
 
