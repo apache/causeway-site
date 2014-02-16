@@ -14,7 +14,7 @@ Title: Documentation
 #### Getting started
 
 - **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
-- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-32.png"></a>
+- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 }
 
