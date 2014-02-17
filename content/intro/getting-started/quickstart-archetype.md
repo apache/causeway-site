@@ -107,7 +107,7 @@ If you use Eclipse, do also install the [Eclipse templates](../resources/editor-
 
 As noted above, the generated app is a reasonably complete application for tracking to-do items.  It consists of the following modules: 
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr><th>Module</th><th>Description</th></tr>
 <tr><td>myapp</td><td>The parent (aggregator) module</td></tr>
 <tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> (repository) domain service.</td></tr>

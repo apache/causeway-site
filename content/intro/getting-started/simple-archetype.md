@@ -4,7 +4,7 @@ The quickest way to get started with Apache Isis is to run the simple archetype.
 
 If you want to see a more functionally complete example, also check out the [ToDo app (quickstart) archetype](quickstart-archetype.html); this will give you a good idea of what makes up a not-too-complex Isis application.  In fact, we recommend that you run both archetypes: this simple archetype generates a very simple application for you to refactor and extend, while the ToDo app provides to guide your own development.
 
-### Generating the App
+## Generating the App
 
 Create a new directory, and `cd` into that directory.
 
@@ -28,7 +28,7 @@ where:
 
 The archetype generation process will then run; it only takes a few seconds.
 
-### Building the App
+## Building the App
 
 Switch into the root directory of your newly generated app, and build your app:
 
@@ -39,7 +39,7 @@ mvn clean install
 
 where `myapp` is the `artifactId` entered above.
 
-### Running the App
+## Running the App
 
 The `simple_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../../components/viewers/wicket/about.html) and the [Restful Objects viewer](../../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
 
@@ -71,23 +71,23 @@ Note that if you use `mvn jetty:run`, then the context path changes; check the c
 
 Finally, you can also run the app by deploying to a standalone servlet container such as [Tomcat](http://tomcat.apache.org).
 
-### Using the App
+## Using the App
 
 The archetype provides a welcome page that explains the classes and files generated, and provides detailed guidance and what to do next.
 
 The app itself is configured to run using shiro security, as configured in the `WEB-INF/shiro.ini` config file.  To log in, use `sven/pass`.
 
-### Modifying the App
+## Modifying the App
 
 Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site; check out the 'programming model how-tos' section on the main [documentation](../../documentation.html) page first).
 
 If you use Eclipse, do also install the [Eclipse templates](../resources/editor-templates.html); these will help you follow the Isis naming conventions.  
 
-#### App Structure
+## App Structure
 
 As noted above, the generated app is a very simple application consisting of a single domain object that can be easily renamed and extended. The intention is not to showcase all of Isis' capabilities; rather it is to allow you to very easily modify the generated application (eg rename `SimpleObject` to `Customer`) without having to waste time deleting lots of generated code.
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr><th>Module</th><th>Description</th></tr>
 <tr><td>myapp</td><td>The parent (aggregator) module</td></tr>
 <tr><td>myapp-dom</td><td>The domain object model, consisting of <tt>SimpleObject</tt> and <tt>SimpleObjects</tt> (repository) domain service.</td></tr>
