@@ -295,8 +295,8 @@ For both:
 
 #### Third-party:
 
-* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html) (stub)
-* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a> (1.4.0-snapshot, stub)
+* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html) [1.4.0-snapshot]
+* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a> [1.4.0-snapshot]
 
 }
 
@@ -429,10 +429,10 @@ For both:
 
 #### Third-party extensions
 
-* [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html) [stub]
-* [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html) [stub]
-* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
-* [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html) [stub]
+* [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html)
+* [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html)
+* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html)
 
 
 }
