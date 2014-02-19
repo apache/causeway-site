@@ -442,9 +442,7 @@ For both:
 {row
 
 {col-md-12
-<a name="restfulobjects-viewer">
-## RestfulObjects Viewer [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
-</a>
+## <a name="restfulobjects-viewer">RestfulObjects Viewer</a> [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 }
 
 
