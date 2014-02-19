@@ -10,7 +10,7 @@ The following screenshots are taken from the project's `zzzdemo` app (adapted fr
 
 The screenshot below shows the object acting as the source of the data.  The "download as doc" action calls the service.
 
-![](https://raw.github.com/danhaywood/isis-domainservice-docx/master/images/contributed-action.png =600x)
+<img src="https://raw.github.com/danhaywood/isis-domainservice-docx/master/images/contributed-action.png" style="width: 600px;"/>
 
 #### Template
 
