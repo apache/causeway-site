@@ -623,7 +623,6 @@ For both:
 * [JRebel Plugin](other/jrebel.html)  <a href="./other/jrebel.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
 
 
-
 <!--
 
 ----------
