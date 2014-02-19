@@ -6,11 +6,11 @@ This [Wicket extension](https://github.com/danhaywood/isis-wicket-excel) allow a
 
 The following screenshots are taken from the `zzzdemo` app (adapted from Isis' quickstart archetype).
 
-![](https://raw.github.com/danhaywood/isis-wicket-excel/master/images/excel-tab.png)
+<img src="https://raw.github.com/danhaywood/isis-wicket-excel/master/images/excel-tab.png" style="width: 900px;"/>
 
-![](https://raw.github.com/danhaywood/isis-wicket-excel/master/images/download-link.png)
+<img src="https://raw.github.com/danhaywood/isis-wicket-excel/master/images/download-link.png" style="width: 900px;"/>
 
-![](https://raw.github.com/danhaywood/isis-wicket-excel/master/images/excel.png)
+<img src="https://raw.github.com/danhaywood/isis-wicket-excel/master/images/excel.png" style="width: 900px;"/>
 
 
 ## Download
