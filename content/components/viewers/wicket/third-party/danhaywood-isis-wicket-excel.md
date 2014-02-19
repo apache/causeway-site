@@ -1,6 +1,6 @@
 Title: Download as Excel extension for Wicket viewer
 
-This [Wicket extension](https://github.com/danhaywood/isis-wicket-excel) allow a collection of entities to be downloaded as an Excel spreadsheet (using Apache POI).
+This [Wicket extension](https://github.com/danhaywood/isis-wicket-excel) allow a collection of entities to be downloaded as an Excel spreadsheet (using [Apache POI](http://poi.apache.org)).
 
 ## Screenshots
 
@@ -22,6 +22,6 @@ The extension is hosted on [github](https://github.com/danhaywood/isis-wicket-ex
 
 ## See also
 
-See also the [Excel domain service](../../../../reference/services/third-party/isis-domainservice-excel.html), which allows programmatic export and import, eg to support bulk updating/inserting.
+See also the [Excel domain service](../../../../reference/services/third-party/danhaywood-isis-domainservice-excel.html), which allows programmatic export and import, eg to support bulk updating/inserting.
 
    
