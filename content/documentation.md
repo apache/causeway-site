@@ -442,7 +442,7 @@ For both:
 {row
 
 {col-md-12
-## <a name="restfulobjects-viewer"></a>RestfulObjects Viewer [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
+## <a name="restfulobjects-viewer">RestfulObjects Viewer</a> [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
 }
 
 
@@ -621,6 +621,7 @@ For both:
 #### <a name="other-topics-third-party-plugins"></a>Third-party Plugins
 
 * [JRebel Plugin](other/jrebel.html)  <a href="./other/jrebel.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
+
 
 
 <!--
