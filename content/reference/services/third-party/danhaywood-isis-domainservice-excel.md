@@ -9,7 +9,7 @@ Specifically, it allows a collection of (view model) object to be exported to an
 
 Using the Excel domain service and view models to perform bulk updates.
 
-<iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
+<iframe width="840" height="630" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
 
     
 ## Download
