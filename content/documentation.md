@@ -434,7 +434,6 @@ For both:
 * [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
 * [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html)
 
-
 }
 
 }
