@@ -295,7 +295,7 @@ For both:
 
 #### Third-party:
 
-* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html) [1.4.0-snapshot]
+* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html)
 * [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a> [1.4.0-snapshot]
 
 }
