@@ -4,19 +4,21 @@ This [Wicket extension](https://github.com/danhaywood/isis-wicket-fullcalendar2)
 
 ## Screenshots
 
-The following screenshots are taken from the `zzzdemo` app (adapted from Isis' quickstart archetype).
+The following screenshots are taken from the [demo app](https://github.com/danhaywood/isis-wicket-fullcalendar2/tree/master/zzzdemo) (adapted from Isis' quickstart archetype).
 
-#### Standalone collection
+Standalone collection:
 
-![](https://raw.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/standalone-collection.png)
+<img src="https://raw.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/standalone-collection.png" style="width: 900px;"/>
 
-#### Parented collection in a custom dashboard view model
 
-![](https://raw2.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/dashboard.png)
+Parented collection in a custom dashboard view model
 
-#### Parented collection in a regular entity
+<img src="https://raw.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/dashboard.png" style="width: 900px;"/>
 
-![](https://raw.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/parented-collection.png)
+
+Parented collection in a regular entity:
+
+<img src="https://raw.github.com/danhaywood/isis-wicket-fullcalendar2/master/images/parented-collection.png" style="width: 900px;"/>
   
   
 ## Download
