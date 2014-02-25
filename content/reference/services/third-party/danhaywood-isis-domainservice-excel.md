@@ -1,4 +1,4 @@
-Title: Excel Download/Upload
+Title: Excel Download/Upload [1.4.0-snapshot]
 
 The [Excel domain service](https://github.com/danhaywood/isis-domainservice-excel) provides an export/import capability, enabling bulk update or insert of data into Isis.
 
