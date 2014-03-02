@@ -410,15 +410,22 @@ For both:
 
 * [About](components/viewers/wicket/about.html)
 
+#### <a name="wicket-viewer-features">Features</a>
+
+* [Bookmarks](components/viewers/wicket/bookmarks.html) (stub)
+* [Recent pages](components/viewers/wicket/recent-pages.html) (stub)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (stub)
+* [File upload/download](components/viewers/wicket/file-upload-download.html)
+
+}
+
+{col-md-4
+
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
-
-}
-
-{col-md-4
 
 #### <a name="wicket-viewer-extensions">Extensions</a>
 
