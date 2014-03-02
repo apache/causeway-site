@@ -405,7 +405,7 @@ For both:
 }
 
 {col-md-4
-##### <a name="wicket-viewer-about">About</a>
+#### <a name="wicket-viewer-about">About</a>
 <p class="display:none"/>
 
 * [About](components/viewers/wicket/about.html)
