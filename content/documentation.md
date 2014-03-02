@@ -415,7 +415,7 @@ For both:
 * [Bookmarks](components/viewers/wicket/bookmarks.html) (stub)
 * [Recent pages](components/viewers/wicket/recent-pages.html) (stub)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (stub)
-* [File upload/download](components/viewers/wicket/file-upload-download.html)
+* [File upload/download](components/viewers/wicket/file-upload-download.html) (stub)
 
 }
 
