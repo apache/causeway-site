@@ -1,7 +1,13 @@
 Title: Wicket viewer
 
-The wicket module provides a customizable webapp viewer for an Isis domain model, implemented using the [Apache Wicket](http://wicket.apache.org) web framework.
+The wicket viewer provides a customizable webapp for an Isis domain model, implemented using the [Apache Wicket](http://wicket.apache.org) web framework.
 
-go back to: [documentation](../../../documentation.html)
+## Releases
+
+- See [release notes](release-notes/about.html).
+
+## Further reading
+
+The [main documentation page](../../../documentation.html#wicket-viewer) lists the pages available for the Wicket viewer.
 
 

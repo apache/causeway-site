@@ -4,14 +4,13 @@ The restfulobjects viewer provides a RESTful interface to the domain object mode
 
 Each domain object (or part of object) is exposed as a RESTful resource, in a JSON representation.
 
-The viewer is an implementation of the [Restful Objects](http://restfulobjects.org) specification, intended to allow other server-side frameworks to be implemented to support the same protocol.  It currently implements **v0.56** of the spec.
-
-### Applib Service Implementations
-
-- [Event Serializer per RO Spec](event-serializer-rospec.html)
+The viewer is an implementation of the [Restful Objects](http://restfulobjects.org) specification, intended to allow other server-side frameworks to be implemented to support the same protocol.
 
 
-
-### Releases
+## Releases
 
 - See [release notes](release-notes/about.html).
+
+## Further reading
+
+The [main documentation page](../../../documentation.html#restfulobjects-viewer) lists the pages available for the Restful Objects viewer.
