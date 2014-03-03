@@ -413,8 +413,8 @@ For both:
 #### <a name="wicket-viewer-features">Features</a>
 
 * [File upload/download](components/viewers/wicket/file-upload-download.html)
-* [Bookmarks](components/viewers/wicket/bookmarks.html) (stub)
-* [Recent pages](components/viewers/wicket/recent-pages.html) (stub)
+* [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
+* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html) (stub)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (stub)
 
 }
@@ -425,6 +425,8 @@ For both:
 
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
+* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
+* [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html) (stub)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
 
 #### <a name="wicket-viewer-extensions">Extensions</a>
