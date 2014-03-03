@@ -414,8 +414,8 @@ For both:
 
 * [File upload/download](components/viewers/wicket/file-upload-download.html)
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
-* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
-* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
+* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html) (1.4.0-snapshot)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (1.4.0-snapshot)
 
 }
 
@@ -425,8 +425,8 @@ For both:
 
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
-* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
-* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
+* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html) (1.4.0-snapshot)
+* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html) (1.4.0-snapshot)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
 
