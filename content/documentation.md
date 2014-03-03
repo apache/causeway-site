@@ -415,7 +415,7 @@ For both:
 * [File upload/download](components/viewers/wicket/file-upload-download.html)
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
-* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (stub)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
 
 }
 
