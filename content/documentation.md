@@ -425,6 +425,7 @@ For both:
 
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
+* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [The About page](components/viewers/wicket/configuring-the-about-page.html)
