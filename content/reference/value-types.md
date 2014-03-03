@@ -76,6 +76,10 @@ The following [Joda](http://joda-time.sourceforge.net/) types are also supported
 *Isis* itself also provides a number of its own value types. These are
 all in the `org.apache.applib.value` package:
 
+-   `Blob` : binary large object (eg image), also includes metadata about the data (specifically the filename and mime type)
+
+-   `Clob` : character large objects (eg XML file), also includes metadata about the data (specifically the filename and mime type)
+
 -   `Color`
 
 -   `Date` (date only), `DateTime` (date and time) and `Time` (time only)
