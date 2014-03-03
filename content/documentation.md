@@ -412,10 +412,10 @@ For both:
 
 #### <a name="wicket-viewer-features">Features</a>
 
+* [File upload/download](components/viewers/wicket/file-upload-download.html)
 * [Bookmarks](components/viewers/wicket/bookmarks.html) (stub)
 * [Recent pages](components/viewers/wicket/recent-pages.html) (stub)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (stub)
-* [File upload/download](components/viewers/wicket/file-upload-download.html) (stub)
 
 }
 
