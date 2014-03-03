@@ -50,7 +50,7 @@ http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0?hint-1:colle
     
 When the user invokes an action on the object, the URL (necessarily) changes to indicate that the action was invoked.  This URL is specific to the user's session and cannot be shared with others.
     
-A quick way to grab the URL is simply by clicking on the object's title:
+A quick way for the user to grab a shareable URL is simply by clicking on the object's title:
 
 <a href="images/copy-link/040-050-title-url.png"><img src="images/copy-link/050-title-url-940.png"/></a>
 

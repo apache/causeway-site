@@ -16,9 +16,7 @@ and without:
 
 To suppress the 'remember me' checkbox, add the following configuration flag:
 
-<pre>
-isis.viewer.wicket.suppressRememberMe=true
-</pre>
+    isis.viewer.wicket.suppressRememberMe=true
 
 Typically this should be added to the `viewer_wicket.properties` file (in `WEB-INF`), though you can add to `isis.properties` if you wish.
 
