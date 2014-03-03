@@ -22,7 +22,9 @@ Clicking on this button brings up a dialog with the URL preselected:
 
 The URL in this case is something like:
 
-    http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0
+<pre>
+http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0
+</pre>
 
 The user can copy the link (eg `ctrl+C`) into the clipboard, then hit `OK` or `Esc` to dismiss the dialog.
 
@@ -39,7 +41,10 @@ Once the view has been customised, the URL shown in the copy URL dialog is in an
 <a href="images/copy-link/040-copy-link-with-hints.png"><img src="images/copy-link/040-copy-link-with-hints-940.png"/></a>
 
 The URL in this case is something like:
-    http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0?hint-1:collectionContents-view=3&hint-1:collectionContents:collectionContents-3:table-DESCENDING=value&hint-1:collectionContents:collectionContents-3:table-pageNumber=0&hint-2:collectionContents-view=0&hint-2:collectionContents:collectionContents-2:table-pageNumber=0&hint-3:collectionContents-view=2&hint-3:collectionContents:collectionContents-2:table-pageNumber=0&hint-4:collectionContents-view=3&hint-4:collectionContents:collectionContents-3:table-ASCENDING=exerciseDate&hint-4:collectionContents:collectionContents-3:table-pageNumber=0&hint-5:collectionContents-view=0&hint-5:collectionContents:collectionContents-3:table-pageNumber=0
+
+<pre>
+http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0?hint-1:collectionContents-view=3&hint-1:collectionContents:collectionContents-3:table-DESCENDING=value&hint-1:collectionContents:collectionContents-3:table-pageNumber=0&hint-2:collectionContents-view=0&hint-2:collectionContents:collectionContents-2:table-pageNumber=0&hint-3:collectionContents-view=2&hint-3:collectionContents:collectionContents-2:table-pageNumber=0&hint-4:collectionContents-view=3&hint-4:collectionContents:collectionContents-3:table-ASCENDING=exerciseDate&hint-4:collectionContents:collectionContents-3:table-pageNumber=0&hint-5:collectionContents-view=0&hint-5:collectionContents:collectionContents-3:table-pageNumber=0
+</pre>
 
 #### Copy URL from title
     
