@@ -52,7 +52,7 @@ When the user invokes an action on the object, the URL (necessarily) changes to 
     
 A quick way for the user to grab a shareable URL is simply by clicking on the object's title:
 
-<a href="images/copy-link/040-050-title-url.png"><img src="images/copy-link/050-title-url-940.png"/></a>
+<a href="images/copy-link/050-title-url.png"><img src="images/copy-link/050-title-url-940.png"/></a>
 
 
 ##User Experience
