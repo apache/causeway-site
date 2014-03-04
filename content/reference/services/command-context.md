@@ -3,19 +3,19 @@ Title: CommandContext and CommandService [1.4.0-SNAPSHOT]
 The `CommandContext` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
 
 By default, the `Command` is held in-memory only; once the action invocation has completed, the `Command` object is gone.  The optional
- supporting `CommandService` enables the implementation of `Command` to be pluggable, however, enabling the `Command` to be persisted.
+ supporting `CommandService` enables the implementation of `Command` to be pluggable.  With an appropriate implementation (eg the JDO implementation, described below) the `Command` may then be persisted.
 
 Persistent `Command`s support several use cases:
 
 - they enable profiling of the running application (which actions are invoked then most often, what is their response time)
 - they act as a parent to any background commands that might be invoked through the [BackgroundService](./background-service.html)
-- if [auditing](./auditing-service.html) is configured, they provide better audit information as the `Command` (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique `transactionId` GUID
+- if [auditing](./auditing-service.html) is configured, they provide better audit informatio, since the `Command` (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique `transactionId` GUID
 - if [publishing](./publishing-service.html) is configured, they provide better traceability as the `Command` is also correlated with any published events, again through the unique `transactionId` GUID
 
 Assuming that the `CommandService` supports persistent `Command`s, the associated [@Command](../recognized-annotations/Command.html) annotation also allows action invocations to be performed in the background.  In this case the act of invoking the action on an object instead returns the `Command` to the user.
 
 
-### API
+## API
 
 The `CommandContext` request-scoped service defines the following very simple API:
 
@@ -75,11 +75,15 @@ and where `Command` has the members:
 * `getException()` - exception stack trace if action threw exception
     
 
-### Implementation
+## Implementation
+
+#### CommandContext
 
 The `CommandContext` implementation is part of the core framework (isis-core), in fact is a concrete class in the applib:
 
 * `org.apache.isis.applib.services.command.CommandContext`
+
+#### CommandService (for persistent `Command`s)
 
 The `CommandService` interface - which acts as the factory for different `Command` implementations - is pluggable.  Currently there is only a single implementation, provided by the JDO objectstore, which persists `Command`s to an RDBMS:
 
@@ -89,7 +93,57 @@ There is also a supporting repository to query persisted `Command`s:
 
 * `org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdoRepository`
 
-### Usage
+
+## Usage
+
+#### Explicitly treating an action as a command
+
+The typical way to indicate that an action should be treated as a command is to annotate it with the [@Command](../recognized-annotations/Command.html) annotation, for example:
+
+    public class ToDoItem ... {
+    
+        @Command
+        public ToDoItem completed() { ... }
+    
+    }
+
+The annotation can also be used to specify whether the command should be performed in the background, for example:
+
+    public class ToDoItem ... {
+
+        @Command(executeIn=ExecuteIn.BACKGROUND)
+        public ToDoItem scheduleImplicitly() {
+            completeSlowly(3000);
+            return this;
+        }
+    }        
+
+When a background command is invoked, the user is returned the command object itself (to provide a handle to the command being invoked).
+
+#### Making commands the default
+
+As an alternative to annotating every action with `@Command`, alternatively this can be configured as the default.  
+
+To treat every action as a command, add the following to `isis.properties`:
+
+    isis.services.command.actions=all 
+
+To treat only non-query actions as commands (ie those annotated with [@ActionSemantics](../recognized-annotations/ActionSemantics.html) of IDEMPOTENT or NON_IDEMPOTENT), use:
+
+    isis.services.command.actions=ignoreQueryOnly
+
+To prevent an action from being treated as a command (even if globally enabled), use the `@Command` annotation with the `disabled` attribute:
+
+    @Command(disabled=true)
+    public void notACommand() { ... }
+
+To disable globally, use:    
+    
+    isis.services.command.actions=none
+
+If the key is not present in `isis.properties`, then commands are disabled by default.
+    
+#### Interating with the services
 
 Typically the domain objects have little need to interact with the `CommandContext` and `Command` directly; what is more useful is that these are persisted in support of the various use cases identified above.
 
@@ -110,7 +164,7 @@ The domain object can still obtain the original ("effective") user that caused t
     String user = commandContext.getCommand().getUser();
 
 
-### Registering the Services
+## Registering the Services
 
 Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/services/command-service-jdo.html) of the `CommandService`, then it would be:
 
@@ -121,7 +175,7 @@ Register like any other service in `isis.properties`.  For example, if using the
                   ...
 
 
-### Related Services
+## Related Services
 
 These services are most often used in conjunction with the `BackgroundService` and `BackgroundCommandService` (both described [here](./background-service.html)).  For `BackgroundService` captures commands for execution in the background, while the [BackgroundCommandService] persists such commands for execution.  
 
