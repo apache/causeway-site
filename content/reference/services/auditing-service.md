@@ -52,13 +52,11 @@ The typical way to indicate that an object should be audited is to annotate it w
         ... 
     }
 
-As an alternative to annotating every object with `@Auditing`, alternatively this can be configured as the default.  
-
-To treat every object as audited, add the following to `isis.properties`:
+As an alternative to annotating every object with `@Audited`, alternatively this can be configured as the default.  Add the following to `isis.properties`:
 
     isis.services.audit.objects=all 
 
-To prevent an object  from being audited (even if globally enabled), use the `@Audited` annotation with the `disabled` attribute:
+To prevent an object from being audited (even if globally enabled), use the `@Audited` annotation with the `disabled` attribute:
 
     @Audited(disabled=true)
     public class NotAuditedObject { ... }
