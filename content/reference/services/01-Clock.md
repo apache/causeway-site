@@ -1,38 +1,56 @@
-Clock
-=====
+title: Clock Service [1.4.0-SNAPSHOT]
 
-Many if not all enterprise applications deal with dates and times in one way or another. For example, if an `Order` is placed, then the `Customer` may have 30 days to pay the Invoice, otherwise a penalty may be levied.
-However, this can complicate automated testing: "today+30" will be a different date every time the test is run.
+Most applications deal with dates and times in one way or another. For example, if an `Order` is placed, then the `Customer` may have 30 days to pay the Invoice, otherwise a penalty may be levied.  However, this can complicate automated testing: "today+30" will be a different date every time the test is run.
 
-A common solution is to require that domain objects do not go directly to the system for the current date (ie don't simply instantiate a new `java.util.Date` in order to get the current time); instead they should call some sort of facade.
+Even disregarding testing, there may be a requirement to ensure that date/times are obtained from an NNTP server (rather than the system PC).  While instantiating a `java.util.Date` to current the current time is painless enough, we would not want complex technical logic for querying an NNTP server spread around domain logic code.
 
-The *Apache Isis* framework provides such a facade through the
-`org.apache.isis.applib.clock.Clock` class. The defaults for all values refer back to the `Clock`, and - because the `Clock` is a singleton - it is easy for any application code to obtain the current time also.
+Therefore it's common to provide a domain service whose responsibility is to provide the current time.  This service can be injected into any domain object (and can be mocked out for unit testing).  Isis provides such a facade through the `ClockService`.
 
-For example:
+## API & Implementation
 
-    public class Customer {
-         public Order placeOrder(Product p) {
-             Date now = Clock.getTimeAsDate();
-             ...
-         }
-         ...
+The API defined by `ClockService` is:
+
+    public class ClockService {
+        public LocalDate now() { ... }
+        public LocalDateTime nowAsLocalDateTime() { ... }
+        public DateTime nowAsDateTime() { ... }
+        public Timestamp nowAsJavaSqlTimestamp() { ... }
+        public long nowAsMillis() { ... }
     }
 
-Lazily Instantiated
--------------------
+In fact, this is a concrete class and therefore constitutes the default implementation:
 
-The first call to `Clock.getTime()` will lazily instantiate the singleton, with the default implementation being one that simply delegates to the system's internal clock. To use a different `Clock` implementation, eg one
-that delegates to an NNTP server, all that is required is to instantiate it any time prior to bootstrapping *Isis* itself.
+* `org.apache.isis.applib.services.clock.ClockService`
 
-One notable implementation that notably takes advantage of this is `FixtureClock`, used for testing. <!--See ? for more information.-->
+The time provided by this default implementation is based on the system clock.
 
-Possibly Replaceable
---------------------
 
-`Clock` implementations can indicate whether they are replaceable as the singleton, or not.
+## Registering the Service
 
-Most (all?) production implementations (eg the default system clock) are *not* replaceable; once instantiated, any attempt to instantiate another subclass will be rejected with an exception.
+Register like any other service in `isis.properties`:
 
-However implementations to work with tests (such as `FixtureClock`, already mentioned) are more likely to be replaceable, so that they can be setup multiple times as required.
+    isis.services=...,\
+                  org.apache.isis.applib.services.clock.ClockService,\
+                  ...
+
+## Alternative Implementations
+
+The default implementation delegates in fact to a singleton class that is also in the applib, namely `org.apache.isis.applib.clock.Clock`.  Because the framework itself uses this singleton, a little care must be exercised in configuring the framework to use an alternative implementation.
+
+Specifically, the first call to the `ClockService` (or to `Clock.getTime()` directly) will lazily instantiate the singleton, specifically `SystemClock` (a subclass of `Clock`).  As its name suggests, this default implementation simply delegates to the system's internal clock.  Once instantiated, the object registers itself as the singleton for the class such that any other attempt to instantiate some other (subclass of) `Clock` is ignored.
+
+Setting up a different implementation therefore requires eagerly instantiating a different subclass of `Clock`.  This is most easily accomplished by defining the `Clock` subclass as a nested inner class of a custom`ClockService` implementation.  For example:
+
+    public class NntpClockService extends ClockService {
+        private static class NntpClock extends Clock {
+            protected long time() {
+                ... NNTP stuff here ...
+            }
+        }
+        public NntpClockService() {
+            new NntpClock();
+        }
+    }
+            
+You can then register this service - instead of the default `ClockService` - in the usual way within `isis.properties`
 

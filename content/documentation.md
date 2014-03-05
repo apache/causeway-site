@@ -253,7 +253,7 @@ For both:
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [Exception Recognizers](./reference/services/exception-recognizers.html)
-* [Clock](./reference/services/01-Clock.html)
+* [ClockService](./reference/services/01-Clock.html)
 * [User Profiles](./reference/services/02-Profiles.html)
 
 #### <a name="domain-services-bookmark-memento">Bookmark/memento</a>

@@ -65,19 +65,17 @@ In order to prepare the release, you'll (need to) have a `~/.gnupg` directory wi
 
 During the release process the `maven-deploy-plugin` uploads the generated artifacts to a staging repo on the [Apache repository manager](http://repository.apache.org).  This requires your Apache LDAP credentials to be specified in your `~/.m2/settings.xml` file:
 
-<pre>
-&lt;settings&gt;
-  &lt;servers&gt;
-    &lt;server&gt;
-      &lt;id&gt;apache.releases.https&lt;/id&gt;
-      &lt;username&gt;xxxxxxx&lt;/username&gt;
-      &lt;password&gt;yyyyyyy&lt;/password&gt;
-    &lt;/server&gt;
-    ...
-  &lt;/servers&gt;
-  ...
-&lt;/settings&gt;
-</pre>
+    <settings>
+      <servers>
+        <server>
+          <id>apache.releases.https</id>
+          <username>xxxxxxx</username>
+          <password>yyyyyyy</password>
+        </server>
+        ...
+      </servers>
+      ...
+    </settings>
 
 where `xxxxxxx` and `yyyyyyy` are your Apache LDAP username and password.   For more information, see these [ASF docs](http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env).
 
@@ -120,26 +118,22 @@ The version number of the parent pom should reflect the branch name that you are
 
 For example, if releasing `core` version `1.2.3`, the POM should read:
 
-<pre>
-&lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-&lt;artifactId&gt;isis&lt;/artifactId&gt;
-&lt;version&gt;1.2.3-SNAPSHOT&lt;/version&gt;
-</pre>
+    <groupId>org.apache.isis.core</groupId>
+    <artifactId>isis</artifactId>
+    <version>1.2.3-SNAPSHOT</version>
 
 ### Update parent (Isis Core)
 
-If releasing Isis Core, check (via [http://search.maven.org](http://search.maven.org)) whether there is a newer version of the Apache parent `org.apache:apache`.
+If releasing Isis Core, check (via <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache%22%20a%3A%22apache%22" target="_blank">http://search.maven.org</a>) whether there is a newer version of the Apache parent `org.apache:apache`.
 
 If there is, update the `<version>` in the `<parent>` element in the parent POM to match the newer version:
 
-<pre>
-&lt;parent&gt;
-    &lt;groupId&gt;org.apache&lt;/groupId&gt;
-    &lt;artifactId&gt;apache&lt;/artifactId&gt;
-    &lt;version&gt;NN&lt;/version&gt;
-    &lt;relativePath&gt;&lt;/relativePath&gt;
-&lt;/parent&gt;
-</pre>
+    <parent>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>NN</version>
+        <relativePath />
+    </parent>
 
 where `NN` is the updated version number.
 
@@ -147,17 +141,14 @@ where `NN` is the updated version number.
 
 If releasing a non-core component, then check and if necessary update the `<version>` in the `<parent>` element in the parent POM to match the released (non-SNAPSHOT) version of `org.apache.isis.core:isis`:
 
-<pre>
-&lt;parent&gt;
-    &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
-    &lt;artifactId&gt;isis&lt;/artifactId&gt;
-    &lt;version&gt;1.2.3&lt;/version&gt;
-    &lt;relativePath&gt;&lt;/relativePath&gt;
-&lt;/parent&gt;
-</pre>
+    <parent>
+        <groupId>org.apache.isis.core</groupId>
+        <artifactId>isis</artifactId>
+        <version>1.2.3</version>
+        <relativePath />
+    </parent>
 
-> This obviously requires that the core has been released previously.  If you 
-also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
+> This obviously requires that the core has been released previously.  If you also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
 
 Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it the parent is also updated to the non-`SNAPSHOT` version.  *However*, the tck module's dependency on the component (typically a property) should remain as `SNAPSHOT`; it will be updated automatically when the `mvn release:prepare` is performed.
 
@@ -330,16 +321,12 @@ You should already have changed the parent POM of the releasable module to refer
 
 Next, delete all Isis artifacts from your local Maven repo:
 
-<pre>
-rm -rf ~/.m2/repository/org/apache/isis
-</pre>
+    rm -rf ~/.m2/repository/org/apache/isis
 
 
 Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
-<pre>
-mvn clean install
-</pre>
+    mvn clean install
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
@@ -357,10 +344,10 @@ If you are working on Windows and using mSysGit, this is where you'll need to sw
 
 Run the dry-run as follows:
 
-<pre>
-mvn release:prepare -P apache-release -D dryRun=true
-</pre>
+    mvn release:prepare -P apache-release -D dryRun=true
 
+> below there is details on how to run in batch (non-interative) mode.
+    
 Some modules might have additional profiles to be activated.  For example, the (now mothballed) SQL ObjectStore required `-P apache-release,integration-tests` so that its integration tests are also run.
 
 This should generate something like:
@@ -414,6 +401,16 @@ For the final question, new development version", the minor 'z' part of the vers
 <pre>
 What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.4-SNAPSHOT:
 </pre>
+
+
+If you don't want to avoid being prompted, you can also enter this information through properties, eg:
+
+    mvn release:prepare -P apache-release -D dryRun=true \
+        -Dtag=my-proj-1.2.3 \
+        -DreleaseVersion=1.2.3 \
+        -DdevelopmentVersion=1.2.4-SNAPSHOT
+
+> The `--batch-mode` argument can also, in theory, be added, but it's not clear (to me at least) how to enter the passphrase in this case.
 
 Assuming this completes successfully, delete the generated `release.properties` file:
 
