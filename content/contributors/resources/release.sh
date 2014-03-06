@@ -79,11 +79,11 @@ echo ""
 echo "" 
 echo "" 
 
-rm -rf /$ISISTMP/$ISISART-$ISISREL
-mkdir /$ISISTMP/$ISISART-$ISISREL
+rm -rf $ISISTMP/$ISISART-$ISISREL
+mkdir $ISISTMP/$ISISART-$ISISREL
 
-cp target/$ISISART-$ISISREL-source-release.zip /$ISISTMP/$ISISART-$ISISREL/.
-pushd /$ISISTMP/$ISISART-$ISISREL
+cp target/$ISISART-$ISISREL-source-release.zip $ISISTMP/$ISISART-$ISISREL/.
+pushd $ISISTMP/$ISISART-$ISISREL
 unzip $ISISART-$ISISREL-source-release.zip
 
 cd $ISISART-$ISISREL
@@ -112,7 +112,7 @@ echo ""
 echo "" 
 echo "" 
 
-mvn release:perform -P apache-release -DworkingDirectory=/$ISISTMP/$ISISART-$ISISREL
+mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:perform failed :-("  >&2
     exit 1

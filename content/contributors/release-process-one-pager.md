@@ -107,11 +107,11 @@ then "for real":
 
 #### Confirm:
 
-    rm -rf /$ISISTMP/$ISISART-$ISISREL
-    mkdir /$ISISTMP/$ISISART-$ISISREL
+    rm -rf $ISISTMP/$ISISART-$ISISREL
+    mkdir $ISISTMP/$ISISART-$ISISREL
 
-    cp target/$ISISART-$ISISREL-source-release.zip /$ISISTMP/$ISISART-$ISISREL/.
-    pushd /$ISISTMP/$ISISART-$ISISREL
+    cp target/$ISISART-$ISISREL-source-release.zip $ISISTMP/$ISISART-$ISISREL/.
+    pushd $ISISTMP/$ISISART-$ISISREL
     unzip $ISISART-$ISISREL-source-release.zip
 
     cd $ISISART-$ISISREL
@@ -130,7 +130,7 @@ if building on *nix, can use the defaults:
 but if using mSysGit on windows, specify a different working directory:
 
     mvn release:perform -P apache-release \
-        -DworkingDirectory=/$ISISTMP/$ISISART-$ISISREL/checkout
+        -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
         
 You may (again) be prompted for gpg passphrase.
  
