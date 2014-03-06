@@ -27,12 +27,16 @@ if [ -z $ISISREL ]; then exit; fi
 if [ -z $ISISDEV ]; then exit; fi
 if [ -z $ISISRC ]; then exit; fi
 
+# derived
+export ISISCTP=$(echo $ISISART | cut -d- -f2)
+export ISISCNM=$(echo $ISISART | cut -d- -f3)
+if [ $(echo "abc-def" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
+
 clear
+
 echo "" 
-echo "ISISART   : $ISISART" 
-echo "ISISREL   : $ISISREL" 
-echo "ISISDEV   : $ISISDEV" 
-echo "ISISRC    : $ISISRC" 
+env | grep ISIS | sort
+echo "" 
 
 
 

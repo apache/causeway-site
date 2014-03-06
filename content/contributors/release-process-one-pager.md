@@ -22,8 +22,8 @@ if releasing `core`, eg:
 
     cd core
     export ISISART=isis
-    export ISISREL=1.4.0
     export ISISDEV=1.5.0-SNAPSHOT
+    export ISISREL=1.4.0
     export ISISRC=RC1
 
 if releasing a `component/xxx/yyy`, eg:
@@ -31,11 +31,20 @@ if releasing a `component/xxx/yyy`, eg:
     cd component/xxx/yyy
 
     export ISISART=isis-xxx-yyy
-    export ISISREL=1.4.0
     export ISISDEV=1.5.0-SNAPSHOT
+    export ISISREL=1.4.0
     export ISISRC=RC1
 
+then export derived props for component type and component name
 
+    export ISISCTP=$(echo $ISISART | cut -d- -f2)
+    export ISISCNM=$(echo $ISISART | cut -d- -f3)
+    if [ $(echo "abc-def" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
+
+confirm:
+
+    env | grep ISIS | sort
+    
 ## Get code
 
 Pull down latest, create branch (eg `prepare/isis-1.4.0-RC1`):
