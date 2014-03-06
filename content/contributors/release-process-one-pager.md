@@ -124,6 +124,7 @@ then "for real":
     else
         ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISCPN/"
     fi
+    echo cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
     cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
 
     pushd $ISISTMP/$ISISART-$ISISREL
