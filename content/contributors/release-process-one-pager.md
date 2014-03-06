@@ -118,6 +118,10 @@ then "for real":
 
     mvn release:perform -P apache-release
 
+## Nexus staging
+
+Log onto [repository.apache.org](http://repository.apache.org) and close the staging repo.
+
 ## Git branches/tags
 
 Push branch then tags:
