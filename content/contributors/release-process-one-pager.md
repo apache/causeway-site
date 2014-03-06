@@ -43,8 +43,7 @@ Summarises the steps spelt out in full [here](release-process.html)
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tbody>
-</tr>
-
+</table>
 
 ## Set up environment
 
