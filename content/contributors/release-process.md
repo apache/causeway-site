@@ -58,7 +58,7 @@ The most important configuration you require is to set up public/private key pai
 
 In order to prepare the release, you'll (need to) have a `~/.gnupg` directory with the relevant files (`gpg.conf`, `pubring.gpg`, `secring.gpg` etc), and have `gpg` on your operating system PATH.
 
-> If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin. In other words, even if you normally use mSysGit bash, you may need to cut the release using `cmd.exe`.
+> If on Windows, the equivalent directory is `c:\users\xxx\appdata\roaming\gnupg`.  For `gpg`, use either [cygwin.com](http://cygwin.com) or [gpg4win.org](http://www.gpg4win.org).  Note also that the mSysGit version of `gpg` (as provided by GitHub's bash client) is not compatible with that provided by cygwin; move it to one side and check that `gpg.exe` being used is that from gpg4win.
 
 
 #### Maven `settings.xml`
@@ -338,12 +338,7 @@ Most of the work is done using the `mvn release:prepare` goal.  Since this makes
 
 ### Dry-run
 
-{note
-If you are working on Windows and using mSysGit, this is where you'll need to switch over to using `cmd.exe`
-}
-
 Run the dry-run as follows:
-
 
     mvn release:prepare -P apache-release -D dryRun=true \
         -Dtag=my-proj-1.2.3 \
