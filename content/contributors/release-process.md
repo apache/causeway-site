@@ -560,7 +560,6 @@ Use the following subject:
 And use the following body:
 
 <pre>
-
 I've staged a release for Apache Isis Core and related components:
 * Core 1.4.0
 * JDO Object Store 1.4.0
@@ -579,8 +578,8 @@ The artifacts have been staged to staging repository on repository.apache.org:
 * https://repository.apache.org/service/local/repositories/orgapacheisis-1005/content/org/apache/isis/viewer/isis-viewer-restfulobjects/2.2.0/isis-viewer-restfulobjects-2.2.0-source-release.zip
 * https://repository.apache.org/service/local/repositories/orgapacheisis-1003/content/org/apache/isis/security/isis-security-shiro/1.4.0/isis-security-shiro-1.4.0-source-release.zip
 * https://repository.apache.org/service/local/repositories/orgapacheisis-1004/content/org/apache/isis/security/isis-security-file/1.4.0/isis-security-file-1.4.0-source-release.zip
-* ...
-* ...
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1006/content/org/apache/isis/archetype/quickstart_wicket_restful_jdo-archetype/1.4.0/quickstart_wicket_restful_jdo-archetype-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1007/content/org/apache/isis/archetype/simple_wicket_restful_jdo-archetype/1.4.0/simple_wicket_restful_jdo-archetype-1.4.0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
