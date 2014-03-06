@@ -397,17 +397,14 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 
 If you didn't provide the `releaseVersion`, `tag` and `developmentVersion` tags, then you'll be prompted for them.  You can generally accept the defaults that Maven offers.
 
-Assuming this completes successfully, delete the generated `release.properties` file:
+Assuming this completes successfully, re-run the command, but without the `dryRun` flag and specifying `resume=false` (to ignore the generated `release.properties` file that gets generated as a side-effect of using `git`).  You can also set the `skipTests` flag since they would have been run during the previous dry run:
 
-    rm release.properties
+    mvn release:prepare -P apache-release -D resume=false -DskipTests=true
+            -DreleaseVersion=1.2.3 \
+            -Dtag=isis-1.2.3 \
+            -DdevelopmentVersion=1.2.4-SNAPSHOT
 
-The requirement to delete this file is a side-effect of using `mvn` with a decentralized version control system such `git` rather than with a centralized version control system such as `svn`.
-
-Then, re-run the command, but without the `dryRun` flag.  You can also set the `skipTests` flag since they would have been run during the previous dry run:
-
-    mvn release:prepare -P apache-release -D skipTests=true
-
-Because we were required to delete `release.properties` file, you'll need to re-enter the same information version/tag information when prompted.
+> If any issues here, then explicitly delete the generated `release.properties` file first.
 
 ### Post-prepare sanity check
 
