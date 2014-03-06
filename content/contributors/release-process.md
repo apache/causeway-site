@@ -393,7 +393,7 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.2.3: :
 </pre>
 
-If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them.  You can generally accept the defaults that Maven offers.
+If you didn't provide the `releaseVersion`, `tag` and `developmentVersion` tags, then you'll be prompted for them.  You can generally accept the defaults that Maven offers.
 
 Assuming this completes successfully, delete the generated `release.properties` file:
 
