@@ -17,6 +17,26 @@ Summarises the steps spelt out in full [here](release-process.html)
         <th>License headers (RAT)</th>
         <th>License check</th>
         <th>Commit changes</th>
+    </tr>
+    </thead>
+    <tbody>
+        <td>Core</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tbody>
+</table>
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+    <tr>
+        <th>Artifact</th>
         <th>prepare dryrun</th>
         <th>prepare</th>
         <th>confirm</th>
@@ -33,17 +53,9 @@ Summarises the steps spelt out in full [here](release-process.html)
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
     </tbody>
 </table>
+
 
 ## Set up environment
 
