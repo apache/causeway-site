@@ -80,7 +80,7 @@ Commit any changes from the preceding steps:
 
 ## Release
 
-Prepare:
+#### Prepare:
 
     mvn release:prepare -P apache-release \
                         -D dryRun=true \
@@ -93,7 +93,7 @@ Prepare:
                         -DdevelopmentVersion=$DEV \
                         -Dtag=$ARTIFACT-$REL
 
-Confirm:
+#### Confirm:
 
     rm -rf /tmp/$ARTIFACT-$REL
     mkdir /tmp/$ARTIFACT-$REL
@@ -109,7 +109,7 @@ Confirm:
 
     popd
 
-Perform:
+#### Perform:
 
     mvn release:perform -P apache-release
 
