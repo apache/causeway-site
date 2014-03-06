@@ -4,7 +4,7 @@ Summarises the steps spelt out in full [here](release-process.html)
 
 ## Checklist
 
-<table class="table table-bordered table-condensed table-hover">
+<table class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr>
             <th>Artifact</th>
@@ -74,7 +74,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Shiro Sec</td>
+            <td>Shiro Security</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -87,7 +87,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>File Sec</td>
+            <td>File Security</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -100,7 +100,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Quickstart arch</td>
+            <td>Quickstart archetype</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -113,7 +113,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Simple arch</td>
+            <td>Simple archetype</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -128,7 +128,7 @@ Summarises the steps spelt out in full [here](release-process.html)
     </tbody>
 </table>
 
-<table class="table table-bordered table-condensed table-hover">
+<table class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr>
             <th>Artifact</th>
@@ -143,6 +143,69 @@ Summarises the steps spelt out in full [here](release-process.html)
     <tbody>
         <tr>
             <td>Core</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>JDO Objectstore</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Wicket Viewer</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Restful Viewer</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Shiro Security</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>File Security</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Quickstart archetype</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Simple archetype</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
