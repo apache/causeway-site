@@ -41,6 +41,9 @@ Sanity check:
 
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install -o
+    if [ $? -ne 0 ]; then
+        echo "sanity check failed :-("  >&2
+    fi
 
 
 

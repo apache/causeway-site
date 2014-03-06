@@ -50,13 +50,13 @@ git checkout -d $ARTIFACT-$REL-$RC
 mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase=$PASSPHRASE -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare -DdryRun=true failed :-("  >&2
-    popd
+    exit 1
 fi
 
 mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare failed :-("  >&2
-    popd
+    exit 1
 fi
 
 
@@ -85,6 +85,7 @@ mvn clean install
 if [ $? -ne 0 ]; then
     echo "sanity check failed :-("  >&2
     popd
+    exit 1
 fi
 
 cat DEPENDENCIES
@@ -108,7 +109,7 @@ echo ""
 mvn release:perform -P apache-release
 if [ $? -ne 0 ]; then
     echo "mvn release:perform failed :-("  >&2
-    popd
+    exit 1
 fi
 
 

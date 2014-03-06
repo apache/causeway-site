@@ -297,15 +297,14 @@ First, check that there are *NO SNAPSHOT* dependencies in any of the `pom.xml` o
 
 Next, delete all Isis artifacts from your local Maven repo:
 
-<pre>
-rm -rf ~/.m2/repository/org/apache/isis
-</pre>
+    rm -rf ~/.m2/repository/org/apache/isis
 
 Next, check that `core` builds independently, using the `-o` offline flag:
 
-<pre>
-mvn clean install -o
-</pre>
+    mvn clean install -o
+    if [ $? -ne 0 ]; then
+        echo "sanity check failed :-("  >&2
+    fi
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
@@ -318,10 +317,12 @@ Next, delete all Isis artifacts from your local Maven repo:
 
     rm -rf ~/.m2/repository/org/apache/isis
 
-
 Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
     mvn clean install
+    if [ $? -ne 0 ]; then
+        echo "sanity check failed :-("  >&2
+    fi
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
@@ -339,6 +340,9 @@ Run the dry-run as follows:
         -DreleaseVersion=1.2.3 \
         -Dtag=isis-1.2.3 \
         -DdevelopmentVersion=1.2.4-SNAPSHOT
+    if [ $? -ne 0 ]; then
+        echo "mvn release:prepare -dryRun failed :-("  >&2
+    fi
 
 where:
 
@@ -353,6 +357,9 @@ This is not quite fully automated; you may be prompted for the gpg passphrase.
 Or, if you want to be prompted for the versions, you can omit the properties, eg:
 
     mvn release:prepare -P apache-release -D dryRun=true
+    if [ $? -ne 0 ]; then
+        echo "mvn release:prepare -dryRun failed :-("  >&2
+    fi
 
 Some modules might have additional profiles to be activated.  For example, the (now mothballed) SQL ObjectStore required `-P apache-release,integration-tests` so that its integration tests are also run.
 
@@ -398,6 +405,9 @@ Assuming this completes successfully, re-run the command, but without the `dryRu
             -DreleaseVersion=1.2.3 \
             -Dtag=isis-1.2.3 \
             -DdevelopmentVersion=1.2.4-SNAPSHOT
+    if [ $? -ne 0 ]; then
+        echo "mvn release:prepare failed :-("  >&2
+    fi
 
 > If any issues here, then explicitly delete the generated `release.properties` file first.
 
@@ -445,6 +455,9 @@ Before you start, make sure you've defined the staging repo in your local `~/.m2
 The command to stage the release is:
 
     mvn release:perform -P apache-release
+    if [ $? -ne 0 ]; then
+        echo "mvn release:perform failed :-("  >&2
+    fi
 
 The command starts off by checking out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:
 
