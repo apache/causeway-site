@@ -250,14 +250,11 @@ if releasing a `component/xxx/yyy`, eg:
     export ISISREL=1.4.0
     export ISISRC=RC1
 
-then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR):
+then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR), and confirm:
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
     export ISISCPN=$(echo $ISISART | cut -d- -f3)
     if [ $(echo "$ISISART" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
-
-confirm:
-
     env | grep ISIS | sort
     
 ## Get code
