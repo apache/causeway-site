@@ -85,17 +85,27 @@ Commit any changes from the preceding steps:
 
 #### Prepare:
 
+first the dry run:
+
     mvn release:prepare -P apache-release \
                         -D dryRun=true \
                         --batch-mode -Dgpg.passphrase=$PASSPHRASE \
                         -DreleaseVersion=$REL \
                         -DdevelopmentVersion=$DEV \
                         -Dtag=$ARTIFACT-$REL
+    if [ $? -ne 0 ]; then
+        echo "mvn release:prepare -dryRun failed :-("  >&2
+    fi
+
+then "for real": 
 
     mvn release:prepare -P apache-release -D skipTests=true -Dresume=false \
                         -DreleaseVersion=$REL \
                         -DdevelopmentVersion=$DEV \
                         -Dtag=$ARTIFACT-$REL
+    if [ $? -ne 0 ]; then
+        echo "mvn release:prepare -dryRun failed :-("  >&2
+    fi
 
 #### Confirm:
 
