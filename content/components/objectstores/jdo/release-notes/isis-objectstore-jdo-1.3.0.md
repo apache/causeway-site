@@ -1,4 +1,4 @@
-Title: isis-objectstore-jdo-1.0.0
+Title: isis-objectstore-jdo-1.3.0
                                
 
 <h2>        New Feature
