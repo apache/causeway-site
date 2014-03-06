@@ -554,19 +554,37 @@ The following boilerplate is for a release of the Apache Isis Core.  Adapt as re
 
 Use the following subject:
 <pre>
-[VOTE] Apache Isis Core release 1.2.3
+[VOTE] Apache Isis Core release 1.4.0 and related components
 </pre>
 
 And use the following body:
 
 <pre>
-I've staged a release for Apache Isis Core, namely 1.2.3.
+
+I've staged a release for Apache Isis Core and related components:
+* Core 1.4.0
+* JDO Object Store 1.4.0
+* Wicket Viewer 1.4.0
+* Restful Objects Viewer 2.2.0
+* Shiro Security 1.4.0
+* File Security 1.4.0
+* Quickstart Archetype 1.4.0
+* Simple Archetype 1.4.0
 
 The artifacts have been staged to staging repository on repository.apache.org:
-* https://repository.apache.org/service/local/repositories/orgapacheisis-NNNN/content/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
-* https://repository.apache.org/service/local/repositories/orgapacheisis-NNNN/content/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
 
-In the source code repo the code has been tagged as isis-1.2.3-RC1.
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1000/content/org/apache/isis/core/isis/1.4.0/isis-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1001/content/org/apache/isis/objectstore/isis-objectstore-jdo/1.4.0/isis-objectstore-jdo-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1002/content/org/apache/isis/viewer/isis-viewer-wicket/1.4.0/isis-viewer-wicket-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1005/content/org/apache/isis/viewer/isis-viewer-restfulobjects/2.2.0/isis-viewer-restfulobjects-2.2.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1003/content/org/apache/isis/security/isis-security-shiro/1.4.0/isis-security-shiro-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-1004/content/org/apache/isis/security/isis-security-file/1.4.0/isis-security-file-1.4.0-source-release.zip
+* ...
+* ...
+
+For each zip there is a corresponding signature file (append .asc to the zip's url).
+
+In the source code repo the code has been tagged as isis-1.4.0-RC1.
 
 Our website contains some suggestions of how to verify the release, see
 http://isis.apache.org/contributors/verifying-releases.html
