@@ -27,10 +27,10 @@ if [ -z $PASSPHRASE ]; then exit; fi
 
 clear
 echo "" 
-echo "ISISART  : $ISISART" 
-echo "ISISREL       : $ISISREL" 
-echo "ISISDEV       : $ISISDEV" 
-echo "ISISRC        : $ISISRC" 
+echo "ISISART   : $ISISART" 
+echo "ISISREL   : $ISISREL" 
+echo "ISISDEV   : $ISISDEV" 
+echo "ISISRC    : $ISISRC" 
 echo "PASSPHRASE: (suppressed)" 
 
 
@@ -52,7 +52,7 @@ echo ""
 # eg isis-1.4.0-RC1
 git checkout -d $ISISART-$ISISREL-$ISISRC 
 
-mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase=$PASSPHRASE -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
+mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase="$PASSPHRASE" -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare -DdryRun=true failed :-("  >&2
     exit 1
