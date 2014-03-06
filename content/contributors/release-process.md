@@ -1,6 +1,6 @@
 Title: Formal Release Process
 
-This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).
+This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).  There is also an experimental [script](resources/release.sh) for automating the process from the release:perform stage onwards.
 
 ## Intro
 
@@ -158,9 +158,7 @@ There should be no snapshot dependencies; the only mention of `SNAPSHOT` should 
 
 It's probably easiest to load up each `pom.xml` and inspect manually:
 
-<pre>
-vi `/bin/find . -name pom.xml | grep -v target`
-</pre>
+    vi `/bin/find . -name pom.xml | grep -v target`
 
 ... and search for `SNAPSHOT`.
 
@@ -214,18 +212,15 @@ The Apache Release Audit Tool `RAT` (from the [Apache Creadur](http://creadur.ap
 
 To run the RAT tool, use:
 
-<pre>
-mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
-</pre>
+    mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
 
 where `rat.numUnapprovedLicenses` property is set to a high figure, temporarily overriding the default value of 0.  This will allow the command to run over all submodules, rather than failing after the first one. 
 
 > Do *not* use `mvn rat:check`; depending on your local Maven configuratoin this may bring down the obsolete `mvn-rat-plugin` from the Codehaus repo.
 
 All being well the command should complete.  For each failing submodule, it will have written out a `target\rat.txt`; missing license notes are indicated using the key `!???`.  You can collate these together using something like:
-<pre>
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
-</pre>
+
+    for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 
 Investigate and fix any reported violations, typically by either:
 

@@ -1,4 +1,3 @@
-
 #
 # parameterize
 #
@@ -22,48 +21,57 @@ if [ -z $RC ]; then exit; fi
 if [ -z $PASSPHRASE ]; then exit; fi
 
 clear
-echo "" >&2
-echo "ARTIFACT  : $ARTIFACT" >&2
-echo "REL       : $REL" >&2
-echo "DEV       : $DEV" >&2
-echo "RC        : $RC" >&2
-echo "PASSPHRASE: (suppressed)" >&2
+echo "" 
+echo "ARTIFACT  : $ARTIFACT" 
+echo "REL       : $REL" 
+echo "DEV       : $DEV" 
+echo "RC        : $RC" 
+echo "PASSPHRASE: (suppressed)" 
 
 
 
 #
 # release prepare
 #
-echo "" >&2
-echo "" >&2
-echo "" >&2
-echo "#################################################" >&2
-echo "release prepare" >&2
-echo "#################################################" >&2
-echo "" >&2
-echo "" >&2
-echo "" >&2
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "release prepare" 
+echo "#################################################" 
+echo "" 
+echo "" 
+echo "" 
 
 
 # eg isis-1.4.0-RC1
 git checkout -d $ARTIFACT-$REL-$RC 
 
 mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase=$PASSPHRASE -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
+if [ $? -ne 0 ]; then
+    echo "mvn release:prepare -DdryRun=true failed :-("  >&2
+    popd
+fi
+
 mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
+if [ $? -ne 0 ]; then
+    echo "mvn release:prepare failed :-("  >&2
+    popd
+fi
 
 
 #
 # sanity check
 #
-echo "" >&2
-echo "" >&2
-echo "" >&2
-echo "#################################################" >&2
-echo "sanity check" >&2
-echo "#################################################" >&2
-echo "" >&2
-echo "" >&2
-echo "" >&2
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "sanity check" 
+echo "#################################################" 
+echo "" 
+echo "" 
+echo "" 
 
 rm -rf /tmp/$ARTIFACT-$REL
 mkdir /tmp/$ARTIFACT-$REL
@@ -74,6 +82,10 @@ unzip $ARTIFACT-$REL-source-release.zip
 
 cd $ARTIFACT-$REL
 mvn clean install
+if [ $? -ne 0 ]; then
+    echo "sanity check failed :-("  >&2
+    popd
+fi
 
 cat DEPENDENCIES
 
@@ -83,31 +95,35 @@ popd
 #
 # release perform
 #
-echo "" >&2
-echo "" >&2
-echo "" >&2
-echo "#################################################" >&2
-echo "release perform" >&2
-echo "#################################################" >&2
-echo "" >&2
-echo "" >&2
-echo "" >&2
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "release perform" 
+echo "#################################################" 
+echo "" 
+echo "" 
+echo "" 
 
 mvn release:perform -P apache-release
+if [ $? -ne 0 ]; then
+    echo "mvn release:perform failed :-("  >&2
+    popd
+fi
 
 
 #
 # nexus
 #
-echo "" >&2
-echo "" >&2
-echo "" >&2
-echo "#################################################" >&2
-echo "nexus staging" >&2
-echo "#################################################" >&2
-echo "" >&2
-echo "" >&2
-echo "" >&2
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "nexus staging" 
+echo "#################################################" 
+echo "" 
+echo "" 
+echo "" 
 read -p "Hit enter when staged in nexus (else ^C): " CONFIRM
 
 
@@ -115,15 +131,15 @@ read -p "Hit enter when staged in nexus (else ^C): " CONFIRM
 #
 # git push branch/tag
 #
-echo "" >&2
-echo "" >&2
-echo "" >&2
-echo "#################################################" >&2
-echo "git push branch/tag" >&2
-echo "#################################################" >&2
-echo "" >&2
-echo "" >&2
-echo "" >&2
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "git push branch/tag" 
+echo "#################################################" 
+echo "" 
+echo "" 
+echo "" 
 
 git push -u origin prepare/$ARTIFACT-$REL-$RC
 git push origin refs/tags/$ARTIFACT-$REL:refs/tags/$ARTIFACT-$REL-$RC
