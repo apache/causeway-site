@@ -351,7 +351,9 @@ where:
 * `tag` should follow our [standard](release-branch-and-tag-names.html) (concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*)
 * `developmentVersion` should increment as required, and have `-SNAPSHOT` appended.
 
-> The `--batch-mode` argument can also, in theory, be added, but it's not clear (to me at least) how to enter the passphrase in this case.
+This is not quite fully automated; you may be prompted for the gpg passphrase.
+
+> To fully automate this, it may be possible to also add `--batch-mode -Dgpg.passphrase="..."` arguments.  See [here](http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html) (maven release plugin docs) and [here](http://maven.apache.org/maven-release/maven-release-plugin/examples/non-interactive-release.html) (maven gpg plugin docs).
 
 Or, if you want to be prompted for the versions, you can omit the properties, eg:
 
