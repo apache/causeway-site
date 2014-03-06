@@ -89,7 +89,7 @@ Commit any changes from the preceding steps:
 first the dry run:
 
     mvn release:prepare -P apache-release \
-                        -D dryRun=true \
+                        -DdryRun=true \
                         --batch-mode -Dgpg.passphrase="$PASSPHRASE" \
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
@@ -101,7 +101,7 @@ first the dry run:
 
 then "for real": 
 
-    mvn release:prepare -P apache-release -D skipTests=true -Dresume=false \
+    mvn release:prepare -P apache-release -DskipTests=true -Dresume=false \
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
                         -Dtag=$ISISART-$ISISREL
