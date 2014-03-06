@@ -344,10 +344,18 @@ If you are working on Windows and using mSysGit, this is where you'll need to sw
 
 Run the dry-run as follows:
 
+
+    mvn release:prepare -P apache-release -D dryRun=true \
+        -Dtag=my-proj-1.2.3 \
+        -DreleaseVersion=1.2.3 \
+        -DdevelopmentVersion=1.2.4-SNAPSHOT
+
+> The `--batch-mode` argument can also, in theory, be added, but it's not clear (to me at least) how to enter the passphrase in this case.
+
+Or, f you want to be prompted for the versions, you can omit the properties, eg:
+
     mvn release:prepare -P apache-release -D dryRun=true
 
-> below there is details on how to run in batch (non-interative) mode.
-    
 Some modules might have additional profiles to be activated.  For example, the (now mothballed) SQL ObjectStore required `-P apache-release,integration-tests` so that its integration tests are also run.
 
 This should generate something like:
@@ -384,33 +392,26 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.2.3: :
 </pre>
 
-Then answer the next three questions.  
+If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them:
 
-For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
+* For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
 
 <pre>
-What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.3: :
+    What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.3: :
 </pre>
 
-For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*.  This is the same as our [standard](release-branch-and-tag-names.html):
+* For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*.  This is the same as our [standard](release-branch-and-tag-names.html):
+
 <pre>
-What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.2.3: :
+    What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.2.3: :
 </pre>
 
-For the final question, new development version", the minor 'z' part of the version should be incremented, and `-SNAPSHOT` appended.  Generally you can, once more, accept the default:
+* For the final question, new development version", the minor 'z' part of the version should be incremented, and `-SNAPSHOT` appended.  Generally you can, once more, accept the default:
+
 <pre>
-What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.4-SNAPSHOT:
+    What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.4-SNAPSHOT:
 </pre>
 
-
-If you don't want to avoid being prompted, you can also enter this information through properties, eg:
-
-    mvn release:prepare -P apache-release -D dryRun=true \
-        -Dtag=my-proj-1.2.3 \
-        -DreleaseVersion=1.2.3 \
-        -DdevelopmentVersion=1.2.4-SNAPSHOT
-
-> The `--batch-mode` argument can also, in theory, be added, but it's not clear (to me at least) how to enter the passphrase in this case.
 
 Assuming this completes successfully, delete the generated `release.properties` file:
 
