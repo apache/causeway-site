@@ -341,13 +341,19 @@ Most of the work is done using the `mvn release:prepare` goal.  Since this makes
 Run the dry-run as follows:
 
     mvn release:prepare -P apache-release -D dryRun=true \
-        -Dtag=my-proj-1.2.3 \
         -DreleaseVersion=1.2.3 \
+        -Dtag=isis-1.2.3 \
         -DdevelopmentVersion=1.2.4-SNAPSHOT
+
+where:
+
+* `releaseVersion` just strip off the `-SNAPSHOT` suffix:
+* `tag` should follow our [standard](release-branch-and-tag-names.html) (concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*)
+* `developmentVersion` should increment as required, and have `-SNAPSHOT` appended.
 
 > The `--batch-mode` argument can also, in theory, be added, but it's not clear (to me at least) how to enter the passphrase in this case.
 
-Or, f you want to be prompted for the versions, you can omit the properties, eg:
+Or, if you want to be prompted for the versions, you can omit the properties, eg:
 
     mvn release:prepare -P apache-release -D dryRun=true
 
@@ -387,7 +393,7 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.2.3: :
 </pre>
 
-If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them:
+If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them.
 
 * For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
 
