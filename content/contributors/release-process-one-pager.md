@@ -2,13 +2,23 @@ Title: Release Process (1 pager)
 
 Summarises the steps spelt out in full [here](release-process.html)
 
+## Set up environment
+
+if on *nix:
+
+    export ISISTMP=/tmp
+
+if on Windows:
+
+    export ISISTMP=/c/tmp
+
 ## Switch to correct directory, parameterize the release
 
 {note
 Switch to the directory containing the (parent of the) artifact(s) to be released
 }
 
-... if for `core`, eg:
+if releasing `core`, eg:
 
     cd core
     export ISISART=isis
@@ -16,7 +26,7 @@ Switch to the directory containing the (parent of the) artifact(s) to be release
     export ISISDEV=1.5.0-SNAPSHOT
     export ISISRC=RC1
 
-... if for a `component/xxx/yyy`, eg:
+if releasing a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
 
@@ -97,11 +107,11 @@ then "for real":
 
 #### Confirm:
 
-    rm -rf /tmp/$ISISART-$ISISREL
-    mkdir /tmp/$ISISART-$ISISREL
+    rm -rf /$ISISTMP/$ISISART-$ISISREL
+    mkdir /$ISISTMP/$ISISART-$ISISREL
 
-    cp target/$ISISART-$ISISREL-source-release.zip /tmp/$ISISART-$ISISREL/.
-    pushd /tmp/$ISISART-$ISISREL
+    cp target/$ISISART-$ISISREL-source-release.zip /$ISISTMP/$ISISART-$ISISREL/.
+    pushd /$ISISTMP/$ISISART-$ISISREL
     unzip $ISISART-$ISISREL-source-release.zip
 
     cd $ISISART-$ISISREL
@@ -120,7 +130,7 @@ if building on *nix, can use the defaults:
 but if using mSysGit on windows, specify a different working directory:
 
     mvn release:perform -P apache-release \
-        -DworkingDirectory=/c/tmp/$ISISART-$ISISREL/checkout
+        -DworkingDirectory=/$ISISTMP/$ISISART-$ISISREL/checkout
         
 You may (again) be prompted for gpg passphrase.
  

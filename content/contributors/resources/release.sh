@@ -2,6 +2,12 @@
 # parameterize
 #
 
+if [ "$OS" == "Windows_NT" ]; then
+    ISISTMP=/c/tmp
+else
+    ISISTMP=/tmp
+fi
+
 # artifact
 ISISART=isis
 # releaseVersion
@@ -11,19 +17,15 @@ ISISDEV=1.5.0-SNAPSHOT
 # release candidate
 ISISRC=RC1
 
-PASSPHRASE="some secret phrase"
-
 read -p "ISISART? ($ISISART): " ISISART
 read -p "ISISREL? ($ISISREL): " ISISREL
 read -p "ISISDEV? ($ISISDEV): " ISISDEV
 read -p "ISISRC? ($ISISRC): " ISISRC
-read -p "PASSPHRASE? ($PASSPHRASE): " PASSPHRASE
 
 if [ -z $ISISART ]; then exit; fi
 if [ -z $ISISREL ]; then exit; fi
 if [ -z $ISISDEV ]; then exit; fi
 if [ -z $ISISRC ]; then exit; fi
-if [ -z $PASSPHRASE ]; then exit; fi
 
 clear
 echo "" 
@@ -31,7 +33,6 @@ echo "ISISART   : $ISISART"
 echo "ISISREL   : $ISISREL" 
 echo "ISISDEV   : $ISISDEV" 
 echo "ISISRC    : $ISISRC" 
-echo "PASSPHRASE: (suppressed)" 
 
 
 
@@ -52,7 +53,7 @@ echo ""
 # eg isis-1.4.0-RC1
 git checkout -d $ISISART-$ISISREL-$ISISRC 
 
-mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase="$PASSPHRASE" -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
+mvn release:prepare -P apache-release -D dryRun=true -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare -DdryRun=true failed :-("  >&2
     exit 1
@@ -78,11 +79,11 @@ echo ""
 echo "" 
 echo "" 
 
-rm -rf /tmp/$ISISART-$ISISREL
-mkdir /tmp/$ISISART-$ISISREL
+rm -rf /$ISISTMP/$ISISART-$ISISREL
+mkdir /$ISISTMP/$ISISART-$ISISREL
 
-cp target/$ISISART-$ISISREL-source-release.zip /tmp/$ISISART-$ISISREL/.
-pushd /tmp/$ISISART-$ISISREL
+cp target/$ISISART-$ISISREL-source-release.zip /$ISISTMP/$ISISART-$ISISREL/.
+pushd /$ISISTMP/$ISISART-$ISISREL
 unzip $ISISART-$ISISREL-source-release.zip
 
 cd $ISISART-$ISISREL
@@ -111,7 +112,7 @@ echo ""
 echo "" 
 echo "" 
 
-mvn release:perform -P apache-release
+mvn release:perform -P apache-release -DworkingDirectory=/$ISISTMP/$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:perform failed :-("  >&2
     exit 1
