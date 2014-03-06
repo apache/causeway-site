@@ -43,6 +43,7 @@ Sanity check:
     mvn clean install -o
     if [ $? -ne 0 ]; then
         echo "sanity check failed :-("  >&2
+        exit 1
     fi
 
 
@@ -95,6 +96,7 @@ first the dry run:
                         -Dtag=$ARTIFACT-$REL
     if [ $? -ne 0 ]; then
         echo "mvn release:prepare -dryRun failed :-("  >&2
+        exit 1
     fi
 
 then "for real": 
@@ -105,6 +107,7 @@ then "for real":
                         -Dtag=$ARTIFACT-$REL
     if [ $? -ne 0 ]; then
         echo "mvn release:prepare -dryRun failed :-("  >&2
+        exit 1
     fi
 
 #### Confirm:
@@ -120,7 +123,7 @@ then "for real":
     mvn clean install
     if [ $? -ne 0 ]; then
         echo "confirm failed :-("  >&2
-        exit 0
+        exit 1
     fi
 
     cat DEPENDENCIES
@@ -130,4 +133,11 @@ then "for real":
 #### Perform:
 
     mvn release:perform -P apache-release
+    if [ $? -ne 0 ]; then
+        echo "mvn release:perform failed :-("  >&2
+        exit 1
+    fi
+
+## Git branches/tags
+
 
