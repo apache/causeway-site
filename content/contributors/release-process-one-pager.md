@@ -15,7 +15,6 @@ Switch to the directory containing the (parent of the) artifact(s) to be release
     export ISISREL=1.4.0
     export ISISDEV=1.5.0-SNAPSHOT
     export ISISRC=RC1
-    export PASSPHRASE="..."
 
 ... if for a `component/xxx/yyy`, eg:
 
@@ -25,7 +24,6 @@ Switch to the directory containing the (parent of the) artifact(s) to be release
     export ISISREL=1.4.0
     export ISISDEV=1.5.0-SNAPSHOT
     export ISISRC=RC1
-    export PASSPHRASE="..."
 
 
 ## Get code
@@ -82,15 +80,14 @@ Commit any changes from the preceding steps:
 
 #### Prepare:
 
-first the dry run:
+first the dry run (you will be prompted for gpg passphrase):
 
     mvn release:prepare -P apache-release \
                         -DdryRun=true \
-                        --batch-mode -Dgpg.passphrase="$PASSPHRASE" \
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
                         -Dtag=$ISISART-$ISISREL
-
+                        
 then "for real": 
 
     mvn release:prepare -P apache-release -DskipTests=true -Dresume=false \
@@ -116,8 +113,17 @@ then "for real":
 
 #### Perform:
 
+if building on *nix, can use the defaults:
+
     mvn release:perform -P apache-release
 
+but if using mSysGit on windows, specify a different working directory:
+
+    mvn release:perform -P apache-release \
+        -DworkingDirectory=/c/tmp/$ISISART-$ISISREL/checkout
+        
+You may (again) be prompted for gpg passphrase.
+ 
 ## Nexus staging
 
 Log onto [repository.apache.org](http://repository.apache.org) and close the staging repo.

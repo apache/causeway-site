@@ -302,9 +302,6 @@ Next, delete all Isis artifacts from your local Maven repo:
 Next, check that `core` builds independently, using the `-o` offline flag:
 
     mvn clean install -o
-    if [ $? -ne 0 ]; then
-        echo "sanity check failed :-("  >&2
-    fi
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct.
 
@@ -320,9 +317,6 @@ Next, delete all Isis artifacts from your local Maven repo:
 Next, build the component, though without the offline flag. Maven should pull down the component's dependencies from the Maven central repo, including the non-spshot of Isis core:
 
     mvn clean install
-    if [ $? -ne 0 ]; then
-        echo "sanity check failed :-("  >&2
-    fi
 
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
@@ -347,9 +341,6 @@ Run the dry-run as follows:
         -DreleaseVersion=1.2.3 \
         -Dtag=isis-1.2.3 \
         -DdevelopmentVersion=1.2.4-SNAPSHOT
-    if [ $? -ne 0 ]; then
-        echo "mvn release:prepare -dryRun failed :-("  >&2
-    fi
 
 where:
 
@@ -357,16 +348,11 @@ where:
 * `tag` should follow our [standard](release-branch-and-tag-names.html) (concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*)
 * `developmentVersion` should increment as required, and have `-SNAPSHOT` appended.
 
-This is not quite fully automated; you may be prompted for the gpg passphrase. 
-
-> To fully automate this, it may be possible to also add `--batch-mode -Dgpg.passphrase="..."` arguments.  See [here](http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html) (maven release plugin docs) and [here](http://maven.apache.org/maven-release/maven-release-plugin/examples/non-interactive-release.html) (maven gpg plugin docs).
+This is not quite fully automated; you may be prompted for the gpg passphrase.   (Experiments in using `--batch-mode -Dgpg.passphrase="..."` to fully automate this didn't work; for more info, see [here](http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html) (maven release plugin docs) and [here](http://maven.apache.org/maven-release/maven-release-plugin/examples/non-interactive-release.html) (maven gpg plugin docs).
 
 Or, if you want to be prompted for the versions, you can omit the properties, eg:
 
     mvn release:prepare -P apache-release -D dryRun=true
-    if [ $? -ne 0 ]; then
-        echo "mvn release:prepare -dryRun failed :-("  >&2
-    fi
 
 Some modules might have additional profiles to be activated.  For example, the (now mothballed) SQL ObjectStore required `-P apache-release,integration-tests` so that its integration tests are also run.
 
@@ -412,9 +398,6 @@ Assuming this completes successfully, re-run the command, but without the `dryRu
             -DreleaseVersion=1.2.3 \
             -Dtag=isis-1.2.3 \
             -DdevelopmentVersion=1.2.4-SNAPSHOT
-    if [ $? -ne 0 ]; then
-        echo "mvn release:prepare failed :-("  >&2
-    fi
 
 > If any issues here, then explicitly delete the generated `release.properties` file first.
 
@@ -459,14 +442,18 @@ Before you start, make sure you've defined the staging repo in your local `~/.m2
 
 ### Perform the Release
 
-The command to stage the release is:
+If running on *nix, then the command to stage the release is:
 
     mvn release:perform -P apache-release
-    if [ $? -ne 0 ]; then
-        echo "mvn release:perform failed :-("  >&2
-    fi
 
-The command starts off by checking out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:
+but if using mSysGit on windows, specify a different working directory:
+
+    mvn release:perform -P apache-release \
+        -DworkingDirectory=/c/tmp/$ISISART-$ISISREL/checkout
+
+You may (again) be prompted for gpg passphrase.
+
+The command starts off by checking out the codebase from the tag (hence different working directory under Windows to avoid 260 char path limit).  It then builds the artifacts, then uploads them to the Apache staging repository:
 
 <pre>
 ...
