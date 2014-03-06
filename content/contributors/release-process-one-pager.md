@@ -72,6 +72,12 @@ Missing/spurious `supplemental-models.xml`
     mvn license:download-licenses
     groovy ../../../scripts/checkmissinglicenses.groovy
 
+## Commit changes
+
+Commit any changes from the preceding steps:
+
+    git commit -am "ISIS-nnn: updates to pom.xml etc for release"
+
 ## Release
 
 Prepare:
