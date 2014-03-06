@@ -140,4 +140,8 @@ then "for real":
 
 ## Git branches/tags
 
+Push branch then tags:
 
+    git push -u origin prepare/$ARTIFACT-$REL-$RC
+    git push origin refs/tags/$ARTIFACT-$REL:refs/tags/$ARTIFACT-$REL-$RC
+    git fetch
