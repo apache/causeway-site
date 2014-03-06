@@ -28,9 +28,9 @@ if [ -z $ISISDEV ]; then exit; fi
 if [ -z $ISISRC ]; then exit; fi
 
 # derived
-export ISISCTP=$(echo $ISISART | cut -d- -f2)
-export ISISCNM=$(echo $ISISART | cut -d- -f3)
-if [ $(echo "abc-def" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
+export ISISCPT=$(echo $ISISART | cut -d- -f2)
+export ISISCPN=$(echo $ISISART | cut -d- -f3)
+if [ $(echo "$ISISART" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
 
 clear
 
@@ -86,7 +86,13 @@ echo ""
 rm -rf $ISISTMP/$ISISART-$ISISREL
 mkdir $ISISTMP/$ISISART-$ISISREL
 
-cp target/$ISISART-$ISISREL-source-release.zip $ISISTMP/$ISISART-$ISISREL/.
+if [ "$ISISCOR" == "Y" ]; then
+    ZIPDIR="$M2_REPO/repository/org/apache/isis/core/"
+else
+    ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISCPN/"
+fi
+cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
+
 pushd $ISISTMP/$ISISART-$ISISREL
 unzip $ISISART-$ISISREL-source-release.zip
 

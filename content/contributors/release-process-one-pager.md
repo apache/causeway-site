@@ -35,11 +35,11 @@ if releasing a `component/xxx/yyy`, eg:
     export ISISREL=1.4.0
     export ISISRC=RC1
 
-then export derived props for component type and component name
+then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR):
 
-    export ISISCTP=$(echo $ISISART | cut -d- -f2)
-    export ISISCNM=$(echo $ISISART | cut -d- -f3)
-    if [ $(echo "abc-def" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
+    export ISISCPT=$(echo $ISISART | cut -d- -f2)
+    export ISISCPN=$(echo $ISISART | cut -d- -f3)
+    if [ $(echo "$ISISART" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
 
 confirm:
 
@@ -119,7 +119,13 @@ then "for real":
     rm -rf $ISISTMP/$ISISART-$ISISREL
     mkdir $ISISTMP/$ISISART-$ISISREL
 
-    cp target/$ISISART-$ISISREL-source-release.zip $ISISTMP/$ISISART-$ISISREL/.
+    if [ "$ISISCOR" == "Y" ]; then
+        ZIPDIR="$M2_REPO/repository/org/apache/isis/core/"
+    else
+        ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISCPN/"
+    fi
+    cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
+
     pushd $ISISTMP/$ISISART-$ISISREL
     unzip $ISISART-$ISISREL-source-release.zip
 
@@ -154,3 +160,4 @@ Push branch then tags:
     git push -u origin prepare/$ISISART-$ISISREL-$ISISRC
     git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
     git fetch
+
