@@ -9,10 +9,10 @@ Summarises the steps spelt out in full [here](release-process.html)
         <tr>
             <th>Artifact</th>
             <th>Env?</th>
-            <th>Update parent POM version (no&nbsp;snapshots)</th>
-            <th>Update TCK POM version (no&nbsp;snapshots)</th>
+            <th>Update parent POM ver.</th>
+            <th>Update TCK POM ver.</th>
             <th>Newer plugin versions</th>
-            <th>Newer dependencies</th>
+            <th>Newer deps</th>
             <th>Formatting</th>
             <th>License headers (RAT)</th>
             <th>License check</th>
@@ -22,7 +22,7 @@ Summarises the steps spelt out in full [here](release-process.html)
     </thead>
     <tbody>
         <tr>
-            <td>isis</td>
+            <th>isis</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -35,7 +35,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-objectstore-jdo</td>
+            <th>isis-objectstore-jdo</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -48,7 +48,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-viewer-wicket</td>
+            <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -61,7 +61,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-viewer-restfulobjects</td>
+            <th>isis-viewer-restfulobjects</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -74,7 +74,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-security-shiro</td>
+            <th>isis-security-shiro</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -87,7 +87,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-security-file</td>
+            <th>isis-security-file</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -100,7 +100,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>quickstart_wicket_restful_jdo-archetype</td>
+            <th>quickstart_wicket_restful_jdo-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -113,7 +113,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>simple_wicket_restful_jdo-archetype</td>
+            <th>simple_wicket_restful_jdo-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -142,7 +142,7 @@ Summarises the steps spelt out in full [here](release-process.html)
     </thead>
     <tbody>
         <tr>
-            <td>isis</td>
+            <th>isis</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -151,7 +151,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-objectstore-jdo</td>
+            <th>isis-objectstore-jdo</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -160,7 +160,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-viewer-wicket</td>
+            <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -169,7 +169,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-viewer-restfulobjects</td>
+            <th>isis-viewer-restfulobjects</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -178,7 +178,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-security-shiro</td>
+            <th>isis-security-shiro</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -187,7 +187,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>isis-security-file</td>
+            <th>isis-security-file</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -196,7 +196,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>quickstart_wicket_restful_jdo-archetype</td>
+            <th>quickstart_wicket_restful_jdo-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -205,7 +205,7 @@ Summarises the steps spelt out in full [here](release-process.html)
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>simple_wicket_restful_jdo-archetype</td>
+            <th>simple_wicket_restful_jdo-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
