@@ -236,6 +236,7 @@ Switch to the directory containing the (parent of the) artifact(s) to be release
 if releasing `core`, eg:
 
     cd core
+
     export ISISART=isis
     export ISISDEV=1.5.0-SNAPSHOT
     export ISISREL=1.4.0
