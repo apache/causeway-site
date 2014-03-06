@@ -297,15 +297,13 @@ Update parent version to non-`SNAPSHOT` (including tck project, if any):
 
 ####Missing/spurious `supplemental-models.xml`
 
-... if in `core`:
-
     mvn license:download-licenses
-    groovy ../scripts/checkmissinglicenses.groovy
+    if [ "$ISISCOR" == "Y" ]; then
+        groovy ../scripts/checkmissinglicenses.groovy
+    else
+        groovy ../../../scripts/checkmissinglicenses.groovy
+    fi
 
-... if for a `component/xxx/yyy`:
-
-    mvn license:download-licenses
-    groovy ../../../scripts/checkmissinglicenses.groovy
 
 ## Commit changes
 
