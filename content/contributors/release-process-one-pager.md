@@ -9,8 +9,8 @@ Summarises the steps spelt out in full [here](release-process.html)
     <tr>
         <th>Artifact</th>
         <th>Env?</th>
-        <th>Update parent POM version (no snapshots)</th>
-        <th>Update TCK POM version (no snapshots)</th>
+        <th>Update parent POM version (no&nbsp;snapshots)</th>
+        <th>Update TCK POM version (no&nbsp;snapshots)</th>
         <th>Newer plugin versions</th>
         <th>Newer dependencies</th>
         <th>Formatting</th>
