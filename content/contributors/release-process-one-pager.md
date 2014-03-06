@@ -357,16 +357,12 @@ then "for real":
 
 #### Perform:
 
-if building on *nix, can use the defaults:
-
-    mvn release:perform -P apache-release
-
-but if using mSysGit on windows, specify a different working directory:
-
     mvn release:perform -P apache-release \
         -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
-        
+     
 You may (again) be prompted for gpg passphrase.
+
+> The `workingDirectory` property is to avoid 260char path issue if building on Windows.
  
 ## Nexus staging
 
