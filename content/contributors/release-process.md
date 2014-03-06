@@ -560,7 +560,7 @@ Use the following subject:
 And use the following body:
 
 <pre>
-I've staged a release for Apache Isis Core and related components:
+I've cut a release for Apache Isis Core and related components:
 * Core 1.4.0
 * JDO Object Store 1.4.0
 * Wicket Viewer 1.4.0
@@ -570,7 +570,7 @@ I've staged a release for Apache Isis Core and related components:
 * Quickstart Archetype 1.4.0
 * Simple Archetype 1.4.0
 
-The artifacts have been staged to staging repository on repository.apache.org:
+The artifacts have been uploaded to staging repository on repository.apache.org:
 
 * https://repository.apache.org/service/local/repositories/orgapacheisis-1000/content/org/apache/isis/core/isis/1.4.0/isis-1.4.0-source-release.zip
 * https://repository.apache.org/service/local/repositories/orgapacheisis-1001/content/org/apache/isis/objectstore/isis-objectstore-jdo/1.4.0/isis-objectstore-jdo-1.4.0-source-release.zip
@@ -585,8 +585,7 @@ For each zip there is a corresponding signature file (append .asc to the zip's u
 
 In the source code repo the code has been tagged as isis-1.4.0-RC1.
 
-Our website contains some suggestions of how to verify the release, see
-http://isis.apache.org/contributors/verifying-releases.html
+Our website contains some suggestions of how to verify the release, see http://isis.apache.org/contributors/verifying-releases.html.  There is also a script you can use, http://isis.apache.org/contributors/verifying-releases-script.html.
 
 Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
 

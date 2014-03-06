@@ -16,8 +16,7 @@ The script could be enhanced in many ways, feel free to do so! Copy the script t
 	# -Run this script
 	# TODO: enhance this script so it will stop when something is broken
 	_download(){
-		files=( `cat "*.txt" `)
-		for fil in "${files[@]}"
+		for fil in `cat *.txt`
 		do
 			echo 'Downloading '$fil
 			curl -O $fil
