@@ -261,7 +261,7 @@ recognized by *Apache Isis*' default programming model:
 
 There are also a number of deprecated methods (for lifecycle callbacks):
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
 <tr>
     <th>Prefix</th>
     <th>Object</th>

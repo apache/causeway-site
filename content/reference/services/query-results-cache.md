@@ -7,7 +7,7 @@ Caching such values is useful for code that loops "naively" through a bunch of s
 > Note: this service was inspired by similar functionality that exists in relational databases, for example Sybase's [subquery results cache](http://infocenter.sybase.com/help/index.jsp?topic=/com.sybase.dc20023_1251/html/optimizer/X43480.htm) and Oracle's [result_cache](http://www.dba-oracle.com/oracle11g/oracle_11g_result_cache_sql_hint.htm) hint.
 
 
-###API & Implementation
+## API & Implementation
 
 The API defined by `QueryResultsCache` is:
 
@@ -55,7 +55,7 @@ In fact, this is a concrete class:
 * `org.apache.isis.applib.services.queryresultscache.QueryResultsCache`
 
 
-### Usage
+## Usage
 
 Suppose that there's a `TaxService` that calculates tax on `Taxable` items, with respect to some `TaxType`, and for a given `LocalDate`.  To calculate tax it must run a database query and then perform some additional calculations.  The original implementation is:
 

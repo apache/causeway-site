@@ -414,16 +414,13 @@ If you don't want to avoid being prompted, you can also enter this information t
 
 Assuming this completes successfully, delete the generated `release.properties` file:
 
-<pre>
-rm release.properties
-</pre>
+    rm release.properties
 
 The requirement to delete this file is a side-effect of using `mvn` with a decentralized version control system such `git` rather than with a centralized version control system such as `svn`.
 
 Then, re-run the command, but without the `dryRun` flag.  You can also set the `skipTests` flag since they would have been run during the previous dry run:
-<pre>
-mvn release:prepare -P apache-release -D skipTests=true
-</pre>
+
+    mvn release:prepare -P apache-release -D skipTests=true
 
 Because we were required to delete `release.properties` file, you'll need to re-enter the same information version/tag information when prompted.
 
@@ -470,9 +467,7 @@ Before you start, make sure you've defined the staging repo in your local `~/.m2
 
 The command to stage the release is:
 
-<pre>
-mvn release:perform -P apache-release
-</pre>
+    mvn release:perform -P apache-release
 
 The command starts off by checking out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:
 
@@ -552,16 +547,14 @@ Use `gpg --keyserver hkp://pgp.mit.edu --recv-keys nnnnnnnn` to confirm that the
 Finally, push both the branch and the tag created locally to the central origin server.  For the tag, we append an `-RCn` suffix until the vote succeeds.  
 
 To push the branch, for example:
-<pre>
-git checkout prepare/isis-1.2.3-RC1
-git push -u origin prepare/isis-1.2.3-RC1
-</pre>
+
+    git checkout prepare/isis-1.2.3-RC1
+    git push -u origin prepare/isis-1.2.3-RC1
 
 To push the tag, with the `-RCn` suffix, for example:
-<pre>
-git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3-RC1
-git fetch
-</pre>
+
+    git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3-RC1
+    git fetch
 
 The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
 
@@ -636,9 +629,7 @@ If the vote has been successful, then replace the `-RCn` tag with another withou
 
 You can do this using the `scripts/promoterctag.sh` script; for example:
 
-<pre>
-sh scripts/promoterctag isis-1.2.3 RC1
-</pre>
+    sh scripts/promoterctag isis-1.2.3 RC1
 
 Or, if you like to execute the steps in that script by hand:
 
@@ -747,17 +738,14 @@ isis/
 
 If necessary, checkout this directory structure:
 
-<pre>
-svn co https://dist.apache.org/repos/dist/release/isis isis-dist
-</pre>
+    svn co https://dist.apache.org/repos/dist/release/isis isis-dist
 
 Next, add the new release into the appropriate directory, and delete any previous release.  You can use [the upd.sh script](upd_sh) to help; this downloads the artefacts from the Nexus release repository, adds the artefacts to subsversion and deletes the previous version.
 
 
 At the end, commit the changes:
-<pre>
-svn commit -m "publishing isis source releases to dist.apache.org"
-</pre>
+
+    svn commit -m "publishing isis source releases to dist.apache.org"
 
 ## Update JIRA and generate Release notes
 
@@ -823,14 +811,14 @@ And use the following body (summarizing the main points as required):
 
 <pre>
 The Isis team is pleased to announce the release of:
-- Apache Isis Core version 1.3.0
-- Wicket Viewer 1.3.0
-- Restful Objects Viewer 2.1.0
-- JDO Object Store 1.3.0
-- Shiro Security 1.3.0
-- File Security 1.0.1
-- Simple Archetype 1.3.0
-- Quickstart Archetype 1.3.0
+- Apache Isis Core version 1.x.0
+- Wicket Viewer 1.x.0
+- Restful Objects Viewer 2.x.0
+- JDO Object Store 1.x.0
+- Shiro Security 1.x.0
+- File Security 1.x.0
+- Simple Archetype 1.x.0
+- Quickstart Archetype 1.x.0
 
 New features in this release include:
 - ...
@@ -867,22 +855,18 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
-<pre>
-git checkout master                               # update master with latest
-git pull
-git merge prepare/isis-1.2.3-RC1                  # merge branch onto master
-git branch -d prepare/isis-1.2.3-RC1              # branch no longer needed
-git push origin --delete prepare/isis-1.2.3-RC1   # remote branch no longer needed
-</pre>
+    git checkout master                               # update master with latest
+    git pull
+    git merge prepare/isis-1.2.3-RC1                  # merge branch onto master
+    git branch -d prepare/isis-1.2.3-RC1              # branch no longer needed
+    git push origin --delete prepare/isis-1.2.3-RC1   # remote branch no longer needed
 
 If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.
  
 Next, do a sanity check that everything builds ok:
 
-<pre>
-rm -rf ~/.m2/repository/org/apache/isis
-mvn clean install
-</pre>
+    rm -rf ~/.m2/repository/org/apache/isis
+    mvn clean install
 
 ... and run up an Isis application.
 
@@ -896,10 +880,6 @@ The trunk holds a [STATUS](https://git-wip-us.apache.org/repos/asf/isis/repo?p=i
 
 Finally, push the changes up to origin:
 
-<pre>
-git fetch    # check no new commits on origin/master
-git push
-</pre>
-
-
+    git fetch    # check no new commits on origin/master
+    git push
 
