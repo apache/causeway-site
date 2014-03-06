@@ -88,6 +88,7 @@ Commit any changes from the preceding steps:
                         -DreleaseVersion=$REL \
                         -DdevelopmentVersion=$DEV \
                         -Dtag=$ARTIFACT-$REL
+
     mvn release:prepare -P apache-release -D skipTests=true -Dresume=false \
                         -DreleaseVersion=$REL \
                         -DdevelopmentVersion=$DEV \
