@@ -6,53 +6,150 @@ Summarises the steps spelt out in full [here](release-process.html)
 
 <table class="table table-bordered table-condensed table-hover">
     <thead>
-    <tr>
-        <th>Artifact</th>
-        <th>Env?</th>
-        <th>Update parent POM version (no&nbsp;snapshots)</th>
-        <th>Update TCK POM version (no&nbsp;snapshots)</th>
-        <th>Newer plugin versions</th>
-        <th>Newer dependencies</th>
-        <th>Formatting</th>
-        <th>License headers (RAT)</th>
-        <th>License check</th>
-        <th>Commit changes</th>
-    </tr>
+        <tr>
+            <th>Artifact</th>
+            <th>Env?</th>
+            <th>Update parent POM version (no&nbsp;snapshots)</th>
+            <th>Update TCK POM version (no&nbsp;snapshots)</th>
+            <th>Newer plugin versions</th>
+            <th>Newer dependencies</th>
+            <th>Formatting</th>
+            <th>License headers (RAT)</th>
+            <th>License check</th>
+            <th>Recreate archetype</th>
+            <th>Commit changes</th>
+        </tr>
     </thead>
     <tbody>
-        <td>Core</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <tr>
+            <td>Core</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>JDO Objectstore</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Wicket Viewer</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Restful Viewer</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Shiro Sec</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>File Sec</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Quickstart arch</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Simple arch</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>n/a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
     </tbody>
 </table>
 
 <table class="table table-bordered table-condensed table-hover">
     <thead>
-    <tr>
-        <th>Artifact</th>
-        <th>prepare dryrun</th>
-        <th>prepare</th>
-        <th>confirm</th>
-        <th>perform</th>
-        <th>stage (nexus)</th>
-        <th>git push</th>
-    </tr>
+        <tr>
+            <th>Artifact</th>
+            <th>prepare dryrun</th>
+            <th>prepare</th>
+            <th>confirm</th>
+            <th>perform</th>
+            <th>stage (nexus)</th>
+            <th>git push</th>
+        </tr>
     </thead>
     <tbody>
-        <td>Core</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <tr>
+            <td>Core</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
     </tbody>
 </table>
 
