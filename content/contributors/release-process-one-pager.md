@@ -11,20 +11,20 @@ Switch to the directory containing the (parent of the) artifact(s) to be release
 ... if for `core`, eg:
 
     cd core
-    export ARTIFACT=isis
-    export REL=1.4.0
-    export DEV=1.5.0-SNAPSHOT
-    export RC=RC1
+    export ISISART=isis
+    export ISISREL=1.4.0
+    export ISISDEV=1.5.0-SNAPSHOT
+    export ISISRC=RC1
     export PASSPHRASE="..."
 
 ... if for a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
 
-    export ARTIFACT=isis-xxx-yyy
-    export REL=1.4.0
-    export DEV=1.5.0-SNAPSHOT
-    export RC=RC1
+    export ISISART=isis-xxx-yyy
+    export ISISREL=1.4.0
+    export ISISDEV=1.5.0-SNAPSHOT
+    export ISISRC=RC1
     export PASSPHRASE="..."
 
 
@@ -34,7 +34,7 @@ Pull down latest, create branch (eg `prepare/isis-1.4.0-RC1`):
 
     git checkout master
     git pull --ff-only
-    git checkout -d prepare/$ARTIFACT-$REL-$RC 
+    git checkout -d prepare/$ISISART-$ISISREL-$ISISRC 
 
     
 Sanity check:
@@ -91,9 +91,9 @@ first the dry run:
     mvn release:prepare -P apache-release \
                         -D dryRun=true \
                         --batch-mode -Dgpg.passphrase=$PASSPHRASE \
-                        -DreleaseVersion=$REL \
-                        -DdevelopmentVersion=$DEV \
-                        -Dtag=$ARTIFACT-$REL
+                        -DreleaseVersion=$ISISREL \
+                        -DdevelopmentVersion=$ISISDEV \
+                        -Dtag=$ISISART-$ISISREL
     if [ $? -ne 0 ]; then
         echo "mvn release:prepare -dryRun failed :-("  >&2
         exit 1
@@ -102,9 +102,9 @@ first the dry run:
 then "for real": 
 
     mvn release:prepare -P apache-release -D skipTests=true -Dresume=false \
-                        -DreleaseVersion=$REL \
-                        -DdevelopmentVersion=$DEV \
-                        -Dtag=$ARTIFACT-$REL
+                        -DreleaseVersion=$ISISREL \
+                        -DdevelopmentVersion=$ISISDEV \
+                        -Dtag=$ISISART-$ISISREL
     if [ $? -ne 0 ]; then
         echo "mvn release:prepare -dryRun failed :-("  >&2
         exit 1
@@ -112,14 +112,14 @@ then "for real":
 
 #### Confirm:
 
-    rm -rf /tmp/$ARTIFACT-$REL
-    mkdir /tmp/$ARTIFACT-$REL
+    rm -rf /tmp/$ISISART-$ISISREL
+    mkdir /tmp/$ISISART-$ISISREL
 
-    cp target/$ARTIFACT-$REL-source-release.zip /tmp/$ARTIFACT-$REL/.
-    pushd /tmp/$ARTIFACT-$REL
-    unzip $ARTIFACT-$REL-source-release.zip
+    cp target/$ISISART-$ISISREL-source-release.zip /tmp/$ISISART-$ISISREL/.
+    pushd /tmp/$ISISART-$ISISREL
+    unzip $ISISART-$ISISREL-source-release.zip
 
-    cd $ARTIFACT-$REL
+    cd $ISISART-$ISISREL
     mvn clean install
     if [ $? -ne 0 ]; then
         echo "confirm failed :-("  >&2
@@ -142,6 +142,6 @@ then "for real":
 
 Push branch then tags:
 
-    git push -u origin prepare/$ARTIFACT-$REL-$RC
-    git push origin refs/tags/$ARTIFACT-$REL:refs/tags/$ARTIFACT-$REL-$RC
+    git push -u origin prepare/$ISISART-$ISISREL-$ISISRC
+    git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
     git fetch

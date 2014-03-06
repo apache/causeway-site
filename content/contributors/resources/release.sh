@@ -2,30 +2,35 @@
 # parameterize
 #
 
-ARTIFACT=isis
-REL=1.4.0
-DEV=1.5.0-SNAPSHOT
-RC=RC1
+# artifact
+ISISART=isis
+# releaseVersion
+ISISREL=1.4.0
+# developmentVersion
+ISISDEV=1.5.0-SNAPSHOT
+# release candidate
+ISISRC=RC1
+
 PASSPHRASE="some secret phrase"
 
-read -p "ARTIFACT? ($ARTIFACT): " ARTIFACT
-read -p "REL? ($REL): " REL
-read -p "DEV? ($DEV): " DEV
-read -p "RC? ($RC): " RC
+read -p "ISISART? ($ISISART): " ISISART
+read -p "ISISREL? ($ISISREL): " ISISREL
+read -p "ISISDEV? ($ISISDEV): " ISISDEV
+read -p "ISISRC? ($ISISRC): " ISISRC
 read -p "PASSPHRASE? ($PASSPHRASE): " PASSPHRASE
 
-if [ -z $ARTIFACT ]; then exit; fi
-if [ -z $REL ]; then exit; fi
-if [ -z $DEV ]; then exit; fi
-if [ -z $RC ]; then exit; fi
+if [ -z $ISISART ]; then exit; fi
+if [ -z $ISISREL ]; then exit; fi
+if [ -z $ISISDEV ]; then exit; fi
+if [ -z $ISISRC ]; then exit; fi
 if [ -z $PASSPHRASE ]; then exit; fi
 
 clear
 echo "" 
-echo "ARTIFACT  : $ARTIFACT" 
-echo "REL       : $REL" 
-echo "DEV       : $DEV" 
-echo "RC        : $RC" 
+echo "ISISART  : $ISISART" 
+echo "ISISREL       : $ISISREL" 
+echo "ISISDEV       : $ISISDEV" 
+echo "ISISRC        : $ISISRC" 
 echo "PASSPHRASE: (suppressed)" 
 
 
@@ -45,15 +50,15 @@ echo ""
 
 
 # eg isis-1.4.0-RC1
-git checkout -d $ARTIFACT-$REL-$RC 
+git checkout -d $ISISART-$ISISREL-$ISISRC 
 
-mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase=$PASSPHRASE -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
+mvn release:prepare -P apache-release -D dryRun=true --batch-mode -Dgpg.passphrase=$PASSPHRASE -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare -DdryRun=true failed :-("  >&2
     exit 1
 fi
 
-mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$REL -DdevelopmentVersion=$DEV -Dtag=$ARTIFACT-$REL
+mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare failed :-("  >&2
     exit 1
@@ -73,14 +78,14 @@ echo ""
 echo "" 
 echo "" 
 
-rm -rf /tmp/$ARTIFACT-$REL
-mkdir /tmp/$ARTIFACT-$REL
+rm -rf /tmp/$ISISART-$ISISREL
+mkdir /tmp/$ISISART-$ISISREL
 
-cp target/$ARTIFACT-$REL-source-release.zip /tmp/$ARTIFACT-$REL/.
-pushd /tmp/$ARTIFACT-$REL
-unzip $ARTIFACT-$REL-source-release.zip
+cp target/$ISISART-$ISISREL-source-release.zip /tmp/$ISISART-$ISISREL/.
+pushd /tmp/$ISISART-$ISISREL
+unzip $ISISART-$ISISREL-source-release.zip
 
-cd $ARTIFACT-$REL
+cd $ISISART-$ISISREL
 mvn clean install
 if [ $? -ne 0 ]; then
     echo "sanity check failed :-("  >&2
@@ -142,6 +147,6 @@ echo ""
 echo "" 
 echo "" 
 
-git push -u origin prepare/$ARTIFACT-$REL-$RC
-git push origin refs/tags/$ARTIFACT-$REL:refs/tags/$ARTIFACT-$REL-$RC
+git push -u origin prepare/$ISISART-$ISISREL-$ISISRC
+git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
 git fetch
