@@ -327,6 +327,13 @@ Next, build the component, though without the offline flag. Maven should pull do
 Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).  The versions of `core` should not be a SNAPSHOT.
 
 
+## Commit changes
+
+Before going any further, remember to commit any changes from the preceding steps:
+
+    git commit -am "ISIS-nnn: updates to pom.xml etc for release"
+
+
 ## Preparing a Release (`mvn release:prepare`)
 
 Most of the work is done using the `mvn release:prepare` goal.  Since this makes a lot of changes, we run it first in "dry run" mode; only if that works do we run the goal for real.

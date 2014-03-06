@@ -118,6 +118,10 @@ then "for real":
 
     cd $ARTIFACT-$REL
     mvn clean install
+    if [ $? -ne 0 ]; then
+        echo "confirm failed :-("  >&2
+        exit 0
+    fi
 
     cat DEPENDENCIES
 
