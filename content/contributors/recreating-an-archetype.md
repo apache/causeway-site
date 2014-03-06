@@ -6,57 +6,54 @@ Isis archetypes are reverse engineered from example applications.  Once reverse 
 
 Switch to the directory containing the example application; this page uses `quickstart_wicket_restful_jdo`:
 
-<pre>
-cd example/application/quickstart_wicket_restful_jdo
-</pre>
+    cd example/application/quickstart_wicket_restful_jdo
 
 Make sure that the app's `pom.xml`:
 
 - has the correct `-SNAPSHOT` version
 - references *released* versions of Isis core and the other components
 
-Check for and fix any missing license header notices:
-<pre>
-mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
-</pre>
+It's probably easiest to load up each `pom.xml` and inspect manually:
+
+    vi `/bin/find . -name pom.xml | grep -v target`
+
+... and search for `SNAPSHOT`.
+
+
+Next, check for and fix any missing license header notices:
+
+    mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
+    for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 
 Finally, double check that the app is running satisfactorily:
   
-<pre>
-mvn clean install
-mvn antrun:run     # runs as standalone app using webconsole
-cd webapp
-mvn jetty:run      # runs as mvn jetty plugin
-</pre>
+    mvn clean install
+    mvn antrun:run     # runs as standalone app using webconsole
+    cd webapp
+    mvn jetty:run      # runs as mvn jetty plugin
 
 ### Create the archetype
 
 Before we generate the archetype, we clear out all non source code artifacts.
 
 Start by doing the regular `mvn clean`:
-<pre>
-mvn clean
-</pre>
+
+    mvn clean
 
 To view the remaining files/directories that needs removing, use:
-<pre>
-for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -print; done
-/bin/find . -name "*.log" -print
-</pre>
+
+    for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -print; done
+    /bin/find . -name "*.log" -print
 
 To actually delete these files, use:
-<pre>
-for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -exec rm -r {} \;; done
-/bin/find . -name "*.log" -exec rm {} \;
-</pre>
+
+    for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -exec rm -r {} \;; done
+    /bin/find . -name "*.log" -exec rm {} \;
 
 Now we can create the archetype:
 
-<pre>
-mvn archetype:create-from-project
-groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n quickstart -v 1.2.3
-</pre>
+    mvn archetype:create-from-project
+    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n quickstart -v 1.2.3
 
 where:
 
@@ -67,32 +64,28 @@ where:
 
 First, build the archetype:
 
-<pre>
-cd target/generated-sources/archetype
-mvn clean install
-cd ../../..
-</pre>
+    cd target/generated-sources/archetype
+    mvn clean install
+    cd ../../..
 
 Then, *in a different session*, create a new app from the archetype:
-<pre>
-mkdir /tmp/test
-cd /tmp/test
-mvn archetype:generate  \
-    -D archetypeCatalog=local \
-    -D archetypeGroupId=org.apache.isis.archetype \
-    -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
-    -D groupId=com.mycompany \
-    -D artifactId=myapp
-</pre>
+
+    mkdir /tmp/test
+    cd /tmp/test
+    mvn archetype:generate  \
+        -D archetypeCatalog=local \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
+        -D groupId=com.mycompany \
+        -D artifactId=myapp
 
 Build the newly generated app and test:
-<pre>
-cd myapp
-mvn clean install
-mvn antrun:run     # runs as standalone app using webconsole
-cd webapp
-mvn jetty:run      # runs as mvn jetty plugin
-</pre>
+
+    cd myapp
+    mvn clean install
+    mvn antrun:run     # runs as standalone app using webconsole
+    cd webapp
+    mvn jetty:run      # runs as mvn jetty plugin
 
 ### Check the archetype source code into git
 
@@ -100,41 +93,32 @@ Back in the *original session* (at `example/application/quickstart_wicket_restfu
 
 If this is an update to an existing archetype:
 
-<pre>
-git rm -rf ../../archetype/quickstart_wicket_restful_jdo
-rm -rf ../../archetype/quickstart_wicket_restful_jdo
-</pre>
+    git rm -rf ../../archetype/quickstart_wicket_restful_jdo
+    rm -rf ../../archetype/quickstart_wicket_restful_jdo
 
 Make sure that the `archetype/quickstart_wicket_restful_jdo` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
 
 Then, copy over the generated source of the archetype:
 
-<pre>
-cp -r target/generated-sources/archetype \
-        ../../archetype/quickstart_wicket_restful_jdo
-git add ../../archetype/quickstart_wicket_restful_jdo
-</pre>
+    cp -r target/generated-sources/archetype \
+            ../../archetype/quickstart_wicket_restful_jdo
+    git add ../../archetype/quickstart_wicket_restful_jdo
 
 Next, confirm that the `-SNAPSHOT` version of the archetype is correct:
 
-<pre>
-vi ../../archetype/quickstart_wicket_restful_jdo/pom.xml
-</pre>
+    vi ../../archetype/quickstart_wicket_restful_jdo/pom.xml
 
 If this a new archetype, then add a reference to the archetype to the root `pom.xml`, eg:
 
-<pre>
-&lt;modules&gt;
-    ...
-    &lt;module&gt;example/archetype/quickstart&lt;/module&gt;
-    ...
-&lt;/modules&gt;
-</pre>
+    <modules>
+        ...
+        <module>example/archetype/quickstart</module>
+        ...
+    </modules>
 
 Finally, commit the changes:
-<pre>
-git commit -am "ISIS-nnn: updating archetype"
-</pre>
+
+    git commit -am "ISIS-nnn: updating archetype"
 
 ### Setting up Eclipse IDE
 
@@ -147,10 +131,8 @@ You may also want to import the new archetype project, using `File > Import > Pr
 
 The procedure for releasing the archetype is the same as for any other releasable module; in essence:
 
-<pre>
-cd example/archetype/quickstart_wicket_restful_jdo
-mvn release:prepare -P apache-release
-mvn release:perform -P apache-release
-</pre>
+    cd example/archetype/quickstart_wicket_restful_jdo
+    mvn release:prepare -P apache-release
+    mvn release:perform -P apache-release
 
 See the [release process](release-process.html) for full details.
