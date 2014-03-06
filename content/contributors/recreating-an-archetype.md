@@ -26,11 +26,18 @@ Next, check for and fix any missing license header notices:
     for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 
 Finally, double check that the app is running satisfactorily:
+
+first, as self-hosted webconsole (browse to [http://localhost:8080](http://localhost:8080):
   
     mvn clean install
-    mvn antrun:run     # runs as standalone app using webconsole
+    mvn antrun:run     
+
+then using mvn jetty plugin (browse to [http://localhost:8080/quickstart_wicket_restful_jdo-webapp/](http://localhost:8080/quickstart_wicket_restful_jdo-webapp/):
+
     cd webapp
-    mvn jetty:run      # runs as mvn jetty plugin
+    mvn jetty:run     
+    
+Check the about page and confirm built against non-SNAPSHOT versions of the Isis jars.
 
 ### Create the archetype
 
@@ -100,8 +107,7 @@ Make sure that the `archetype/quickstart_wicket_restful_jdo` directory was fully
 
 Then, copy over the generated source of the archetype:
 
-    cp -r target/generated-sources/archetype \
-            ../../archetype/quickstart_wicket_restful_jdo
+    mv target/generated-sources/archetype ../../archetype/quickstart_wicket_restful_jdo
     git add ../../archetype/quickstart_wicket_restful_jdo
 
 Next, confirm that the `-SNAPSHOT` version of the archetype is correct:
