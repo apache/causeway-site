@@ -485,9 +485,11 @@ All being well this command will complete successfully.  Given that it is upload
 
 If the `mvn release:perform` has worked then it will have put release artifacts into a newly created staging repository .
 
-Log onto [repository.apache.org](http://repository.apache.org) (using your ASF LDAP account) and check that the release has been staged:
+Log onto [repository.apache.org](http://repository.apache.org) (using your ASF LDAP account):
 
-> screenshot below is out of date
+<img src="resources/nexus-staging-0.png" width="600px"/>
+
+And then check that the release has been staged (select `staging repositories` from left-hand side):
 
 <img src="resources/nexus-staging-1.png" width="600px"/>
 
@@ -502,21 +504,19 @@ After checking that the staging repository contains the artifacts that you expec
 
 Press the Close button and complete the dialog:
 
-> screenshot below is out of date
-
 <img src="resources/nexus-staging-2.png" width="600px"/>
 
-All being well, the close should complete successfully:
+Nexus should start the process of closing the repository.
 
-> screenshot below is out of date
+<img src="resources/nexus-staging-2a.png" width="600px"/>
+
+All being well, the close should (eventually) complete successfully (keep hitting refresh):
 
 <img src="resources/nexus-staging-3.png" width="600px"/>
 
 The Nexus repository manager will also email you with confirmation of a successful close.
 
 If Nexus has problems with the key signature, however, then the close will be aborted:
-
-> screenshot below is out of date
 
 <img src="resources/nexus-staging-4.png" width="600px"/>
 
