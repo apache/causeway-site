@@ -563,8 +563,8 @@ And use the following body:
 I've staged a release for Apache Isis Core, namely 1.2.3.
 
 The artifacts have been staged to staging repository on repository.apache.org:
-* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
-* https://repository.apache.org/content/repositories/orgapacheisis-nnn/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
+* https://repository.apache.org/service/local/repositories/orgapacheisis-NNNN/content/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip (zip file)
+* https://repository.apache.org/service/local/repositories/orgapacheisis-NNNN/content/org/apache/isis/core/isis/1.2.3/isis-1.2.3-source-release.zip.asc (signature)
 
 In the source code repo the code has been tagged as isis-1.2.3-RC1.
 

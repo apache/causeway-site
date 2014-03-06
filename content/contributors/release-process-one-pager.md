@@ -2,6 +2,50 @@ Title: Release Process (1 pager)
 
 Summarises the steps spelt out in full [here](release-process.html)
 
+## Checklist
+
+<table class="table table-bordered table-condensed table-hover">
+    <thead>
+    <tr>
+        <th>Artifact</th>
+        <th>Env?</th>
+        <th>Update parent POM version (no snapshots)</th>
+        <th>Update TCK POM version (no snapshots)</th>
+        <th>Newer plugin versions</th>
+        <th>Newer dependencies</th>
+        <th>Formatting</th>
+        <th>License headers (RAT)</th>
+        <th>License check</th>
+        <th>Commit changes</th>
+        <th>prepare dryrun</th>
+        <th>prepare</th>
+        <th>confirm</th>
+        <th>perform</th>
+        <th>stage (nexus)</th>
+        <th>git push</th>
+    </tr>
+    </thead>
+    <tbody>
+        <td>Core</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tbody>
+</tr>
+
+
 ## Set up environment
 
 if on *nix:
@@ -67,17 +111,22 @@ Update parent version to non-`SNAPSHOT` (including tck project, if any):
 
     vi `/bin/find . -name pom.xml | grep -v target`
 
-Newer dependencies:
+####Update plugin versions
+
+    mvn versions:display-plugin-updates > /tmp/foo
+    cat /tmp/foo
+
+####Newer dependencies:
 
     mvn versions:display-dependency-updates > /tmp/foo
     grep "\->" /tmp/foo | /bin/sort -u
 
-Missing license headers in files:
+####Missing license headers in files:
 
     mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
     for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done
 
-Missing/spurious `supplemental-models.xml`
+####Missing/spurious `supplemental-models.xml`
 
 ... if in `core`:
 
