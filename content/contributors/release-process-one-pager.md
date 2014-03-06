@@ -376,9 +376,12 @@ Log onto [repository.apache.org](http://repository.apache.org) and close the sta
 
 ## Git branches/tags
 
-Push branch then tags:
+(If component has its own branch, ie not reusing core's, then) push branch:
 
     git push -u origin prepare/$ISISART-$ISISREL-$ISISRC
+
+Then push tag:
+
     git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
     git fetch
 
