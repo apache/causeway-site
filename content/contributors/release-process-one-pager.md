@@ -41,10 +41,6 @@ Sanity check:
 
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install -o
-    if [ $? -ne 0 ]; then
-        echo "sanity check failed :-("  >&2
-        exit 1
-    fi
 
 
 
@@ -94,10 +90,6 @@ first the dry run:
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
                         -Dtag=$ISISART-$ISISREL
-    if [ $? -ne 0 ]; then
-        echo "mvn release:prepare -dryRun failed :-("  >&2
-        exit 1
-    fi
 
 then "for real": 
 
@@ -105,10 +97,6 @@ then "for real":
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
                         -Dtag=$ISISART-$ISISREL
-    if [ $? -ne 0 ]; then
-        echo "mvn release:prepare -dryRun failed :-("  >&2
-        exit 1
-    fi
 
 #### Confirm:
 
@@ -121,10 +109,6 @@ then "for real":
 
     cd $ISISART-$ISISREL
     mvn clean install
-    if [ $? -ne 0 ]; then
-        echo "confirm failed :-("  >&2
-        exit 1
-    fi
 
     cat DEPENDENCIES
 
@@ -133,10 +117,6 @@ then "for real":
 #### Perform:
 
     mvn release:perform -P apache-release
-    if [ $? -ne 0 ]; then
-        echo "mvn release:perform failed :-("  >&2
-        exit 1
-    fi
 
 ## Git branches/tags
 
