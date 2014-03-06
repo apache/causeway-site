@@ -120,11 +120,11 @@ then "for real":
     mkdir $ISISTMP/$ISISART-$ISISREL
 
     if [ "$ISISCOR" == "Y" ]; then
-        ZIPDIR="$M2_REPO/repository/org/apache/isis/core/"
+        ZIPDIR="$M2_REPO/repository/org/apache/isis/core/$ISISART/$ISISREL"
     else
-        ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISCPN/"
+        ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISART/$ISISREL"
     fi
-    echo cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
+    echo "cp \"$ZIPDIR/$ISISART-$ISISREL-source-release.zip\" $ISISTMP/$ISISART-$ISISREL/."
     cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
 
     pushd $ISISTMP/$ISISART-$ISISREL
