@@ -27,12 +27,12 @@ Next, check for and fix any missing license header notices:
 
 Finally, double check that the app is running satisfactorily:
 
-first, as self-hosted webconsole (browse to [http://localhost:8080](http://localhost:8080):
+first, as self-hosted webconsole (browse to [http://localhost:8080](http://localhost:8080)):
   
     mvn clean install
     mvn antrun:run     
 
-then using mvn jetty plugin (browse to [http://localhost:8080/quickstart_wicket_restful_jdo-webapp/](http://localhost:8080/quickstart_wicket_restful_jdo-webapp/):
+then using mvn jetty plugin (browse to [http://localhost:8080/quickstart_wicket_restful_jdo-webapp/](http://localhost:8080/quickstart_wicket_restful_jdo-webapp/)) etc:
 
     cd webapp
     mvn jetty:run     
@@ -81,10 +81,10 @@ Then, *in a different session*, create a new app from the archetype:
     cd /tmp/test
     mvn archetype:generate  \
         -D archetypeCatalog=local \
-        -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
         -D groupId=com.mycompany \
-        -D artifactId=myapp
+        -D artifactId=myapp \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype
 
 Build the newly generated app and test:
 
