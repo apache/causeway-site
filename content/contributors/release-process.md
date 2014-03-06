@@ -393,26 +393,7 @@ What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
 1.2.3: :
 </pre>
 
-If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them.
-
-* For the first, release version, you can generally accept the default; Maven just strips off the `-SNAPSHOT` suffix:
-
-<pre>
-    What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.3: :
-</pre>
-
-* For the next question, SCM release tag, you can generally accept the default. Maven's offered value is a concatenation of the `artifactId` and the version entered above *without a `-RCn` suffix*.  This is the same as our [standard](release-branch-and-tag-names.html):
-
-<pre>
-    What is SCM release tag or label for "Apache Isis Core"? (org.apache.isis.core:isis) isis-1.2.3: :
-</pre>
-
-* For the final question, new development version", the minor 'z' part of the version should be incremented, and `-SNAPSHOT` appended.  Generally you can, once more, accept the default:
-
-<pre>
-    What is the new development version for "Apache Isis Core"? (org.apache.isis.core:isis) 1.2.4-SNAPSHOT:
-</pre>
-
+If you didn't provide the `tag`, `releaseVersion` and `developmentVersion` tags, then you'll be prompted for them.  You can generally accept the defaults that Maven offers.
 
 Assuming this completes successfully, delete the generated `release.properties` file:
 
