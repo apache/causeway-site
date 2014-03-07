@@ -779,20 +779,25 @@ Update the Isis CMS website:
 
   For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-1.2.3.html`
 
-* On the core/component's about page, provide a link to release notes providing details of the contents of the release.
+
+* Do a search for `x.y.0-SNAPSHOT` and replace with `x.y.0`
+
+* Update the version number on the [quickstart archetype](../intro/getting-started/quickstart-archetype.html) and the [simple archetype](../intro/getting-started/simple-archetype.html) pages.
+  
+* For core (if released) and for each released component's about page, update the link to the latest release notes providing details of the contents of the release.
 
 * Update the version listed on the [documentation page](../documentation.html).
 
 * The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
 
-
-And once the release has been approved:
+In addition:
 
 * Update the [download page](../download.html) with a link to the source release zip file (under [https://dist.apache.org/repos/dist/release/isis](https://dist.apache.org/repos/dist/release/isis))
 
 * The [DOAP RDF](../doap_isis.rdf) file (which provides a machine-parseable description of the project) should also be updated with details of the new release.  Validate using the [W3C RDF Validator](http://www.w3.org/RDF/Validator/) service.
 
   For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
+
 
 <!--
 ### Update CMS site with generated Maven site
