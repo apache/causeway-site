@@ -4,6 +4,8 @@ Summarises the steps spelt out in full [here](release-process.html)
 
 ## Checklist
 
+also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.uk/spreadsheet/pub?key=0Ahw-_f4BrwqAdGpJNzY4T1I1dmRFcTJtcTdmcjVVLXc&single=true&gid=2&output=html">google doc spreadsheet</a>.
+
 <table class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr>
