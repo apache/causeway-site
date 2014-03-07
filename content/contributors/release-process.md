@@ -779,7 +779,6 @@ Update the Isis CMS website:
 
   For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-1.2.3.html`
 
-
 * Do a search for `x.y.0-SNAPSHOT` and replace with `x.y.0`
 
 * Update the version number on the [quickstart archetype](../intro/getting-started/quickstart-archetype.html) and the [simple archetype](../intro/getting-started/simple-archetype.html) pages.
