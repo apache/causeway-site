@@ -20,6 +20,7 @@ Title: Documentation
 
 {col-md-4
 #### <a name="tutorials">Tutorials, screencasts</a>
+<p class="display:none"/>
 
 - [Tutorials](intro/tutorials/tutorials.html)
 - **[Screencasts](intro/tutorials/screencasts.html)** <a href="intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
@@ -35,6 +36,7 @@ Title: Documentation
 
 {col-md-4
 #### <a name="resources">Resources</a>
+<p class="display:none"/>
 
 - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
 - **[Editor templates](intro/resources/editor-templates.html)**
