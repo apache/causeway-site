@@ -77,7 +77,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
     <td>Commands, Auditing, Publishing<br/><br/><i>A run-through of the command (profiling) service, auditing service, publishing service.  Also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.</i>
     <br/><br/>
-    Seel also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
+    See also the <a href="../../reference/services/command-context.html#screencast">Command context domain service</a> page
     </td>
     <td>
       <iframe width="420" height="210" src="//www.youtube.com/embed/tqXUZkPB3EI" frameborder="0" allowfullscreen></iframe>
@@ -93,7 +93,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
     <td>Bulk updates in Isis<br/><br/><i>Using the Excel domain service and view models to perform bulk updates.</i>
     <br/><br/>
-    Seel also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
+    See also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
