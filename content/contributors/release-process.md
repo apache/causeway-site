@@ -1,6 +1,10 @@
 Title: Formal Release Process
 
-This page details the process for formalling releasing Isis modules.  If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).  There is also an experimental [script](resources/release.sh) for automating the process from the release:perform stage onwards.
+This page details the process for formalling releasing Isis modules.  
+
+If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).  (There is also an experimental [script](resources/release.sh) for automating the latter part of the process).
+
+See also the [release checklist](release-checklist.html) for keeping track of where you are while releasing (possibly multiple) components.
 
 ## Intro
 
