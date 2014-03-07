@@ -14,6 +14,12 @@ Persistent `Command`s support several use cases:
 
 Assuming that the `CommandService` supports persistent `Command`s, the associated [@Command](../recognized-annotations/Command.html) annotation also allows action invocations to be performed in the background.  In this case the act of invoking the action on an object instead returns the `Command` to the user.
 
+## <a name="screencast">Screencast</a>
+
+The screencast provides a run-through of the command (profiling) service, auditing service, publishing service.  It also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/tqXUZkPB3EI" frameborder="0" allowfullscreen></iframe>
+
 
 ## API
 

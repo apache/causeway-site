@@ -268,7 +268,7 @@ For both:
 
 #### <a name="domain-services-profiling-background-execution">Profiling/background execution [1.4.0-snapshot]</a>
 
-* [Command Context/Service](./reference/services/command-context.html)
+* [Command Context/Service](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Background Service / Background Command Service](./reference/services/background-service.html)
 
 #### <a name="domain-services-publishing-auditing">Publishing/auditing</a>
