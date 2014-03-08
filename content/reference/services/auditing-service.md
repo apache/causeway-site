@@ -45,12 +45,16 @@ An alternative implementation, that persists audit records to a database, is the
 
 ## Usage
 
+#### Explicitly marking an object as audited
+
 The typical way to indicate that an object should be audited is to annotate it with the [@Audited](../recognized-annotations/Audited.html) annotation, for example:
 
     @Audited
     public class ToDoItem ... {
         ... 
     }
+
+#### Making auditing the default
 
 As an alternative to annotating every object with `@Audited`, alternatively this can be configured as the default.  Add the following to `isis.properties`:
 

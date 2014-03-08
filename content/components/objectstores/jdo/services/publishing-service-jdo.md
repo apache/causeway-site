@@ -8,7 +8,7 @@ The intention is for an event service bus (eg [Apache ServiceMix](http://service
 
 Although a polling architecture introduces some overhead, it avoids the complexity of XA/JTA transactions which would otherwise be needed to ensure that events are only published atomically with committed changes to the database.
 
-### Register the Service
+## Register the Service
 
 Register like any other service in `isis.properties`:
 
@@ -17,3 +17,8 @@ Register like any other service in `isis.properties`:
                   ...
 
 Assuming that you've also configured Isis to use the JDO objectstore, you should be good to go...
+
+
+## Related projects
+
+Dan Haywood's [camel-isis-pubsubjdo](https://github.com/danhaywood/camel-isis-pubsubjdo) project up on github shows how to poll and process the persisted `PublishedEvent` table using [Apache Camel](http://camel.apache.org).
