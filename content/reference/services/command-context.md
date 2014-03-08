@@ -134,7 +134,7 @@ To treat every action as a command, add the following to `isis.properties`:
 
     isis.services.command.actions=all 
 
-For some applications it may be required only to record (as commands) only those actions that update objects; in other words queries and searches can be ignored.  Put another way, only actions annotated (with [@ActionSemantics](../recognized-annotations/ActionSemantics.html)) as IDEMPOTENT or NON_IDEMPOTENT should be treated as commands.  In this case, use:
+For some applications it may be required to record (as commands) only those actions that update objects; in other words queries and searches can be ignored.  Put another way, only actions annotated (with [@ActionSemantics](../recognized-annotations/ActionSemantics.html)) as IDEMPOTENT or NON_IDEMPOTENT should be treated as commands.  In this case, use:
 
     isis.services.command.actions=ignoreQueryOnly
 
