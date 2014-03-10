@@ -4,7 +4,8 @@ Title: Release Matrix
 
 The table below lists dependencies between core, components and archetypes.
 
-1.4.0-snapshot will hopefully be released as 1.4.0 on 10-mar-2014
+* 1.4.1-snapshot will hopefully be released as 1.4.1 prior to 17-mar-2014
+* 1.4.0-snapshot will hopefully be released as 1.4.0 prior to 17-mar-2014
 
 <table  class="table table-striped table-bordered table-condensed">
 <tr class="heading">
@@ -164,8 +165,19 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Objectstore</th>
     <th class="heading"><a href="components/objectstores/jdo/about.html">JDO</a></th>
-    <th class="heading">1.4.0</th>
+    <th class="heading">1.4.1</th>
     <td>1.4.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">1.4.0</th>
+    <td>1.3.0</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -208,6 +220,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Viewer</th>
     <th class="heading"><a href="components/viewers/wicket/about.html">Wicket</a></th>
+    <th class="heading">1.4.1</th>
+    <td>1.4.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
     <td>1.4.0</td>
     <td>-</td>
@@ -318,6 +341,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Archetype</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Simple</a></th>
+    <th class="heading">1.4.1</th>
+    <td>1.4.0</td>
+    <td>1.4.0</td>
+    <td>-</td>
+    <td>1.4.1</td>
+    <td>1.4.1</b></td>
+    <td>2.2.0</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
     <td>1.4.0</td>
     <td>1.4.0</td>
@@ -351,6 +385,17 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Quickstart</a></th>
+    <th class="heading">1.4.1</th>
+    <td>1.4.0</td>
+    <td>1.4.0</td>
+    <td>-</td>
+    <td>1.4.1</td>
+    <td>1.4.1</b></td>
+    <td>2.2.0</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
     <td>1.4.0</td>
     <td>1.4.0</td>
