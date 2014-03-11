@@ -67,11 +67,46 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       <iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
+  <tr>
+    <td>Bulk updates in Isis<br/><br/><i>Using the (third-party) Excel domain service and view models to perform bulk updates.</i>
+    <br/><br/>
+    See also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
+    </td>
+    <td>
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
+    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating a (third-party) google maps extension.</i>
+    <br/><br/>
+    See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
+    </td>
+    <td>
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+
+  <tr>
+      <td colspan="2">
+        <h2>Restful Objects Viewer</h2>
+      </td>
+  </tr>
+  <tr>
+    <td>Using Chrome Tools<br/><br/><i>Interacting with the REST API using Chrome Plugins</i>
+    <br/><br/>
+    Learn more <a href="../../components/viewers/restfulobjects/using-chrome-tools.html">here</a>
+    </td>
+    <td>
+      <iframe width="420" height="236" src="//www.youtube.com/embed/_-TOvVYWCHc" frameborder="0" allowfullscreen></iframe>)
+    </td>
+  </tr>
+
+
 
   
   <tr>
     <td colspan="2">
-        <h2>Built-in Domain Services</h2>
+        <h2>Domain Services</h2>
     </td>
   </tr>
   <tr>
@@ -84,29 +119,11 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   </td>
   </tr>
 
-
+  
   <tr>
       <td colspan="2">
-        <h2>Customizations, Extensions, Plugins</h2>
+        <h2>Other Tools</h2>
       </td>
-  </tr>
-  <tr>
-    <td>Bulk updates in Isis<br/><br/><i>Using the Excel domain service and view models to perform bulk updates.</i>
-    <br/><br/>
-    See also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
-    </td>
-    <td>
-      <iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>
-    </td>
-  </tr>
-  <tr>
-    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating google maps.</i>
-    <br/><br/>
-    See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
-    </td>
-    <td>
-      <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
-    </td>
   </tr>
   <tr>
     <td>Isis' integration with <a id="jrebel" name="jrebel">JRebel</a><br/><br/><i>Develop your app without having to redeploy using <a href="https://github.com/danhaywood/isis-jrebel-plugin">this plugin</a>.</i><br/><br/>(Apologies for the slightly flaky audio on this screencast)
