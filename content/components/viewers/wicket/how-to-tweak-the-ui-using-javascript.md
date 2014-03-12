@@ -7,6 +7,7 @@ The Wicket viewer allows you to customize the GUI in several (progressively more
 * by replacing elements of the page using the `ComponentFactory` interface (see [here](./customizing-the-viewer.html))
 * by providing new pages (see [here](./custom-pages.html))
 
+Customizing the viewer using Javascript is discouraged, however, as there is no formal API that such custom JS can target.  Instead, consider implementing the customization server-side, using the `ComponentFactory` interface (described [here](./customizing-the-viewer.html)).
 
 ## Customizing using Javascript snippets
 
