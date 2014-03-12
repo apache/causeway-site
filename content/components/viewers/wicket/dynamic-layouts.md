@@ -6,7 +6,7 @@ Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki
 
 How to layout properties and collections dynamically, in the Wicket viewer.
 
-<iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
+<iframe width="530" height="354" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
 
 
 ## JSON layout file
