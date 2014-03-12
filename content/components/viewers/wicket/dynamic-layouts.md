@@ -132,7 +132,7 @@ Therefore, make sure the following is added to the dom project's `pom.xml`:
         </resource>
     </resources>
  
-If using an Isis [archetype](../intro/getting-started/simple-archetype.html), then the POM is already correctly configured.
+If using an Isis [archetype](../../../intro/getting-started/simple-archetype.html), then the POM is already correctly configured.
 
 ## Static vs Dynamic Layouts
 
