@@ -441,6 +441,9 @@ Other
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html) (1.4.0-snapshot)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 
+}
+
+{col-md-4
 
 #### <a name="wicket-viewer-extensions">Customization</a>
 
@@ -448,10 +451,6 @@ Other
 * [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
 * [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
 * [Custom pages](components/viewers/wicket/custom-pages.html)
-
-}
-
-{col-md-4
 
 #### <a name="wicket-viewer-third-party-extensions">Third-party extensions</a>
 
