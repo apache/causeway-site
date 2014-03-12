@@ -2,7 +2,7 @@ Title: Configuring the About page
 
 Isis' Wicket viewer has an About page that, by default, will provide a dump of the JARs that make up the webapp.  This page will also show the manifest attributes of the WAR archive itself, if there are any.  One of these attributes may also be used as the application version number.
 
-### Screenshot
+## Screenshot
 
 Here's what the About page looks like with this configuration added:
 
@@ -15,7 +15,7 @@ Note that the `Build-Time` attribute has been used as the version number.  The W
 
 If none of these are found, then no version is displayed.
 
-### Configuration
+## Configuration
 
 *Note: the configuration described here will also be part of the quickstart_wicket_restful_jdo archetype (1.0.3+).*
 
@@ -79,26 +79,24 @@ The manifest attributes are provided to the rest of the application by way of th
 
 In your subclass of `IsisWicketApplication`, there is a method `newIsisWicketModule()`.  In this method you need to bind an `InputStream` that will read the manifest attributes.  This is all boilerplate so you can just copy-n-paste:
 
-<pre>
-@Override
-protected Module newIsisWicketModule() {
+    @Override
+    protected Module newIsisWicketModule() {
 
-    ...
+        ...
 
-    final Module quickstartOverrides = new AbstractModule() {
-        @Override
-        protected void configure() {
-            ...
-            bind(InputStream.class)
-                .annotatedWith(Names.named("metaInfManifest"))
-                .toProvider(Providers.of(
-                    getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
-        }
-    };
+        final Module quickstartOverrides = new AbstractModule() {
+            @Override
+            protected void configure() {
+                ...
+                bind(InputStream.class)
+                    .annotatedWith(Names.named("metaInfManifest"))
+                    .toProvider(Providers.of(
+                        getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
+            }
+        };
 
-    ...
+        ...
 
-}
-</pre>
+    }
 
 And with that you should be good to go!

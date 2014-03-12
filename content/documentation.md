@@ -177,8 +177,6 @@ For both:
 
 #### <a name="more-advanced-topics-more-ui-layout-hints">More UI layout hints</a>
 
-* [Static and dynamic layouts](more-advanced-topics/dynamic-layouts.html) <a href="more-advanced-topics/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Tweaking CSS classes](./more-advanced-topics/how-to-tweak-the-ui-using-css-classes.html)
 * [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
 * [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
 * [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
@@ -425,16 +423,31 @@ For both:
 
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
+Layouts
+
+* [Static layouts](components/viewers/wicket/static-layouts.html)
+* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
+
+Pages
+
+* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
+* [The About page](components/viewers/wicket/configuring-the-about-page.html)
+
+Other
+
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html) (1.4.0-snapshot)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html) (1.4.0-snapshot)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
-* [The About page](components/viewers/wicket/configuring-the-about-page.html)
 
-#### <a name="wicket-viewer-extensions">Extensions</a>
 
-* [Extending the viewer](components/viewers/wicket/customizing-the-viewer.html)
+#### <a name="wicket-viewer-extensions">Customization</a>
+
+* [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
+* [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
+* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
+* [Custom pages](components/viewers/wicket/custom-pages.html)
 
 }
 
