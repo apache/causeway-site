@@ -13,37 +13,84 @@ In the vast majority of cases customization should be sufficient by [replacing e
 
 Isis defines eight page types (see the `org.apache.isis.viewer.wicket.model.models.PageType` enum):
 
-* `SIGN_IN`
+<table class="table table-bordered table-hover">
+  <tr>
+      <th>
+         Page type
+      </th>
+      <th>
+         Renders
+      </th>
+  </tr>
+  <tr>
+      <th>
+         SIGN_IN
+      </th>
+      <td>
+         The initial sign-in page
+      </td>
+  </tr>
+  <tr>
+      <th>
+         HOME
+      </th>
+      <td>
+         The home page, displaying either the welcome message or dashboard
+      </td>
+  </tr>
+  <tr>
+      <th>
+        ABOUT
+      </th>
+      <td>
+        The about page, accessible from link top-right
+      </td>
+  </tr>
+  <tr>
+      <th>
+        ENTITY
+      </th>
+      <td>
+        Renders a single entity or view model
+      </td>
+  </tr>
+  <tr>
+      <th>
+         STANDALONE_COLLECTION
+      </th>
+      <td>
+        Page rendered after invoking an action that returns a collection of entites
+      </td>
+  </tr>
+  <tr>
+      <th>
+        VALUE
+      </th>
+      <td>
+        After invoking an action that returns a value type (though not URLs or Blob/Clobs, as these are handled appropriately automatically).
+      </td>
+  </tr>
+  <tr>
+      <th>
+         VOID_RETURN
+      </th>
+      <td>
+         After invoking an action that is `void`
+      </td>
+  </tr>
+  <tr>
+      <th>
+        ACTION_PROMPT
+      </th>
+      <td>
+         (No longer used).
+      </td>
+  </tr>
+</table>
 
-   The initial sign-in page
 
-* `HOME`
 
-   The home page, displaying either the welcome message or dashboard
 
-* `ABOUT`
-
-   The about page, accessible from link top-right
-
-* `ENTITY`
-
-   Renders a single entity or view model
-
-* `STANDALONE_COLLECTION`
-
-   Page rendered after invoking an action that returns a collection of entites
-   
-* `VALUE`
-
-   Page rendered after invoking an action that returns a value type (though not URLs or Blob/Clobs, as these are handled appropriately automatically).
-  
-* `VOID_RETURN`
-
-  Page rendered after invoking an action that is `void`
-
-* `ACTION_PROMPT`
-
-   No longer used.
 
 ## `PageClassList` interface
 
