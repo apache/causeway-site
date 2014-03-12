@@ -22,7 +22,7 @@ These customizations should generally be added to `src/main/webapp/css/applicati
 
 ## Targetting individual members
 
-For example, the `ToDoItem` object of the [ToDo app](../intro/getting-started/quickstart-archetype.html) has a `notes` property.  The HTML for this will be something like:
+For example, the `ToDoItem` object of the [ToDo app](../../../intro/getting-started/quickstart-archetype.html) has a `notes` property.  The HTML for this will be something like:
 
     <div>
         <div class="property ToDoItem-notes">
@@ -58,7 +58,7 @@ You can use a similar approach for collections and actions.
 
 The above technique works well if you know the class member to target, but you might instead want to apply a custom style to a set of members.  For this, you can use the `@CssClass`.
 
-For example, in the `ToDoItem` class (as shown [here](https://github.com/apache/isis/blob/prepare/isis-viewer-wicket-1.3.1-RC1/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java#L172)) the following annotation (indicating that this is a key, important, property) :
+For example, in the `ToDoItem` class the following annotation (indicating that this is a key, important, property) :
 
     @CssClass("x-key")
     public LocalDate getDueBy() {
