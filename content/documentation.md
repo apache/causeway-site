@@ -417,6 +417,11 @@ For both:
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html) (1.4.0-snapshot)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (1.4.0-snapshot)
 
+#### Changing Pages
+
+* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
+* [The About page](components/viewers/wicket/configuring-the-about-page.html)
+
 }
 
 {col-md-4
@@ -427,11 +432,6 @@ Layouts
 
 * [Static layouts](components/viewers/wicket/static-layouts.html)
 * [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
-Pages
-
-* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
-* [The About page](components/viewers/wicket/configuring-the-about-page.html)
 
 Other
 
