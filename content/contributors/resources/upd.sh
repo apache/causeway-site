@@ -12,14 +12,14 @@
 #
 #################################################################
 
-isis_core="1.3.0 1.3.0"
-objectstore_jdo="1.3.0 1.3.0"
-security_shiro="1.3.0 1.3.0"
-security_file="1.0.1 1.0.1"
-viewer_restfulobjects="2.1.0 2.1.0"
-viewer_wicket="1.3.1 1.3.1"
-archetype_todoapp="1.3.1 1.3.1"
-archetype_simple="1.3.1 1.3.1"
+isis_core="1.3.0 1.4.0"
+objectstore_jdo="1.3.0 1.4.1"
+security_shiro="1.3.0 1.4.0"
+security_file="1.0.1 1.4.0"
+viewer_restfulobjects="2.1.0 2.2.0"
+viewer_wicket="1.3.1 1.4.1"
+archetype_todoapp="1.3.1 1.4.1"
+archetype_simple="1.3.1 1.4.1"
 
 
 
@@ -40,8 +40,8 @@ md5="$zip.md5"
 # isis_core
 #
 #################################################################
-old_ver=`echo $isis_core | awk '{print $1}'
-new_ver=`echo $isis_core | awk '{print $2}'
+old_ver=`echo $isis_core | awk '{print $1}'`
+new_ver=`echo $isis_core | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -70,8 +70,8 @@ fi
 # objectstore_jdo
 #
 #################################################################
-old_ver=`echo $objectstore_jdo | awk '{print $1}'
-new_ver=`echo $objectstore_jdo | awk '{print $2}'
+old_ver=`echo $objectstore_jdo | awk '{print $1}'`
+new_ver=`echo $objectstore_jdo | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -79,7 +79,7 @@ if [ "$old_ver" != "$new_ver" ]; then
 	localname="jdo"
 
 	fullname="isis-$type-$localname"
-	pushd component/$type/$localname"
+	pushd component/$type/$localname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
 	svn add $fullname-$new_ver-$asc
@@ -111,7 +111,7 @@ if [ "$old_ver" != "$new_ver" ]; then
 	localname="file"
 
 	fullname="isis-$type-$localname"
-	pushd component/$type/$localname"
+	pushd component/$type/$localname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
 	svn add $fullname-$new_ver-$asc
@@ -134,8 +134,8 @@ fi
 # security_shiro
 #
 #################################################################
-old_ver=`echo $security_shiro | awk '{print $1}'
-new_ver=`echo $security_shiro | awk '{print $2}'
+old_ver=`echo $security_shiro | awk '{print $1}'`
+new_ver=`echo $security_shiro | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -143,7 +143,7 @@ if [ "$old_ver" != "$new_ver" ]; then
 	localname="shiro"
 
 	fullname="isis-$type-$localname"
-	pushd component/$type/$localname"
+	pushd component/$type/$localname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
 	svn add $fullname-$new_ver-$asc
@@ -166,8 +166,8 @@ fi
 # viewer_restfulobjects
 #
 #################################################################
-old_ver=`echo $viewer_restfulobjects | awk '{print $1}'
-new_ver=`echo $viewer_restfulobjects | awk '{print $2}'
+old_ver=`echo $viewer_restfulobjects | awk '{print $1}'`
+new_ver=`echo $viewer_restfulobjects | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -175,7 +175,7 @@ if [ "$old_ver" != "$new_ver" ]; then
 	localname="restfulobjects"
 
 	fullname="isis-$type-$localname"
-	pushd component/$type/$localname"
+	pushd component/$type/$localname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
 	svn add $fullname-$new_ver-$asc
@@ -198,8 +198,8 @@ fi
 # viewer_wicket
 #
 #################################################################
-old_ver=`echo $viewer_wicket | awk '{print $1}'
-new_ver=`echo $viewer_wicket | awk '{print $2}'
+old_ver=`echo $viewer_wicket | awk '{print $1}'`
+new_ver=`echo $viewer_wicket | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -207,7 +207,7 @@ if [ "$old_ver" != "$new_ver" ]; then
 	localname="wicket"
 
 	fullname="isis-$type-$localname"
-	pushd component/$type/$localname"
+	pushd component/$type/$localname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
 	svn add $fullname-$new_ver-$asc
@@ -230,8 +230,8 @@ fi
 # archetype_todoapp
 #
 #################################################################
-old_ver=`echo $archetype_todoapp | awk '{print $1}'
-new_ver=`echo $archetype_todoapp | awk '{print $2}'
+old_ver=`echo $archetype_todoapp | awk '{print $1}'`
+new_ver=`echo $archetype_todoapp | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
@@ -259,8 +259,8 @@ fi
 # archetype_simple
 #
 #################################################################
-old_ver=`echo $archetype_simple | awk '{print $1}'
-new_ver=`echo $archetype_simple | awk '{print $2}'
+old_ver=`echo $archetype_simple | awk '{print $1}'`
+new_ver=`echo $archetype_simple | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
