@@ -13,8 +13,8 @@ Title: Documentation
 
 #### <a name="getting-started">Getting started</a>
 
-- **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.3.1](archetypes/release-notes/about.html))**
-- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.3.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+- **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.4.1](archetypes/release-notes/about.html))**
+- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.4.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 }
 
@@ -355,7 +355,7 @@ For both:
 {row
 
 {col-md-12
-## <a name="core">Core [1.3.0](core/release-notes/about.html)</a>
+## <a name="core">Core [1.4.0](core/release-notes/about.html)</a>
 
 }
 
@@ -401,7 +401,7 @@ For both:
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.3.1](components/viewers/wicket/release-notes/about.html)
+## <a name="wicket-viewer">Wicket Viewer</a> [1.4.1](components/viewers/wicket/release-notes/about.html)
 }
 
 {col-md-4
@@ -466,7 +466,7 @@ Other
 {row
 
 {col-md-12
-## <a name="restfulobjects-viewer">RestfulObjects Viewer</a> [2.1.0](components/viewers/restfulobjects/release-notes/about.html)
+## <a name="restfulobjects-viewer">RestfulObjects Viewer</a> [2.2.0](components/viewers/restfulobjects/release-notes/about.html)
 }
 
 
@@ -502,7 +502,7 @@ Other
 {row
 
 {col-md-12
-## <a name="jdo-objectstore">JDO/DataNucleus Object Store</a> [1.3.0](components/objectstores/jdo/release-notes/about.html)
+## <a name="jdo-objectstore">JDO/DataNucleus Object Store</a> [1.4.1](components/objectstores/jdo/release-notes/about.html)
 }
 
 {col-md-4
@@ -576,7 +576,7 @@ Other
 }
 
 {col-md-4
-#### <a name="security-shiro">Shiro</a> [1.3.0](components/security/shiro/release-notes/about.html)
+#### <a name="security-shiro">Shiro</a> [1.4.0](components/security/shiro/release-notes/about.html)
 
 * [About](components/security/shiro/about.html)
 
