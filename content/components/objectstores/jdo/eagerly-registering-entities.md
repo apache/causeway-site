@@ -9,7 +9,7 @@ Isis is quite happy for the metamodel to be lazily created, and - to be fair - D
 In any case, it's probably not good practice to have DataNucleus work this way.  The `RegisterEntities` service can therefore be registered in order to do the eager registration.  It searches for all `@PersistenceCapable` entities under specified package(s), and registers them all.
 
 > in 1.3.x, it is not mandatory to eagerly register entity types; however we strongly recommend it.
-> in 1.4.0-SNAPSHOT, it *is* mandatory to eager register entity types.
+> in 1.4.0 and later, it *is* mandatory to eager register entity types.
 
 ### Specify the Package Prefix(es)
 
@@ -24,7 +24,7 @@ The value of this property can be a comma-separated list (if there is more than 
 
 ### Register the Service (1.3.x only)
 
-> In 1.4.0-SNAPSHOT this step is no longer required.
+> In 1.4.0 and later this step is no longer required.
 
 (If using 1.3.x), register like any other service in `isis.properties`:
 

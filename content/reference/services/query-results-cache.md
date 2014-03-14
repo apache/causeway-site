@@ -1,4 +1,4 @@
-Title: Query Results Cache [1.4.0-SNAPSHOT]
+Title: Query Results Cache
 
 The purpose of the `QueryResultsCache` is to improve response times to the user, by providing a short-term ([request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)) cache of the value of some (safe or idempotent) method call.  This will typically be as the result of running a query, but could be any expensive operation.
 

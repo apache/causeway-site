@@ -123,7 +123,7 @@ For example:
 
 Services can optionally declare lifecycle callbacks to initialize them (when the app is deployed) and to shut them down (when the app is undeployed).
 
-An Isis session *is* available when initialization occurs (so services can interact with the object store, for example). [1.4.0-SNAPSHOT].
+An Isis session *is* available when initialization occurs (so services can interact with the object store, for example).
 
 #### Initialization
 

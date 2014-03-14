@@ -1,4 +1,4 @@
-Title: CommandContext and CommandService [1.4.0-SNAPSHOT]
+Title: CommandContext and CommandService
 
 The `CommandContext` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
 

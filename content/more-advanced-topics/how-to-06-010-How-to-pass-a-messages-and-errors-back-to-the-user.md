@@ -34,22 +34,18 @@ to the user is determined by the viewer being used.
 Alternative way to raise an error
 ---------------------------------
 
-An alternative to calling `DomainObjectContainer#raiseError()` <!--(see ?)-->
-is to simply throw an `org.apache.isis.applib.ApplicationException`. Which
-you use is a matter of style, because the behaviour is exactly the same; internally `raiseError()` just throws the `ApplicationException`.
-
-As of [1.4.0-SNAPSHOT], can also throw `org.apache.isis.applib.RecoverableException`.
+An alternative to calling `DomainObjectContainer#raiseError()` is to simply throw either an `org.apache.isis.applib.ApplicationException` or its superclass, `org.apache.isis.applib.RecoverableException`. Which you use is a matter of style, because the behaviour is exactly the same; internally `raiseError()` just throws the `ApplicationException`.
 
 
 How to deal with an unrecoverable and unexpected error
 ------------------------------------------------------
 
-Throw any exception that isn't a subclass of `ApplicationException` (or `RecoverableException` as of 1.4.0-SNAPSHOT).
+Throw any exception that isn't a subclass of `RecoverableException`
 
 The `org.apache.isis.applib.UnrecoverableException` is provided as a convenient superclass to use, but this is not required.
 
 
-Handling aborted transactions [1.4.0-SNAPSHOT]
+Handling aborted transactions
 -----------------------------
 
 If underlying transaction is aborted by the framework - for example as the result of a constraint violation in the objectstore - then the application code should *not* throw `ApplicationException` (or `RecoverableException`), it should throw some other (non-recoverable) exception.

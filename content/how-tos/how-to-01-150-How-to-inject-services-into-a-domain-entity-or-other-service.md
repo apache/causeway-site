@@ -31,7 +31,7 @@ or alternatively, using 'inject' as the prefix:
 
 Note that the method name can be anything; it doesn't need to be related to the type being injected.
 
-### Field Injection [1.4.0-SNAPSHOT]
+### Field Injection
 
 Field injection is also supported, using the `javax.inject.Inject annotation`.  For example:
 

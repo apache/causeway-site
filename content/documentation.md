@@ -259,14 +259,14 @@ For both:
 #### <a name="domain-services-bookmark-memento">Bookmark/memento</a>
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
-* [Memento Service](./reference/services/memento-service.html) [1.4.0-snapshot]
-* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html) [1.4.0-snapshot]
+* [Memento Service](./reference/services/memento-service.html)
+* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
 
 }
 
 {col-md-4
 
-#### <a name="domain-services-profiling-background-execution">Profiling/background execution [1.4.0-snapshot]</a>
+#### <a name="domain-services-profiling-background-execution">Profiling/background execution</a>
 
 * [Command Context/Service](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Background Service / Background Command Service](./reference/services/background-service.html)
@@ -276,7 +276,7 @@ For both:
 * [Auditing Service](./reference/services/auditing-service.html)
 * [Publishing Service](./reference/services/publishing-service.html)
 
-#### <a name="domain-services-performance-tuning-coordination">Performance tuning/co-ordination [1.4.0-snapshot]</a>
+#### <a name="domain-services-performance-tuning-coordination">Performance tuning/co-ordination</a>
 
 * [QueryResultsCache](./reference/services/query-results-cache.html)
 * [Scratchpad](./reference/services/scratchpad.html)
@@ -296,8 +296,8 @@ For both:
 #### <a name="domain-services-third-party">Third-party</a>
 
 * [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html)
-* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a> [1.4.0-snapshot]
-* [String interpolator](./reference/services/third-party/danhaywood-isis-domainservice-stringinterpolator.html) [1.4.0-snapshot]
+* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [String interpolator](./reference/services/third-party/danhaywood-isis-domainservice-stringinterpolator.html)
 
 }
 
@@ -320,7 +320,7 @@ For both:
 
 * [Configuration Files](./reference/configuration-files.html)
 
-####  <a name="reference-non-ui-execution">Non-UI execution [1.4.0-snapshot]</a>
+####  <a name="reference-non-ui-execution">Non-UI execution</a>
 
 - [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
 - [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html)
@@ -414,8 +414,8 @@ For both:
 
 * [File upload/download](components/viewers/wicket/file-upload-download.html)
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
-* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html) (1.4.0-snapshot)
-* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html) (1.4.0-snapshot)
+* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
 
 #### Changing Pages
 
@@ -437,8 +437,8 @@ Other
 
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
-* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html) (1.4.0-snapshot)
-* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html) (1.4.0-snapshot)
+* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
+* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 
 }
@@ -554,8 +554,8 @@ Other
 
 * [Exception Recognizers](components/objectstores/jdo/services/exception-recognizers-jdo.html)
 * [Settings Services on JDO](components/objectstores/jdo/services/settings-services-jdo.html)
-* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html) [1.4.0-snapshot]
-* [Background Command Service on JDO](components/objectstores/jdo/services/background-command-service-jdo.html) [1.4.0-snapshot]
+* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html)
+* [Background Command Service on JDO](components/objectstores/jdo/services/background-command-service-jdo.html)
 * [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
 * [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
 

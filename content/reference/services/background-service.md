@@ -1,4 +1,4 @@
-Title: Background Service [1.4.0-SNAPSHOT]
+Title: Background Service
 
 The `BackgroundService`, and its companion `BackgroundCommandService`, enable action invocations to be persisted such that they may be invoked in the background.
  

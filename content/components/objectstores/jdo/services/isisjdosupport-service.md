@@ -70,7 +70,7 @@ In the domain entity or service, add:
         this.isisJdoSupport = isisJdoSupport;
     }
 
-or simply (1.4.0-SNAPSHOT):
+or simply:
 
     @javax.inject.Inject
     private IsisJdoSupport isisJdoSupport;

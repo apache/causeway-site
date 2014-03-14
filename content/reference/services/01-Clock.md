@@ -1,4 +1,4 @@
-title: Clock Service [1.4.0-SNAPSHOT]
+title: Clock Service
 
 Most applications deal with dates and times in one way or another. For example, if an `Order` is placed, then the `Customer` may have 30 days to pay the Invoice, otherwise a penalty may be levied.  However, this can complicate automated testing: "today+30" will be a different date every time the test is run.
 

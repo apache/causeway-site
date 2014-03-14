@@ -3,6 +3,9 @@ Title: @NotPersistable
 > **Support**
 > 
 > * Not supported by: Wicket viewer
+>
+> [ISIS-743](https://issues.apache.org/jira/browse/ISIS-743) has been raised 
+> contemplating the removal of this annotation.
 
 The `@NotPersistable` annotation indicates that transient instances of
 this class may be created but may not be persisted. The framework will

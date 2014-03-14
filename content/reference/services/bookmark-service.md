@@ -5,7 +5,7 @@ The `BookmarkService` provides the ability to obtain a serializable `org.apache.
 This is a good way of storing a reference to an arbitrary object (a polymorphic relationship).  The downside is that there is no way for the objectstore (eg JDO objectstore) to enforce any kind of referental integrity.
 
 
-###API
+## API
 
 The API defined by `BookmarkService` is:
 
@@ -18,7 +18,6 @@ The API defined by `BookmarkService` is:
       @Hidden
       Object lookup(Bookmark bookmark);
 
-      // 1.4.0-SNAPSHOT
       @Hidden
       <T> T lookup(Bookmark bookmark, Class<T> requiredType);
 
@@ -29,21 +28,21 @@ The API defined by `BookmarkService` is:
 If a domain class implements the `org.apache.isis.applib.bookmarks.BookmarkHolder` interface then the `BookmarkService` will appear as a contributed action.  Otherwise the service is hidden from view, intended to be injected into domain objects as a supporting domain service.
 
 
-###Usage within the framework
+## Usage within the framework
 
-Bookmarks are used [1.4.0-SNAPSHOT onwards] by the [BackgroundCommandService](./background-service.html), which uses a bookmark to capture the target object on which an action will be invoked subsequently.
+Bookmarks are used by the [BackgroundCommandService](./background-service.html), which uses a bookmark to capture the target object on which an action will be invoked subsequently.
 
 Bookmarks are also used by the [PublishingService](./publishing-service.html) and the [AuditingService](./auditing-service.html).
 
 
-###Implementations
+## Implementations
 
 The core framework provides a default implementation of this API:
 
 * `org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault`
 
 
-### Register the Service
+## Register the Service
 
 Register this service in `isis.properties`, eg:
 

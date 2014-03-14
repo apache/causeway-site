@@ -2,7 +2,7 @@ Title: Auditing Service
 
 The auditing service provides a simple mechanism to capture changes to data.  It is called for each property that has changed on any domain object, as a set of pre- and post-values.
 
-## API [1.4.0-SNAPSHOT]
+## API
 
 The API for the service is:
 
@@ -38,8 +38,7 @@ The API for the service is:
 
 A simple implementation of the service that writes to stderr, is available, useful for debugging:
 
-* `org.apache.isis.applib.services.audit.AuditingService3$Stderr` [1.4.0-SNAPSHOT]
-* `org.apache.isis.applib.services.audit.AuditingService2$Stderr` [1.3.0]
+* `org.apache.isis.applib.services.audit.AuditingService3$Stderr`
 
 An alternative implementation, that persists audit records to a database, is the [JDO Publishing Service](../../components/objectstores/jdo/services/publishing-service-jdo.html).   This implementation is only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
 

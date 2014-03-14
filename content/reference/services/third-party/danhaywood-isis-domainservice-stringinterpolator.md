@@ -1,4 +1,4 @@
-Title: String interpolator domain service (for mail-merge/reporting) [1.4.0-snapshot]
+Title: String interpolator domain service (for mail-merge/reporting)
 
 The [String interpolator domain service](https://github.com/danhaywood/isis-domainservice-stringinterpolator)  will interpolate string templates with either Isis system properties or values obtained from a domain object (possibly walking relationships).  It uses [OGNL](http://commons.apache.org/proper/commons-ognl/) to evaluate the expressions withn the string template.
 

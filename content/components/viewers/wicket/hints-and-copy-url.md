@@ -8,7 +8,7 @@ The copy URL and hinting is automatic.
 
 ##Screenshots
 
-> taken from 1.4.0-snapshot.
+(screenshots of v1.4.0)
 
 #### Copy URL
 
@@ -22,9 +22,7 @@ Clicking on this button brings up a dialog with the URL preselected:
 
 The URL in this case is something like:
 
-<pre>
-http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0
-</pre>
+    http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:L_0
 
 The user can copy the link (eg `ctrl+C`) into the clipboard, then hit `OK` or `Esc` to dismiss the dialog.
 

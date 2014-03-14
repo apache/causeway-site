@@ -23,7 +23,7 @@ The format of the `.layout.json` file is:
             General: {                             // member group name
               members: {           
                 description: {                     // property, no associated actions, but with UI hint
-                  typicalLength: {                 // UI hint for size of field [new in 1.4.0-SNAPSHOT]
+                  typicalLength: {                 // UI hint for size of field
                     value: 50
                   }
                 },            
@@ -31,10 +31,10 @@ The format of the `.layout.json` file is:
                 complete: {                        // property, with associated actions
                   actions: {              
                     completed: {
-                      named: {                     // naming UI hint [new in 1.4.0-SNAPSHOT]
+                      named: {                     // naming UI hint
                         value: "Done"
                       }
-                      cssClass: {                  // CSS UI hint [new in 1.4.0-SNAPSHOT] 
+                      cssClass: {                  // CSS UI hint
                         value: "x-highlight"
                       },
                     },       
@@ -74,10 +74,10 @@ The format of the `.layout.json` file is:
                 add:{},
                 delete: {}
               },
-              paged: {                             // pagination UI hint [new in 1.4.0-SNAPSHOT]
+              paged: {                             // pagination UI hint
                 value: 10                          // 10 items to a page 
               },
-              render: {                            // lazy-loading UI hint [new in 1.4.0-SNAPSHOT]
+              render: {                            // lazy-loading UI hint
                 value: EAGERLY
               }
             },

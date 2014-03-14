@@ -24,7 +24,7 @@ There is no additional configuration required in any Maven `pom.xml`; you are do
 ## Workaround for DN versioning issues: using a Maven profile
 
 {Note
-This workaround applies to v1.3.0 and previous releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0-SNAPSHOT and later.
+This workaround applies to v1.3.0 and previous releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
 }
 
 Every so often there will be a new release of DataNucleus plugins to the [Maven central repo](http://search.maven.org)  For better or for worse, the Maven DataNucleus enhancer plugin defines a range dependency: it will always use the latest version of the DN modules available.
@@ -63,9 +63,9 @@ ch.
 </pre>
 
 
-### v1.4.0-SNAPSHOT and later
+### v1.4.0 and later
 
-v1.4.0-SNAPSHOT of Isis uses DN 3.3.x, which means that this problem should no longer occur.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0-SNAPSHOT and later.
+v1.4.0 of Isis uses DN 3.3.x, which means that this problem should no longer occur.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
 
 If you create your app from the v1.4.x archetypes (not released at time of writing), then the pom.xml files will be set up correctly.
 

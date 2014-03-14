@@ -1,4 +1,4 @@
-Title: Bulk Interaction [1.4.0-SNAPSHOT]
+Title: Bulk Interaction
 
 The `Bulk.InteractionContext` domain service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service intended to support the implementation of [@Bulk](../recognized-annotations/Bulk.html) actions.  That is, when a bulk action is invoked over a collection of objects, each object instance "knows where it is" in the collection.  In essence, the `Bulk.InteractionContext` service acts a little like an iterator.
 

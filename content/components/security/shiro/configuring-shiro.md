@@ -70,8 +70,6 @@ meaning that the `[users]` and `[roles]` sections of `shiro.ini` are unused.  In
 
 ## What the user/roles translate to
 
-> as of 1.4.0-SNAPSHOT; see [ISIS-656](https://issues.apache.org/jira/browse/ISIS-656).
-
 In your domain objects you can find the users/roles for the current user using:
 
     final UserMemento user = container.getUser();

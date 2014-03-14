@@ -1,4 +1,4 @@
-Title: Memento Service [1.4.0-SNAPSHOT]
+Title: Memento Service
 
 The `MementoService` was originally introduced to simplify the implementation of [ViewModel](../../more-advanced-topics/ViewModel.html)s, which are required to return a string representation of all of their backing state, moreover which is safe for use within a URL.
 
@@ -53,7 +53,7 @@ If using another implementation, the `canSet(...)` method can be used to check i
 
 ###Usage within the framework
 
-The memento service is used [1.4.0-SNAPSHOT onwards] by the [CommandContext](./command-context.html) service and also [BackgroundCommandService](./background-service.html).  These both use a memento to capture a representation of an action invocation.
+The memento service is used by the [CommandContext](./command-context.html) service and also [BackgroundCommandService](./background-service.html).  These both use a memento to capture a representation of an action invocation.
 
 
 ###Implementations

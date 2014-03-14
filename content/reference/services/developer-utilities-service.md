@@ -13,14 +13,13 @@ The API defined by `DeveloperUtilitiesService` (some annotations omitted) is:
 
         public Blob downloadLayouts();
 
-        // new in 1.4.0-SNAPSHOT
         public void refreshServices();
 
         @NotInServiceMenu
         public Clob downloadLayout(Object domainObject);
 
-        @Deprecated // in 1.4.0-SNAPSHOT
-        @Hidden     // in 1.4.0-SNAPSHOT
+        @Deprecated // as of 1.4.0
+        @Hidden     // as of 1.4.0
         @NotInServiceMenu
         public Object refreshLayout(Object domainObject);
     }
@@ -39,9 +38,7 @@ where:
 
 *  `refreshServices()` allows the developer to rebuild the Isis metamodel of all domain services.  This is particularly useful for picking up changes to [contributed actions](../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
 
-*  `refreshLayout()` (contributed action) allows the developer to rebuild the Isis metamodel of the current object.  The object's layout may change accordingly.
-
-   In 1.4.0-SNAPSHOT this action has been deprecated because the [Wicket viewer](../../components/viewers/wicket/about.html)), when running in protoype mode, automatically does this.
+The `refreshLayout()` (which rebuild the Isis metamodel of the current object so that the UI refreshes) has been deprecated and hidden; the [Wicket viewer](../../components/viewers/wicket/about.html)) (when running in prototype mode) now automatically does this does this.
 
 
 ###Implementations

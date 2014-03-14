@@ -1,4 +1,4 @@
-Title: AbstractIsisSessionTemplate (1.4.0-snapshot)
+Title: AbstractIsisSessionTemplate
 
 {note
 This class is only semi-formalized, and may change (in small ways) over time.

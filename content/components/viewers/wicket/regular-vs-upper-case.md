@@ -4,7 +4,7 @@ The default CSS styling for the Wicket viewer uses upper-case (`text-transform: 
 
 ##Screenshots
 
-> taken from 1.4.0-snapshot.
+(screenshots of v1.4.0)
 
 #### Upper case
 

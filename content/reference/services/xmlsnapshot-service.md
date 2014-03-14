@@ -1,4 +1,4 @@
-Title: XML Snapshot Service [1.4.0-SNAPSHOT]
+Title: XML Snapshot Service
 
 The *Apache Isis* framework provides the capability to generate XML snapshots (and if required corresponding XSD schemas) based on graphs of domain objects. 
 

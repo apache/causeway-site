@@ -4,9 +4,6 @@ Title: Release Matrix
 
 The table below lists dependencies between core, components and archetypes.
 
-* 1.4.1-snapshot will hopefully be released as 1.4.1 prior to 17-mar-2014
-* 1.4.0-snapshot will hopefully be released as 1.4.0 prior to 17-mar-2014
-
 <table  class="table table-striped table-bordered table-condensed">
 <tr class="heading">
     <th>&nbsp;</th>
@@ -22,7 +19,7 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading"><a href="core/about.html">Core</a></th>
     <th class="heading">&nbsp;</th>
-    <th class="heading">1.4.0-snapshot</th>
+    <th class="heading">1.4.0</th>
     <td>-</td>
     <td>-</td>
     <td>-</td>
