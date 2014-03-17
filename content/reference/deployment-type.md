@@ -52,25 +52,19 @@ The standard list of deploymentTypes and their categories are:
     <td>Visible</td>
 </tr>
 <tr>
-    <td>SERVER<br/>
-UNIT_TESTING<br/>
-SINGLE_USER</td>
+    <td>SERVER</td>
     <td>PRODUCTION</td>
     <td>Not visible</td>
     <td>Not visible</td>
 </tr>
 <tr>
-    <td>SERVER<br/>
-UNIT_TESTING<br/>
-SINGLE_USER</td>
+    <td>UNIT_TESTING</td>
     <td>PRODUCTION</td>
     <td>Not visible</td>
     <td>Not visible</td>
 </tr>
 <tr>
-    <td>SERVER<br/>
-UNIT_TESTING<br/>
-SINGLE_USER</td>
+    <td>SINGLE_USER</td>
     <td>PRODUCTION</td>
     <td>Not visible</td>
     <td>Not visible</td>
