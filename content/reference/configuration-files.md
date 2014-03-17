@@ -1,79 +1,86 @@
 Title: Configuration Files
 
-Isis has one mandatory configuration file, `isis.properties`.  For the webapp viewers, this typically lives alongside the `web.xml` file in the `WEB-INF` directory.  If necessary, though, it can be configured to live outside this directory; this is discussed later on in this article.
+Isis has one mandatory configuration file, `isis.properties`.  For the webapp viewers, this typically lives alongside the `web.xml` file in the `WEB-INF` directory.
 
-In addition to the `isis.properties` file, Isis will also read from a number of supplementary configuration files.  For example:
+In addition, Isis will also read from a number of supplementary configuration files (if present), for each of the configured components.  For example:
 
-* if the JDO (DataNucleus) objectstore is configured, then Isis will search for `persistor_datanucleus.proeprties`.
+* if the JDO (DataNucleus) objectstore (aka persistor) is configured, then Isis will search for `persistor_datanucleus.properties`.  Isis will also read from `persistor.properties`
+* if the Shiro authentication has been configured, it will search for `authentication_shiro.properties`.  Isis will also read from `authentication.properties`.
 
-* Or, if the Shiro authentication has been configured, it will search for `authentication_shiro.properties`.
+This approach allows configuration to be partitioned by component.  
 
-This approach allows configuration to be partitioned by component.  To restate though, this is not mandatory: you can just use `isis.properties` for all configuration if you wish.
+> It is also possible to externalize all configuration files so that they reside outside of `WEB-INF` directory; this is discussed [here](./externalized-configuration.html).
 
-### Specifying Components
+## Specifying Components
 
 A running Isis instance requires a persistor (aka objectstore), the authentication mechanism, the authorization mechanism, and a user profile store.  It also requires some sort of viewer or viewers.
 
-The persistor, authentication, authorization and profilestore are specified in the `isis.properties` file.  For example, this is the configuration of the [simple](../intro/getting-started/simple-archetype.html) archetype:
+The objectstore, authentication, authorization and profilestore are specified in the `isis.properties` file.  For example, this is the configuration of the [simple](../intro/getting-started/simple-archetype.html) archetype:
 
-<pre>
-isis.persistor=datanucleus
-isis.authentication=shiro
-isis.authorization=shiro
-isis.user-profile-store=in-memory
-</pre>
+    isis.persistor=datanucleus
+    isis.authentication=shiro
+    isis.authorization=shiro
+    isis.user-profile-store=in-memory
 
 The available values are registered in [installer-registry.properties](https://raw.github.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  In either case the appropriate component must also (of course) be added as a dependency to the `pom.xml` files.  
 
 The viewer is *not* specified in the `isis.properties` file; rather it is implied by the configuration of `WEB-INF/web.xml` file.  The archetypes are a good point of reference for the required servlet context listeners and servlets; every viewer has its own requirements.
 
-Some of the viewers have their own configuration properties.  These can also be moved out into their supplementary config files, provided that an additional entry is made in the `web.xml` file.  For example, to specify that the Wicket viewer and Restful Objects viewer config files should be read, add the following:
+## Componentized configuration Files by component
 
-<pre>
-&lt;context-param&gt;
-    &lt;param-name&gt;isis.viewers&lt;/param-name&gt;
-    &lt;param-value&gt;wicket,restfulobjects&lt;/param-value&gt;
-&lt;/context-param&gt;
-</pre>
+As noted in the introduction, the configuration can optionally be broken out by component and also component implementation.  
 
-This will cause Isis to search and read for `viewer_wicket.properties` and `viewer_restfulobjects.properties`.
+This is also supported for the configured viewer(s).  However, because the configured viewer(s) is/are not listed in `isis.properties`, an additional hint is required in the `web.xml` file to tell Isis which viewers are in use.
 
-(Note: this is only supported for the Wicket viewer for 1.2.0 on, see [ISIS-342](https://issues.apache.org/jira/browse/ISIS-342))
+For example, to specify that the Wicket viewer and Restful Objects viewers are configured, specify:
 
-### Specifying an external configuration directory
+    <context-param>
+        <param-name>isis.viewers</param-name>
+        <param-value>wicket,restfulobjects</param-value>
+    </context-param>
 
-As noted above, by default Isis will look for configuration files in the `WEB-INF` directory.  If you wish to vary the configuration by environment (eg systest vs production), then this can be altered by specifying the `isis.config.dir` context parameter.
-
-If the external configuration directory will change from one environment to another, then specify the context parameter according to the documentation of your chosen servlet container.
-
-For example, if using Tomcat 7.0, you would typically copy the empty `$TOMCAT_HOME/webapps/conf/context.xml` to a file specific to the webapp, for example `$TOMCAT_HOME/webapps/conf/todo.xml`.  The context parameter would then be specified by adding the following:
-
-<pre>
-&lt;Parameter name="isis.config.dir"
-           value="/usr/local/tomcat/conf/"
-           override="true"/&gt;
-</pre>
-
-For more detail, see the Tomcat documentation on [defining a context](http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Defining_a_context) and on [context parameters](http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Context_Parameters).
-     
-If the external configuration directory is fixed for all environments, then you can specify within the `web.xml` itself:
-
-<pre>
-&lt;context-param&gt;
-    &lt;param-name&gt;isis.config.dir&lt;/param-name&gt;
-    &lt;param-value&gt;location of external config directory&lt;/param-value&gt;
-&lt;/context-param&gt;
-</pre>
-
-
-
-###Shiro
-
-If using Isis' [Shiro integration](../components/security/shiro/about.html) for authentication and/or authorization, note that it reads from the `shiro.ini` configuration file.  By default this also resides in `WEB-INF`.
-
-Similar to Isis, Shiro lets this configuration directory be altered, by specifying the `shiroConfigLocations` context parameter.
-
-You can therefore override the default location using the same technique as described above for Isis' `isis.config.dir` context parameter.
-
-
-
+The table below summarizes the additional configuration files that are searched for the most commonly configured components:
+    
+<table class="table table-striped table-bordered table-condensed">
+<tr>
+    <th>Component type</th>
+    <th>Component implementation</th>
+    <th>Additional configuration files</th>
+</tr>
+<tr>
+    <td>Object Store</td>
+    <td>JDO (DataNucleus)</td>
+    <td>persistor_datanucleus.properties<br/>
+persistor.properties</td>
+</tr>
+<tr>
+    <td>Authentication</td>
+    <td>Shiro</td>
+    <td>authentication_shiro.properties<br/>
+authentication.properties</td>
+</tr>
+<tr>
+    <td>Authorization</td>
+    <td>Shiro</td>
+    <td>authorization_shiro.properties<br/>
+authorization.properties</td>
+</tr>
+<tr>
+    <td>Viewer</td>
+    <td>Wicket</td>
+    <td>viewer_wicket.properties<br/>
+viewer.properties</td>
+</tr>
+<tr>
+    <td>Viewer</td>
+    <td>Restful Objects</td>
+    <td>viewer_restfulobjects.properties<br/>
+viewer.properties</td>
+</tr>
+<tr>
+    <td>Profile Store</td>
+    <td>In-memory</td>
+    <td>user-profile-store_in-memory.properties<br/>
+user-profile-store.properties</td>
+</tr>
+</table>

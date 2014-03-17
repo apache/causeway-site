@@ -26,7 +26,7 @@ EXPLORATION<br/>
 UTILITY</td>
     <td>Visible</td>
     <td>Not visible</td>
-    </tr>
+</tr>
 <tr>
     <td>PROTOTYPING</td>
     <td>SERVER_PROTOTYPE<br/>

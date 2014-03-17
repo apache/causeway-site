@@ -326,6 +326,7 @@ For both:
 #### <a name="reference-config">Config</a>
 
 * [Configuration Files](./reference/configuration-files.html)
+* [Externalized Configuration](./reference/externalized-configuration.html)
 
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>
 
