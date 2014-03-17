@@ -6,8 +6,8 @@ Title: @Exploration
 
 The `@Exploration` annotation marks an action method as available in
 exploration mode only, and therefore not intended for use in the
-production system. An exploration action may or may not also be a debug
-action (annotated with `@Debug`<!--, see ?-->).
+production system. 
+
 
 For example:
 
@@ -18,5 +18,7 @@ For example:
         ...
     }
 
-See also the <!--@Prototype--> annotation<!--, ?-->.
+    
+#### See also
 
+See also the [@Prototype](./prototype.html) annotation.

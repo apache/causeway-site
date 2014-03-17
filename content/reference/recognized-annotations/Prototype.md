@@ -6,8 +6,7 @@ Title: @Prototype
 
 The `@Prototype` annotation marks an action method as available in
 prototype mode only, and therefore not intended for use in the
-production system. A prototype action may or may not also be a debug
-action (annotated with `@Debug` <!--, see ?)-->.
+production system.
 
 For example:
 
@@ -18,4 +17,8 @@ For example:
         ...
     }
 
-See also the @Exploration annotation <!--, ?-->.
+    
+#### See also
+
+See also the [@Exploration](./exploration.html) annotation.
+
