@@ -10,7 +10,7 @@ There are in fact three frameworks involved here, all of which need to be pointe
 
   which as already discussed reads `isis.properties` and optional component-specific config files.
 
-* [Apache Shiro](http:shiro.apache.org) (if using the Isis' [Shiro integration](../components/security/shiro/about.html) for authentication and/or authorization
+* [Apache Shiro](http://shiro.apache.org) (if using the Isis' [Shiro integration](../components/security/shiro/about.html) for authentication and/or authorization
   
   which reads the `shiro.ini` file (and may read other files referenced from that file)  
 
