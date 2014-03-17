@@ -51,6 +51,22 @@ where:
 
 The above configuration has been tested against [ApacheDS](http://directory.apache.org/apacheds/), v1.5.7.  This can be administered using [Apache Directory Studio](http://directory.apache.org/studio/), v1.5.3.
 
+### Using a shared role/perms path
+
+As an alternative to injecting the `permissionsByRole` property, the role/permission mapping can alternatively be specified by injecting a resource path:
+
+    ldapRealm.resourcePath=classpath:webapp/myroles.ini
+
+where `myroles.ini` is in `src/main/resources/webapp`, and takes the form:
+
+     [roles]
+     user_role = *:ToDoItemsJdo:*:*,\
+                 *:ToDoItem:*:*
+     self-install_role = *:ToDoItemsFixturesService:install:*
+     admin_role = *
+
+This separation of the role/mapping can be useful if Shiro is configured to support multiple realms (eg an LdapRealm based one and also an TextRealm)
+
 ### Active DS LDAP Configuration
 
 The screenshot below shows the ApacheDS using Apache Directory Studio.  The setup here was initially base on [this tutorial](http://krams915.blogspot.co.uk/2011/01/ldap-apache-directory-studio-basic.html).  However, user accounts have been moved to a separate node.
