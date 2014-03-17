@@ -8,19 +8,19 @@ The default JVM configuration will most likely not be appropriate for running Is
     <th>Description</th>
 </tr>
 <tr>
-    <td>-server</td>
+    <td>&#8209;server</td>
     <td>Run the JVM in server mode, meaning that the JVM should spend more time on the optimization of the fragments of codes that are most often used (hotspots). This leads to better performance at the price of a higher overhead at startup</td>
 </tr>
 <tr>
-    <td>-Xms128m</td>
+    <td>&#8209;Xms128m</td>
     <td>Minimum heap size</td>
 </tr>
 <tr>
-    <td>-Xmx768m</td>
+    <td>&#8209;Xmx768m</td>
     <td>Maximum heap size</td>
 </tr>
 <tr>
-    <td>-XX:PermSize=64m</td>
+    <td>&#8209;XX:PermSize=64m</td>
     <td>Minimum perm size (for class definitions)</td>
 </tr>
 <tr>
@@ -28,7 +28,7 @@ The default JVM configuration will most likely not be appropriate for running Is
     <td>Maximum perm size (for class definitions)</td>
 </tr>
 <tr>
-    <td>-XX:+DisableExplicitGC</td>
+    <td>&#8209;XX:+DisableExplicitGC</td>
     <td>Causes any explicit calls to <tt>System.gc()</tt> to be ignored.  See <a href="http://stackoverflow.com/questions/12847151/setting-xxdisableexplicitgc-in-production-what-could-go-wrong">this stackoverflow</a> question.</td>
 </tr>
 </table>
