@@ -8,8 +8,6 @@ The most thing aspect of configuration that varies by `deploymentType` is whethe
 
 ## Deployment Types and Deployment Categories
 
-There is a standard list of `deploymentType`s, though components can extend this list if required (and note, the [Wicket viewer](../components/viewers/wicket/about.html) is one such component that does so).
-
 Each `deploymentType` list has a corresponding `deploymentCategory`, and it is this that determines whether `@Exploration` and `@Prototype` actions are visible.
 
 The standard list of deploymentTypes and their categories are:
@@ -45,6 +43,8 @@ SINGLE_USER</td>
     <td>Not visible</td>
 </tr>
 </table>
+
+It is possible for components to add their own `deploymentType`s, and the [Wicket viewer](../components/viewers/wicket/about.html) is one such component that does so.  However, every such `deploymentType` maps to precisely one of the 3 available deployment categories, and it is the category that determines action visibility.
 
 
 ## Specifying the Deployment Type in the `web.xml` file
