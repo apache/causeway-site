@@ -53,7 +53,7 @@ You can therefore override the default location using the same technique as desc
                value="file:/usr/local/myapp/conf/shiro.ini" 
                override="true" />
 
-> Note that Shiro is more flexible than Isis; it will accepts any URL, not only a filesystem directory. 
+> Note that Shiro is more flexible than Isis; it will read its configuration from any URL, not just a directory on the local filesystem. 
 
 
 ## <a name="log4j">Externalizing Log4j's Configuration</a>
