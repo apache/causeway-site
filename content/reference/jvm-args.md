@@ -13,19 +13,19 @@ The default JVM configuration will most likely not be appropriate for running Is
 </tr>
 <tr>
     <td>-Xms128m</td>
-    <td></td>
+    <td>Minimum heap size</td>
 </tr>
 <tr>
     <td>-Xmx768m</td>
-    <td></td>
+    <td>Maximum heap size</td>
 </tr>
 <tr>
     <td>-XX:PermSize=64m</td>
-    <td></td>
+    <td>Minimum perm size (for class definitions)</td>
 </tr>
 <tr>
     <td>-XX:MaxPermSize=256m</td>
-    <td></td>
+    <td>Maximum perm size (for class definitions)</td>
 </tr>
 <tr>
     <td>-XX:+DisableExplicitGC</td>
