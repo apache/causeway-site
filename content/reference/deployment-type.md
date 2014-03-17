@@ -16,63 +16,31 @@ The standard list of deploymentTypes and their categories are:
 
 <table class="table table-striped table-bordered table-condensed">
 <tr>
+<th>Deployment category</th>
 <th>Deployment types</th>
-<th>Deployment category</th>
-</tr>
-<tr>
-    <td>EXPLORATION</td>
-    <td>EXPLORING</td>
-</tr>
-<tr>
-    <td>SERVER_EXPLORATION</td>
-    <td>EXPLORING</td>
-</tr>
-<tr>
-    <td>UTILITY</td>
-    <td>EXPLORING</td>
-</tr>
-<tr>
-    <td>PROTOTYPE</td>
-    <td>PROTOTYPING</td>
-</tr>
-<tr>
-    <td>SERVER_PROTOTYPE</td>
-    <td>PROTOTYPING</td>
-</tr>
-<tr>
-    <td>SERVER</td>
-    <td>PRODUCTION</td>
-</tr>
-<tr>
-    <td>UNIT_TESTING</td>
-    <td>PRODUCTION</td>
-</tr>
-<tr>
-    <td>SINGLE_USER</td>
-    <td>PRODUCTION</td>
-</tr>
-</table>
-
-where, as you might imagine from the names, the `deploymentCategory` maps to action visibility as follows:
-
-<table class="table table-striped table-bordered table-condensed">
-<tr>
-<th>Deployment category</th>
 <th><tt>@Exploration</tt> actions</th>
 <th><tt>@Prototype<tt> actions</th>
 </tr>
 <tr>
     <td>EXPLORING</td>
+    <td>SERVER_EXPLORATION<br/>
+EXPLORATION<br/>
+UTILITY</td>
     <td>Visible</td>
     <td>Not visible</td>
-</tr>
+    </tr>
 <tr>
     <td>PROTOTYPING</td>
+    <td>SERVER_PROTOTYPE<br/>
+PROTOTYPE</td>
     <td>Not visible</td>
     <td>Visible</td>
 </tr>
 <tr>
     <td>PRODUCTION</td>
+    <td>SERVER<br/>
+UNIT_TESTING<br/>
+SINGLE_USER</td>
     <td>Not visible</td>
     <td>Not visible</td>
 </tr>
