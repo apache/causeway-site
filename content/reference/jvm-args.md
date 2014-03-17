@@ -2,7 +2,7 @@ Title: Suggested JVM args
 
 The default JVM configuration will most likely not be appropriate for running Isis as a webapp.  Some args that you will 
 
-<table class="table table-striped table-bordered table-condensed">
+<table class="table table-striped table-bordered">
 <tr>
     <th>Flag</th>
     <th>Description</th>
