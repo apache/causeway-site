@@ -327,6 +327,7 @@ For both:
 
 * [Configuration Files](./reference/configuration-files.html)
 * [Externalized Configuration](./reference/externalized-configuration.html)
+* [JVM args](./reference/jvm-args.html)
 
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>
 
