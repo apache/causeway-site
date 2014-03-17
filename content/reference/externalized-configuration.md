@@ -70,4 +70,4 @@ Further details an be found in the [log4j documentation](https://logging.apache.
 
 ## See also
 
-See [JVM args](./suggested-jvm-args.html) for other JVM args and system properties that you might want to consider setting.
+See [JVM args](./jvm-args.html) for other JVM args and system properties that you might want to consider setting.
