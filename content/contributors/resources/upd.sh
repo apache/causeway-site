@@ -102,8 +102,8 @@ fi
 # security_file
 #
 #################################################################
-old_ver=`echo $security_file | awk '{print $1}'
-new_ver=`echo $security_file | awk '{print $2}'
+old_ver=`echo $security_file | awk '{print $1}'`
+new_ver=`echo $security_file | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 

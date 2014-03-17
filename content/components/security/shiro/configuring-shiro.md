@@ -50,11 +50,42 @@ Specifying `$iniRealm` means that the usernames/passwords, roles and permissions
 * the users/passwords and their roles from the `[users]` sections;  
 * the roles are mapped to permissions in the `[roles]` section.
 
-The permission format is:
+#### Users section
+
+The `[users]` section lists users, passwords and their roles.  For example:
+
+<pre>
+sven = pass, admin_role
+dick = pass, user_role, analysis_role, self-install_role
+bob  = pass, user_role, self-install_role
+</pre>
+
+#### Roles section
+
+The `roles` section lists roles and their corresponding permissions.  For example:
+
+<pre>
+user_role = *:ToDoItems:*:*,\
+            *:ToDoItem:*:*,\
+            *:ToDoAppDashboard:*:*
+analysis_role = *:ToDoItemAnalysis:*:*,\
+            *:ToDoItemsByCategoryViewModel:*:*,\
+            *:ToDoItemsByDateRangeViewModel:*:*
+self-install_role = *:ToDoItemsFixturesService:install:*
+admin_role = *
+</pre>
+
+#### Permissions format
+
+The permission format is configurable.  The default format is:
 
     packageName:className:memberName:r,w
 
-and is discussed in more detail [here](./format-of-permissions.html)
+where each of the parts of the permission string can be wildcarded using `*`.
+
+See [here](./format-of-permissions.html) for further discussion.
+
+## Multiple Realms
 
 The `shiro.ini` file as configured in the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html) is a little more complex.  Here there are two text-based realms defined, `realm1` and `realm2`.  The `resourcePath` for these realms is in the form:
 
@@ -66,7 +97,7 @@ The security manager for the app only references these two realms:
 
     securityManager.realms = $realm1,$realm2
 
-meaning that the `[users]` and `[roles]` sections of `shiro.ini` are unused.  Instead, you'll find these sections in both `realm1.ini` and `realm2.ini` (because both are coincidentally implementations of the same `org.apache.shiro.realm.text.IniRealm` class
+meaning that the `[users]` and `[roles]` sections of `shiro.ini` are unused.  Instead, you'll find these sections in both `realm1.ini` and `realm2.ini` (because both are coincidentally implementations of the same `org.apache.shiro.realm.text.IniRealm` class).
 
 ## What the user/roles translate to
 
