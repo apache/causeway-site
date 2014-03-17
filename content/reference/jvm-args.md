@@ -24,7 +24,7 @@ The default JVM configuration will most likely not be appropriate for running Is
     <td>Minimum perm size (for class definitions)</td>
 </tr>
 <tr>
-    <td>-XX:MaxPermSize=256m</td>
+    <td>&#8209;XX:MaxPermSize=256m</td>
     <td>Maximum perm size (for class definitions)</td>
 </tr>
 <tr>
