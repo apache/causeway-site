@@ -14,5 +14,20 @@ For example:
     }
 
 If the action should neither be contributed nor appear in the service's
-service menu <!--(see ?)-->, then you could instead simply mark it as `@Hidden`
-<!--(see ?)-->.
+service menu, then you could instead simply mark it as `@Hidden`.
+
+
+## Contributing of one-arg actions
+
+Actions that accept a single argument will, by default, also be contributed as an association:
+
+* if the action returns a single object (value or entity) then the action will be contributed as a property
+
+* if the action returns a list then the action will be contributed as a collection
+
+This behaviour can be influenced by specifying the "As." attribute:
+
+* use `@NotContributed(As.ACTION)` to contribute the action as an association
+* use `@NotContributed(As.ASSOCIATION)` to contribute the action as an action
+* use `@NotContributed` to not contribute the action at all.
+

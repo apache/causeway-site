@@ -288,6 +288,7 @@ For both:
 * [QueryResultsCache](./reference/services/query-results-cache.html)
 * [Scratchpad](./reference/services/scratchpad.html)
 * [Bulk.Interaction](./reference/services/bulk-interaction.html)
+* [EventBusService](./reference/services/event-bus-service.html) (stub)
 
 
 }
