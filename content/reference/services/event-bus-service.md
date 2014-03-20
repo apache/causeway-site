@@ -24,14 +24,6 @@ where
 
 ## Usage
 
-A good practice for domain services is to self-register when the `EventBusService` is injected into it:
-
-    private EventBusService eventBusService;
-    public void injectEventBusService(final EventBusService eventBusService) {
-        this.eventBusService = eventBusService;
-        eventBusService.register(this);
-    }
-
 The actual subscription of events is done by annotating a method on the class (that is, the usual Guava programming model).  
 
 For example, suppose in a library domain that a `LibraryMember` wants to leave the library.  A letter should be sent out detailing any books that they still have out on loan:
@@ -63,6 +55,16 @@ Meanwhile, in the `BookRepository` domain service, we subscribe to the event and
     }
 
 This design allows the `libraryMember` module to be decoupled from the `book` module.
+
+### Self Registration
+
+A good practice for domain services is to self-register when the `EventBusService` is injected into it:
+
+    private EventBusService eventBusService;
+    public void injectEventBusService(final EventBusService eventBusService) {
+        this.eventBusService = eventBusService;
+        eventBusService.register(this);
+    }
 
     
 ### `@PostsPropertyChangedEvent`
