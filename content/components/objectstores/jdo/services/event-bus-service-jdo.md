@@ -7,9 +7,7 @@ The JDO implementation does not provide any additional functionality, but is awa
 
 ## Register the Service
 
-Register this service like any other service, in `isis.properties`
-
-If the JDO ObjectStore *is* in use, use:
+Register this service like any other service, in `isis.properties`:
 
     isis.services=...,\
                   org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo,\
