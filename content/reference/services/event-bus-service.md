@@ -79,9 +79,9 @@ This design allows the `libraryMember` module to be decoupled from the `book` mo
 
 Isis will also automatically publish (post) an `org.apache.isis.applib.services.eventbus.PropertyChangedEvent` event object on any property that is annotated with [`@PostsPropertyChangedEvent](../recognized-annotations/PostsPropertyChangedEvent.html).  This can remove some boilerplate.
 
-> The `@PropertyChangeEvent` is only raised for interactions through the UI, or through interactions through a wrapper created by the [Wrapper Factory](wrapper-factory.html) service.
-
-> This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.
+> A couple of notes:
+> * The `@PropertyChangeEvent` is only raised for interactions through the UI, or through interactions through a wrapper created by the [Wrapper Factory](wrapper-factory.html) service.
+> * This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.
     
 ## Implementation
 
