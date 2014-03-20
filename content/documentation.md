@@ -569,7 +569,7 @@ Other
 * [Background Command Service on JDO](components/objectstores/jdo/services/background-command-service-jdo.html)
 * [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
 * [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
-* [Event Bus Service for JDO](components/objectstores/jdo/services/reference/services/event-bus-service-jdo.html)
+* [Event Bus Service for JDO](components/objectstores/jdo/services/event-bus-service-jdo.html)
 
 #### <a name="jdo-objectstore-non-ui">Non-UI</a>
 
