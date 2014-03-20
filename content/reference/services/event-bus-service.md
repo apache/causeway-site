@@ -71,9 +71,13 @@ A good practice for domain services is to self-register when the `EventBusServic
 
 Isis will also automatically publish (post) an `org.apache.isis.applib.services.eventbus.PropertyChangedEvent` event object on any property that is annotated with [`@PostsPropertyChangedEvent](../recognized-annotations/PostsPropertyChangedEvent.html).  This can remove some boilerplate.
 
-> A couple of notes:
-> * The `@PropertyChangeEvent` is only raised for interactions through the UI, or through interactions through a wrapper created by the [Wrapper Factory](wrapper-factory.html) service.
-> * This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.
+<blockquote>
+<p>A couple of notes:
+<ul>
+<li>The `@PropertyChangeEvent` is only raised for interactions through the UI, or through interactions through a wrapper created by the [Wrapper Factory](wrapper-factory.html) service.</li>
+<li>This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.</li>
+</ul
+</blockquote>
     
 ## Implementation
 
