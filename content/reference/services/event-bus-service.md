@@ -76,7 +76,7 @@ Isis will also automatically publish (post) an `org.apache.isis.applib.services.
 <ul>
 <li>The `@PropertyChangeEvent` is only raised for interactions through the UI, or through interactions through a wrapper created by the [Wrapper Factory](wrapper-factory.html) service.</li>
 <li>This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.</li>
-</ul
+</ul>
 </blockquote>
     
 ## Implementation
