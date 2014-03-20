@@ -182,18 +182,28 @@ An alternative implementation of the `PublishingService` is provided by the [JDO
 
 An alternative implementation of the `EventSerializer` is provided by the [Restful Objects viewer](../../components/viewers/restfulobjects/event-serializer-rospec.html).  This implementation serializes the payload using the conventions of the [Restful Objects spec](http://restfulobjects.org).
 
-#### Related Services
+## Related Services
+
+The [`PublishingService`](./PublishingService.html) is intended for coarse-grained publish/subscribe for system-to-system interactions, from Isis to some other system.  Here the only events published are those that action invocations (for actions annotated with [`@PublishedAction`](../recognized-annotations/PublishedAction.html)) and of changed objects (for objects annotated with [`@PublishedObject`](../recognized-annotations/PublishedObject.html).
+
+The [`EventBusService`](./EventBusService.html) meanwhile is intended for fine-grained publish/subscribe for object-to-object interactions within an Isis domain object model.  The event propogation is strictly in-memory, and there are no restrictions on the object acting as the event (it need not be serializable, for example).  
+
+
+## Third-party integrations
 
 Dan Haywood's [camel-isis-pubsubjdo](https://github.com/danhaywood/camel-isis-pubsubjdo) project up on github shows how to poll and process the persisted `PublishedEvent` table using [Apache Camel](http://camel.apache.org).
 
 
-## Class Diagram
+<hr/>
+
+## Design Notes
 
 The following class diagram shows how the above components fit together:
 
  ![](images/yuml.me-23db58a4.png)
 
-The diagram was generated at [yuml.me](http://yuml.me/edit/23db58a4) using the following description:
+ 
+This yuml.me diagram was generated at [yuml.me](http://yuml.me/edit/23db58a4) using the following description:
 
 <pre>
 [PublishingService]++-serializesUsing>[EventSerializer]

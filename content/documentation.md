@@ -288,7 +288,7 @@ For both:
 * [QueryResultsCache](./reference/services/query-results-cache.html)
 * [Scratchpad](./reference/services/scratchpad.html)
 * [Bulk.Interaction](./reference/services/bulk-interaction.html)
-* [EventBusService](./reference/services/event-bus-service.html) (stub)
+* [EventBusService](./reference/services/event-bus-service.html)
 
 
 }
@@ -534,6 +534,7 @@ Other
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html) (1.4.2-snapshot)
 
 }
 
@@ -568,6 +569,7 @@ Other
 * [Background Command Service on JDO](components/objectstores/jdo/services/background-command-service-jdo.html)
 * [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
 * [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
+* [Event Bus Service for JDO](components/objectstores/jdo/services/reference/services/event-bus-service-jdo.html)
 
 #### <a name="jdo-objectstore-non-ui">Non-UI</a>
 
