@@ -105,6 +105,6 @@ If the JDO ObjectStore *is* in use, use:
 
 The `EventBusService` is intended for fine-grained publish/subscribe for object-to-object interactions within an Isis domain object model.  The event propogation is strictly in-memory, and there are no restrictions on the object acting as the event (it need not be serializable, for example).
 
-The [`PublishingService`](./PublishingService.html) meanwhile is intended for coarse-grained publish/subscribe for system-to-system interactions, from Isis to some other system.  Here the only events published are those that action invocations (for actions annotated with [`@PublishedAction`](../recognized-annotations/PublishedAction.html)) and of changed objects (for objects annotated with [`@PublishedObject`](../recognized-annotations/PublishedObject.html).
+The [PublishingService](publishing-service.html) meanwhile is intended for coarse-grained publish/subscribe for system-to-system interactions, from Isis to some other system.  Here the only events published are those that action invocations (for actions annotated with [`@PublishedAction`](../recognized-annotations/PublishedAction.html)) and of changed objects (for objects annotated with [`@PublishedObject`](../recognized-annotations/PublishedObject.html).
 
 
