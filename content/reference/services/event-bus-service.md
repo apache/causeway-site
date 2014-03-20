@@ -10,19 +10,10 @@ The typical implementation of a domain service subscriber is to identify the imp
 
 The API defined by `EventBusService` is:
 
-
     public abstract class EventBusService {
-
-        protected abstract EventBus getEventBus();
-        
         public void register(Object domainObject) { ... }
-        
-        @Programmatic
         public void unregister(Object domainObject) { ... }
-        
-        @Programmatic
         public void post(Object event) { ... }
-
     }
 
 where
@@ -30,7 +21,6 @@ where
 * `register(Object)` registers the object with the event bus (it is simply a wrapper that delegates to `EventBus#register(Object)`)
 * `unregister(Object)` unregisters the object with the event bus (it is simply a wrapper that delegates to `EventBus#unregister(Object)`)
 * `post(Object)` posts the event onto event bus (it is simply a wrapper that delegates to `EventBus#post(Object)`)
-* `getEventBus()` provides access to the Guava `EventBus` for anything more sophisticated.
 
 ## Usage
 
