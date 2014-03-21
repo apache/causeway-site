@@ -343,7 +343,7 @@ For both:
 
 * [Deployment Types](./reference/deployment-type.html)
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
-* [Annotations](./reference/recognized-annotations/about.html)
+* [Recognized Annotations](./reference/recognized-annotations/about.html)
 * [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
 * [Value types](./reference/value-types.html)
 
