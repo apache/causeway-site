@@ -1,12 +1,10 @@
 Title: JRebel plugin (third-party)
 
-This is a plugin for Apache Isis plugin for [JRebel][http://zeroturnaround.com/software/jrebel/]. By configuring it you can develop your Isis application without having to restart the app. 
+This is a plugin for Apache Isis plugin for [JRebel](http://zeroturnaround.com/software/jrebel/). By configuring it you can develop your Isis application without having to restart the app. 
 
-JRebel is [commercial software](), although there is a community version that is [free for open source use]().  Please check terms and conditions before using.
+JRebel itself is commercial software, though there is also a community version that is [free for open source use](https://my.jrebel.com/).  Please check terms and conditions before using.
 
 The Isis JRebel plugin itself is free for use, and is hosted on [github](https://github.com/danhaywood/isis-jrebel-plugin).
-
-The plugin is designed for Isis configured with the JDO (DataNucleus) objectstore, and either the Wicket viewer or the Restful Objects viewer.
 
 
 ## <a name="screencast"></a>Screencast
