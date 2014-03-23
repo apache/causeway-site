@@ -48,11 +48,32 @@ This screencast shows how to use Maven in conjunction with IntelliJ:
 > TODO
 
 
-See also:
+These screenshots show the VM arguments as configured in IntelliJ:
 
 <img src="images/intellij-040-run-config.png"  width="600px"/>
 
-<img src="images/intellij-050-run-config-vm.png"  width="600px"/>
+and
+
+<img src="images/intellij-050-run-config-vm.png"  width="500px"/>
+
+If you want to copy-n-paste those VM args, they are:
+
+    -Drebel.log=false \
+    -Drebel.check_class_hash=true \
+    -Drebel.packages_exclude=org.apache.isis \
+    -Dproject.root=C:\APACHE\isis-git-rw\example\application\simple_wicket_restful_jdo \
+    -Dtarget.dir=target \
+    -Drebel.plugins=C:/github/danhaywood/isis-jrebel-plugin/target/danhaywood-isis-jrebel-plugin-1.0.0-SNAPSHOT.jar \
+    -Disis-jrebel-plugin.packagePrefix=dom.simple,org.apache.isis.objectstore.jdo.applib \
+    -Disis-jrebel-plugin.loggingLevel=warn \
+    -XX:MaxPermSize=128m
+
+You'll need to adjust the value of some of these:
+* `rebel.plugins` for the location of the plugin JAR
+* `project.root` for the root directory of the application
+* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
+    
+You can probably leave the other properties as is.
 
 
 ## Download
