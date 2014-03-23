@@ -12,7 +12,7 @@ If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) 
 
 If working in Eclipse, then JDO enhancement is most easily done by installing [DataNucleus' plugin](http://www.datanucleus.org/plugins/ide.eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.  This plugin needs to be configured for each of your domain modules (usually just one in any given app).
 
-The steps are therefore two-fold:
+The steps are therefore:
 
 * import the project into Eclipse
 * configure the DataNucleus enhancer
