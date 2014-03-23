@@ -12,6 +12,8 @@ However there are a couple of issues you may encounter:
 
 * New releases of DataNucleus plugins in the Maven central repo can cause versioning problems.
 
+  (This is no longer an issue for in Isis 1.4.0).
+
 We have workarounds for both.
 
 ## Workaround for path limits: Configuring the `persistence.xml` file
@@ -21,11 +23,15 @@ Details of how to configure the `persistence.xml` file can be found [here](./per
 
 There is no additional configuration required in any Maven `pom.xml`; you are done.
 
-## Workaround for DN versioning issues: using a Maven profile
+## DN versioning issues: using a Maven profile (prior to 1.4.0)
 
-{Note
-This workaround applies to v1.3.0 and previous releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
+{note
+v1.4.0 of Isis uses DN 3.3.x, which means that the problems addressed in this section should no longer arise.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) for further discussion.
 }
+
+### Isis 1.3.x
+
+> This workaround applies to v1.3.x releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
 
 Every so often there will be a new release of DataNucleus plugins to the [Maven central repo](http://search.maven.org)  For better or for worse, the Maven DataNucleus enhancer plugin defines a range dependency: it will always use the latest version of the DN modules available.
 
@@ -56,20 +62,12 @@ ions of the same plugin in the classpath. The URL "file:/C:/MVN/.m2/repository/o
 rg/datanucleus/datanucleus-core/3.1.3/datanucleus-core-3.1.3.jar" is already reg
 istered, and you are trying to register an identical plugin located at URL "file
 :/C:/MVN/.m2/repository/org/datanucleus/datanucleus-core/3.1.2/datanucleus-core-
-3.1.2.jar." -&gt; [Help 1]
+3.1.2.jar." -> [Help 1]
 [ERROR]
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e swit
 ch.
 </pre>
 
-
-### v1.4.0 and later
-
-v1.4.0 of Isis uses DN 3.3.x, which means that this problem should no longer occur.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
-
-If you create your app from the v1.4.x archetypes (not released at time of writing), then the pom.xml files will be set up correctly.
-
-### Recommended solution for v1.3.0
 
 The preferred solution forces the version of DataNucleus and jdo-api to be the version referenced by the JDO ObjectStore.    If you have created your app from the v1.3.x archetypes, then they will be set up correctly.
 
@@ -128,32 +126,30 @@ Then, in the `dom` project's `pom.xml`, update the DataNucleus enhancer plugin t
 
  
 
-### Solution used prior to v1.3.0
+### Isis 1.2.0 and previous
 
 This solution attempts to use the latest-n-greatest version of DataNucleus, and was the approach used in Isis Core 1.2.0 and earlier.  However, it has been found to be flawed if a new version of the DataNucleus enhancer was released that had an incompatibility with the version of DN referenced by the JDO ObjectStore.
 
 The fix is to use a Maven profile.  The following is correct as of the JDO ObjectStore v1.1.0:
 
-<pre>
-    &lt;profiles&gt;
-        &lt;profile&gt;
-            &lt;id&gt;not-m2e&lt;/id&gt;
-            &lt;activation&gt;
-                &lt;property&gt;
-                    &lt;name&gt;!m2e.version&lt;/name&gt;
-                &lt;/property&gt;
-            &lt;/activation&gt;
-            &lt;dependencies&gt;
-                &lt;dependency&gt;
-                    &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
-                    &lt;artifactId&gt;datanucleus-core&lt;/artifactId&gt;
-                    &lt;version&gt;(3.2.0-m1, 3.2.99)&lt;/version&gt;
-                    &lt;scope&gt;runtime&lt;/scope&gt;
-                &lt;/dependency&gt;
-            &lt;/dependencies&gt;
-        &lt;/profile&gt;
-    &lt;/profiles&gt;
-</pre>
+    <profiles>
+        <profile>
+            <id>not-m2e</id>
+            <activation>
+                <property>
+                    <name>!m2e.version</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-core</artifactId>
+                    <version>(3.2.0-m1, 3.2.99)</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
-This says that when *not* run within Eclipse (the ${m2e.version} property is *not* set), then to use the latest version of the DataNucleus dependency can be referenced.  You can maintain the &lt;version&gt; to keep track with the latest-n-greatest available in the Maven repo.
+This says that when *not* run within Eclipse (the ${m2e.version} property is *not* set), then to use the latest version of the DataNucleus dependency can be referenced.  You can maintain the <version> to keep track with the latest-n-greatest available in the Maven repo.
 

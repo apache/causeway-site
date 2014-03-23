@@ -30,16 +30,15 @@ Create a new directory, and `cd` into that directory.
 
 Then run the following command:
 
-<pre>
-mvn archetype:generate  \
-    -D archetypeGroupId=org.apache.isis.archetype \
-    -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
-    -D archetypeVersion=1.4.1 \
-    -D groupId=com.mycompany \
-    -D artifactId=myapp \
-    -D version=1.0-SNAPSHOT \
-    -B
-</pre>
+    mvn archetype:generate  \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
+        -D archetypeVersion=1.4.1 \
+        -D groupId=com.mycompany \
+        -D artifactId=myapp \
+        -D version=1.0-SNAPSHOT \
+        -B
+
 where:
 
 - `groupId` represents your own organization, and
@@ -52,10 +51,8 @@ The archetype generation process will then run; it only takes a few seconds.
 
 Switch into the root directory of your newly generated app, and build your app:
 
-<pre>
-cd myapp
-mvn clean install
-</pre>
+    cd myapp
+    mvn clean install
 
 where `myapp` is the `artifactId` entered above.
 
@@ -67,23 +64,24 @@ Once you've built the app, you can run the WAR in a variety of ways.
 
 The recommended approach when getting started is to run the self-hosting version of the WAR, allowing Isis to run as a standalone app; for example:
 
-<pre>
-java -jar viewer-webapp/target/myapp-viewer-webapp-1.0-SNAPSHOT-jetty-console.war
-</pre>
+    java -jar viewer-webapp/target/myapp-viewer-webapp-1.0-SNAPSHOT-jetty-console.war
 
 This can also be accomplished using an embedded Ant target provided in the build script:
 
-<pre>
-mvn antrun:run
-</pre>
+In 1.4.1 and previous:
+
+    mvn antrun:run
+
+In 1.4.2-snapshot and alter:
+
+    mvn -P self-host antrun:run
+
 The first is to simply deploying the generated WAR (`webapp/target/myapp-webapp-1.0-SNAPSHOT.war`) to a servlet container.
 
 Alternatively, you could run the WAR in a Maven-hosted Jetty instance, though you need to `cd` into the `webapp` module:
 
-<pre>
-cd webapp
-mvn jetty:run -D jetty.port=9090
-</pre>
+    cd webapp
+    mvn jetty:run -D jetty.port=9090
 
 In the above, we've passed in a property to indicate a different port from the default port (8080).
 

@@ -6,7 +6,6 @@ Title: Documentation
 </blockquote>
 
 
-
 {documentation
 
 {row
@@ -14,14 +13,19 @@ Title: Documentation
 {col-md-4
 #### <a name="elevator-pitch">Elevator pitch</a>
 
-- **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
-- [Common Use Cases](intro/elevator-pitch/common-use-cases.html)  <a href="intro/elevator-pitch/common-use-cases.html#screencast"><img src="./images/tv_show-25.png"></a>
-- [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
+* **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
+* [Common Use Cases](intro/elevator-pitch/common-use-cases.html)  <a href="intro/elevator-pitch/common-use-cases.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
 #### <a name="getting-started">Getting started</a>
 
-- **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.4.1](archetypes/release-notes/about.html))**
-- [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.4.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+Archetypes
+* **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.4.1](archetypes/release-notes/about.html))**
+* [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.4.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+
+Development Environment
+* [Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [IntelliJ](intro/getting-started/ide/intellij.html) <a href="./intro/getting-started/ide/intellij.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
 
 }
 
@@ -46,7 +50,7 @@ Title: Documentation
 <p class="display:none"/>
 
 - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
-- **[Editor templates](intro/resources/editor-templates.html)**
+- **[Eclipse templates](intro/resources/editor-templates.html)**
 - [Icons](intro/resources/icons.html)
 - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
@@ -521,11 +525,7 @@ Other
 <p class="display:none"/>
 
 * [About](components/objectstores/jdo/about.html)
-
-#### <a name="jdo-objectstore-jdo-enhancer">JDO Enhancer</a>
-
-* [DataNucleus and Eclipse](components/objectstores/jdo/datanucleus-and-eclipse.html) <a href="./components/objectstores/jdo/datanucleus-and-eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [DataNucleus and Maven](components/objectstores/jdo/datanucleus-and-maven.html)
+* [Using Maven with its DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html)
 
 #### <a name="jdo-objectstore-configuration">Configuration</a>
 
@@ -660,7 +660,7 @@ Other
 
 #### <a name="other-topics-third-party-plugins">Third-party Plugins</a>
 
-* [JRebel Plugin](other/jrebel.html)  <a href="./other/jrebel.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
+* [JRebel](other/jrebel.html)  <a href="./other/jrebel.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 
 

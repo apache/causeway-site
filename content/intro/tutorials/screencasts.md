@@ -12,6 +12,8 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     <td>How it works<br/><br/><i>How Apache Isis builds a webapp from the underlying domain object model</i>
     <br/><br/>
     See <a href="../elevator-pitch/common-use-cases.html#screencast">common use cases</a>
+    <br/><br/>
+    This screencast is for Isis v1.1.0 (ie somewhat out of date)
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/ludOLyi6VyY" frameborder="0" allowfullscreen></iframe>
@@ -39,16 +41,25 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   
   <tr>
       <td colspan="2">
-        <h2>JDO Objectstore</h2>
+        <h2>Development Environment</h2>
       </td>
   </tr>
   <tr>
-    <td>Importing into Eclipse<br/><br/><i>How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore</i><br/><br/>NB: when configuring DataNucleus for the *dom* project, make sure you are in the 'Java perspective', not the 'Java EE perspective').
+    <td>Setting up Eclipse<br/><br/><i>How to import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore</i><br/><br/>NB: when configuring DataNucleus for the *dom* project, make sure you are in the 'Java perspective', not the 'Java EE perspective').
     <br/><br/>
-    Learn more about <a href="../../components/objectstores/jdo/datanucleus-and-eclipse.html#screencast">datanucleus and eclipse</a>
+    Learn more <a href="../getting-started/ide/eclipse.html#screencast">here</a>
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
+    <td>Setting up IntelliJ<br/><br/><i>How to import an Apache Isis maven-based application into IntelliJ and run the app.
+    <br/><br/>
+    Learn more <a href="../getting-started/ide/intellij.html#screencast">here</a>
+    </td>
+    <td>
+      TODO
     </td>
   </tr>
 
@@ -122,16 +133,35 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   
   <tr>
       <td colspan="2">
-        <h2>Other Tools</h2>
+        <h2><a id="jrebel" name="jrebel">JRebel</a></h2>
+        <br/><br/><i>Develop your app without having to redeploy using <a href="http://zeroturnaround.com/software/jrebel/>JRebel</a> and an <a href="https://github.com/danhaywood/isis-jrebel-plugin">Isis plugin</a> for JRebel.</i>
       </td>
   </tr>
   <tr>
-    <td>Isis' integration with <a id="jrebel" name="jrebel">JRebel</a><br/><br/><i>Develop your app without having to redeploy using <a href="https://github.com/danhaywood/isis-jrebel-plugin">this plugin</a>.</i><br/><br/>(Apologies for the slightly flaky audio on this screencast)
+    <td>Maven and JRebel<br/><br/>
     <br/><br/>
-    See also the <a href="../../other/jrebel.html#screencast">JRebel plugin</a> page
+    See also <a href="../../other/jrebel.html#screencast">here</a>
     </td>
     <td>
-      <iframe width="420" height="236" src="//www.youtube.com/embed/PxVgbz3ae_g" frameborder="0" allowfullscreen></iframe>
+      <iframe width="420" height="236" src="//www.youtube.com/embed/jpYNZ343gi4" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
+    <td>Eclipse and JRebel<br/><br/>
+    <br/><br/>
+    See also <a href="../../other/jrebel.html#screencast">here</a>
+    </td>
+    <td>
+      <iframe width="420" height="236" src="//www.youtube.com/embed/uPfRXllQV1o" frameborder="0" allowfullscreen></iframe>
+    </td>
+  </tr>
+  <tr>
+    <td>IntelliJ and JRebel<br/><br/>
+    <br/><br/>
+    See also <a href="../../other/jrebel.html#screencast">here</a>
+    </td>
+    <td>
+      TODO
     </td>
   </tr>
 <table>
