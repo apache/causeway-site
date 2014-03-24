@@ -56,10 +56,6 @@ Title: Documentation
 - [Icons](intro/resources/icons.html)
 - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
-#### <a name="releases">Releases</a>
-
-- [Release Matrix](./release-matrix.html)
-
 }
 
 }
@@ -651,6 +647,10 @@ Other
 #### <a name="other-topics-pmc">PMC</a>
 
 * [Notes](contributors/pmc-notes.html)
+
+#### <a name="releases">Releases</a>
+
+- [Release Matrix](./release-matrix.html)
 
 
 }
