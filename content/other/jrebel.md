@@ -48,8 +48,8 @@ This screencast shows how to use Eclipse in conjunction with JRebel:
 
 The archetypes already include a `.launch` file for JRebel.  AS the screencast showed, you will need to adjust some settings:
 
-* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
 * `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
+* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
 
 
 ## <a name="intellij">Using IntelliJ with JRebel</a>
@@ -64,11 +64,11 @@ This screencast shows how to use IntelliJ in conjunction with JRebel:
 
 These screenshots show the VM arguments as configured in IntelliJ:
 
-<img src="images/intellij-040-run-config.png"  width="600px"/>
+<img src="images/intellij-040-run-config.png"  width="720px"/>
 
 and
 
-<img src="images/intellij-050-run-config-vm.png"  width="500px"/>
+<img src="images/intellij-050-run-config-vm.png"  width="640px"/>
 
 If you want to copy-n-paste those VM args, they are:
 
@@ -84,9 +84,7 @@ If you want to copy-n-paste those VM args, they are:
 
 You'll need to adjust the value of some of these:
 
-* `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
-* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
-* `project.root` for the root directory of the application
+* `rebel.plugins` is the location of the Isis plugin JAR (from the github repo)
+* `isis-jrebel-plugin.packagePrefix` is the prefix of the application (eg `com.mycompany.myapp.dom`)
+* `project.root` is the root directory of the application
     
-You can probably leave the other properties as is.
-
