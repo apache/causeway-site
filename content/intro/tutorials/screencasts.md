@@ -161,7 +161,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     See also <a href="../../other/jrebel.html#screencast">here</a>
     </td>
     <td>
-      <iframe width="420" height="236" src="//www.youtube.com/embed/XXX" frameborder="0" allowfullscreen></iframe>
+      <iframe width="420" height="236" src="//www.youtube.com/embed/fb5VbU-VY8I" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
 <table>

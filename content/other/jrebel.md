@@ -58,7 +58,7 @@ The archetypes already include a `.launch` file for JRebel.  AS the screencast s
 
 This screencast shows how to use IntelliJ in conjunction with JRebel:
 
-<iframe width="640" height="360" src="//www.youtube.com/embed/XXX" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="//www.youtube.com/embed/fb5VbU-VY8I" frameborder="0" allowfullscreen></iframe>
 
 > This screencast follows on from the one that explains [how to setup IntelliJ](../../intro/getting-started/ide/intellij.html#screencast) as your IDE.
 
