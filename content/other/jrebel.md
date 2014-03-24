@@ -62,15 +62,15 @@ This screencast shows how to use IntelliJ in conjunction with JRebel:
 
 > This screencast follows on from the one that explains [how to setup IntelliJ](../../intro/getting-started/ide/intellij.html#screencast) as your IDE.
 
-These screenshots show the VM arguments as configured in IntelliJ:
+The screenshot below show the Run/Debug configuration updated with appropriate VM options:
 
 <img src="images/intellij-040-run-config.png"  width="720px"/>
 
-and
+where the VM options, in full, are:
 
 <img src="images/intellij-050-run-config-vm.png"  width="720px"/>
 
-If you want to copy-n-paste those VM args, they are:
+If you want to copy-n-paste those VM options, they are:
 
     -Drebel.log=false \
     -Drebel.check_class_hash=true \
