@@ -6,7 +6,7 @@ Title: Setting up the IntelliJ IDE
 > * setting up [IntelliJ and JRebel](../../../other/jrebel.html).  
 > 
 
-We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  One of the most popular IDEs is [IntelliJ](http://jetbrains.com/intellij), offering either a paid-for "Ultimate" edition or a free-to-use Community edition.  Either will do for Isis development.
+We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  One of the most popular IDEs is [IntelliJ IDEA](http://www.jetbrains.com/idea/), offering either a paid-for "Ultimate" edition or a free-to-use Community edition.  Either will do for Isis development.
 
 If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) (the default if using the [simple](../simple-archetype.html) or [quickstart](../quickstart-archetype.html) archetypes), then the development environment must be configured such that the Java bytecode can be enhanced by a [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  When working in IntelliJ, then JDO enhancement is most easily done by leveraging the Maven configuration.  We do this by executing the `mvn compile` goal in the dom project, prior to running the application.
 
