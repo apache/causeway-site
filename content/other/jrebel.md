@@ -1,9 +1,5 @@
 Title: Eclipse and JRebel plugin
 
-> See also:
-> * [IntelliJ and JRebel](./intellij-and-jrebel.html)
-> * [Maven and JRebel](./maven-and-jrebel.html)
-
 The Apache Isis JRebel plugin for [JRebel](http://zeroturnaround.com/software/jrebel/) allows you to alter the domain classes in your development environment and have the running app pick up those changes (avoiding a restart).
 
 JRebel monitors the compiled bytecode of the domain object classes, and reloads whenever these are changed.  The Isis plugin then recreates the Isis and JDO metamodels automatically.
