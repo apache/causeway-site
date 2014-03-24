@@ -17,6 +17,7 @@ The Isis JRebel plugin itself is free for use, and is hosted on [github](https:/
 ## Prerequisites
 
 There are two prerequisites:
+
 * first, you'll need to download the JRebel JAR (or install the plugins into the IDE) and set up a license
 * second, you'll need to build/download the Isis JRebel plugin.  Do this by cloning the [github repo](https://github.com/danhaywood/isis-jrebel-plugin), and building using maven.
 
