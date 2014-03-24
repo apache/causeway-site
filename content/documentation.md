@@ -22,20 +22,24 @@ Title: Documentation
 * **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.4.1](archetypes/release-notes/about.html))**
 * [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.4.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
+}
+
+{col-md-4
 
 #### <a name="getting-started">Development Environment</a>
 
 * [Setting up Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Setting up IntelliJ](intro/getting-started/ide/intellij.html) <a href="./intro/getting-started/ide/intellij.html#screencast"><img src="./images/tv_show-25.png"></a>
 
-}
-
-{col-md-4
 #### <a name="tutorials">Tutorials, screencasts</a>
 <p class="display:none"/>
 
 - [Tutorials](intro/tutorials/tutorials.html)
 - **[Screencasts](intro/tutorials/screencasts.html)** <a href="intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+
+}
+
+{col-md-4
 
 #### <a name="learning-more">Learning more</a>
 
@@ -44,9 +48,6 @@ Title: Documentation
 - [Books](intro/learning-more/books.html)
 - [Naked Objects PhD thesis](intro/learning-more/Pawson-Naked-Objects-thesis.pdf) (Pawson)
 
-}
-
-{col-md-4
 #### <a name="resources">Resources</a>
 <p class="display:none"/>
 
