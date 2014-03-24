@@ -31,14 +31,14 @@ Importing the Isis as a Maven app is straightforward:
 
 and then:
 
-<img src="images/intellij-020-maven.png"  width="720px"/>
+<img src="images/intellij-020-maven.png"  width="500px"/>
 
 
 ## Setting up a Run/Debug Configuration
 
 The screenshot below shows how to setup the run/debug configuration:
 
-<img src="images/intellij-030-run-configuration.png"  width="600px"/>
+<img src="images/intellij-030-run-configuration.png"  width="720px"/>
 
 That is:
 
