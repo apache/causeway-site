@@ -20,6 +20,22 @@ There are two prerequisites:
 * first, you'll need to download the JRebel JAR (or install the plugins into the IDE) and set up a license
 * second, you'll need to build/download the Isis JRebel plugin.  Do this by cloning the [github repo](https://github.com/danhaywood/isis-jrebel-plugin), and building using maven.
 
+## DOM project configuration
+
+The `dom` module requires a `rebel.xml` file in order to tell JRebel which classes to monitor.  This file resides in `src/main/resources`, and is as follows:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+        <classpath>
+            <dir name="${project.root}/dom/${target.dir}/classes">
+            </dir>
+        </classpath>
+    </application>
+
+Note the use of the `${project.root}` and `${target.dir}` properties; values are supplied when the application is launched (as explained below).
+
+> Prior to 1.4.2-snapshot, the `rebel.xml` file simply had hard-coded values within it.
+
 ## <a name="maven"><a name="screencast">Using Maven with JRebel (1.4.2-snapshot)</a></a>
 
 This screencast shows how to use Maven in conjunction with JRebel:
