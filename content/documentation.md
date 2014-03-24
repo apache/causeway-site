@@ -20,10 +20,12 @@ Title: Documentation
 #### <a name="getting-started">Getting started</a>
 
 Archetypes
+
 * **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.4.1](archetypes/release-notes/about.html))**
 * [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.4.1](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 Development Environment
+
 * [Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [IntelliJ](intro/getting-started/ide/intellij.html) <a href="./intro/getting-started/ide/intellij.html#screencast"><img src="./images/tv_show-25.png"></a> [stub]
 
