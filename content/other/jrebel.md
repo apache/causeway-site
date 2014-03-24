@@ -52,7 +52,7 @@ The archetypes already include a `.launch` file for JRebel.  AS the screencast s
 * `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
 
 
-## <a name="intellij>Using IntelliJ with JRebel</a>
+## <a name="intellij">Using IntelliJ with JRebel</a>
 
 >  Remember to installed the JRebel plugin for IntelliJ (File > Settings > Plugins), and set up a license.
 
