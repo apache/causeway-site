@@ -659,6 +659,8 @@ Other
 #### <a name="other-topics-third-party-viewers">Third Party Viewers</a>
 
 * [DHTMLX](third-party/viewers/dhtmlx/about.html)
+* [Android Viewer (GSOC2013)](https://github.com/DImuthuUpe/ISIS_Android_Viewer)
+* [JQueryMobile Viewer (GSOC2013)](https://github.com/bhargavgolla/isisJavaScript/)
 
 #### <a name="other-topics-third-party-plugins">Third-party Plugins</a>
 
