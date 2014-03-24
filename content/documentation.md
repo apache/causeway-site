@@ -628,6 +628,11 @@ Other
 * [Git Cookbook](contributors/git-cookbook.html)
 * [Versioning Policy](contributors/versioning-policy.html)
 
+#### <a name="releases">Releases</a>
+
+- [Release Matrix](./release-matrix.html)
+
+
 }
 
 {col-md-4
@@ -647,10 +652,6 @@ Other
 #### <a name="other-topics-pmc">PMC</a>
 
 * [Notes](contributors/pmc-notes.html)
-
-#### <a name="releases">Releases</a>
-
-- [Release Matrix](./release-matrix.html)
 
 
 }
