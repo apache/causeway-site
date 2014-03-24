@@ -59,7 +59,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     Learn more <a href="../getting-started/ide/intellij.html#screencast">here</a>
     </td>
     <td>
-      TODO
+      <iframe width="420" height="315" src="http://www.youtube.com/embed/lwKsyTbTSnA" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
 
@@ -161,7 +161,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     See also <a href="../../other/jrebel.html#screencast">here</a>
     </td>
     <td>
-      TODO
+      <iframe width="420" height="236" src="//www.youtube.com/embed/XXX" frameborder="0" allowfullscreen></iframe>
     </td>
   </tr>
 <table>

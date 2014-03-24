@@ -6,23 +6,21 @@ Title: Setting up Eclipse (with JDO/DataNucleus)
 > * setting up [Eclipse and JRebel](../../../other/jrebel.html).  
 > 
 
-We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.
+We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  The most commonly used IDE is [Eclipse](http://www.eclipse.org), which can be downloaded in various configurations, all of which are free for use.  We recommend you download the "Eclipse JEE package".
 
-If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) (the default if using the [simple](../simple-archetype.html) or [quickstart](../quickstart-archetype.html) archetypes), then the development environment must be configured such that the Java bytecode can be enhanced by a [JDO enhancer](http://db.apache.org/jdo/enhancement.html).
-
-If working in Eclipse, then JDO enhancement is most easily done by installing [DataNucleus' plugin](http://www.datanucleus.org/plugins/ide.eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.  This plugin needs to be configured for each of your domain modules (usually just one in any given app).
+If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) (the default if using the [simple](../simple-archetype.html) or [quickstart](../quickstart-archetype.html) archetypes), then the development environment must be configured such that the Java bytecode can be enhanced by a [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  If working in Eclipse, then JDO enhancement is most easily done by installing [DataNucleus' plugin](http://www.datanucleus.org/plugins/ide.eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.  This plugin needs to be configured for each of your domain modules (usually just one in any given app).
 
 The steps are therefore:
 
 * import the project into Eclipse
 * configure the DataNucleus enhancer
-* running the app from the `.launch` file
+* run the app from the `.launch` file
 
 ## <a name="screencast"></a>Screencast
 
 The following screencast shows how import an Apache Isis maven-based application into Eclipse and configure to use with the JDO Objectstore
 
-<iframe width="420" height="315" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="480" src="http://www.youtube.com/embed/RgcYfjQ8yJA" frameborder="0" allowfullscreen></iframe>
 
 
 ## Importing the Project

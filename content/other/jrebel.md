@@ -16,16 +16,19 @@ This page describes how to use the JRebel with:
 
 The Isis JRebel plugin itself is free for use, and is hosted on [github](https://github.com/danhaywood/isis-jrebel-plugin).  However, JRebel itself is commercial software.  There is though  a community version that is [free for open source use](https://my.jrebel.com/).   Please check terms and conditions before using.
 
+> Note that Isis must be run in prototype mode to automatically pick up changes.
 
-## <a name="screencast"></a>Screencasts
+## Prerequisites
 
-The following screencasts show how to develop your app without having to redeploy using a JRebel plugin.
+There are two prerequisites:
+* first, you'll need to download the JRebel JAR (or install the plugins into the IDE) and set up a license
+* second, you'll need to build/download the Isis JRebel plugin.  Do this by cloning the [github repo]((https://github.com/danhaywood/isis-jrebel-plugin)), and building using maven.
 
-#### Using Maven with JRebel (1.4.2-snapshot)
+## <a name="maven"><a name="screencast">Using Maven with JRebel (1.4.2-snapshot)</a></a>
 
 This screencast shows how to use Maven in conjunction with JRebel:
 
-<iframe width="640" height="354" src="//www.youtube.com/embed/jpYNZ343gi4" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="//www.youtube.com/embed/jpYNZ343gi4" frameborder="0" allowfullscreen></iframe>
 
 The command used to run the webapp is:
 
@@ -33,20 +36,33 @@ The command used to run the webapp is:
         -Djrebel.jar="C:/Users/Dan/.IdeaIC13/config/plugins/jr-ide-idea/lib/jrebel/jrebel.jar" \
         -Disis_jrebel_plugin.jar="C:/github/danhaywood/isis-jrebel-plugin/target/danhaywood-isis-jrebel-plugin-1.0.0-SNAPSHOT.jar"
 
-Change the values of `rebel.jar` and `isis_jrebel_plugin.jar` as necessary.
+Change the values of `rebel.jar` and `isis_jrebel_plugin.jar` as necessary:
+* the `rebel.jar` property is the location of the JRebel jar file.  You can either download this or (as the above example shows) simply use the embedded JRebel from an IDE
+* the `isis_jrebel_plugin.jar` property points to the Isis plugin JAR that you built previously
+* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
 
-#### Using Eclipse with JRebel
+## <a name="eclipse">Using Eclipse with JRebel</a>
+
+> Remember to install the JRebel plugin for Eclipse from the Eclipse Marketplace (Help > Eclipse Marketplace), and set up a license.
 
 This screencast shows how to use Maven in conjunction with Eclipse:
 
-<iframe width="640" height="354" src="//www.youtube.com/embed/uPfRXllQV1o" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="//www.youtube.com/embed/uPfRXllQV1o" frameborder="0" allowfullscreen></iframe>
 
-#### Using IntelliJ with JRebel
+The archetypes already include a `.launch` file for JRebel.  AS the screencast showed, you will need to adjust some settings:
+* `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
+* `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
+
+
+## <a name="intellij>Using IntelliJ with JRebel</a>
+
+>  Remember to installed the JRebel plugin for IntelliJ (File > Settings > Plugins), and set up a license.
 
 This screencast shows how to use Maven in conjunction with IntelliJ:
 
-> TODO
+<iframe width="640" height="360" src="//www.youtube.com/embed/XXX" frameborder="0" allowfullscreen></iframe>
 
+> This screencast follows on from the one that explains [how to setup IntelliJ](../../intro/getting-started/ide/intellij.html#screencast) as your IDE.
 
 These screenshots show the VM arguments as configured in IntelliJ:
 
@@ -69,20 +85,9 @@ If you want to copy-n-paste those VM args, they are:
     -XX:MaxPermSize=128m
 
 You'll need to adjust the value of some of these:
-* `rebel.plugins` for the location of the plugin JAR
-* `project.root` for the root directory of the application
+* `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
 * `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
+* `project.root` for the root directory of the application
     
 You can probably leave the other properties as is.
 
-
-## Download
-
-The plugin can be downloaded from [github](https://github.com/danhaywood/isis-jrebel-plugin).
-
-
-## Usage
-
-The README on the github page how to set up the plugin.
-
-One final note: you do need to run Isis in prototype mode to automatically pick up changes.
