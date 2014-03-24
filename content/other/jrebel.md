@@ -68,7 +68,7 @@ These screenshots show the VM arguments as configured in IntelliJ:
 
 and
 
-<img src="images/intellij-050-run-config-vm.png"  width="640px"/>
+<img src="images/intellij-050-run-config-vm.png"  width="720px"/>
 
 If you want to copy-n-paste those VM args, they are:
 
