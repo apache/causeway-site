@@ -52,10 +52,10 @@ See [here](../../../reference/deployment-type.html) for other deployment types (
 
 Then - importantly - for the `Before launch` setting, first remove the default "Make" entry, and then add a new Maven goal:
 
-<img src="images/intellij-040-run-configuration.png"  width="350px"/>
+<img src="images/intellij-035-run-configuration.png"  width="500px"/>
 
 to execute `mvn compile` for the `dom` modue:
 
-<img src="images/intellij-040-run-configuration.png"  width="400px"/>
+<img src="images/intellij-040-run-configuration.png"  width="450px"/>
   
 Running `mvn compile` (rather than IntellJ's regular make) will ensure that the domain object classes are enhanced by the DataNucleus enhancer.
