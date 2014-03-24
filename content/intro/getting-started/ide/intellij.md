@@ -31,7 +31,7 @@ Importing the Isis as a Maven app is straightforward:
 
 and then:
 
-<img src="images/intellij-020-maven.png"  width="600px"/>
+<img src="images/intellij-020-maven.png"  width="720px"/>
 
 
 ## Setting up a Run/Debug Configuration
@@ -52,10 +52,10 @@ See [here](../../../reference/deployment-type.html) for other deployment types (
 
 Then - importantly - for the `Before launch` setting, first remove the default "Make" entry, and then add a new Maven goal:
 
-<img src="images/intellij-035-run-configuration.png"  width="600px"/>
+<img src="images/intellij-035-run-configuration.png"  width="720px"/>
 
-to execute `mvn compile` for the `dom` modue:
+to execute `mvn compile` for the `dom` module:
 
-<img src="images/intellij-040-run-configuration.png"  width="500px"/>
+<img src="images/intellij-040-run-configuration.png"  width="600px"/>
   
 Running `mvn compile` (rather than IntellJ's regular make) will ensure that the domain object classes are enhanced by the DataNucleus enhancer.
