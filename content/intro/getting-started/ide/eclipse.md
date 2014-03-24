@@ -27,8 +27,6 @@ The following screencast shows how import an Apache Isis maven-based application
 
 Use File > Import, then Maven > Existing Maven Projects.
 
-> see the screencast for further details.
-
 ## Add DataNucleus support
 
 > note:
@@ -99,9 +97,9 @@ When the enhancer runs, it will print out to the console:
 
 If running on Windows then the DataNucleus plugin is very likely to hit the Windows path limit.
 
-To fix this, we configure the enhancer to read from the `persistence.xml` file.  (This fix is also required if [working with Maven](./datanucleus-and-maven.html)).
+To fix this, we configure the enhancer to read from the `persistence.xml` file.  (This fix is also required if [working with Maven](../../../components/objectstores/jdo/datanucleus-and-maven.html)).
 
-As a prerequisite, first make sure that your domain object has a `persistence.xml` file.  The details of how to do this can be found [here](./persistence_xml.html).
+As a prerequisite, first make sure that your domain object has a `persistence.xml` file.  The details of how to do this can be found [here](../../../components/objectstores/jdo/persistence_xml.html).
 
 
 Then specify the `persistence-unit` in the project properties:
@@ -129,7 +127,7 @@ Not ideal, we know.  Please feel free to contribute a better solution :-)
 
 The simple and quickstart archetypes automatically generate `.launch` configurations in the `webapp` module.  You can therefore very simply run the application by right-clicking on one of these files, and choosing "Run As..." or "Debug As...".
 
-> please see the screencast to see this in action.
+> the screencast shows this in action.
 
 <hr/>
 ## Other domain projects.
@@ -142,13 +140,13 @@ And, remember also to configure Eclipse's DataNucleus plugin for these other dom
 
 #### JDO Applib domain projects.
 
-The JDO objectstore also defines some of its own persistable domain entities, these being used in its implementation of the [Publishing Service](./publishing-service-jdo.html) and the [Settings Services](./settings-services-jdo.html).   These persistable domain entities are defined in the JDO applib, and must be enhanced.
+The JDO objectstore also defines some of its own persistable domain entities, these being used in its implementation of the [Publishing Service](../../../components/objectstores/jdo/publishing-service-jdo.html) and the [Settings Services](../../../components/objectstores/jdo/settings-services-jdo.html).   These persistable domain entities are defined in the JDO applib, and must be enhanced.
 
 If just using released versions of Isis, then there is nothing to be done.
 
 However, if building Isis from source code and in Eclipse, and if you plan to use either of these services, then you must also configure Eclipse's DataNucleus plugin.
 
-As noted in the [page describing persistence.xml](./persistence_xml.html), the `persistence-unit` name is: `jdo-applib`.  You should therefore configure the enhance the DataNucleus enhancer for the `isis-objectstore-jdo-applib` project, and configure the plugin as shown below:
+As noted in the [page describing persistence.xml](../../../components/objectstores/jdo/persistence_xml.html), the `persistence-unit` name is: `jdo-applib`.  You should therefore configure the enhance the DataNucleus enhancer for the `isis-objectstore-jdo-applib` project, and configure the plugin as shown below:
 
 <img src="images/jdo-applib-dn-project-configuration.png"  width="600px"/>
 
