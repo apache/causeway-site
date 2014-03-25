@@ -72,7 +72,7 @@ In 1.4.1 and previous:
 
     mvn antrun:run
 
-In 1.4.2-snapshot and alter:
+In 1.4.2-snapshot and after:
 
     mvn -P self-host antrun:run
 
