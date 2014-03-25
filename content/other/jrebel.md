@@ -63,7 +63,7 @@ This screencast shows how to use Eclipse in conjunction with JRebel:
 
 <iframe width="640" height="360" src="//www.youtube.com/embed/uPfRXllQV1o" frameborder="0" allowfullscreen></iframe>
 
-The archetypes already include a `.launch` file for JRebel.  AS the screencast showed, you will need to adjust some settings:
+The archetypes already include a `.launch` file for JRebel.  You will have to adjust some of the property values:
 
 * `rebel.plugins` for the location of the Isis plugin JAR (from the github repo)
 * `isis-jrebel-plugin.packagePrefix` for the prefix of the application (eg `com.mycompany.myapp.dom`)
