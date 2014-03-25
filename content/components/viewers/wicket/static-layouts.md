@@ -119,15 +119,15 @@ Below are sketches for the layout of the [ToDoItem](https://github.com/apache/is
 
 #### &nbsp;
     
-<img src="images/layouts/6-6-0-12.png"  width="600px"/>
+<img src="images/layouts/6-6-0-12.png"  width="720px"/>
 
 #### &nbsp;
     
-<img src="images/layouts/4-4-4-12.png"  width="600px"/>
+<img src="images/layouts/4-4-4-12.png"  width="720px"/>
 
 #### &nbsp;
     
-<img src="images/layouts/4-0-8-0.png"  width="600px"/>
+<img src="images/layouts/4-0-8-0.png"  width="720px"/>
 
 ## Other Annotations
 

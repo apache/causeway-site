@@ -138,7 +138,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   </tr>
   <tr>
     <td>Maven and JRebel<br/><br/>
-        <br/><br/><i>Develop your app without having to redeploy using <a href="http://zeroturnaround.com/software/jrebel/>JRebel</a> and an <a href="https://github.com/danhaywood/isis-jrebel-plugin">Isis plugin</a> for JRebel.</i>
+        <br/><br/><i>Develop your app without having to redeploy using <a href="http://zeroturnaround.com/software/jrebel/">JRebel</a> and an <a href="https://github.com/danhaywood/isis-jrebel-plugin">Isis plugin</a> for JRebel.</i>
     <br/><br/>
     See also <a href="../../other/jrebel.html#screencast">here</a>
     </td>
