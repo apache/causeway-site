@@ -72,7 +72,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
     <td>Dynamic layouts in the Wicket viewer<br/><br/><i>How to layout properties and collections dynamically</i>
     <br/><br/>
-    Learn more <a href="../../more-advanced-topics/dynamic-layouts.html#screencast">here</a>
+    Learn more <a href="../../components/viewers/wicket/dynamic-layouts.html#screencast">here</a>
     </td>
     <td>
       <iframe width="420" height="236" src="http://www.youtube.com/embed/zmrg49WeEPc" frameborder="0" allowfullscreen></iframe>
@@ -134,11 +134,11 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
       <td colspan="2">
         <h2><a id="jrebel" name="jrebel">JRebel</a></h2>
-        <br/><br/><i>Develop your app without having to redeploy using <a href="http://zeroturnaround.com/software/jrebel/>JRebel</a> and an <a href="https://github.com/danhaywood/isis-jrebel-plugin">Isis plugin</a> for JRebel.</i>
       </td>
   </tr>
   <tr>
     <td>Maven and JRebel<br/><br/>
+        <br/><br/><i>Develop your app without having to redeploy using <a href="http://zeroturnaround.com/software/jrebel/>JRebel</a> and an <a href="https://github.com/danhaywood/isis-jrebel-plugin">Isis plugin</a> for JRebel.</i>
     <br/><br/>
     See also <a href="../../other/jrebel.html#screencast">here</a>
     </td>
