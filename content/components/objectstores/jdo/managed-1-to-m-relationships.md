@@ -28,8 +28,10 @@ and
         public void setDepartment(Department department) { ... }
         ...
     }
-
+    
 Contrast the above with the programmatic maintenance described in the [how-to](../../../more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html).
+
+If you use Eclipse as your IDE, then these [editor templates](../../../intro/resources/editor-templates.html) include a set (prefixed `isjd`) to help write such code.
 
 > **Note**
 > 
@@ -38,4 +40,3 @@ In fact, not only do you not need to manually maintain the relationship, we have
 The error in that case was that the same object was contained in the parents collection.  This of course should not happen for a `TreeSet`.  However, JDO/DataNucleus replaces the `TreeSet` with its own implementation, and (either by design or otherwise) this does not enforce `Set` semantics.
 >
 The upshot is that you should NEVER programmatically add the child object to the parent's collection if using JDO Objectstore.
-
