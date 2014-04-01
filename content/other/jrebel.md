@@ -1,4 +1,4 @@
-Title: Eclipse and JRebel plugin
+Title: JRebel plugin (hot redeploys)
 
 The Apache Isis JRebel plugin for [JRebel](http://zeroturnaround.com/software/jrebel/) allows you to alter the domain classes in your development environment and have the running app pick up those changes (avoiding a restart).
 
