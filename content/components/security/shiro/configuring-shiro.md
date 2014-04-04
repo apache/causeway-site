@@ -117,3 +117,27 @@ For example, in the quickstart/todo app, if logging in as `dick` with the follow
     dick = pass, user_role, analysis_role, self-install_role
 
 then this corresponds to the roles *realm1:user_role*, *realm1:self-install_role* and *realm1:analysis_role*.  If using the Wicket viewer, then there will also be another role which is used internally (namely *org.apache.isis.viewer.wicket.roles.USER*).
+
+## Configuring Shiro for JDBC
+
+Something like the following should do:
+
+    builtInCacheManager = org.apache.shiro.cache.MemoryConstrainedCacheManager
+    securityManager.cacheManager = $builtInCacheManager
+
+    ps = org.apache.shiro.authc.credential.DefaultPasswordService
+    pm = org.apache.shiro.authc.credential.PasswordMatcher
+    pm.passwordService = $ps
+
+    aa = org.apache.shiro.authc.credential.AllowAllCredentialsMatcher
+    sm = org.apache.shiro.authc.credential.SimpleCredentialsMatcher
+
+    jdbcRealm=org.apache.shiro.realm.jdbc.JdbcRealm
+    jdbcRealm.authenticationQuery = SELECT password from users where username = ?
+    jdbcRealm.userRolesQuery = select r.label from users_roles ur inner join roles r on ur.role_id = r.id where user_id = (select id from users where username = ?);
+    jdbcRealm.permissionsQuery=select p.permission from roles_permissions rp inner join permissions p on rp.permission_id = p.id where rp.role_id = (select id from roles where label = ?);
+    jdbcRealm.permissionsLookupEnabled=true
+
+    ds = com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+    ds ...etc
+    securityManager.realms = $jdbcRealm
