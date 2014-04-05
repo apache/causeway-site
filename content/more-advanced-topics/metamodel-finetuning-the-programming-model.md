@@ -48,6 +48,8 @@ isis.reflector.facets.include=org.apache.isis.example.metamodel.namefile.facets.
 
 To include/exclude more than one `FacetFactory`, specify as a comma-separated list.  And if you want to dig into this in more detail, the code that implements this logic is [JavaReflectorInstallerNoDecorators](https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/progmodels/dflt/JavaReflectorInstallerNoDecorators.java).
 
+> This [thread](http://isis.markmail.org/thread/472c3mrvcgnripst) from the users mailing list (in Apr 2014) shows a typical customization.
+
 ### Specifying a new programming model
 
 To specify a completely new programming model, you'll first need an  implementation of `ProgrammingModel`.  One option is to subclass from `ProgammingModelFacetsJava5`; in your subclass you could remove any `FacetFactory`s that you wanted to exclude, as well as registering your own implementations.
