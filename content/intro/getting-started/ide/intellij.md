@@ -55,8 +55,10 @@ Then - importantly - for the `Before launch` setting, first remove the default "
 
 <img src="images/intellij-035-run-configuration.png"  width="720px"/>
 
-to execute `mvn compile` for the `dom` module:
+to execute `mvn datanucleus:enhance` for the `dom` module:
 
 <img src="images/intellij-040-run-configuration.png"  width="600px"/>
   
-Running `mvn compile` (rather than IntellJ's regular make) will ensure that the domain object classes are enhanced by the DataNucleus enhancer.
+Running `mvn datanucleus:enhance` will ensure that the domain object classes are enhanced by the DataNucleus enhancer.
+
+> *Note*: The above assumes you are using IntelliJ's background automatic builds (File > Settings > Compiler > Make project automatically).  If you have this switched off, then you probably should also run IntelliJ's regular make here.
