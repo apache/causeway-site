@@ -1,31 +1,31 @@
 Title: Editor Templates
 
-The following table lists various IDE templates (for Eclipse and IntelliJ) when writing Isis domain objects and unit tests:
+The following table lists various IDE templates (for IntelliJ and Eclipse) when writing Isis domain objects and unit tests:
 
 <table  class="table table-striped table-bordered table-condensed">
     <tr class="heading">
         <th>Template</th>
         <th>Prefix</th>
-        <th>Eclipse</th>
         <th>IntelliJ</th>
+        <th>Eclipse</th>
     </tr>
     <tr>
         <th class="heading">Isis Domain Objects</th>
         <td><tt>is</tt></td>
-        <td><a href="resources/isis-templates.xml">Download</a></td>
         <td><a href="resources/isis-templates-idea.xml">Download</a></td>
+        <td><a href="resources/isis-templates.xml">Download</a></td>
     </tr>
     <tr>
         <th class="heading">JUnit tests</th>
         <td><tt>ju</tt></td>
-        <td><a href="resources/junit4-templates.xml">Download</a></td>
         <td><a href="resources/junit4-templates-idea.xml">Download</a></td>
+        <td><a href="resources/junit4-templates.xml">Download</a></td>
     </tr>
     <tr>
         <th class="heading">JMock tests</th>
         <td><tt>jm</tt></td>
-        <td><a href="resources/jmock-templates.xml">Download</a></td>
         <td><a href="resources/jmock-templates-idea.xml">Download</a></td>
+        <td><a href="resources/jmock-templates.xml">Download</a></td>
     </tr>
 </table>
 
@@ -35,11 +35,11 @@ The most commonly used Isis domain objects templates are also listed on the [Isi
 
 ### Installation
 
-To install in Eclipse, go to `Windows > Preferences > Java > Editor > Templates` and choose `Import`.
-
 To install in IntelliJ, copy to the relevant `config/templates` directory, eg:
 
 * Windows `<User home>\.IntelliJIdea13\config\templates`
 * Linux `~/.IntelliJIdea13/config/templates`
 * Mac OS `~/Library/Preferences/IntelliJIdea13/templates`
+
+To install in Eclipse, go to `Windows > Preferences > Java > Editor > Templates` and choose `Import`.
 
