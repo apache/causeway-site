@@ -31,7 +31,7 @@ The following table lists various IDE templates (for IntelliJ and Eclipse) when 
 
 Enter the prefix (`is`, `ju`, `jm`) and the IDE will list all available templates in that category.  
 
-The most commonly used Isis domain objects templates are also listed on the [Isis cheat sheet](resources/IsisCheatSheet.pdf).
+The most commonly used Isis domain objects templates are also listed on the [Isis cheat sheet](cheat-sheet.html).
 
 ### Installation
 
