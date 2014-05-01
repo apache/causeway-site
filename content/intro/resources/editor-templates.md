@@ -1,12 +1,35 @@
 Title: Editor Templates
 
-The following Java editor templates (for Eclipse and IntelliJ) provide snippets to speed up writing domain objects and unit testing
+The following table lists various IDE templates (for Eclipse and IntelliJ) when writing Isis domain objects and unit tests:
 
-- Isis domain objects (prefix `is`): [Eclipse](resources/isis-templates.xml) [IntelliJ](resources/isis-templates-idea.xml)
-- JUnit (prefix `ju`): [Eclipse](resources/junit4-templates.xml) [IntelliJ](resources/junit4-templates-idea.xml)
-- JMock (prefix `jm`): [Eclipse](resources/jmock2-templates.xml) [IntelliJ](resources/jmock2-templates-idea.xml)
+<table  class="table table-striped table-bordered table-condensed">
+    <tr class="heading">
+        <th>Template</th>
+        <th>Prefix</th>
+        <th>Eclipse</th>
+        <th>IntelliJ</th>
+    </tr>
+    <tr>
+        <th class="heading">Isis Domain Objects</th>
+        <td><tt>is</tt></td>
+        <td><a href="resources/isis-templates.xml">Download</a></td>
+        <td><a href="resources/isis-templates-idea.xml">Download</a></td>
+    </tr>
+    <tr>
+        <th class="heading">JUnit tests</th>
+        <td><tt>ju</tt></td>
+        <td><a href="resources/junit4-templates.xml">Download</a></td>
+        <td><a href="resources/junit4-templates-idea.xml">Download</a></td>
+    </tr>
+    <tr>
+        <th class="heading">JMock tests</th>
+        <td><tt>jm</tt></td>
+        <td><a href="resources/jmock-templates.xml">Download</a></td>
+        <td><a href="resources/jmock-templates-idea.xml">Download</a></td>
+    </tr>
+</table>
 
-Enter the prefix (`is`, `ju`, `jm`) for a drop-down list of all available templates in that category.
+Enter the prefix (`is`, `ju`, `jm`) and the IDE will list all available templates in that category.  
 
 The most commonly used Isis domain objects templates are also listed on the [Isis cheat sheet](resources/IsisCheatSheet.pdf).
 
