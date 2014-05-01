@@ -10,19 +10,19 @@ The following table lists various IDE templates (for IntelliJ and Eclipse) when 
         <th>Eclipse</th>
     </tr>
     <tr>
-        <th class="heading">Isis Domain Objects</th>
+        <td>Isis Domain Objects</td>
         <td><tt>is</tt></td>
         <td><a href="resources/isis-templates-idea.xml">Download</a></td>
         <td><a href="resources/isis-templates.xml">Download</a></td>
     </tr>
     <tr>
-        <th class="heading">JUnit tests</th>
+        <td>JUnit tests</td>
         <td><tt>ju</tt></td>
         <td><a href="resources/junit4-templates-idea.xml">Download</a></td>
         <td><a href="resources/junit4-templates.xml">Download</a></td>
     </tr>
     <tr>
-        <th class="heading">JMock tests</th>
+        <td>JMock tests</td>
         <td><tt>jm</tt></td>
         <td><a href="resources/jmock-templates-idea.xml">Download</a></td>
         <td><a href="resources/jmock-templates.xml">Download</a></td>
