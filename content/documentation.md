@@ -28,8 +28,8 @@ Title: Documentation
 
 #### <a name="getting-started">Development Environment</a>
 
-* [Setting up Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Setting up IntelliJ](intro/getting-started/ide/intellij.html) <a href="./intro/getting-started/ide/intellij.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Setting up Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 #### <a name="tutorials">Tutorials, screencasts</a>
 <p class="display:none"/>
@@ -52,7 +52,7 @@ Title: Documentation
 <p class="display:none"/>
 
 - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
-- **[Eclipse templates](intro/resources/editor-templates.html)**
+- **[IDE templates (IntelliJ and Eclipse)](intro/resources/editor-templates.html)**
 - [Icons](intro/resources/icons.html)
 - **[Programming Model Cheat Sheet](intro/resources/cheat-sheet.html)**
 
