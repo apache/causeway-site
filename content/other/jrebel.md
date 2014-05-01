@@ -89,14 +89,14 @@ where the VM options, in full, are:
 
 If you want to copy-n-paste those VM options, they are:
 
-    -Drebel.log=false \
-    -Drebel.check_class_hash=true \
-    -Drebel.packages_exclude=org.apache.isis \
-    -Dproject.root=C:\APACHE\isis-git-rw\example\application\simple_wicket_restful_jdo \
-    -Dtarget.dir=target \
-    -Drebel.plugins=C:/github/danhaywood/isis-jrebel-plugin/target/danhaywood-isis-jrebel-plugin-1.0.0-SNAPSHOT.jar \
-    -Disis-jrebel-plugin.packagePrefix=dom.simple,org.apache.isis.objectstore.jdo.applib \
-    -Disis-jrebel-plugin.loggingLevel=warn \
+    -Drebel.log=false
+    -Drebel.check_class_hash=true
+    -Drebel.packages_exclude=org.apache.isis
+    -Dproject.root=C:\APACHE\isis-git-rw\example\application\simple_wicket_restful_jdo
+    -Dtarget.dir=target
+    -Drebel.plugins=C:/github/danhaywood/isis-jrebel-plugin/target/danhaywood-isis-jrebel-plugin-1.0.0-SNAPSHOT.jar
+    -Disis-jrebel-plugin.packagePrefix=dom.simple,org.apache.isis.objectstore.jdo.applib
+    -Disis-jrebel-plugin.loggingLevel=warn
     -XX:MaxPermSize=128m
 
 You'll need to adjust the value of some of these:
