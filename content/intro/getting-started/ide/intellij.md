@@ -4,6 +4,7 @@ Title: Setting up the IntelliJ IDE
 > 
 > * setting up [Eclipse IDE](./eclipse.html).  
 > * setting up [IntelliJ and JRebel](../../../other/jrebel.html).  
+> * IDE templates for IntelliJ(../../resources/editor-templates.html).  
 > 
 
 We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  One of the most popular IDEs is [IntelliJ IDEA](http://www.jetbrains.com/idea/), offering either a paid-for "Ultimate" edition or a free-to-use Community edition.  Either will do for Isis development.
@@ -19,7 +20,7 @@ The steps are therefore:
 
 This screencast shows how to import an Isis app into IntelliJ, and then how to setup the run/debug configuration to run the app:
 
-<iframe width="640" height="360" src="//www.youtube.com/embed/lwKsyTbTSnA" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="//www.youtube.com/embed/gF2FRadglpk" frameborder="0" allowfullscreen></iframe>
 
 If you are a [JRebel](http://zeroturnaround.com/software/jrebel/) user, then do also look at [how to configure IntelliJ with JRebel](../../../other/jrebel.html#intellij).
 
