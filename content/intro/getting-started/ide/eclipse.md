@@ -4,7 +4,7 @@ Title: Setting up Eclipse (with JDO/DataNucleus)
 > 
 > * setting up [IntelliJ IDE](./intellij.html).  
 > * setting up [Eclipse and JRebel](../../../other/jrebel.html).  
-> * IDE templates for Eclipse(../../resources/editor-templates.html).  
+> * [IDE templates for Eclipse](../../resources/editor-templates.html).  
 > 
 
 We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  The most commonly used IDE is [Eclipse](http://www.eclipse.org), which can be downloaded in various configurations, all of which are free for use.  We recommend you download the "Eclipse JEE package".
