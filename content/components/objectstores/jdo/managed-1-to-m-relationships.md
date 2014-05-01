@@ -31,7 +31,7 @@ and
     
 Contrast the above with the programmatic maintenance described in the [how-to](../../../more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html).
 
-If you use Eclipse as your IDE, then these [editor templates](../../../intro/resources/editor-templates.html) include a set (prefixed `isjd`) to help write such code.
+If you use Eclipse or IntelliJ as your IDE, then these [editor templates](../../../intro/resources/editor-templates.html) include a set (prefixed `isjd` or `isc.jd`) to help write such code.
 
 > **Note**
 > 
@@ -40,3 +40,9 @@ In fact, not only do you not need to manually maintain the relationship, we have
 The error in that case was that the same object was contained in the parents collection.  This of course should not happen for a `TreeSet`.  However, JDO/DataNucleus replaces the `TreeSet` with its own implementation, and (either by design or otherwise) this does not enforce `Set` semantics.
 >
 The upshot is that you should NEVER programmatically add the child object to the parent's collection if using JDO Objectstore.
+
+### Add to the Parent, not the Child
+
+One further hint: when having a bidirectional 1-n relationship that must be automatically managed by DataNucleus, it's preferred to "add" to the parent's child collection, than set the parent on the child.
+
+If you don't do this then you may (as of Isis 1.4.1) hit an NullPointerException.  This may be a bug in DN, we are not completely sure, but the above idiom seems to fix the issue.  For more information, see [this thread](http://isis.markmail.org/thread/ipu2lzqqikqdglox) on the Isis users mailing list, including this [message](http://markmail.org/message/hblptpw675mlw723) with the above recommendation.
