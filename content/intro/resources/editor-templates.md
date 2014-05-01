@@ -1,23 +1,22 @@
 Title: Editor Templates
 
-The following Java editor templates (for Eclipse) provide snippets to speed up writing domain objects and unit testing
+The following Java editor templates (for Eclipse and IntelliJ) provide snippets to speed up writing domain objects and unit testing
 
-  - [Isis domain object snippets](resources/isis-templates.xml)
-  - [JUnit snippets](resources/junit4-templates.xml)
-  - [JMock templates](resources/jmock2-templates.xml)
+- Isis domain objects (prefix `is`): [Eclipse](resources/isis-templates.xml) [IntelliJ](resources/isis-templates-idea.xml)
+- JUnit (prefix `ju`): [Eclipse](resources/junit4-templates.xml) [IntelliJ](resources/junit4-templates-idea.xml)
+- JMock (prefix `jm`): [Eclipse](resources/jmock2-templates.xml) [IntelliJ](resources/jmock2-templates-idea.xml)
 
+Enter the prefix (`is`, `ju`, `jm`) for a drop-down list of all available templates in that category.
 
-To install, go to `Windows > Preferences > Java > Editor > Templates` and choose `Import`.
+The most commonly used Isis domain objects templates are also listed on the [Isis cheat sheet](resources/IsisCheatSheet.pdf).
 
-Each of these template defined in these teamplate files has a common prefix so you can easily find them.
+### Installation
 
-For example, the Isis templates all have the prefix "`is`"; simply enter "is" and press ctrl+space to get the list of templates starting with "is" where you will find those related to Isis.
+To install in Eclipse, go to `Windows > Preferences > Java > Editor > Templates` and choose `Import`.
 
-Similarly, the JUnit templates are prefixed "`ju`".
+To install in IntelliJ, copy to the relevant `config/templates` directory, eg:
 
-And the JMock templates are prefixed "`jm`".
+* Windows `<User home>\.IntelliJIdea13\config\templates`
+* Linux `~/.IntelliJIdea13/config/templates`
+* Mac OS `~/Library/Preferences/IntelliJIdea13/templates`
 
-
-### Notes
-
-The `ispauto` and `isaauto` (for auto-complete of properties or of action parameters) only apply from v1.3.0+.
