@@ -24,8 +24,8 @@ The following table lists various IDE templates (for IntelliJ and Eclipse) when 
     <tr>
         <td>JMock tests</td>
         <td><tt>jm</tt></td>
-        <td><a href="resources/jmock-templates-idea.xml">Download</a></td>
-        <td><a href="resources/jmock-templates.xml">Download</a></td>
+        <td><a href="resources/jmock2-templates-idea.xml">Download</a></td>
+        <td><a href="resources/jmock2-templates.xml">Download</a></td>
     </tr>
 </table>
 
