@@ -8,7 +8,7 @@ The table below lists dependencies between core, components and archetypes.
 <tr class="heading">
     <th>&nbsp;</th>
     <th>&nbsp;</th>
-    <td>ver.</td>
+    <td>>br/>ver.</td>
     <td><br/>rel. date</td>
     <th><br/>Core</th>
     <th>Shiro<br/>Security</th>
