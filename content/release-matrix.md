@@ -465,7 +465,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.0.3</th>
-    <th class="heading"></th>
+    <td class="heading">2013-05-31</td>
     <td>1.2.0</td>
     <td>1.1.1</td>
     <td>-</td>
@@ -489,7 +489,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.0.1</th>
-    <th class="heading"></th>
+    <td class="heading">2013-01-10</td>
     <td>1.0.0</td>
     <td>1.0.0</td>
     <td>-</td>
