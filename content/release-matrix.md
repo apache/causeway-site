@@ -8,7 +8,7 @@ The table below lists dependencies between core, components and archetypes.
 <tr class="heading">
     <th>&nbsp;</th>
     <th>&nbsp;</th>
-    <td><br/>ver.</td>
+    <th><br/>ver.</th>
     <td><br/>rel. date</td>
     <th><br/>Core</th>
     <th>Shiro<br/>Security</th>
@@ -45,7 +45,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.2.0</th>
-    <th class="heading"></th>
+    <td class="heading">2013-05-31</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -57,7 +57,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.1.0</th>
-    <th class="heading"></th>
+    <td class="heading">2013-01-31</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -69,7 +69,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.0.0</th>
-    <th class="heading"></th>
+    <td class="heading">2013-01-10</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -81,7 +81,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">Security</th>
     <th class="heading"><a href="components/security/file/about.html">File</a></th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>-</td>
     <td>-</td>
@@ -93,7 +93,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.0.1</th>
-    <th class="heading"></th>
+    <td class="heading">2013-05-31</td>
     <td>1.2.0</td>
     <td>-</td>
     <td>-</td>
@@ -117,7 +117,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="components/security/shiro/about.html">Shiro</a></th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>-</td>
     <td>-</td>
@@ -177,7 +177,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">Objectstore</th>
     <th class="heading"><a href="components/objectstores/jdo/about.html">JDO</a></th>
     <th class="heading">1.4.1</th>
-    <th class="heading">2014-03-14</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>-</td>
     <td>-</td>
@@ -189,7 +189,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.3.0</td>
     <td>-</td>
     <td>-</td>
@@ -249,7 +249,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>-</td>
     <td>-</td>
@@ -321,7 +321,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="components/viewers/restfulobjects/about.html">Restful</a></th>
     <th class="heading">2.2.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>-</td>
     <td>-</td>
@@ -369,7 +369,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">Archetype</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Simple</a></th>
     <th class="heading">1.4.1</th>
-    <th class="heading">2014-03-14</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>1.4.0</td>
     <td>-</td>
@@ -381,7 +381,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>1.4.0</td>
     <td>-</td>
@@ -417,7 +417,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Quickstart</a></th>
     <th class="heading">1.4.1</th>
-    <th class="heading">2014-03-14</th>
+    <td class="heading">2014-03-14</td>
     <td>1.4.0</td>
     <td>1.4.0</td>
     <td>-</td>
@@ -429,7 +429,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th class="heading"></th>
+    <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
     <td>1.4.0</td>
     <td>-</td>
