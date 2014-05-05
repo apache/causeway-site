@@ -9,8 +9,8 @@ The table below lists dependencies between core, components and archetypes.
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <td>ver.</td>
-    <td>release<br/>date</td>
-    <th>Core</th>
+    <td><br/>rel. date</td>
+    <th><br/>Core</th>
     <th>Shiro<br/>Security</th>
     <th>File<br/>Security</th>
     <th>JDO<br/>Objectstore</th>
@@ -21,7 +21,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading"><a href="core/about.html">Core</a></th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th class="heading">2014-03-11</th>
+    <th>2014-03-11</th>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -33,7 +33,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.3.0</th>
-    <th class="heading"></th>
+    <th></th>
     <td>-</td>
     <td>-</td>
     <td>-</td>
