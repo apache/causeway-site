@@ -21,7 +21,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading"><a href="core/about.html">Core</a></th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
-    <th>2014-03-11</th>
+    <td class="heading">2014-03-11</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -33,7 +33,7 @@ The table below lists dependencies between core, components and archetypes.
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">1.3.0</th>
-    <th></th>
+    <td class="heading">2013-10-25</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
