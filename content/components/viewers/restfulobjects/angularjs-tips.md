@@ -8,28 +8,28 @@ This page captures one or two tips on using AngularJS to write such a bespoke cl
 
 Suppose you have a `CustomerService` providing a `findCustomer` action:
 
-  public class CustomerService {
+    public class CustomerService {
 
-    public String id() { return "customers"; }
+      public String id() { return "customers"; }
     
-    @ActionSemantics(Of.SAFE)
-    public Customer findCustomer(@Named("customerName") String customerName) { ... }
+      @ActionSemantics(Of.SAFE)
+      public Customer findCustomer(@Named("customerName") String customerName) { ... }
   
-  }
+    }
   
 Restful Objects will expose this as action with the following link that looks something like:
 
-  {
-    "rel" : "urn:org.restfulobjects:rels/invoke",
-    "href" : "http://localhost:8080/restful/services/customers/actions/findCustomer/invoke",
-    "method" : "GET",
-    "type" : "application/json;profile=\"urn:org.restfulobjects:repr-types/action-result\"",
-    "arguments" : {
-      "customerName" : {
-        "value" : null
+    {
+      "rel" : "urn:org.restfulobjects:rels/invoke",
+      "href" : "http://localhost:8080/restful/services/customers/actions/findCustomer/invoke",
+      "method" : "GET",
+      "type" : "application/json;profile=\"urn:org.restfulobjects:repr-types/action-result\"",
+      "arguments" : {
+        "customerName" : {
+          "value" : null
+        }
       }
-    }
-  }  
+    }  
   
 You can then invoke this using AngularJs' `$resource` service as follows.  
 
