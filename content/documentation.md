@@ -428,6 +428,7 @@ For both:
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
+* [Tips and workarounds](components/viewers/wicket/tips-and-workarounds.html)
 
 #### Changing Pages
 
