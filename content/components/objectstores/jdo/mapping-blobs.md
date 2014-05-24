@@ -1,19 +1,22 @@
-Title: Mapping Blobs
+Title: Mapping Blobs (and Clobs)
 
+> *Note:* prior to 1.5.0-snapshot, the Isis mapping for `Blob`s and `Clob`s is broken (the mapping classes are not correctly registered with DataNucleus), and so the `Blob` or `Clob` are stored as a serialized Java object... not ideal.
 
 Isis configures JDO/DataNucleus so that the properties of type `org.apache.isis.applib.value.Blob` and `org.apache.isis.applib.value.Clob` can also be persisted.
 
 As for [Joda dates](mapping-joda-dates.html), this requires the `@javax.jdo.annotations.Persistent` annotation.  However, whereas for dates one would always expect this value to be retrieved eagerly, for blobs and clobs it is not so clear cut.
 
-For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property is as follows:
+For example, in the `ToDoItem` class (of the [quickstart archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property (as of 1.5.0-snapshot) is as follows:
 
 <pre>
-  @javax.jdo.annotations.Persistent(defaultFetchGroup="false")
+  @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
+      @javax.jdo.annotations.Column(name = "attachment_name"),
+      @javax.jdo.annotations.Column(name = "attachment_mimetype"),
+      @javax.jdo.annotations.Column(name = "attachment_bytes", sqlType = "BLOB")
+  })
   private Blob attachment;
 
   @Optional
-  @MemberOrder(name="Detail", sequence = "7")
-  @Hidden(where=Where.STANDALONE_TABLES)
   public Blob getAttachment() {
     return attachment;
   }
@@ -22,5 +25,46 @@ For example, in the `ToDoItem` (in the [wicket/restful/jdo archetype](../../../g
   }
 </pre>
 
-Here we can see that the property is hidden in standalone tables, and so there's no need to retrieve it eagerly.  The converse of this the object is rendered by itself, then the attachment property will be retrieved as a one separate query; this seems like a reasonable compromise.
+The three `@javax.jdo.annotations.Column` annotations are required because the mapping classes that Isis provides ([IsisBlobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisBlobMapping.java#L59) and [IsisClobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisClobMapping.java#L59)) map to 3 columns.  (It is not an error to omit these `@Column` annotations, but without them the names of the table columns are simply suffixed `_0`, `_1`, `_2` etc.
+
+If the `Blob` or `Clob` is mandatory, then use:
+
+<pre>
+  @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
+      @javax.jdo.annotations.Column(name = "attachment_name", allowsNull="false"),
+      @javax.jdo.annotations.Column(name = "attachment_mimetype", allowsNull="false"),
+      @javax.jdo.annotations.Column(name = "attachment_bytes", sqlType = "BLOB", allowsNull="false")
+  })
+  private Blob attachment;
+
+  @Mandatory
+  public Blob getAttachment() {
+    return attachment;
+  }
+  public void setAttachment(final Blob attachment) {
+    this.attachment = attachment;
+  }
+</pre>
+
+> Instead of `@Mandatory`, using `@javax.jdo.annotations.Column(allowsNull="false")` will also work.  However, as this last `@Column` annotation is only for Isis' benefit (DataNucleus ignores it in the presence of the `Persistent#columns` attribute) we prefer to use `@Mandatory` instead.
+
+Using the `@Column` annotation, you can also specify whether the `Blob` is mapped to a `VARBINARY` rather than a `BLOB` column:
+
+<pre>
+      @javax.jdo.annotations.Column(name = "attachment_bytes", sqlType = "VARBINARY", length=2048)
+</pre>
+
+The maximum allowed length for a `VARBINARY` will vary by database vendor.  Obviously, only do this if you are sure that the data to be mapped fits into the smaller size.  
+
+Mapping `Clob`s works the exact same way, but the `@Column#sqlType` attribute will either be `CLOB`
+
+<pre>
+      @javax.jdo.annotations.Column(name = "attachment_chars", sqlType = "CLOB")
+</pre>
+
+or `VARCHAR`, 
+
+<pre>
+      @javax.jdo.annotations.Column(name = "attachment_chars", sqlType = "VARCHAR", length=2048)
+</pre>
 

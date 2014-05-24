@@ -52,7 +52,7 @@ This can also be accomplished using an embedded Ant target provided in the build
 
     mvn antrun:run
 
-> in 1.4.2-snapshot this is changing to: mvn -P self-host antrun:run
+> in 1.5.0-snapshot this is changing to: mvn -P self-host antrun:run
     
 The first is to simply deploying the generated WAR (`webapp/target/myapp-webapp-1.0-SNAPSHOT.war`) to a servlet container.
 

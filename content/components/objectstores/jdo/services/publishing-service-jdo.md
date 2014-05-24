@@ -8,7 +8,7 @@ The intention is for an event service bus (eg [Apache ServiceMix](http://service
 
 Although a polling architecture introduces some overhead, it avoids the complexity of XA/JTA transactions which would otherwise be needed to ensure that events are only published atomically with committed changes to the database.
 
-## Configuration [1.4.2-snapshot]
+## Configuration [1.5.0-snapshot]
 
 The `PublishedEvent` entity can either persist the serialized form of the event as a zipped byte array or as a CLOB.  Which is used is determined by a configuration setting (typically stored in `persistor_datanucleus.properties`, but `isis.properties` can also be used):
 
