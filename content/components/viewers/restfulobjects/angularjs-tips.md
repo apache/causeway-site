@@ -33,16 +33,16 @@ Restful Objects will expose this as action with the following link that looks so
   
 You can then invoke this using AngularJs' `$resource` service as follows.  
 
-  var findCustomerAction = $resource("http://localhost:8080/restful/services/customers/actions/findCustomer/invoke?:queryString");
+    var findCustomerAction = $resource("http://localhost:8080/restful/services/customers/actions/findCustomer/invoke?:queryString");
 
-  var findCustomerArgs = { 
-    "customerName": { 
-        "value": "Fred" 
-      }
-  };
-  var findCustomerArgsStringified = JSON.stringify(findCustomerArgs);
+    var findCustomerArgs = { 
+      "customerName": { 
+          "value": "Fred" 
+        }
+    };
+    var findCustomerArgsStringified = JSON.stringify(findCustomerArgs);
 
-  findCustomerAction.get({queryString: findCustomerArgsStringified}, function(data) { ... } )
+    findCustomerAction.get({queryString: findCustomerArgsStringified}, function(data) { ... } )
 
 Here the `:queryString` placeholder in the initial `$resource` constructor is expanded with a stringified version of the JSON object representing the args.  Note how the `findCustomerArgs` is the same as the `"arguments"` attribute in the original link (with a value provided instead of `null`).
 
