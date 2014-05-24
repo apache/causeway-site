@@ -504,6 +504,7 @@ Other
 #### Hints and Tips
 
 * [Using Chrome Tools](components/viewers/restfulobjects/using-chrome-tools.html) <a href="components/viewers/restfulobjects/using-chrome-tools.html"><img src="./images/tv_show-25.png"></a>
+* [AngularJS Tips](components/viewers/restfulobjects/angularjs-tips.html)
 
 }
 
