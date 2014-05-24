@@ -39,7 +39,6 @@ You can then invoke this using AngularJs' `$resource` service as follows.
           "value": "Fred" 
         }
     };
-
     findCustomer.get({queryString: JSON.stringify(findCustomerArgs)}, function(data) { ... } )
 
 Here the `:queryString` placeholder in the initial `$resource` constructor is expanded with a stringified version of the JSON object representing the args.  Note how the `findCustomerArgs` is the same as the `"arguments"` attribute in the original link (with a value provided instead of `null`).
