@@ -72,12 +72,6 @@ Mapping `Clob`s works in a very similar way, but the `@Column#sqlType` attribute
   }
 </pre>
 
-or `VARCHAR`:
-
-<pre>
-      @javax.jdo.annotations.Column(name = "attachment_chars", sqlType = "VARCHAR", length=2048)
-</pre>
-
 
 ### Mapping to VARBINARY or VARCHAR
 
