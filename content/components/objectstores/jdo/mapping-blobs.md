@@ -29,7 +29,7 @@ For example, in the `ToDoItem` class (of the [quickstart archetype](../../../get
 
 The three `@javax.jdo.annotations.Column` annotations are required because the mapping classes that Isis provides ([IsisBlobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisBlobMapping.java#L59) and [IsisClobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisClobMapping.java#L59)) map to 3 columns.  (It is not an error to omit these `@Column` annotations, but without them the names of the table columns are simply suffixed `_0`, `_1`, `_2` etc.
 
-If the `Blob` or `Clob` is mandatory, then use:
+If the `Blob` is mandatory, then use:
 
 <pre>
   @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
@@ -63,7 +63,7 @@ Mapping `Clob`s works in a very similar way, but the `@Column#sqlType` attribute
   })
   private Clob doc;
 
-  @Mandatory
+  @Optional
   public Clob getDoc() {
     return doc;
   }
