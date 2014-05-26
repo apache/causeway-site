@@ -79,7 +79,7 @@ or `VARCHAR`:
 </pre>
 
 
-# Mapping to VARBINARY or VARCHAR
+### Mapping to VARBINARY or VARCHAR
 
 Instead of mapping to a `Blob` or `Clob` datatype, you might also specify map to a `VARBINARY` or `VARCHAR`.  In this case you will need to specify a length.  For example:
 
