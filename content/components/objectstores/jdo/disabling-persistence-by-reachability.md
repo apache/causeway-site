@@ -3,11 +3,11 @@ Title: Disabling Persistence by Reachability
 By default, JDO/DataNucleus supports the concept of [persistence-by-reachability](http://www.datanucleus.org/products/datanucleus/jdo/orm/cascading.html).  That is, if
 a non-persistent entity is associated with an already-persistent entity, then DataNucleus will detect this and will automatically persist the associated object.  Put another way: there is no need to call Isis' `DomainObjectContainer#persist(.)` or `DomainObjectContainer#persistIfNotAlready(.)` methods.
 
-However, convenient though this feature is, *you may find that it causes performance issues*.
+However, convenient though this feature is, **you may find that it causes performance issues**.
 
 One scenario in particular where this performance issues can arise is if your entities implement the `java.lang.Comparable` interface, and you have used Isis' [ObjectContracts](../../../reference/Utility.html) utility.  The issue here is that `ObjectContracts` implementation can cause DataNucleus to recursively rehydrate a larger number of associated entities.  (More detail below).
 
-We therefore *recommend that you disable persistence-by-reachability*, add the following to `persistor_datanucleus.properties`:
+We therefore **recommend that you disable persistence-by-reachability**, add the following to `persistor_datanucleus.properties`:
 
     #
     # Require explicit persistence (since entities are Comparable and using ObjectContracts#compareTo).
