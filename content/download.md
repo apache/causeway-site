@@ -12,7 +12,7 @@ For example:
 mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
-    -D archetypeVersion=1.4.1 \
+    -D archetypeVersion=1.5.0 \
     -D groupId=com.mycompany \
     -D artifactId=myapp \
     -D version=1.0-SNAPSHOT \
@@ -27,20 +27,22 @@ If you want to build Isis from formally released source tarballs, you can downlo
 
 Core:
 
-* [isis-1.4.0](https://www.apache.org/dyn/closer.cgi/isis/isis-core/isis-1.4.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/isis-core/isis-1.4.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/isis-core/isis-1.4.0-source-release.zip.md5)) 
+* [isis-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/isis-core/isis-1.5.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/isis-core/isis-1.5.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/isis-core/isis-1.5.0-source-release.zip.md5)) 
 
 Components:
 
+<!--
 * [isis-security-file-1.4.0](https://www.apache.org/dyn/closer.cgi/isis/component/security/file/isis-security-file-1.4.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/security/file/isis-security-file-1.4.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/security/file/isis-security-file-1.4.0-source-release.zip.md5))
-* [isis-security-shiro-1.4.0](https://www.apache.org/dyn/closer.cgi/isis/component/security/shiro/isis-security-shiro-1.4.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/security/shiro/isis-security-shiro-1.4.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/security/shiro/isis-security-shiro-1.4.0-source-release.zip.md5))
-* [isis-objectstore-jdo-1.4.1](https://www.apache.org/dyn/closer.cgi/isis/component/objectstore/jdo/isis-objectstore-jdo-1.4.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/objectstore/jdo/isis-objectstore-jdo-1.4.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/objectstore/jdo/isis-objectstore-jdo-1.4.1-source-release.zip.md5))
-* [isis-viewer-wicket-1.4.1](https://www.apache.org/dyn/closer.cgi/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip.md5))
-* [isis-viewer-restfulobjects-2.2.0](https://www.apache.org/dyn/closer.cgi/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.2.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.2.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.2.0-source-release.zip.md5))
+-->
+* [isis-security-shiro-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/component/security/shiro/isis-security-shiro-1.5.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/security/shiro/isis-security-shiro-1.5.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/security/shiro/isis-security-shiro-1.5.0-source-release.zip.md5))
+* [isis-objectstore-jdo-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/component/objectstore/jdo/isis-objectstore-jdo-1.5.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/objectstore/jdo/isis-objectstore-jdo-1.5.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/objectstore/jdo/isis-objectstore-jdo-1.5.0-source-release.zip.md5))
+* [isis-viewer-wicket-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.4.1-source-release.zip.md5))
+* [isis-viewer-restfulobjects-2.3.0](https://www.apache.org/dyn/closer.cgi/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.3.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.3.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/viewer/restfulobjects/isis-viewer-restfulobjects-2.3.0-source-release.zip.md5))
 
 Archetypes:
 
-* [simple_wicket_restful_jdo-archetype-1.4.1](https://www.apache.org/dyn/closer.cgi/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.4.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.4.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.4.1-source-release.zip.md5))
-* [quickstart_wicket_restful_jdo-archetype-1.4.1](https://www.apache.org/dyn/closer.cgi/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.4.1-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.4.1-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.4.1-source-release.zip.md5))
+* [simple_wicket_restful_jdo-archetype-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.5.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.5.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simple_wicket_restful_jdo-archetype/simple_wicket_restful_jdo-archetype-1.5.0-source-release.zip.md5))
+* [quickstart_wicket_restful_jdo-archetype-1.5.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.5.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.5.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/quickstart_wicket_restful_jdo-archetype/quickstart_wicket_restful_jdo-archetype-1.5.0-source-release.zip.md5))
 
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 

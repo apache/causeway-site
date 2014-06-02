@@ -20,6 +20,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading"><a href="core/about.html">Core</a></th>
     <th class="heading">&nbsp;</th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
     <td class="heading">2014-03-11</td>
     <td>-</td>
@@ -116,6 +128,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="components/security/shiro/about.html">Shiro</a></th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.0</th>
     <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
@@ -176,6 +200,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Objectstore</th>
     <th class="heading"><a href="components/objectstores/jdo/about.html">JDO</a></th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.1</th>
     <td class="heading">2014-03-14</td>
     <td>1.4.0</td>
@@ -236,6 +272,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Viewer</th>
     <th class="heading"><a href="components/viewers/wicket/about.html">Wicket</a></th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.1</th>
     <td class="heading">2014-03-14</td>
     <td>1.4.0</td>
@@ -320,6 +368,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="components/viewers/restfulobjects/about.html">Restful</a></th>
+    <th class="heading">2.3.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">2.2.0</th>
     <td class="heading">2014-03-11</td>
     <td>1.4.0</td>
@@ -368,6 +428,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">Archetype</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Simple</a></th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>1.5.0</td>
+    <td>1.5.0</b></td>
+    <td>2.3.0</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.1</th>
     <td class="heading">2014-03-14</td>
     <td>1.4.0</td>
@@ -416,6 +488,18 @@ The table below lists dependencies between core, components and archetypes.
 <tr>
     <th class="heading">&nbsp;</th>
     <th class="heading"><a href="intro/getting-started/quickstart-archetype.html">Quickstart</a></th>
+    <th class="heading">1.5.0</th>
+    <td class="heading">2014-06-06</td>
+    <td>1.5.0</td>
+    <td>1.5.0</td>
+    <td>-</td>
+    <td>1.5.0</td>
+    <td>1.5.0</b></td>
+    <td>2.3.0</td>
+</tr>
+<tr>
+    <th class="heading">&nbsp;</th>
+    <th class="heading">&nbsp;</th>
     <th class="heading">1.4.1</th>
     <td class="heading">2014-03-14</td>
     <td>1.4.0</td>
