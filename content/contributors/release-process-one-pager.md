@@ -49,7 +49,7 @@ Pull down latest, create branch (eg `prepare/isis-1.4.0-RC1`):
 
     git checkout master
     git pull --ff-only
-    git checkout -d prepare/$ISISART-$ISISREL-$ISISRC 
+    git checkout -b prepare/$ISISART-$ISISREL-$ISISRC 
 
     
 Sanity check:
@@ -63,7 +63,11 @@ Sanity check:
 
 Update parent version to non-`SNAPSHOT` (including tck project, if any):
 
-    vi `/bin/find . -name pom.xml | grep -v target`
+    grep SNAPSHOT `/bin/find . -name pom.xml | grep -v target | sort`
+
+or (more thoroughly):
+
+    vi `/bin/find . -name pom.xml | grep -v target | sort`
 
 ####Update plugin versions
 

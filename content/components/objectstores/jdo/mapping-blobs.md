@@ -1,6 +1,6 @@
 Title: Mapping Blobs (and Clobs)
 
-> *Note:* prior to 1.5.0-snapshot, the Isis mapping for `Blob`s and `Clob`s is broken (the mapping classes are not correctly registered with DataNucleus), and so the `Blob` or `Clob` are stored as a serialized Java object... not ideal.
+> *Note:* prior to v1.5.0, the Isis mapping for `Blob`s and `Clob`s is broken (the mapping classes are not correctly registered with DataNucleus), and so the `Blob` or `Clob` are stored as a serialized Java object... not ideal.
 
 Isis configures JDO/DataNucleus so that the properties of type `org.apache.isis.applib.value.Blob` and `org.apache.isis.applib.value.Clob` can also be persisted.
 
@@ -8,7 +8,7 @@ As for [Joda dates](mapping-joda-dates.html), this requires the `@javax.jdo.anno
 
 ### Mapping Blobs
 
-For example, in the `ToDoItem` class (of the [quickstart archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property (as of 1.5.0-snapshot) is as follows:
+For example, in the `ToDoItem` class (of the [quickstart archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property (v1.5.0 onwards) is as follows:
 
 <pre>
   @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {

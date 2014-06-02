@@ -35,9 +35,9 @@ The `dom` module requires a `rebel.xml` file in order to tell JRebel which class
 
 Note the use of the `${project.root}` and `${target.dir}` properties; values are supplied when the application is launched (as explained below).
 
-> Prior to 1.5.0-snapshot, the `rebel.xml` file simply had hard-coded values within it.
+> Prior to 1.5.0, the `rebel.xml` file simply had hard-coded values within it.
 
-## <a name="maven"><a name="screencast">Using Maven with JRebel (1.5.0-snapshot)</a></a>
+## <a name="maven"><a name="screencast">Using Maven with JRebel (v1.5.0 onwards)</a></a>
 
 This screencast shows how to use Maven in conjunction with JRebel:
 

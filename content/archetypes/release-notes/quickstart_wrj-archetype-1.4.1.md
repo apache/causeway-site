@@ -1,4 +1,4 @@
-Title: quickstart-wrj-archetype-1.3.1
+Title: quickstart-wrj-archetype-1.4.1
 
 Uses:
 

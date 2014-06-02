@@ -2,7 +2,7 @@ Title: Formal Release Process
 
 This page details the process for formalling releasing Isis modules.  
 
-If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html).  (There is also an experimental [script](resources/release.sh) for automating the latter part of the process).
+If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html) (that also parameterizes some of the steps listed here 'long-hand'.  There is also an experimental [script](resources/release.sh) for automating the latter part of the process.
 
 See also the [release checklist](release-checklist.html) for keeping track of where you are while releasing (possibly multiple) components.
 
@@ -160,11 +160,16 @@ Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its par
 
 There should be no snapshot dependencies; the only mention of `SNAPSHOT` should be for the Isis modules about to be released.  
 
-It's probably easiest to load up each `pom.xml` and inspect manually:
+As a quick check, do a grep for `SNAPSHOT`:
 
-    vi `/bin/find . -name pom.xml | grep -v target`
+    grep SNAPSHOT `/bin/find . -name pom.xml | grep -v target | sort`
+
+Or, for a more thorough check, load up each `pom.xml` and inspect manually:
+
+    vi `/bin/find . -name pom.xml | grep -v target | sort`
 
 ... and search for `SNAPSHOT`.
+
 
 > Obviously, don't update Isis' `SNAPSHOT` references; these get updated by the `mvn release:prepare` command we run later.
 

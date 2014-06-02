@@ -8,37 +8,50 @@ else
     ISISTMP=/tmp
 fi
 
+
 # artifact
-ISISART=isis
 # releaseVersion
-ISISREL=1.4.0
 # developmentVersion
-ISISDEV=1.5.0-SNAPSHOT
 # release candidate
-ISISRC=RC1
 
-read -p "ISISART? ($ISISART): " ISISART
-read -p "ISISREL? ($ISISREL): " ISISREL
-read -p "ISISDEV? ($ISISDEV): " ISISDEV
-read -p "ISISRC? ($ISISRC): " ISISRC
+# export ISISART=isis
+# export ISISREL=1.4.0
+# export ISISDEV=1.5.0-SNAPSHOT
+# export ISISRC=RC1
 
-if [ -z $ISISART ]; then exit; fi
-if [ -z $ISISREL ]; then exit; fi
-if [ -z $ISISDEV ]; then exit; fi
-if [ -z $ISISRC ]; then exit; fi
+read -p "ISISART? ($ISISART): " xISISART
+read -p "ISISREL? ($ISISREL): " xISISREL
+read -p "ISISDEV? ($ISISDEV): " xISISDEV
+read -p "ISISRC? ($ISISRC): " xISISRC
+
+if [ ! -z $xISISART ]; then ISISART=$xISISART; fi
+if [ ! -z $xISISREL ]; then ISISREL=$xISISREL; fi
+if [ ! -z $xISISDEV ]; then ISISDEV=$xISISDEV; fi
+if [ ! -z $xISISRC ]; then ISISRC=$xISISRC; fi
+
+echo "" 
+if [ -z $ISISART ]; then echo "ISISART is required">&2; exit; fi
+if [ -z $ISISREL ]; then echo "ISISREL is required">&2; exit; fi
+if [ -z $ISISDEV ]; then echo "ISISDEV is required">&2; exit; fi
+if [ -z $ISISRC ]; then echo "ISISRC is required">&2; exit; fi
 
 # derived
 export ISISCPT=$(echo $ISISART | cut -d- -f2)
 export ISISCPN=$(echo $ISISART | cut -d- -f3)
 if [ $(echo "$ISISART" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
 
-clear
 
+echo "" 
+echo "" 
+echo "" 
+echo "#################################################" 
+echo "env vars"
+echo "#################################################" 
 echo "" 
 env | grep ISIS | sort
 echo "" 
 
-
+exit
 
 #
 # release prepare
@@ -55,7 +68,11 @@ echo ""
 
 
 # eg isis-1.4.0-RC1
-git checkout -d $ISISART-$ISISREL-$ISISRC 
+git checkout $ISISART-$ISISREL-$ISISRC 
+if [ $? -ne 0 ]; then
+    echo "git checkout $ISISART-$ISISREL-$ISISRC  failed :-(" >&2
+    exit 1
+fi
 
 mvn release:prepare -P apache-release -D dryRun=true -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
 if [ $? -ne 0 ]; then
