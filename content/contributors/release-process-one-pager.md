@@ -57,7 +57,7 @@ If **releasing a component without also releasing core**, then pull down latest,
     git pull --ff-only
     git checkout -b prepare/$ISISART-$ISISREL-$ISISRC 
 
-If *releasing a component on top of a core release*, then omit this step (just continue in the same branch as for core).
+If **releasing a component on top of a core release**, then omit this step (just continue in the same branch as for core).
 
 
 ## Check code
