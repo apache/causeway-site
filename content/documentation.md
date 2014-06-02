@@ -531,6 +531,7 @@ Other
 
 * [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
 * [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
+* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
