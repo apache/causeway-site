@@ -62,7 +62,7 @@ DataNucleus's persistence-by-reachability algorithm adds the `AgreementRole`s in
 
 * the evaluation of the "agreement" property delegates back to the `Agreement`, whose own `Agreement#compareTo()` uses the scalar `reference` property.  As the `Agreement` is already in-memory, this does not trigger any further database queries
 
-* the evaluation of the "startDate" property is just a scalar
+* the evaluation of the "startDate" property is just a scalar property of the `AgreementRole`, so will already in-memory
 
 * the evaluation of the "party" property delegates back to the `Party`, whose own `Party#compareTo()` requires the uses the scalar `reference` property.  However, since the `Party` is not yet in-memory, using the `reference` property triggers a database query to "rehydrate" the `Party` instance.
 
