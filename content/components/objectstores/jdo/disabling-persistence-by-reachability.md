@@ -59,8 +59,11 @@ and Party's is similarly implemented as:
 
     
 DataNucleus's persistence-by-reachability algorithm adds the `AgreementRole`s into a `SortedSet`, which causes `AgreementRole#compareTo()` to fire:
+
 * the evaluation of the "agreement" property delegates back to the `Agreement`, whose own `Agreement#compareTo()` uses the scalar `reference` property.  As the `Agreement` is already in-memory, this does not trigger any further database queries
+
 * the evaluation of the "startDate" property is just a scalar
+
 * the evaluation of the "party" property delegates back to the `Party`, whose own `Party#compareTo()` requires the uses the scalar `reference` property.  However, since the `Party` is not yet in-memory, using the `reference` property triggers a database query to "rehydrate" the `Party` instance.
 
 In other words, in figuring out whether `AgreementRole` requires the persistence-by-reachability algorithm to run, it causes the adjacent associated entity `Party` to also be retrieved.
