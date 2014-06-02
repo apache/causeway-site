@@ -50,9 +50,9 @@ The recommended approach when getting started is to run the self-hosting version
 
 This can also be accomplished using an embedded Ant target provided in the build script:
 
-    mvn antrun:run
+    mvn -P self-host antrun:run
 
-> in 1.5.0-snapshot this is changing to: mvn -P self-host antrun:run
+> prior to v1.5.0, this was simply: mvn antrun:run
     
 The first is to simply deploying the generated WAR (`webapp/target/myapp-webapp-1.0-SNAPSHOT.war`) to a servlet container.
 

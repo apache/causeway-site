@@ -535,7 +535,7 @@ Other
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
-* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html) (1.5.0-snapshot)
+* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
 }
 
