@@ -802,6 +802,8 @@ In addition:
 
   For more information on DOAP files, see these [Apache policy docs](http://projects.apache.org/doap.html).
 
+* The `STATUS` file (in root of Isis' source) should be updated with details of the new release.
+
 
 <!--
 ### Update CMS site with generated Maven site
