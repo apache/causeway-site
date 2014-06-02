@@ -92,9 +92,9 @@ Build the newly generated app and test:
 
     cd myapp
     mvn clean install
-    mvn antrun:run     # runs as standalone app using webconsole
+    mvn antrun:run -P self-host    # runs as standalone app using webconsole
     cd webapp
-    mvn jetty:run      # runs as mvn jetty plugin
+    mvn jetty:run                  # runs as mvn jetty plugin
 
 ### Check the archetype source code into git
 
