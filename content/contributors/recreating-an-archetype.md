@@ -139,6 +139,7 @@ You may also want to import the new archetype project, using `File > Import > Pr
 
 The procedure for releasing the archetype is the same as for any other releasable module; in essence:
 
+    export ISISTMP= ... # as required
     export ISISART=quickstart_wicket_restful_jdo-archetype
     export ISISDEV=1.6.0-SNAPSHOT
     export ISISREL=1.5.0
@@ -148,6 +149,6 @@ The procedure for releasing the archetype is the same as for any other releasabl
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
                     -Dtag=$ISISART-$ISISREL
-    mvn release:perform -P apache-release
-
+    mvn release:perform -P apache-release \
+        -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
 See the [release process](release-process.html) for full details.
