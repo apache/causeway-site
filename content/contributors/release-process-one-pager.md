@@ -45,23 +45,33 @@ then export derived props for component type (ISISCPT) and component name (ISISC
     
 ## Get code
 
-If releasing core, or if releasing a component without also releasing core, then 
-pull down latest, create branch (eg `prepare/isis-1.4.0-RC1`):
+If **releasing core**, then pull down latest, create branch (eg `prepare/isis-1.4.0-RC1`):
 
     git checkout master
     git pull --ff-only
     git checkout -b prepare/$ISISART-$ISISREL-$ISISRC 
 
-If releasing a component on top of a core release, then omit this step (just continue in the same branch as for core).
+If **releasing a component without also releasing core**, then pull down latest, create branch (eg `prepare/isis-objectstore-jdo-1.4.0-RC1`):
+
+    git checkout master
+    git pull --ff-only
+    git checkout -b prepare/$ISISART-$ISISREL-$ISISRC 
+
+If *releasing a component on top of a core release*, then omit this step (just continue in the same branch as for core).
     
 ## Sanity check
 
-Core only:
+If **releasing core**, then clean all local mvn artifacts and rebuild with `-o` flag:
 
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install -o
 
-Components:
+If **releasing a component without also releasing core**, then clean all local mvn artifacst and rebuild **without `-o`** flag:
+
+    rm -rf ~/.m2/repository/org/apache/isis
+    mvn clean install
+
+If *releasing a component on top of a core release*, then do not clean, just rebuild with `-o` flag:
 
     mvn clean install -o
 
