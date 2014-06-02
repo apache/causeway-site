@@ -60,9 +60,7 @@ If **releasing a component without also releasing core**, then pull down latest,
 If **releasing a component on top of a core release**, then omit this step (just continue in the same branch as for core).
 
 
-## Check code
-
-####Update parent pom
+##Update parent pom
 
 Update parent version to non-`SNAPSHOT` (including tck project, if any):
 
@@ -71,6 +69,26 @@ Update parent version to non-`SNAPSHOT` (including tck project, if any):
 or (more thoroughly):
 
     vi `/bin/find . -name pom.xml | grep -v target | sort`
+
+
+## Sanity check
+
+If **releasing core**, then clean all local mvn artifacts and rebuild with `-o` flag:
+
+    rm -rf ~/.m2/repository/org/apache/isis
+    mvn clean install -o
+
+If **releasing a component without also releasing core**, then clean all local mvn artifacst and rebuild **without `-o`** flag:
+
+    rm -rf ~/.m2/repository/org/apache/isis
+    mvn clean install
+
+If **releasing a component on top of a core release**, then do not clean, just rebuild with `-o` flag:
+
+    mvn clean install -o
+
+    
+## Check versions
 
 ####Update plugin versions
 
@@ -97,24 +115,6 @@ or (more thoroughly):
     fi
 
     
-## Sanity check
-
-If **releasing core**, then clean all local mvn artifacts and rebuild with `-o` flag:
-
-    rm -rf ~/.m2/repository/org/apache/isis
-    mvn clean install -o
-
-If **releasing a component without also releasing core**, then clean all local mvn artifacst and rebuild **without `-o`** flag:
-
-    rm -rf ~/.m2/repository/org/apache/isis
-    mvn clean install
-
-If **releasing a component on top of a core release**, then do not clean, just rebuild with `-o` flag:
-
-    mvn clean install -o
-
-
-
 ## Commit changes
 
 Commit any changes from the preceding steps:
