@@ -30,7 +30,7 @@ Finally, double check that the app is running satisfactorily:
 first, as self-hosted webconsole (browse to [http://localhost:8080](http://localhost:8080)):
   
     mvn clean install
-    mvn antrun:run -P selfhost
+    mvn antrun:run -P self-host
 
 then using mvn jetty plugin (browse to [http://localhost:8080/quickstart_wicket_restful_jdo-webapp/](http://localhost:8080/quickstart_wicket_restful_jdo-webapp/)) etc:
 
