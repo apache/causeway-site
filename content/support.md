@@ -31,7 +31,7 @@ Apache Isis has two public mailing lists.
 
 The Markmail archives span both our current (TLP) mailing lists and also our original mailing lists while in the Apache incubator; the ASF archives span just our TLP mailing lists.
 
-#### How to subscribe
+#### <a name="how-to-subscribe">How to subscribe</a>
 
 To subscribe to the `users` mailing list:
 
