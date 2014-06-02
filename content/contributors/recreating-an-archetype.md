@@ -150,5 +150,5 @@ The procedure for releasing the archetype is the same as for any other releasabl
                     -DdevelopmentVersion=$ISISDEV \
                     -Dtag=$ISISART-$ISISREL
     mvn release:perform -P apache-release \
-        -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
+        -DworkingDirectory=$ISISTMP/checkout
 See the [release process](release-process.html) for full details.
