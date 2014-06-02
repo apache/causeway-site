@@ -49,13 +49,13 @@ Start by doing the regular `mvn clean`:
 
 To view the remaining files/directories that needs removing, use:
 
-    for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -print; done
+    for a in .project .classpath .settings bin .idea target-ide; do /bin/find . -name $a -print; done
     /bin/find . -name "*.iml" -print
     /bin/find . -name "*.log" -print
 
 To actually delete these files, use:
 
-    for a in .project .classpath .settings bin target-ide; do /bin/find . -name $a -exec rm -r {} \;; done
+    for a in .project .classpath .settings bin .idea target-ide; do /bin/find . -name $a -exec rm -r {} \;; done
     /bin/find . -name "*.iml" -exec rm {} \;
     /bin/find . -name "*.log" -exec rm {} \;
 
