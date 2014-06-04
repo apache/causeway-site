@@ -489,6 +489,7 @@ Other
 <p class="display:none"/>
 
 * [About](components/viewers/restfulobjects/about.html)
+* [Restful Objects Specification](http://restfulobjects.org)
 
 }
 
