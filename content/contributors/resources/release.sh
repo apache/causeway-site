@@ -74,13 +74,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mvn release:prepare -P apache-release -D dryRun=true -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
+mvn release:prepare -P apache-release -D dryRun=true -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL-$ISISRC
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare -DdryRun=true failed :-("  >&2
     exit 1
 fi
 
-mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL
+mvn release:prepare -P apache-release -D skipTests=true -Dresume=false -DreleaseVersion=$ISISREL -DdevelopmentVersion=$ISISDEV -Dtag=$ISISART-$ISISREL-$ISISRC
 if [ $? -ne 0 ]; then
     echo "mvn release:prepare failed :-("  >&2
     exit 1
@@ -140,7 +140,7 @@ echo ""
 echo "" 
 echo "" 
 
-mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL
+mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL-$ISISRC
 if [ $? -ne 0 ]; then
     echo "mvn release:perform failed :-("  >&2
     exit 1

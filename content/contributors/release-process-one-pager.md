@@ -131,14 +131,14 @@ first the dry run (you will be prompted for gpg passphrase):
                         -DdryRun=true \
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
-                        -Dtag=$ISISART-$ISISREL
+                        -Dtag=$ISISART-$ISISREL-$ISISRC
                         
 then "for real": 
 
     mvn release:prepare -P apache-release -DskipTests=true -Dresume=false \
                         -DreleaseVersion=$ISISREL \
                         -DdevelopmentVersion=$ISISDEV \
-                        -Dtag=$ISISART-$ISISREL
+                        -Dtag=$ISISART-$ISISREL-$ISISRC
 
 #### Confirm:
 

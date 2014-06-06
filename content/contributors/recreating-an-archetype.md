@@ -143,6 +143,7 @@ The procedure for releasing the archetype is the same as for any other releasabl
     export ISISART=quickstart_wicket_restful_jdo-archetype
     export ISISDEV=1.6.0-SNAPSHOT
     export ISISREL=1.5.0
+    export ISISRC=RC1
 
     rm -rf $ISISTMP/checkout
 
@@ -150,7 +151,7 @@ The procedure for releasing the archetype is the same as for any other releasabl
     mvn release:prepare -P apache-release \
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
-                    -Dtag=$ISISART-$ISISREL
+                    -Dtag=$ISISART-$ISISREL-$ISISRC
     mvn release:perform -P apache-release \
         -DworkingDirectory=$ISISTMP/checkout
 
