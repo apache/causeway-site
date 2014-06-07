@@ -2,8 +2,8 @@ Title: Verify releases using a script
 
 To save some time in verifying an Isis release we've assembled a script to automate the process. The script is tested on Mac OSX and should work on Linux too. Windows users can use Cygwin. It's **recommended** that you start this process in an empty directory:
 
-	$ mkdir ~/verify-isis-release
-	$ cd ~/verify-isis-release
+	mkdir ~/verify-isis-release
+	cd ~/verify-isis-release
 
 ## Copy the script to your local machine 
 	
@@ -61,15 +61,14 @@ The script could be enhanced in many ways, feel free to do so! Copy (or [downloa
 	_unpack
 	_build
 
-Make sure the script is executable 
+Make sure the script is executable:
 
-	$ chmod +x verify-isis-release.sh
+	chmod +x verify-isis-release.sh
 
 
 ## Create an input file
 
 The input file is a plain .txt file containing all urls to the packages to be verfied. Here's a sample of the release of Isis 1.0.0:
-
 
     https://repository.apache.org/content/repositories/orgapacheisis-063/org/apache/isis/core/isis/1.0.0/isis-1.0.0-source-release.zip
     https://repository.apache.org/content/repositories/orgapacheisis-058/org/apache/isis/objectstore/isis-objectstore-jdo/1.0.0/isis-objectstore-jdo-1.0.0-source-release.zip
@@ -80,9 +79,43 @@ The input file is a plain .txt file containing all urls to the packages to be ve
     
 The actual list of packages to be verified will be provided through the mailing list.
 
+## Clean out Isis from your local Maven repo
+
+    rm -rf ~/.m2/repository/org/apache/isis
+
 ## Execute the script
 Execute...
 
-    $ ./verify-isis-release.sh
+    ./verify-isis-release.sh
     
 …and get yourself a cup of coffee.
+
+## Test the archetypes
+
+Assuming that everything builds ok, then test the archetypes:
+
+    mvn archetype:generate  \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
+        -D groupId=com.mycompany \
+        -D artifactId=myapp \
+        -D version=1.0-SNAPSHOT \
+        -B \
+        -o
+    
+    mvn -P self-host antrun:run
+    
+and
+
+    mvn archetype:generate  \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
+        -D groupId=com.mycompany \
+        -D artifactId=myapp \
+        -D version=1.0-SNAPSHOT \
+        -B \
+        -o
+    
+    mvn -P self-host antrun:run
+
+If they run up ok, then it's time to [vote](verifying-releases.html)!
