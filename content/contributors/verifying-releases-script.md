@@ -7,7 +7,7 @@ To save some time in verifying an Isis release we've assembled a script to autom
 
 ## Copy the script to your local machine 
 	
-The script could be enhanced in many ways, feel free to do so! Copy the script to a .sh file, for eaxmple `verify-isis-release.sh`
+The script could be enhanced in many ways, feel free to do so! Copy (or [download](resources/verify-isis-release.sh) the `verify-isis-release.sh` script below:
 	
 	#!/bin/bash
 	# Instructions:
