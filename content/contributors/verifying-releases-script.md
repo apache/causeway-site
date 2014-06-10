@@ -92,7 +92,7 @@ Execute...
 
 ## Test the archetypes
 
-Assuming that everything builds ok, then test the archetypes:
+Assuming that everything builds ok, then test the archetypes (adjust version as necessary):
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
@@ -101,11 +101,18 @@ Assuming that everything builds ok, then test the archetypes:
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
         -B \
-        -o
-    
+        -o \
+        -D archetypeVersion=1.5.0
+
+
+    cd myapp
+    mvn clean install -o
     mvn -P self-host antrun:run
     
-and
+and (adjust version as necessary):
+
+    cd ..
+    rm -rf myapp
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
@@ -114,8 +121,12 @@ and
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
         -B \
-        -o
+        -o \
+        -D archetypeVersion=1.5.0
+
+    cd myapp
     
+    mvn clean install -o    
     mvn -P self-host antrun:run
 
 If they run up ok, then it's time to [vote](verifying-releases.html)!

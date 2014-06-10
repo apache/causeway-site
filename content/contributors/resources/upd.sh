@@ -4,7 +4,7 @@
 # format is "old_ver new_ver"
 #
 # eg:
-# isis_core="1.3.0 1.4.0"   # update from 1.3.0 to 1.4.0
+# isis_core="1.4.0 1.5.0"   # update from 1.4.0 to 1.5.0
 # isis_core="1.4.0 1.4.0"   # don't update (since old_ver = new_ver)
 # isis_core=""              # also don't update (no versions provided)
 #
@@ -12,14 +12,14 @@
 #
 #################################################################
 
-isis_core="1.3.0 1.4.0"
-objectstore_jdo="1.3.0 1.4.1"
-security_shiro="1.3.0 1.4.0"
-security_file="1.0.1 1.4.0"
-viewer_restfulobjects="2.1.0 2.2.0"
-viewer_wicket="1.3.1 1.4.1"
-archetype_todoapp="1.3.1 1.4.1"
-archetype_simple="1.3.1 1.4.1"
+isis_core="1.4.0 1.5.0"
+objectstore_jdo="1.4.1 1.5.0"
+security_shiro="1.4.0 1.5.0"
+security_file="1.4.0 1.4.0"
+viewer_restfulobjects="2.2.0 2.3.0"
+viewer_wicket="1.4.1 1.5.0"
+archetype_todoapp="1.4.1 1.5.0"
+archetype_simple="1.4.1 1.5.0"
 
 
 

@@ -59,19 +59,19 @@ Then verify the signatures using a command such as:
 
 <pre>
 pgpk -a KEYS
-pgpv isis-1.4.0-source-release.zip.asc
+pgpv isis-1.5.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 pgp -ka KEYS
-pgp isis-1.4.0-source-release.zip.asc
+pgp isis-1.5.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 gpg --import KEYS
-gpg --verify isis-1.4.0-source-release.zip.asc
+gpg --verify isis-1.5.0-source-release.zip.asc
 </pre>
 
 Alternatively, you can verify the MD5 signature on the files. A Unix/Linux
