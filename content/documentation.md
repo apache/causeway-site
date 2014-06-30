@@ -174,7 +174,6 @@ For both:
 #### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
 
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
-* [Generic repository](./more-advanced-topics/how-to-09-030-How-to-use-a-generic-repository.html)
 
 #### <a name="more-advanced-topics-idioms-and-patterns">Idioms and patterns</a>
 
