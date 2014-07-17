@@ -48,8 +48,8 @@ Isis defines its own extended syntax for permissions, following the format:
 
 where:
 
-* the optional ! prefix indicates this permission is a vetoing permission
-* the optional xxx/ prefix is a permission group that scopes the perm/veto perm
+* the optional `!` prefix indicates this permission is a vetoing permission
+* the optional `xxx/` prefix is a permission group that scopes any vetoing permissions
 * the remainder of the string is the permission (possibly wildcarded, with :rw as optional suffix)
 
 For example:
@@ -62,11 +62,18 @@ api_role    = org.estatio.api ;\
 admin_role = adm/*
 </pre>
 
-defines the user role as access to all permissions except those in `org.estatio.api` and `org.estatio.webapp.services.admin`.
+sets up:
+* the user role with access to all permissions except those in `org.estatio.api` and `org.estatio.webapp.services.admin`
+* the api_role with access to all permissions in `org.estatio.api`
+* the admin_role with access to everything.
+
+The permission group concept is required to scope the applicability of any veto permission.  This is probably best explained by an example.  Suppose that a user has both `admin_role` and `user_role`; we would want the `admin_role` to trump the vetos of the `user_role`, in other words to give the user access to everything.  Because of the permission groups, the two `!reg/...` vetos in user_role only veto out selected permissions granted by the `reg/*` permissions, but they do not veto the permissions granted by a different scope, namely `adm/*`.  The net effect is what we would want: that a user with both `admin_role` and `user_role` would have access to everything, irrespective of those two veto permissions of the `user_role`.
 
 To tell Shiro to use the Isis permission format, add the following to `shiro.ini`:
 
 <pre>
 permissionResolver = org.apache.isis.security.shiro.authorization.IsisPermissionResolver
-ldapRealm.permissionResolver = $permissionResolver
+xxxRealm.permissionResolver = $permissionResolver
 </pre>
+
+where `xxxRealm` is the realm to be configured.
