@@ -11,21 +11,12 @@ See also the [release checklist](release-checklist.html) for keeping track of wh
 Apache Isis consists of a number of separately releasable modules.  Relative to the root of the [source code repo](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree), these are:
 
 - `core`
-- `component/objectstore/jdo`
-- `component/security/file`
-- `component/security/shiro`
-- `component/viewer/restfulobjects`
 - `component/viewer/wicket`
-- `component/example/archetypes/quickstart_wicket_restful_jdo`
-- `component/example/archetypes/simple_wicket_restful_jdo`
+- `component/example/archetypes/todoapp`
+- `component/example/archetypes/simpleapp`
 
 Other components, not yet released (but not mothballed yet either) are:
 
-- `component/objectstore/nosql`
-- `component/objectstore/xml`
-- `component/profilestore/xml`
-- `component/progmodel/groovy`
-- `component/viewer/dnd`
 - `component/viewer/scimpi`
 
 
@@ -101,7 +92,7 @@ Then, determine/confirm the version number of the module being released.  This s
 Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare release candidate #1 for a release 1.2.3 of `core`, use:
 
 <pre>
-git checkout -b prepare/isis-1.2.3-RC1
+git checkout -b prepare/isis-1.2.3
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -541,8 +532,8 @@ Finally, push both the branch and the tag created locally to the central origin 
 
 To push the branch, for example:
 
-    git checkout prepare/isis-1.2.3-RC1
-    git push -u origin prepare/isis-1.2.3-RC1
+    git checkout prepare/isis-1.2.3
+    git push -u origin prepare/isis-1.2.3
 
 To push the tag, with the `-RCn` suffix, for example:
 
@@ -672,13 +663,13 @@ If the vote has been unsuccessful, then:
 * delete the remote branch, for example:
 
 <pre>
-  git push origin --delete prepare/isis-1.2.3-RC1
+  git push origin --delete prepare/isis-1.2.3
 </pre>
 
 * delete your local branch, for example:
 
 <pre>
-  git branch -D prepare/isis-1.2.3-RC1
+  git branch -D prepare/isis-1.2.3
 </pre>
 
 * delete the remote origin server's tag, for example:
@@ -870,11 +861,11 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
-    git checkout master                               # update master with latest
+    git checkout master                           # update master with latest
     git pull
-    git merge prepare/isis-1.2.3-RC1                  # merge branch onto master
-    git branch -d prepare/isis-1.2.3-RC1              # branch no longer needed
-    git push origin --delete prepare/isis-1.2.3-RC1   # remote branch no longer needed
+    git merge prepare/isis-1.2.3                  # merge branch onto master
+    git branch -d prepare/isis-1.2.3              # branch no longer needed
+    git push origin --delete prepare/isis-1.2.3   # remote branch no longer needed
 
 If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.
  

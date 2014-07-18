@@ -37,19 +37,6 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>isis-objectstore-jdo</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
             <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -63,46 +50,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>isis-viewer-restfulobjects</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>isis-security-shiro</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>isis-security-file</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>quickstart_wicket_restful_jdo-archetype</th>
+            <th>todoapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -115,7 +63,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>simple_wicket_restful_jdo-archetype</th>
+            <th>simpleapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>n/a</td>
@@ -153,15 +101,6 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>isis-objectstore-jdo</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
             <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -171,7 +110,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>isis-viewer-restfulobjects</th>
+            <th>todoapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -180,34 +119,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>isis-security-shiro</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>isis-security-file</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>quickstart_wicket_restful_jdo-archetype</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>simple_wicket_restful_jdo-archetype</th>
+            <th>simpleapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
