@@ -63,9 +63,11 @@ If **releasing a component on top of a core release**, then omit this step (just
 ##Update parent pom
 
 If **releasing core**, check:
+
 * parent is `org.apache:apache` (non-SNAPSHOT version)
 
 If **releasing a component**, check:
+
 * parent of component is `o.a.isis.core:isis`            (non-SNAPSHOT version)
 * parent of tck modules is `o.a.isis.core:isis-core-tck` (non-SNAPSHOT version)
 
