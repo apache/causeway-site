@@ -145,7 +145,7 @@ If releasing a non-core component, then check and if necessary update the `<vers
 
 > This obviously requires that the core has been released previously.  If you also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
 
-Also, if there is a tck test module with `oa.isis.core:isis-core-tck` as its parent, then make sure that it the parent is also updated to the non-`SNAPSHOT` version.  *However*, the tck module's dependency on the component (typically a property) should remain as `SNAPSHOT`; it will be updated automatically when the `mvn release:prepare` is performed.
+Also, if there is a tck test module with `o.a.isis.core:isis-core-tck` as its parent, then make sure that it the parent is also updated to the non-`SNAPSHOT` version.  *However*, the tck module's dependency on the component (typically a property) should remain as `SNAPSHOT`; it will be updated automatically when the `mvn release:prepare` is performed.
 
 ### Check no SNAPSHOT dependencies
 
