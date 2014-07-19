@@ -190,7 +190,7 @@ Log onto [repository.apache.org](http://repository.apache.org) and close the sta
 
 ## Git branches/tags
 
-(If component has its own branch, ie not reusing core's, then) push branch:
+Push branch:
 
     git push -u origin prepare/$ISISART-$ISISREL
 
