@@ -4,9 +4,9 @@ Isis archetypes are reverse engineered from example applications.  Once reverse 
 
 ### Check the example app
 
-Switch to the directory containing the example application; this page uses `quickstart_wicket_restful_jdo`:
+Switch to the directory containing the example application; this page uses `simpleapp`:
 
-    cd example/application/quickstart_wicket_restful_jdo
+    cd example/application/simpleapp
 
 Make sure that the app's `pom.xml`:
 
@@ -32,7 +32,7 @@ first, as self-hosted webconsole (browse to [http://localhost:8080](http://local
     mvn clean install
     mvn antrun:run -P self-host
 
-then using mvn jetty plugin (browse to [http://localhost:8080/quickstart_wicket_restful_jdo-webapp/](http://localhost:8080/quickstart_wicket_restful_jdo-webapp/)) etc:
+then using mvn jetty plugin (browse to [http://localhost:8080/simpleapp-webapp/](http://localhost:8080/simpleapp-webapp/)) etc:
 
     cd webapp
     mvn jetty:run     
@@ -86,7 +86,7 @@ Then, *in a different session*, create a new app from the archetype:
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype
+        -D archetypeArtifactId=simpleapp-archetype
 
 Build the newly generated app and test:
 
@@ -98,29 +98,29 @@ Build the newly generated app and test:
 
 ### Check the archetype source code into git
 
-Back in the *original session* (at `example/application/quickstart_wicket_restful_jdo`), we are ready to check the archetype source code into git.
+Back in the *original session* (at `example/application/simpleapp`), we are ready to check the archetype source code into git.
 
 If this is an update to an existing archetype:
 
-    git rm -rf ../../archetype/quickstart_wicket_restful_jdo
-    rm -rf ../../archetype/quickstart_wicket_restful_jdo
+    git rm -rf ../../archetype/simpleapp
+    rm -rf ../../archetype/simpleapp
 
-Make sure that the `archetype/quickstart_wicket_restful_jdo` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
+Make sure that the `archetype/simpleapp` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
 
 Then, copy over the generated source of the archetype:
 
-    mv target/generated-sources/archetype ../../archetype/quickstart_wicket_restful_jdo
-    git add ../../archetype/quickstart_wicket_restful_jdo
+    mv target/generated-sources/archetype ../../archetype/simpleapp
+    git add ../../archetype/simpleapp
 
 Next, confirm that the `-SNAPSHOT` version of the archetype is correct:
 
-    vi ../../archetype/quickstart_wicket_restful_jdo/pom.xml
+    vi ../../archetype/simpleapp/pom.xml
 
 If this a new archetype, then add a reference to the archetype to the root `pom.xml`, eg:
 
     <modules>
         ...
-        <module>example/archetype/quickstart</module>
+        <module>example/archetype/simpleapp</module>
         ...
     </modules>
 
@@ -140,14 +140,14 @@ You may also want to import the new archetype project, using `File > Import > Pr
 The procedure for releasing the archetype is the same as for any other releasable module; in essence:
 
     export ISISTMP= ... # as required
-    export ISISART=quickstart_wicket_restful_jdo-archetype
+    export ISISART=simpleapp-archetype
     export ISISDEV=1.6.0-SNAPSHOT
     export ISISREL=1.5.0
     export ISISRC=RC1
 
     rm -rf $ISISTMP/checkout
 
-    cd example/archetype/quickstart_wicket_restful_jdo
+    cd example/archetype/simpleapp
     mvn release:prepare -P apache-release \
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
