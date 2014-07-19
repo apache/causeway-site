@@ -12,7 +12,7 @@ Update the parent `pom.xml` to reference the *released* version of Isis core and
 
     vi example/application/simpleapp/pom.xml
    
-and update the appropriate `<properties>:
+and update the appropriate `<properties>`:
 
     <properties>
         <isis.version>1.6.0</isis.version>
