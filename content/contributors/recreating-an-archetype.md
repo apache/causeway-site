@@ -73,11 +73,11 @@ Quickly check that the remaining files are all source files:
 Now we can create the archetype:
 
     mvn archetype:create-from-project
-    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n quickstart -v 1.2.3
+    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n simpleapp -v 1.2.3
 
 where:
 
-- `quickstart` is the name of the source application, and 
+- `simpleapp` is the name of the source application, and 
 - `1.2.3` is the version of isis core that is to be the parent of the generated archetype.
 
 ### Test the archetype
