@@ -400,7 +400,6 @@ For both:
 #### <a name="core-bundled-components">Bundled components</a>
 
 * [Bytecode Enhancers](core/bytecode.html) [stub]
-* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 * [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 
 }
@@ -411,10 +410,12 @@ For both:
 {row
 
 {col-md-12
-## <a name="jdo-objectstore">Core (JDO/DataNucleus) Object Store</a>
+## <a name="jdo-objectstore">Core Object Store</a>
+
+<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
+
 }
 
-<i>previously released (v[1.5.0](components/objectstores/jdo/release-notes/about.html)) as separate component, now part of Core</i>
 
 {col-md-4
 
@@ -455,6 +456,9 @@ Other:
 * [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
 * [Transaction Management](components/objectstores/jdo/transaction-management.html)
 
+####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
+
+* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
   
 }
 
@@ -488,10 +492,12 @@ Other:
 {row
 
 {col-md-12
-## <a name="restfulobjects-viewer">Core (RestfulObjects) Viewer</a> 
+## <a name="restfulobjects-viewer">Core Viewer</a> 
+
+<i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)), now part of Core.</i>
+
 }
 
-<i>previously released (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)) as separate component, now part of Core</i>
 
 
 {col-md-4
@@ -528,16 +534,16 @@ Other:
 
 {col-md-12
 ## <a name="security">Core Security</a>
+
+<i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html)), now part of Core</i>
 }
 
 {col-md-4
-#### <a name="security-shiro">Shiro</a> 
-
-<i>previously released (v[1.5.0](components/security/shiro/release-notes/about.html)) as separate component, now part of Core</i>
+#### <a name="security-shiro">Shiro Implementation</a> 
 
 * [About](components/security/shiro/about.html)
 
-#### <a name="security-shiro-configuration">Configuration</a>
+#### <a name="security-shiro-configuration">Shiro Configuration</a>
 
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
 * [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
@@ -547,9 +553,9 @@ Other:
 
 {col-md-4
 
-#### <a name="security-bypass">Bypass</a> 
+#### <a name="other-core-security-implementations">Other Core Implementations</a> 
 
-* [About](core/bypass-security.html) [stub]
+* ['Bypass' Implementation](core/bypass-security.html) [stub]
 
 }
 
