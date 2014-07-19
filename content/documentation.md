@@ -456,10 +456,6 @@ Other:
 * [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
 * [Transaction Management](components/objectstores/jdo/transaction-management.html)
 
-####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
-
-* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
-  
 }
 
 {col-md-4
@@ -483,6 +479,10 @@ Other:
 
 * [Background Command Execution](components/objectstores/jdo/non-ui/background-command-execution-jdo.html)
 
+####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
+
+* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
+  
   
 }
 
@@ -543,6 +543,10 @@ Other:
 
 * [About](components/security/shiro/about.html)
 
+}
+
+{col-md-4
+
 #### <a name="security-shiro-configuration">Shiro Configuration</a>
 
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
@@ -557,10 +561,9 @@ Other:
 
 * ['Bypass' Implementation](core/bypass-security.html) [stub]
 
+
 }
 
-{col-md-4
-}
 
 }
 
@@ -631,6 +634,52 @@ Other
 }
 
 }
+
+
+
+
+{row
+
+{col-md-12
+## <a name="modules">Modules</a> 
+
+
+}
+
+
+
+{col-md-4
+
+
+}
+
+{col-md-4
+
+
+}
+
+{col-md-4
+
+
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
