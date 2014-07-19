@@ -66,6 +66,10 @@ To actually delete these files, use:
     /bin/find . -name "*.iml" -exec rm {} \;
     /bin/find . -name "*.log" -exec rm {} \;
 
+Quickly check that the remaining files are all source files:
+
+    /bin/find .
+
 Now we can create the archetype:
 
     mvn archetype:create-from-project
