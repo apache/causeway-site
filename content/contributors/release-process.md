@@ -561,10 +561,10 @@ And use the following body:
 
 <pre>
 I've cut a release for Apache Isis Core and related components:
-* Core 1.6.0 (now incorporating the JDO Object store, Restful Objects viewer and Shiro Security)
+* Core 1.6.0
 * Wicket Viewer 1.6.0
-* TodoApp Archetype 1.6.0 (previously called the 'Quickstart Archetype')
-* SimpleApp Archetype 1.6.0 (previously called the 'Simple Archetype')
+* TodoApp Archetype 1.6.0
+* SimpleApp Archetype 1.6.0
 
 The artifacts have been uploaded to staging repository on repository.apache.org:
 
@@ -798,25 +798,28 @@ And use the following body (summarizing the main points as required):
 
 <pre>
 The Isis team is pleased to announce the release of:
-- Apache Isis Core version 1.x.0   (now incorporating JDO Object
-- Wicket Viewer 1.x.0
-- SimpleApp Archetype 1.x.0
-- ToDoApp Archetype 1.x.0
+* Apache Isis Core version 1.6.0
+* Wicket Viewer 1.6.0
+* ToDoApp Archetype 1.6.0
+* SimpleApp Archetype 1.6.0
 
-Note that Isis Core now incorporates the JDO Objectstore, Restful Objects Viewer and Shiro Security
-(previously released as separate components).
+Note that:
+* Isis Core now incorporates the JDO Objectstore, Restful Objects Viewer and 
+  Shiro Security, all previously released as separate components.
+* ToDoApp Archetype was previously the 'Quickstart (Wicket/Restful/JDO) archetype'
+* SimpleApp Archetype was previously the 'Simple (Wicket/Restful/JDO) archetype'
 
 New features in this release include:
 - ...
 
-Full release notes are available at [1,2,3,4,5,6] on the Isis website.
+Full release notes are available at [1,2,3,4] on the Isis website.
 
-You can access this release directly from the Maven central repo [9], 
-or download the release and build it from source [10].
+You can access this release directly from the Maven central repo [5], 
+or download the release and build it from source [6].
 
 Enjoy!
 
--The Isis team
+--The Isis team
 
 [1] http://isis.apache.org/core/release-notes/isis-1.x.0.html
 [2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.x.0.html
