@@ -554,32 +554,24 @@ The following boilerplate is for a release of the Apache Isis Core.  Adapt as re
 
 Use the following subject:
 <pre>
-[VOTE] Apache Isis Core release 1.4.0 and related components
+[VOTE] Apache Isis Core release 1.6.0 and related components
 </pre>
 
 And use the following body:
 
 <pre>
 I've cut a release for Apache Isis Core and related components:
-* Core 1.4.0
-* JDO Object Store 1.4.0
-* Wicket Viewer 1.4.0
-* Restful Objects Viewer 2.2.0
-* Shiro Security 1.4.0
-* File Security 1.4.0
-* Quickstart Archetype 1.4.0
-* Simple Archetype 1.4.0
+* Core 1.6.0 (now incorporating the JDO Object store, Restful Objects viewer and Shiro Security)
+* Wicket Viewer 1.6.0
+* TodoApp Archetype 1.6.0 (previously called the 'Quickstart Archetype')
+* SimpleApp Archetype 1.6.0 (previously called the 'Simple Archetype')
 
 The artifacts have been uploaded to staging repository on repository.apache.org:
 
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1000/content/org/apache/isis/core/isis/1.4.0/isis-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1001/content/org/apache/isis/objectstore/isis-objectstore-jdo/1.4.0/isis-objectstore-jdo-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1002/content/org/apache/isis/viewer/isis-viewer-wicket/1.4.0/isis-viewer-wicket-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1005/content/org/apache/isis/viewer/isis-viewer-restfulobjects/2.2.0/isis-viewer-restfulobjects-2.2.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1003/content/org/apache/isis/security/isis-security-shiro/1.4.0/isis-security-shiro-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1004/content/org/apache/isis/security/isis-security-file/1.4.0/isis-security-file-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1006/content/org/apache/isis/archetype/quickstart_wicket_restful_jdo-archetype/1.4.0/quickstart_wicket_restful_jdo-archetype-1.4.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-1007/content/org/apache/isis/archetype/simple_wicket_restful_jdo-archetype/1.4.0/simple_wicket_restful_jdo-archetype-1.4.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/core/isis/1.6.0/isis-1.6.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/viewer/isis-viewer-wicket/1.6.0/isis-viewer-wicket-1.6.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/todoapp-archetype/1.6.0/todoapp-archetype-1.6.0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/simpleapp-archetype/1.6.0/simpleapp-archetype-1..0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
