@@ -8,12 +8,19 @@ Switch to the directory containing the example application; this page uses `simp
 
     cd example/application/simpleapp
 
-Make sure that the app's `pom.xml`:
+Update the parent `pom.xml` to reference the *released* version of Isis core and the other components.  As of v1.6.0 this means:
 
-- has the correct `-SNAPSHOT` version
-- references *released* versions of Isis core and the other components
+    vi example/application/simpleapp/pom.xml
+   
+and update the appropriate `<properties>:
 
-It's probably easiest to load up each `pom.xml` and inspect manually:
+    <properties>
+        <isis.version>1.6.0</isis.version>
+        <isis-viewer-wicket.version>1.6.0</isis-viewer-wicket.version>
+        ...
+    </properties>
+
+Alternatively, you could just load up each `pom.xml` and inspect manually:
 
     vi `/bin/find . -name pom.xml | grep -v target`
 
