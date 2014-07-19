@@ -196,6 +196,6 @@ Push branch:
 
 Then push tag:
 
-    git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
+    git push origin refs/tags/$ISISART-$ISISREL-$ISISRC:refs/tags/$ISISART-$ISISREL-$ISISRC
     git fetch
 
