@@ -198,10 +198,12 @@ You may also want to import the new archetype project, using `File > Import > Pr
 
 The procedure for releasing the archetype is the same as for any other releasable module; in essence:
 
-    export ISISTMP= ... # as required
+If recreating the **simpleapp** archetype:
+
+    export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
-    export ISISDEV=1.6.0-SNAPSHOT
-    export ISISREL=1.5.0
+    export ISISDEV=1.7.0-SNAPSHOT
+    export ISISREL=1.6.0
     export ISISRC=RC1
 
     rm -rf $ISISTMP/checkout
@@ -211,7 +213,23 @@ The procedure for releasing the archetype is the same as for any other releasabl
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
                     -Dtag=$ISISART-$ISISREL-$ISISRC
-    mvn release:perform -P apache-release \
-        -DworkingDirectory=$ISISTMP/checkout
+    mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/checkout
+
+If recreating the **todoapp** archetype:
+
+    export ISISTMP=/c/tmp   # or as required
+    export ISISART=todoapp-archetype
+    export ISISDEV=1.7.0-SNAPSHOT
+    export ISISREL=1.6.0
+    export ISISRC=RC1
+
+    rm -rf $ISISTMP/checkout
+
+    cd example/archetype/todoapp
+    mvn release:prepare -P apache-release \
+                    -DreleaseVersion=$ISISREL \
+                    -DdevelopmentVersion=$ISISDEV \
+                    -Dtag=$ISISART-$ISISREL-$ISISRC
+    mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/checkout
 
 See the [release process](release-process.html) for full details.
