@@ -400,7 +400,6 @@ For both:
 #### <a name="core-bundled-components">Bundled components</a>
 
 * [Bytecode Enhancers](core/bytecode.html) [stub]
-* [Bypass Security](core/bypass-security.html) [stub]
 * [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 * [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 
@@ -412,112 +411,10 @@ For both:
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.5.0](components/viewers/wicket/release-notes/about.html)
+## <a name="jdo-objectstore">Core (JDO/DataNucleus) Object Store</a>
 }
 
-{col-md-4
-#### <a name="wicket-viewer-about">About</a>
-<p class="display:none"/>
-
-* [About](components/viewers/wicket/about.html)
-
-#### <a name="wicket-viewer-features">Features</a>
-
-* [File upload/download](components/viewers/wicket/file-upload-download.html)
-* [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
-* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
-* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
-* [Tips and workarounds](components/viewers/wicket/tips-and-workarounds.html)
-
-#### Changing Pages
-
-* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
-* [The About page](components/viewers/wicket/configuring-the-about-page.html)
-
-}
-
-{col-md-4
-
-#### <a name="wicket-viewer-configuration">Configuration</a>
-
-Layouts
-
-* [Static layouts](components/viewers/wicket/static-layouts.html)
-* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
-Other
-
-* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
-* [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
-* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
-* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
-* [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
-
-}
-
-{col-md-4
-
-#### <a name="wicket-viewer-extensions">Customization</a>
-
-* [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
-* [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
-* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
-* [Custom pages](components/viewers/wicket/custom-pages.html)
-
-#### <a name="wicket-viewer-third-party-extensions">Third-party extensions</a>
-
-* [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html)
-* [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html)
-* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html)
-
-}
-
-}
-
-{row
-
-{col-md-12
-## <a name="restfulobjects-viewer">RestfulObjects Viewer</a> [2.3.0](components/viewers/restfulobjects/release-notes/about.html)
-}
-
-
-{col-md-4
-
-#### <a name="restfulobjects-viewer-about">About</a>
-<p class="display:none"/>
-
-* [About](components/viewers/restfulobjects/about.html)
-* [Restful Objects Specification](http://restfulobjects.org)
-
-}
-
-{col-md-4
-
-#### <a name="restfulobjects-viewer-applib-service-impl">Applib service impl.</a>
-
-* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
-
-}
-
-{col-md-4
-
-#### Hints and Tips
-
-* [Using Chrome Tools](components/viewers/restfulobjects/using-chrome-tools.html) <a href="components/viewers/restfulobjects/using-chrome-tools.html"><img src="./images/tv_show-25.png"></a>
-* [AngularJS Tips](components/viewers/restfulobjects/angularjs-tips.html)
-
-}
-
-}
-
-
-
-{row
-
-{col-md-12
-## <a name="jdo-objectstore">JDO/DataNucleus Object Store</a> [1.5.0](components/objectstores/jdo/release-notes/about.html)
-}
+<i>previously released (v[1.5.0](components/objectstores/jdo/release-notes/about.html)) as separate component, now part of Core</i>
 
 {col-md-4
 
@@ -591,11 +488,52 @@ Other:
 {row
 
 {col-md-12
-## <a name="security">Security</a>
+## <a name="restfulobjects-viewer">Core (RestfulObjects) Viewer</a> 
+}
+
+<i>previously released (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)) as separate component, now part of Core</i>
+
+
+{col-md-4
+
+#### <a name="restfulobjects-viewer-about">About</a>
+<p class="display:none"/>
+
+* [About](components/viewers/restfulobjects/about.html)
+* [Restful Objects Specification](http://restfulobjects.org)
+
 }
 
 {col-md-4
-#### <a name="security-shiro">Shiro</a> [1.5.0](components/security/shiro/release-notes/about.html)
+
+#### <a name="restfulobjects-viewer-applib-service-impl">Applib service impl.</a>
+
+* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
+
+}
+
+{col-md-4
+
+#### Hints and Tips
+
+* [Using Chrome Tools](components/viewers/restfulobjects/using-chrome-tools.html) <a href="components/viewers/restfulobjects/using-chrome-tools.html"><img src="./images/tv_show-25.png"></a>
+* [AngularJS Tips](components/viewers/restfulobjects/angularjs-tips.html)
+
+}
+
+}
+
+
+{row
+
+{col-md-12
+## <a name="security">Core Security</a>
+}
+
+{col-md-4
+#### <a name="security-shiro">Shiro</a> 
+
+<i>previously released (v[1.5.0](components/security/shiro/release-notes/about.html)) as separate component, now part of Core</i>
 
 * [About](components/security/shiro/about.html)
 
@@ -608,10 +546,10 @@ Other:
 }
 
 {col-md-4
-#### <a name="security-file">File</a> [1.0.1](components/security/file/release-notes/about.html)
-<p class="display:none"/>
 
-* [About](components/security/file/about.html)
+#### <a name="security-bypass">Bypass</a> 
+
+* [About](core/bypass-security.html) [stub]
 
 }
 
@@ -619,6 +557,77 @@ Other:
 }
 
 }
+
+
+
+{row
+
+{col-md-12
+## <a name="wicket-viewer">Wicket Viewer</a> [1.5.0](components/viewers/wicket/release-notes/about.html)
+}
+
+{col-md-4
+#### <a name="wicket-viewer-about">About</a>
+<p class="display:none"/>
+
+* [About](components/viewers/wicket/about.html)
+
+#### <a name="wicket-viewer-features">Features</a>
+
+* [File upload/download](components/viewers/wicket/file-upload-download.html)
+* [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
+* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
+* [Tips and workarounds](components/viewers/wicket/tips-and-workarounds.html)
+
+#### Changing Pages
+
+* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
+* [The About page](components/viewers/wicket/configuring-the-about-page.html)
+
+}
+
+{col-md-4
+
+#### <a name="wicket-viewer-configuration">Configuration</a>
+
+Layouts
+
+* [Static layouts](components/viewers/wicket/static-layouts.html)
+* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
+
+Other
+
+* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+* [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
+* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
+* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
+* [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
+
+}
+
+{col-md-4
+
+#### <a name="wicket-viewer-extensions">Customization</a>
+
+* [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
+* [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
+* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
+* [Custom pages](components/viewers/wicket/custom-pages.html)
+
+#### <a name="wicket-viewer-third-party-extensions">Third-party extensions</a>
+
+* [Excel download](./components/viewers/wicket/third-party/danhaywood-isis-wicket-excel.html)
+* [Fullcalendar2](./components/viewers/wicket/third-party/danhaywood-isis-wicket-fullcalendar2.html)
+* [Gmap3](./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Wicked charts](./components/viewers/wicket/third-party/danhaywood-isis-wicket-wickedcharts.html)
+
+}
+
+}
+
+
+
 
 {row
 
@@ -699,7 +708,7 @@ Other:
 {row
 
 {col-md-12
-## <a name="unreleased">Unreleased & Mothballed components</a>
+## <a name="unreleased">Unreleased or Mothballed components</a>
 }
 
 {col-md-4
@@ -733,6 +742,13 @@ No longer under active development
 }
 
 {col-md-4
+
+#### <a name="retired">Retired</a>
+
+Previously released but now retired
+
+* [File Security](components/security/file/about.html)
+
 
 #### <a name="unreleased-incomplete">Incomplete</a>
 
