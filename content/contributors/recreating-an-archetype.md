@@ -200,6 +200,8 @@ The procedure for releasing the archetype is the same as for any other releasabl
 
 If recreating the **simpleapp** archetype:
 
+    cd example/archetype/simpleapp
+
     export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
     export ISISDEV=1.7.0-SNAPSHOT
@@ -208,7 +210,6 @@ If recreating the **simpleapp** archetype:
 
     rm -rf $ISISTMP/checkout
 
-    cd example/archetype/simpleapp
     mvn release:prepare -P apache-release \
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
@@ -216,6 +217,8 @@ If recreating the **simpleapp** archetype:
     mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/checkout
 
 If recreating the **todoapp** archetype:
+
+    cd example/archetype/todoapp
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=todoapp-archetype
@@ -225,7 +228,6 @@ If recreating the **todoapp** archetype:
 
     rm -rf $ISISTMP/checkout
 
-    cd example/archetype/todoapp
     mvn release:prepare -P apache-release \
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
