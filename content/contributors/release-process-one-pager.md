@@ -36,6 +36,15 @@ if releasing a `component/xxx/yyy`, eg:
     export ISISREL=1.6.0
     export ISISRC=RC1
 
+eg, for Wicket viewer this is:
+
+    cd component/viewer/wicket
+
+    export ISISART=isis-viewer-wicket
+    export ISISDEV=1.7.0-SNAPSHOT
+    export ISISREL=1.6.0
+    export ISISRC=RC1
+    
 then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR), and confirm:
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
@@ -69,7 +78,9 @@ If **releasing core**, check:
 If **releasing a component**, check:
 
 * parent of component is `o.a.isis.core:isis`            (non-SNAPSHOT version)
+    * eg `component/viewer/wicket/pom.xml`
 * parent of tck modules is `o.a.isis.core:isis-core-tck` (non-SNAPSHOT version)
+    * eg `component/viewer/wicket/tck/pom.xml`
 
 
 ##Check for SNAPSHOT dependencies
