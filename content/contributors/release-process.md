@@ -89,10 +89,10 @@ git pull --ff-only
 
 Then, determine/confirm the version number of the module being released.  This should be in line with our [semantic versioning policy](versioning-policy.html).
 
-Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare release candidate #1 for a release 1.2.3 of `core`, use:
+Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare release candidate #1 for a release 1.6.0 of `core`, use:
 
 <pre>
-git checkout -b prepare/isis-1.2.3
+git checkout -b prepare/isis-1.6.0
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
@@ -111,11 +111,11 @@ Before making any formal release, there are a number of prerequisites that shoul
 
 The version number of the parent pom should reflect the branch name that you are now on (with a `-SNAPSHOT` suffix).  In many cases this will have been done already during earlier development; but confirm that it has been updated.  If it has not, make the change.
 
-For example, if releasing `core` version `1.2.3`, the POM should read:
+For example, if releasing `core` version `1.6.0`, the POM should read:
 
     <groupId>org.apache.isis.core</groupId>
     <artifactId>isis</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
 
 ### Update parent (Isis Core)
 
@@ -139,7 +139,7 @@ If releasing a non-core component, then check and if necessary update the `<vers
     <parent>
         <groupId>org.apache.isis.core</groupId>
         <artifactId>isis</artifactId>
-        <version>1.2.3</version>
+        <version>1.6.0</version>
         <relativePath />
     </parent>
 
@@ -338,9 +338,9 @@ Most of the work is done using the `mvn release:prepare` goal.  Since this makes
 Run the dry-run as follows:
 
     mvn release:prepare -P apache-release -D dryRun=true \
-        -DreleaseVersion=1.2.3 \
-        -Dtag=isis-1.2.3 \
-        -DdevelopmentVersion=1.2.4-SNAPSHOT
+        -DreleaseVersion=1.6.0 \
+        -Dtag=isis-1.6.0 \
+        -DdevelopmentVersion=1.7.0-SNAPSHOT
 
 where:
 
@@ -381,13 +381,13 @@ $ mvn release:prepare -P apache-release -D dryRun=true
 [INFO] Isis Core TCK Fixtures
 [INFO]
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Isis Core 1.2.3-SNAPSHOT
+[INFO] Building Apache Isis Core 1.6.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
 [INFO]
 [INFO] --- maven-release-plugin:2.3.2:prepare (default-cli) @ isis ---
 [INFO] Resuming release from phase 'map-release-versions'
 What is the release version for "Apache Isis Core"? (org.apache.isis.core:isis)
-1.2.3: :
+1.6.0: :
 </pre>
 
 If you didn't provide the `releaseVersion`, `tag` and `developmentVersion` tags, then you'll be prompted for them.  You can generally accept the defaults that Maven offers.
@@ -395,19 +395,19 @@ If you didn't provide the `releaseVersion`, `tag` and `developmentVersion` tags,
 Assuming this completes successfully, re-run the command, but without the `dryRun` flag and specifying `resume=false` (to ignore the generated `release.properties` file that gets generated as a side-effect of using `git`).  You can also set the `skipTests` flag since they would have been run during the previous dry run:
 
     mvn release:prepare -P apache-release -D resume=false -DskipTests=true
-            -DreleaseVersion=1.2.3 \
-            -Dtag=isis-1.2.3 \
-            -DdevelopmentVersion=1.2.4-SNAPSHOT
+            -DreleaseVersion=1.6.0 \
+            -Dtag=isis-1.6.0 \
+            -DdevelopmentVersion=1.7.0-SNAPSHOT
 
 > If any issues here, then explicitly delete the generated `release.properties` file first.
 
 ### Post-prepare sanity check
 
-You should end up with artifacts in your local repo with the new version `1.2.3`. There are then a couple of sanity checks that you can perform:
+You should end up with artifacts in your local repo with the new version `1.6.0`. There are then a couple of sanity checks that you can perform:
 
 * unzip the source-release ZIP and check it builds
 
-  For example, if building core, then the ZIP file will be called `isis-1.2.3-source-release.zip` and should reside in `~/.m2/repository/org/apache/isis/core/isis/1.2.3` directory.
+  For example, if building core, then the ZIP file will be called `isis-1.6.0-source-release.zip` and should reside in `~/.m2/repository/org/apache/isis/core/isis/1.6.0` directory.
 
   Unzip in a new directory, and build.
 
@@ -461,17 +461,17 @@ The command starts off by checking out the codebase from the tag (hence differen
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
 re
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.2.3 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.6.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.2.3 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
+[INFO] Executing: cmd.exe /X /C "git clone --branch isis-1.6.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Executing: cmd.exe /X /C "git ls-remote file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
 [INFO] Executing: cmd.exe /X /C "git fetch file:///C:\APACHE\isis-git-rw"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C "git checkout isis-1.2.3"
+[INFO] Executing: cmd.exe /X /C "git checkout isis-1.6.0"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
 [INFO] Executing: cmd.exe /X /C "git ls-files"
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
@@ -532,12 +532,12 @@ Finally, push both the branch and the tag created locally to the central origin 
 
 To push the branch, for example:
 
-    git checkout prepare/isis-1.2.3
-    git push -u origin prepare/isis-1.2.3
+    git checkout prepare/isis-1.6.0
+    git push -u origin prepare/isis-1.6.0
 
 To push the tag, with the `-RCn` suffix, for example:
 
-    git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3-RC1
+    git push origin refs/tags/isis-1.6.0:refs/tags/isis-1.6.0-RC1
     git fetch
 
 The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
@@ -575,7 +575,7 @@ The artifacts have been uploaded to staging repository on repository.apache.org:
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-1.4.0-RC1.
+In the source code repo the code has been tagged as isis-1.6.0-RC1.
 
 Our website contains some suggestions of how to verify the release, see http://isis.apache.org/contributors/verifying-releases.html.  There is also a script you can use, http://isis.apache.org/contributors/verifying-releases-script.html.
 
@@ -586,7 +586,7 @@ Please verify the release and cast your vote.  The vote will be open for a minim
 [ ] -1
 </pre>
 
-The value `orgapacheisis-nnn` is the repository id provided by Nexus earlier.
+The value `orgapacheisis-10xx` is the repository id provided by Nexus earlier.
 
 The procedure for other committers to verify the release can be found [here](verifying-releases.html).
 
@@ -598,7 +598,7 @@ Once the vote has completed, post the results to the isis-dev mailing list.
 For example, use the following subject for a vote on Isis Core:
 
 <pre>
-[RESULT] [VOTE] Apache Isis Core release 1.2.3
+[RESULT] [VOTE] Apache Isis Core release 1.6.0
 </pre>
 
 using the body (alter last line as appropriate):
@@ -621,28 +621,28 @@ If the vote has been successful, then replace the `-RCn` tag with another withou
 
 You can do this using the `scripts/promoterctag.sh` script; for example:
 
-    sh scripts/promoterctag isis-1.2.3 RC1
+    sh scripts/promoterctag isis-1.6.0 RC1
 
 Or, if you like to execute the steps in that script by hand:
 
 * add the new remote tag, for example:
 
 <pre>
-  git push origin refs/tags/isis-1.2.3:refs/tags/isis-1.2.3
+  git push origin refs/tags/isis-1.6.0:refs/tags/isis-1.6.0
   git fetch
 </pre>
 
 * delete the `-RCn` remote tag, for example:
 
 <pre>
-  git push origin --delete refs/tags/isis-1.2.3-RC1
+  git push origin --delete refs/tags/isis-1.6.0-RC1
   git fetch
 </pre>
 
 * delete the `-RCn` local tag, for example:
 
 <pre>
-  git tag -d isis-1.2.3-RC1
+  git tag -d isis-1.6.0-RC1
   git fetch
 </pre>
 
@@ -655,25 +655,25 @@ If the vote has been unsuccessful, then:
 * delete the remote branch, for example:
 
 <pre>
-  git push origin --delete prepare/isis-1.2.3
+  git push origin --delete prepare/isis-1.6.0
 </pre>
 
 * delete your local branch, for example:
 
 <pre>
-  git branch -D prepare/isis-1.2.3
+  git branch -D prepare/isis-1.6.0
 </pre>
 
 * delete the remote origin server's tag, for example:
 
 <pre>
-  git push origin --delete refs/tags/isis-1.2.3-RC1
+  git push origin --delete refs/tags/isis-1.6.0-RC1
 </pre>
 
 * delete the tag that was created locally, for example:
 
 <pre>
-  git tag -d isis-1.2.3
+  git tag -d isis-1.6.0
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
@@ -765,7 +765,7 @@ Update the Isis CMS website:
 
   Typically this be will a new page in the core section or for one of the components. Make a note of the URL of this new page (for use in the mailing list announcement).
 
-  For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-1.2.3.html`
+  For example, a new release of Isis Core would have a release notes page `http://isis.apache.org/core/release-notes-1.6.0.html`
 
 * Do a search for `x.y.0-SNAPSHOT` and replace with `x.y.0`
 
@@ -802,7 +802,7 @@ Announce the release to dev@isis.apache.org mailing list.
 For example, for a release of Apache Isis Core, use the following subject:
 
 <pre>
-[ANN] Apache Isis version 1.2.3 Released
+[ANN] Apache Isis version 1.6.0 Released
 </pre>
 
 And use the following body (summarizing the main points as required):
@@ -855,9 +855,9 @@ Because we release from a branch, the changes made in the branch (changes to `po
 
     git checkout master                           # update master with latest
     git pull
-    git merge prepare/isis-1.2.3                  # merge branch onto master
-    git branch -d prepare/isis-1.2.3              # branch no longer needed
-    git push origin --delete prepare/isis-1.2.3   # remote branch no longer needed
+    git merge prepare/isis-1.6.0                  # merge branch onto master
+    git branch -d prepare/isis-1.6.0              # branch no longer needed
+    git push origin --delete prepare/isis-1.6.0   # remote branch no longer needed
 
 If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.
  
