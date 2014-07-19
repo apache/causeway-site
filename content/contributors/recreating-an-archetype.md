@@ -214,7 +214,8 @@ If recreating the **simpleapp** archetype:
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
                     -Dtag=$ISISART-$ISISREL-$ISISRC
-    mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/checkout
+    mvn release:perform -P apache-release \
+                    -DworkingDirectory=$ISISTMP/checkout
 
 If recreating the **todoapp** archetype:
 
@@ -232,6 +233,7 @@ If recreating the **todoapp** archetype:
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
                     -Dtag=$ISISART-$ISISREL-$ISISRC
-    mvn release:perform -P apache-release -DworkingDirectory=$ISISTMP/checkout
+    mvn release:perform -P apache-release \
+                    -DworkingDirectory=$ISISTMP/checkout
 
 See the [release process](release-process.html) for full details.
