@@ -6,11 +6,11 @@ Isis archetypes are reverse engineered from example applications.  Once reverse 
 
 Switch to the directory containing the example application.
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     cd example/application/simpleapp
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     cd example/application/todoapp
 
@@ -48,9 +48,9 @@ then using mvn jetty plugin:
     cd webapp
     mvn jetty:run     
 
-If recreating the *simpleapp* archetype, browse to [http://localhost:8080/simpleapp-webapp/](http://localhost:8080/simpleapp-webapp/).
+If recreating the **simpleapp** archetype, browse to [http://localhost:8080/simpleapp-webapp/](http://localhost:8080/simpleapp-webapp/).
     
-If recreating the *todoapp* archetype, browse to [http://localhost:8080/todoapp-webapp/](http://localhost:8080/todoapp-webapp/).
+If recreating the **todoapp** archetype, browse to [http://localhost:8080/todoapp-webapp/](http://localhost:8080/todoapp-webapp/).
 
     
 Check the about page and confirm built against non-SNAPSHOT versions of the Isis jars.
@@ -85,11 +85,11 @@ Now we can create the archetype.
 
 and then update the generated files.  
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n simpleapp -v 1.2.3
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n todoapp -v 1.2.3
 
@@ -107,7 +107,7 @@ First, build the archetype:
 
 Then, *in a different session*, create a new app from the archetype:
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     mkdir /tmp/test-simpleapp
     cd /tmp/test-simpleapp
@@ -118,7 +118,7 @@ If recreating the *simpleapp* archetype:
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     mkdir /tmp/test-todoapp
     cd /tmp/test-todoapp
@@ -141,12 +141,12 @@ Build the newly generated app and test:
 
 Back in the *original session* (at `example/application/simpleapp` or `example/application/todoapp`), we are ready to check the archetype source code into git.
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     git rm -rf ../../archetype/simpleapp
     rm -rf ../../archetype/simpleapp
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     git rm -rf ../../archetype/todoapp
     rm -rf ../../archetype/todoapp
@@ -155,23 +155,23 @@ In either case make sure that the `archetype/xxxapp` directory was fully removed
 
 Then, copy over the generated source of the archetype.
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     mv target/generated-sources/archetype ../../archetype/simpleapp
     git add ../../archetype/simpleapp
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     mv target/generated-sources/archetype ../../archetype/todoapp
     git add ../../archetype/todoapp
 
 Next, confirm that the `-SNAPSHOT` version of the archetype is correct:
 
-If recreating the *simpleapp* archetype:
+If recreating the **simpleapp** archetype:
 
     vi ../../archetype/simpleapp/pom.xml
 
-If recreating the *todoapp* archetype:
+If recreating the **todoapp** archetype:
 
     vi ../../archetype/todoapp/pom.xml
 
