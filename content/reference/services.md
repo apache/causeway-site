@@ -208,17 +208,7 @@ Title: Applib Services and Implementations
 </table>
     
 
-isis-core-applib
-
-* (abstract)o.a.i.applib.fixturescripts.FixtureScripts ... requires ClassDiscoveryService
-
-
-    
-isis-module-background
-
-* (empty, placeholder) 
-
-
-
-
+Notes:
+* the `isis-module-background` module is currently unused (defines no classes).
+  
 }
