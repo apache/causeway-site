@@ -10,18 +10,14 @@ Title: Applib Services and Implementations
     <th class="heading">Impl'n<br/>Maven Module</th>
     <th class="heading">Impl'n<br/>Class</th>
     <th class="heading">@DomainService?</th>
-    <th class="heading">@RequestScoped?</th>
-    <th class="heading">Depends on</th>
     <th class="heading">Notes</th>
 </tr>
 <tr>
     <th class="heading">isis-core-xxx</th>
     <th class="heading">o.a.i.applib.services.classdiscovery<br/>ClassDiscoveryService</th>
     <td>isis-core-applib</td>
-    <td>ClassDiscoveryServiceUsingReflections</td>
+    <td>ClassDiscoveryService<br/>UsingReflections</td>
     <td>No; register in isis.properties</td>
-    <td>No</td>
-    <td></td>
     <td>requires org.reflections as dependency</td>
 </tr>
 <tr>
@@ -30,8 +26,6 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>CommandContext</td>
     <td>Yes; auto-registered</td>
-    <td>Yes</td>
-    <td></td>
     <td>API is also a concrete class</td>
 </tr>
 <tr>
@@ -40,8 +34,6 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>Bulk.InteractionContext</td>
     <td>Yes; auto-registered</td>
-    <td>Yes</td>
-    <td></td>
     <td>API is also a concrete class</td>
 </tr>
 <tr>
@@ -50,8 +42,6 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>QueryResultsCache</td>
     <td>Yes; auto-registered</td>
-    <td>Yes</td>
-    <td></td>
     <td>API is also a concrete class</td>
 </tr>
 <tr>
@@ -60,18 +50,14 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>Scratchpad</td>
     <td>Yes; auto-registered</td>
-    <td>Yes</td>
-    <td></td>
     <td>API is also a concrete class</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.exceprecog<br/>ExceptionRecognizer</th>
     <td>isis-core-applib</td>
-    <td>ExceptionRecognizerCompositeForJdoObjectStore</td>
+    <td>ExceptionRecognizerComposite<br/>ForJdoObjectStore</td>
     <td>No; register in isis.properties</td>
-    <td></td>
-    <td></td>
     <td>Extensible using composite pattern if required</td>
 </tr>
 <tr>
@@ -81,8 +67,6 @@ Title: Applib Services and Implementations
     <td>DomainObjectContainerDefault</td>
     <td>No, but automatically registered as a 'special case'</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -90,8 +74,6 @@ Title: Applib Services and Implementations
     <td>isis-core-metamodel</td>
     <td>BookmarkServiceDefault</td>
     <td>Yes; auto-registered</td>
-    <td></td>
-    <td></td>
     <td>related service: BookmarkHolderActionContributions, BookmarkHolderAssociationContributions</td>
 </tr>
 <tr>
@@ -100,8 +82,6 @@ Title: Applib Services and Implementations
     <td>isis-core-runtime</td>
     <td>BackgroundServiceDefault</td>
     <td>No; register in isis.properties</td>
-    <td></td>
-    <td></td>
     <td>Not automatically registered because of its dependencies</td>
 </tr>
 <tr>
@@ -111,8 +91,6 @@ Title: Applib Services and Implementations
     <td>MementoServiceDefault</td>
     <td>Yes; auto-registered</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -120,8 +98,6 @@ Title: Applib Services and Implementations
     <td>isis-core-runtime</td>
     <td>XmlSnapshotServiceDefault</td>
     <td>Yes; auto-registered</td>
-    <td></td>
-    <td></td>
     <td></td>
 </tr>
 <tr>
@@ -131,8 +107,6 @@ Title: Applib Services and Implementations
     <td>EventBusServiceJdo</td>
     <td>Yes; auto-registered</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -141,8 +115,6 @@ Title: Applib Services and Implementations
     <td>IsisJdoSupportImpl</td>
     <td>Yes; auto-registered</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th class="heading">isis-module-xxx</th>
@@ -150,9 +122,7 @@ Title: Applib Services and Implementations
     <td>isis-module-audit-jdo</td>
     <td>AuditingServiceJdo</td>
     <td>No, but see notes</td>
-    <td></td>
-    <td></td>
-    <td>AuditingServiceJdoContributions, AuditingServiceJdoRepository (@DomainService)</td>
+    <td>related services: AuditingServiceJdoContributions, AuditingServiceJdoRepository</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -160,9 +130,7 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>CommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td></td>
-    <td></td>
-    <td>related services: CommandServiceJdoContributions, CommandServiceJdoRepository (@DomainService)
+    <td>related services: CommandServiceJdoContributions, CommandServiceJdoRepository</td>
 </td>
 </tr>
 <tr>
@@ -171,9 +139,7 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>BackgroundCommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td></td>
-    <td></td>
-    <td>related services: BackgroundCommandServiceJdoContributions, BackgroundCommandServiceJdoRepository (@DomainService)</td>
+    <td>related services: BackgroundCommandServiceJdoContributions, BackgroundCommandServiceJdoRepository</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -182,19 +148,14 @@ Title: Applib Services and Implementations
     <td>WrapperFactoryDefault</td>
     <td>Yes; auto-registered</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
-
 <tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.publish<br/>PublishingService</th>
     <td>isis-module-publishing-jdo</td>
     <td>PublishingServiceJdo</td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository (@DomainService)</td>
+    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -203,16 +164,12 @@ Title: Applib Services and Implementations
     <td>RestfulObjectsSpecEventSerializer</td>
     <td>Yes; auto-registered</td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th class="heading">Other</th>
     <th class="heading">o.a.i.applib.services.devutils<br/>DeveloperUtilitiesService</th>
     <td>isis-module-devutils</td>
     <td>DeveloperUtilitiesServiceDefault</td>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
 </tr>
@@ -223,16 +180,12 @@ Title: Applib Services and Implementations
     <td>ApplicationSettingsServiceJdo</td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.settings<br/>UserSettingsServiceRW</th>
     <td>isis-module-settings</td>
     <td>UserSettingsServiceJdo</td>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
 </tr>
