@@ -26,7 +26,7 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>CommandContext</td>
     <td>Yes; auto-registered</td>
-    <td>API is also a concrete class</td>
+    <td>API is also a concrete class.  Command impl depends on configured CommandService</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -74,7 +74,7 @@ Title: Applib Services and Implementations
     <td>isis-core-metamodel</td>
     <td>BookmarkServiceDefault</td>
     <td>Yes; auto-registered</td>
-    <td>related service: BookmarkHolderActionContributions, BookmarkHolderAssociationContributions</td>
+    <td>related services: BookmarkHolderActionContributions, BookmarkHolderAssociationContributions</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -82,7 +82,7 @@ Title: Applib Services and Implementations
     <td>isis-core-runtime</td>
     <td>BackgroundServiceDefault</td>
     <td>No; register in isis.properties</td>
-    <td>Not automatically registered because of its dependencies</td>
+    <td>Depends on: BackgroundCommandService (which is why not automatically registered)</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -121,7 +121,7 @@ Title: Applib Services and Implementations
     <th class="heading">o.a.i.applib.services.audit<br/>AuditingService3</th>
     <td>isis-module-audit-jdo</td>
     <td>AuditingServiceJdo</td>
-    <td>No, but see notes</td>
+    <td>No; register in isis.properties</td>
     <td>related services: AuditingServiceJdoContributions, AuditingServiceJdoRepository</td>
 </tr>
 <tr>
@@ -155,7 +155,7 @@ Title: Applib Services and Implementations
     <td>isis-module-publishing-jdo</td>
     <td>PublishingServiceJdo</td>
     <td></td>
-    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository</td>
+    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository; depends on EventSerializer</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
