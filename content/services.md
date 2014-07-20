@@ -8,7 +8,7 @@ Title: Applib Services and Implementations
 <table  class="table table-striped table-bordered table-condensed">
 <tr class="heading">
     <th class="heading">&nbsp;</th>
-    <th class="heading" span="2">Implementation</th>
+    <th class="heading span2">Implementation</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
     <th class="heading">&nbsp;</th>
@@ -18,13 +18,13 @@ Title: Applib Services and Implementations
     <th class="heading">API</th>
     <th class="heading">Maven Module</th>
     <th class="heading">Class</th>
-    <th class="heading">@DomainService ?</th>
-    <th class="heading">@RequestScoped ?</th>
+    <th class="heading">@DomainService?</th>
+    <th class="heading">@RequestScoped?</th>
     <th class="heading">Depends on</th>
     <th class="heading">Notes</th>
 </tr>
 <tr class="heading">
-    <th class="heading" span="7">Core Implementations of Applib Services</th>
+    <th class="heading span7">Core Implementations of Applib Services</th>
 </tr>
 <tr>
     <th class="heading">o.a.i.applib.services.classdiscovery.ClassDiscoveryService</th>
@@ -144,7 +144,7 @@ Title: Applib Services and Implementations
     <td></td>
 </tr>
 <tr class="heading">
-    <th class="heading" span="7">Module Implementations of Applib services</th>
+    <th class="heading span7">Module Implementations of Applib services</th>
 </tr>
 <tr>
     <th class="heading">o.a.i.applib.services.audit.AuditingService3</th>
@@ -205,7 +205,7 @@ Title: Applib Services and Implementations
     <td></td>
 </tr>
 <tr class="heading">
-    <th class="heading" span="7">Other Module (self-contained with own applib)</th>
+    <th class="heading span7">Other Module (self-contained with own applib)</th>
 </tr>
 <tr>
     <th class="heading">o.a.i.applib.services.devutils.DeveloperUtilitiesService</th>
