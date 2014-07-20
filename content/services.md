@@ -69,7 +69,7 @@ Title: Applib Services and Implementations
     <td>depends on:<br/>ClassDiscoveryService</td>
 </tr>
 <tr>
-    <th class="heading">isis-core-xxx</th>
+    <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.classdiscovery<br/>ClassDiscoveryService</th>
     <td>isis-core-applib</td>
     <td>ClassDiscoveryService<br/>UsingReflections</td>
