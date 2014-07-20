@@ -8,8 +8,6 @@ Title: isis-1.6.0
 <ul>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-493'>ISIS-493</a>] -         Annotation to identify domain services/repositories
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/ISIS-572'>ISIS-572</a>] -         To improve performance, support the use of data pinned to caches for entities that are intended to be reference data.  For these, infer the ImmutableFacet.
-</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-800'>ISIS-800</a>] -         Wizard-like form for Wicket viewer
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-813'>ISIS-813</a>] -         Provide the ability to mock out domain services in integration tests.
@@ -25,9 +23,6 @@ Title: isis-1.6.0
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-798'>ISIS-798</a>] -         Minor improvements in support of integration testing.
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/ISIS-799'>ISIS-799</a>] -         Isis Shiro - Server restart for loading new permission
-</li>
-<li>[<a href='https://issues.apache.org/jira/browse/ISIS-810'>ISIS-810</a>] -         Remove Wizard and Wicket viewer implementation on basis that shouldn&#39;t constrain programming model to this extent.
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-823'>ISIS-823</a>] -         Restructure Todo&#39;s tests, nested static classes.
 </li>
@@ -46,8 +41,6 @@ Title: isis-1.6.0
 <h2>        Bug
 </h2>
 <ul>
-<li>[<a href='https://issues.apache.org/jira/browse/ISIS-643'>ISIS-643</a>] -         FrameworkSynchronizer throws NPE on delete of child entity in 1-N relationship
-</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-796'>ISIS-796</a>] -         lifecycle callback &quot;updating()&quot; is not firing
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-797'>ISIS-797</a>] -         &#39;Restful objects&#39; decodes json request body while this is not 

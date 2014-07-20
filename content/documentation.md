@@ -19,8 +19,8 @@ Title: Documentation
 
 #### <a name="getting-started">Archetypes</a>
 
-* **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.5.0](archetypes/release-notes/about.html))**
-* [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.5.0](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+* **[Simple Archetype](intro/getting-started/simple-archetype.html) ([1.6.0](archetypes/release-notes/about.html))**
+* [Quickstart Archetype](intro/getting-started/quickstart-archetype.html) ([1.6.0](archetypes/release-notes/about.html)) <a href="intro/getting-started/quickstart-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 }
 
@@ -247,7 +247,7 @@ For both:
 {row
 
 {col-md-12
-## <a name="domain-services">Domain  Services</a>
+## <a name="core-modules">Core Modules</a>
 
 }
 
@@ -366,7 +366,7 @@ For both:
 {row
 
 {col-md-12
-## <a name="core">Core [1.5.0](core/release-notes/about.html)</a>
+## <a name="core">Core [1.6.0](core/release-notes/about.html)</a>
 
 }
 
@@ -572,7 +572,7 @@ Other:
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.5.0](components/viewers/wicket/release-notes/about.html)
+## <a name="wicket-viewer">Wicket Viewer</a> [1.6.0](components/viewers/wicket/release-notes/about.html)
 }
 
 {col-md-4

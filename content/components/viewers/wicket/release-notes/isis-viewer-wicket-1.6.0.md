@@ -18,7 +18,6 @@ Title: isis-viewer-wicket-1.6.0
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-807'>ISIS-807</a>] -         Break out EntityPropertiesForm into two for the new IWizard, and then make into a separate component.
 </li>
-<li>[<a href='https://issues.apache.org/jira/browse/ISIS-810'>ISIS-810</a>] -         Remove Wizard and Wicket viewer implementation on basis that shouldn&#39;t constrain programming model to this extent.
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-815'>ISIS-815</a>] -         Internationalization of Wicket UI elements (edit, ok, cancel, logout, about)
 </li>

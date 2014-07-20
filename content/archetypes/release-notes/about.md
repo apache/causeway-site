@@ -1,15 +1,17 @@
 Title: Release Notes
 
-Simple archetype:
+SimpleApp archetype:
 
+* [simpleapp-archetype-1.6.0](simpleapp-archetype-1.5.0.html)
 * [simple_wrj-archetype-1.5.0](simple_wrj-archetype-1.5.0.html)
 * [simple_wrj-archetype-1.4.1](simple_wrj-archetype-1.4.1.html)
 * [simple_wrj-archetype-1.4.0](simple_wrj-archetype-1.4.0.html)
 * [simple_wrj-archetype-1.3.1](simple_wrj-archetype-1.3.1.html)
 * [simple_wrj-archetype-1.3.0](simple_wrj-archetype-1.3.0.html)
 
-Quickstart (ToDo app) archetype:
+TodoApp archetype (previously called the Quickstart archetype):
 
+* [todoapp-archetype-1.6.0](todoapp-archetype-1.6.0.html)
 * [quickstart_wrj-archetype-1.5.0](quickstart_wrj-archetype-1.5.0.html)
 * [quickstart_wrj-archetype-1.4.1](quickstart_wrj-archetype-1.4.1.html)
 * [quickstart_wrj-archetype-1.4.0](quickstart_wrj-archetype-1.4.0.html)
