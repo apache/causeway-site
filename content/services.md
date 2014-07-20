@@ -3,23 +3,12 @@ Title: Applib Services and Implementations
 {domain-services
 
 
-
-
 <table  class="table table-striped table-bordered table-condensed">
 <tr class="heading">
     <th class="heading">&nbsp;</th>
-    <th class="heading">&nbsp;</th>
-    <th class="heading span2">Implementation</th>
-    <th class="heading">&nbsp;</th>
-    <th class="heading">&nbsp;</th>
-    <th class="heading">&nbsp;</th>
-    <th class="heading">&nbsp;</th>
-</tr>
-<tr class="heading">
-    <th class="heading">&nbsp;</th>
     <th class="heading">API</th>
-    <th class="heading">Maven Module</th>
-    <th class="heading">Class</th>
+    <th class="heading">Impl'n<br/>Maven Module</th>
+    <th class="heading">Impl'n<br/>Class</th>
     <th class="heading">@DomainService?</th>
     <th class="heading">@RequestScoped?</th>
     <th class="heading">Depends on</th>
