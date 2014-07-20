@@ -155,7 +155,7 @@ Title: Applib Services and Implementations
     <td>isis-module-publishing-jdo</td>
     <td>PublishingServiceJdo</td>
     <td></td>
-    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository; depends on EventSerializer</td>
+    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository; <br/>depends on: EventSerializer</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
