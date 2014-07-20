@@ -257,7 +257,7 @@ For both:
 
 {col-md-4
 
-#### <a name="domain-services-common">Common</a>
+#### <a name="core-modules-common">Common</a>
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [Exception Recognizers](./reference/services/exception-recognizers.html)

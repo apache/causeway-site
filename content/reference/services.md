@@ -22,6 +22,14 @@ Title: Applib Services and Implementations
 </tr>
 <tr>
     <th>&nbsp;</th>
+    <th class="heading">o.a.i.applib.services.clock<br/>ClockService</th>
+    <td>isis-core-applib</td>
+    <td>ClockService</td>
+    <td>Yes; auto-registered</td>
+    <td>API is also a concrete class.</td>
+</tr>
+<tr>
+    <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.command<br/>CommandContext</th>
     <td>isis-core-applib</td>
     <td>CommandContext</td>
