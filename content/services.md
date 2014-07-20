@@ -13,14 +13,6 @@ Title: Applib Services and Implementations
     <th class="heading">Notes</th>
 </tr>
 <tr>
-    <th class="heading">isis-core-xxx</th>
-    <th class="heading">o.a.i.applib.services.classdiscovery<br/>ClassDiscoveryService</th>
-    <td>isis-core-applib</td>
-    <td>ClassDiscoveryService<br/>UsingReflections</td>
-    <td>No; register in isis.properties</td>
-    <td>requires org.reflections as dependency</td>
-</tr>
-<tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.command<br/>CommandContext</th>
     <td>isis-core-applib</td>
@@ -59,6 +51,22 @@ Title: Applib Services and Implementations
     <td>ExceptionRecognizerComposite<br/>ForJdoObjectStore</td>
     <td>No; register in isis.properties</td>
     <td>Extensible using composite pattern if required</td>
+</tr>
+<tr>
+    <th class="heading">isis-core-xxx</th>
+    <th class="heading">o.a.i.applib.fixturescripts<br/>FixtureScripts</th>
+    <td>isis-core-applib</td>
+    <td>(abstract class)</td>
+    <td>No; register own subclass in isis.properties</td>
+    <td>depends on:<br/>ClassDiscoveryService</td>
+</tr>
+<tr>
+    <th class="heading">isis-core-xxx</th>
+    <th class="heading">o.a.i.applib.services.classdiscovery<br/>ClassDiscoveryService</th>
+    <td>isis-core-applib</td>
+    <td>ClassDiscoveryService<br/>UsingReflections</td>
+    <td>No; register in isis.properties</td>
+    <td>requires org.reflections:reflections as Maven dependency</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
