@@ -206,6 +206,8 @@ The procedure for releasing the archetype is the same as for any other releasabl
 First, confirm environment variables set correctly:
 
     env | grep ISIS | sort
+    
+Then switch the correct directory and release:
 
     cd example/archetype/$ISISCPN
 
