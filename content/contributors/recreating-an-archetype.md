@@ -2,6 +2,36 @@ Title: Recreating an Archetype
 
 Isis archetypes are reverse engineered from example applications.  Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.
 
+### Setup environment variables
+
+If recreating the **simpleapp** archetype:
+
+    cd example/archetype/simpleapp
+
+    export ISISTMP=/c/tmp   # or as required
+    export ISISART=simpleapp-archetype
+    export ISISDEV=1.7.0-SNAPSHOT
+    export ISISREL=1.6.0
+    export ISISRC=RC1
+    export ISISCPT=
+    export ISISCPN=
+
+    env | grep ISIS
+
+If recreating the **todoapp** archetype:
+
+    cd example/archetype/todoapp
+
+    export ISISTMP=/c/tmp   # or as required
+    export ISISART=todoapp-archetype
+    export ISISDEV=1.7.0-SNAPSHOT
+    export ISISREL=1.6.0
+    export ISISRC=RC1
+    export ISISCPT=
+    export ISISCPN=
+
+    env | grep ISIS
+
 ### Check the example app
 
 Switch to the directory containing the example application.
@@ -198,17 +228,17 @@ You may also want to import the new archetype project, using `File > Import > Pr
 
 ### Releasing the Archetype
 
-The procedure for releasing the archetype is the same as for any other releasable module; in essence:
+The procedure for releasing the archetype is the same as for any other releasable module.
+
+First, confirm environment variables set correctly:
+
+    env | grep ISIS
+
+(In particular, check that `$ISISART` is set to `simpleapp-archetype` or `todoapp-archetype` as required).
 
 If recreating the **simpleapp** archetype:
 
     cd example/archetype/simpleapp
-
-    export ISISTMP=/c/tmp   # or as required
-    export ISISART=simpleapp-archetype
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
-    export ISISRC=RC1
 
     rm -rf $ISISTMP/checkout
 
@@ -222,12 +252,6 @@ If recreating the **simpleapp** archetype:
 If recreating the **todoapp** archetype:
 
     cd example/archetype/todoapp
-
-    export ISISTMP=/c/tmp   # or as required
-    export ISISART=todoapp-archetype
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
-    export ISISRC=RC1
 
     rm -rf $ISISTMP/checkout
 
