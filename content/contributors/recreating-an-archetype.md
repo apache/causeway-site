@@ -196,7 +196,7 @@ If this a new archetype, then add a reference to the archetype to the root `pom.
 
 Finally, commit the changes:
 
-    git commit -am "ISIS-nnn: updating archetype"
+    git commit -am "ISIS-nnn: updating $ISISCPN archetype"
 
 
 ### Releasing the Archetype
