@@ -13,10 +13,11 @@ If recreating the **simpleapp** archetype:
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
     export ISISRC=RC1
-    export ISISCPT=archetype
-    export ISISCPN=simpleapp
 
-    env | grep ISIS
+    export ISISCPT=$(echo $ISISART | cut -d- -f2)
+    export ISISCPN=$(echo $ISISART | cut -d- -f1)
+
+    env | grep ISIS | sort
 
 If recreating the **todoapp** archetype:
 
@@ -27,10 +28,11 @@ If recreating the **todoapp** archetype:
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
     export ISISRC=RC1
-    export ISISCPT=archetype
-    export ISISCPN=todoapp
 
-    env | grep ISIS
+    export ISISCPT=$(echo $ISISART | cut -d- -f2)
+    export ISISCPN=$(echo $ISISART | cut -d- -f1)
+
+    env | grep ISIS | sort
 
 ### Check the example app
 
@@ -143,7 +145,7 @@ If testing the **todoapp** archetype:
 
 and confirm:
     
-    env | grep ISIS
+    env | grep ISIS | sort
 
 Then recreate:
 
@@ -203,7 +205,7 @@ The procedure for releasing the archetype is the same as for any other releasabl
 
 First, confirm environment variables set correctly:
 
-    env | grep ISIS
+    env | grep ISIS | sort
 
 (In particular, check that `$ISISART` is set to `simpleapp-archetype` or `todoapp-archetype` as required).
 
