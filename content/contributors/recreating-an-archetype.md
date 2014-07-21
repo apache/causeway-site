@@ -158,10 +158,6 @@ Then recreate:
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=$ISISCPN-archetype
 
-where:
-
-- `$ISISCPN` is either `simpleapp` or `todoapp`
-
 Build the newly generated app and test:
 
     cd myapp
