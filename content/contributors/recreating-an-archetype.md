@@ -129,6 +129,22 @@ First, build the archetype:
 
 Then, *in a different session*, create a new app from the archetype:
 
+Set up environment variables:
+
+If testing the **simpleapp** archetype:
+
+    export ISISCPN=simpleapp
+
+If testing the **todoapp** archetype:
+
+    export ISISCPN=todoapp
+
+and confirm:
+    
+    env | grep ISIS
+
+Then recreate:
+
     mkdir /tmp/test-$ISISCPN
     cd /tmp/test-$ISISCPN
     mvn archetype:generate  \
