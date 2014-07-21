@@ -207,24 +207,7 @@ First, confirm environment variables set correctly:
 
     env | grep ISIS | sort
 
-(In particular, check that `$ISISART` is set to `simpleapp-archetype` or `todoapp-archetype` as required).
-
-If recreating the **simpleapp** archetype:
-
-    cd example/archetype/simpleapp
-
-    rm -rf $ISISTMP/checkout
-
-    mvn release:prepare -P apache-release \
-                    -DreleaseVersion=$ISISREL \
-                    -DdevelopmentVersion=$ISISDEV \
-                    -Dtag=$ISISART-$ISISREL-$ISISRC
-    mvn release:perform -P apache-release \
-                    -DworkingDirectory=$ISISTMP/checkout
-
-If recreating the **todoapp** archetype:
-
-    cd example/archetype/todoapp
+    cd example/archetype/$ISISCPN
 
     rm -rf $ISISTMP/checkout
 
