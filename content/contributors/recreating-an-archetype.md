@@ -133,10 +133,12 @@ Set up environment variables:
 
 If testing the **simpleapp** archetype:
 
+    export ISISTMP=/c/tmp    # or as required
     export ISISCPN=simpleapp
 
 If testing the **todoapp** archetype:
 
+    export ISISTMP=/c/tmp    # or as required
     export ISISCPN=todoapp
 
 and confirm:
@@ -145,8 +147,10 @@ and confirm:
 
 Then recreate:
 
-    mkdir /tmp/test-$ISISCPN
-    cd /tmp/test-$ISISCPN
+    rm -rf $ISISTMP/test-$ISISCPN
+
+    mkdir $ISISTMP/test-$ISISCPN
+    cd $ISISTMP/test-$ISISCPN
     mvn archetype:generate  \
         -D archetypeCatalog=local \
         -D groupId=com.mycompany \
