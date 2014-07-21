@@ -34,7 +34,7 @@ Title: Applib Services and Implementations
     <td>isis-core-applib</td>
     <td>CommandContext</td>
     <td>Yes; auto-registered</td>
-    <td>API is also a concrete class.  Command impl depends on configured CommandService</td>
+    <td>API is also a concrete class.  <br/>Depends on: CommandService for persistent <tt>Command</tt>, else in-memory impl. used</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -130,7 +130,7 @@ Title: Applib Services and Implementations
     <td>isis-module-audit-jdo</td>
     <td>AuditingServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: AuditingServiceJdoContributions (UI so register if req'd), AuditingServiceJdoRepository (auto-registered)</td>
+    <td>related services: AuditingServiceJdoContributions, AuditingServiceJdoRepository (@DomainService)</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -138,7 +138,7 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>CommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: CommandServiceJdoContributions (UI so register if req'd), CommandServiceJdoRepository (auto-registered)</td>
+    <td>related services: CommandServiceJdoContributions, CommandServiceJdoRepository (@DomainService)</td>
 </td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>BackgroundCommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: BackgroundCommandServiceJdoContributions (UI so register if req'd), BackgroundCommandServiceJdoRepository (auto-registered)</td>
+    <td>related services: BackgroundCommandServiceJdoContributions, BackgroundCommandServiceJdoRepository (@DomainService)</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -171,7 +171,7 @@ Title: Applib Services and Implementations
     <td>isis-module-publishing-jdo</td>
     <td>PublishingServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: PublishingServiceJdoContributions (UI so register if req'd), PublishingServiceJdoRepository (auto-registered); <br/>depends on: EventSerializer</td>
+    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository (@DomainService); <br/>depends on: EventSerializer</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
