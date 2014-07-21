@@ -13,8 +13,8 @@ If recreating the **simpleapp** archetype:
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
     export ISISRC=RC1
-    export ISISCPT=
-    export ISISCPN=
+    export ISISCPT=archetype
+    export ISISCPN=simpleapp
 
     env | grep ISIS
 
@@ -27,8 +27,8 @@ If recreating the **todoapp** archetype:
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
     export ISISRC=RC1
-    export ISISCPT=
-    export ISISCPN=
+    export ISISCPT=archetype
+    export ISISCPN=todoapp
 
     env | grep ISIS
 
@@ -36,13 +36,7 @@ If recreating the **todoapp** archetype:
 
 Switch to the directory containing the example application.
 
-If recreating the **simpleapp** archetype:
-
-    cd example/application/simpleapp
-
-If recreating the **todoapp** archetype:
-
-    cd example/application/todoapp
+    cd example/application/$ISISCPN
 
 Update the parent `pom.xml` to reference the *released* version of Isis core and the other components.  
 
@@ -115,19 +109,15 @@ Now we can create the archetype.
 
     mvn archetype:create-from-project
 
-and then update the generated files.  
+and then update the generated files:
 
-If recreating the **simpleapp** archetype:
-
-    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n simpleapp -v 1.2.3
-
-If recreating the **todoapp** archetype:
-
-    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n todoapp -v 1.2.3
+    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n $ISISCPN -v 1.2.3
 
 where:
 
-- `1.2.3` is the version of isis core that is to be the parent of the generated archetype.
+- $ISISCPN is the component name set earlier (`simpleapp` or `todoapp`)
+- 1.2.3 is the version of isis core that is to be the parent of the generated archetype, 
+    - this will usually be the same as `$ISISREL` unless a patch/interim release of the archetype.
 
 ### Test the archetype
 
@@ -139,27 +129,18 @@ First, build the archetype:
 
 Then, *in a different session*, create a new app from the archetype:
 
-If recreating the **simpleapp** archetype:
-
-    mkdir /tmp/test-simpleapp
-    cd /tmp/test-simpleapp
+    mkdir /tmp/test-$ISISCPN
+    cd /tmp/test-$ISISCPN
     mvn archetype:generate  \
         -D archetypeCatalog=local \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=simpleapp-archetype
+        -D archetypeArtifactId=$ISISCPN-archetype
 
-If recreating the **todoapp** archetype:
+where:
 
-    mkdir /tmp/test-todoapp
-    cd /tmp/test-todoapp
-    mvn archetype:generate  \
-        -D archetypeCatalog=local \
-        -D groupId=com.mycompany \
-        -D artifactId=myapp \
-        -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=todoapp-archetype
+- `$ISISCPN` is either `simpleapp` or `todoapp`
 
 Build the newly generated app and test:
 
@@ -171,41 +152,21 @@ Build the newly generated app and test:
 
 ### Check the archetype source code into git
 
-Back in the *original session* (at `example/application/simpleapp` or `example/application/todoapp`), we are ready to check the archetype source code into git.
+Back in the *original session* (at `example/application/simpleapp` or `example/application/todoapp`), we are ready to check the archetype source code into git:
 
-If recreating the **simpleapp** archetype:
+    git rm -rf ../../archetype/$ISISCPN
+    rm -rf ../../archetype/$ISISCPN
 
-    git rm -rf ../../archetype/simpleapp
-    rm -rf ../../archetype/simpleapp
+In either case make sure that the `archetype/$ISISCPN` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
 
-If recreating the **todoapp** archetype:
+Then, copy over the generated source of the archetype:
 
-    git rm -rf ../../archetype/todoapp
-    rm -rf ../../archetype/todoapp
-
-In either case make sure that the `archetype/xxxapp` directory was fully removed, otherwise the next command will not copy the regenerated source into the correct location.
-
-Then, copy over the generated source of the archetype.
-
-If recreating the **simpleapp** archetype:
-
-    mv target/generated-sources/archetype ../../archetype/simpleapp
-    git add ../../archetype/simpleapp
-
-If recreating the **todoapp** archetype:
-
-    mv target/generated-sources/archetype ../../archetype/todoapp
-    git add ../../archetype/todoapp
+    mv target/generated-sources/archetype ../../archetype/$ISISCPN
+    git add ../../archetype/$ISISCPN
 
 Next, confirm that the `-SNAPSHOT` version of the archetype is correct:
 
-If recreating the **simpleapp** archetype:
-
-    vi ../../archetype/simpleapp/pom.xml
-
-If recreating the **todoapp** archetype:
-
-    vi ../../archetype/todoapp/pom.xml
+    vi ../../archetype/$ISISCPN/pom.xml
 
 If this a new archetype, then add a reference to the archetype to the root `pom.xml`, eg:
 
@@ -218,12 +179,6 @@ If this a new archetype, then add a reference to the archetype to the root `pom.
 Finally, commit the changes:
 
     git commit -am "ISIS-nnn: updating archetype"
-
-### Setting up Eclipse IDE
-
-If the original application projects are imported into Eclipse, note that you'll need to recreate their project configuration afterwards (right click in `Package Explorer` > `Maven` > `Update Package Configuration`)
-
-You may also want to import the new archetype project, using `File > Import > Project > Maven > Existing Maven Project`.
 
 
 ### Releasing the Archetype
