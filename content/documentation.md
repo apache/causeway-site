@@ -717,7 +717,7 @@ Other
 * [Applying Patches](contributors/applying-patches.html)
 * [Recreating an archetype](contributors/recreating-an-archetype.html)
 * [Snapshot process](contributors/snapshot-process.html)
-* [Release process](contributors/release-process.html)
+* [Release process](contributors/release-process.html) ([one-pager](contributors/release-process-one-pager.html))
 * [Release branch and tag names](contributors/release-branch-and-tag-names.html)
 * [Verifying releases](contributors/verifying-releases.html)
 * [Key generation](contributors/key-generation.html)
