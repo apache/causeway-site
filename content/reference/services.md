@@ -94,14 +94,6 @@ Title: Applib Services and Implementations
 </tr>
 <tr>
     <th>&nbsp;</th>
-    <th class="heading">o.a.i.applib.services.background<br/>BackgroundService</th>
-    <td>isis-core-runtime</td>
-    <td>BackgroundServiceDefault</td>
-    <td>No; register in isis.properties</td>
-    <td>Depends on: BackgroundCommandService (which is why not automatically registered)</td>
-</tr>
-<tr>
-    <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.memento<br/>MementoService</th>
     <td>isis-core-runtime</td>
     <td>MementoServiceDefault</td>
@@ -137,8 +129,8 @@ Title: Applib Services and Implementations
     <th class="heading">o.a.i.applib.services.audit<br/>AuditingService3</th>
     <td>isis-module-audit-jdo</td>
     <td>AuditingServiceJdo</td>
-    <td>No; register in isis.properties</td>
-    <td>related services: AuditingServiceJdoContributions, AuditingServiceJdoRepository</td>
+    <td>Yes; auto-registered</td>
+    <td>related services: AuditingServiceJdoContributions (UI so register if req'd), AuditingServiceJdoRepository (auto-registered)</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -146,7 +138,7 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>CommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: CommandServiceJdoContributions, CommandServiceJdoRepository</td>
+    <td>related services: CommandServiceJdoContributions (UI so register if req'd), CommandServiceJdoRepository (auto-registered)</td>
 </td>
 </tr>
 <tr>
@@ -155,7 +147,15 @@ Title: Applib Services and Implementations
     <td>isis-module-command-jdo</td>
     <td>BackgroundCommandServiceJdo</td>
     <td>Yes; auto-registered</td>
-    <td>related services: BackgroundCommandServiceJdoContributions, BackgroundCommandServiceJdoRepository</td>
+    <td>related services: BackgroundCommandServiceJdoContributions (UI so register if req'd), BackgroundCommandServiceJdoRepository (auto-registered)</td>
+</tr>
+<tr>
+    <th>&nbsp;</th>
+    <th class="heading">o.a.i.applib.services.background<br/>BackgroundService</th>
+    <td>isis-module-background</td>
+    <td>BackgroundServiceDefault</td>
+    <td>Yes; auto-registered</td>
+    <td>Depends on: BackgroundCommandService</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -170,8 +170,8 @@ Title: Applib Services and Implementations
     <th class="heading">o.a.i.applib.services.publish<br/>PublishingService</th>
     <td>isis-module-publishing-jdo</td>
     <td>PublishingServiceJdo</td>
-    <td></td>
-    <td>related services: PublishingServiceJdoContributions, PublishingServiceJdoRepository; <br/>depends on: EventSerializer</td>
+    <td>Yes; auto-registered</td>
+    <td>related services: PublishingServiceJdoContributions (UI so register if req'd), PublishingServiceJdoRepository (auto-registered); <br/>depends on: EventSerializer</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
@@ -186,29 +186,26 @@ Title: Applib Services and Implementations
     <th class="heading">o.a.i.applib.services.devutils<br/>DeveloperUtilitiesService</th>
     <td>isis-module-devutils</td>
     <td>DeveloperUtilitiesServiceDefault</td>
-    <td></td>
-    <td></td>
+    <td>No; register in isis.properties</td>
+    <td>Not auto-registered since provides UI and may wish to subclass</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.settings<br/>ApplicationSettingsServiceRW</th>
     <td>isis-module-settings</td>
     <td>ApplicationSettingsServiceJdo</td>
-    <td></td>
-    <td></td>
+    <td>No; register in isis.properties</td>
+    <td>Not auto-registered since provides UI and may wish to subclass</td>
 </tr>
 <tr>
     <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.settings<br/>UserSettingsServiceRW</th>
     <td>isis-module-settings</td>
     <td>UserSettingsServiceJdo</td>
-    <td></td>
-    <td></td>
+    <td>No; register in isis.properties</td>
+    <td>Not auto-registered since provides UI and may wish to subclass</td>
 </tr>
 </table>
     
-
-Notes:
-* the `isis-module-background` module is currently unused (defines no classes).
   
 }

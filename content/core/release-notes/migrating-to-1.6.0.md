@@ -41,6 +41,8 @@ new modules:
     * developer utilities service (download metamodel etc)
 * `o.a.i.module:isis-module-audit-jdo`
     * persisting `AuditEntry` entity
+* `o.a.i.module:isis-module-background`
+    * scheduling background commands
 * `o.a.i.module:isis-module-command-jdo`
     * persisting `Command` entity and enabling background commands via scheduler
 * `o.a.i.module:isis-module-publishing-jdo`
