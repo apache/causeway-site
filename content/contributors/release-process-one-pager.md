@@ -15,7 +15,7 @@ if on Windows:
 ## Switch to correct directory, parameterize the release
 
 {note
-Switch to the directory containing the (parent of the) artifact(s) to be released
+Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
 }
 
 if releasing `core`, eg:
@@ -96,13 +96,21 @@ or (more thoroughly):
 
 ## Sanity check
 
+{note
+Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
+}
+
 If **releasing core**, then clean all local mvn artifacts and rebuild with `-o` flag:
 
+    cd core
+    
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install -o
 
 If **releasing a component without also releasing core**, then clean all local mvn artifacst and rebuild **without `-o`** flag:
 
+    cd component/xxx/yyy
+    
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install
 
@@ -147,6 +155,10 @@ Commit any changes from the preceding steps:
 ## Release
 
 #### Prepare:
+
+{note
+Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
+}
 
 first the dry run (you will be prompted for gpg passphrase):
 

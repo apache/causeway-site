@@ -79,6 +79,7 @@ in `webapp/pom.xml`
 
 * add in dependencies (if used) to:
     * `o.a.i.module:isis-module-audit-jdo`
+    * `o.a.i.module:isis-module-background`
     * `o.a.i.module:isis-module-command-jdo`
     * `o.a.i.module:isis-module-publishing-jdo`
     * `o.a.i.module:isis-module-publishingeventserializer-ro`
@@ -103,14 +104,17 @@ in `webapp/src/main/webapp/WEB-INF/isis.properties`
         * `org.apache.isis.objectstore.jdo.datanucleus.service.support.IsisJdoSupportImpl`
         * `org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo`
         * `org.apache.isis.objectstore.jdo.applib.service.background.BackgroundCommandServiceJdo`
+        * `org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdo`
         * `org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdoRepository`
         * `org.apache.isis.objectstore.jdo.applib.service.background.BackgroundCommandServiceJdoRepository`
+        * `org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdo`
         * `org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdoRepository`
+        * `org.apache.isis.objectstore.jdo.applib.service.publish.PublishingService`
         * `org.apache.isis.objectstore.jdo.applib.service.publish.PublishingServiceJdoRepository`
         * `org.apache.isis.viewer.restfulobjects.rendering.eventserializer.RestfulObjectsSpecEventSerializer`
 
+       
 It is still necessary to:
 
 * explicitly register any service (`*Contributions`) that affects the UI
-* explicitly register `CommandServiceJdo`, `AuditingServiceJdo` and `PublishingServiceJdo` (each has substantive "side-effects")
-
+* explicitly register ApplicationSettings, UserSettings and DeveloperUtilities services (each is designed to be optionally subclassed)
