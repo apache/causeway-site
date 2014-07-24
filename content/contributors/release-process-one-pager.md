@@ -2,16 +2,6 @@ Title: Release Process (1 pager)
 
 See also the [full release process](release-process.html) and the [release checklist](release-checklist.html).
 
-## Set up environment
-
-if on *nix:
-
-    export ISISTMP=/tmp
-
-if on Windows:
-
-    export ISISTMP=/c/tmp
-
 ## Switch to correct directory, parameterize the release
 
 {note
@@ -22,6 +12,7 @@ if releasing `core`, eg:
 
     cd core
 
+    export ISISTMP=/c/tmp     # or whatever
     export ISISART=isis
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
@@ -31,6 +22,7 @@ if releasing a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
 
+    export ISISTMP=/c/tmp     # or whatever
     export ISISART=isis-xxx-yyy
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0

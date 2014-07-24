@@ -34,8 +34,10 @@ Title: isis-viewer-wicket-1.6.0
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-837'>ISIS-837</a>] -         In Wicket viewer, forms not flushing properties when annotated with JDO @NotPersistent.
 </li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-843'>ISIS-843</a>] -         AboutPage is not serializable
+</li>
 </ul>
- 
+
 
  
 <h2>        Task

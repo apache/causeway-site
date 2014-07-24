@@ -234,12 +234,11 @@ The script will also double check that all required environment variables are se
 
 Then, run the script:
 
-    sh ../../../scripts/recreate-archetype.sh
+    sh ../../../scripts/recreate-archetype.sh ISIS-nnn
 
-Finally, review changes and commit:
+Finally, review changes to confirm all:
 
     git status
-    git commit -m "recreating $ISISCPN archetype"
     
 ### Releasing the Archetype
 

@@ -14,7 +14,7 @@ Another related change in 1.6.0 is [ISIS-493](https://issues.apache.org/jira/bro
 
 ### Summary of changes
 
-modules moved to core:
+components moved to core:
 
 * `o.a.i.security:isis-security-shiro` -> `o.a.i.core:isis-core-security-shiro`
 
@@ -26,10 +26,6 @@ modules moved to core:
 * `o.a.i.viewer:isis-viewer-restfulobjects` -> DELETED (modules now parented by core directly)
 * `o.a.i.viewer:isis-viewer-restfulobjects-rendering` -> `o.a.i.core:isis-core-viewer-restfulobjects-rendering`
 * `o.a.i.viewer:isis-viewer-restfulobjects-server` -> `o.a.i.core:isis-core-viewer-restfulobjects-server`
-
-renamed modules
-
-* `o.a.i.core:isis-core-wrapper` -> `o.a.i.module:isis-module-wrapper`
 
 new modules:
 
@@ -68,12 +64,6 @@ in `dom/pom.xml`
 * add in dependencies (if used) to
     * `o.a.i.module:isis-module-settings-applib`
     * `o.a.i.module:isis-module-devutils-applib`
-
-* update dependency on `isis-core-wrapper` (if used), instead to `isis-module-wrapper`
-
-in `integtests/pom.xml`
-
-* update dependency on `isis-core-wrapper`, instead to `isis-module-wrapper`
 
 in `webapp/pom.xml`
 
