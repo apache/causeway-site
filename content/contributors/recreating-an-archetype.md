@@ -221,15 +221,13 @@ First, make sure all environment variables are set, using:
 
 The script will also double check that all required environment variables are set.
 
-Then, make sure you are in the correct directory.
+Make sure you are in the correct directory.  If recreating the **simpleapp** archetype:
 
-If recreating the **simpleapp** archetype:
-
-    cd example/archetype/simpleapp
+    cd example/application/simpleapp
 
 If recreating the **todoapp** archetype:
 
-    cd example/archetype/todoapp
+    cd example/application/todoapp
 
 Then, run the script:
 
