@@ -219,7 +219,10 @@ First, make sure all environment variables are set, using:
 
     env | grep ISIS | sort
 
-The script will also double check that all required 
+The script will also double check that all required environment variables are set.
+
+Then, make sure you are in the correct directory.
+
 If recreating the **simpleapp** archetype:
 
     cd example/archetype/simpleapp
@@ -232,6 +235,11 @@ Then, run the script:
 
     sh ../../../recreate-archetype.sh
 
+Finally, review changes and commit:
+
+    git status
+    git commit -m "recreating $ISISCPN archetype"
+    
 ### Releasing the Archetype
 
 The procedure for releasing the archetype is the same as for any other releasable module.
