@@ -6,7 +6,7 @@ Isis archetypes are reverse engineered from example applications.  Once reverse 
 
 If recreating the **simpleapp** archetype:
 
-    cd example/archetype/simpleapp
+    cd example/application/simpleapp
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
@@ -22,7 +22,7 @@ If recreating the **simpleapp** archetype:
 
 If recreating the **todoapp** archetype:
 
-    cd example/archetype/todoapp
+    cd example/application/todoapp
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=todoapp-archetype

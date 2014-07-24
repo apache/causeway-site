@@ -26,11 +26,17 @@ Title: isis-viewer-wicket-1.6.0
 <h2>        Bug
 </h2>
 <ul>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-544'>ISIS-544</a>] -         If auto-focus on an action param date, then doesn't show calendar picker..
+</li>
+<li>[<a href='https://issues.apache.org/jira/browse/ISIS-825'>ISIS-825</a>] -         Wicket viewer, auto-focus on first field on action parameter not working
+</li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-835'>ISIS-835</a>] -         NPE in select2 with isisaddons module for tags, (optional choices for strings)
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-837'>ISIS-837</a>] -         In Wicket viewer, forms not flushing properties when annotated with JDO @NotPersistent.
 </li>
 </ul>
+ 
+
  
 <h2>        Task
 </h2>
