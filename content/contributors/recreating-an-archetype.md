@@ -215,19 +215,22 @@ Using the script does not generate an app from the archetype to test it works,
 and also - to allow review - stages files into git but omits the final commit.
 }
 
-Make sure you are in the correct directory.  If recreating the **simpleapp** archetype:
+Make sure you are in the correct directory and environment variables are correct.
+
+If recreating the **simpleapp** archetype:
 
     cd example/application/simpleapp
+
+    env | grep ISIS | sort
 
 If recreating the **todoapp** archetype:
 
     cd example/application/todoapp
 
-Next, make sure all environment variables are set, using:
-
     env | grep ISIS | sort
 
-(At the top of this page there are commands to run).  The script will also double check that all required environment variables are set.
+If the environment variables look wrong, use the commands at the top of this page to setup.
+The script will also double check that all required environment variables are set.
 
 Then, run the script:
 
