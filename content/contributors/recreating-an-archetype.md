@@ -215,12 +215,6 @@ Using the script does not generate an app from the archetype to test it works,
 and also - to allow review - stages files into git but omits the final commit.
 }
 
-First, make sure all environment variables are set, using:
-
-    env | grep ISIS | sort
-
-The script will also double check that all required environment variables are set.
-
 Make sure you are in the correct directory.  If recreating the **simpleapp** archetype:
 
     cd example/application/simpleapp
@@ -228,6 +222,12 @@ Make sure you are in the correct directory.  If recreating the **simpleapp** arc
 If recreating the **todoapp** archetype:
 
     cd example/application/todoapp
+
+Next, make sure all environment variables are set, using:
+
+    env | grep ISIS | sort
+
+(At the top of this page there are commands to run).  The script will also double check that all required environment variables are set.
 
 Then, run the script:
 
