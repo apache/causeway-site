@@ -12,7 +12,7 @@ if releasing `core`, eg:
 
     cd core
 
-    export ISISTMP=/c/tmp     # or whatever
+    export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
@@ -22,7 +22,7 @@ if releasing a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
 
-    export ISISTMP=/c/tmp     # or whatever
+    export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis-xxx-yyy
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
@@ -32,6 +32,7 @@ eg, for Wicket viewer this is:
 
     cd component/viewer/wicket
 
+    export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis-viewer-wicket
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
