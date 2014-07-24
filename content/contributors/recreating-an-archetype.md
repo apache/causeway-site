@@ -234,7 +234,7 @@ The script will also double check that all required environment variables are se
 
 Then, run the script:
 
-    sh ../../../recreate-archetype.sh
+    sh ../../../scripts/recreate-archetype.sh
 
 Finally, review changes and commit:
 
