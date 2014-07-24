@@ -96,13 +96,13 @@ Assuming that everything builds ok, then test the archetypes (adjust version as 
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
+        -D archetypeArtifactId=simpleapp-archetype \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
         -B \
         -o \
-        -D archetypeVersion=1.5.0
+        -D archetypeVersion=1.6.0
 
 
     cd myapp
@@ -116,7 +116,7 @@ and (adjust version as necessary):
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=quickstart_wicket_restful_jdo-archetype \
+        -D archetypeArtifactId=todoapp-archetype \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \

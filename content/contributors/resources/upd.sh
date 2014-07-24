@@ -12,14 +12,10 @@
 #
 #################################################################
 
-isis_core="1.4.0 1.5.0"
-objectstore_jdo="1.4.1 1.5.0"
-security_shiro="1.4.0 1.5.0"
-security_file="1.4.0 1.4.0"
-viewer_restfulobjects="2.2.0 2.3.0"
-viewer_wicket="1.4.1 1.5.0"
-archetype_todoapp="1.4.1 1.5.0"
-archetype_simple="1.4.1 1.5.0"
+isis_core="1.5.0 1.6.0"
+viewer_wicket="1.5.0 1.6.0"
+archetype_todoapp="1.5.0 1.6.0"
+archetype_simpleapp="1.5.0 1.6.0"
 
 
 
@@ -63,133 +59,6 @@ if [ "$old_ver" != "$new_ver" ]; then
 	popd
 fi
 
-
-
-#################################################################
-#
-# objectstore_jdo
-#
-#################################################################
-old_ver=`echo $objectstore_jdo | awk '{print $1}'`
-new_ver=`echo $objectstore_jdo | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="objectstore"
-	localname="jdo"
-
-	fullname="isis-$type-$localname"
-	pushd component/$type/$localname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
-
-
-
-#################################################################
-#
-# security_file
-#
-#################################################################
-old_ver=`echo $security_file | awk '{print $1}'`
-new_ver=`echo $security_file | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="security"
-	localname="file"
-
-	fullname="isis-$type-$localname"
-	pushd component/$type/$localname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
-
-
-
-#################################################################
-#
-# security_shiro
-#
-#################################################################
-old_ver=`echo $security_shiro | awk '{print $1}'`
-new_ver=`echo $security_shiro | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="security"
-	localname="shiro"
-
-	fullname="isis-$type-$localname"
-	pushd component/$type/$localname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
-
-
-
-#################################################################
-#
-# viewer_restfulobjects
-#
-#################################################################
-old_ver=`echo $viewer_restfulobjects | awk '{print $1}'`
-new_ver=`echo $viewer_restfulobjects | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="viewer"
-	localname="restfulobjects"
-
-	fullname="isis-$type-$localname"
-	pushd component/$type/$localname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
 
 
 
@@ -236,7 +105,7 @@ new_ver=`echo $archetype_todoapp | awk '{print $2}'`
 if [ "$old_ver" != "$new_ver" ]; then 
 
 	type="archetype"
-	fullname="quickstart_wicket_restful_jdo-archetype"
+	fullname="todoapp-archetype"
 	pushd $type/$fullname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
@@ -256,16 +125,16 @@ fi
 
 #################################################################
 #
-# archetype_simple
+# archetype_simpleapp
 #
 #################################################################
-old_ver=`echo $archetype_simple | awk '{print $1}'`
-new_ver=`echo $archetype_simple | awk '{print $2}'`
+old_ver=`echo $archetype_simpleapp | awk '{print $1}'`
+new_ver=`echo $archetype_simpleapp | awk '{print $2}'`
 
 if [ "$old_ver" != "$new_ver" ]; then 
 
 	type="archetype"
-	fullname="simple_wicket_restful_jdo-archetype"
+	fullname="simpleapp-archetype"
 	pushd $type/$fullname
 
 	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5

@@ -12,8 +12,8 @@ Then run the following command:
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=simple_wicket_restful_jdo-archetype \
-        -D archetypeVersion=1.5.0 \
+        -D archetypeArtifactId=simpleapp-archetype \
+        -D archetypeVersion=1.6.0 \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \

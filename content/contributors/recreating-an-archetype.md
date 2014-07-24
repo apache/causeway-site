@@ -12,6 +12,7 @@ If recreating the **simpleapp** archetype:
     export ISISART=simpleapp-archetype
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
+    export ISISPAR=1.6.0
     export ISISRC=RC1
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
@@ -27,12 +28,15 @@ If recreating the **todoapp** archetype:
     export ISISART=todoapp-archetype
     export ISISDEV=1.7.0-SNAPSHOT
     export ISISREL=1.6.0
+    export ISISPAR=1.6.0
     export ISISRC=RC1
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
     export ISISCPN=$(echo $ISISART | cut -d- -f1)
 
     env | grep ISIS | sort
+
+nb: `$ISISPAR` is the version of the Isis core that will act as the archetype's parent.  Usually this is the same as `$ISISREL`.
 
 ### Check the example app
 
@@ -81,7 +85,10 @@ If recreating the **todoapp** archetype, browse to [http://localhost:8080/todoap
     
 Check the about page and confirm built against non-SNAPSHOT versions of the Isis jars.
 
-### Create the archetype
+### Create the archetype (manual)
+
+The archetype can be created either by hand or using a script.  The steps below
+are the manual approach; the scripted approach is shown after.
 
 Before we generate the archetype, we clear out all non source code artifacts.
 
@@ -113,12 +120,12 @@ Now we can create the archetype.
 
 and then update the generated files:
 
-    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n $ISISCPN -v 1.2.3
+    groovy ../../../scripts/updateGeneratedArchetypeSources.groovy -n $ISISCPN -v $ISISPAR
 
 where:
 
-- $ISISCPN is the component name set earlier (`simpleapp` or `todoapp`)
-- 1.2.3 is the version of isis core that is to be the parent of the generated archetype, 
+- `$ISISCPN` is the component name set earlier (`simpleapp` or `todoapp`)
+- `$ISISPAR` is the version of isis core that is to be the parent of the generated archetype, 
     - this will usually be the same as `$ISISREL` unless a patch/interim release of the archetype.
 
 ### Test the archetype
@@ -198,6 +205,30 @@ Finally, commit the changes:
 
     git commit -am "ISIS-nnn: updating $ISISCPN archetype"
 
+    
+### Create the archetype (scripted)
+
+{note
+Using the script does not generate an app from the archetype to test it works,
+and also - to allow review - stages files into git but omits the final commit.
+}
+
+First, make sure all environment variables are set, using:
+
+    env | grep ISIS | sort
+
+The script will also double check that all required 
+If recreating the **simpleapp** archetype:
+
+    cd example/archetype/simpleapp
+
+If recreating the **todoapp** archetype:
+
+    cd example/archetype/todoapp
+
+Then, run the script:
+
+    sh ../../../recreate-archetype.sh
 
 ### Releasing the Archetype
 
