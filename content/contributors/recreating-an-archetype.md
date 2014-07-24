@@ -87,8 +87,11 @@ Check the about page and confirm built against non-SNAPSHOT versions of the Isis
 
 ### Create the archetype (manual)
 
+
+{note
 The archetype can be created either by hand or using a script.  The steps below
 are the manual approach; the scripted approach is shown after.
+}
 
 Before we generate the archetype, we clear out all non source code artifacts.
 
