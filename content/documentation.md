@@ -268,7 +268,7 @@ Implemented within Isis core.
 * [Exception Recognizers](./reference/services/exception-recognizers.html)
 * [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
 
-#### <a name="domain-services-event-bus">Event bus </a>
+#### <a name="domain-services-event-bus">Event Bus</a>
 
 Decouple business logic across modules using intra-process publish/subscribe 
 
@@ -278,9 +278,9 @@ Decouple business logic across modules using intra-process publish/subscribe
 
 {col-md-4
 
-#### <a name="domain-services-information-sharing">command context/background</a>
+#### <a name="domain-services-information-sharing">Commands/Background</a>
 
-Context in which actions invoked, infrastructure to run actions in background (asynchronously).
+Context in which actions invoked, infrastructure to run actions in background.
 
 * [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Background Service](./reference/services/background-service.html)
