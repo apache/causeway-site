@@ -359,7 +359,7 @@ Profiling, background execution, extended auditing.
 Hosted at [isisaddons.org](http://isisaddons.org).
 
 * [Docx Mail merge](./modules/isis-module-docx.html)
-* [Excel download/upload](./modules/isis-module-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Excel download/upload](./modules/isis-module-excel.html) <a href="./modules/isis-module-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Scheduler](./reference/modules/isis-module-scheduler.html)
 * [String interpolator](./modules/isis-module-stringinterpolator.html)
 * [Tags](./reference/modules/isis-module-tags.html)
