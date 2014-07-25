@@ -261,4 +261,16 @@ Then switch the correct directory and release:
     mvn release:perform -P apache-release \
                     -DworkingDirectory=$ISISTMP/checkout
 
+Next, log onto [repository.apache.org](http://repository.apache.org) and close the staging repo.
+
+Then push branch:
+
+    git push -u origin prepare/$ISISART-$ISISREL
+
+and push tag:
+
+    git push origin refs/tags/$ISISART-$ISISREL-$ISISRC:refs/tags/$ISISART-$ISISREL-$ISISRC
+    git fetch
+
 See the [release process](release-process.html) for full details.
+
