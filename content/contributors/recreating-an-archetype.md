@@ -146,15 +146,14 @@ If testing the **simpleapp** archetype:
 
     export ISISTMP=/c/tmp    # or as required
     export ISISCPN=simpleapp
+    env | grep ISIS | sort
 
 If testing the **todoapp** archetype:
 
     export ISISTMP=/c/tmp    # or as required
     export ISISCPN=todoapp
-
-and confirm:
-    
     env | grep ISIS | sort
+
 
 Then recreate:
 
