@@ -259,7 +259,9 @@ For both:
 
 {col-md-4
 
-#### <a name="core-modules-common">Common</a>
+#### <a name="core-modules-common">Core</a>
+
+Implemented within Isis core.
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [ClockService](./reference/services/ClockService.html)
