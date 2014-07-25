@@ -249,7 +249,7 @@ For both:
 {col-md-12
 ## <a name="core-domain-services">Core Domain Services</a>
 
-<i>[./reference/services](Services summary)</i>
+<a href="./reference/services.html">Summary of all services</i>
 
 }
 
@@ -270,7 +270,7 @@ For both:
 
 {col-md-4
 
-#### <a name="domain-services-event-bus">Event bus (for decoupled business logic)</a>
+#### <a name="domain-services-event-bus">Event bus (decoupled business logic)</a>
 
 * [EventBusService](./reference/services/event-bus-service.html)
 
