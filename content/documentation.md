@@ -327,9 +327,9 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 * [Auditing](./reference/services/auditing-service.html)
 
-#### <a name="isis-module-command">Commands</a>
+#### <a name="isis-module-command">Command (persistence)</a>
 
-Profiling/background execution/extended auditing.
+Profiling, background execution, extended auditing.
 
 * [Command Service](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Background Command Service](./reference/services/background-command-service.html)
