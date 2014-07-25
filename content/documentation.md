@@ -270,11 +270,15 @@ For both:
 
 {col-md-4
 
-#### <a name="domain-services-event-bus">Event bus (decoupled business logic)</a>
+#### <a name="domain-services-event-bus">Event bus </a>
+
+Decouple business logic across modules using intra-process publish/subscribe 
 
 * [EventBusService](./reference/services/event-bus-service.html)
 
-#### <a name="domain-services-information-sharing">Services for co-ordinated information sharing</a>
+#### <a name="domain-services-information-sharing">Information sharing</a>
+
+Services to co-ordinate sharing of information across multiple objects/interactions
 
 * [Scratchpad](./reference/services/scratchpad.html)
 * [Bulk.Interaction](./reference/services/bulk-interaction.html)
