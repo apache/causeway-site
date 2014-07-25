@@ -266,19 +266,20 @@ For both:
 * [Exception Recognizers](./reference/services/exception-recognizers.html)
 * [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
 
-}
-
-{col-md-4
-
 #### <a name="domain-services-event-bus">Event bus </a>
 
 Decouple business logic across modules using intra-process publish/subscribe 
 
 * [EventBusService](./reference/services/event-bus-service.html)
 
+}
+
+{col-md-4
+
+
 #### <a name="domain-services-information-sharing">Information sharing</a>
 
-Services to co-ordinate sharing of information across multiple objects/interactions
+Co-ordinate sharing of information across multiple objects/interactions
 
 * [Scratchpad](./reference/services/scratchpad.html)
 * [Bulk.Interaction](./reference/services/bulk-interaction.html)
