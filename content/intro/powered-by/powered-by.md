@@ -43,13 +43,13 @@ If you want to try out the application, grab the [source code](https://www.assem
 
 <table>
   <tr>
-    <td>TransportPlanner allows schedules of journeys to be planned.  It uses Isis' integration with <a href="https://github.com/danhaywood/isis-wicket-gmap3">Google Maps</a> to provide the map.</td>
+    <td>TransportPlanner allows schedules of journeys to be planned.  It uses Isis' integration with <a href="https://github.com/isisaddons/isis-wicket-gmap3">Google Maps</a> to provide the map.</td>
     <td>
       <a href="https://www.assembla.com/code/transportplanner/git/nodes/master/screenshots/TransportDemand.png"><img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TransportDemand.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="530"></img></a>
     </td>
   </tr>
   <tr>
-    <td>TransportPlanner uses Isis' <a href="https://github.com/danhaywood/isis-wicket-wickedcharts">Wicked Charts</a> integration to provide custom graphs</td>
+    <td>TransportPlanner uses Isis' <a href="https://github.com/isisaddons/isis-wicket-wickedcharts">Wicked Charts</a> integration to provide custom graphs</td>
     <td>
       <a href="https://www.assembla.com/code/transportplanner/git/nodes/master/screenshots/TPM_CostPie.png"><img src="https://www.assembla.com/code/transportplanner/git/node/blob/screenshots/TPM_CostPie.png?raw=1&rev=a9d5184ecb05c3d95dafec587c84cfcbc7a25b8b" width="530"></img></a>
     </td>

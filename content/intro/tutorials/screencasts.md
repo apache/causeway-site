@@ -79,7 +79,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Bulk updates in Isis<br/><br/><i>Using the (third-party) Excel domain service and view models to perform bulk updates.</i>
+    <td>Bulk updates in Isis<br/><br/><i>Using the <code>isis-module-excel</code> module (in <a href="http://isisaddons.org">Isis Add-ons</a> and view models to perform bulk updates.</i>
     <br/><br/>
     See also the <a href="../../modules/isis-module-excel.html#screencast">Excel module</a> page
     </td>
@@ -88,9 +88,9 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating a (third-party) google maps extension.</i>
+    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating the <code>isis-module-gmap3</code> google maps extension (in <a href="http://isisaddons.org">Isis Add-ons</a>).</i>
     <br/><br/>
-    See the <a href="../../components/viewers/wicket/third-party/danhaywood-isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
+    See the <a href="../../components/viewers/wicket/isisaddons/isis-wicket-gmap3.html#screencast">gmap3 extension</a> page
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>

@@ -7,7 +7,7 @@ The Wicket viewer allows you to customize the GUI in several (progressively more
 * by replacing elements of the page using the `ComponentFactory` interface (described below)
 * by providing new pages (see [here](./custom-pages.html))
 
-Replacing elements of the page (the technique described here) is the most powerful general-purpose way to customize the look-n-feel of the viewer.  (Third-party) examples include the [gmap3](third-party/danhaywood-isis-wicket-gmap3.html), [calendar](third-party/danhaywood-isis-wicket-fullcalendar2.html), [excel download](third-party/danhaywood-isis-wicket-excel.html) and [charting](third-party/danhaywood-isis-wicket-wickedcharts.html) integrations.
+Replacing elements of the page (the technique described here) is the most powerful general-purpose way to customize the look-n-feel of the viewer.  Examples at [Isis Add-ons](http://isisaddons.org) include the [gmap3](isisaddons/isis-wicket-gmap3.html), [calendar](isisaddons/isis-wicket-fullcalendar2.html), [excel download](isisaddons/isis-wicket-excel.html) and [charting](isisaddons/isis-wicket-wickedcharts.html) integrations.
 
 ## Replacing Components (elements of the page) 
 
@@ -107,10 +107,10 @@ For example, out-of-the-box Isis provides a table view, a summary view (totals/s
 
 Additional views though could render the objects in the collection as a variety of ways.  Indeed, some third-party implementations already exist:
 
-  * [excel integration](https://github.com/danhaywood/isis-wicket-excel) (collection as a downloadable excel spreadsheet)
-  * [google maps v3 integration](https://github.com/danhaywood/isis-wicket-gmap3) (render any objects with a location on a map)
-  * [wicked charts integration](https://github.com/danhaywood/isis-wicket-wickedcharts) (barchart of any data)
-  * [full calendar integration](https://github.com/danhaywood/isis-wicket-fullcalendar) (render any objects with date properties on a calendar)
+  * [excel integration](https://github.com/isisaddons/isis-wicket-excel) (collection as a downloadable excel spreadsheet)
+  * [google maps v3 integration](https://github.com/isisaddons/isis-wicket-gmap3) (render any objects with a location on a map)
+  * [wicked charts integration](https://github.com/isisaddons/isis-wicket-wickedcharts) (barchart of any data)
+  * [full calendar integration](https://github.com/isisaddons/isis-wicket-fullcalendar) (render any objects with date properties on a calendar)
   
 Registering these custom views is just a matter of adding the appropriate Maven module to the classpath.  Isis uses the JDK `ServiceLoader` API to automatically discover and register the `ComponentFactory` of each such component.
 

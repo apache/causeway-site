@@ -1,6 +1,6 @@
-Title: String interpolator domain service (for mail-merge/reporting)
+Title: isis-module-stringinterpolator (for mail-merge/reporting)
 
-The [String interpolator domain service](https://github.com/danhaywood/isis-domainservice-stringinterpolator)  will interpolate string templates with either Isis system properties or values obtained from a domain object (possibly walking relationships).  It uses [OGNL](http://commons.apache.org/proper/commons-ognl/) to evaluate the expressions withn the string template.
+The [isis-module-stringinterpolator](https://github.com/isisaddons/isis-module-stringinterpolator) module's `StringInterpolatorService` interpolates string templates with either Isis system properties or values obtained from a domain object (possibly walking relationships).  It uses [OGNL](http://commons.apache.org/proper/commons-ognl/) to evaluate the expressions withn the string template.
 
 One use case for this service is in building URLs based on an object's state, parameterized by environment (prod/test/dev etc).  These URLs could be anything; in the original use case they were to a reporting service:
 
@@ -13,4 +13,4 @@ When initialized by Isis, the Isis system properties are exposed as the `propert
    
 ## Download
 
-The service is hosted on [github](https://github.com/danhaywood/isis-domainservice-stringinterpolator).  
+The service is hosted on [github](https://github.com/isisaddons/isis-module-stringinterpolator).  

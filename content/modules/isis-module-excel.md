@@ -1,6 +1,6 @@
 Title: Excel Download/Upload
 
-The [Excel domain service](https://github.com/danhaywood/isis-domainservice-excel) provides an export/import capability, enabling bulk update or insert of data into Isis.
+The [isis-module-excel](https://github.com/isisaddons/isis-module-excel) module's `ExcelDomainService` provides an export/import capability to enable bulk update or insert of data into Isis.
 
 Specifically, it allows a collection of (view model) object to be exported to an Excel spreadsheet, or recreated by importing from Excel. The underlying technology used is [Apache POI](http://poi.apache.org).
 
@@ -14,4 +14,4 @@ Using the Excel domain service and view models to perform bulk updates.
     
 ## Download
 
-The extension is hosted on [github](https://github.com/danhaywood/isis-domainservice-excel).
+The extension is hosted on [github](https://github.com/isisaddons/isis-module-excel).
