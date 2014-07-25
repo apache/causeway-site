@@ -354,7 +354,9 @@ Profiling, background execution, extended auditing.
 
 {col-md-4
 
-#### <a name="modules-isisaddons">Isis-Addons</a>
+#### <a name="modules-isisaddons">Isis Addons</a>
+
+Hosted at [isisaddons.org](http://isisaddons.org).
 
 * [Docx Mail merge](./modules/isis-module-docx.html)
 * [Excel download/upload](./modules/isis-module-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
