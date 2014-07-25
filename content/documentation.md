@@ -247,7 +247,9 @@ For both:
 {row
 
 {col-md-12
-## <a name="core-modules">Core Modules</a>
+## <a name="core-domain-services">Core Domain Services</a>
+
+<i>[./reference/services](Services summary)</i>
 
 }
 
@@ -260,11 +262,29 @@ For both:
 #### <a name="core-modules-common">Common</a>
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
+* [ClockService](./reference/services/ClockService.html)
 * [Exception Recognizers](./reference/services/exception-recognizers.html)
-* [ClockService](./reference/services/01-Clock.html)
-* [User Profiles](./reference/services/02-Profiles.html)
+* [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
 
-#### <a name="domain-services-bookmark-memento">Bookmark/memento</a>
+}
+
+{col-md-4
+
+#### <a name="domain-services-event-bus">Event bus (for decoupled business logic)</a>
+
+* [EventBusService](./reference/services/event-bus-service.html)
+
+#### <a name="domain-services-information-sharing">Services for co-ordinated information sharing</a>
+
+* [Scratchpad](./reference/services/scratchpad.html)
+* [Bulk.Interaction](./reference/services/bulk-interaction.html)
+* [QueryResultsCache](./reference/services/query-results-cache.html)
+
+}
+
+{col-md-4
+
+#### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
 * [Memento Service](./reference/services/memento-service.html)
@@ -272,45 +292,67 @@ For both:
 
 }
 
+}
+
+
+
+{row
+
+{col-md-12
+## <a name="modules">Modules</a>
+
+}
+
+}
+
+{row
+
 {col-md-4
 
-#### <a name="domain-services-profiling-background-execution">Profiling/background execution</a>
+#### <a name="isis-module-auditing">Auditing</a>
+
+* [Auditing Service](./reference/services/auditing-service.html)
+
+#### <a name="isis-module-command">Commands</a>
+
+<i>for profiling/background execution/extended auditing</i>
 
 * [Command Context/Service](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Background Service / Background Command Service](./reference/services/background-service.html)
 
-#### <a name="domain-services-publishing-auditing">Publishing/auditing</a>
+}
 
-* [Auditing Service](./reference/services/auditing-service.html)
+{col-md-4
+
+#### <a name="isis-module-publishing">Publishing</a>
+
 * [Publishing Service](./reference/services/publishing-service.html)
 
-#### <a name="domain-services-performance-tuning-coordination">Performance tuning/co-ordination</a>
+#### <a name="isis-module-settings">Settings</a>
 
-* [QueryResultsCache](./reference/services/query-results-cache.html)
-* [Scratchpad](./reference/services/scratchpad.html)
-* [Bulk.Interaction](./reference/services/bulk-interaction.html)
-* [EventBusService](./reference/services/event-bus-service.html)
+* [Settings Services](./reference/services/settings-services.html)
 
+#### <a name="isis-module-devutils">Developer Utilities</a>
+
+* [Developer Utilities Service](./reference/services/developer-utilities-service.html)
 
 }
 
 {col-md-4
 
-#### <a name="domain-services-other">Other</a>
+#### <a name="modules-isisaddons">Isis-Addons</a>
 
-* [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
-* [Settings Services](./reference/services/settings-services.html)
-* [Developer Utilities Service](./reference/services/developer-utilities-service.html)
+* [Docx Mail merge](./modules/isis-module-docx.html)
+* [Excel download/upload](./modules/isis-module-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Scheduler](./reference/modules/isis-module-scheduler.html)
+* [String interpolator](./modules/isis-module-stringinterpolator.html)
+* [Tags](./reference/modules/isis-module-tags.html)
 
-#### <a name="domain-services-third-party">Third-party</a>
-
-* [Docx Mail merge](./reference/services/third-party/danhaywood-isis-domainservice-docx.html)
-* [Excel download/upload](./reference/services/third-party/danhaywood-isis-domainservice-excel.html) <a href="./reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [String interpolator](./reference/services/third-party/danhaywood-isis-domainservice-stringinterpolator.html)
 
 }
 
 }
+
 
 {row
 

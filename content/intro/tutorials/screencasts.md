@@ -81,7 +81,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   <tr>
     <td>Bulk updates in Isis<br/><br/><i>Using the (third-party) Excel domain service and view models to perform bulk updates.</i>
     <br/><br/>
-    See also the <a href="../../reference/services/third-party/danhaywood-isis-domainservice-excel.html#screencast">Excel domain service</a> page
+    See also the <a href="../../modules/isis-module-excel.html#screencast">Excel module</a> page
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/8SsRDhCUuRc" frameborder="0" allowfullscreen></iframe>

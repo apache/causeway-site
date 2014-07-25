@@ -110,6 +110,14 @@ Title: Applib Services and Implementations
 </tr>
 <tr>
     <th>&nbsp;</th>
+    <th class="heading">o.a.i.applib.services.wrapper<br/>WrapperFactory</th>
+    <td>isis-core-wrapper</td>
+    <td>WrapperFactoryDefault</td>
+    <td>Yes; auto-registered</td>
+    <td></td>
+</tr>
+<tr>
+    <th>&nbsp;</th>
     <th class="heading">o.a.i.applib.services.eventbus<br/>EventBusService</th>
     <td>isis-core-objectstore-jdo-datanucleus</td>
     <td>EventBusServiceJdo</td>
@@ -156,14 +164,6 @@ Title: Applib Services and Implementations
     <td>BackgroundServiceDefault</td>
     <td>Yes; auto-registered</td>
     <td>Depends on: BackgroundCommandService</td>
-</tr>
-<tr>
-    <th>&nbsp;</th>
-    <th class="heading">o.a.i.applib.services.wrapper<br/>WrapperFactory</th>
-    <td>isis-module-wrapper</td>
-    <td>WrapperFactoryDefault</td>
-    <td>Yes; auto-registered</td>
-    <td></td>
 </tr>
 <tr>
     <th>&nbsp;</th>
