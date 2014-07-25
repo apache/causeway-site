@@ -2,12 +2,10 @@ Title: Background Service
 
 The `BackgroundService`, and its companion `BackgroundCommandService`, enable action invocations to be persisted such that they may be invoked in the background.
  
-The `BackgroundService` is responsible for capturing a memento representing the action invocation, and persisting it.  The default `BackgroundServiceDefault` implementation (provided by isis-core) uses (a private copy of) [MementoService](./memento-service.html), and then delegates the persistence of the memento to the companion `BackgroundCommandService` (discussed further [below](#BackgroundCommandService)).
+The `BackgroundService` is responsible for capturing a memento representing the action invocation, and persisting it.  The default `BackgroundServiceDefault` implementation (provided by isis-core) uses (a private copy of) [MementoService](./memento-service.html), and then delegates the persistence of the memento to an appropriate implementation of the companion `BackgroundCommandService`.  One such implementation is `isis-module-command-jdo`'s [BackgroundCommandServiceJdo](./background-command-service.html).
  
-The JDO objectstore provides an implementation of `BackgroundCommandService` ([BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)) that persists to an RBMS entities.  You are welcome to write other implementations to other data stores (eg NoSQL) if required.
-
-The persisting of commands is only half the story; there needs to be a separate process  to read the commands and execute them.  The `BackgroundCommandExecution` class (also discussed [below](#BackgroundCommandExecution) provides the mechanism to do this.
-
+The persisting of commands is only half the story; there needs to be a separate process  to read the commands and execute them.  The `BackgroundCommandExecution` abstract class (discussed [below](#BackgroundCommandExecution) provides infrastructure to do this; the concrete
+implementation of this class depends on the configured `BackgroundCommandService` (in order to query for the persisted (background) `Command`s.
 
 
 ## BackgroundService
@@ -68,64 +66,14 @@ We could therefore refactor the method as follows:
 where `commandContext` field is the injected `CommandContext` domain service.
 
 
-## BackgroundCommandService
-
-The `BackgroundCommandService` is a companion to the default `BackgroundServiceDefault` implementation, and takes responsibility for persisting the required action as a background command.
-
-Typically this service isn't called from domain classes, but it exists as a domain service so that it is pluggable.
-
-
-### API
-
-The API of the `BackgroundCommandService` is:
-
-    public interface BackgroundCommandService {
-    
-        public void schedule(
-                final ActionInvocationMemento aim, 
-                final Command command, 
-                final String targetClassName, final String targetActionName, final String targetArgs);
-
-    }
-
-where `ActionInvocationMemento` is a wrapper around a [MementoService](./memento-service.html)'s `Memento`, capturing the details of an action invocation (for execution later on).
-
-For the record, the API of `ActionInvocationMemento` is:
-
-    public class ActionInvocationMemento {
-    
-        public String getActionId() { ... }
-        public String getTargetClassName() { ... }
-        public String getTargetActionName() { ... }
-        public Bookmark getTarget() { ... }
-        public int getNumArgs() { ... }
-        public Class<?> getArgType(final int num) throws ClassNotFoundException { ... }
-        public <T> T getArg(final int num, final Class<T> type) { ... }
-        
-        public String asMementoString() { ... }
-    }
-
-The `asMementoString()` method tehrefore lets the `BackgroundCommandService` implementation convert the action invocation into a simple string.
-
-
-### Implementation
-
-The JDO object store provides the [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html) implementation that persists `Command`s to an RDBMS.
-
-
-### Usage
-
-As noted above, this service isn't intended to be called from domain classes; rather it acts as a plug-in point to the default `BackgroundServiceDefault` service.
-
 ## Related Services
 
-These services are closely related to the `CommandContext` and `CommandService` services (both described [here]](./command-context.html)  services.  The `CommandContext` service is responsible for providing a parent `Command` with which the background `Command`s can then be associated as children, while the `CommandService` is responsible for persisting those parent `Command`s (analogous to the way in which the  `BackgroundCommandService` persists the child background `Command`s).
+This service is closely related to the [CommandContext](./command-context.html) and also that service's supporting [CommandService](./command-service.html) service.  The `CommandContext` service is responsible for providing a parent `Command` with which the background `Command`s can then be associated as children, while the `CommandService` is responsible for persisting those parent `Command`s.  The latter is analogous to the way in which the  `BackgroundCommandService` persists the child background `Command`s.
 
-The core framework provides default implementations of `CommandContext` and also `BackgroundService`, and there is very little reason to use any other implementation.
-
-The implementations of `CommandService` and `BackgroundCommandService` also go together; typically both parent `Command`s and child background `Command`s will be persisted in the same way.  The JDO objectstore provides implementations of both ([CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) and [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)).
+The implementations of `CommandService` and `BackgroundCommandService` go together; typically both parent `Command`s and child background `Command`s will be persisted in the same way.  The `isis-module-command-jdo` module provides implementations of both (see [CommandServiceJdo](../../components/objectstores/jdo/services/command-service-jdo.html) and [BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)).
  
-## BackgroundCommandExecution
+
+## BackgroundCommandExecution abstract class
 
 The `BackgroundCommandExecution` (in isis-core) is an abstract template class provided by isis-core that defines an abstract hook method to obtain background `Command`s to be executed:
 
@@ -136,20 +84,14 @@ The `BackgroundCommandExecution` (in isis-core) is an abstract template class pr
         ...
     }
 
-The developer is required to implement this hook method in a subclass.
-
-If using the JDO implementation of `BackgroundCommandService`, then this subclass exists already, namely:
-
-* `org.apache.isis.objectstore.jdo.service.BackgroundCommandExecutionFromBackgroundCommandServiceJdo`
-
-This returns all background `Command`s that are not yet started.
+The developer is required to implement this hook method in a subclass.  The `isis-module-command-jdo` module provides a suitable concrete implementation.
 
 
 ## Quartz Scheduler Configuration
 
 The last part of the puzzle is to actually run this class.  These could be run in a batch job overnight, or run continually by, say, the [Quartz](http://quartz-scheduler.org) scheduler.  For the latter case, we want to define a Quartz cron job that will inherit the `execute(...)` method of `BackgroundCommandExecution` (inherited from *its* superclass, `AbstractIsisSessionTemplate`).
 
-The following does the trick:
+If using the `isis-module-command-jdo`, then the following does the trick:
 
     import org.apache.isis.objectstore.jdo.service.BackgroundCommandExecutionFromBackgroundCommandServiceJdo;
     
@@ -290,6 +232,8 @@ and the entry in `web.xml` for the Quartz servlet:
      </servlet>
 
 
+     
+<!--
 All of this stuff is configured in the example todo app, found on github (as of Isis 1.5.0):
 
 * [BackgroundCommandExecutionQuartzJob](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/java/webapp/scheduler/BackgroundCommandExecutionQuartzJob.java)
@@ -297,17 +241,14 @@ All of this stuff is configured in the example todo app, found on github (as of 
 * [quartz-config.xml](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/resources/webapp/scheduler/quartz-config.xml)
 * [quartz.properties](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/resources/webapp/scheduler/quartz.properties)
 * [web.xml](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/webapp/WEB-INF/web.xml#L308)
+-->
 
 
 ## Registering the Services
 
-Register like any other service in `isis.properties`.  For example, if using the default implementation of `BackgroundService` and the JDO implementation of `BackgroundCommandService`, it would be:
+Assuming that the `configuration-and-annotation` services installer is configured:
 
-    isis.services=...,\
-                  org.apache.isis.core.runtime.services.background.BackgroundServiceDefault,\
-                  org.apache.isis.objectstore.jdo.applib.service.background.BackgroundCommandServiceJdo,\
-                  org.apache.isis.objectstore.jdo.applib.service.background.BackgroundCommandServiceJdoRepository,\
-                  org.apache.isis.objectstore.jdo.applib.service.background.BackgroundCommandServiceJdoContributions,\
-                  ...
+    isis.services-installer=configuration-and-annotation
 
-Note that the JDO implementation provides additional supporting `...Repository` and `...Contributions` services to query for and render background `Command`s.
+then Isis' core implementation of `BackgroundService` will be automatically registered and injected into your entities/services.
+

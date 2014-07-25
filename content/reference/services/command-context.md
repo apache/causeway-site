@@ -1,9 +1,9 @@
-Title: CommandContext and CommandService
+Title: CommandContext
 
 The `CommandContext` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
 
 By default, the `Command` is held in-memory only; once the action invocation has completed, the `Command` object is gone.  The optional
- supporting `CommandService` enables the implementation of `Command` to be pluggable.  With an appropriate implementation (eg the JDO implementation, described below) the `Command` may then be persisted.
+ supporting `CommandService` enables the implementation of `Command` to be pluggable.  With an appropriate implementation (eg as provided by the `isis-command-module-jdo`'s [CommandServiceJdo](./command-service.html)) the `Command` may then be persisted.
 
 Persistent `Command`s support several use cases:
 
@@ -91,13 +91,7 @@ The `CommandContext` implementation is part of the core framework (isis-core), i
 
 #### CommandService (for persistent `Command`s)
 
-The `CommandService` interface - which acts as the factory for different `Command` implementations - is pluggable.  Currently there is only a single implementation, provided by the JDO objectstore, which persists `Command`s to an RDBMS:
-
-* `org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdo`
-
-There is also a supporting repository to query persisted `Command`s:
-
-* `org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdoRepository`
+The `CommandService` interface - which acts as the factory for different `Command` implementations - is pluggable.  The [isis-module-command-jdo](command-service.html) implementation persists `Command`s to an RDBMS.
 
 
 ## Usage
@@ -126,6 +120,8 @@ The annotation can also be used to specify whether the command should be perform
 
 When a background command is invoked, the user is returned the command object itself (to provide a handle to the command being invoked).
 
+This requires that an implementation of `CommandService` that persists the commands (such as `isis-module-command-jdo`'s `CommandService` [implementation](./command-service.html)) is configured.  It also requires that a scheduler is configured to execute the background commands, see [BackgroundCommandService](./background-command-service.html)).
+
 #### Making commands the default
 
 As an alternative to annotating every action with `@Command`, alternatively this can be configured as the default.  
@@ -149,7 +145,7 @@ To disable globally, use:
 
 If the key is not present in `isis.properties`, then commands are disabled by default.
     
-#### Interating with the services
+#### Interacting with the services
 
 Typically the domain objects have little need to interact with the `CommandContext` and `Command` directly; what is more useful is that these are persisted in support of the various use cases identified above.
 
@@ -172,17 +168,15 @@ The domain object can still obtain the original ("effective") user that caused t
 
 ## Registering the Services
 
-Register like any other service in `isis.properties`.  For example, if using the core `CommandContext` service along with the [JDO implementation](../../components/objectstores/jdo/services/command-service-jdo.html) of the `CommandService`, then it would be:
+Assuming that the `configuration-and-annotation` services installer is configured:
 
-    isis.services=...,\
-                  org.apache.isis.applib.services.command.CommandContext,\
-                  org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdo,\
-                  org.apache.isis.objectstore.jdo.applib.service.command.CommandServiceJdoRepository,\
-                  ...
+    isis.services-installer=configuration-and-annotation
+
+then the `CommandContext` service is automatically registered and injected into your entities/services; no further configuration is required.  
 
 
 ## Related Services
 
-These services are most often used in conjunction with the `BackgroundService` and `BackgroundCommandService` (both described [here](./background-service.html)).  For `BackgroundService` captures commands for execution in the background, while the [BackgroundCommandService] persists such commands for execution.  
+As discussed above, the supporting [CommandService](./command-service.html) enables `Command` objects to be persisted.  Other related services are the [BackgroundService](./background-service.html) and [BackgroundCommandService](./background-service.html)).  For `BackgroundService` captures commands for execution in the background, while the [BackgroundCommandService] persists such commands for execution.  
 
 The implementations of `CommandService` and `BackgroundCommandService` are intended to go together, so that persistent parent `Command`s can be associated with their child background `Command`s.

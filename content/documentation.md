@@ -278,6 +278,13 @@ Decouple business logic across modules using intra-process publish/subscribe
 
 {col-md-4
 
+#### <a name="domain-services-information-sharing">command context/background</a>
+
+Context in which actions invoked, infrastructure to run actions in background (asynchronously).
+
+* [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Background Service](./reference/services/background-service.html)
+
 
 #### <a name="domain-services-information-sharing">Information sharing</a>
 
@@ -318,14 +325,14 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 #### <a name="isis-module-auditing">Auditing</a>
 
-* [Auditing Service](./reference/services/auditing-service.html)
+* [Auditing](./reference/services/auditing-service.html)
 
 #### <a name="isis-module-command">Commands</a>
 
-<i>for profiling/background execution/extended auditing</i>
+Profiling/background execution/extended auditing.
 
-* [Command Context/Service](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Background Service / Background Command Service](./reference/services/background-service.html)
+* [Command Service](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Background Command Service](./reference/services/background-command-service.html)
 
 }
 
