@@ -164,7 +164,7 @@ Isis provides a number of Eclipse templates to help ensure that code is formatte
   - Import [Apache-Isis-code-style-cleanup.xml](resources/Apache-Isis-code-style-cleanup.xml)
   - (this performs both code formatting and organizing imports)
 
-In addition, you will probably want to import the Java editor templates, as described in the [getting started](../getting-started/editor-templates.html) section.
+In addition, you will probably want to import the Java editor templates, as described in the [getting started](../intro/resources/editor-templates.html) section.
 
 <!--
 TODO: to add from the original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").

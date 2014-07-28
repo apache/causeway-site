@@ -8,17 +8,17 @@ The following screenshots are taken from the [demo app](https://github.com/isisa
 
 Standalone collection:
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-fullcalendar2/master/images/standalone-collection.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-fullcalendar2/master/images/standalone-collection.png" style="width: 900px;"/>
 
 
 Parented collection in a custom dashboard view model
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-fullcalendar2/master/images/dashboard.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-fullcalendar2/master/images/dashboard.png" style="width: 900px;"/>
 
 
 Parented collection in a regular entity:
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-fullcalendar2/master/images/parented-collection.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-fullcalendar2/master/images/parented-collection.png" style="width: 900px;"/>
   
   
 ## Download

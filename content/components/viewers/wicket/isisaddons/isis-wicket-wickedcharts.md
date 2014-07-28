@@ -19,18 +19,18 @@ The following screenshots are taken from the [demo app](https://github.com/isisa
 
 A collection with `BigDecimal` properties:
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-wickedcharts/master/images/summarychart-tab.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-wickedcharts/master/images/summarychart-tab.png" style="width: 900px;"/>
 
 renders the returned chart with associated summary data:
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-wickedcharts/master/images/summarychart.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-wickedcharts/master/images/summarychart.png" style="width: 900px;"/>
 
 
 #### Scalar Chart
 
 Result of an action to analyze `ToDoItem`s by their category:
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-wickedcharts/master/images/piechart.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-wickedcharts/master/images/piechart.png" style="width: 900px;"/>
 
    
 ## Download

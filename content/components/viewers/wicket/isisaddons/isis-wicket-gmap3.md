@@ -6,9 +6,9 @@ This [Wicket extension](https://github.com/isisaddons/isis-wicket-gmap3) renders
 
 The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-gmap3/tree/master/zzzdemo) (adapted from Isis' quickstart archetype).  Each `ToDoItem` has been made `Locatable`.
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-gmap3/master/images/screenshot-1.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-gmap3/master/images/screenshot-1.png" style="width: 900px;"/>
 
-<img src="https://raw.github.com/isisaddons/isis-wicket-gmap3/master/images/screenshot-2.png" style="width: 900px;"/>
+<img src="https://raw.githubusercontent.com/isisaddons/isis-wicket-gmap3/master/images/screenshot-2.png" style="width: 900px;"/>
 
 
 ## <a name="screencast"></a>Screencast

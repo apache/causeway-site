@@ -32,7 +32,7 @@ where:
 
 * `downloadLayouts()` allows the developer can download a ZIP file of `Xxx.layout.json` files for each domain type in the Isis metamodel.  
  
-    This is useful if converting a domain model to use [dynamic layouts](../../more-advanced-topics/dynamic-layouts.html).
+    This is useful if converting a domain model to use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 *  `downloadLayout()` (contributed action) allows the developer can download the `Xxx.layout.json` for an individual object
 

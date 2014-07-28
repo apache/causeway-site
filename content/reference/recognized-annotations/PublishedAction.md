@@ -6,4 +6,4 @@ Title: @PublishedAction
 
 This annotation on an action causes an events to be published by the registered implementation of a `PublishingService`.
 
-A fuller description of the publishing architecture can be found [here](http://isis.apache.org/core/services/publishing-service.html).
+A fuller description of the publishing architecture can be found [here](http://isis.apache.org/reference/services/publishing-service.html).

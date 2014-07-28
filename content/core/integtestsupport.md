@@ -4,7 +4,7 @@ Title: Integration testing Support
 
 The `isis-core-integtestsupport` module provides the ability to bootstrap Isis within a JUnit testing framework, using any object store.  This is done using a JUnit rule.
 
-In addition, the UI can be integration tested by "wrapping" each domain object in a proxy.  This proxy ensures that the "see it/use it/do it" rules (ie to hide, disable, or validate) are enforced.  The wrapping is performed using the `WrapperFactory`, part of the [isis-core-wrapper](wrapper.html) module.
+In addition, the UI can be integration tested by "wrapping" each domain object in a proxy.  This proxy ensures that the "see it/use it/do it" rules (ie to hide, disable, or validate) are enforced.  The wrapping is performed using the [WrapperFactory](../reference/services/wrapper-factory.html), part of Isis core.
 
 To use, update the `pom.xml`:
 

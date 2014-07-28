@@ -22,7 +22,7 @@ The objectstore, authentication, authorization and profilestore are specified in
     isis.authorization=shiro
     isis.user-profile-store=in-memory
 
-The available values are registered in [installer-registry.properties](https://raw.github.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  In either case the appropriate component must also (of course) be added as a dependency to the `pom.xml` files.  
+The available values are registered in [installer-registry.properties](https://raw.githubusercontent.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  In either case the appropriate component must also (of course) be added as a dependency to the `pom.xml` files.  
 
 The viewer is *not* specified in the `isis.properties` file; rather it is implied by the configuration of `WEB-INF/web.xml` file.  The archetypes are a good point of reference for the required servlet context listeners and servlets; every viewer has its own requirements.
 

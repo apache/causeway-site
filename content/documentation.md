@@ -368,13 +368,13 @@ Background/async execution
 
 #### <a name="modules-isisaddons">Isis Addons</a>
 
-Hosted at [isisaddons.org](http://isisaddons.org).
+Hosted at [isisaddons.org](http://www.isisaddons.org).
 
-* [Docx Mail merge](./modules/isis-module-docx.html)
-* [Excel download/upload](./modules/isis-module-excel.html) <a href="./modules/isis-module-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Scheduler](./reference/modules/isis-module-scheduler.html) [stub]
-* [String interpolator](./modules/isis-module-stringinterpolator.html)
-* [Tags](./reference/modules/isis-module-tags.html)
+* [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
+* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./modules/isis-module-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Scheduler](http://github.com/isisaddons/isis-module-scheduler)
+* [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
+* [Tags](http://github.com/isisaddons/isis-module-tags)
 
 
 }

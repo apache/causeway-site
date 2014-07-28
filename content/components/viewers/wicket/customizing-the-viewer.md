@@ -7,7 +7,7 @@ The Wicket viewer allows you to customize the GUI in several (progressively more
 * by replacing elements of the page using the `ComponentFactory` interface (described below)
 * by providing new pages (see [here](./custom-pages.html))
 
-Replacing elements of the page (the technique described here) is the most powerful general-purpose way to customize the look-n-feel of the viewer.  Examples at [Isis Add-ons](http://isisaddons.org) include the [gmap3](isisaddons/isis-wicket-gmap3.html), [calendar](isisaddons/isis-wicket-fullcalendar2.html), [excel download](isisaddons/isis-wicket-excel.html) and [charting](isisaddons/isis-wicket-wickedcharts.html) integrations.
+Replacing elements of the page (the technique described here) is the most powerful general-purpose way to customize the look-n-feel of the viewer.  Examples at [Isis Add-ons](http://www.isisaddons.org) include the [gmap3](isisaddons/isis-wicket-gmap3.html), [calendar](isisaddons/isis-wicket-fullcalendar2.html), [excel download](isisaddons/isis-wicket-excel.html) and [charting](isisaddons/isis-wicket-wickedcharts.html) integrations.
 
 ## Replacing Components (elements of the page) 
 

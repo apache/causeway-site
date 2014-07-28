@@ -64,12 +64,12 @@ To support unit-testing, Isis provides the `InMemoryDB` class; a glorified hashm
 
 ## Usage
 
-The following examples are taken from the [quickstart ("todo") application](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo); in particular from that project's [integration test](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java) module.
+The following examples are taken from the [todoapp](https://github.com/apache/isis/tree/master/example/application/todoapp); in particular from that project's [integration test](https://github.com/apache/isis/tree/master/example/application/todoapp/integtests/src/test/java) module.
 
 
 ### Root pom ###
 
-In the root [`pom.xml`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/pom.xml), we recommend that you update the `maven-surefire-plugin` patterns, so that BDD specs are recognised alongside unit and integration tests:
+In the root [`pom.xml`](https://github.com/apache/isis/blob/master/example/application/todoapp/pom.xml), we recommend that you update the `maven-surefire-plugin` patterns, so that BDD specs are recognised alongside unit and integration tests:
 
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -109,7 +109,7 @@ There is no need to explicitly add in a dependency on `isis-core-wrapper`; this 
 
 ### Writing an Integration test ###
 
-Integration tests should subclass from `IntegrationTestAbstract`.  For example, here's a the [`ToDoItemTest_completed`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/tests/actions/ToDoItemTest_completed.java) test which exercises of the `ToDoItem`'s `completed()` action:
+Integration tests should subclass from `IntegrationTestAbstract`.  For example, here's a the [`ToDoItemTest_completed`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/tests/actions/ToDoItemTest_completed.java) test which exercises of the `ToDoItem`'s `completed()` action:
 
 
     public class ToDoItemTest_completed  {
@@ -154,11 +154,11 @@ Integration tests should subclass from `IntegrationTestAbstract`.  For example, 
         }
     }
 
-The [ToDoItemsFixture](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/fixture/src/main/java/fixture/todo/ToDoItemsFixture.java) referenced above tears down data as well as installs new data.  In this example it runs at the class level (`@BeforeClass`), but it can also run at the instance level (`@Before`).  
+The [ToDoItemsFixture](https://github.com/apache/isis/blob/master/example/application/todoapp/fixture/src/main/java/fixture/todo/ToDoItemsFixture.java) referenced above tears down data as well as installs new data.  In this example it runs at the class level (`@BeforeClass`), but it can also run at the instance level (`@Before`).  
 
 Note also that when the `ToDoItem` is wrapped, it is not possible to call `setComplete()` directly on the object; but when it is unwrapped then this call can be made as per normal.
 
-The [ToDoSystemInitializer](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/ToDoSystemInitializer.java) class referenced above is responsible for setting up the `IsisSystemForTest`.  You can think of it as being broadly equivalent to the information that is in the regular `isis.properties` file: 
+The [ToDoSystemInitializer](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/ToDoSystemInitializer.java) class referenced above is responsible for setting up the `IsisSystemForTest`.  You can think of it as being broadly equivalent to the information that is in the regular `isis.properties` file: 
 
     public class ToDoSystemInitializer {
         
@@ -223,7 +223,7 @@ You may find it more convenient to place the `.feature` files in `src/test/java`
         </testResources>
     </build>
 
-Let's now look at the a specification for the `ToDoItem'`s "completed" feature.  Firstly, the [`ToDoItemSpec_findAndComplete.feature`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/ToDoItemSpec_findAndComplete.feature):
+Let's now look at the a specification for the `ToDoItem'`s "completed" feature.  Firstly, the [`ToDoItemSpec_findAndComplete.feature`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/specs/todoitem/ToDoItemSpec_findAndComplete.feature):
 
     @ToDoItemsFixture
     Feature: Find And Complete ToDo Items
@@ -237,7 +237,7 @@ Let's now look at the a specification for the `ToDoItem'`s "completed" feature. 
 
 The `@ToDoItemsFixture` is a custom tag we've specified to indicate the prerequisite fixtures to be loaded; more on this in a moment.  The `@integration` tag, meanwhile, says that this feature should be run with integration-level scope.  (If we wanted to run at unit-level scope, the tag would be `@unit`).
 
-The [`RunSpecs`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/specs/todoitem/RunSpecs.java) class to run this feature (and any other features in this package or subpackages) is just boilerplate:
+The [`RunSpecs`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/specs/todoitem/RunSpecs.java) class to run this feature (and any other features in this package or subpackages) is just boilerplate:
 
     @RunWith(Cucumber.class)
     @Cucumber.Options(
@@ -252,9 +252,9 @@ The [`RunSpecs`](https://github.com/apache/isis/blob/master/example/application/
         // intentionally empty 
     }
 
-The JSON formatter allows integration with enhanced reports, for example as provided by [Masterthought.net](http://www.masterthought.net/section/cucumber-reporting) (screenshots at end of page).  (Commented out) configuration for this is provided in the example todo app `integtests` module's [pom.xml](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/pom.xml).
+The JSON formatter allows integration with enhanced reports, for example as provided by [Masterthought.net](http://www.masterthought.net/section/cucumber-reporting) (screenshots at end of page).  (Commented out) configuration for this is provided in the example todo app `integtests` module's [pom.xml](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/pom.xml).
 
-The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/BootstrappingGlue.java) step definition:
+The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/BootstrappingGlue.java) step definition:
 
     public class BootstrappingGlue extends CukeGlueAbstract {
     
@@ -275,7 +275,7 @@ The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://gith
         // bootstrapping of @unit scope omitted
     }
 
-The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/CatalogOfFixturesGlue.java):
+The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/CatalogOfFixturesGlue.java):
 
     public class CatalogOfFixturesGlue extends CukeGlueAbstract {
             
@@ -290,7 +290,7 @@ The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlu
 
 Note that this is annotated with a tag (`@ToDoItemsFixture`) so that the correct fixture runs.  (We might have a whole variety of these).
      
-The step definitions pertaining to `ToDoItem` then reside in the [`ToDoItemGlue`](https://github.com/apache/isis/blob/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/glue/todoitem/ToDoItemGlue.java) class.  This is where the heavy lifting gets done:
+The step definitions pertaining to `ToDoItem` then reside in the [`ToDoItemGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/todoitem/ToDoItemGlue.java) class.  This is where the heavy lifting gets done:
 
     public class ToDoItemGlue extends CukeGlueAbstract {
     

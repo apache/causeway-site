@@ -1,14 +1,14 @@
 Title: @Command
 
-The `@Command` annotation lets you change the way in which the framework invokes an action, most notably to invoke the action in the background.  It works (and influences the behaviour of) the the `CommandContext`, `CommandService`, `BackgroundService` and `BackgroundCommandService` domain services (documented [here](../../../core/services/command-context.html) and [here](../../../core/services/background-service.html)). 
+The `@Command` annotation lets you change the way in which the framework invokes an action, most notably to invoke the action in the background.  It works (and influences the behaviour of) the the `CommandContext`, `CommandService`, `BackgroundService` and `BackgroundCommandService` domain services (documented [here](../../../reference/services/command-context.html) and [here](../../../reference/services/background-service.html)). 
 
 By default, actions are invoked in directly in the thread of the invocation.
 
 If the `CommandContext` service is configured, then this action invocation is reified into a `Command` object, capturing details of the target object, the action, the parameter arguments, the user, a timestamp and so on. 
 
-If an appropriate `CommandService` service is configured (for example the [CommandServiceJdo](../../../components/objectstores/jdo/command-service-jdo.html) JDO implementation), then the `Command` itself is persisted.
+If an appropriate `CommandService` service is configured (for example the [CommandServiceJdo](../../../components/objectstores/jdo/services/command-service-jdo.html) JDO implementation), then the `Command` itself is persisted.
 
-If the `BackgroundService` is configured, then commands can be invoked by means of a separate background process.  If an appropriate `BackgroundCommandService` service is configured (for example, the [BackgroundCommandServiceJdo](../../../components/objectstores/jdo/background-command-service-jdo.html) JDO implementation), then the background command is persisted.
+If the `BackgroundService` is configured, then commands can be invoked by means of a separate background process.  If an appropriate `BackgroundCommandService` service is configured (for example, the [BackgroundCommandServiceJdo](../../../components/objectstores/jdo/services/background-command-service-jdo.html) JDO implementation), then the background command is persisted.
 
 The `@Command` annotation can be annotated on action methods, to influence this behaviour:
 

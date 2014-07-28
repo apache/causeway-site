@@ -468,7 +468,7 @@ Finally, commit your changes.
 
 ### Save to `KEYS`
 
-The armored representation of the public key should be saved to Isis' `KEYS` file, [https://github.com/apache/isis/blob/master/KEYS](https://github.com/apache/isis/blob/master/KEYS) (ie, in the [root](https://github.com/apache/isis) directory).
+The armored representation of the public key should be saved to Isis' `KEYS` file, [http://www.apache.org/dist/isis/KEYS](http://www.apache.org/dist/isis/KEYS) (that is, in the ASF distribution directory for Isis).
 
 First, in a new directory, checkout this file:
 

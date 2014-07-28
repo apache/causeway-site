@@ -13,7 +13,7 @@ In addition to the [support given to Apache Foundation as a whole](http://www.ap
 </tr>
 <tr>
 <td><img src="images/icons8-logo.png"></td>
-<td style="padding: 10px"><a href="http://icons8.com/">Icons8</a>, for selected icons on this website and in the <a href="https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/dom/src/main/resources/images">example todo app</a> used to generate the <a href="intro/getting-started/quickstart-archetype.html">quickstart archetype</a></td>
+<td style="padding: 10px"><a href="http://icons8.com/">Icons8</a>, for selected icons on this website and in the <a href="https://github.com/apache/isis/tree/master/example/application/todoapp/dom/src/main/resources/images">example todo app</a> used to generate the <a href="intro/getting-started/todoapp-archetype.html">todoapp archetype</a></td>
 </tr>
 </table>
 

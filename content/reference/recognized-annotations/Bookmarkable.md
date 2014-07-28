@@ -4,7 +4,7 @@ Title: @Bookmarkable
 >
 > Supported by the Wicket viewer.
 
-The `@Bookmarkable` annotation indicates that an entity or an action (with safe [action semantics](./ActinSemantics.html)) is automatically bookmarked.
+The `@Bookmarkable` annotation indicates that an entity or an action (with safe [action semantics](./ActionSemantics.html)) is automatically bookmarked.
 
 (In the Wicket viewer), a link to a bookmarked object is shown in the bookmarks panel that slides out from the left:
 

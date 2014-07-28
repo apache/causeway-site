@@ -49,7 +49,7 @@ It is possible for components to add their own `deploymentType`s, and the [Wicke
 
 ## Specifying the Deployment Type in the `web.xml` file
 
-> If running these viewers using the [WebServer](https://raw.github.com/apache/isis/master/core/webserver/src/main/java/org/apache/isis/core/webserver/WebServer.java), then the `deploymentType` is forced to SERVER_PROTOTYPE; the value in the `web.xml` file is ignored.  Thus these settings only take force when deploying into a regular webapp server, eg Tomcat.
+> If running these viewers using the [WebServer](https://raw.githubusercontent.com/apache/isis/master/core/webserver/src/main/java/org/apache/isis/core/webserver/WebServer.java), then the `deploymentType` is forced to SERVER_PROTOTYPE; the value in the `web.xml` file is ignored.  Thus these settings only take force when deploying into a regular webapp server, eg Tomcat.
 
 #### Wicket
 
@@ -87,7 +87,7 @@ The [Scimpi](../components/viewers/scimpi/about.html) is configured the same way
 
 ## Running a web viewer using `WebServer`
 
-If running these viewers using the [WebServer](https://raw.github.com/apache/isis/master/core/webserver/src/main/java/org/apache/isis/core/webserver/WebServer.java), then the `deploymentType` defaults to prototype; see below for more details.
+If running these viewers using the [WebServer](https://raw.githubusercontent.com/apache/isis/master/core/webserver/src/main/java/org/apache/isis/core/webserver/WebServer.java), then the `deploymentType` defaults to prototype; see below for more details.
 
 It is possible to explicitly specify the deployment mode at the command line:
 
@@ -102,7 +102,7 @@ Only `server_*`-style `deploymentType`s should be specified (it has a bearing on
 
 ## Component Defaults
 
-If a component implementation is not specified explicitly, then the default is based on the deployment category (see the [InstallerLookupDefault](https://raw.github.com/apache/isis/master/core/runtime/src/main/java/org/apache/isis/core/runtime/installers/InstallerLookupDefault.java) class).
+If a component implementation is not specified explicitly, then the default is based on the deployment category (see the [InstallerLookupDefault](https://raw.githubusercontent.com/apache/isis/master/core/runtime/src/main/java/org/apache/isis/core/runtime/installers/InstallerLookupDefault.java) class).
 
 <table class="table table-striped table-bordered table-condensed">
 <tr>
