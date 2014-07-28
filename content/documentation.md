@@ -221,6 +221,7 @@ For both:
 * [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
 * [Exception Recognizer](./reference/services/exception-recognizers.html) service
 
+
 #### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
 
 * [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
@@ -259,19 +260,18 @@ Commonly-used domain services to use within your app, implemented in Isis core. 
 
 {col-md-4
 
-#### <a name="core-modules-common">Core</a>
-
+#### <a name="core-modules-common">Fundamentals</a>
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [ClockService](./reference/services/ClockService.html)
-* [Exception Recognizers](./reference/services/exception-recognizers.html)
+* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
 * [Wrapper Factory](reference/services/wrapper-factory.html) [stub]
 
 #### <a name="domain-services-event-bus">Event Bus</a>
 
 Decouple business logic across modules using intra-process publish/subscribe 
 
-* [EventBusService](./reference/services/event-bus-service.html)
+* [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
 
 }
 
@@ -326,14 +326,15 @@ Optional supporting modules to use within your app.  Some implement API defined 
 
 #### <a name="isis-module-auditing">Auditing</a>
 
-* [Auditing](./reference/services/auditing-service.html)
+* [Auditing API](./reference/services/auditing-service.html) [Implementation](components/objectstores/jdo/services/auditing-service-jdo.html)
 
 #### <a name="isis-module-command">Command (persistence)</a>
 
 Profiling, background execution, extended auditing.
 
-* [Command Service](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Background Command Service](./reference/services/background-command-service.html)
+* [Command Service API](./reference/services/command-service.html) [Impl](components/objectstores/jdo/services/command-service-jdo.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Background Command Service API](./reference/services/background-command-service.html) [Impl](components/objectstores/jdo/services/background-command-service-jdo.html)
+    * [Background Command Execution](./reference/non-ui/background-command-execution.html) [Impl](components/objectstores/jdo/non-ui/background-command-execution-jdo.html)
 
 }
 
@@ -341,11 +342,12 @@ Profiling, background execution, extended auditing.
 
 #### <a name="isis-module-publishing">Publishing</a>
 
-* [Publishing Service](./reference/services/publishing-service.html)
+* [Publishing Service API](./reference/services/publishing-service.html) [Impl](components/objectstores/jdo/services/publishing-service-jdo.html) 
+
 
 #### <a name="isis-module-settings">Settings</a>
 
-* [Settings Services](./reference/services/settings-services.html)
+* [Settings Service API](./reference/services/settings-services.html)[Impl](components/objectstores/jdo/services/settings-services-jdo.html)
 
 #### <a name="isis-module-devutils">Developer Utilities</a>
 
@@ -394,7 +396,6 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>
 
 - [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
-- [BackgroundCommandExecution](./reference/non-ui/background-command-execution.html)
 
 }
 
@@ -496,20 +497,6 @@ Other:
 
 * [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
 
-#### <a name="jdo-objectstore-applib-service-impl">Applib service impl.</a>
-<p class="display:none"/>
-
-* [Exception Recognizers](components/objectstores/jdo/services/exception-recognizers-jdo.html)
-* [Settings Services on JDO](components/objectstores/jdo/services/settings-services-jdo.html)
-* [Command Service on JDO](components/objectstores/jdo/services/command-service-jdo.html)
-* [Background Command Service on JDO](components/objectstores/jdo/services/background-command-service-jdo.html)
-* [Publishing Service on JDO](components/objectstores/jdo/services/publishing-service-jdo.html) 
-* [Auditing Service on JDO](components/objectstores/jdo/services/auditing-service-jdo.html)
-* [Event Bus Service for JDO](components/objectstores/jdo/services/event-bus-service-jdo.html)
-
-#### <a name="jdo-objectstore-non-ui">Non-UI</a>
-
-* [Background Command Execution](components/objectstores/jdo/non-ui/background-command-execution-jdo.html)
 
 ####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
 
