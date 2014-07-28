@@ -1,4 +1,4 @@
-Title: simple-wrj-archetype-1.5.0
+Title: simpleapp-1.6.0
 
 Uses:
 

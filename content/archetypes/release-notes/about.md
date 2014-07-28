@@ -2,7 +2,7 @@ Title: Release Notes
 
 SimpleApp archetype:
 
-* [simpleapp-archetype-1.6.0](simpleapp-archetype-1.5.0.html)
+* [simpleapp-archetype-1.6.0](simpleapp-archetype-1.6.0.html)
 * [simple_wrj-archetype-1.5.0](simple_wrj-archetype-1.5.0.html)
 * [simple_wrj-archetype-1.4.1](simple_wrj-archetype-1.4.1.html)
 * [simple_wrj-archetype-1.4.0](simple_wrj-archetype-1.4.0.html)

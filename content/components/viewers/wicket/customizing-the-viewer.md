@@ -110,7 +110,7 @@ Additional views though could render the objects in the collection as a variety 
   * [excel integration](https://github.com/isisaddons/isis-wicket-excel) (collection as a downloadable excel spreadsheet)
   * [google maps v3 integration](https://github.com/isisaddons/isis-wicket-gmap3) (render any objects with a location on a map)
   * [wicked charts integration](https://github.com/isisaddons/isis-wicket-wickedcharts) (barchart of any data)
-  * [full calendar integration](https://github.com/isisaddons/isis-wicket-fullcalendar) (render any objects with date properties on a calendar)
+  * [full calendar integration](https://github.com/isisaddons/isis-wicket-fullcalendar2) (render any objects with date properties on a calendar)
   
 Registering these custom views is just a matter of adding the appropriate Maven module to the classpath.  Isis uses the JDK `ServiceLoader` API to automatically discover and register the `ComponentFactory` of each such component.
 

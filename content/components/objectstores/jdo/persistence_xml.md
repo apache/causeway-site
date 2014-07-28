@@ -43,7 +43,7 @@ And, if you are using Eclipse, remember also to configure Eclipse's DataNucleus 
 
 ## JDO Applib domain projects.
 
-The JDO objectstore also defines some of its own persistable domain entities, these being used in its implementation of the [Publishing Service](./publishing-service-jdo.html) and the [Settings Services](./settings-services-jdo.html).  These persistable domain entities are defined in the JDO applib, and must be enhanced.
+The JDO objectstore also defines some of its own persistable domain entities, these being used in its implementation of the [Publishing Service](./services/publishing-service-jdo.html) and the [Settings Services](./services/settings-services-jdo.html).  These persistable domain entities are defined in the JDO applib, and must be enhanced.
 
 If just using released versions of Isis, then there is nothing to be done.
 
