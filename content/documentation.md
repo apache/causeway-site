@@ -249,7 +249,7 @@ For both:
 {col-md-12
 ## <a name="core-domain-services">Core Domain Services</a>
 
-<a href="./reference/services.html">Summary of all service APIs and their implementations (including modules, below)</i>
+Services implemented within Isis core.  See also this <a href="./reference/services.html">summary</i> of all service APIs and their implementations (including modules, below)
 
 }
 
@@ -261,7 +261,6 @@ For both:
 
 #### <a name="core-modules-common">Core</a>
 
-Implemented within Isis core.
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [ClockService](./reference/services/ClockService.html)
