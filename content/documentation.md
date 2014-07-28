@@ -474,6 +474,11 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 
+####  <a name="jdo-objectstore-jdo-services">JDO services</a>
+<p class="display:none"/>
+
+* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
+
 }
 
 {col-md-4
@@ -492,11 +497,6 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 }
 
 {col-md-4
-####  <a name="jdo-objectstore-jdo-services">JDO services</a>
-<p class="display:none"/>
-
-* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
-
 ####  <a name="jdo-objectstore-jdoother-hints">Other Hints</a>
 
 * [Transaction Management](components/objectstores/jdo/transaction-management.html)
