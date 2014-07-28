@@ -80,9 +80,11 @@ in `webapp/src/main/webapp/WEB-INF/isis.properties`
 
 * enable `@DomainService` support using:
 
+<pre>
     isis.services-installer=configuration-and-annotation
     isis.services.ServicesInstallerFromAnnotation.packagePrefix=\
                                      com.mycompany.foo,com.mycompany.bar
+</pre>
 
 * for the `isis.services` key:
 
