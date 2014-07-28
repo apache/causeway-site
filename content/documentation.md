@@ -328,30 +328,39 @@ Optional supporting modules to use within your app.  Some implement API defined 
 
 * [Auditing API](./reference/services/auditing-service.html) [Implementation](components/objectstores/jdo/services/auditing-service-jdo.html)
 
-#### <a name="isis-module-command">Command (persistence)</a>
+#### <a name="isis-module-command">Command Service (persistence)</a>
 
-Profiling, background execution, extended auditing.
+Profiling, extended auditing.
 
-* [Command Service API](./reference/services/command-service.html) [Impl](components/objectstores/jdo/services/command-service-jdo.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Background Command Service API](./reference/services/background-command-service.html) [Impl](components/objectstores/jdo/services/background-command-service-jdo.html)
-    * [Background Command Execution](./reference/non-ui/background-command-execution.html) [Impl](components/objectstores/jdo/non-ui/background-command-execution-jdo.html)
+* [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Implementation](components/objectstores/jdo/services/command-service-jdo.html) 
+
+#### <a name="isis-module-command">Background Command Service</a>
+
+Background/async execution
+
+* [API](./reference/services/background-command-service.html)
+* [Implementation](components/objectstores/jdo/services/background-command-service-jdo.html)
+* [Background Execution](./reference/non-ui/background-command-execution.html) ([Impl](components/objectstores/jdo/non-ui/background-command-execution-jdo.html))
 
 }
 
 {col-md-4
 
-#### <a name="isis-module-publishing">Publishing</a>
+#### <a name="isis-module-publishing">Publishing Service</a>
 
-* [Publishing Service API](./reference/services/publishing-service.html) [Impl](components/objectstores/jdo/services/publishing-service-jdo.html) 
+* [API](./reference/services/publishing-service.html)
+* [Implementation](components/objectstores/jdo/services/publishing-service-jdo.html) 
 
 
-#### <a name="isis-module-settings">Settings</a>
+#### <a name="isis-module-settings">Settings Service</a>
 
-* [Settings Service API](./reference/services/settings-services.html)[Impl](components/objectstores/jdo/services/settings-services-jdo.html)
+* [API](./reference/services/settings-services.html
+* [Implementation](components/objectstores/jdo/services/settings-services-jdo.html)
 
 #### <a name="isis-module-devutils">Developer Utilities</a>
 
-* [Developer Utilities Service](./reference/services/developer-utilities-service.html)
+* [API](./reference/services/developer-utilities-service.html)
 
 }
 
