@@ -465,7 +465,6 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 <p class="display:none"/>
 
 * [About](components/objectstores/jdo/about.html)
-* [Using Maven with its DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html)
 
 #### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
 
@@ -498,11 +497,12 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 
 * [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
 
-####  <a name="jdo-objectstore-jdo-mapping-hints">Other Hints</a>
+####  <a name="jdo-objectstore-jdoother-hints">Other Hints</a>
 
 * [Transaction Management](components/objectstores/jdo/transaction-management.html)
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 * [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
+* [Using Maven with DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html) (prior to 1.4.0)
 
 
 ####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
