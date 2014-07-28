@@ -370,10 +370,11 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 }
 
 
+
 {row
 
 {col-md-12
-## <a name="reference">Reference</a>
+## <a name="core">Core [1.6.0](core/release-notes/about.html)</a>
 
 }
 
@@ -398,6 +399,7 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 
 {col-md-4
 
+
 ####  <a name="reference-reference">Reference</a>
 
 * [Deployment Types](./reference/deployment-type.html)
@@ -410,29 +412,11 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 
 {col-md-4
 
-
 #### <a name="reference-supporting-features">Supporting features</a>
 
 * [Security](./reference/Security.html)
 * [Applib utility classes](./reference/Utility.html)
 * [Applib Events](./reference/Event.html)
-
-}
-
-}
-
-{row
-
-{col-md-12
-## <a name="core">Core [1.6.0](core/release-notes/about.html)</a>
-
-}
-
-}
-
-{row
-
-{col-md-4
 
 #### <a name="core-dev-support">Dev support</a>
 <p class="display:none"/>
@@ -440,23 +424,11 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 * [Unit Test Support](core/unittestsupport.html)
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-
-}
-
-{col-md-4
-
-#### <a name="core-runtime">Runtime</a>
-<p class="display:none"/>
+  
+#### <a name="core-bundled-components">Other parts of core</a>
 
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
-
-}
-
-{col-md-4
-  
-#### <a name="core-bundled-components">Bundled components</a>
-
 * [Bytecode Enhancers](core/bytecode.html) [stub]
 * [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 
@@ -692,51 +664,6 @@ Other
 }
 
 }
-
-
-
-
-{row
-
-{col-md-12
-## <a name="modules">Modules</a> 
-
-
-}
-
-
-
-{col-md-4
-
-
-}
-
-{col-md-4
-
-
-}
-
-{col-md-4
-
-
-
-}
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
