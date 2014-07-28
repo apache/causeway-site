@@ -324,10 +324,6 @@ Optional supporting modules to use within your app.  Some implement API defined 
 
 {col-md-4
 
-#### <a name="isis-module-auditing">Auditing</a>
-
-* [Auditing API](./reference/services/auditing-service.html) [Implementation](components/objectstores/jdo/services/auditing-service-jdo.html)
-
 #### <a name="isis-module-command">Command Service (persistence)</a>
 
 Profiling, extended auditing.
@@ -347,6 +343,10 @@ Background/async execution
 
 {col-md-4
 
+#### <a name="isis-module-auditing">Auditing</a>
+
+* [Auditing API](./reference/services/auditing-service.html) [Implementation](components/objectstores/jdo/services/auditing-service-jdo.html)
+
 #### <a name="isis-module-publishing">Publishing Service</a>
 
 * [API](./reference/services/publishing-service.html)
@@ -355,16 +355,16 @@ Background/async execution
 
 #### <a name="isis-module-settings">Settings Service</a>
 
-* [API](./reference/services/settings-services.html
+* [API](./reference/services/settings-services.html)
 * [Implementation](components/objectstores/jdo/services/settings-services-jdo.html)
-
-#### <a name="isis-module-devutils">Developer Utilities</a>
-
-* [API](./reference/services/developer-utilities-service.html)
 
 }
 
 {col-md-4
+
+#### <a name="isis-module-devutils">Developer Utilities</a>
+
+* [API](./reference/services/developer-utilities-service.html)
 
 #### <a name="modules-isisaddons">Isis Addons</a>
 
