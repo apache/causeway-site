@@ -52,7 +52,7 @@ The Cucumber-JVM spec runner allows you to indicate which package(s) should be r
 
 ### Integration- vs Unit- Scope
 
-Although BDD specs are most commonly used for end-to-end tests (ie at the same scope as an integration test), the two concerns (expressability of a test to a business person vs granularity of the test) should not be conflated.  There [are](http://tooky.co.uk/2013/01/18/cucumber-and-full-stack-testing.html) several [good](http://silkandspinach.net/2013/01/18/a-testing-strategy/) blog [posts](http://claysnow.co.uk/the-testing-iceberg/) discussing [this](http://claysnow.co.uk/living-documentation-can-be-readable-and-fast/).  The basic idea is to avoid the overhead of a heavy-duty integration test if possible.
+Although BDD specs are most commonly used for end-to-end tests (ie at the same scope as an integration test), the two concerns (expressability of a test to a business person vs granularity of the test) should not be conflated.  There are a couple of [good](http://silkandspinach.net/2013/01/18/a-testing-strategy/) blog [posts](http://claysnow.co.uk/the-testing-iceberg/) discussing [this](http://claysnow.co.uk/living-documentation-can-be-readable-and-fast/).  The basic idea is to avoid the overhead of a heavy-duty integration test if possible.
 
 Isis takes inspiration from these to optionally allow BDD specs to be run at a unit scope.  The scope is indicated by annotating the scenario with the `@unit` or `@integration` tags.
 

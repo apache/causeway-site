@@ -198,7 +198,7 @@ See [this page](../components/objectstores/jdo/datanucleus-and-eclipse.html) for
 
 You will also see that the page describes how to configure the `isis-objectstore-jdo-applib` domain project with the DataNucleus enhancer.
 
-If you fail to do this, then the JDO ObjectStore's implementation of the [Publishing Service](../components/objectstores/jdo/publishing-service-jdo.html) and the [Settings Services](../components/objectstores/jdo/settings-services-jdo.html) will throw runtime exceptions.
+If you fail to do this, then the JDO ObjectStore's implementation of the [Publishing Service](../components/objectstores/jdo/services/publishing-service-jdo.html) and the [Settings Services](../components/objectstores/jdo/services/settings-services-jdo.html) will throw runtime exceptions.
 
 
 ## What's Next

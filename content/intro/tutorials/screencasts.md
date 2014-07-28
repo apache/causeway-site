@@ -79,7 +79,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Bulk updates in Isis<br/><br/><i>Using the <code>isis-module-excel</code> module (in <a href="http://www.isisaddons.org">Isis Add-ons</a> and view models to perform bulk updates.</i>
+    <td>Bulk updates in Isis<br/><br/><i>Using the <code>isis-module-excel</code> module (in <a href="http://www.isisaddons.org">Isis Add-ons</a> and view models to perform bulk updates).</i>
     <br/><br/>
     See also the <a href="http://github.com/isisaddons/isis-module-excel.html">github repo</a>
     </td>

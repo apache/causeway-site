@@ -371,7 +371,7 @@ Background/async execution
 Hosted at [isisaddons.org](http://www.isisaddons.org).
 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
-* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./modules/isis-module-excel.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 * [Scheduler](http://github.com/isisaddons/isis-module-scheduler)
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
 * [Tags](http://github.com/isisaddons/isis-module-tags)
@@ -654,7 +654,7 @@ Other
 
 * [Excel download](./components/viewers/wicket/isisaddons/isis-wicket-excel.html)
 * [Fullcalendar2](./components/viewers/wicket/isisaddons/isis-wicket-fullcalendar2.html)
-* [Gmap3](./components/viewers/wicket/isisaddons/danhaywood-isis-wicket-gmap3.html) <a href="./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Gmap3](./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html) <a href="./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
 * [Wicked charts](./components/viewers/wicket/isisaddons/isis-wicket-wickedcharts.html)
 
 }
