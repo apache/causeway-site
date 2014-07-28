@@ -249,7 +249,7 @@ For both:
 {col-md-12
 ## <a name="core-domain-services">Core Domain Services</a>
 
-Commonly-used domain services to use within your application, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
+Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
 
 }
 
@@ -314,7 +314,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 {col-md-12
 ## <a name="modules">Modules</a>
 
-Optional supporting modules to use within your application.  Some implement API defined in the applib; see this <a href="./reference/services.html">summary</a>.
+Optional supporting modules to use within your app.  Some implement API defined in the applib; see this <a href="./reference/services.html">summary</a>.
 
 }
 
