@@ -315,6 +315,8 @@ Co-ordinate sharing of information across multiple objects/interactions
 {col-md-12
 ## <a name="modules">Modules</a>
 
+Supporting modules to use directly within your application.
+
 }
 
 }
@@ -408,15 +410,16 @@ Hosted at [isisaddons.org](http://isisaddons.org).
 * [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
 * [Value types](./reference/value-types.html)
 
-}
-
-{col-md-4
-
 #### <a name="reference-supporting-features">Supporting features</a>
 
 * [Security](./reference/Security.html)
 * [Applib utility classes](./reference/Utility.html)
 * [Applib Events](./reference/Event.html)
+
+}
+
+{col-md-4
+
 
 #### <a name="core-dev-support">Dev support</a>
 <p class="display:none"/>
