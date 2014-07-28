@@ -249,7 +249,7 @@ For both:
 {col-md-12
 ## <a name="core-domain-services">Core Domain Services</a>
 
-<a href="./reference/services.html">Summary of all services</i>
+<a href="./reference/services.html">Summary of all service APIs and their implementations (including modules, below)</i>
 
 }
 
