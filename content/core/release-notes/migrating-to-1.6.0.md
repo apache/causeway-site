@@ -110,4 +110,4 @@ It is still necessary to:
 
 * explicitly register any service (`*Contributions`) that affects the UI
 * explicitly register `ExceptionRecognizerCompositeForJdoObjectStore` (as is desgned to be optionally subclassed)
-* explicitly register ApplicationSettings, UserSettings and DeveloperUtilities services (each is designed to be optionally subclassed)
+* explicitly register `ApplicationSettings`, `UserSettings` and `DeveloperUtilities` services (each is designed to be optionally subclassed)
