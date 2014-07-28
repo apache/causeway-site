@@ -249,7 +249,7 @@ For both:
 {col-md-12
 ## <a name="core-domain-services">Core Domain Services</a>
 
-Commonly-used domain services to use within your application, implemented within Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
+Commonly-used domain services to use within your application, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
 
 }
 
