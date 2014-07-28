@@ -1,8 +1,8 @@
-Title: Simple Archetype
+Title: SimpleApp Archetype
 
 The quickest way to get started with Apache Isis is to run the simple archetype.  This will generate a very simple one-class domain model, called `SimpleObject`, with a single property `name`.  There is also a corresponding `SimpleObjectRepository` domain service.  From this you can easily rename these initial classes, and extend to build up your own Isis domain application.
 
-If you want to see a more functionally complete example, also check out the [ToDo app (quickstart) archetype](quickstart-archetype.html); this will give you a good idea of what makes up a not-too-complex Isis application.  In fact, we recommend that you run both archetypes: this simple archetype generates a very simple application for you to refactor and extend, while the ToDo app provides to guide your own development.
+If you want to see a more functionally complete example, also check out the [TodoApp archetype](todoapp-archetype.html); this will give you a good idea of what makes up a not-too-complex Isis application.  In fact, we recommend that you run both archetypes: this archetype generates a very simple application for you to refactor and extend, while the ToDo app provides to guide your own development.
 
 ## Generating the App
 
@@ -40,7 +40,7 @@ where `myapp` is the `artifactId` entered above.
 
 ## Running the App
 
-The `simple_wicket_restful_jdo` archetype generates a single WAR file, configured to run both the [Wicket viewer](../../components/viewers/wicket/about.html) and the [Restful Objects viewer](../../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
+The `simpleapp` archetype generates a single WAR file, configured to run both the [Wicket viewer](../../components/viewers/wicket/about.html) and the [Restful Objects viewer](../../components/viewers/wicket/about.html).  The archetype also configures the [JDO Objectstore](../../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.  
 
 Once you've built the app, you can run the WAR in a variety of ways. 
 
