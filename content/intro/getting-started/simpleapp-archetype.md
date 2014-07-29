@@ -46,7 +46,7 @@ Once you've built the app, you can run the WAR in a variety of ways.
 
 The recommended approach when getting started is to run the self-hosting version of the WAR, allowing Isis to run as a standalone app; for example:
 
-    java -jar viewer-webapp/target/myapp-viewer-webapp-1.0-SNAPSHOT-jetty-console.war
+    java -jar webapp/target/myapp-webapp-1.0-SNAPSHOT-jetty-console.jar
 
 This can also be accomplished using an embedded Ant target provided in the build script:
 
