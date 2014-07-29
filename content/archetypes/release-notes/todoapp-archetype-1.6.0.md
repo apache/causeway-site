@@ -1,4 +1,4 @@
-Title: quickstart-wrj-archetype-1.5.0
+Title: todoapp-archetype-1.6.0
 
 Uses:
 

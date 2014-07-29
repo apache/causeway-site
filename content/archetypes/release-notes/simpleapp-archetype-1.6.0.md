@@ -1,4 +1,4 @@
-Title: simpleapp-1.6.0
+Title: simpleapp-archetype-1.6.0
 
 Uses:
 
