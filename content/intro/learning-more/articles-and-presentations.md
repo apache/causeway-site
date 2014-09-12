@@ -2,6 +2,10 @@ Title: Articles, Conference Sessions, Podcasts
 
 Some articles and recorded material relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've **highlighted** some of the better ones...
 
+2014
+
+* Presentation, JEEConf: [Extremely rapid application development with Apache Isis](https://www.youtube.com/watch?v=BNGUqZ6YE-M) (50 min. video)
+
 2013
 
 * Presentation, Oredev: [RRRADDD! Ridiculously Rapid Domain-driven (and Restful) Apps With Apache Isis](http://oredev.org/2013/wed-fri-conference/rrraddd-ridiculously-rapid-domain-driven-and-restful-apps-with-apache-isis)  (50 min. video)

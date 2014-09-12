@@ -152,6 +152,8 @@ Hit `Finish` and you are done.
 
 ### Coding Conventions
 
+#### Eclipse
+
 Isis provides a number of Eclipse templates to help ensure that code is formatted according to our standards:
 
 - `Windows > Preferences > Java > Code Style > Code Templates` 
@@ -165,6 +167,14 @@ Isis provides a number of Eclipse templates to help ensure that code is formatte
   - (this performs both code formatting and organizing imports)
 
 In addition, you will probably want to import the Java editor templates, as described in the [getting started](../intro/resources/editor-templates.html) section.
+
+#### IntelliJ
+
+If you use IntelliJ, we haven't (yet) got  an equivalent settings file, but the screenshot below shows how to setup the import order:
+
+<img src="resources/isis-importorder-in-intellij.png" width="500px"></img>
+
+
 
 <!--
 TODO: to add from the original incubator website [here](http://incubator.apache.org/isis "Apache Isis (incubator website)").

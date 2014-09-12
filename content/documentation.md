@@ -34,8 +34,8 @@ Title: Documentation
 #### <a name="tutorials">Tutorials, screencasts</a>
 <p class="display:none"/>
 
-- [Tutorials](intro/tutorials/tutorials.html)
 - **[Screencasts](intro/tutorials/screencasts.html)** <a href="intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+- [Tutorials](intro/tutorials/tutorials.html)
 
 }
 
@@ -206,6 +206,7 @@ For both:
 #### <a name="more-advanced-topics-derived-props-colls">Derived props/colls</a>
 
 * [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
+* [Passwords](./more-advanced-topics/how-to-04-015-Password-properties-and-params.md.html)
 * [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
 * [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
 * [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)

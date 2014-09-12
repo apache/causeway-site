@@ -23,3 +23,5 @@ Typically implementations of `ExceptionRecognizer` are registered as services (i
 The `DomainObjectContainer` provided by Isis core is itself an `ExceptionRecognizer`, and will handle `ConcurrencyException`s (raised by any objectstore).  No configuration is required to enable this feature (neither can it be disabled).
 
 Other components (such as the JDO Objectstore) may provide `ExceptionRecognizer` implementations; check the documentation for the component.
+
+
