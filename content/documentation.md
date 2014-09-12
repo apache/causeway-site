@@ -206,7 +206,7 @@ For both:
 #### <a name="more-advanced-topics-derived-props-colls">Derived props/colls</a>
 
 * [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
-* [Passwords](./more-advanced-topics/how-to-04-015-Password-properties-and-params.md.html)
+* [Passwords](./more-advanced-topics/how-to-04-015-Password-properties-and-params.html)
 * [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
 * [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
 * [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
