@@ -55,16 +55,15 @@ If using another implementation, the `canSet(...)` method can be used to check i
 
 To use in your code, simply declare the service and annotate with `@javax.inject.Inject`.  For example:
 
-<pre>
-import org.apache.isis.applib.services.memento.MementoService;
+    import org.apache.isis.applib.services.memento.MementoService;
 
-public class MyEntity {
-
-
-    javax.inject.Inject
-    private MementoService mementoService;
-}
-</pre>
+    public class MyEntity {
+        ...
+        
+        
+        javax.inject.Inject
+        private MementoService mementoService;
+    }
 
 ###Implementations
 
@@ -89,8 +88,5 @@ The memento service is used by the [CommandContext](./command-context.html) serv
 ### Register the Service
 
 As of 1.6.0, the `MementoServiceDefault` service is automatically registered and available for injection (it is annotated with `@DomainService`).
-
-Prior to 1.6.0, it was necessary to register the service in `isis.properties`.
-
 
 
