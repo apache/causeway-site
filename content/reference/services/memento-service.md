@@ -58,8 +58,8 @@ To use in your code, simply declare the service and annotate with `@javax.inject
     import org.apache.isis.applib.services.memento.MementoService;
 
     public class MyEntity {
+
         ...
-        
         
         javax.inject.Inject
         private MementoService mementoService;
