@@ -53,7 +53,9 @@ If using another implementation, the `canSet(...)` method can be used to check i
 
 ###Usage
 
-To use in your code, simply declare the service and annotate with `@javax.inject.Inject`.  For example:
+To use in your code, simply define a field for the `MementoService` type and annotate with `@javax.inject.Inject`.  
+
+For example:
 
     import org.apache.isis.applib.services.memento.MementoService;
 
