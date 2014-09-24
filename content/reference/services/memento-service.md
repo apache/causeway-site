@@ -51,10 +51,20 @@ In the case of the default implementation provided by the core framework, the ty
 If using another implementation, the `canSet(...)` method can be used to check if the candidate object's type is supported.
 
 
-###Usage within the framework
+###Usage
 
-The memento service is used by the [CommandContext](./command-context.html) service and also [BackgroundCommandService](./background-service.html).  These both use a memento to capture a representation of an action invocation.
+To use in your code, simply declare the service and annotate with `@javax.inject.Inject`.  For example:
 
+<pre>
+import org.apache.isis.applib.services.memento.MementoService;
+
+public class MyEntity {
+
+
+    javax.inject.Inject
+    private MementoService mementoService;
+}
+</pre>
 
 ###Implementations
 
@@ -70,14 +80,17 @@ In fact, the `MementoServiceDefault` implementation does provide a mechanism to 
 However, you are of course free to write some other implementation of `MementoService`, perhaps based on `MementoServiceDefault` code if you wish.
 
 
+### Related Services
+
+The memento service is used by the [CommandContext](./command-context.html) service and also [BackgroundCommandService](./background-service.html).  These both use a memento to capture a representation of an action invocation.
+
+
+
 ### Register the Service
 
-The service is registered, like any other, in `isis.properties`:
+As of 1.6.0, the `MementoServiceDefault` service is automatically registered and available for injection (it is annotated with `@DomainService`).
 
-    isis.services=...,\
-                  org.apache.isis.core.runtime.services.memento.MementoServiceDefault,\
-                  ...
-
+Prior to 1.6.0, it was necessary to register the service in `isis.properties`.
 
 
 

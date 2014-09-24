@@ -58,21 +58,27 @@ Typically implementations will use the injected `EventSerializer` to convert the
         public Object serialize(EventMetadata metadata, EventPayload payload);
     }
 
-The serialized form returned by `EventSerializer` will typically be something like JSON, XML or a string.  The signature of `serialize(...)` returns an object 
-Although not necessary to implement `EventSerializer`, typically one should also for maximum flexibility, but its important to make sure that the `PublishingService` is able to handle the serialized form.  Strings are a good
-lowest common denominator, but in some cases are type-safe equivalent, such as a
+The serialized form returned by `EventSerializer` must be in a form that the `PublishingService` implementation is able
+to handle.  Strings are a good lowest common denominator, but (if custom implementations of both `EventSerializer` and
+`PublishingService` were in use) then it might also be some other type, for example an
 `org.w3c.dom.Document` or an `org.json.JSONObject` might be returned instead.
 
 
 ### Fine-tuning the payload
 
-The `EventPayload` that is serialized identifies the object(s) being interacted with or changed, and in the case of the action invocation provides details of the action arguments and result (if any) of that action.  However, the payload does not include the new state of these objects.  It is therefore the responsibility of the subscriber to call back to Isis to determine any information that has not been published.
+The `EventPayload` that is serialized identifies the object(s) being interacted with or changed, and in the case of the
+action invocation provides details of the action arguments and result (if any) of that action.  However, the payload 
+does not (by default) include the new state of these objects.  It is therefore the responsibility of the subscriber to 
+call back to Isis to determine any information that has not been published.
 
-Doing this is comparatively straightforward if using the Restful Object serializer and Restful Objects viewer; the JSON provided includes hrefs to the objects.
+Doing this is comparatively straightforward if using the Restful Object serializer and Restful Objects viewer; the 
+JSON provided includes hrefs to the objects.
 
-In some circumstances, however, it may make more sense to eagerly "push" information about the change to the subscriber by including that state within the payload.  
+In some circumstances, then, it may make more sense to eagerly "push" information about the change to the subscriber 
+by including that state within the payload.  
 
-To accomplish this, an implementation of a "`PayloadFactory`" must be specified in the annotation.  For actions, implement `@PublishedAction.PayloadFactory`:
+To accomplish this, an implementation of a "`PayloadFactory`" must be specified in the annotation.  For actions, 
+implement `@PublishedAction.PayloadFactory`:
 
     public @interface PublishedAction {
         public interface PayloadFactory {
@@ -84,16 +90,29 @@ To accomplish this, an implementation of a "`PayloadFactory`" must be specified 
         Class<? extends PayloadFactory> value()  default PayloadFactory.class;
     }
 
+The `EventPayloadForActionInvocation` abstract class (in the Isis applib) can optionally be used as the base class for
+the object instance returned from `payLoadFor(...)`.
+
 For objects, the interface to implement is `@PublishedObject.PayloadFactory`:
 
     public @interface PublishedObject {
+
+        public enum ChangeKind {
+            CREATE,
+            UPDATE,
+            DELETE
+        }
+
         public interface PayloadFactory {
           @Programmatic
-          public EventPayload payloadFor(Object changed);
+          public EventPayload payloadFor(Object changedObject, ChangeKind kind);
         }
         Class<? extends PayloadFactory> value() default PayloadFactory.class;
     }
 
+Similarly, the `EventPayloadForObjectChanged` abstract class may be used as the base class for the object returned from
+`payLoadFor(...)`.
+    
 For example, the following will eagerly include the `ToDoItem`'s `description` property whenever it is changed:
 
     @PublishedObject(ToDoItemPayloadFactory.class)
@@ -105,7 +124,7 @@ where `ToDoItemPayloadFactory` is defined as:
 
     public class ToDoItemChangedPayloadFactory implements PayloadFactory {
         public static class ToDoItemPayload 
-            extends EventPayloadForChangedObject<ToDoItem> {
+            extends EventPayloadForObjectChanged<ToDoItem> {
 
           public ToDoItemPayload(ToDoItem changed) {
               super(changed);
@@ -116,7 +135,7 @@ where `ToDoItemPayloadFactory` is defined as:
           }
         }
         @Override
-        public EventPayload payloadFor(Object changedObject) {
+        public EventPayload payloadFor(Object changedObject, ChangeKind kind) {
           return new ToDoItemPayload((ToDoItem) changedObject);
         }
     }
