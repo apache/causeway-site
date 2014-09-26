@@ -198,7 +198,7 @@ For both:
 
 #### <a name="more-advanced-topics-business-rules">Business rules</a>
 
-* [Hide part of a title](./more-advanced-topics/how-to-hide-a-portion-of-the-title.html)
+* [Hide part of a title](./more-advanced-topics/how-to-hide-a-portion-of-a-title.html)
 * [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
 * [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
 * [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
