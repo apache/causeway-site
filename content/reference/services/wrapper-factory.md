@@ -113,20 +113,8 @@ For example:
 > of such an `ExceptionRecognizer`; but it should be simple enough to write one...
 
 
-### Register the Service
+### Automatically Available
 
-Register this service in `isis.properties`, eg:
+As of 1.6.0 this service is automatically on the classpath and registered; there is no need to configure in 
+`isis.properties` or update your application's `pom.xml`.
 
-    isis.services=...,\
-                  org.apache.isis.core.wrapper.WrapperFactoryDefault,\
-                  ...
-
-
-### Maven dependencies
-
-Add the following to your application's "dom" module's `pom.xml`:
-
-    <dependency>
-        <groupId>org.apache.isis.core</groupId>
-        <artifactId>isis-core-wrapper</artifactId>
-    </dependency>
