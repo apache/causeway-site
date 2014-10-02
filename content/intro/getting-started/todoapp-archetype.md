@@ -89,6 +89,18 @@ Note that if you use `mvn jetty:run`, then the context path changes; check the c
 
 Finally, you can also run the app by deploying to a standalone servlet container such as [Tomcat](http://tomcat.apache.org).
 
+## Running the App with Fixtures (1.7.0-SNAPSHOT)
+
+It is also possible to start the application with a pre-defined set of data; useful for demos or manual exploratory
+testing.  This is done by specifying a _fixture script_ on the command line:
+
+    java -jar webapp/target/myapp-webapp-1.0-SNAPSHOT-jetty-console.jar \
+         --initParam isis.persistor.datanucleus.install-fixtures=true  \
+         --initParam isis.fixtures=fixture.todo.scenarios.RecreateToDoItemsAndCompleteSeveralForCurrent
+    
+where (in the above example) `fixture.todo.scenarios.RecreateToDoItemsAndCompleteSeveralForCurrent` is the fully 
+qualified class name of the fixture script to be run.
+
 ## Using the App
 
 The archetype provides a welcome page that explains the classes and files generated, and provides detailed guidance and what to do next.
