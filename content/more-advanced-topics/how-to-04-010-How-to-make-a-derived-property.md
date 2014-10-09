@@ -23,11 +23,31 @@ For example:
         ...
     }
 
-### Read-write
+### Read-write using a setter
 
 A derived property can be made updateable (in that it takes the provided
-value and does something sensible with it) by providing a `modifyXxx()`
-supporting method:
+value and does something sensible with it) simply providing a setter that
+has been annotated using both Isis' `@NotPersisted` attribute and JDO's
+`@javax.jdo.annotations.NotPersistent` attribute:
+
+    public class Employee {
+        public Department getDepartment() { ... }
+        ...
+
+        @javax.jdo.annotations.NotPersistent
+        @NotPersisted
+        public Employee getManager() { ... }
+        public void setManager(Employee manager) {
+            if (getDepartment() == null) { return; }
+            getDepartment().modifyManager(manager);
+        }
+        ...
+    }
+
+### Read-write using a modify method (1.7.0-SNAPSHOT onwards)
+
+Alternatively, a derived property can be made updateable by providing a 
+`modifyXxx()` supporting method:
 
     public class Employee {
         public Department getDepartment() { ... }
@@ -48,26 +68,37 @@ supporting method:
 Note how the implementation of such a `modifyXxx()` method typically
 modifies the original source of the information (the Department object).
 
-Alternatively, if you prefer to have a setter, then you can use Isis'
-@NotPersisted attribute.
+### Caveats
 
-    public class Employee {
-        public Department getDepartment() { ... }
-        ...
+Beware of having two visible properties that update the same underlying data;
+which value "wins" is not well-defined.
 
-        @NotPersisted
-        public Employee getManager() { ... }
-        public void setManager(Employee manager) {
-            if (getDepartment() == null) { return; }
-            getDepartment().modifyManager(manager);
-        }
-        ...
+For example, consider this silly example:
+
+    public class ToDoItem {
+    
+        private String description;
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+
+        public String getDerivedDescription() { return getDescription(); }
+        public void modifyDerivedDescription(String derivedDescription) { setDescription(derivedDescription); }
+        
     }
+    
+The value that is persisted back will be either from the 'description' field
+or the 'derivedDescription' field, which is almost certainly not what was intended.
 
-> **Note**
->
-> If you use this approach, then for some object stores you may also
-> need to annotate the property to exclude it. For example the
-> JDO/DataNucleus object store requires the property being annotated
-> with @javax.jdo.annotations.NotPersistent.
+The fix is easy enough; make one of the fields invisible, eg:
 
+    public class ToDoItem {
+    
+        private String description;
+        @Hidden // problem resolved!
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+        
+        public String getDerivedDescription() { return getDescription(); }
+        public void modifyDerivedDescription(String derivedDescription) { setDescription(derivedDescription); }
+        
+    }
