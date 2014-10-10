@@ -102,3 +102,5 @@ The fix is easy enough; make one of the fields invisible, eg:
         public void modifyDerivedDescription(String derivedDescription) { setDescription(derivedDescription); }
         
     }
+
+
