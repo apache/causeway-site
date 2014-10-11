@@ -14,8 +14,8 @@ if releasing `core`, eg:
 
     export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
+    export ISISDEV=1.8.0-SNAPSHOT
+    export ISISREL=1.7.0
     export ISISRC=RC1
 
 if releasing a `component/xxx/yyy`, eg:
@@ -24,8 +24,8 @@ if releasing a `component/xxx/yyy`, eg:
 
     export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis-xxx-yyy
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
+    export ISISDEV=1.8.0-SNAPSHOT
+    export ISISREL=1.7.0
     export ISISRC=RC1
 
 eg, for Wicket viewer this is:
@@ -34,8 +34,8 @@ eg, for Wicket viewer this is:
 
     export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis-viewer-wicket
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
+    export ISISDEV=1.8.0-SNAPSHOT
+    export ISISREL=1.7.0
     export ISISRC=RC1
     
 then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR), and confirm:
@@ -47,13 +47,13 @@ then export derived props for component type (ISISCPT) and component name (ISISC
     
 ## Get code
 
-If **releasing core**, then pull down latest, create branch (eg `prepare/isis-1.6.0`):
+If **releasing core**, then pull down latest, create branch (eg `prepare/isis-1.7.0`):
 
     git checkout master
     git pull --ff-only
     git checkout -b prepare/$ISISART-$ISISREL
 
-If **releasing a component without also releasing core**, then pull down latest, create branch (eg `prepare/isis-viewer-wicket-1.6.0`):
+If **releasing a component without also releasing core**, then pull down latest, create branch (eg `prepare/isis-viewer-wicket-1.7.0`):
 
     git checkout master
     git pull --ff-only
