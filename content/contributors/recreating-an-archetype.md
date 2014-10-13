@@ -40,11 +40,7 @@ nb: `$ISISPAR` is the version of the Isis core that will act as the archetype's 
 
 ### Check the example app
 
-Switch to the directory containing the example application.
-
-    cd example/application/$ISISCPN
-
-Update the parent `pom.xml` to reference the *released* version of Isis core and the other components:
+Make sure you are in the correct directory, and update the parent `pom.xml` to reference the *released* version of Isis core and the other components:
 
     <properties>
         <isis.version>1.7.0</isis.version>
