@@ -51,6 +51,7 @@ eg, for Wicket viewer this is:
     export ISISCOR="N"
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
     export ISISCPN=$(echo $ISISART | cut -d- -f3)
+    env | grep ISIS | sort
         
 ## Get code
 
