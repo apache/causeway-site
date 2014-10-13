@@ -18,6 +18,10 @@ if releasing `core`, eg:
     export ISISREL=1.7.0
     export ISISRC=RC1
 
+    export ISISCOR="Y"
+    env | grep ISIS | sort
+
+    
 if releasing a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
@@ -28,6 +32,12 @@ if releasing a `component/xxx/yyy`, eg:
     export ISISREL=1.7.0
     export ISISRC=RC1
 
+    export ISISCOR="N"
+    export ISISCPT=$(echo $ISISART | cut -d- -f2)
+    export ISISCPN=$(echo $ISISART | cut -d- -f3)
+    env | grep ISIS | sort
+    
+    
 eg, for Wicket viewer this is:
 
     cd component/viewer/wicket
@@ -37,14 +47,11 @@ eg, for Wicket viewer this is:
     export ISISDEV=1.8.0-SNAPSHOT
     export ISISREL=1.7.0
     export ISISRC=RC1
-    
-then export derived props for component type (ISISCPT) and component name (ISISCPN) and whether core or not (ISISCOR), and confirm:
 
+    export ISISCOR="N"
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
     export ISISCPN=$(echo $ISISART | cut -d- -f3)
-    if [ $(echo "$ISISART" | grep -v "-") ]; then export ISISCOR="Y"; else export ISISCOR="N"; fi
-    env | grep ISIS | sort
-    
+        
 ## Get code
 
 If **releasing core**, then pull down latest, create branch (eg `prepare/isis-1.7.0`):
@@ -117,7 +124,7 @@ If **releasing a component on top of a core release**, then do not clean, just r
 ####Update plugin versions
 
     mvn versions:display-plugin-updates > /tmp/foo
-    cat /tmp/foo
+    grep "\->" /tmp/foo | /bin/sort -u
 
 ####Newer dependencies:
 
@@ -153,7 +160,7 @@ Commit any changes from the preceding steps:
 Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
 }
 
-first the dry run (you will be prompted for gpg passphrase):
+first the dry run:
 
     mvn release:prepare -P apache-release \
                         -DdryRun=true \
@@ -196,8 +203,6 @@ then "for real":
     mvn release:perform -P apache-release \
         -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
      
-You may (again) be prompted for gpg passphrase.
-
 > The `workingDirectory` property is to avoid 260char path issue if building on Windows.
  
 ## Nexus staging

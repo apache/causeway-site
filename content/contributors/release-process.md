@@ -77,6 +77,24 @@ where `xxxxxxx` and `yyyyyyy` are your Apache LDAP username and password.   For 
 > It is also possible to configure to use `.ssh` secure keys, and thereby avoid hardcoding your Apache LDAP password into your `.m2/settings.xml` file. A description of how to do this can be found, for example, [here](http://bval.apache.org/release-setup.html).
 }
 
+Also, set up keyphrase for `gpg`; this avoids being prompted during release:
+
+    <profiles>
+      <profile>
+        <id>gpg</id>
+        <properties>
+          <gpg.executable>gpg2</gpg.executable>
+          <gpg.passphrase>this is not really my passphrase</gpg.passphrase>
+        </properties>
+      </profile>
+      ...
+    </profiles>
+
+    <activeProfiles>
+      <activeProfile>gpg</activeProfile>
+      ...
+    </activeProfiles>
+
 
 #### Pull down code to release
 
@@ -170,7 +188,7 @@ The `maven-versions-plugin` should be used to determine if there are newer versi
 
 <pre>
 mvn versions:display-plugin-updates > /tmp/foo
-cat /tmp/foo
+grep "\->" /tmp/foo | /bin/sort -u
 </pre>
 
 Review the generated output and make updates as you see fit.  (However, if updating, please check by searching for known issues with newer versions).
