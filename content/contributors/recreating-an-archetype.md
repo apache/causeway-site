@@ -204,8 +204,7 @@ Finally, commit the changes:
 ### Create the archetype (scripted)
 
 {note
-Using the script does not generate an app from the archetype to test it works,
-and also - to allow review - stages files into git but omits the final commit.
+Using the script does not generate an app from the archetype to test it works.
 }
 
 Make sure you are in the correct directory and environment variables are correct.
@@ -229,10 +228,9 @@ Then, run the script:
 
     sh ../../../scripts/recreate-archetype.sh ISIS-nnn
 
-Finally, review changes to confirm all:
+The script automatically commits changes; if you wish use `git log` and 
+`git diff` (or a tool such as SourceTree) to review changes made.
 
-    git status
-    
 ### Releasing the Archetype
 
 {note
