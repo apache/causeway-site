@@ -235,6 +235,11 @@ Finally, review changes to confirm all:
     
 ### Releasing the Archetype
 
+{note
+Releasing the archetype is performed from the example/archetype directory,
+NOT the example/application directory.
+}
+
 The procedure for releasing the archetype is the same as for any other releasable module.
 
 First, confirm environment variables set correctly:
