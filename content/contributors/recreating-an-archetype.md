@@ -234,8 +234,8 @@ The script automatically commits changes; if you wish use `git log` and
 ### Releasing the Archetype
 
 {note
-Releasing the archetype is performed from the example/archetype directory,
-NOT the example/application directory.
+Releasing the archetype is performed from the *example/archetype* directory,
+NOT the *example/application* directory.
 }
 
 The procedure for releasing the archetype is the same as for any other releasable module.
