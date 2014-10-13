@@ -10,9 +10,9 @@ If recreating the **simpleapp** archetype:
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
-    export ISISPAR=1.6.0
+    export ISISDEV=1.8.0-SNAPSHOT
+    export ISISREL=1.7.0
+    export ISISPAR=1.7.0
     export ISISRC=RC1
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
@@ -26,9 +26,9 @@ If recreating the **todoapp** archetype:
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=todoapp-archetype
-    export ISISDEV=1.7.0-SNAPSHOT
-    export ISISREL=1.6.0
-    export ISISPAR=1.6.0
+    export ISISDEV=1.8.0-SNAPSHOT
+    export ISISREL=1.7.0
+    export ISISPAR=1.7.0
     export ISISRC=RC1
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
@@ -44,13 +44,11 @@ Switch to the directory containing the example application.
 
     cd example/application/$ISISCPN
 
-Update the parent `pom.xml` to reference the *released* version of Isis core and the other components.  
-
-As of v1.6.0 this means updating the appropriate `<properties>`:
+Update the parent `pom.xml` to reference the *released* version of Isis core and the other components:
 
     <properties>
-        <isis.version>1.6.0</isis.version>
-        <isis-viewer-wicket.version>1.6.0</isis-viewer-wicket.version>
+        <isis.version>1.7.0</isis.version>
+        <isis-viewer-wicket.version>1.7.0</isis-viewer-wicket.version>
         ...
     </properties>
 

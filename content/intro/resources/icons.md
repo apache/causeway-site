@@ -8,10 +8,17 @@ Most Isis viewers use icons to help identify domain objects in the user interfac
 
 ## Third Party Icon Sets
 
-There are also various open source icon sets for both personal and commercial use (though some require a link back to the authors website).
+There are also various open source icon sets for both personal and commercial use (though some require a link back to the authors website):
 
-* A good icon set to get started with is the [tango desktop](http://tango.freedesktop.org/Tango_Icon_Library) set.
+* [icons8](http://icons8.com/) (as used in the [Estatio](../powered-by/powered-by.html) app) - styled for Win8, Android and MacOS
 
-* Another icon set (as used in the [Estatio](../powered-by/powered-by.html) app) is [icons8](http://icons8.com/) website.  This has 1500+ icons in the style of Windows 8 and iOS7.
+* [tango desktop](http://tango.freedesktop.org/Tango_Icon_Library) icon set - as used in Linux GNOME and KDE desktops
+
+* [the noun project](http://thenounproject.com/) community of icon providers (both free and commercial)
+
+* [flaticon](http://www.flaticon.com/) - free vector icons
+
+* [batch](http://adamwhitcroft.com/batch/) (300+ icons)
+
 
 If you know of any others freely usable and easily accessible, let us know through the [mailing list](../../support.html).
