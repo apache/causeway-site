@@ -246,7 +246,7 @@ First, confirm environment variables set correctly:
     
 Then switch the correct directory and release:
 
-    cd example/archetype/$ISISCPN
+    cd ../../../example/archetype/$ISISCPN
 
     rm -rf $ISISTMP/checkout
 
