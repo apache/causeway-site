@@ -1,7 +1,8 @@
 Title: CommandServiceJdo
 
 {note
-As of 1.6.0 this implementation has been superceded by the implementation in [Isis addons](http://github.com/isisaddons/isis-module-command).
+In 1.6.0 this implementation was released as `org.apache.isis.core:isis-module-command-jdo:1.6.0` and also as an [Isis addon](http://github.com/isisaddons/isis-module-command) module.
+In 1.7.0+ only the Isis addon implementation is released.
 }
 
 The JDO objectstore provides an implementation of the applib [CommandService](../../../../reference/services/command-context.html) that persists the command data into a `CommandJdo` entity.  This is mapped to an `IsisCommand` table.

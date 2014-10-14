@@ -318,7 +318,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 ## <a name="modules">Modules</a>
 
 Optional supporting modules to use within your app.  Some are implemented by the framework itself, some are implemented in [Isis addons](http://www.isisaddons.org).  Applib modules are
-summarized <a href="./reference/services.html">here</a>.
+summarized [here](./reference/services.html).
 
 }
 
