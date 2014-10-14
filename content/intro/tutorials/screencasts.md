@@ -74,7 +74,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Commands and Auditing (v1.6.0)<br/><br/><i>Configuring the command and auditing add-on modules for the simpleapp application (as per by the <a href="../getting-started/simpleapp-archetype.html">archetype</a>.</i>
+    <td>Commands and Auditing (v1.6.0)<br/><br/><i>Configuring the command and auditing add-on modules for the simpleapp application (as per by the <a href="../getting-started/simpleapp-archetype.html">archetype</a>).</i>
     <br/><br/>
     Learn more at the <a href="http://github.com/isisaddons/isis-module-command.html">isis-module-command</a> and <a href="http://github.com/isisaddons/isis-module-audit.html">isis-module-audit</a> github repos.
     </td>
@@ -83,7 +83,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   </td>
   </tr>
   <tr>
-    <td>Security (v1.6.0)<br/><br/><i>Configuring the security add-on module for the simpleapp application (as per by the <a href="../getting-started/simpleapp-archetype.html">archetype</a>..</i>
+    <td>Security (v1.6.0)<br/><br/><i>Configuring the security add-on module for the simpleapp application (as per by the <a href="../getting-started/simpleapp-archetype.html">archetype</a>).</i>
     <br/><br/>
     Learn more at the <a href="http://github.com/isisaddons/isis-module-security.html">isis-module-security</a> github repo.
     </td>
@@ -103,7 +103,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   </td>
   </tr>
   <tr>
-    <td>Bulk updates in Isis (v1.5.0)<br/><br/><i>Using the <code>isis-module-excel</code> module (in <a href="http://www.isisaddons.org">Isis Add-ons</a> and view models to perform bulk updates).</i>
+    <td>Bulk updates in Isis (v1.5.0)<br/><br/><i>Using the <code>isis-module-excel</code> module and view models to perform bulk updates).</i>
     <br/><br/>
     Learn more at the  <a href="http://github.com/isisaddons/isis-module-excel.html">isis-module-excel</a> github repo.
     </td>
@@ -136,9 +136,9 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     </td>
   </tr>
   <tr>
-    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating the <code>isis-module-gmap3</code> google maps extension (in <a href="http://www.isisaddons.org">Isis Add-ons</a>).</i>
+    <td>Customizing the Wicket viewer<br/><br/><i>How to customize the Wicket viewer, integrating the <code>isis-module-gmap3</code> google maps extension.</i>
     <br/><br/>
-    Learn more at the <a href="http://github.com/isisaddons/isis-wicket-excel.html">github repo</a>
+    Learn more at the <a href="http://github.com/isisaddons/isis-wicket-excel.html">isis-wicket-gmap3</a> github repo.
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/9o5zAME8LrM" frameborder="0" allowfullscreen></iframe>
@@ -153,8 +153,6 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
   </tr>
   <tr>
     <td>Using Chrome Tools<br/><br/><i>Interacting with the REST API using Chrome Plugins</i>
-    <br/><br/>
-    Learn more <a href="../../components/viewers/restfulobjects/using-chrome-tools.html">here</a>
     </td>
     <td>
       <iframe width="420" height="236" src="//www.youtube.com/embed/_-TOvVYWCHc" frameborder="0" allowfullscreen></iframe>)
