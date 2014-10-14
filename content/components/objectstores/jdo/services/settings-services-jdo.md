@@ -1,5 +1,9 @@
 Title: Settings Services using JDO
 
+{note
+In 1.6.0 this implementation was released as part of *org.apache.isis.core:isis-module-settings-jdo:1.6.0* and was also released as an [Isis addon](http://github.com/isisaddons/isis-module-settings) module.  **In 1.7.0+ only the [Isis addon](http://github.com/isisaddons/isis-module-settings) implementation is released.**
+}
+
 The JDO objectstore provides simple implementations of the two applib [Settings Services](../../../../reference/services/settings-services.html).
 
 ## Application Settings

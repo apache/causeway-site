@@ -1,5 +1,9 @@
 Title: Publishing Service using JDO
 
+{note
+In 1.6.0 this implementation was released as part of *org.apache.isis.core:isis-module-publishing-jdo:1.6.0* and was also released as an [Isis addon](http://github.com/isisaddons/isis-module-publishing) module.  **In 1.7.0+ only the [Isis addon](http://github.com/isisaddons/isis-module-publishing) implementation is released.**
+}
+
 The JDO objectstore provides a simple implementation of the applib [PublishingService](../../../../reference/services/publishing-service.html) that simply persists the event data into a `PublishedEvent` entity.
 
 Along with the event data, the `PublishedEvent` also includes a status property with two values: `QUEUED` and `PROCESSED`.  The service also acts as a repository to search for all unprocessed events.

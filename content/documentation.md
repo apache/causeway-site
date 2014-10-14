@@ -340,7 +340,7 @@ Profiling, extended auditing.
 Background/async execution
 
 * [API](./reference/services/background-command-service.html)
-* [Implementation](components/objectstores/jdo/services/background-command-service-jdo.html)
+* [Isis addons implementation](components/objectstores/jdo/services/command-service-jdo.html) 
 * [Background Execution](./reference/non-ui/background-command-execution.html) ([Impl](components/objectstores/jdo/non-ui/background-command-execution-jdo.html))
 
 }

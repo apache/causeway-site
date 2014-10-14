@@ -1,5 +1,9 @@
 Title: BackgroundCommandServiceJdo
 
+{note
+In 1.6.0 this implementation was released as part of *org.apache.isis.core:isis-module-command-jdo:1.6.0* and was also released as an [Isis addon](http://github.com/isisaddons/isis-module-command) module.  **In 1.7.0+ only the [Isis addon](http://github.com/isisaddons/isis-module-command) implementation is released.**
+}
+
 The JDO objectstore provides an implementation of the applib [BackgroundCommandService](../../../../reference/services/background-service.html) that persists the command data into a `CommandJdo` entity.  This is mapped to an `IsisCommand` table.
 
 There are two further services that can be used:
