@@ -333,15 +333,15 @@ summarized [here](./reference/services.html).
 Profiling, extended auditing.
 
 * [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Isis addons implementation](components/objectstores/jdo/services/command-service-jdo.html) 
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 #### <a name="isis-module-command">Background Command Service</a>
 
 Background/async execution
 
 * [API](./reference/services/background-command-service.html)
-* [Isis addons implementation](components/objectstores/jdo/services/command-service-jdo.html) 
-* [Background Execution](./reference/non-ui/background-command-execution.html) ([Impl](components/objectstores/jdo/non-ui/background-command-execution-jdo.html))
+* [Background Execution](./reference/non-ui/background-command-execution.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command) (for both)
 
 }
 
@@ -349,34 +349,36 @@ Background/async execution
 
 #### <a name="isis-module-auditing">Auditing</a>
 
-* [Auditing API](./reference/services/auditing-service.html) [Implementation](components/objectstores/jdo/services/auditing-service-jdo.html)
+* [Auditing API](./reference/services/auditing-service.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-audit)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 #### <a name="isis-module-publishing">Publishing Service</a>
 
 * [API](./reference/services/publishing-service.html)
-* [Implementation](components/objectstores/jdo/services/publishing-service-jdo.html) 
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
-
-#### <a name="isis-module-settings">Settings Service</a>
-
-* [API](./reference/services/settings-services.html)
-* [Implementation](components/objectstores/jdo/services/settings-services-jdo.html)
 
 }
 
 {col-md-4
 
+#### <a name="isis-module-settings">Settings Service</a>
+
+* [API](./reference/services/settings-services.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-settings) 
+
 #### <a name="isis-module-devutils">Developer Utilities</a>
 
 * [API](./reference/services/developer-utilities-service.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-devutils) 
 
-#### <a name="modules-isisaddons">Isis Addons</a>
+#### <a name="modules-isisaddons">Other Isis Addons</a>
 
 Hosted at [isisaddons.org](http://www.isisaddons.org).
 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
 * [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Scheduler](http://github.com/isisaddons/isis-module-scheduler)
+* [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
 * [Tags](http://github.com/isisaddons/isis-module-tags)
 
