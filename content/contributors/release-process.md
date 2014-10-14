@@ -588,7 +588,7 @@ The artifacts have been uploaded to staging repository on repository.apache.org:
 
 * https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/core/isis/1.7.0/isis-1.7.0-source-release.zip
 * https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/viewer/isis-viewer-wicket/1.7.0/isis-viewer-wicket-1.7.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/simpleapp-archetype/1.7.0/simpleapp-archetype-1..0-source-release.zip
+* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/simpleapp-archetype/1.7.0/simpleapp-archetype-1.7.0-source-release.zip
 * https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/todoapp-archetype/1.7.0/todoapp-archetype-1.7.0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).

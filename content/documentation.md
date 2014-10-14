@@ -182,6 +182,7 @@ For both:
 * [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./more-advanced-topics/ViewModel.html)
+* [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
 
 #### <a name="more-advanced-topics-more-ui-layout-hints">More UI layout hints</a>
 
