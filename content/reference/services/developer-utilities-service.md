@@ -1,5 +1,9 @@
 Title: Developer Utilities Service
 
+{note
+In 1.6.0 this implementation was released as part of *org.apache.isis.core:isis-module-devutils-jdo:1.6.0* and was also released as an [Isis addon](http://github.com/isisaddons/isis-module-devutils) module.  **In 1.7.0+ only the [Isis addon](http://github.com/isisaddons/isis-module-devutils) implementation is released.**
+}
+
 The `DeveloperUtilitiesService` service provides a number of development-time utilities, mostly related to accessing/interacting with the Isis metamodel.  These are visible in the UI, either as menu actions or as contributed actions.  All actions are annotated with [@Prototype](../recognized-annotations/Prototype.html), so are suppressed in [production mode](../deployment-type.html).
 
 

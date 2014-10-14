@@ -330,14 +330,10 @@ summarized [here](./reference/services.html).
 
 #### <a name="isis-module-command">Command Service (persistence)</a>
 
-Profiling, extended auditing.
-
 * [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
 * [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 #### <a name="isis-module-command">Background Command Service</a>
-
-Background/async execution
 
 * [API](./reference/services/background-command-service.html)
 * [Background Execution](./reference/non-ui/background-command-execution.html)
@@ -362,23 +358,13 @@ Background/async execution
 
 {col-md-4
 
-#### <a name="isis-module-settings">Settings Service</a>
-
-* [API](./reference/services/settings-services.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-settings) 
-
-#### <a name="isis-module-devutils">Developer Utilities</a>
-
-* [API](./reference/services/developer-utilities-service.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-devutils) 
-
 #### <a name="modules-isisaddons">Other Isis Addons</a>
 
-Hosted at [isisaddons.org](http://www.isisaddons.org).
-
+* [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
 * [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 * [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Settings](http://github.com/isisaddons/isis-module-settings) 
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
 * [Tags](http://github.com/isisaddons/isis-module-tags)
 

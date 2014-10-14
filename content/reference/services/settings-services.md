@@ -1,5 +1,9 @@
 Title: Settings Services
 
+{note
+In 1.6.0 this implementation was released as part of *org.apache.isis.core:isis-module-settings-jdo:1.6.0* and was also released as an [Isis addon](http://github.com/isisaddons/isis-module-settings) module.  **In 1.7.0+ only the [Isis addon](http://github.com/isisaddons/isis-module-settings) implementation is released.**
+}
+
 The `ApplicationSettingsService` and the `UserSettingsService` are two similar services that provide the ability to store either configuration settings.  With `ApplicationSettingsService` these settings have global scope; for the `UserSettingsService` the settings are stored per user.
 
 The core applib defines only interfaces and some convenience abstract classes.  The JDO objectstore provides an [implementation](../../components/objectstores/jdo/services/settings-services-jdo.html), alternatively you could write your own implementation.
