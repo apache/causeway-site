@@ -118,18 +118,18 @@ The services listed here are those whose API is defined in Isis applib.  In addi
     <td>can replace by explicitly registering different implementation in isis.properties</td>
 </tr>
 <tr>
+    <th class="heading">o.a.i.applib.services.publish<br/>EventSerializer</th>
+    <td>g:org.isisaddons.module.publishing<br/>a:isis-module-publishing</td>
+    <td>RestfulObjectsSpecEventSerializer</td>
+    <td>Yes; auto-registered</td>
+    <td>can replace by explicitly registering different implementation in isis.properties</td>
+</tr>
+<tr>
     <th class="heading">o.a.i.applib.services.publish<br/>PublishingService</th>
     <td>g:org.isisaddons.module.publishing<br/>a:isis-module-publishing</td>
     <td>PublishingService</td>
     <td>Yes; auto-registered</td>
     <td>related services: PublishingServiceContributions, PublishingServiceRepository (@DomainService); <br/>depends on: EventSerializer</td>
-</tr>
-<tr>
-    <th class="heading">o.a.i.applib.services.publish<br/>EventSerializer</th>
-    <td>g:org.isisaddons.module.publishing<br/>a:isis-module-publishing</td>
-    <td>RestfulObjectsSpecEventSerializer</td>
-    <td>Yes; auto-registered</td>
-    <td></td>
 </tr>
 <tr>
     <th class="heading">o.a.i.applib.services.queryresultscache<br/>QueryResultsCache</th>
