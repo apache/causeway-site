@@ -317,7 +317,8 @@ Co-ordinate sharing of information across multiple objects/interactions
 {col-md-12
 ## <a name="modules">Modules</a>
 
-Optional supporting modules to use within your app.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
+Optional supporting modules to use within your app.  Some are implemented by the framework itself, some are implemented in [Isis addons](http://www.isisaddons.org).  Applib modules are
+summarized <a href="./reference/services.html">here</a>.
 
 }
 
@@ -332,7 +333,7 @@ Optional supporting modules to use within your app.  Some implement API defined 
 Profiling, extended auditing.
 
 * [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Implementation](components/objectstores/jdo/services/command-service-jdo.html) 
+* [Isis addons implementation](components/objectstores/jdo/services/command-service-jdo.html) 
 
 #### <a name="isis-module-command">Background Command Service</a>
 
@@ -445,7 +446,6 @@ Hosted at [isisaddons.org](http://www.isisaddons.org).
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 * [Bytecode Enhancers](core/bytecode.html) [stub]
-* [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 
 }
 
@@ -786,6 +786,7 @@ No longer under active development
 
 Previously released but now retired
 
+* [In-memory Profile Store](core/inmemory-profilestore.html) [stub]
 * [File Security](components/security/file/about.html)
 
 

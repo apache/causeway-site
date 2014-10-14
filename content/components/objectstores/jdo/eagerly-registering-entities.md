@@ -1,6 +1,9 @@
 Title: Eagerly Registering Entity Types
 
-Both Apache Isis and DataNucleus have their own metamodels of the domain entities.  Isis builds its metamodel by walking the graph of types from the services registered in `isis.properties`.  The JDO objectstore then takes these types and registers them with DataNucleus.
+*in 1.6.0 and 1.7.0, this feature may be (partly?) broken; see [ISIS-847](https://issues.apache.org/jira/browse/ISIS-847)*
+
+Both Apache Isis and DataNucleus have their own metamodels of the domain entities.  Isis builds its metamodel by walking the graph of types from the services registered using
+`@DomainService` or explicitly registered in `isis.properties`.  The JDO objectstore then takes these types and registers them with DataNucleus.
 
 In some cases, though, not every entity type is discoverable from the API of the service actions.  This is especially the case if you have lots of subtypes (where the action method specifies only the supertype).  In such cases the Isis and JDO metamodels is built lazily, when an instance of that (sub)type is first encountered.
 
