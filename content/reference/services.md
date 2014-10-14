@@ -8,7 +8,7 @@ The services listed here are those whose API is defined in Isis applib.  In addi
 <tr class="heading">
     <th class="heading">API</th>
     <th class="heading">Impl'n<br/>Maven Module</th>
-    <th class="heading">Impl'n<br/>Class(es)</th>
+    <th class="heading">Impl'n<br/>Class</th>
     <th class="heading">@DomainService?</th>
     <th class="heading">Notes</th>
 </tr>
