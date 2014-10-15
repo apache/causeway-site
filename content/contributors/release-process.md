@@ -593,9 +593,9 @@ The source code artifacts have been uploaded to staging repositories on reposito
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-1.7.0-RC1.
+In the source code repo the code has been tagged as isis-1.7.0-RC1, isis-viewer-wicket-1.7.0-RC1, simpleapp-archetype-1.7.0-RC1 and todoapp-archetype-1.7.0-RC1.
 
-Alternatively, you can configure Maven to use the above staging repositories directly.  For instructions on how to do this, along with other suggestions on how to verify the release, see http://isis.apache.org/contributors/verifying-releases.html
+For instructions on how to verify the release (build from binaries and/or use in Maven directly), see http://isis.apache.org/contributors/verifying-releases.html
 
 Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
 
