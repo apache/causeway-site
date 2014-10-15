@@ -1,6 +1,6 @@
 Title: Verify releases using a script
 
-To save some time in verifying an Isis release we've assembled a script to automate the process. The script is tested on Mac OSX and Linux.  Windows users can use Cygwin or gpgWin (the latter is bundled with [Github for Windows](http://windows.github.com)).
+To save some time in verifying an Isis release we've assembled a script to automate the process. The script is tested on Mac OSX and Linux.  Windows users can use Cygwin or [msysgit](http://msysgit.github.io/)).
 
 It's **recommended** that you start this process in an empty directory:
 
