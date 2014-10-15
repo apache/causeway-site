@@ -604,7 +604,10 @@ Please verify the release and cast your vote.  The vote will be open for a minim
 [ ] -1
 </pre>
 
-The value `orgapacheisis-10xx` is the repository id provided by Nexus earlier; update the email text as required before sending.
+Remember to update:
+* the version number (1.7.0 or whatever)
+* the release candidate number (`RC1` or whatever)
+* the repository id, as provided by Nexus earlier (`orgapacheisis-10xx` or whatever)
 
 Note that the email also references the procedure for other committers to [verify the release](verifying-releases.html).
 
