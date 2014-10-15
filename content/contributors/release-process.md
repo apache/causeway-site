@@ -602,8 +602,6 @@ Please verify the release and cast your vote.  The vote will be open for a minim
 [ ] +1
 [ ]  0
 [ ] -1
-
-
 </pre>
 
 Remember to update:
