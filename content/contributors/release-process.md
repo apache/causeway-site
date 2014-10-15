@@ -595,13 +595,15 @@ For each zip there is a corresponding signature file (append .asc to the zip's u
 
 In the source code repo the code has been tagged as isis-1.7.0-RC1.
 
-Alternatively, you can add the above staging repositories to your local `~/.m2/settings.xml` file and use directly.  Our website describes how to do this, and other suggestions on how to verify the release, at http://isis.apache.org/contributors/verifying-releases.html.  There is also a script you can use, http://isis.apache.org/contributors/verifying-releases-script.html.
+Alternatively, you can configure Maven to use the above staging repositories directly.  For instructions on how to do this, along with other suggestions on how to verify the release, see http://isis.apache.org/contributors/verifying-releases.html
 
 Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
 
 [ ] +1
 [ ]  0
 [ ] -1
+
+
 </pre>
 
 Remember to update:
