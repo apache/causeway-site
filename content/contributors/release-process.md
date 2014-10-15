@@ -572,7 +572,7 @@ The following boilerplate is for a release of the Apache Isis Core.  Adapt as re
 
 Use the following subject:
 <pre>
-[VOTE] Apache Isis Core release 1.7.0 and related components
+[VOTE] Apache Isis Core release 1.7.0 RC1 and related components
 </pre>
 
 And use the following body:
@@ -584,18 +584,18 @@ I've cut a release for Apache Isis Core and related components:
 * SimpleApp Archetype 1.7.0
 * TodoApp Archetype 1.7.0
 
-The artifacts have been uploaded to staging repository on repository.apache.org:
+The source code artifacts have been uploaded to staging repositories on repository.apache.org:
 
-* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/core/isis/1.7.0/isis-1.7.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/viewer/isis-viewer-wicket/1.7.0/isis-viewer-wicket-1.7.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/simpleapp-archetype/1.7.0/simpleapp-archetype-1.7.0-source-release.zip
-* https://repository.apache.org/service/local/repositories/orgapacheisis-10xx/content/org/apache/isis/archetype/todoapp-archetype/1.7.0/todoapp-archetype-1.7.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.7.0/isis-1.7.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/viewer/isis-viewer-wicket/1.7.0/isis-viewer-wicket-1.7.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.7.0/simpleapp-archetype-1.7.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/todoapp-archetype/1.7.0/todoapp-archetype-1.7.0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
 In the source code repo the code has been tagged as isis-1.7.0-RC1.
 
-Our website contains some suggestions of how to verify the release, see http://isis.apache.org/contributors/verifying-releases.html.  There is also a script you can use, http://isis.apache.org/contributors/verifying-releases-script.html.
+Alternatively, you can add the above staging repositories to your local `~/.m2/settings.xml` file and use directly.  Our website describes how to do this, and other suggestions on how to verify the release, at http://isis.apache.org/contributors/verifying-releases.html.  There is also a script you can use, http://isis.apache.org/contributors/verifying-releases-script.html.
 
 Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
 
@@ -604,9 +604,9 @@ Please verify the release and cast your vote.  The vote will be open for a minim
 [ ] -1
 </pre>
 
-The value `orgapacheisis-10xx` is the repository id provided by Nexus earlier.
+The value `orgapacheisis-10xx` is the repository id provided by Nexus earlier; update the email text as required before sending.
 
-The procedure for other committers to verify the release can be found [here](verifying-releases.html).
+Note that the email also references the procedure for other committers to [verify the release](verifying-releases.html).
 
 
 ## After the vote
