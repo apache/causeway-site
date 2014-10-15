@@ -315,10 +315,11 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="modules">Modules</a>
+## <a name="modules">Add-on Modules/Services</a>
 
-Optional supporting modules to use within your app.  Some are implemented by the framework itself, some are implemented in [Isis addons](http://www.isisaddons.org).  Applib modules are
-summarized [here](./reference/services.html).
+Optional supporting modules to use within your app, with implementations in [Isis addons](http://www.isisaddons.org).  Some modules implement interfaces defined in Isis applib (eg auditing), others are standalone (eg excel and tags).
+
+In addition, a full list of all applib services (including those that are implemented by the framework itself, eg `DomainObjectContainer` and `MementoService`) is summarized **[here](./reference/services.html)**.
 
 }
 
