@@ -21,8 +21,8 @@ The script could be enhanced in many ways, feel free to do so! Copy (or [downloa
 		for fil in `cat *.txt`
 		do
 			echo 'Downloading '$fil
-			curl -O $fil
-			curl -O $fil.asc
+			curl  -L -O $fil
+			curl  -L -O $fil.asc
 		done
 	}
 	_verify(){
