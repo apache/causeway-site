@@ -4,7 +4,7 @@ This page explains how you can contribute to Apache Isis.  You'll probably also 
 
 Thanks for considering to help out, your contributions are appreciated!
 
-## Workflow
+## Recommended Workflow (github pull requests) ##
 
 Isis' source code is hosted in an Apache git repo ([https](https://git-wip-us.apache.org/repos/asf/isis.git), [http](http://git-wip-us.apache.org/repos/asf/isis.git)), with a clone on github ([https](https://github.com/apache/isis.git), or ssh: `git@github.com:apache/isis.git`.
 
@@ -16,17 +16,18 @@ The diagram below illustrates the process:
 
 That is:
 
-- as a one-time activity, you fork the [github.com/apache/isis](https://github.com/apache/isis.git) repo into your own fork on github.com
-- as a one-time activity, you clone your fork to your local computer
-- you set the [github.com/apache/isis](https://github.com/apache/isis.git) as your upstream branch; this will allow you to keep your local clone up-to-date with new commits
+1. as a one-time activity, you fork the [github.com/apache/isis](https://github.com/apache/isis.git) repo into your own fork on github.com
+2. as a one-time activity, you clone your fork to your local computer
+3. you set the [github.com/apache/isis](https://github.com/apache/isis.git) as your upstream branch; this will allow you to keep your local clone up-to-date with new commits
   - note the asymmetry here: the `upstream` repo (the Apache github repo) is **not** the same as the `origin` repo (your fork).
-- you work on your changes locally; when done, you push them to your github fork
+4. you work on your changes locally; when done, you push them to your github fork
+5. to contribute back a change, raise a [JIRA](https://issues.apache.org/jira/browse/ISIS) ticket, and ensure your commit message is in the form: `ISIS-nnnn: ...` so that changes can be tracked (more discussion on this point below).  In any case, before you decide to start hacking with Isis, it's always worth creating a ticket in JIRA and then have a discussion about it on the [mailing lists](http://isis.apache.org/support.html).  
+6. Use github to raise a [pull request](https://help.github.com/articles/using-pull-requests/) for your feature
+7. An Isis committer will review your change, and apply it if suitable.
 
-The diagram also indicates the [JIRA](https://issues.apache.org/jira/browse/ISIS) ticket; all work in Isis should tracked in JIRA.  Before you decide to start hacking with Isis, it's always worth creating a ticket in JIRA and then have a discussion about it on the [mailing lists](http://isis.apache.org/support.html).  
+## Alternative Workflow (JIRA patches) ##
 
-Assuming you have a JIRA ticket, generally speaking all you need to do once you have your patch is to add a comment with the URL to your patch on your github fork; the Isis committer can then download your patch from the JIRA ticket, review it, and apply your patch.  
-
-As a slight simplification to the above, you may decide to clone directly from [github.com/apache/isis](https://github.com/apache/isis.git) rather than create your own fork:
+As an alternative, you may decide to clone directly from [github.com/apache/isis](https://github.com/apache/isis.git) rather than create your own fork:
 
 <img src="resources/git-workflow-2.png" width="600px"></img>
 
@@ -34,7 +35,7 @@ In this case your `upstream` repo is the same as your `origin` repo, which might
 
 For the Isis committers it really doesn't matter which route you take, so go with whatever's most comfortable.
 
-### Setting up your fork/clone
+## Setting up your fork/clone ##
 
 If you choose to create your own fork then you'll need an account on [github.com](https://github.com).  You then fork simply by pressing the "Fork" button:
 
@@ -66,7 +67,7 @@ git fetch
 
 For more info on tracking branches [here](http://git-scm.com/book/en/Git-Branching-Remote-Branches) and [here](http://gitready.com/beginner/2009/03/09/remote-tracking-branches.html).
 
-##Commit messages
+## Commit messages ##
 
 Although with git your commits are always performed on your local repo, those commit messages become public when the patch is applied by an Isis committer.  You should take time to write a meaningful commit message that helps explain what the patch refers to; if you don't then there's a chance that your patch may be rejected and not applied.  No-one likes hard work to go to waste!
 
@@ -88,11 +89,9 @@ why this is a problem, and how the patch fixes the problem when applied.
 
 Once your git repo is setup, the next thing you'll most likely want to do is to setup your development environment.  See [here](development-environment.html) for more details.
 
-##Creating the patch file
+## Creating the patch file ##
 
-If you are working off your own github fork, then you can use github to generate your patch files.  Attach them to the relevant JIRA.
-
-If you are working without a github fork, then you can create the patches from your own local git repository.
+If you are working without a github fork of Isis, then you can create the patches from your own local git repository.
 
 As per [this stackoverflow question](http://stackoverflow.com/questions/6658313/generate-a-git-patch-for-a-specific-commit), create the patch using `git format-patch`:
 
@@ -100,11 +99,11 @@ As per [this stackoverflow question](http://stackoverflow.com/questions/6658313/
 
 Here `-10` is the last 10 commits you have done. You need to change that integer according to the commits you need to apply into the patch.
 
-##Sample Contribution Workflow
+## Sample Contribution Workflow ##
 
 Assuming you're development environment is all setup, let's walk through how you might make contribute a patch.  In this example, suppose that you've decided to work on JIRA ticket #123, an enhancement to support Blob/Clob datatypes.
 
-### Update your master branch
+#### Update your master branch ####
 
 The first thing to do is to make sure your local clone is up-to-date.  We do this by retrieving new commits from upstream repo and then merging them as a fast-forward into your local branch.
 
@@ -124,7 +123,7 @@ git pull --ff-only
 
 If the `merge` or `pull` fails, it means that you must have made commits and there have been changes meanwhile on the remote `master`'s branch.  You can use `gitk --all` to confirm.  If this fails, see our [git cookbook](git-cookbook.html) page for a procedure to retrospectively sort out this situation.
 
-### Create a topic branch
+#### Create a topic branch ####
 
 We recommend you name topic branches by the JIRA ticket, ie <tt>ISIS-nnn-description</tt>.   So let's create a new branch based off `master` and call it "ISIS-123-blobs"
 
@@ -142,7 +141,7 @@ master
 
 The command line prompt should also indicate you are on a branch, isolated from any changes that might happen on the `master` branch.
 
-###Make File Changes and Commit
+#### Make File Changes and Commit ####
 
 Next, make changes to your files using the usual commands (see also our [git cookbook](git-cookbook.html) page):
 
@@ -156,9 +155,9 @@ and so on.
 
 Continue this way until happy with the change.  Remember to run all your tests on the topic branch (including a full `mvn clean install`).
 
-###Reintegrating with `master`
+#### Rebasing with `master` ####
 
-Before you can share your change, you should reintegrate your changes with the `master` branch.  
+Before you can share your change, you should rebase (in other words replay) your changes on top of the `master` branch.  
 
 The first thing to do is to pull down any changes made in upstream remote's `master` since you started your topic branch:
 
@@ -186,7 +185,7 @@ git rebase --continue
 
 Once the rebase has completed, re-run your tests to confirm that everything is still good.
 
-### Making your change available remotely (with fork)
+#### Raising a pull request ####
 
 If you have your own fork, you can now simply push the changes you've made locally to your fork:
 
@@ -196,22 +195,17 @@ git push -u origin ISIS-123-blobs
 </pre>
 This will create a corresponding branch in the remote github repo.  If you use `gitk --all`, you'll also see a `remotes/origin/ISIS-123-blobs` branch.
 
-Then, update your JIRA and add a comment with a URL to this branch.
+Then, use github to raise a [pull request](https://help.github.com/articles/using-pull-requests/).  Pull requests sent to the Apache GitHub repositories will forward a pull request e-mail to the [dev mailing list](../support.html).  You'll probably want to sign up to the dev mailing list first before issuing your first pull request (though that isn't mandatory).
 
-You can aso use github to raise a *pull request*.  Pull requests sent to the Apache GitHub repositories will forward a pull request e-mail to the [dev mailing list](../support.html); sign up to the dev mailing list first before issuing your pull request.
-
-The process to raise the pull request:
+The process to raise the pull request, broadly speaking:
 
 * Open a web browser to your github fork of isis
 * Select your topic branch (pushed in the previous step) so that the pull request references the topic branch.
 * Click the `Pull Request` button.
 * Check that the Isis mailing list email came through.
 
-### Making your change available remotely (no fork)
 
-If you decided against having your own github fork, then you'll need to create a patch and then attach to the JIRA.  Use `github diff` and redirect to a file.
-
-##If your pull request is accepted
+## If your pull request is accepted ##
 
 To double check that your pull request is accepted, update your `master` branch from the `upstream` remote:
 
@@ -236,7 +230,7 @@ git checkout master
 git push origin master
 </pre>
 
-####If your pull request is rejected
+#### If your pull request is rejected ####
 
 If your pull request is rejected, then you'll need to update your branch from the main repository and then address the rejection reason.
 
