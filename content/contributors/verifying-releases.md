@@ -88,7 +88,7 @@ Configuring your local Maven install amounts to updating the `~/.m2/settings.xml
                 </repository>
                 ...
             </repositories>
-        <profile>
+        </profile>
         ...
     </profiles>
     <activeProfiles>
