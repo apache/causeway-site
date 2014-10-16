@@ -104,7 +104,7 @@ Assuming that everything builds ok, then test the archetypes (adjust version as 
         -D version=1.0-SNAPSHOT \
         -B \
         -o \
-        -D archetypeVersion=1.6.0
+        -D archetypeVersion=1.7.0   # adjust version as necessary
 
 
     cd myapp
@@ -124,7 +124,7 @@ and (adjust version as necessary):
         -D version=1.0-SNAPSHOT \
         -B \
         -o \
-        -D archetypeVersion=1.5.0
+        -D archetypeVersion=1.7.0   # adjust version as necessary
 
     cd myapp
     
