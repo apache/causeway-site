@@ -630,6 +630,7 @@ Other
 * [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
+* [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
 
 }
 
