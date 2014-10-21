@@ -825,16 +825,13 @@ The Isis team is pleased to announce the release of:
 * SimpleApp Archetype 1.7.0
 * ToDoApp Archetype 1.7.0
 
-Note that:
-* Isis Core now incorporates the JDO Objectstore, Restful Objects Viewer and 
-  Shiro Security, all previously released as separate components.
-* ToDoApp Archetype was previously the 'Quickstart (Wicket/Restful/JDO) archetype'
-* SimpleApp Archetype was previously the 'Simple (Wicket/Restful/JDO) archetype'
-
 New features in this release include:
 - ...
 
 Full release notes are available at [1,2,3,4] on the Isis website.
+
+Note that:
+* ...
 
 You can access this release directly from the Maven central repo [5], 
 or download the release and build it from source [6].
@@ -845,8 +842,8 @@ Enjoy!
 
 [1] http://isis.apache.org/core/release-notes/isis-1.x.0.html
 [2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.x.0.html
-[3] http://isis.apache.org/getting-started/release-notes/todoapp-archetype-1.x.0.html
-[4] http://isis.apache.org/getting-started/release-notes/simpleapp-archetype-1.x.0.html
+[3] http://isis.apache.org/archetypes/release-notes/todoapp-archetype-1.x.0.html
+[4] http://isis.apache.org/archetypes/release-notes/simpleapp-archetype-1.x.0.html
 [5] http://search.maven.org
 [6] http://isis.apache.org/download.html
 </pre>
