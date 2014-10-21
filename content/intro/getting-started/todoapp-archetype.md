@@ -37,7 +37,7 @@ Then run the following command:
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=todoapp-archetype \
-        -D archetypeVersion=1.6.0 \
+        -D archetypeVersion=1.7.0 \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \

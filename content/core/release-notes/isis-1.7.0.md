@@ -75,10 +75,12 @@ Title: isis-1.7.0
 
 <h2>        Removed features - available in <a href="http://www.isisaddons.org">isiaddons.org</a>
 </h2>
+<ul>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-851'>ISIS-851</a>] -         Remove modules from Isis core (available instead through isisaddons).
 </li>
 <li>[<a href='https://issues.apache.org/jira/browse/ISIS-887'>ISIS-887</a>] -         Mothball the o.a.isis.core:isis-module-xxx modules, as now in isisaddons.
 </li>
+</ul>
 
 
 <h2>        Removed features (obsolete)

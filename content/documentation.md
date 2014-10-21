@@ -19,8 +19,8 @@ Title: Documentation
 
 #### <a name="getting-started">Archetypes</a>
 
-* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) ([1.6.0](archetypes/release-notes/about.html))**
-* [TodoApp Archetype](intro/getting-started/todoapp-archetype.html) ([1.6.0](archetypes/release-notes/about.html)) <a href="intro/getting-started/todoapp-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) ([1.7.0](archetypes/release-notes/about.html))**
+* [TodoApp Archetype](intro/getting-started/todoapp-archetype.html) ([1.7.0](archetypes/release-notes/about.html)) <a href="intro/getting-started/todoapp-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 }
 
@@ -379,7 +379,7 @@ In addition, a full list of all applib services (including those that are implem
 {row
 
 {col-md-12
-## <a name="core">Core [1.6.0](core/release-notes/about.html)</a>
+## <a name="core">Core [1.7.0](core/release-notes/about.html)</a>
 
 }
 
@@ -590,7 +590,7 @@ In addition, a full list of all applib services (including those that are implem
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.6.0](components/viewers/wicket/release-notes/about.html)
+## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html)
 }
 
 {col-md-4

@@ -66,4 +66,4 @@ CSS into your app's `application.css` file:
         border-top:1px solid #CCCBC7;
     }
 
-This has been fixed in `1.7.0-SNAPSHOT`.
+This has been fixed in `1.7.0`.
