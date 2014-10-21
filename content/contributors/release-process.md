@@ -808,7 +808,7 @@ TODO: some sort of process required here...
 
 ## Announce the release
 
-Announce the release to dev@isis.apache.org mailing list.
+Announce the release to users@isis.apache.org mailing list.
 
 For example, for a release of Apache Isis Core, use the following subject:
 
