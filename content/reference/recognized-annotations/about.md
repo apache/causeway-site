@@ -2,7 +2,7 @@ title: Recognized Annotations
 
 go back to: [documentation](../../documentation.html)
 
-<table>
+<table class="table table-bordered table-condensed table-hover">
 <tr>
     <th>Annotation</th>
     <th>.layout.json ?</th>
