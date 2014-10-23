@@ -55,7 +55,7 @@ Then - importantly - for the `Before launch` setting, first remove the default "
 
 <img src="images/intellij-035-run-configuration.png"  width="720px"/>
 
-to execute `mvn datanucleus:enhance` for the `dom` module:
+to execute `mvn datanucleus:enhance` for the `dom` module (adjust path as necessary):
 
 <img src="images/intellij-040-run-configuration.png"  width="600px"/>
   
