@@ -6,7 +6,7 @@ go back to: [documentation](../../documentation.html)
 <tr>
     <th>Annotation</th>
     <th>Purpose</th>
-    <th>.layout.json ?</th>
+    <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a> ?</th>
     <th>Deprecated?</th>
 </tr>
 <tr><td><a href="./ActionInteraction.html">@ActionInteraction</a></td>
