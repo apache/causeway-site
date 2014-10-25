@@ -382,69 +382,6 @@ For both:
 
 
 
-{row
-
-{col-md-12
-## <a name="modules">Add-on Modules/Services</a>
-
-Optional supporting modules to use within your app, with implementations in [Isis addons](http://www.isisaddons.org).  Some modules implement interfaces defined in Isis applib (eg auditing), others are standalone (eg excel and tags).
-
-In addition, a full list of all applib services (including those that are implemented by the framework itself, eg `DomainObjectContainer` and `MementoService`) is summarized **[here](./reference/services.html)**.
-
-}
-
-}
-
-{row
-
-{col-md-4
-
-#### <a name="isis-module-command">Command Service (persistence)</a>
-
-* [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-
-#### <a name="isis-module-command">Background Command Service</a>
-
-* [API](./reference/services/background-command-service.html)
-* [Background Execution](./reference/non-ui/background-command-execution.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-command) (for both)
-
-}
-
-{col-md-4
-
-#### <a name="isis-module-auditing">Auditing</a>
-
-* [Auditing API](./reference/services/auditing-service.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-audit)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-
-#### <a name="isis-module-publishing">Publishing Service</a>
-
-* [API](./reference/services/publishing-service.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-
-
-}
-
-{col-md-4
-
-#### <a name="modules-isisaddons">Other Isis Addons</a>
-
-* [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
-* [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
-* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Settings](http://github.com/isisaddons/isis-module-settings) 
-* [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
-* [Tags](http://github.com/isisaddons/isis-module-tags)
-
-
-}
-
-}
-
-
 
 {row
 
@@ -659,6 +596,71 @@ Other
 }
 
 }
+
+
+
+{row
+
+{col-md-12
+## <a name="modules">Add-on Modules/Services</a>
+
+Optional supporting modules to use within your app, with implementations in [Isis addons](http://www.isisaddons.org).  Some modules implement interfaces defined in Isis applib (eg auditing), others are standalone (eg excel and tags).
+
+In addition, a full list of all applib services (including those that are implemented by the framework itself, eg `DomainObjectContainer` and `MementoService`) is summarized **[here](./reference/services.html)**.
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+#### <a name="isis-module-command">Command Service (persistence)</a>
+
+* [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+
+#### <a name="isis-module-command">Background Command Service</a>
+
+* [API](./reference/services/background-command-service.html)
+* [Background Execution](./reference/non-ui/background-command-execution.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command) (for both)
+
+}
+
+{col-md-4
+
+#### <a name="isis-module-auditing">Auditing</a>
+
+* [Auditing API](./reference/services/auditing-service.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-audit)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+
+#### <a name="isis-module-publishing">Publishing Service</a>
+
+* [API](./reference/services/publishing-service.html)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+
+
+}
+
+{col-md-4
+
+#### <a name="modules-isisaddons">Other Isis Addons</a>
+
+* [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
+* [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
+* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Settings](http://github.com/isisaddons/isis-module-settings) 
+* [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
+* [Tags](http://github.com/isisaddons/isis-module-tags)
+
+
+}
+
+}
+
 
 
 
