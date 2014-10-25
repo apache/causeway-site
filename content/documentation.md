@@ -125,6 +125,70 @@ Title: Documentation
 }
 
 
+{row
+
+{col-md-12
+## <a name="core-domain-services">Core Domain Services</a>
+
+Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+#### <a name="core-modules-common">Fundamentals</a>
+
+* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
+* [ClockService](./reference/services/ClockService.html)
+* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
+* [Wrapper Factory](reference/services/wrapper-factory.html)
+
+#### <a name="domain-services-event-bus">Event Bus</a>
+
+Decouple business logic across modules using intra-process publish/subscribe 
+
+* [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
+
+}
+
+{col-md-4
+
+#### <a name="domain-services-information-sharing">Commands/Background</a>
+
+Context in which actions invoked, infrastructure to run actions in background.
+
+* [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Background Service](./reference/services/background-service.html)
+
+
+#### <a name="domain-services-information-sharing">Information sharing</a>
+
+Co-ordinate sharing of information across multiple objects/interactions
+
+* [Scratchpad](./reference/services/scratchpad.html)
+* [Bulk.Interaction](./reference/services/bulk-interaction.html)
+* [QueryResultsCache](./reference/services/query-results-cache.html)
+
+}
+
+{col-md-4
+
+#### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
+
+* [Bookmark Service](./reference/services/bookmark-service.html)
+* [Memento Service](./reference/services/memento-service.html)
+* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
+
+}
+
+}
+
+
+
 
 {row
 
@@ -311,69 +375,6 @@ For both:
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
-
-}
-
-}
-
-
-{row
-
-{col-md-12
-## <a name="core-domain-services">Core Domain Services</a>
-
-Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
-
-}
-
-}
-
-{row
-
-{col-md-4
-
-#### <a name="core-modules-common">Fundamentals</a>
-
-* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
-* [ClockService](./reference/services/ClockService.html)
-* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
-* [Wrapper Factory](reference/services/wrapper-factory.html)
-
-#### <a name="domain-services-event-bus">Event Bus</a>
-
-Decouple business logic across modules using intra-process publish/subscribe 
-
-* [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
-
-}
-
-{col-md-4
-
-#### <a name="domain-services-information-sharing">Commands/Background</a>
-
-Context in which actions invoked, infrastructure to run actions in background.
-
-* [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Background Service](./reference/services/background-service.html)
-
-
-#### <a name="domain-services-information-sharing">Information sharing</a>
-
-Co-ordinate sharing of information across multiple objects/interactions
-
-* [Scratchpad](./reference/services/scratchpad.html)
-* [Bulk.Interaction](./reference/services/bulk-interaction.html)
-* [QueryResultsCache](./reference/services/query-results-cache.html)
-
-}
-
-{col-md-4
-
-#### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
-
-* [Bookmark Service](./reference/services/bookmark-service.html)
-* [Memento Service](./reference/services/memento-service.html)
-* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
 
 }
 
