@@ -199,7 +199,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./Hidden.html">@Hidden</a></td>
-        <th>UI/domain</th>
+        <td>UI, Domain</td>
         <td>Object member is not visible.
         </td>
         <td>Y</td>
