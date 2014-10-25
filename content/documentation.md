@@ -63,16 +63,6 @@ Title: Documentation
 {row
 
 {col-md-12
-## <a name="how-tos">How-tos (programming model)</a>
-
-}
-
-}
-
-
-{row
-
-{col-md-12
 ## <a name="core">Core [1.7.0](core/release-notes/about.html)</a>
 
 }
@@ -200,6 +190,16 @@ Title: Documentation
 
 }
 
+
+
+{row
+
+{col-md-12
+## <a name="how-tos">How-tos (programming model)</a>
+
+}
+
+}
 
 
 
