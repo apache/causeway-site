@@ -125,72 +125,6 @@ Title: Documentation
 }
 
 
-{row
-
-{col-md-12
-## <a name="jdo-objectstore">Core Object Store</a>
-
-<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
-
-}
-
-
-{col-md-4
-
-#### <a name="jdo-objectstore-about">About</a>
-<p class="display:none"/>
-
-* [About](components/objectstores/jdo/about.html)
-
-#### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
-
-* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
-* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
-* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
-* [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
-* [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
-
-####  <a name="jdo-objectstore-jdo-services">JDO services</a>
-<p class="display:none"/>
-
-* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
-
-}
-
-{col-md-4
-
-
-####  <a name="jdo-objectstore-jdo-mapping-hints">JDO (Mapping) Hints</a>
-<p class="display:none"/>
-
-* [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
-* [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
-* [Mapping BigDecimals](components/objectstores/jdo/mapping-bigdecimals.html)
-* [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
-* [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
-* [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
-
-}
-
-{col-md-4
-####  <a name="jdo-objectstore-jdoother-hints">Other Hints</a>
-
-* [Transaction Management](components/objectstores/jdo/transaction-management.html)
-* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
-* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
-* [Using Maven with DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html) (prior to 1.4.0)
-
-
-####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
-
-* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
-  
-  
-}
-
-}
-
-
 
 {row
 
@@ -514,7 +448,7 @@ In addition, a full list of all applib services (including those that are implem
 {row
 
 {col-md-12
-## <a name="restfulobjects-viewer">Core Viewer</a> 
+## <a name="restfulobjects-viewer">Core (Restful) Viewer</a> 
 
 <i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)), now part of Core.</i>
 
@@ -550,6 +484,73 @@ In addition, a full list of all applib services (including those that are implem
 }
 
 }
+
+
+{row
+
+{col-md-12
+## <a name="jdo-objectstore">Core Object Store</a>
+
+<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
+
+}
+
+
+{col-md-4
+
+#### <a name="jdo-objectstore-about">About</a>
+<p class="display:none"/>
+
+* [About](components/objectstores/jdo/about.html)
+
+#### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
+
+* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
+* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
+* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
+* [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
+* [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
+
+####  <a name="jdo-objectstore-jdo-services">JDO services</a>
+<p class="display:none"/>
+
+* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
+
+}
+
+{col-md-4
+
+
+####  <a name="jdo-objectstore-jdo-mapping-hints">JDO (Mapping) Hints</a>
+<p class="display:none"/>
+
+* [Mapping Mandatory and Optional Properties](components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
+* [Mapping JODA Dates](components/objectstores/jdo/mapping-joda-dates.html)
+* [Mapping BigDecimals](components/objectstores/jdo/mapping-bigdecimals.html)
+* [Mapping Blobs](components/objectstores/jdo/mapping-blobs.html)
+* [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
+* [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
+
+}
+
+{col-md-4
+####  <a name="jdo-objectstore-jdoother-hints">Other Hints</a>
+
+* [Transaction Management](components/objectstores/jdo/transaction-management.html)
+* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
+* [Using Maven with DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html) (prior to 1.4.0)
+
+
+####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
+
+* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
+  
+  
+}
+
+}
+
 
 
 {row
