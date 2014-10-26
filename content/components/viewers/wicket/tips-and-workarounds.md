@@ -1,7 +1,6 @@
-Title: Tips and Workarounds
+Title: Rendering of abstract properties in tables
 
-
-##Rendering of abstract properties in tables ([ISIS-582]())
+> For more info, see [ISIS-582](https://issues.apache.org/jira/browse/ISIS-582).
 
 Suppose you have a hierarchy of classes where a property is derived and abstract in the superclass, concrete implementations in the subclasses.  For example:
 
@@ -34,3 +33,4 @@ Alternatively the implementation could throw a `RuntimeException`, eg
 
     throw new RuntimeException("never called; workaround for ISIS-582");
     
+
