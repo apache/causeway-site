@@ -203,19 +203,21 @@ For both:
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html) [About](components/viewers/wicket/about.html)
+## <a name="user-interface">UI</a>
 }
 
-#### <a name="how-tos-ui-hints">UI hints</a>
-
-Icons and Titles
+#### <a name="ui-hints-icons-and-titles">Icons and Titles</a>
 
 * [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 
-Names and Descriptions
+}
+
+{col-md-4
+
+#### <a name="ui-hints-names-and-descriptions">Names and Descriptions</a>
 
 * [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
 * [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
@@ -226,18 +228,12 @@ Names and Descriptions
 
 {col-md-4
 
-#### <a name="wicket-viewer-configuration">Layout</a>
+#### <a name="ui-hints-layout">Layout</a>
 
 * [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
 * [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
 * [Static layouts](components/viewers/wicket/static-layouts.html)
 * [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
-
-}
-
-{col-md-4
-
 
 }
 
@@ -426,7 +422,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Advanced UI (Wicket)</a> 
+## <a name="wicket-viewer">Advanced UI/Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html) [About](components/viewers/wicket/about.html)
 
 }
 
