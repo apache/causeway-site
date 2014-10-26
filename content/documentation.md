@@ -63,7 +63,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## <a name="core">Core [1.7.0](core/release-notes/about.html)</a>
+## <a name="core">Core Concepts [1.7.0](core/release-notes/about.html)</a>
 
 }
 
@@ -77,6 +77,11 @@ Title: Documentation
 
 * [Configuration Files](./reference/configuration-files.html)
 
+#### <a name="core-modules-common">Fundamental Domain Services</a>
+
+* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
+* [ClockService](./reference/services/ClockService.html)
+
 }
 
 
@@ -88,23 +93,16 @@ Title: Documentation
 * [Recognized Annotations](./reference/recognized-annotations/about.html)
 * [Deployment Types](./reference/deployment-type.html)
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
-* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
-* [Value types](./reference/value-types.html)
 
 #### <a name="reference-supporting-features">Supporting features</a>
 
 * [Security](./reference/Security.html)
 * [Applib utility classes](./reference/Utility.html)
-* [Applib Events](./reference/Event.html)
 
 }
 
 {col-md-4
 
-
-####  <a name="reference-non-ui-execution">Non-UI execution</a>
-
-- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
 
 
 }
@@ -127,17 +125,6 @@ Commonly-used domain services to use within your app, implemented in Isis core. 
 
 {col-md-4
 
-#### <a name="core-modules-common">Fundamentals</a>
-
-* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
-* [ClockService](./reference/services/ClockService.html)
-* [Wrapper Factory](reference/services/wrapper-factory.html)
-
-#### <a name="domain-services-event-bus">Event Bus</a>
-
-Decouple business logic across modules using intra-process publish/subscribe 
-
-* [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
 
 }
 
@@ -168,6 +155,10 @@ Co-ordinate sharing of information across multiple objects/interactions
 * [Bookmark Service](./reference/services/bookmark-service.html)
 * [Memento Service](./reference/services/memento-service.html)
 * [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
+
+####  <a name="reference-non-ui-execution">Non-UI execution</a>
+
+- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
 
 }
 
@@ -284,6 +275,17 @@ For both:
 
 {col-md-4
 
+#### <a name="core-modules-common">WrapperFactory</a>
+
+* [Wrapper Factory](reference/services/wrapper-factory.html)
+* [Applib Events](./reference/Event.html)
+
+#### <a name="domain-services-event-bus">Event Bus</a>
+
+Decouple business logic across modules using intra-process publish/subscribe 
+
+* [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
+
 #### <a name="more-advanced-topics-idioms-and-patterns">Idioms and patterns</a>
 
 * [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
@@ -314,7 +316,6 @@ For both:
 * [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
 * [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
 * [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
-
 
 }
 
@@ -348,6 +349,12 @@ For both:
 #### <a name="more-advanced-topics-customisation">Customisation</a>
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
+
+#### <a name="more-advanced-topics-other">Other</a>
+
+* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
+* [Value types](./reference/value-types.html)
+
 
 #### <a name="core-dev-support">Support for testing</a>
 <p class="display:none"/>
