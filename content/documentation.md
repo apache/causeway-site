@@ -79,10 +79,6 @@ Title: Documentation
 * [Externalized Configuration](./reference/externalized-configuration.html)
 * [JVM args](./reference/jvm-args.html)
 
-####  <a name="reference-non-ui-execution">Non-UI execution</a>
-
-- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
-
 }
 
 {col-md-4
@@ -107,18 +103,16 @@ Title: Documentation
 {col-md-4
 
 
-#### <a name="core-dev-support">Dev support</a>
-<p class="display:none"/>
-
-* [Unit Test Support](core/unittestsupport.html)
-* [Integration Test Support](core/integtestsupport.html)
-* [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-  
 #### <a name="core-bundled-components">Other parts of core</a>
 
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 * [Bytecode Enhancers](core/bytecode.html) [stub]
+
+####  <a name="reference-non-ui-execution">Non-UI execution</a>
+
+- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
+
 
 }
 
@@ -210,7 +204,6 @@ Co-ordinate sharing of information across multiple objects/interactions
 * [Pojo vs Inheriting from framework](./how-tos/how-to-01-010-How-to-have-a-domain-object-be-a-POJO.html)
 * [Registering a domain service](./how-tos/how-to-09-010-How-to-register-domain-services,-repositories-and-factories.html)
 * [Entity property](./how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
-* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * [Entity collection](./how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
 * [Entity or service action](./how-tos/how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
 * [Names/description of action param](./how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
@@ -221,12 +214,6 @@ Co-ordinate sharing of information across multiple objects/interactions
 * [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
 * [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
 * [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
-
-#### <a name="how-tos-ui-hints">UI hints</a>
-
-* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
-* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
 
 }
 
@@ -290,6 +277,8 @@ For both:
 }
 
 
+
+
 {row
 
 {col-md-12
@@ -303,10 +292,6 @@ For both:
 
 {col-md-4
 
-#### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
-
-* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html)
-
 #### <a name="more-advanced-topics-idioms-and-patterns">Idioms and patterns</a>
 
 * [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
@@ -315,14 +300,6 @@ For both:
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./more-advanced-topics/ViewModel.html)
 * [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
-
-#### <a name="more-advanced-topics-more-ui-layout-hints">More UI layout hints</a>
-
-* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 
 
 }
@@ -374,6 +351,17 @@ For both:
 #### <a name="more-advanced-topics-customisation">Customisation</a>
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
+
+#### <a name="core-dev-support">Support for testing</a>
+<p class="display:none"/>
+
+* [Unit Test Support](core/unittestsupport.html)
+* [Integration Test Support](core/integtestsupport.html)
+* [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
+  
+#### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
+
+* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
 
 
 }
@@ -559,18 +547,34 @@ For both:
 
 {col-md-4
 
+#### <a name="how-tos-ui-hints">UI hints</a>
+
+Icons and Titles
+
+* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
+* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
+* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+
+Names and Descriptions
+
+* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
+* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
+* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
+* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
+
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
 Layouts
 
+* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
+* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
 * [Static layouts](components/viewers/wicket/static-layouts.html)
 * [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
 
 Other
 
-* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
-* [Regular vs upper case](components/viewers/wicket/regular-vs-upper-case.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
