@@ -404,8 +404,11 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 }
 
-{col-md-4
+}
 
+{row
+
+{col-md-4
 
 #### <a name="wicket-viewer-features">Features/end-user usage</a>
 
