@@ -13,14 +13,13 @@ This approach allows configuration to be partitioned by component.
 
 ## Specifying Components
 
-A running Isis instance requires a persistor (aka objectstore), the authentication mechanism, the authorization mechanism, and a user profile store.  It also requires some sort of viewer or viewers.
+A running Isis instance requires a persistor (aka objectstore), an authentication mechanism, and an authorization mechanism.  It also requires some sort of viewer or viewers.
 
-The objectstore, authentication, authorization and profilestore are specified in the `isis.properties` file.  For example, this is the configuration of the [simple](../intro/getting-started/simple-archetype.html) archetype:
+The objectstore, authentication and authorization are specified in the `isis.properties` file.  For example, this is the configuration of the [simple](../intro/getting-started/simple-archetype.html) archetype:
 
     isis.persistor=datanucleus
     isis.authentication=shiro
     isis.authorization=shiro
-    isis.user-profile-store=in-memory
 
 The available values are registered in [installer-registry.properties](https://raw.githubusercontent.com/apache/isis/master/core/runtime/src/main/resources/org/apache/isis/core/runtime/installer-registry.properties); alternatively the fully qualified class name can be specified.  In either case the appropriate component must also (of course) be added as a dependency to the `pom.xml` files.  
 
@@ -76,11 +75,5 @@ viewer.properties</td>
     <td>Restful Objects</td>
     <td>viewer_restfulobjects.properties<br/>
 viewer.properties</td>
-</tr>
-<tr>
-    <td>Profile Store</td>
-    <td>In-memory</td>
-    <td>user-profile-store_in-memory.properties<br/>
-user-profile-store.properties</td>
 </tr>
 </table>

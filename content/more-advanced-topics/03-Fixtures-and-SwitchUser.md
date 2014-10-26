@@ -3,6 +3,10 @@ Fixtures and SwitchUser
 
 > Using fixtures to setup the system, generally for testing purposes.
 
+{note
+this material is somewhat superceded; we now recommend the use of FixtureScripts.
+}
+
 Fixtures are used to setup the framework into a known state. This is
 predominantly done for testing, and in particular when running with the
 in-memory object store. However, fixtures can also be used to specify

@@ -76,10 +76,9 @@ Title: Documentation
 #### <a name="reference-config">Config</a>
 
 * [Configuration Files](./reference/configuration-files.html)
-* [Externalized Configuration](./reference/externalized-configuration.html)
-* [JVM args](./reference/jvm-args.html)
 
 }
+
 
 {col-md-4
 
@@ -102,12 +101,6 @@ Title: Documentation
 
 {col-md-4
 
-
-#### <a name="core-bundled-components">Other parts of core</a>
-
-* [Core Runtime](core/runtime.html) [stub]
-* [Webserver](core/webserver.html) [stub]
-* [Bytecode Enhancers](core/bytecode.html) [stub]
 
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>
 
@@ -138,7 +131,6 @@ Commonly-used domain services to use within your app, implemented in Isis core. 
 
 * [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [ClockService](./reference/services/ClockService.html)
-* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
 * [Wrapper Factory](reference/services/wrapper-factory.html)
 
 #### <a name="domain-services-event-bus">Event Bus</a>
@@ -331,7 +323,7 @@ For both:
 #### <a name="more-advanced-topics-error-handling">Error handling</a>
 
 * [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Exception Recognizer](./reference/services/exception-recognizers.html) service
+* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
 
 
 #### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
@@ -348,6 +340,11 @@ For both:
 * [Hide/disable/validate per user/role](./more-advanced-topics/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
 * [The authorization manager](./more-advanced-topics/how-to-08-020-How-to-use-Isis-authorization-manager.html)
 
+#### <a name="more-advanced-topics-deployment">Deployment</a>
+
+* [Externalized Configuration](./reference/externalized-configuration.html)
+* [JVM args](./reference/jvm-args.html)
+
 #### <a name="more-advanced-topics-customisation">Customisation</a>
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
@@ -363,6 +360,11 @@ For both:
 
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
 
+
+#### <a name="core-bundled-components">Other parts of core</a>
+
+* [Core Runtime](core/runtime.html) [stub]
+* [Webserver](core/webserver.html) [stub]
 
 }
 

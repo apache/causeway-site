@@ -50,9 +50,6 @@ Default Runtime
   * {{{./objectstores/index.html}objectstores}} module, under which there are
     various objectstore implementations (for persisting domain objects)
 
-  * {{{./profilestores/index.html}profilestores}} module, under which there are
-    various profilestore implementations (for persisting user preferences)
-
   * {{{./bytecode/index.html}bytecode}} module, under which there are
     various bytecode enhancement implementations (used for transparent lazy
     loading/unit of work support)
@@ -63,9 +60,6 @@ he
 
   * {{{./webserver/index.html}webserver}} module, providing the ability to run
     Isis webapps under a webserver instance (Jetty)
-
-  * {{{./remoting/index.html}remoting}} module, acting as a parent to the
-    modules that provide support for client/server deployments
 
 
 -->
