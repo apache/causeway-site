@@ -2,49 +2,28 @@ Title: Deployment Types and Component Defaults
 
 The `deploymentType` configuration setting is used to specify whether Isis is running in development mode or production mode (similar to Apache Wicket's concept of the application's [configuration type](http://ci.apache.org/projects/wicket/apidocs/6.0.x/org/apache/wicket/Application.html#getConfigurationType()).
 
-The most thing aspect of configuration that varies by `deploymentType` is whether actions annotated with [@Exploration](./recognized-annotations/Exploration.html) and [@Prototype](./recognized-annotations/Prototype.html) are visible.  It is also used to determine the default component to use (for security and objectstore) if not explicitly specified.
+The most notable thing that varies by `deploymentType` is simply whether actions annotated with [@Prototype](./recognized-annotations/Prototype.html) are visible.
 
-> The `deploymentType` design is perhaps overly complex; we hope to simplify in the future.
-
-## Deployment Types and Deployment Categories
-
-Each `deploymentType` list has a corresponding `deploymentCategory`, and it is this that determines whether `@Exploration` and `@Prototype` actions are visible.
-
-The standard list of deploymentTypes and their categories are:
+Each `deploymentType` list has a corresponding `deploymentCategory`, and it is this that determines whether `@Prototype` actions are visible:
 
 <table class="table table-striped table-bordered table-condensed">
 <tr>
-<th>Deployment category</th>
 <th>Deployment types</th>
-<th><tt>@Exploration</tt> actions</th>
 <th><tt>@Prototype<tt> actions</th>
 </tr>
 <tr>
-    <td>EXPLORING</td>
-    <td>SERVER_EXPLORATION<br/>
-EXPLORATION<br/>
-UTILITY</td>
-    <td>Visible</td>
-    <td>Not visible</td>
-</tr>
-<tr>
-    <td>PROTOTYPING</td>
-    <td>SERVER_PROTOTYPE<br/>
-PROTOTYPE</td>
-    <td>Not visible</td>
+    <td>SERVER_PROTOTYPE</td>
     <td>Visible</td>
 </tr>
 <tr>
-    <td>PRODUCTION</td>
-    <td>SERVER<br/>
-UNIT_TESTING<br/>
-SINGLE_USER</td>
+    <td>UNIT_TESTING</td>
     <td>Not visible</td>
+</tr>
+<tr>
+    <td>SERVER</td>
     <td>Not visible</td>
 </tr>
 </table>
-
-It is possible for components to add their own `deploymentType`s, and the [Wicket viewer](../components/viewers/wicket/about.html) is one such component that does so.  However, every such `deploymentType` maps to precisely one of the 3 available deployment categories, and it is the category that determines action visibility.
 
 
 ## Specifying the Deployment Type in the `web.xml` file
@@ -102,45 +81,9 @@ Only `server_*`-style `deploymentType`s should be specified (it has a bearing on
 
 ## Component Defaults
 
-If a component implementation is not specified explicitly, then the default is based on the deployment category (see the [InstallerLookupDefault](https://raw.githubusercontent.com/apache/isis/master/core/runtime/src/main/java/org/apache/isis/core/runtime/installers/InstallerLookupDefault.java) class).
+If a component implementation is not specified explicitly, then the defaults are:
 
-<table class="table table-striped table-bordered table-condensed">
-<tr>
-<th>Deployment category</th>
-<th>Deployment types</th>
-<th>Authentication<br/>(if not specified)</th>
-<th>Authorization<br/>(if not specified)</th>
-<th>Object store<br/>(if not specified)</th>
-<th>Profile store<br/>(if not specified)</th>
-</tr>
-<tr>
-    <td>EXPLORING</td>
-    <td>SERVER_EXPLORATION<br/>
-EXPLORATION<br/>
-UTILITY</td>
-    <td><a href="../core/bypass-security.html">Bypass</a></td>
-    <td><a href="../core/bypass-security.html">Bypass</a></td>
-    <td><a href="../core/inmemory-objectstore.html">In-memory</a></td>
-    <td><a href="../core/inmemory-profilestore.html">In-memory</a></td>
-    </tr>
-<tr>
-    <td>PROTOTYPING</td>
-    <td>SERVER_PROTOTYPE<br/>
-PROTOTYPE</td>
-    <td><a href="../components/security/file/about.html">File-based</a></td>
-    <td><a href="../core/bypass-security.html">Bypass</a></td>
-    <td><a href="../core/inmemory-objectstore.html">In-memory</a></td>
-    <td><a href="../core/inmemory-profilestore.html">In-memory</a></td>
-</tr>
-<tr>
-    <td>PRODUCTION</td>
-    <td>SERVER<br/>
-UNIT_TESTING<br/>
-SINGLE_USER</td>
-    <td><a href="../components/security/file/about.html">File-based</a></td>
-    <td><a href="../components/security/file/about.html">File-based</a></td>
-    <td><a href="../components/objectstores/xml/about.html">XML</a></td>
-    <td><a href="../components/profilestores/xml/about.html">XML</a></td>
-</tr>
-</table>
+* authentication=[shiro](../components/security/shiro/about.html)
+* authorization=[shiro](../components/security/shiro/about.html)
+* persistor=[datanucleus](../components/objectstores/jdo/about.html)
 
