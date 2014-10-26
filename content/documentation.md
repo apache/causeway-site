@@ -334,6 +334,7 @@ JDO Objectstore
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 * [In-memory Object Store](core/inmemory-objectstore.html) [stub]
+* ['Bypass' Implementation](core/bypass-security.html) [stub]
 
 }
 
@@ -482,9 +483,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="restfulobjects-viewer">Core (Restful) Viewer</a> 
-
-<i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)), now part of Core.</i>
+## <a name="restfulobjects-viewer">Core REST API, Security, Objectstore</a> 
 
 }
 
@@ -494,91 +493,25 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 {col-md-4
 
-#### <a name="restfulobjects-viewer-about">About</a>
+#### <a name="restfulobjects-viewer-about">REST API</a> [About](components/viewers/restfulobjects/about.html)
 <p class="display:none"/>
 
-* [About](components/viewers/restfulobjects/about.html)
+<i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)).</i>
+
 * [Restful Objects Specification](http://restfulobjects.org)
 
-}
-
-{col-md-4
-
-#### <a name="restfulobjects-viewer-applib-service-impl">Applib service impl.</a>
-
-* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html)
-
-}
-
-{col-md-4
-
-#### Hints and Tips
+Hints and Tips
 
 * [Using Chrome Tools](components/viewers/restfulobjects/using-chrome-tools.html) <a href="components/viewers/restfulobjects/using-chrome-tools.html"><img src="./images/tv_show-25.png"></a>
 * [AngularJS Tips](components/viewers/restfulobjects/angularjs-tips.html)
 
 }
 
-}
-
-
-
-{row
-
-{col-md-12
-## <a name="jdo-objectstore">Core Object Store</a> [About](components/objectstores/jdo/about.html)
-
-<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
-
-}
-
-
 {col-md-4
 
-#### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
+#### <a name="security">Core Security</a> [About](components/security/shiro/about.html)
 
-* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
-* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
-* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
-
-
-}
-
-{col-md-4
-
-####  <a name="jdo-objectstore-jdo-other-hints">Other Hints</a>
-
-* [Transaction Management](components/objectstores/jdo/transaction-management.html)
-
-}
-
-{col-md-4
-
-####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
-
-
-  
-}
-
-}
-
-
-
-{row
-
-{col-md-12
-## <a name="security">Core Security</a> [About](components/security/shiro/about.html)
-
-<i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html)), now part of Core</i>
-}
-
-{col-md-4
-
-}
-
-{col-md-4
-
-#### <a name="security-shiro-configuration">Shiro Configuration</a>
+<i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html))</i>
 
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
 * [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
@@ -588,17 +521,18 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 {col-md-4
 
-#### <a name="other-core-security-implementations">Other Core Implementations</a> 
+#### <a name="jdo-objectstore">Core Object Store</a> [About](components/objectstores/jdo/about.html)
 
-* ['Bypass' Implementation](core/bypass-security.html) [stub]
+<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html))</i>
 
+* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
+* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
+* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
+* [Transaction Management](components/objectstores/jdo/transaction-management.html)
 
 }
 
-
 }
-
-
 
 
 {row
@@ -641,6 +575,7 @@ In addition, a full list of all applib services (including those that are implem
 #### <a name="isis-module-publishing">Publishing Service</a>
 
 * [API](./reference/services/publishing-service.html)
+* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) (out-of-date)
 * [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 
