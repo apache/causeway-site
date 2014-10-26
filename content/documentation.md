@@ -455,6 +455,8 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 }
 
+}
+
 
 {row
 
@@ -465,7 +467,9 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 }
 
+}
 
+{row
 
 {col-md-4
 
