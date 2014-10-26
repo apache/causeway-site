@@ -284,7 +284,7 @@ For both:
 #### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
 
 * [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
-* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
+* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html) [reference](./reference/object-lifecycle-callbacks.html)
 * [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
 * [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
 
@@ -299,20 +299,12 @@ For both:
 * [Unit Test Support](core/unittestsupport.html)
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-  
-#### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
-
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
 
 
 #### <a name="more-advanced-topics-customisation">Customisation</a>
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
-
-#### <a name="more-advanced-topics-other">Other</a>
-
-* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
-* [Value types](./reference/value-types.html)
 
 
 #### <a name="more-advanced-topics-deployment">Deployment</a>
@@ -322,8 +314,9 @@ For both:
 
 
 
-#### <a name="core-bundled-components">Other parts of core</a>
+#### <a name="core-bundled-components">Other</a>
 
+* [Value types](./reference/value-types.html) (partial support)
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 
