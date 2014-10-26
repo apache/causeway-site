@@ -187,13 +187,6 @@ Validity ("do it")
 {col-md-4
 
 
-#### <a name="how-tos-object-management">Object management</a>
-
-* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
-* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
-* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
-* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
-
 #### <a name="how-tos-drop-downs">Drop-downs &amp; defaults</a>
 
 For properties:
@@ -214,6 +207,14 @@ For both:
 * [Drop-down for limited # instances](./how-tos/how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
 * [Auto-complete (repository-based)](./how-tos/how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
 
+#### <a name="how-tos-object-management">Object management</a>
+
+* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
+* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
+* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
+* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
+
+
 }
 
 }
@@ -227,6 +228,115 @@ For both:
 
 {col-md-12
 ## <a name="more-advanced-topics">More advanced topics</a>
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+#### <a name="more-advanced-topics-business-rules">Business rules</a>
+
+* [Hide part of a title](./more-advanced-topics/how-to-hide-part-of-a-title.html)
+* [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
+* [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
+* [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
+* [Declarative validation using @MustSatisfy](./more-advanced-topics/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
+* [Hide/disable/validate per user/role](./more-advanced-topics/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
+
+#### <a name="more-advanced-topics-derived-props-colls">Derived props/colls</a>
+
+* [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
+* [Passwords](./more-advanced-topics/how-to-04-015-Password-properties-and-params.html)
+* [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
+* [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
+* [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
+* [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
+
+#### <a name="more-advanced-topics-idioms-and-patterns">Idioms and patterns</a>
+
+* [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
+* [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
+* [Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
+* [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
+* [View models](./more-advanced-topics/ViewModel.html)
+
+#### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
+
+* [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
+* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
+* [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
+* [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
+
+
+}
+
+{col-md-4
+
+#### <a name="ui-hints-names-and-descriptions">UI Overrides</a>
+
+* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
+* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
+* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
+* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
+
+#### <a name="more-advanced-topics-error-handling">Error handling</a>
+
+* [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
+* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
+
+}
+
+{col-md-4
+
+#### <a name="core-dev-support">Support for testing</a>
+<p class="display:none"/>
+
+* [Unit Test Support](core/unittestsupport.html)
+* [Integration Test Support](core/integtestsupport.html)
+* [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
+  
+#### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
+
+* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
+
+
+#### <a name="more-advanced-topics-customisation">Customisation</a>
+
+* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
+
+#### <a name="more-advanced-topics-other">Other</a>
+
+* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
+* [Value types](./reference/value-types.html)
+
+
+#### <a name="more-advanced-topics-deployment">Deployment</a>
+
+* [Externalized Configuration](./reference/externalized-configuration.html)
+* [JVM args](./reference/jvm-args.html)
+
+
+
+#### <a name="core-bundled-components">Other parts of core</a>
+
+* [Core Runtime](core/runtime.html) [stub]
+* [Webserver](core/webserver.html) [stub]
+
+}
+
+}
+
+
+{row
+
+{col-md-12
+## <a name="core-domain-services">Domain Services</a>
+
+Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
 
 }
 
@@ -252,119 +362,6 @@ Decouple business logic across modules using intra-process publish/subscribe
 
 * [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
 
-#### <a name="more-advanced-topics-idioms-and-patterns">Idioms and patterns</a>
-
-* [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
-* [Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
-* [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
-* [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
-* [View models](./more-advanced-topics/ViewModel.html)
-* [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
-
-
-}
-
-{col-md-4
-
-#### <a name="more-advanced-topics-business-rules">Business rules</a>
-
-* [Hide part of a title](./more-advanced-topics/how-to-hide-part-of-a-title.html)
-* [All members hidden](./more-advanced-topics/how-to-02-040-How-to-specify-that-none-of-an-object's-members-is-visible.html)
-* [All members unmodifiable](./more-advanced-topics/how-to-02-080-How-to-specify-that-none-of-an-object's-members-can-be-modified-or-invoked.html)
-* [Immutable object](./more-advanced-topics/how-to-02-090-How-to-specify-that-an-object-is-immutable.html)
-* [Declarative validation using @MustSatisfy](./more-advanced-topics/how-to-02-130-How-to-validate-declaratively-using-MustSatisfy.html)
-
-#### <a name="more-advanced-topics-derived-props-colls">Derived props/colls</a>
-
-* [Derived property](./more-advanced-topics/how-to-04-010-How-to-make-a-derived-property.html)
-* [Passwords](./more-advanced-topics/how-to-04-015-Password-properties-and-params.html)
-* [Derived collection](./more-advanced-topics/how-to-04-020-How-to-make-a-derived-collection.html)
-* [Inlining query-only repository action](./more-advanced-topics/how-to-04-030-How-to-inline-the-results-of-a-query-only-repository-action.html)
-* [Trigger on property change](./more-advanced-topics/how-to-04-040-How-to-trigger-other-behaviour-when-a-property-is-changed.html)
-* [Trigger on collection change](./more-advanced-topics/how-to-04-050-How-to-trigger-other-behaviour-when-an-object-is-added-or-removed.html)
-
-}
-
-{col-md-4
-
-#### <a name="more-advanced-topics-error-handling">Error handling</a>
-
-* [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
-
-
-#### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
-
-* [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
-* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
-* [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
-* [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
-* [Lazy loading](./more-advanced-topics/how-to-07-050-How-to-perform-lazy-loading.html)
-* [Dirty object tracking](./more-advanced-topics/how-to-07-060-How-to-perform-dirty-object-tracking.html)
-
-#### <a name="more-advanced-topics-permissions">Permissions</a>
-
-* [Hide/disable/validate per user/role](./more-advanced-topics/how-to-08-010-Hiding,-disabling-or-validating-for-specific-users-or-roles.html)
-* [The authorization manager](./more-advanced-topics/how-to-08-020-How-to-use-Isis-authorization-manager.html)
-
-#### <a name="more-advanced-topics-deployment">Deployment</a>
-
-* [Externalized Configuration](./reference/externalized-configuration.html)
-* [JVM args](./reference/jvm-args.html)
-
-#### <a name="more-advanced-topics-customisation">Customisation</a>
-
-* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
-
-#### <a name="more-advanced-topics-other">Other</a>
-
-* [Lifecycle callbacks](./reference/object-lifecycle-callbacks.html)
-* [Value types](./reference/value-types.html)
-
-
-#### <a name="core-dev-support">Support for testing</a>
-<p class="display:none"/>
-
-* [Unit Test Support](core/unittestsupport.html)
-* [Integration Test Support](core/integtestsupport.html)
-* [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-  
-#### <a name="more-advanced-topics-prototyping-tips">Prototyping tips</a>
-
-* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
-
-#### <a name="ui-hints-names-and-descriptions"></a>
-
-* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-
-
-#### <a name="core-bundled-components">Other parts of core</a>
-
-* [Core Runtime](core/runtime.html) [stub]
-* [Webserver](core/webserver.html) [stub]
-
-}
-
-}
-
-
-{row
-
-{col-md-12
-## <a name="core-domain-services">Core Domain Services</a>
-
-Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
-
-}
-
-}
-
-{row
-
-{col-md-4
 
 
 }
