@@ -73,35 +73,31 @@ Title: Documentation
 
 {col-md-4
 
-#### <a name="reference-config">Config</a>
-
-* [Configuration Files](./reference/configuration-files.html)
-
-#### <a name="core-modules-common">Fundamental Domain Services</a>
-
-* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
-* [ClockService](./reference/services/ClockService.html)
-
-}
-
-
-{col-md-4
-
-
-####  <a name="reference-reference">Reference</a>
+####  <a name="reference-reference">Programming Conventions</a>
 
 * [Recognized Annotations](./reference/recognized-annotations/about.html)
-* [Deployment Types](./reference/deployment-type.html)
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
 
-#### <a name="reference-supporting-features">Supporting features</a>
 
+}
+
+
+{col-md-4
+
+#### <a name="core-modules-common">DomainObjectContainer</a>
+
+* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
 * [Security](./reference/Security.html)
-* [Applib utility classes](./reference/Utility.html)
+
 
 }
 
 {col-md-4
+
+#### <a name="reference-config">Config</a>
+
+* [Deployment Types](./reference/deployment-type.html)
+* [Configuration Files](./reference/configuration-files.html)
 
 
 
@@ -302,6 +298,11 @@ Other
 {row
 
 {col-md-4
+
+#### <a name="reference-supporting-features">Supporting features</a>
+
+* [ClockService](./reference/services/ClockService.html)
+* [Applib utility classes](./reference/Utility.html)
 
 #### <a name="core-modules-common">WrapperFactory</a>
 
