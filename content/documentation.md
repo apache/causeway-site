@@ -264,13 +264,6 @@ For both:
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./more-advanced-topics/ViewModel.html)
 
-#### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
-
-* [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
-* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
-* [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
-* [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
-
 
 }
 
@@ -287,6 +280,14 @@ For both:
 
 * [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
 * [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
+
+#### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
+
+* [Initial value of property](./more-advanced-topics/how-to-07-010-How-to-set-up-the-initial-value-of-a-property-programmatically.html)
+* [Lifecycle hooks](./more-advanced-topics/how-to-07-020-How-to-insert-behaviour-into-the-object-life-cycle.html)
+* [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
+* [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
+
 
 }
 
