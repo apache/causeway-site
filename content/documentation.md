@@ -206,6 +206,8 @@ For both:
 ## <a name="user-interface">UI</a>
 }
 
+{col-md-4
+
 #### <a name="ui-hints-icons-and-titles">Icons and Titles</a>
 
 * [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
