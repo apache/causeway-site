@@ -113,63 +113,6 @@ Title: Documentation
 {row
 
 {col-md-12
-## <a name="core-domain-services">Core Domain Services</a>
-
-Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
-
-}
-
-}
-
-{row
-
-{col-md-4
-
-
-}
-
-{col-md-4
-
-#### <a name="domain-services-information-sharing">Commands/Background</a>
-
-Context in which actions invoked, infrastructure to run actions in background.
-
-* [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Background Service](./reference/services/background-service.html)
-
-
-#### <a name="domain-services-information-sharing">Information sharing</a>
-
-Co-ordinate sharing of information across multiple objects/interactions
-
-* [Scratchpad](./reference/services/scratchpad.html)
-* [Bulk.Interaction](./reference/services/bulk-interaction.html)
-* [QueryResultsCache](./reference/services/query-results-cache.html)
-
-}
-
-{col-md-4
-
-#### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
-
-* [Bookmark Service](./reference/services/bookmark-service.html)
-* [Memento Service](./reference/services/memento-service.html)
-* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
-
-####  <a name="reference-non-ui-execution">Non-UI execution</a>
-
-- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
-
-}
-
-}
-
-
-
-
-{row
-
-{col-md-12
 ## <a name="how-tos">How-tos (programming model)</a>
 
 }
@@ -254,6 +197,91 @@ For both:
 
 * [Drop-down for limited # instances](./how-tos/how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
 * [Auto-complete (repository-based)](./how-tos/how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
+
+}
+
+}
+
+
+
+{row
+
+{col-md-12
+## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html)
+}
+
+{col-md-4
+#### <a name="wicket-viewer-about">About</a>
+<p class="display:none"/>
+
+* [About](components/viewers/wicket/about.html)
+
+#### <a name="wicket-viewer-features">Features</a>
+
+* [File upload/download](components/viewers/wicket/file-upload-download.html)
+* [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
+* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
+* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
+* [Tips and workarounds](components/viewers/wicket/tips-and-workarounds.html)
+
+#### Changing Pages
+
+* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
+* [The About page](components/viewers/wicket/configuring-the-about-page.html)
+
+}
+
+{col-md-4
+
+#### <a name="how-tos-ui-hints">UI hints</a>
+
+Icons and Titles
+
+* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
+* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
+* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+
+Names and Descriptions
+
+* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
+* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
+* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
+* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
+
+#### <a name="wicket-viewer-configuration">Configuration</a>
+
+Layouts
+
+* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
+* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
+* [Static layouts](components/viewers/wicket/static-layouts.html)
+* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
+
+Other
+
+* [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
+* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
+* [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
+* [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
+
+}
+
+{col-md-4
+
+#### <a name="wicket-viewer-extensions">Customization</a>
+
+* [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
+* [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
+* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
+* [Custom pages](components/viewers/wicket/custom-pages.html)
+
+#### <a name="wicket-viewer-isisaddons">Isis Add-ons</a>
+
+* [Excel download](./components/viewers/wicket/isisaddons/isis-wicket-excel.html)
+* [Fullcalendar2](./components/viewers/wicket/isisaddons/isis-wicket-fullcalendar2.html)
+* [Gmap3](./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html) <a href="./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
+* [Wicked charts](./components/viewers/wicket/isisaddons/isis-wicket-wickedcharts.html)
 
 }
 
@@ -376,6 +404,64 @@ Decouple business logic across modules using intra-process publish/subscribe
 }
 
 }
+
+
+{row
+
+{col-md-12
+## <a name="core-domain-services">Core Domain Services</a>
+
+Commonly-used domain services to use within your app, implemented in Isis core.  Some implement API defined in the applib; see <a href="./reference/services.html">summary</a>.
+
+}
+
+}
+
+{row
+
+{col-md-4
+
+
+}
+
+{col-md-4
+
+#### <a name="domain-services-information-sharing">Commands/Background</a>
+
+Context in which actions invoked, infrastructure to run actions in background.
+
+* [Command Context](./reference/services/command-context.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Background Service](./reference/services/background-service.html)
+
+
+#### <a name="domain-services-information-sharing">Information sharing</a>
+
+Co-ordinate sharing of information across multiple objects/interactions
+
+* [Scratchpad](./reference/services/scratchpad.html)
+* [Bulk.Interaction](./reference/services/bulk-interaction.html)
+* [QueryResultsCache](./reference/services/query-results-cache.html)
+
+}
+
+{col-md-4
+
+#### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
+
+* [Bookmark Service](./reference/services/bookmark-service.html)
+* [Memento Service](./reference/services/memento-service.html)
+* [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
+
+####  <a name="reference-non-ui-execution">Non-UI execution</a>
+
+- [IsisSessionTemplate](./reference/non-ui/isis-session-template.html)
+
+}
+
+}
+
+
+
 
 
 
@@ -525,90 +611,6 @@ Decouple business logic across modules using intra-process publish/subscribe
 
 }
 
-
-
-{row
-
-{col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html)
-}
-
-{col-md-4
-#### <a name="wicket-viewer-about">About</a>
-<p class="display:none"/>
-
-* [About](components/viewers/wicket/about.html)
-
-#### <a name="wicket-viewer-features">Features</a>
-
-* [File upload/download](components/viewers/wicket/file-upload-download.html)
-* [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
-* [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
-* [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
-* [Tips and workarounds](components/viewers/wicket/tips-and-workarounds.html)
-
-#### Changing Pages
-
-* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
-* [The About page](components/viewers/wicket/configuring-the-about-page.html)
-
-}
-
-{col-md-4
-
-#### <a name="how-tos-ui-hints">UI hints</a>
-
-Icons and Titles
-
-* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
-* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
-* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
-
-Names and Descriptions
-
-* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-
-#### <a name="wicket-viewer-configuration">Configuration</a>
-
-Layouts
-
-* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
-* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
-* [Static layouts](components/viewers/wicket/static-layouts.html)
-* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
-Other
-
-* [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
-* [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
-* [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
-* [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
-
-}
-
-{col-md-4
-
-#### <a name="wicket-viewer-extensions">Customization</a>
-
-* [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
-* [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
-* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
-* [Custom pages](components/viewers/wicket/custom-pages.html)
-
-#### <a name="wicket-viewer-isisaddons">Isis Add-ons</a>
-
-* [Excel download](./components/viewers/wicket/isisaddons/isis-wicket-excel.html)
-* [Fullcalendar2](./components/viewers/wicket/isisaddons/isis-wicket-fullcalendar2.html)
-* [Gmap3](./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html) <a href="./components/viewers/wicket/isisaddons/isis-wicket-gmap3.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Wicked charts](./components/viewers/wicket/isisaddons/isis-wicket-wickedcharts.html)
-
-}
-
-}
 
 
 
