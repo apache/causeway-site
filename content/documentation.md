@@ -128,14 +128,27 @@ Title: Documentation
 * [Entity property](./how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 * [Entity collection](./how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
 * [Entity or service action](./how-tos/how-to-01-060-How-to-add-an-action-to-a-domain-entity-or-service.html)
+
+#### <a name="how-tos-ui-hints-icons">UI Hints</a>
+
+Icons and Titles
+
+* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
+* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
+* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
+
+Names and Descriptions
+
 * [Names/description of action param](./how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
-* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
 
-#### <a name="how-tos-object-management">Object management</a>
+Layout
 
-* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
-* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
-* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
+* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
+* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
+* [Static layouts](components/viewers/wicket/static-layouts.html)
+* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
+
 
 }
 
@@ -174,6 +187,13 @@ Validity ("do it")
 {col-md-4
 
 
+#### <a name="how-tos-object-management">Object management</a>
+
+* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
+* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
+* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
+* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
+
 #### <a name="how-tos-drop-downs">Drop-downs &amp; defaults</a>
 
 For properties:
@@ -199,47 +219,6 @@ For both:
 }
 
 
-
-{row
-
-{col-md-12
-## <a name="user-interface">UI</a>
-}
-
-{col-md-4
-
-#### <a name="ui-hints-icons-and-titles">Icons and Titles</a>
-
-* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
-* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
-* [Titles in tables](components/viewers/wicket/titles-in-tables.html)
-
-}
-
-{col-md-4
-
-#### <a name="ui-hints-names-and-descriptions">Names and Descriptions</a>
-
-* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
-* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
-* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
-* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
-
-}
-
-{col-md-4
-
-#### <a name="ui-hints-layout">Layout</a>
-
-* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
-* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
-* [Static layouts](components/viewers/wicket/static-layouts.html)
-* [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
-}
-
-}
 
 
 
@@ -354,6 +333,12 @@ Decouple business logic across modules using intra-process publish/subscribe
 
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
 
+#### <a name="ui-hints-names-and-descriptions"></a>
+
+* [Name/descr. of an object](./more-advanced-topics/how-to-05-010-How-to-specify-a-name-or-description-for-an-object.html)
+* [Name/descr. of a property](./more-advanced-topics/how-to-05-020-How-to-specify-a-name-or-description-for-a-property.html)
+* [Name/descr. of a collection](./more-advanced-topics/how-to-05-030-How-to-specify-a-name-or-description-for-a-collection.html)
+* [Name/descr. of an action](./more-advanced-topics/how-to-05-040-How-to-specify-names-or-description-for-an-action.html)
 
 
 #### <a name="core-bundled-components">Other parts of core</a>
