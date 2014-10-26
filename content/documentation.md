@@ -30,6 +30,7 @@ Title: Documentation
 
 * [Setting up IntelliJ](intro/getting-started/ide/intellij.html) <a href="./intro/getting-started/ide/intellij.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Setting up Eclipse](intro/getting-started/ide/eclipse.html) <a href="./intro/getting-started/ide/eclipse.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [Using Maven with DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html) (prior to 1.4.0)
 
 #### <a name="tutorials">Tutorials, screencasts</a>
 <p class="display:none"/>
@@ -182,6 +183,13 @@ Validity ("do it")
 * [Size of string properties](./how-tos/how-to-01-120-How-to-specify-the-size-of-String-properties.html)
 * [Size of string action params](./how-tos/how-to-01-130-How-to-specify-the-size-of-String-action-parameters.html)
 
+#### <a name="how-tos-object-management">Object management</a>
+
+* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
+* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
+* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
+* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
+
 }
 
 {col-md-4
@@ -207,54 +215,6 @@ For both:
 * [Drop-down for limited # instances](./how-tos/how-to-03-030-How-to-specify-that-a-class-of-objects-has-a-limited-number-of-instances.html)
 * [Auto-complete (repository-based)](./how-tos/how-to-03-040-How-to-find-an-entity-(for-an-action-parameter-or-property)-using-auto-complete.html)
 
-#### <a name="how-tos-object-management">Object management</a>
-
-* [Injecting services](./how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html)
-* [Finding objects](./how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
-* [Instantiating and persisting objects](./how-tos/how-to-09-050-How-to-use-Factories.html)
-* [Create/delete objects](./how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
-
-
-}
-
-}
-
-
-{row
-
-{col-md-12
-## <a name="jdo-objectstore">Core Object Store</a>
-
-<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
-
-}
-
-
-{col-md-4
-
-#### <a name="jdo-objectstore-about">About</a>
-<p class="display:none"/>
-
-* [About](components/objectstores/jdo/about.html)
-
-#### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
-
-* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
-* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
-* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
-* [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
-* [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
-
-####  <a name="jdo-objectstore-jdo-services">JDO services</a>
-<p class="display:none"/>
-
-* [Using the `IsisJdoSupport` service](components/objectstores/jdo/services/isisjdosupport-service.html)
-
-}
-
-{col-md-4
-
-
 ####  <a name="jdo-objectstore-jdo-mapping-hints">JDO (Mapping) Hints</a>
 <p class="display:none"/>
 
@@ -265,27 +225,10 @@ For both:
 * [Managed 1:m bidirectional relationships](components/objectstores/jdo/managed-1-to-m-relationships.html)
 * [Lazy Loading](components/objectstores/jdo/lazy-loading.html)
 
-}
-
-{col-md-4
-####  <a name="jdo-objectstore-jdoother-hints">Other Hints</a>
-
-* [Transaction Management](components/objectstores/jdo/transaction-management.html)
-* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
-* [`IsisConfigurationForJdoIntegTests`](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
-* [Using Maven with DataNucleus plugin](components/objectstores/jdo/datanucleus-and-maven.html) (prior to 1.4.0)
-
-
-####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
-
-* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
-  
-  
-}
 
 }
 
-
+}
 
 
 
@@ -366,6 +309,7 @@ For both:
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
+* [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
 
 #### <a name="more-advanced-topics-customisation">Customisation</a>
@@ -378,13 +322,18 @@ For both:
 * [Externalized Configuration](./reference/externalized-configuration.html)
 * [JVM args](./reference/jvm-args.html)
 
+JDO Objectstore
+
+* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+* [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
+* [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
 
-#### <a name="core-bundled-components">Other</a>
+#### <a name="core-bundled-components">Other Core Components</a>
 
-* [Value types](./reference/value-types.html) (partial support)
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
+* [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 
 }
 
@@ -412,6 +361,10 @@ Commonly-used domain services to use within your app, implemented in Isis core. 
 
 * [ClockService](./reference/services/ClockService.html)
 * [Applib utility classes](./reference/Utility.html)
+
+JDO Objectstore 
+
+* [IsisJdoSupport](components/objectstores/jdo/services/isisjdosupport-service.html)
 
 #### <a name="core-modules-common">WrapperFactory</a>
 
@@ -573,15 +526,53 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="security">Core Security</a>
+## <a name="jdo-objectstore">Core Object Store</a> [About](components/objectstores/jdo/about.html)
+
+<i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html)), now part of Core</i>
+
+}
+
+
+{col-md-4
+
+#### <a name="jdo-objectstore-configuration">JDO/Isis Configuration</a>
+
+* [`persistence.xml` file](components/objectstores/jdo/persistence_xml.html)
+* [Eagerly Registering Entity Types](components/objectstores/jdo/eagerly-registering-entities.html)
+* [Disabling persistence-by-reachability](components/objectstores/jdo/disabling-persistence-by-reachability.html)
+
+
+}
+
+{col-md-4
+
+####  <a name="jdo-objectstore-jdo-other-hints">Other Hints</a>
+
+* [Transaction Management](components/objectstores/jdo/transaction-management.html)
+
+}
+
+{col-md-4
+
+####  <a name="other-core-objectstore-implementations">Other Core Implementations</a>
+
+
+  
+}
+
+}
+
+
+
+{row
+
+{col-md-12
+## <a name="security">Core Security</a> [About](components/security/shiro/about.html)
 
 <i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html)), now part of Core</i>
 }
 
 {col-md-4
-#### <a name="security-shiro">Shiro Implementation</a> 
-
-* [About](components/security/shiro/about.html)
 
 }
 
@@ -801,6 +792,7 @@ Previously released but now retired
 
 #### <a name="unreleased-incomplete">Incomplete</a>
 
+* [Value types](./reference/value-types.html) (partial support)
 * [Eclipse IDE Plugin](other/eclipse-plugin.html) [stub]
 * [Maven Plugin](other/maven-plugin.html) [stub]
 
