@@ -3,6 +3,7 @@ Title: Suppressing Elements of the Representations (1.8.0-SNAPSHOT)
 > Enabling these settings makes the representations non-standard with respect to the [Restful Object spec](http://restfulobjects.org).
 > In the future the spec may be updated to allow such extensions.
 
+
 {note
 These configuration settings should be considered beta, and are likely to change in the future in response to emerging requirements
 }
