@@ -508,7 +508,7 @@ Features, configuration and UI customisation.
 
 Configuration & Customisation
 
-* [Suppressing elements of the object representation](components/viewers/restfulobjects/suppressing-elements-of-the-object-representation.html) (1.8.0-SNAPSHOT) 
+* [Suppressing elements of the representations](components/viewers/restfulobjects/suppressing-elements-of-the-representations.html) (1.8.0-SNAPSHOT) 
 * [Simplified object representation](components/viewers/restfulobjects/simplified-object-representation.html) (1.8.0-SNAPSHOT) 
 * [Custom representations](components/viewers/restfulobjects/custom-representations.html) 
 
