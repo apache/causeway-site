@@ -34,14 +34,6 @@ The API to implement is the `RepresentationService` API:
     import org.apache.isis.viewer.restfulobjects.rendering.RendererContext;
     import org.apache.isis.viewer.restfulobjects.rendering.domainobjects.*;
 
-    /**
-     * Configure the Restful Objects viewer to emit custom representations (rather than the
-     * standard representations defined in the RO spec).
-     *
-     * <p>
-     * This interface is EXPERIMENTAL and may change in the future.
-     * </p>
-     */
     public interface RepresentationService {
     
         @Programmatic
@@ -98,4 +90,4 @@ This will replace the default representation.
 
 If all that is required is a very simple representations (of objects), see [here](simplified-object-representation.html).
 
-Or, it is also possible to simply suppress certain elements; see [here](suppressing-elements-of-the-representation.html).
+Or, it is also possible to simply suppress certain elements; see [here](suppressing-elements-of-the-representations.html).
