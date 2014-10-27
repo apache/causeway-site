@@ -8,7 +8,7 @@ To force wicket tags to be NOT be stripped, use:
 
     isis.viewer.wicket.stripWicketTags=false
 
-This only applies in [exploration/prototype](../../../reference/deployment-type.html) mode.
+This only applies in [prototype](../../../reference/deployment-type.html) mode.
 
 Typically this should be added to the `viewer_wicket.properties` file (in `WEB-INF`), though you can add to `isis.properties` if you wish.
 
