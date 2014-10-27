@@ -43,7 +43,7 @@ You can then invoke this using AngularJs' `$resource` service as follows.
 
 Here the `:queryString` placeholder in the initial `$resource` constructor is expanded with a stringified version of the JSON object representing the args.  Note how the `findCustomerArgs` is the same as the `"arguments"` attribute in the original link (with a value provided instead of `null`).
 
-### Invoking a PUT or POSt link
+### Invoking a PUT or POST link
 
 > The following notes need expanding.  Contributions welcome
 

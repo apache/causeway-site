@@ -506,6 +506,12 @@ Features, configuration and UI customisation.
 
 * [Restful Objects Specification](http://restfulobjects.org)
 
+Configuration & Customisation
+
+    * [Suppressing elements of the object representation](components/viewers/restfulobjects/suppressing-elements-of-the-object-representation.html) (1.8.0-SNAPSHOT) 
+* [Simplified object representation](components/viewers/restfulobjects/simplified-object-representation.html) (1.8.0-SNAPSHOT) 
+* [Custom representations](components/viewers/restfulobjects/custom-representations.html) 
+
 Hints and Tips
 
 * [Using Chrome Tools](components/viewers/restfulobjects/using-chrome-tools.html) <a href="components/viewers/restfulobjects/using-chrome-tools.html"><img src="./images/tv_show-25.png"></a>
