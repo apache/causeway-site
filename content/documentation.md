@@ -87,8 +87,8 @@ Title: Documentation
 
 #### <a name="core-modules-common">DomainObjectContainer</a>
 
-* [DomainObjectContainer interface](./reference/DomainObjectContainer.html)
-* [Security](./reference/Security.html)
+* [DomainObjectContainer API](./reference/DomainObjectContainer.html)
+* [Users and Roles](./reference/Security.html)
 
 
 }
@@ -139,7 +139,7 @@ Icons and Titles
 * [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 
-Names and Descriptions
+Names & Descriptions
 
 * [Names/description of action param](./how-tos/how-to-01-140-How-to-specify-names-or-descriptions-for-an-action-parameter.html)
 
@@ -422,7 +422,9 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Advanced UI/Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html) [About](components/viewers/wicket/about.html)
+## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html) [About](components/viewers/wicket/about.html)
+
+Features, configuration and UI customisation.
 
 }
 
@@ -439,7 +441,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
 
-#### <a name="wicket-viewer-features">Configuration</a>
+#### <a name="wicket-viewer-configuration">Configuration</a>
 
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
@@ -450,23 +452,25 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 {col-md-4
 
-#### Changing Pages
+#### <a name="wicket-viewer-customization">Application-specific customisation</a>
 
-* [The Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
-* [The About page](components/viewers/wicket/configuring-the-about-page.html)
-
-#### <a name="wicket-viewer-extensions">Customization</a>
-
+* [Customising the Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
+* [Customising the About page](components/viewers/wicket/configuring-the-about-page.html)
 * [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
 * [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
-* [Render abstract properties in tables](components/viewers/wicket/tips-and-workarounds.html)
-* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
-* [Custom pages](components/viewers/wicket/custom-pages.html)
 
+#### <a name="wicket-viewer-customization">Tips</a>
+
+* [Render abstract properties in tables](components/viewers/wicket/tips-and-workarounds.html)
 
 }
 
 {col-md-4
+
+#### <a name="wicket-viewer-extensions">Extending the viewer</a>
+
+* [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
+* [Custom pages](components/viewers/wicket/custom-pages.html)
 
 #### <a name="wicket-viewer-isisaddons">Isis Add-ons</a>
 
