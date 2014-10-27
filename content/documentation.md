@@ -504,7 +504,10 @@ Features, configuration and UI customisation.
 
 <i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)).</i>
 
+Features
+
 * [Restful Objects Specification](http://restfulobjects.org)
+* [Pretty printing](components/viewers/restfulobjects/pretty-printing.html) (1.8.0-SNAPSHOT)
 
 Configuration & Customisation
 

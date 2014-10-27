@@ -18,6 +18,8 @@ There are also various open source icon sets for both personal and commercial us
 
 * [flaticon](http://www.flaticon.com/) - free vector icons
 
+* [Google material design](http://google.github.io/material-design-icons/) and [zip here](http://www.google.com/design/spec/resources/sticker-sheets.html#)
+
 * [batch](http://adamwhitcroft.com/batch/) (300+ icons)
 
 
