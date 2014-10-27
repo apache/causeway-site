@@ -504,6 +504,8 @@ Features, configuration and UI customisation.
 
 <i>previously released as the Restful Objects Viewer component (v[2.3.0](components/viewers/restfulobjects/release-notes/about.html)).</i>
 
+<hr/>
+
 * [Restful Objects Specification](http://restfulobjects.org)
 
 Configuration & Customisation
@@ -526,6 +528,8 @@ Hints and Tips
 
 <i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html))</i>
 
+<hr/>
+
 We strongly recommend using the [Security Isis add-on](http://github.com/isisaddons//isis-module-security), see <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
@@ -539,6 +543,8 @@ We strongly recommend using the [Security Isis add-on](http://github.com/isisadd
 #### <a name="jdo-objectstore">Core Object Store</a> [About](components/objectstores/jdo/about.html)
 
 <i>previously released as the JDO/DataNucleus Objectstore component (v[1.5.0](components/objectstores/jdo/release-notes/about.html))</i>
+
+<hr/>
 
 See also <a href="#jdo-objectstore-jdo-mapping-hints">JDO Mapping Hints</a>, <a href="#more-advanced-topics-error-handling">Error handling</a> and <a href="#more-advanced-topics-deployment">Deployment</a>, above.
 
