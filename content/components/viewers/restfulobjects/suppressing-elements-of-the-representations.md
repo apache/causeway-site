@@ -1,6 +1,11 @@
 Title: Suppressing Elements of the Representations (1.8.0-SNAPSHOT)
 
 > Enabling these settings makes the representations non-standard with respect to the [Restful Object spec](http://restfulobjects.org).
+> In the future the spec may be updated to allow such extensions.
+
+{note
+These configuration settings should be considered beta, and are likely to change in the future in response to emerging requirements
+}
 
 The representations specified by the [Restful Object spec](http://restfulobjects.org) are very rich in hypermedia 
 controls and metadata, intended to support a wide variety of possible REST clients.  However, if an application is 
@@ -29,3 +34,13 @@ where, respectively, these suppress:
 * "disabledReason" json-prop for object members (on the object representation and member detail representations)
 
 The defaults for all of these is false, meaning that the hypermedia/metadata is NOT suppressed.
+
+## Per request
+
+This is not currently supported (though may be in the future).
+
+## See also
+
+If even simpler representations (of objects) are required, see [here](simplified-object-representation.html).
+
+If complete control over all representations is required, see [here](custom-representations.html). 
