@@ -288,7 +288,7 @@ For both:
 #### <a name="more-advanced-topics-error-handling">Error handling</a>
 
 * [Raise message/errors to users](./more-advanced-topics/how-to-06-010-How-to-pass-a-messages-and-errors-back-to-the-user.html)
-* [Exception Recognizers](./reference/services/exception-recognizers.html) [Impl](components/objectstores/jdo/services/exception-recognizers-jdo.html)
+* [Exception Recognizers](./reference/services/exception-recognizers.html)
 
 #### <a name="more-advanced-topics-persistence-lifecycle">Persistence lifecycle</a>
 
