@@ -31,32 +31,10 @@ The archetype generation process will then run; it only takes a few seconds.
 
 We also maintain the archetype for the most current `-SNAPSHOT`; an app generated with this archetype will contain the latest features of Isis, but the usual caveats apply: some features still in development may be unstable.
 
-The process is almost identical to that for stable releases, however you do first need to configure your Maven instance to point to our snapshot repository (hosted on [Cloudbees](http://www.cloudbees.com).  Add the following to your `~/.m2/settings.xml` file:
-
-    <profile>
-        <id>cloudbees-snapshots</id>
-        <activation>
-            <activeByDefault>true</activeByDefault>
-        </activation>
-        <repositories>
-            <repository>
-                <id>snapshots-repo</id>
-                <url>http://repository-estatio.forge.cloudbees.com/snapshot/</url>
-                <releases>
-                    <enabled>false</enabled>
-                </releases>
-                <snapshots>
-                    <enabled>true</enabled>
-                </snapshots>
-            </repository>
-        </repositories>
-    </profile>
-
-This should be places within the <profiles> element of the file.
-
-With this done you should then be able to generate from the SNAPSHOT (note the different `archetypeVersion`):
+The process is almost identical to that for stable releases, however the `archetype:generate` goal is called with slightly different arguments:
 
     mvn archetype:generate  \
+        -D archetypeRepository=http://repository-estatio.forge.cloudbees.com/snapshot/ \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
         -D archetypeVersion=1.8.0-SNAPSHOT \
@@ -65,11 +43,16 @@ With this done you should then be able to generate from the SNAPSHOT (note the d
         -D version=1.0-SNAPSHOT \
         -B
 
-where:
+where as before:
 
 - `groupId` represents your own organization, and
 - `artifactId` is a unique identifier for this app within your organization.
 - `version` is the initial (snapshot) version of your app
+
+but also:
+
+- `archetypeRepository` specifies the location of our snapshot repo (hosted on [CloudBees](http://www.cloudbees.com)), and
+- `archetypeVersion` is the SNAPSHOT version of Isis.
 
 The archetype generation process will then run; it only takes a few seconds.
 
