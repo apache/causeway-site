@@ -5,64 +5,76 @@ Apache Isis viewers identify objects through both an icon and a [title](./how-to
 The icon can be either static and fixed - meaning it is based on the object's class - or dynamic and changing - meaning
 it can change according to the object's state.  For example, an `Order` could indicate its status (pending, shipped), or a `ToDoItem` could indicate if it is complete or not.
 
-The mechanism to locate up the icon is viewer-specific.  In the [Wicket viewer](../components/viewers/wicket/about.html) there are two mechanisms for locating an icon/image, though one applies only to static icons.
+In the [Wicket viewer](../components/viewers/wicket/about.html) there are two mechanisms for locating an icon/image, though one applies only to static icons.  The viewer searches for a viewer in the following way:
 
-If the icon is static then it is located either:
+* if the icon is dynamically specified, then it attempts to load an image file (`.png`, `.gif` or `.jpg`) from a well-known location on the classpath; else
 
-* (1.8.0-SNAPSHOT onwards) by specifying a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon 
-  for the class using either the [`@CssClassFa`](../reference/recognized-annotations/CssClassFa.html) annotation, or
-  an equivalent entry in the [.layout.json](../components/viewers/wicket/dynamic-layouts.html) file.
+* (1.8.0-SNAPSHOT onwards) if the icon is statically specified, then it:
 
-* else, provide an image file for the class, eg `ToDoItem.png`, picked up from a well-known location on the
-  classpath.
-  
-If the icon is dynamic then it is located by the second mechanism only, that is:
+    * first attempts to load a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon if defined; else
+    * otherwise attempts to load an image file (`.png`, `.gif`, `.jpeg` or `.jpg`) from a well-known location on the classpath
+    
+* if all the above fail, then a default icon is provided
 
-* provide an image file for the object, eg `ToDoItem-completed.png`, again picked up from a well-known location on 
-  the classpath.
-
-The sections below explain this in more detail.
-
-## Statically specified 'font awesome' icon
-
-The framework has a number of mechanisms to locate the image.
-By default, the framework will look for an image in the `images`
-directory (either from the classpath or from the filesystem) that has
-the same name as the object class. Multiple file extensions are searched
-for, including `.png`, `.gif` and `.jpg` (in order of preference). For
-example, fan object of type Customer it will look for `Customer.png`,
-`Customer.gif`, `Customer.jpg` etc.
-
-If the framework finds no such file, then it will work up the
-inheritance hierarchy to see if there is an icon matching the name of
-any of the super-classes, and use that instead. If no matching icon is
-found then the framework will look for an image called `default.png`,
-`default.gif` or `default.jpg` in the images directory, and if this has
-not been specified, then the framework will use its own default image
-for an icon.
-
-We strongly recommend that you adopt 'pascal case' as the convention for
-icon file names: if you have a class called OrderLine, then call the
-icon `OrderLine.png`. Actually, the framework will also recognise
-`orderline.png`, but some operating systems and deployment environments
-are case sensitive, so it is good practice to adopt an unambiguous
-convention.
-
-## Statically-specified image file
-
-
+The sections below provide explain (a) what code to add to the domain object and (b) where to put any image files on the classpath.
 
 ## Dynamically-specified image file
 
+To specify that an object should have a specific icon, implement  an `iconName()` method.  This should return the *suffix* for an icon name; this is appended to the class name
 
-
-
-Alternatively, you can use the `iconName`() method instead:
+For example, to indicate that a `com.mycompany.todoapp.dom.TodoItem` object is either complete or incomplete, use:
 
     public String iconName() {
-        return "Person";
+        return isComplete()? "complete": "notComplete";
     }
 
-This makes it easy for more than one class to use the same icon, without
-having to duplicate the image file.
+If the method returns "complete", then the viewer will look for an icon file on the classpath as follows:
 
+* first, it will search in the same package as the domain class (1.8.0-SNAPSHOT):
+
+    * com/mycompany/todoapp/dom/TodoItem-complete.png
+    * com/mycompany/todoapp/dom/TodoItem-complete.gif
+    * com/mycompany/todoapp/dom/TodoItem-complete.jpeg
+    * com/mycompany/todoapp/dom/TodoItem-complete.jpg
+    
+* failing that, it will search in the `images` package:
+
+    * images/TodoItem-complete.png
+    * images/TodoItem-complete.gif
+    * images/TodoItem-complete.jpeg
+    * images/TodoItem-complete.jpg
+
+The viewer stops searching as soon as a image file is found.
+
+## Statically-specified font awesome icon (1.8.0-SNAPSHOT)
+
+If a dynamic icon has not been specified, then the viewer will next attempt to load a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon.
+
+For this, the class needs to be annotated with the [`@CssClassFa`](../reference/recognized-annotations/CssClassFa.html) annotation:
+
+    @CssClass("fa fa-check-square-o")
+    public class TodoItem { 
+        ...
+    }
+
+## Statically-specified image file
+  
+If neither an `iconName()` nor an `@CssClassFa` annotation has been found, then the viewer will search for an image file based on the class's name.
+
+For example, a `com.mycompany.todoapp.dom.TodoItem` object will search:
+
+* first, in the same package as the domain class (1.8.0-SNAPSHOT):
+
+    * com/mycompany/todoapp/dom/TodoItem.png
+    * com/mycompany/todoapp/dom/TodoItem.gif
+    * com/mycompany/todoapp/dom/TodoItem.jpeg
+    * com/mycompany/todoapp/dom/TodoItem.jpg
+    
+* and failing that, it will search in the `images` package:
+
+    * images/TodoItem-complete.png
+    * images/TodoItem-complete.gif
+    * images/TodoItem-complete.jpeg
+    * images/TodoItem-complete.jpg
+
+So, this is basically the same algorithm as for dynamically specified icons, without the suffix specified in the `iconName()` method.
