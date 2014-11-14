@@ -59,13 +59,13 @@ We also maintain the archetype for the most current `-SNAPSHOT`; an app generate
 The process is almost identical to that for stable releases, however the `archetype:generate` goal is called with slightly different arguments:
 
     mvn archetype:generate  \
-        -D archetypeRepository=http://repository-estatio.forge.cloudbees.com/snapshot/ \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
         -D archetypeVersion=1.8.0-SNAPSHOT \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
+        -D archetypeRepository=http://repository-estatio.forge.cloudbees.com/snapshot/ \
         -B
 
 where as before:
@@ -76,8 +76,8 @@ where as before:
 
 but also:
 
-- `archetypeRepository` specifies the location of our snapshot repo (hosted on [CloudBees](http://www.cloudbees.com)), and
 - `archetypeVersion` is the SNAPSHOT version of Isis.
+- `archetypeRepository` specifies the location of our snapshot repo (hosted on [CloudBees](http://www.cloudbees.com)), and
 
 The archetype generation process will then run; it only takes a few seconds.
 
