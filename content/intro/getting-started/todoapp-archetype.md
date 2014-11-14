@@ -56,7 +56,7 @@ The archetype generation process will then run; it only takes a few seconds.
 
 We also maintain the archetype for the most current `-SNAPSHOT`; an app generated with this archetype will contain the latest features of Isis, but the usual caveats apply: some features still in development may be unstable.
 
-The process is almost identical, however you first need to configure your Maven instance to point to our snapshot repository (hosted on [Cloudbees](http://www.cloudbees.com).  Add the following to your `~/.m2/settings.xml` file:
+The process is almost identical to that for stable releases, however you do first need to configure your Maven instance to point to our snapshot repository (hosted on [Cloudbees](http://www.cloudbees.com).  Add the following to your `~/.m2/settings.xml` file:
 
     <profile>
         <id>cloudbees-snapshots</id>
