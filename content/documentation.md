@@ -447,7 +447,7 @@ Features, configuration and UI customisation.
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
-* [Showing a Theme Chooser](components/viewers/wicket/showing-a-theme-chooser.html) (1.8.0-SNAPSHOT)
+* [Showing a theme chooser](components/viewers/wicket/showing-a-theme-chooser.html) (1.8.0-SNAPSHOT)
 
 }
 
@@ -471,6 +471,7 @@ Features, configuration and UI customisation.
 
 #### <a name="wicket-viewer-extensions">Extending the viewer</a>
 
+* [Writing a custom theme](components/viewers/wicket/writing-a-custom-theme.html) (1.8.0-SNAPSHOT)
 * [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
 * [Custom pages](components/viewers/wicket/custom-pages.html)
 

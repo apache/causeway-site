@@ -11,9 +11,23 @@ This is done using the following configuration property (in `WEB-INF/viewer_wick
 
     isis.viewer.wicket.themes.showChooser=true
 
-It is also possible to limit the number themes, to some subset of those in bootswatch.  This is done using a further
+
+Example 1:
+
+<a href="images/theme-chooser/example-1.png"><img src="images/theme-chooser/example-1.png"/></a>
+
+Example 2:
+
+<a href="images/theme-chooser/example-2.png"><img src="images/theme-chooser/example-2.png"/></a>
+
+    
+It is also possible to restrict the themes shown to some subset of those in bootswatch.  This is done using a further
 property:
 
     isis.viewer.wicket.themes.enabled=bootstrap-theme,Cosmo,Flatly,Darkly,Sandstone,United
 
 where the value is the list of themes (from [bootswatch.com](http://bootswatch.com)) to be made available.
+
+
+You can also write and install a custom themes (eg to fit your company's look-n-feel/interface guidelines); see
+[here](writing-a-custom-theme.html) for further details.
