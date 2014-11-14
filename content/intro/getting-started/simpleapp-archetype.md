@@ -4,7 +4,7 @@ The quickest way to get started with Apache Isis is to run the simple archetype.
 
 If you want to see a more functionally complete example, also check out the [TodoApp archetype](todoapp-archetype.html); this will give you a good idea of what makes up a not-too-complex Isis application.  In fact, we recommend that you run both archetypes: this archetype generates a very simple application for you to refactor and extend, while the ToDo app provides to guide your own development.
 
-## Generating the App
+## Generating the App (stable release)
 
 Create a new directory, and `cd` into that directory.
 
@@ -14,6 +14,52 @@ Then run the following command:
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
         -D archetypeVersion=1.7.0 \
+        -D groupId=com.mycompany \
+        -D artifactId=myapp \
+        -D version=1.0-SNAPSHOT \
+        -B
+
+where:
+
+- `groupId` represents your own organization, and
+- `artifactId` is a unique identifier for this app within your organization.
+- `version` is the initial (snapshot) version of your app
+
+The archetype generation process will then run; it only takes a few seconds.
+
+## Generating the App (snapshot release)
+
+We also maintain the archetype for the most current `-SNAPSHOT`; an app generated with this archetype will contain the latest features of Isis, but the usual caveats that some of those features may still be unstable.
+
+The process is almost identical, however you first need to configure your Maven instance to point to our snapshot repository (hosted on [Cloudbees](http://www.cloudbees.com).  Add the following to your `~/.m2/settings.xml` file:
+
+    <profile>
+        <id>cloudbees-snapshots</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <repositories>
+            <repository>
+                <id>snapshots-repo</id>
+                <url>http://repository-estatio.forge.cloudbees.com/snapshot/</url>
+                <releases>
+                    <enabled>false</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+            </repository>
+        </repositories>
+    </profile>
+
+This should be places within the <profiles> element of the file.
+
+With this done you should then be able to generate from the SNAPSHOT (note the different `archetypeVersion`):
+
+    mvn archetype:generate  \
+        -D archetypeGroupId=org.apache.isis.archetype \
+        -D archetypeArtifactId=simpleapp-archetype \
+        -D archetypeVersion=1.8.0-SNAPSHOT \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
