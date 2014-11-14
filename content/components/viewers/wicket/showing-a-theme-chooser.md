@@ -14,11 +14,11 @@ This is done using the following configuration property (in `WEB-INF/viewer_wick
 
 Example 1:
 
-<a href="images/theme-chooser/example-1.png"><img src="images/theme-chooser/example-1.png"/></a>
+<a href="images/theme-chooser/example-1.png"><img width="720px" src="images/theme-chooser/example-1.png"/></a>
 
 Example 2:
 
-<a href="images/theme-chooser/example-2.png"><img src="images/theme-chooser/example-2.png"/></a>
+<a href="images/theme-chooser/example-2.png"><img width="720px" src="images/theme-chooser/example-2.png"/></a>
 
     
 It is also possible to restrict the themes shown to some subset of those in bootswatch.  This is done using a further
