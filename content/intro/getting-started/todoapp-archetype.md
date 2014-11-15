@@ -60,7 +60,7 @@ The process is almost identical to that for stable releases, however the `archet
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=simpleapp-archetype \
+        -D archetypeArtifactId=todoapp-archetype \
         -D archetypeVersion=1.8.0-SNAPSHOT \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
