@@ -165,7 +165,7 @@ Fixture scripts are used to setup the app into a known state.  They are great fo
  
 ## Actions
 
-Most business functionality is implemented using actions... basically a `public` method accepting domain classes and primitives as its parameter types.
+Most business functionality is implemented using actions... basically a `public` method accepting domain classes and primitives as its parameter types.  The action can return a domain entity, or a collection of entities, or a primitive/String/value, or void.  If a domain entity is returned then that object is rendered immediately; if a collection is returned then the Wicket viewer renders a table.  Such collections are sometimes called "standalone" collections.
 
 * write an action to update the domain property (originally called `SimpleObject#name`, though renamed by now)
 * use the [@Named](http://isis.apache.org/reference/recognized-annotations/Named.html) annotation to specify the name of action parameters
@@ -200,6 +200,8 @@ The semantics of an action (whether it is safe/query only, whether it is idempot
 
 ## Value properties
 
+Domain entities have state: either values (primitives, strings) or references to other entities.  In this section we explore adding some value properties
+
 * add some [value properties](http://isis.apache.org/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html); also:
   - for string properties
     - use the [@Multiline](http://isis.apache.org/reference/recognized-annotations/MultiLine.html) annotation to render a text area instead of a text box
@@ -208,7 +210,7 @@ The semantics of an action (whether it is safe/query only, whether it is idempot
   - use [bigdecimals](http://isis.apache.org/components/objectstores/jdo/mapping-bigdecimals.html) properties
   - use [blob/clobs](http://isis.apache.org/components/objectstores/jdo/mapping-blobs.html) properties
   - specify whether [optional or mandatory](http://isis.apache.org/components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
-* TODO: enums
+  - enums (eg as used in the example Todo app, see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L207) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L266)
 * update the corresponding domain service for creating new instances
   - for all non-optional properties will either need to prompt for a value, or calculate some suitable default
 * change the implementation of title, if need be
@@ -218,6 +220,8 @@ The semantics of an action (whether it is safe/query only, whether it is idempot
 
 
 ## Reference properties
+
+Domain entities can also reference other domain entities.  These references may be either scalar (single-valued) or vector (multi-valued).  In this section we focus on scalar reference properties.
 
 * add some [reference properties](http://isis.apache.org/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
 * update the corresponding domain service
@@ -230,10 +234,14 @@ The semantics of an action (whether it is safe/query only, whether it is idempot
   
 ## Usability: Defaults
 
+Quick detour: often we want to set up defaults to go with choices.  A sensible default can really improve the usability of the app.
+
 * Add [defaults](http://isis.apache.org/how-tos/how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html) for action parameters
  
 
 ## Collections  
+
+Returning back to references, Isis also supports vector (multi-valued) references to another object instances... in other words collections.  We sometimes called these "parented" collections (to distinguish from a "standalone" collection as returned from an action)
 
 * Ensure that all domain classes implement `java.lang.Comparable`
   * use the [ObjectContracts](http://isis.apache.org/reference/Utility.html) utility class to help implement `Comparable` (also `equals()`, `hashCode()`, `toString()`)
