@@ -1,5 +1,6 @@
-Apache Isis: Stop scaffolding, start coding
-================
+Title: Stop scaffolding, start coding
+
+A half-day tutorial on developing domain-driven apps using Apache Isis.
 
 ## Run the archetype
 
