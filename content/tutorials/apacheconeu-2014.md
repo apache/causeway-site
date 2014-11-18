@@ -116,7 +116,7 @@ change to:
 
 # Build a domain app
 
-The remainder of the tutorial provides guidance on building a domain application.  We'd rather you build your own app, but if you're not feeling inspired, you could have a go at building our petclinic app.  Here's the design:
+The remainder of the tutorial provides guidance on building a domain application.  We'd rather you build your own app, but if you're not feeling inspired, you could have a go at building our "petclinic" app.  Here's the design:
 
 ![](http://yuml.me/a070d071)
 
@@ -132,7 +132,9 @@ which in yuml.me's DSL is:
 Most domain objects in Apache Isis applications are persistent entities.
 
 * rename the `SimpleObject` class
-* rename the `SimpleObject` class' `name` property
+  * eg rename to `Pet`
+* if required, rename the `SimpleObject` class' `name` property
+  * for `Pet`, can leave `name` property as is
 * specify a [title](http://isis.apache.org/how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * specify an [icon](http://isis.apache.org/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * add the [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) annotation
@@ -144,12 +146,20 @@ Most domain objects in Apache Isis applications are persistent entities.
 Domain services either act as factories or repositories to entities, or (more generally) can be used to "bridge across" to other domains/bounded contexts.  Most are application-scoped, but they can also be request-scoped if required.
 
 * rename the `SimpleObjects` class
+  * eg rename to `Pets`
 * review `create` action (acting as a factory)
   - as per our [docs](http://isis.apache.org/how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
+  - rename if you wish
+    - eg `newPet(...)` or `addPet(...)`
 * review `listAll` action (acting as a repository)
   - as per our [docs](http://isis.apache.org/how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
-  - note the annotations on the corresponding domain class (originally called `SimpleObject`, though renamed by now)
+  - note the annotations on the corresponding domain class (originally called `SimpleObject`, though renamed by now, eg to `Pet`)
+  - rename if you wish
+    - eg `listPets()`
 * note the `@DomainService` annotation
+* optional: add an action to a return subset of objects
+  - use `@Query` annotation
+  - see for example the todo app, see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L93) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItems.java#L63)
 
   
 ## Fixture scripts
