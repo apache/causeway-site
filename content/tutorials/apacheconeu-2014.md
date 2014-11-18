@@ -127,7 +127,9 @@ which in yuml.me's DSL is:
 </pre>
 
 
-## Domain class
+## Domain entity
+
+Most domain objects in Apache Isis applications are persistent entities.
 
 * rename the `SimpleObject` class
 * rename the `SimpleObject` class' `name` property
@@ -138,6 +140,8 @@ which in yuml.me's DSL is:
   
 
 ## Domain service
+
+Domain services either act as factories or repositories to entities, or (more generally) can be used to "bridge across" to other domains/bounded contexts.  Most are application-scoped, but they can also be request-scoped if required.
 
 * rename the `SimpleObjects` class
 * review `create` action (acting as a factory)
@@ -318,6 +322,20 @@ which in yuml.me's DSL is:
 ## Decoupling using the Event Bus
 
 TODO
+
+
+
+* Bulk actions
+
+TODO
+
+
+## Performance tuning
+
+TODO
+
+* QueryResultsCache
+* Scratchpad Services
 
 
 
