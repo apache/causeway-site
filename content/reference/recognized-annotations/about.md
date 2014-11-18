@@ -19,7 +19,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./ActionOrder-deprecated.html">@ActionOrder</a></td>
+        <td><a href="./ActionOrder-deprecated.html" style="text-decoration: line-through;" >@ActionOrder</a></td>
         <td>UI</td>
         <td>Order of buttons and menu items representing actions.
         </td>
@@ -118,7 +118,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Debug-deprecated.html">@Debug</a></td>
+        <td><a href="./Debug-deprecated.html" style="text-decoration: line-through;" >@Debug</a></td>
         <td>UI</td>
         <td>Action only invocable in debug mode.
         </td>
@@ -174,7 +174,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Exploration-deprecated.html">@Exploration</a></td>
+        <td><a href="./Exploration-deprecated.html" style="text-decoration: line-through;" >@Exploration</a></td>
         <td>UI</td>
         <td>Action available in special 'exploration' mode.
         </td>
@@ -190,7 +190,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./FieldOrder-deprecated.html">@FieldOrder</a></td>
+        <td><a href="./FieldOrder-deprecated.html" style="text-decoration: line-through;" >@FieldOrder</a></td>
         <td>UI</td>
         <td>Order of properties and collections
         </td>
@@ -215,7 +215,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Idempotent-deprecated.html">@Idempotent</a></td>
+        <td><a href="./Idempotent-deprecated.html" style="text-decoration: line-through;" >@Idempotent</a></td>
         <td>Domain</td>
         <td>Replaced by @ActionSemantics.
         </td>
@@ -223,7 +223,7 @@ go back to: [documentation](../../documentation.html)
         <td>Y</td>
     </tr>
     <tr>
-        <td><a href="./Ignore-deprecated.html">@Ignore</a></td>
+        <td><a href="./Ignore-deprecated.html" style="text-decoration: line-through;" >@Ignore</a></td>
         <td>Domain</td>
         <td>Replaced by @Programmatic.
         </td>
@@ -405,7 +405,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsPropertyChangedEvent-deprecated.html">@PostsPropertyChangedEvent</a></td>
+        <td><a href="./PostsPropertyChangedEvent-deprecated.html" style="text-decoration: line-through;" >@PostsPropertyChangedEvent</a></td>
         <td>Domain</td>
         <td>Replaced by @PropertyInteraction
         </td>
@@ -456,7 +456,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./QueryOnly-deprecated.html">@QueryOnly</a></td>
+        <td><a href="./QueryOnly-deprecated.html" style="text-decoration: line-through;" >@QueryOnly</a></td>
         <td>Domain</td>
         <td>Replaced by @ActionSemantics.
         </td>
@@ -496,7 +496,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Resolve-deprecated.html">@Resolve</a></td>
+        <td><a href="./Resolve-deprecated.html" style="text-decoration: line-through;" >@Resolve</a></td>
         <td>UI</td>
         <td>Replaced by @Render.
         </td>

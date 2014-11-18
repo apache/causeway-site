@@ -53,7 +53,7 @@ Title: Documentation
 <p class="display:none"/>
 
 - [Downloadable Presentations](intro/resources/downloadable-presentations.html)
-- **[IDE templates**](intro/resources/editor-templates.html)** (IntelliJ and Eclipse)
+- **[IDE templates](intro/resources/editor-templates.html)** (IntelliJ and Eclipse)
 - [Icons](intro/resources/icons.html)
 - **[Cheat Sheet](intro/resources/cheat-sheet.html)**
 
