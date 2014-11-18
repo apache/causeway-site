@@ -307,10 +307,10 @@ For both:
 * [Unit Test Support](core/unittestsupport.html)
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
-* [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
 <!--
-* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
+* [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
 -->
+* [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
 * [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
 
