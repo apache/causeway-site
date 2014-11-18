@@ -148,21 +148,26 @@ Domain services either act as factories or repositories to entities, or (more ge
   - as per our [docs](http://isis.apache.org/how-tos/how-to-01-160-How-to-create-or-delete-objects-within-your-code.html)
 * review `listAll` action (acting as a repository)
   - as per our [docs](http://isis.apache.org/how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
-  - note the annotations on the corresponding domain class (`SimpleObject` above, probably renamed by now)
+  - note the annotations on the corresponding domain class (originally called `SimpleObject`, though renamed by now)
 * note the `@DomainService` annotation
 
   
 ## Fixture scripts
 
+Fixture scripts are used to setup the app into a known state.  They are great for demo's and as a time-saver when implementing a feature, and they can also be reused in automated integration tests.  We usually also have a fixture script to zap all the (non-reference) data (or some logical subset of the data)
+
 * rename the `SimpleObjectsTearDownFixture` class
-  - and update
-* create for domain classes
+  - and update to delete from the appropriate underlying database table(s)
+  - use the injected [IsisJdoSupport](http://isis.apache.org/components/objectstores/jdo/services/isisjdosupport-service.html) domain service.
+* update to create new instances of domain entity
   - inject in the corresponding domain service
 
  
 ## Actions
 
-* update the domain action (`SimpleObject#name` above, renamed by now)
+Most business functionality is implemented using actions... basically a `public` method accepting domain classes and primitives as its parameter types.
+
+* write an action to update the domain property (originally called `SimpleObject#name`, though renamed by now)
 * use the [@Named](http://isis.apache.org/reference/recognized-annotations/Named.html) annotation to specify the name of action parameters
 * use [@ActionSemantics](http://isis.apache.org/reference/recognized-annotations/ActionSemantics.html) annotation to indicate the semantics of the action (safe/query-only, idempotent or non-idempotent)
 * annotate safe action as [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) 
@@ -171,19 +176,27 @@ Domain services either act as factories or repositories to entities, or (more ge
   
 ## REST API
 
+As well as exposing the Wicket viewer, Isis also exposes a REST API (an implementation of the [Restful Objects spec](http://restfulobjects.org)).  All of the functionality of the domain object model is available through this REST API.
+
 * add Chrome extensions
   * install [Postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
   * install [JSON-View](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc?hl=en)
 * browse to Wicket viewer, install fixtures
 * browse to the http://localhost:8080/restful API
 * invoke the service to list all objects
+  * services
+  * actions
+  * invoke (invoking 0-arg actions is easy; the Restful Objects spec defines how to invoke N-arg actions)
 
-
+  
 ## Specify Action semantics
+
+The semantics of an action (whether it is safe/query only, whether it is idempotent, whether it is neither) can be specified for each action; if not specified then Isis assumes non-idempotent.  In the Wicket viewer this matters in that only query-only actions can be bookmarked or used as contributed properties/collections.  In the RESTful viewer this matters in that it determines the HTTP verb (GET, PUT or POST) that is used to invoke the action.
 
 * experiment changing [@ActionSemantics] on actions
   * note the HTTP methods exposed in the REST API change
-
+  * note whether the action is bookmarkable (assuming that it has been annotated with `@Bookmarkable`, that is).
+  
 
 ## Value properties
 
@@ -320,6 +333,8 @@ Domain services either act as factories or repositories to entities, or (more ge
 
 
 ## Decoupling using the Event Bus
+
+
 
 TODO
 
