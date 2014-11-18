@@ -136,7 +136,6 @@ Icons and Titles
 
 * [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-* [Entity icons reflecting object's state](./more-advanced-topics/how-to-05-050-How-to-specify-the-icon-for-an-individual-objects-state.html)
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 
 Names & Descriptions
@@ -308,7 +307,10 @@ For both:
 * [Unit Test Support](core/unittestsupport.html)
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
+* [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
+<!--
 * [Fixtures](./more-advanced-topics/03-Fixtures-and-SwitchUser.html) (out of date)
+-->
 * [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
 
