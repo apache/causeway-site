@@ -1,7 +1,7 @@
 Title: Stop scaffolding, start coding
 
 {note
-A half-day tutorial on developing domain-driven apps using Apache Isis.
+A half-day tutorial (at least!) on developing domain-driven apps using Apache Isis.
 }
 
 ## Run the archetype
@@ -111,6 +111,8 @@ change to:
         <module>webapp</module>
     </modules>
 
+
+<hr/>
 
 # Build a domain app
 
