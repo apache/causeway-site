@@ -148,6 +148,7 @@ go back to: [documentation](../../documentation.html)
         </td>
         <td></td>
         <td></td>
+    </tr>
     <tr>
         <td><a href="./Disabled.html">@Disabled</a></td>
         <td>UI, Domain</td>
@@ -155,6 +156,13 @@ go back to: [documentation](../../documentation.html)
             object action cannot be invoked.
         </td>
         <td>Y</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./DomainService.html">@DomainService</a></td>
+        <td>Domain</td>
+        <td>Class is a domain service (rather than an entity or view model)</td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -183,7 +191,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./Facets.html">@Facets</a></td>
-        <th>(any)</th>
+        <td>(any)</td>
         <td>Install arbitrary facets within the Isis metamodel.
         </td>
         <td></td>
@@ -249,7 +257,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./Mask.html">@Mask</a></td>
-        <th>UI/domain</th>
+        <td>UI/domain</td>
         <td>How to parse/render values (not properly supported)
         </td>
         <td></td>
@@ -390,7 +398,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./Parseable.html">@Parseable</a></td>
-        <th>UI/domain</th>
+        <td>UI/domain</td>
         <td>Indicates that a (value) class can be reconstructed from a string.
         </td>
         <td></td>
@@ -546,7 +554,7 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./ViewModel.html">@ViewModel</a></td>
         <td>Domain, Persistence</td>
-        <td>Specify that a class is a view model (rather than a persisted entity).
+        <td>Specify that a class is a view model (as opposed to an entity or domain service).
         </td>
         <td></td>
         <td></td>

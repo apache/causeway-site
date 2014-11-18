@@ -131,7 +131,9 @@ which in yuml.me's DSL is:
 * rename the `SimpleObject` class' `name` property
 * specify a [title](http://isis.apache.org/how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
 * specify an [icon](http://isis.apache.org/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
-
+* add the [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) annotation
+  * confirm is available from bookmark panel (top-left of Wicket UI)
+  
 
 ## Domain service
 
@@ -141,6 +143,7 @@ which in yuml.me's DSL is:
 * review `listAll` action (acting as a repository)
   - as per our [docs](http://isis.apache.org/how-tos/how-to-09-040-How-to-write-a-custom-repository.html)
   - note the annotations on the corresponding domain class (`SimpleObject` above, probably renamed by now)
+* note the `@DomainService` annotation
 
   
 ## Fixture scripts
@@ -224,7 +227,18 @@ which in yuml.me's DSL is:
 ## Actions (ctd)
 
 * Add domain actions to add/remove from the collection
+  * to create objects, [inject](http://isis.apache.org/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html) associated domain service
+    * generally we recommend using the `@Inject` annotation with either private or default visibility
+  * the service itself use [DomainObjectContainer]()
+* optional: add an action to clone an object  
 
+
+## Clock Service
+
+* To ensure testability, remove any dependencies on system time (eg defaults for date/time action parameters)
+  * ie calls `LocalDate.now()`
+  * instead, inject [ClockService](http://isis.apache.org/reference/services/ClockService.html) and delegate to it
+  
 
 ## Layout
 
@@ -253,83 +267,116 @@ which in yuml.me's DSL is:
 * Validate string properties or action paramters:
   - use the [@Regex](http://isis.apache.org/reference/recognized-annotations/RegEx.html) annotation to specify a pattern
   - use the [@MinLength](http://isis.apache.org/reference/recognized-annotations/MinLength.html) annotation to indicate a minimum number of characters
-* For any data type:
+* Use the `validateXxx()` supporting method on [properties](http://isis.staging.apache.org/how-tos/how-to-02-100-How-to-validate-user-input-for-a-property.html) or [action parameter](http://isis.staging.apache.org/how-tos/how-to-02-120-How-to-validate-an-action-parameter-argument.html)
+* optional: for any data type:
   - use the [@MustSatisfy](http://isis.apache.org/reference/recognized-annotations/MustSatisfy.html) annotation to specify an arbitrary constraint
-
-Use the `validateXxx()` supporting method on [properties](
-
-
-- disable
-- hide
-- vaidate
-
-
-Bookmarkable  
   
+
+## Dashboard (home page)
+
+* Add the [@HomePage](http://isis.apache.org/reference/recognized-annotations/HomePage.html) annotation to one (no more) of the domain services' no-arg actions
+
+
+## Decoupling using Contributions
+
+### Contributed Actions
+
+* Write a new domain service
+  - by convention, called "XxxContributions"
+  - annotate with `@DomainService`
+* Write an action accepting >1 args:
+  - one being a domain entity
+  - other being a primitive or String
+* For this action, add the [@NotInServiceMenu](http://isis.apache.org/reference/recognized-annotations/NotInServiceMenu.html) annotation
+  * indicates service's actions should *not* be included in the main application menu bar
+* should be rendered "as if" an action of the entity
+
   
-dashboards (home page)
+### Contributed Collections
+
+* Write a new domain service (or update the one previously)
+* Write a query-only action accepting exactly 1 arg (a domain entity)
+  - returning a collection, list or set
+* For this action:
+  * add the [@NotInServiceMenu](http://isis.apache.org/reference/recognized-annotations/NotInServiceMenu.html) annotation
+  * add the [@NotContributed(As.ACTION)](http://isis.apache.org/reference/recognized-annotations/NotContributed.html) annotation
+* should be rendered in the UI "as if" a collection of the entity
+* use `.layout.json` to position as required
+
+
+### Contributed Properties
+
+* As for contributed collections, write a new domain service with a query-only action accepting exactly 1 arg (a domain entity); except:
+  - returning a scalar value rather than a collection
+* For this action, annotate as [@NotInServiceMenu](http://isis.apache.org/reference/recognized-annotations/NotInServiceMenu.html) and [@NotContributed(As.ACTION)](http://isis.apache.org/reference/recognized-annotations/NotContributed.html)
+* should be rendered in the UI "as if" a property of the entity
+* use `.layout.json` to position as required
+
+
+## Decoupling using the Event Bus
+
+TODO
 
 
 
+## Extending the Wicket UI
+
+
+### Excel download
+
+TODO
+
+### Fullcalendar2
+
+TODO
+
+### gmap3
+
+TODO
+
+
+## Add-ons
+
+### Security
+
+TODO
+
+### Command
+
+TODO
+
+
+### Auditing
+
+TODO
+
+### Publishing
+
+TODO
 
 
 
-contributed properties/collections
+## CSS
+
+TODO
 
 
-contributed actions
+## View models
 
-
-creating objects:
-- domainobjectcontainer
-
-
-clockservice
-
-
-.layout.json
-
-CSS
-
-@HomePage
-
-
-view models
+TODO
 
 
 
-Customising the REST API
+## Integration tests
+
+TODO
 
 
+## Composite fixture scripts (a la Estatio)
+
+TODO
 
 
-wicket extensions
-- excel download
-- fullcalendar
-- gmap3
+## Customising the REST API
 
-
-add-ons
-- security
-- command
-- auditing
-- publishing
-
-
-event bus
-
-
-RESTful API
-
-
-
-
-
-composite fixture scripts (a la Estatio)
-
-
-
-
-
-integration tests
-
+TODO
