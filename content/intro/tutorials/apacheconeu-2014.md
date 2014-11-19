@@ -97,6 +97,8 @@ Then set up a launch configuration and check that you can:
   
 ## Explore codebase
 
+Apache Isis applications are organized into several Maven modules.  Within your IDE navigate to the various classes and correlate back to the generated UI:
+
 * `myapp` : parent module
 * `myapp-dom`: domain objects module
    - entity: `dom.simple.SimpleObject`
@@ -108,7 +110,10 @@ Then set up a launch configuration and check that you can:
   * (builds the WAR file)
 
 
+  
 ## Testing
+
+Testing is of course massively important, and Isis makes both unit testing and (end-to-end) integration testing easy.  Building the app from the Maven command line ("mvn clean install") will run all tests, but you should also run the tests from within the IDE.
 
 * `myapp-dom` unit tests
    - run 
@@ -123,6 +128,7 @@ Then set up a launch configuration and check that you can:
         - `myapp/integtests/target/cucumber-html-report/index.html`
     - change test in IDE, re-run (in Maven)   
 
+If you have issues with the integration tests, make sure that the domain classes have been enhanced by the DataNucleus enhancer.  (The exact mechanics depends on the IDE being used).
 
 
     
@@ -303,7 +309,7 @@ Domain entities can also reference other domain entities.  These references may 
   
 ## Usability: Defaults
 
-Quick detour: often we want to set up defaults to go with choices.  A sensible default can really improve the usability of the app.
+Quick detour: often we want to set up defaults to go with choices.  Sensible defaults for action parameters can really improve the usability of the app.
 
 * Add [defaults](http://isis.apache.org/how-tos/how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html) for action parameters
  
