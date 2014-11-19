@@ -473,38 +473,68 @@ Using the guidance in [these docs](http://isis.apache.org/reference/services/eve
 
 
 
-* Bulk actions
+* Bulk actions (and the ScratchPad)
 
 Bulk actions are actions that can be invoked on a collection of actions, that is on collections returned by invoking an action.  Actions are specified as being bulk actions using the [@Bulk](http://isis.apache.org/reference/recognized-annotations/Bulk.html) annotation.  Note that currently (1.8.0-SNAPSHOT) only no-arg actions can be specified as bulk actions.
 
-* Write a no-arg action for your domain entity 
-* Inject the [Bulk.InteractionContext](http://isis.apache.org/reference/services/bulk-interaction.html) service and use this to 
+* Write a no-arg action for your domain entity, annotate with `@Bulk`
+* Inject the [Bulk.InteractionContext](http://isis.apache.org/reference/services/bulk-interaction.html) (request-scoped) service
+* Use the `Bulk.InteractionContext` service to determine whether the action was invoked in bulk or as a regular action.
+  * return null if invoked as a bulk action; the Wicket viewer will go back to the original collection
+  * (if return non-null, then Wicket viewer will navigate to the object of the last invocation... generally not what is required)
+  
+The similar [ScratchPad](http://isis.apache.org/reference/services/scratchpad.html) (request-scoped) domain service is a good way to share information between bulk action invocations:
 
+* Inject the [ScratchPad] domain service
+* for each action, store state (eg a running total)
+* In the last invoked bulk action, perform some aggregate processing (eg calculate the average) and return
 
+ 
 
-## Performance tuning
+## Performance tuning (optional)
 
-TODO
+The [QueryResultsCache](http://isis.apache.org/reference/services/query-results-cache.html) (request-scoped) domain service allows arbitrary objects to be cached for the duration of a request.
 
-* QueryResultsCache
-* Scratchpad Services
+This can be helpful for "naive" code which would normally make the same query within a loop.  
 
+* optional: inject the `QueryResultsCache` service, invoke queries "through" the cache API
+  * remember that the service is request-scoped, so it only really makes sense to use this service for code that invokes queries within a loop
 
 
 ## Extending the Wicket UI
 
+Each element in the Wicket viewer (entity form, properties, collections, action button etc) is a component, each created by a internal API (`ComponentFactory`, described [here](http://isis.apache.org/components/viewers/wicket/customizing-the-viewer.html)).  For collections there can be multiple views, and the Wicket viewer provides a view selector drop down (top right of each collection panel).
+
+Moreover, we can add additional views.  In this section we'll explore some of these, already provided through [Isis addons](http://www.isisaddons.org/).
+
 
 ### Excel download
 
-TODO
+The [Excel download add-on](https://github.com/isisaddons/isis-wicket-excel) allows the collection to be downloaded as an Excel spreadsheet (`.xlsx`).
+
+* Use the instructions on the add-on module's README  to add in the excel download module (ie: update the POM).
+
+
 
 ### Fullcalendar2
 
-TODO
+The [Fullcalendar2 download add-on](https://github.com/isisaddons/isis-wicket-fullcalendar2) allows entities to be rendered in a full-page calendar.
+
+* Use the instructions on the add-on module's README  to add in the fullcalendar2 module (ie: update the POM).
+* on one of your entities, implement either the `CalendarEventable` interface or the (more complex) `Calendarable` interface.
+* update fixture scripts to populate any new properties
+* when the app is run, a collection of the entities should be shown within a calendar view
+
 
 ### gmap3
 
-TODO
+The [Gmap3 download add-on](https://github.com/isisaddons/isis-wicket-gmap3) allows entities that implement certain APIs to be rendered in a full-page gmap3.
+
+* Use the instructions on the add-on module's README to add in the gmap3 module (ie: update the POM).
+* on one of your entities, implement the `Locatable` interface
+* update fixture scripts to populate any new properties
+* when the app is run, a collection of the entities should be shown within a map view
+
 
 
 ## Add-ons
