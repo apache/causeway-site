@@ -581,6 +581,8 @@ unit
 
 http://isis.apache.org/core/unittestsupport.html
 
+
+
 ### Integration testing
 
 TODO
@@ -600,33 +602,13 @@ TODO
 
 
 
-# whether to show only object properties for object members
-# (on the object representation only)
-# Takes precedence over the other 'suppress' below.
-#isis.viewer.restfulobjects.objectPropertyValuesOnly=true
+http://isis.apache.org/components/viewers/restfulobjects/simplified-object-representation.html
+
+
+<pre>
 isis.viewer.restfulobjects.objectPropertyValuesOnly=true
+</pre>
 
-# whether to suppress "describedby" links.  Defaults to false.
-#isis.viewer.restfulobjects.suppressDescribedByLinks=true
-
-# whether to suppress "update" links.  Defaults to false.
-#isis.viewer.restfulobjects.suppressUpdateLink=true
-
-# whether to suppress "id" json-prop for object members.  Defaults to false.
-#isis.viewer.restfulobjects.suppressMemberId=true
-
-# whether to suppress "links" json-prop for object members
-# (on the object representation only).  Defaults to false.
-#isis.viewer.restfulobjects.suppressMemberLinks=true
-
-# whether to suppress "extensions" json-prop for object members
-# (on the object representation only).  Defaults to false.
-#isis.viewer.restfulobjects.suppressMemberExtensions=true
-
-# whether to suppress "disabledReason" json-prop for object members
-# (on the object representation only).  Defaults to false.
-#isis.viewer.restfulobjects.suppressMemberDisabledReason=true
-isis.viewer.restfulobjects.suppressMemberDisabledReason=true
 
 
 
@@ -634,6 +616,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true
 
 
 ## Exception Recognizers
+
 
 
 
