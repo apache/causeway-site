@@ -158,7 +158,7 @@ change to:
 
 
 
-# Build a domain app
+## Build a domain app
 
 The remainder of the tutorial provides guidance on building a domain application.  We'd rather you build your own app, but if you're not feeling inspired, you could have a go at building our "petclinic" app.  Here's the design:
 
