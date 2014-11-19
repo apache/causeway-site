@@ -56,15 +56,52 @@ Meanwhile, in the `BookRepository` domain service, we subscribe to the event and
 
 This design allows the `libraryMember` module to be decoupled from the `book` module.
 
-### Self Registration
+## Registering for Events
 
-A good practice for domain services is to self-register when the `EventBusService` is injected into it:
+#### 1.8.0-SNAPSHOT
 
-    private EventBusService eventBusService;
-    public void injectEventBusService(final EventBusService eventBusService) {
-        this.eventBusService = eventBusService;
-        eventBusService.register(this);
+Register for events in the `@PostConstruct` lifecycle method (and unregister in `@PreDestroy`):
+
+    @DomainService
+    public class MySubscribingDomainService {
+
+        ...
+        
+        @Programmatic
+        @PostConstruct
+        public void postConstruct() {
+            eventBusService.register(this);
+        }
+        @Programmatic
+        @PreDestroy
+        public void preDestroy() {
+            eventBusService.unregister(this);
+        }
+        
+        @javax.inject.Inject
+        private EventBusService eventBusService;
     }
+
+This works for both application-scoped and request-scoped (`@RequestScoped`) domain services.
+
+
+#### 1.7.0 and before
+
+Register for events when the `EventBusService` is injected into it:
+
+    @DomainService
+    public class MySubscribingDomainService {
+
+        ...
+        
+        private EventBusService eventBusService;
+        public void injectEventBusService(final EventBusService eventBusService) {
+            this.eventBusService = eventBusService;
+            eventBusService.register(this);
+        }
+    
+    }
+
 
     
 ### `@PostsPropertyChangedEvent`

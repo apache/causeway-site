@@ -455,8 +455,20 @@ Finally, note that the layout of contributed actions/collections/properties can 
 * use `.layout.json` to position as required
 
 
+
+
 ## Decoupling using the Event Bus
 
+Another way in which Apache Isis helps you keep your application nicely modularized is through its event bus.  Each action invocation, or property modification, can be used to generate a succession of events that allows subscribers to veto the interaction (the see it/use it/do it rules) or, if the action is allowed, to perform work prior to the execution of the action or after the execution of the action.
+
+Under the covers Isis uses the [Guava event bus](https://code.google.com/p/guava-libraries/wiki/EventBusExplained) and subscribers (always domain services) subscribe by writing methods annotated with `@com.google.common.eventbus.Subscribe` annotation.
+
+By default the events generated are `ActionInteractionEvent.Default` (for actions) and `PropertyInteractionEvent.Default` (for properties).  Subclasses of these can be specified using the [@ActionInteraction](http://isis.apache.org/reference/recognized-annotations/ActionInteraction.html) or [@PropertyInteraction](http://isis.apache.org/reference/recognized-annotations/PropertyInteraction.html).
+
+
+Using the guidance in [these docs](): 
+
+* write a domain service subscriber to 
 
 
 TODO
