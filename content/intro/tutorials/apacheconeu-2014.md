@@ -1,5 +1,7 @@
 Title: Stop scaffolding, start coding
 
+{apacheconeu2014
+
 {note
 A half-day tutorial (at least!) on developing domain-driven apps using Apache Isis.
 }
@@ -112,7 +114,6 @@ change to:
     </modules>
 
 
-<hr/>
 
 # Build a domain app
 
@@ -447,3 +448,5 @@ TODO
 ## Customising the REST API
 
 TODO
+
+}
