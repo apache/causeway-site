@@ -35,14 +35,15 @@ The types of objects that are supported by the `MementoService` are implementati
 
 In the case of the default implementation provided by the core framework, the types supported are:
 
-* `String`
-* `boolean, `Boolean`
-* `byte`, `Byte`
-* `short`, `Short`
-* `int`, `Integer`
-* `long`, `Long`
-* `float`, `Float`
-* `double`, `Double`
+* `java.lang.String`
+* `java.lang.Boolean`, `boolean`
+* `java.lang.Byte`, `byte`
+* `java.lang.Short`, `short`
+* `java.lang.Integer`, `int`
+* `java.lang.Long`, `long`
+* `java.lang.Float`, `float`
+* `java.lang.Double`, `double`
+* `java.lang.Character`, `char`
 * `java.math.BigDecimal`
 * `java.math.BigInteger`
 * `org.joda.time.LocalDate`

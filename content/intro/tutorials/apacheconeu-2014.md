@@ -344,23 +344,24 @@ The Wicket UI doesn't allow collections to be modified (added to/removed from). 
 
   
   
-## Clock Service
+## CSS UI Hints
 
-To ensure testability, there should be no dependencies on system time, for example usage of `LocalDate.now()`.  Instead the domain objects should delegate to the provided `ClockService`.
+(In 1.8.0-SNAPSHOT), CSS classes can be associated with any class member (property, collection, action).  But for actions in particular:
+- the bootstrap "btn" CSS classes can be used using [@CssClass](http://isis.apache.org/reference/recognized-annotations/CssClass.html) annotation
+- the [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/) icons can be used using the [@CssClassFa](http://isis.apache.org/reference/recognized-annotations/CssClassFa.html) annotation
 
-* remove any dependencies on system time (eg defaults for date/time action parameters)
-  * inject [ClockService](http://isis.apache.org/reference/services/ClockService.html)
-  * call `ClockService.now()` etc where required.
-  
+It's also possible to use Font Awesome icons for the [domain object icon](http://isis.apache.org/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html).
 
-  
-  
+So:
+- for some of the actions of your domain services or entities, annotate using `@CssClass` or `@CssClassFa`.
+
+
+
 ## Dynamic Layout
 
-Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named`, `@LabelAt` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
+Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named`, `@LabelAt`, `@CssClass` and `@CssClassFa` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
 
-* Delete the `@MemberOrder` and `@MemberGroupLayout` annotations and instead specify layout hints using a [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file.
-
+* Delete the various hint annotations and instead specify layout hints using a [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file.
 
 
 
@@ -398,7 +399,6 @@ Or, more pithily: "see it, use it, do it"
   - use the [@MustSatisfy](http://isis.apache.org/reference/recognized-annotations/MustSatisfy.html) annotation to specify an arbitrary constraint
   
 
-
   
   
 ## Home page
@@ -410,6 +410,17 @@ The Wicket UI will automatically invoke the "home page" action, if available.  T
 
 
 
+## Clock Service
+
+To ensure testability, there should be no dependencies on system time, for example usage of `LocalDate.now()`.  Instead the domain objects should delegate to the provided `ClockService`.
+
+* remove any dependencies on system time (eg defaults for date/time action parameters)
+  * inject [ClockService](http://isis.apache.org/reference/services/ClockService.html)
+  * call `ClockService.now()` etc where required.
+  
+
+  
+  
 ## Decoupling using Contributions
 
 One of Isis' most powerful features is the ability for the UI to combine functionality from domain services into the representation of an entity.  The effect is similar to traits or mix-ins in other languages, however the "mixing in" is done at runtime, within the Isis metamodel.  In Isis' terminology, we say that the domain service action is contributed to the entity.
@@ -453,7 +464,6 @@ Finally, note that the layout of contributed actions/collections/properties can 
 * For this action, annotate as [@NotInServiceMenu](http://isis.apache.org/reference/recognized-annotations/NotInServiceMenu.html) and [@NotContributed(As.ACTION)](http://isis.apache.org/reference/recognized-annotations/NotContributed.html)
 * should be rendered in the UI "as if" a property of the entity
 * use `.layout.json` to position as required
-
 
 
 
@@ -547,31 +557,79 @@ In addition to providing Wicket viewer extensions, [Isis addons](http://www.isis
 
 
 
-
-## CSS
-
-TODO
-
-
 ## View models
 
+In most cases users can accomplish the business operations they need by invoking actions directly on domain entities.  For some high-volume or specialized uses cases, though, there may be a requirement to bring together data or functionality that spans several entities.
+
+Also, if using Isis' REST API then the REST client may be a native application (on a smartphone or tablet, say) that is deployed by a third party.  In these cases exposing the entities directly would be inadvisable because a refactoring of the domain entity would change the REST API and probably break that REST client.
+
+To support these use cases, Isis therefore allows you to write a [view model](http://isis.apache.org/reference/recognized-annotations/ViewModel.html), either by annotating the class with [@ViewModel](http://isis.apache.org/reference/recognized-annotations/ViewModel.html) or (for more control) by implementing the `ViewModel` interface.
+
+
 TODO
 
 
+## Testing
 
-## Integration tests
+Up to this point we've been introducing the features of Isis and building out our domain application, but with little regard to testing.  Time to fix that.
+
+### Unit testing
+
+TODO
+
+unit
+
+http://isis.apache.org/core/unittestsupport.html
+
+### Integration testing
 
 TODO
 
+http://isis.apache.org/core/integtestsupport.html
 
-## Composite fixture scripts (a la Estatio)
+http://isis.apache.org/reference/services/wrapper-factory.html
 
-TODO
+
+reuse the fixture scripts
+
 
 
 ## Customising the REST API
 
 TODO
+
+
+
+# whether to show only object properties for object members
+# (on the object representation only)
+# Takes precedence over the other 'suppress' below.
+#isis.viewer.restfulobjects.objectPropertyValuesOnly=true
+isis.viewer.restfulobjects.objectPropertyValuesOnly=true
+
+# whether to suppress "describedby" links.  Defaults to false.
+#isis.viewer.restfulobjects.suppressDescribedByLinks=true
+
+# whether to suppress "update" links.  Defaults to false.
+#isis.viewer.restfulobjects.suppressUpdateLink=true
+
+# whether to suppress "id" json-prop for object members.  Defaults to false.
+#isis.viewer.restfulobjects.suppressMemberId=true
+
+# whether to suppress "links" json-prop for object members
+# (on the object representation only).  Defaults to false.
+#isis.viewer.restfulobjects.suppressMemberLinks=true
+
+# whether to suppress "extensions" json-prop for object members
+# (on the object representation only).  Defaults to false.
+#isis.viewer.restfulobjects.suppressMemberExtensions=true
+
+# whether to suppress "disabledReason" json-prop for object members
+# (on the object representation only).  Defaults to false.
+#isis.viewer.restfulobjects.suppressMemberDisabledReason=true
+isis.viewer.restfulobjects.suppressMemberDisabledReason=true
+
+
+
 
 
 
@@ -582,6 +640,10 @@ TODO
 ## Configuring to use an external database
 
 TODO
+
+update `persistor.properties`
+
+
 
 
 }
