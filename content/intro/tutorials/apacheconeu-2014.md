@@ -537,24 +537,14 @@ The [Gmap3 download add-on](https://github.com/isisaddons/isis-wicket-gmap3) all
 
 
 
-## Add-ons
+## Add-on modules (optional)
 
-### Security
+In addition to providing Wicket viewer extensions, [Isis addons](http://www.isisaddons.org/) also has a large number of modules.  These address such cross-cutting concerns as security, command (profiling), auditing and publishing.
 
-TODO
+* (optional): follow the [security module](https://github.com/isisaddons/isis-module-security) README or [screencast](http://youtu.be/bj8735nBRR4)
+* (optional): follow the [command module](https://github.com/isisaddons/isis-module-command) README or [screencast](http://youtu.be/g01tK58MxJ8)
+* (optional): follow the [auditing module](https://github.com/isisaddons/isis-module-audit) README or (the same) [screencast](http://youtu.be/g01tK58MxJ8)
 
-### Command
-
-TODO
-
-
-### Auditing
-
-TODO
-
-### Publishing
-
-TODO
 
 
 
