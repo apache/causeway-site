@@ -1,5 +1,10 @@
 Title: Tutorials
 
+## Stop Scaffolding, Start Coding
+
+This [tutorial](apacheconeu-2014.html) was originally put together for Apache Con Europe 2014.
+
+
 ## RRRADDD!!! Really Ridiculously Rapid Application Development (Domain-Driven)
 
 ### 2012 edition
@@ -17,3 +22,4 @@ At [Oredev 2013](http://oredev.org/2013) Dan delivered a [presentation](http://o
 
 To support that presentation, there is a [github project](https://github.com/danhaywood/rrraddd-isis-131), set up to run against Isis v1.3.1.  You can run throug the README of that project, or just do a `git checkout` for each of the various tags (22 in all!)
 
+There's also an [updated version](https://github.com/danhaywood/isis-tutorial-140) that runs against Isis v1.4.0.

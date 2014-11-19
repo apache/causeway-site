@@ -182,6 +182,7 @@ Most business functionality is implemented using actions... basically a `public`
 * use [@ActionSemantics](http://isis.apache.org/reference/recognized-annotations/ActionSemantics.html) annotation to indicate the semantics of the action (safe/query-only, idempotent or non-idempotent)
 * annotate safe action as [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) 
   * confirm is available from bookmark panel (top-left of Wicket UI)
+* optional: add an action to clone an object  
   
   
 ## REST API
@@ -261,30 +262,43 @@ Returning back to references, Isis also supports vector (multi-valued) reference
 * optional: Use the [@SortedBy](http://isis.apache.org/reference/recognized-annotations/SortedBy.html) annotation to specify a different comparator than the natural ordering
 
 
-## Actions (ctd)
+## Actions and Collections
+
+The Wicket UI doesn't allow collections to be modified (added to/removed from).  However, we can easily write actions to accomplish the same.  Moreover, these actions can provide some additional business logic.  For example: it probably shouldn't be possible to add an object twice into a collection, so it should not be presented in the list of choices/autoComplete; conversely, only those objects in the collection should be offered as choices to be removed.
 
 * Add domain actions to add/remove from the collection
   * to create objects, [inject](http://isis.apache.org/how-tos/how-to-01-150-How-to-inject-services-into-a-domain-entity-or-other-service.html) associated domain service
     * generally we recommend using the `@Inject` annotation with either private or default visibility
-  * the service itself use [DomainObjectContainer]()
-* optional: add an action to clone an object  
+  * the service itself should use [DomainObjectContainer](http://isis.apache.org/reference/DomainObjectContainer.html)
+* Use the [@MemberOrder](http://isis.apache.org/reference/recognized-annotations/MemberOrder.html) annotation to associate an action with a property or with a collection
+  * set the `name` attribute
 
 
 ## Clock Service
 
-* To ensure testability, remove any dependencies on system time (eg defaults for date/time action parameters)
-  * ie calls `LocalDate.now()`
-  * instead, inject [ClockService](http://isis.apache.org/reference/services/ClockService.html) and delegate to it
+To ensure testability, there should be no dependencies on system time, for example usage of `LocalDate.now()`.  Instead the domain objects should delegate to the provided `ClockService`.
+
+* remove any dependencies on system time (eg defaults for date/time action parameters)
+  * inject [ClockService](http://isis.apache.org/reference/services/ClockService.html)
+  * call `ClockService.now()` etc where required.
   
 
-## Layout
+## Dynamic Layout
 
-* Use the [@MemberOrder](http://isis.apache.org/reference/recognized-annotations/MemberOrder.html) annotation to associate an action with a property or with a collection
-  * set the `name` attribute
-* Delete the `@MemberOrder` annotations and use the associated [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file to specify layout hints instead
+Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
+
+* Delete the `@MemberOrder` and `@MemberGroupLayout` annotations and instead specify layout hints using a [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file.
 
 
 ## Business rules
+
+Apache Isis excels for domains where there are complex business rules to enforce.  The UI tries not to constrain the user from navigating around freely, however the domain objects nevertheless ensure that they cannot change into an invalid state.  Such rules can be enforced either declaratively (using annotations) or imperatively (using code).  The objects can do this in one of three ways:
+
+- visibility: preventing the user from even seeing a property/collection/action
+- usability: allowing the user to view a property/collection/action but not allowing the user to change it
+- validity: allowing the user to modify the property/invoke the action, but validating that the new value/action arguments are correct before hand.
+
+Or, more pithily: "see it, use it, do it"
 
 ### See it!
 

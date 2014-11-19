@@ -37,6 +37,7 @@ Title: Documentation
 
 - **[Screencasts](intro/tutorials/screencasts.html)** <a href="intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 - [Tutorials](intro/tutorials/tutorials.html)
+- **[ApacheCon EU 2014](intro/tutorials/apacheconeu-2014.html)**
 
 }
 
