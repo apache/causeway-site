@@ -93,11 +93,8 @@ This refactoring will be worthwhile provided that enough of the orders being pro
 
 ### Register the Service
 
-Register this service like any other service, in `isis.properties`, eg:
+The `QueryResultsCache` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
-    isis.services=...,\
-                  org.apache.isis.applib.services.queryresultscache.QueryResultsCache,\
-                  ...
 
 
 ### Related Services

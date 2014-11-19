@@ -36,11 +36,10 @@ The API for the service is:
 
 ## Implementations
 
-A simple implementation of the service that writes to stderr, is available, useful for debugging:
+For 1.7.0+, please see the [Isis addon audit](http://github.com/isisaddons/isis-module-audit) module.
 
-* `org.apache.isis.applib.services.audit.AuditingService3$Stderr`
+If you just want to debug (writing to stderr), you can instead configure `org.apache.isis.applib.services.audit.AuditingService3$Stderr`
 
-An alternative implementation, that persists audit records to a database, is the [JDO Publishing Service](../../components/objectstores/jdo/services/publishing-service-jdo.html).   This implementation is only supported when the the [JDO objectstore](../../components/objectstores/jdo/about.html) is configured.
 
 ## Usage
 
@@ -73,11 +72,7 @@ If the key is not present in `isis.properties`, then objects are not audited by 
 
 ## Register the Service
 
-Register like any other service in `isis.properties`.  For example, if using the [JDO auditing implementation](../../components/objectstores/jdo/services/auditing-service-jdo.html) then it would be:
-
-    isis.services=...,\
-                  org.apache.isis.objectstore.jdo.applib.service.audit.AuditingServiceJdo,\
-                  ...
+See the [Isis addon audit](http://github.com/isisaddons/isis-module-audit) module for details.
 
 
 ### Related Services

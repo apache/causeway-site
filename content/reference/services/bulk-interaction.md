@@ -56,12 +56,7 @@ the [quickstart app](../../intro/getting-started/quickstart-archetype.html):
 
 ### Registering the Service
 
-The `Bulk.InteractionContext` is a concrete class, so can be registered directly
-as a service in `isis.properties`:
-
-    isis.services=...,\
-                  org.apache.isis.applib.annotation.Bulk.InteractionContext,\
-                  ...
+The `Bulk.InteractionContext` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
 
 ### Unit testing support

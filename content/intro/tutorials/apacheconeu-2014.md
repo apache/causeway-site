@@ -465,19 +465,21 @@ Under the covers Isis uses the [Guava event bus](https://code.google.com/p/guava
 
 By default the events generated are `ActionInteractionEvent.Default` (for actions) and `PropertyInteractionEvent.Default` (for properties).  Subclasses of these can be specified using the [@ActionInteraction](http://isis.apache.org/reference/recognized-annotations/ActionInteraction.html) or [@PropertyInteraction](http://isis.apache.org/reference/recognized-annotations/PropertyInteraction.html).
 
+Using the guidance in [these docs](http://isis.apache.org/reference/services/event-bus-service.html): 
 
-Using the guidance in [these docs](): 
-
-* write a domain service subscriber to 
-
-
-TODO
+* write a domain service subscriber to subscribe to events
+* use the domain service to perform log events
+* use the domain service to veto actions (hide/disable or validate)
 
 
 
 * Bulk actions
 
-TODO
+Bulk actions are actions that can be invoked on a collection of actions, that is on collections returned by invoking an action.  Actions are specified as being bulk actions using the [@Bulk](http://isis.apache.org/reference/recognized-annotations/Bulk.html) annotation.  Note that currently (1.8.0-SNAPSHOT) only no-arg actions can be specified as bulk actions.
+
+* Write a no-arg action for your domain entity 
+* Inject the [Bulk.InteractionContext](http://isis.apache.org/reference/services/bulk-interaction.html) service and use this to 
+
 
 
 ## Performance tuning
@@ -550,6 +552,11 @@ TODO
 ## Customising the REST API
 
 TODO
+
+
+
+## Exception Recognizers
+
 
 
 ## Configuring to use an external database

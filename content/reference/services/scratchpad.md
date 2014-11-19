@@ -80,11 +80,8 @@ If using the Wicket viewer, the `ToDoItemBulkUpdate` view model returned from th
 
 ### Registering the Service
 
-Register the concrete implementation (from isis-core) in `isis.properties`:
+The `Scratchpad` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
-    isis.services=...,\
-                  org.apache.isis.applib.services.scratchpad.Scratchpad,\
-                  ...
 
 ### Related Services
 

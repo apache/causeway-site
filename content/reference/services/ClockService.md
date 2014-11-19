@@ -27,11 +27,7 @@ The time provided by this default implementation is based on the system clock.
 
 ## Registering the Service
 
-Register like any other service in `isis.properties`:
-
-    isis.services=...,\
-                  org.apache.isis.applib.services.clock.ClockService,\
-                  ...
+The `ClockService` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
 ## Alternative Implementations
 
@@ -52,5 +48,11 @@ Setting up a different implementation therefore requires eagerly instantiating a
         }
     }
             
-You can then register this service - instead of the default `ClockService` - in the usual way within `isis.properties`
+You can then register this service in the usual way within `isis.properties`:
 
+    isis.services=...,\
+                  com.mycompany.myapp.NntpClockService,\
+                  ...
+
+Because this is a subclass of `ClockService` it will be used instead of the default implementation.
+                  

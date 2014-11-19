@@ -104,7 +104,7 @@ Register for events when the `EventBusService` is injected into it:
 
 
     
-### `@PostsPropertyChangedEvent`
+### `@PostsPropertyChangedEvent` (deprecated)
 
 Isis will also automatically publish (post) an `org.apache.isis.applib.services.eventbus.PropertyChangedEvent` event object on any property that is annotated with [`@PostsPropertyChangedEvent](../recognized-annotations/PostsPropertyChangedEvent.html).  This can remove some boilerplate.
 
@@ -115,32 +115,17 @@ Isis will also automatically publish (post) an `org.apache.isis.applib.services.
 <li>This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.</li>
 </ul>
 </blockquote>
+
     
 ## Implementation
 
-Isis provides two implementations.  The default implementation (provided by core runtime) is:
+Isis provides the `org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo` as a default implementation of the `EventBusService` API.
 
-    org.apache.isis.core.runtime.services.eventbus.EventBusServiceDefault
-
-However, if the JDO objectstore is in use, then its implementation *must* be used instead:
-
-    org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo
 
 ## Register the Service
 
-Register this service like any other service, in `isis.properties`
+The `EventBusServiceJdo` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
-If the JDO Objectstore is *not* in use, use:
-
-    isis.services=...,\
-                  org.apache.isis.core.runtime.services.eventbus.EventBusServiceDefault,\
-                  ...
-
-If the JDO ObjectStore *is* in use, use:
-
-    isis.services=...,\
-                  org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo,\
-                  ...
 
 ## Related Services
 
