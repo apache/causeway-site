@@ -3,10 +3,26 @@ Title: Stop scaffolding, start coding
 {apacheconeu2014
 
 {note
-A half-day tutorial (at least!) on developing domain-driven apps using Apache Isis.
+A half-day tutorial on developing domain-driven apps using Apache Isis.
 }
 
+Actually, you could spend a full day working through this tutorial if you wanted to... so pick and choose the bits that look interesting.
+
+
+
+## Prerequisites
+
+You'll need:
+
+* Java 7 JDK
+* [Maven](http://maven.apache.org/) 3.2.x
+* an IDE, such as [Eclipse](http://www.eclipse.org/) or [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+
+
+
 ## Run the archetype
+
+As per the [Isis website](http://isis.apache.org/intro/getting-started/simpleapp-archetype.html), run the simpleapp archetype to build an empty Isis application.  We recommend you use the snapshot release:
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
@@ -17,48 +33,67 @@ A half-day tutorial (at least!) on developing domain-driven apps using Apache Is
         -D version=1.0-SNAPSHOT \
         -D archetypeRepository=http://repository-estatio.forge.cloudbees.com/snapshot/ \
         -B
-    
+
+
+        
 ## Build and run
+
+Start off by building the app from the command line:
 
     cd myapp
     mvn clean install
-
-then
+    
+Once that's built then run using:
 
     mvn antrun:run -P self-host
 
-or alternatively
+
+A splash screen should appear offering to start up the app.  Go ahead and start; the web browser should be opened at http://localhost:8080
+
+
+Alternatively, you can run using the mvn-jetty-plugin:
 
     mvn jetty:run    
-    
+     
+This will accomplish the same thing, though the webapp is mounted at a slightly different URL
+
+
+
 
 ## Using the app
 
-* install fixtures
-* list all
-* create new
-* list all    
+Navigate to the Wicket UI (eg http://localhost:8080/wicket), and login (sven/pass).
 
-        
-##Dev environment
+Once at the home page:
+
+* install fixtures
+* list all objects
+* create a new object
+* list all objects
+
+Go back to the splash screen, and quit the app.  Note that the database runs in-memory (using HSQLDB) so any data created will be lost between runs.
+
+   
+   
+## Dev environment
 
 Set up an IDE and import the project to be able to run and debug the app
 
-#### Configure
+To configure the app, use these links:
 
 * IDE:
   * configure [IntelliJ](http://isis.apache.org/intro/getting-started/ide/intellij.html), import app
   * configure [Eclipse](http://isis.apache.org/intro/getting-started/ide/eclipse.html), import app
 * Set up IDE [editor templates](http://isis.apache.org/intro/resources/editor-templates.html)
 
-
-#### Run
+Then set up a launch configuration and check that you can:
 
 * Run the app from within the IDE
-* Run with different deploymentTypes, note whether `@Prototype` actions are available or not:
+* Run the app in debug mode
+* Run with different deploymentTypes; note whether `@Prototype` actions are available or not:
   - `--type SERVER_PROTOTYPE`
   - `--type SERVER`
-
+  
   
 ## Explore codebase
 
@@ -88,10 +123,12 @@ Set up an IDE and import the project to be able to run and debug the app
         - `myapp/integtests/target/cucumber-html-report/index.html`
     - change test in IDE, re-run (in Maven)   
 
+
+
     
 ## Prototyping
 
-Exclude the `integtests` module.
+Although testing is important, in this tutorial we want to concentrate on how to write features and to iterate quickly.  So for now, exclude the `integtests` module.  Later on in the tutorial we'll add the tests back in so you can learn how to write automated tests for the features of your app.
 
 In the parent `pom.xml`:
 
@@ -121,16 +158,18 @@ The remainder of the tutorial provides guidance on building a domain application
 
 ![](http://yuml.me/a070d071)
 
-which in yuml.me's DSL is:
+In case you're interested, the above diagram was built using [yuml.me][http://yuml.me]; the DSL that defines this diagram is:
 <pre>
 [Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote()]->[Pet|-name:String;-species:PetSpecies]
 [Owner|-firstName:String;-lastName:String]<0..1-0..*>[Pet]
 </pre>
 
 
+
+
 ## Domain entity
 
-Most domain objects in Apache Isis applications are persistent entities.
+Most domain objects in Apache Isis applications are persistent entities.  In the simpleapp archetype the `SimpleObject` is an example.  We can start developing our app by refactoring that class:
 
 * rename the `SimpleObject` class
   * eg rename to `Pet`
@@ -140,11 +179,14 @@ Most domain objects in Apache Isis applications are persistent entities.
 * specify an [icon](http://isis.apache.org/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
 * add the [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) annotation
   * confirm is available from bookmark panel (top-left of Wicket UI)
+
   
 
 ## Domain service
 
-Domain services either act as factories or repositories to entities, or (more generally) can be used to "bridge across" to other domains/bounded contexts.  Most are application-scoped, but they can also be request-scoped if required.
+Domain services often act as factories or repositories to entities; more generally can be used to "bridge across" to other domains/bounded contexts.  Most are application-scoped, but they can also be request-scoped if required.
+
+In the simpleapp archetype the `SimpleObjects` service is a factory/repository for the original `SimpleObject` entity.  For our app it therefore makes sense to refactor that class into our own first service:
 
 * rename the `SimpleObjects` class
   * eg rename to `Pets`
@@ -162,6 +204,8 @@ Domain services either act as factories or repositories to entities, or (more ge
   - use `@Query` annotation
   - see for example the todo app, see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L93) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItems.java#L63)
 
+
+
   
 ## Fixture scripts
 
@@ -170,10 +214,13 @@ Fixture scripts are used to setup the app into a known state.  They are great fo
 * rename the `SimpleObjectsTearDownFixture` class
   - and update to delete from the appropriate underlying database table(s)
   - use the injected [IsisJdoSupport](http://isis.apache.org/components/objectstores/jdo/services/isisjdosupport-service.html) domain service.
-* update to create new instances of domain entity
-  - inject in the corresponding domain service
+* refactor/rename the fixture script classes that create instances your entity:
+  - `SimpleObjectsFixture`, which sets up a set of objects for a given scenario
+  - `SimpleObjectForFoo`, `SimpleObjectForBar`, `SimpleObjectForBaz` and their superclass, `SimpleObjectAbstract`
+  - note that domain services can be injected into these fixture scripts
 
- 
+
+  
 ## Actions
 
 Most business functionality is implemented using actions... basically a `public` method accepting domain classes and primitives as its parameter types.  The action can return a domain entity, or a collection of entities, or a primitive/String/value, or void.  If a domain entity is returned then that object is rendered immediately; if a collection is returned then the Wicket viewer renders a table.  Such collections are sometimes called "standalone" collections.
@@ -184,6 +231,7 @@ Most business functionality is implemented using actions... basically a `public`
 * annotate safe action as [@Bookmarkable](http://isis.apache.org/reference/recognized-annotations/Bookmarkable.html) 
   * confirm is available from bookmark panel (top-left of Wicket UI)
 * optional: add an action to clone an object  
+
   
   
 ## REST API
@@ -200,6 +248,8 @@ As well as exposing the Wicket viewer, Isis also exposes a REST API (an implemen
   * actions
   * invoke (invoking 0-arg actions is easy; the Restful Objects spec defines how to invoke N-arg actions)
 
+
+
   
 ## Specify Action semantics
 
@@ -208,6 +258,8 @@ The semantics of an action (whether it is safe/query only, whether it is idempot
 * experiment changing [@ActionSemantics] on actions
   * note the HTTP methods exposed in the REST API change
   * note whether the action is bookmarkable (assuming that it has been annotated with `@Bookmarkable`, that is).
+
+
   
 
 ## Value properties
@@ -229,6 +281,9 @@ Domain entities have state: either values (primitives, strings) or references to
   - might prefer to use [@Title](http://isis.apache.org/reference/recognized-annotations/Title.html) annotation rather than the `title()` method
 * [order the properties](http://isis.apache.org/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html) using the [@MemberOrder](http://isis.apache.org/reference/recognized-annotations/MemberOrder.html) annotation and [@MemberGroupLayout](http://isis.apache.org/reference/recognized-annotations/MemberGroupLayout.html) annotation
   * see also this [static layouts](http://isis.apache.org/components/viewers/wicket/static-layouts.html) documentation
+* use the [@LabelAt](http://isis.apache.org/reference/recognized-annotations/about.html) annotation to position property labels either to the LEFT, TOP or NONE
+
+
 
 
 ## Reference properties
@@ -243,6 +298,8 @@ Domain entities can also reference other domain entities.  These references may 
   * use a `choicesXxx()` supporting method on [property](http://isis.apache.org/how-tos/how-to-03-010-How-to-specify-a-set-of-choices-for-a-property.html) or [action param](http://isis.apache.org/how-tos/how-to-03-020-How-to-specify-a-set-of-choices-for-an-action-parameter.html)
   * use an `autoCompleteXxx()` supporting method on [property](http://isis.apache.org/how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html) or [action param](http://isis.apache.org/how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html)
 
+
+
   
 ## Usability: Defaults
 
@@ -251,6 +308,8 @@ Quick detour: often we want to set up defaults to go with choices.  A sensible d
 * Add [defaults](http://isis.apache.org/how-tos/how-to-03-050-How-to-specify-default-values-for-an-action-parameter.html) for action parameters
  
 
+ 
+ 
 ## Collections  
 
 Returning back to references, Isis also supports vector (multi-valued) references to another object instances... in other words collections.  We sometimes called these "parented" collections (to distinguish from a "standalone" collection as returned from an action)
@@ -261,6 +320,8 @@ Returning back to references, Isis also supports vector (multi-valued) reference
   * Use `SortedSet` as the class
 * Use the @Render (http://isis.apache.org/reference/recognized-annotations/Render.html) annotation to indicate if the collection should be visible or hidden by default
 * optional: Use the [@SortedBy](http://isis.apache.org/reference/recognized-annotations/SortedBy.html) annotation to specify a different comparator than the natural ordering
+
+
 
 
 ## Actions and Collections
@@ -275,6 +336,8 @@ The Wicket UI doesn't allow collections to be modified (added to/removed from). 
   * set the `name` attribute
 
 
+  
+  
 ## Clock Service
 
 To ensure testability, there should be no dependencies on system time, for example usage of `LocalDate.now()`.  Instead the domain objects should delegate to the provided `ClockService`.
@@ -284,11 +347,15 @@ To ensure testability, there should be no dependencies on system time, for examp
   * call `ClockService.now()` etc where required.
   
 
+  
+  
 ## Dynamic Layout
 
-Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
+Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named`, `@LabelAt` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
 
 * Delete the `@MemberOrder` and `@MemberGroupLayout` annotations and instead specify layout hints using a [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file.
+
+
 
 
 ## Business rules
@@ -301,20 +368,21 @@ Apache Isis excels for domains where there are complex business rules to enforce
 
 Or, more pithily: "see it, use it, do it"
 
-### See it!
+
+#### See it!
 
 * Use the [@Hidden](http://isis.apache.org/reference/recognized-annotations/Hidden.html) annotation to make properties/collections/actions invisible
   * the [@Programmatic](http://isis.apache.org/reference/recognized-annotations/Programmatic.html) annotation can also be used and in many cases is to be preferred; the difference is that the latter means the member is not part of the Isis metamodel.
 * Use the `hideXxx()` supporting method on [properties](http://isis.apache.org/how-tos/how-to-02-010-How-to-hide-a-property.html), [collections](http://isis.apache.org/how-tos/how-to-02-020-How-to-hide-a-collection.html) and [actions](http://isis.apache.org/how-tos/how-to-02-030-How-to-hide-an-action.html) to make a property/collection/action invisible according to some imperative rule
 
   
-### Use it!
+#### Use it!
 
 * Use the [@Disabled](http://isis.apache.org/reference/recognized-annotations/Disabled.html) annotation to make properties read-only/actions non-invokable ('greyed out')
 * Use the `disabledXxx()` supporting method on [properties](http://isis.apache.org/how-tos/how-to-02-050-How-to-prevent-a-property-from-being-modified.html) and [actions](http://isis.apache.org/how-tos/how-to-02-070-How-to-prevent-an-action-from-being-invoked.html) to make a property/action disabled according to some imperative rule
 
 
-### Do it!
+#### Do it!
 
 * Validate string properties or action paramters:
   - use the [@Regex](http://isis.apache.org/reference/recognized-annotations/RegEx.html) annotation to specify a pattern
@@ -324,14 +392,30 @@ Or, more pithily: "see it, use it, do it"
   - use the [@MustSatisfy](http://isis.apache.org/reference/recognized-annotations/MustSatisfy.html) annotation to specify an arbitrary constraint
   
 
-## Dashboard (home page)
+
+  
+  
+## Home page
+
+The Wicket UI will automatically invoke the "home page" action, if available.  This is a no-arg action of one of the domain services, that can return either an object (eg representing the current user) or a standalone action.
 
 * Add the [@HomePage](http://isis.apache.org/reference/recognized-annotations/HomePage.html) annotation to one (no more) of the domain services' no-arg actions
 
 
+
+
 ## Decoupling using Contributions
 
-### Contributed Actions
+One of Isis' most powerful features is the ability for the UI to combine functionality from domain services into the representation of an entity.  The effect is similar to traits or mix-ins in other languages, however the "mixing in" is done at runtime, within the Isis metamodel.  In Isis' terminology, we say that the domain service action is contributed to the entity.
+
+Any action of a domain service that has a domain entity type as one of its parameter types will (by default) be contributed.  If the service action takes more than one argument, or does not have safe semantics, then it will be contributed as an entity action.  If the service action has precisely one parameter type (that of the entity) and has safe semantics then it will be contributed either as a collection or as a property (dependent on whether it returns a collection of a scalar).
+
+Why are contributions so useful?  Because the service action will match not on the entity type, but also on any of the entity's supertypes (all the way up to `java.lang.Object`).  That means that you can apply the [dependency inversion principle](http://en.wikipedia.org/wiki/Dependency_inversion_principle) to ensure that the modules of your application have acyclic dependencies; but in the UI it can still appear as if there are bidirectional dependencies between those modules.  The lack of bidirectional dependencies can help save your app degrading into a [big ball of mud](http://en.wikipedia.org/wiki/Big_ball_of_mud).
+
+Finally, note that the layout of contributed actions/collections/properties can be specified using the `.layout.json` file (and it is highly recommended that you do so).
+
+
+#### Contributed Actions
 
 * Write a new domain service
   - by convention, called "XxxContributions"
@@ -344,7 +428,7 @@ Or, more pithily: "see it, use it, do it"
 * should be rendered "as if" an action of the entity
 
   
-### Contributed Collections
+#### Contributed Collections
 
 * Write a new domain service (or update the one previously)
 * Write a query-only action accepting exactly 1 arg (a domain entity)
@@ -356,7 +440,7 @@ Or, more pithily: "see it, use it, do it"
 * use `.layout.json` to position as required
 
 
-### Contributed Properties
+#### Contributed Properties
 
 * As for contributed collections, write a new domain service with a query-only action accepting exactly 1 arg (a domain entity); except:
   - returning a scalar value rather than a collection
@@ -448,5 +532,11 @@ TODO
 ## Customising the REST API
 
 TODO
+
+
+## Configuring to use an external database
+
+TODO
+
 
 }
