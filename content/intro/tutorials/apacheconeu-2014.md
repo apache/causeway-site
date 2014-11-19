@@ -565,8 +565,8 @@ Also, if using Isis' REST API then the REST client may be a native application (
 
 To support these use cases, Isis therefore allows you to write a [view model](http://isis.apache.org/reference/recognized-annotations/ViewModel.html), either by annotating the class with [@ViewModel](http://isis.apache.org/reference/recognized-annotations/ViewModel.html) or (for more control) by implementing the `ViewModel` interface.
 
-
-TODO
+* build a view model summarizing the state of the app (a "dashboard")
+* write a new `@HomePage` domain service action returning this dashboard viewmodel (and remove the `@HomePage` annotation from any other domain service if present)
 
 
 ## Testing
