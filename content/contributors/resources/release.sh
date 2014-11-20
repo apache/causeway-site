@@ -15,8 +15,8 @@ fi
 # release candidate
 
 # export ISISART=isis
-# export ISISREL=1.6.0
-# export ISISDEV=1.7.0-SNAPSHOT
+# export ISISREL=1.8.0
+# export ISISDEV=1.9.0-SNAPSHOT
 # export ISISRC=RC1
 
 read -p "ISISART? ($ISISART): " xISISART

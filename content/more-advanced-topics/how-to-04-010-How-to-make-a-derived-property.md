@@ -7,7 +7,8 @@ Most derived properties are read-only, their value being derived from
 other information available to the object.
 
 Omitting the mutator (`setXxx()`) method for a property indicates both
-that the field is derived, and is not be persisted.
+that the field is derived, and is not be persisted.  It should however
+be annotated with Isis' `@NotPersisted` annotation.
 
 For example:
 
@@ -16,6 +17,7 @@ For example:
         ...
 
         // this is the derived property
+        @NotPersisted
         public Employee getManager() {
             if (getDepartment() == null) { return null; }
             return getDepartment().getManager();
@@ -27,8 +29,8 @@ For example:
 
 A derived property can be made updateable (in that it takes the provided
 value and does something sensible with it) simply providing a setter that
-has been annotated using both Isis' `@NotPersisted` attribute and JDO's
-`@javax.jdo.annotations.NotPersistent` attribute:
+has been annotated using both Isis' `@NotPersisted` annotation and JDO's
+`@javax.jdo.annotations.NotPersistent` annotation:
 
     public class Employee {
         public Department getDepartment() { ... }
@@ -44,7 +46,7 @@ has been annotated using both Isis' `@NotPersisted` attribute and JDO's
         ...
     }
 
-### Read-write using a modify method (1.7.0-SNAPSHOT onwards)
+### Read-write using a modify method (1.7.0 onwards)
 
 Alternatively, a derived property can be made updateable by providing a 
 `modifyXxx()` supporting method:

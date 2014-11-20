@@ -2,17 +2,19 @@ How to make a derived collection
 --------------------------------
 
 Collections can be derived by omitting the mutator (the same way as
-properties<!--, see ?-->).
+[properties](./how-to-04-010-How-to-make-a-derived-property.html).  It should however be annotated with Isis' `@NotPersisted` annotation.
 
 For example:
 
     public class Department {
+
         // Standard collection
-        private List<Employee> employees = new ArrayList<Employee>();
-        public List<Employee> getEmployees() { ... }
-        private void setEmployees(List<Employee>) { ... }
+        private SortedSet<Employee> employees = new TreeSet<Employee>();
+        public SortedSet<Employee> getEmployees() { ... }
+        private void setEmployees(SortedSet<Employee>) { ... }
 
         // Derived collection
+        @NotPersisted
         public List<Employee> getTerminatedEmployees() {
             List<Employee> terminatedEmployees = new ArrayList<Employee>();
             for(Employee e: employees) {
