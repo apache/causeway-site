@@ -44,8 +44,5 @@ The core framework provides a default implementation of this API:
 
 ## Register the Service
 
-Register this service in `isis.properties`, eg:
+The `BookmarkServiceDefault` is automatically registered with the framework (it is annotated with `@DomainService`) so there is no need to explicitly register the service.
 
-    isis.services=...,\
-                  org.apache.isis.core.metamodel.services.bookmarks.BookmarkServiceDefault,\
-                  ...
