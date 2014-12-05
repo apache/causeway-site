@@ -269,6 +269,7 @@ For both:
 * [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
 * [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
 * [Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* [How to suppress contributions](./more-advanced-topics/how-to-suppress-contributions.html)
 * [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
 * [View models](./more-advanced-topics/ViewModel.html)

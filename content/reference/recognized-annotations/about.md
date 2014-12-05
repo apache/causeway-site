@@ -7,7 +7,7 @@ go back to: [documentation](../../documentation.html)
         <th>Annotation</th>
         <th>Layer</th>
         <th>Purpose</th>
-        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a> ?</th>
+        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
     </tr>
     <tr>
         <td><a href="./ActionInteraction.html">@ActionInteraction</a></td>
@@ -19,7 +19,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionLayout.html">@ActionLayout</a></td>
         <td>UI</td>
         <td>User interface hints for actions</td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./ActionSemantics.html">@ActionSemantics</a></td>
@@ -70,7 +70,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ClassLayout.html">@ClassLayout</a></td>
         <td>UI</td>
         <td>User interface hints for domain classes</td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./CollectionInteraction.html">@CollectionInteraction</a></td>
@@ -83,7 +83,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./CollectionLayout.html">@CollectionLayout</a></td>
         <td>UI</td>
         <td>User interface hints for collections</td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Command.html">@Command</a></td>
@@ -109,7 +109,7 @@ go back to: [documentation](../../documentation.html)
         <td>UI, Domain</td>
         <td>Object property cannot be edited, an object collection cannot be added to/removed from, or an
             object action cannot be invoked.</td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./DomainService.html">@DomainService</a></td>
@@ -160,18 +160,6 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PropertyLayout.html">@PropertyLayout</a></td>
-        <td>UI</td>
-        <td>Layout hints for a property (currently: its label position either to top or the left).</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./ParameterLayout.html">@PropertyLayout</a></td>
-        <td>UI</td>
-        <td>Layout hints for an action parameter (currently: its label position either to top or the left).</td>
-        <td></td>
-    </tr>
-    <tr>
         <td><a href="./MaxLength.html">@MaxLength</a></td>
         <td>Domain</td>
         <td>Maximum length of a property value (strings).</td>
@@ -181,14 +169,14 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./MemberGroupLayout.html">@MemberGroupLayout</a></td>
         <td>UI</td>
         <td>Grouping of properties into groups, and organizing of properties, collections into columns.</td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./MemberOrder.html">@MemberOrder</a></td>
         <td>UI</td>
         <td>Ordering of properties, collections and actions, and also associating actions with either a property or a
             collection.</td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./MinLength.html">@MinLength</a></td>
@@ -244,9 +232,21 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
+        <td><a href="./ParameterLayout.html">@PropertyLayout</a></td>
+        <td>UI</td>
+        <td>Layout hints for an action parameter (currently: its label position either to top or the left).</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
         <td><a href="./Parseable.html">@Parseable</a></td>
         <td>UI/domain</td>
         <td>Indicates that a (value) class can be reconstructed from a string.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./Programmatic.html">@Programmatic</a></td>
+        <td>Domain</td>
+        <td>Ignore a public method, excluded from the Isis metamodel.</td>
         <td></td>
     </tr>
     <tr>
@@ -257,10 +257,10 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Programmatic.html">@Programmatic</a></td>
-        <td>Domain</td>
-        <td>Ignore a public method, excluded from the Isis metamodel.</td>
-        <td></td>
+        <td><a href="./PropertyLayout.html">@PropertyLayout</a></td>
+        <td>UI</td>
+        <td>Layout hints for a property (currently: its label position either to top or the left).</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./PublishedAction.html">@PublishedAction</a></td>
@@ -308,14 +308,12 @@ go back to: [documentation](../../documentation.html)
         <td>Specify that a class has value-semantics.
         </td>
         <td></td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./ViewModel.html">@ViewModel</a></td>
         <td>Domain, Persistence</td>
         <td>Specify that a class is a view model (as opposed to an entity or domain service).
         </td>
-        <td></td>
         <td></td>
     </tr>
 </table>
@@ -328,10 +326,10 @@ go back to: [documentation](../../documentation.html)
         <th>Annotation</th>
         <th>Layer</th>
         <th>Purpose</th>
-        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a> ?</th>
+        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
     </tr>
     <tr>
-        <td><a href="./ActionOrder-deprecated.html" style="text-decoration: line-through;" >@ActionOrder</a></td>
+        <td><a href="./ActionOrder-deprecated.html" >@ActionOrder</a></td>
         <td>UI</td>
         <td>Order of buttons and menu items representing actions.
         </td>
@@ -343,7 +341,7 @@ go back to: [documentation](../../documentation.html)
         <td>Allow visual representation of individual objects or object members layout to be customized by application-specific CSS.
         <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
         </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./CssClassFa-deprecated.html">@CssClassFa</a></td>
@@ -351,10 +349,10 @@ go back to: [documentation](../../documentation.html)
         <td>So that font awesome icons can be applied to action buttons/menu items and optionally as an object icon.
         <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ActionLayout</code>
         </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./Debug-deprecated.html" style="text-decoration: line-through;" >@Debug</a></td>
+        <td><a href="./Debug-deprecated.html" >@Debug</a></td>
         <td>UI</td>
         <td>Action only invocable in debug mode.
         </td>
@@ -366,10 +364,10 @@ go back to: [documentation](../../documentation.html)
         <td>Provide a longer description/tool-tip of an object or object member.
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
         </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./Exploration-deprecated.html" style="text-decoration: line-through;" >@Exploration</a></td>
+        <td><a href="./Exploration-deprecated.html"  >@Exploration</a></td>
         <td>UI</td>
         <td>Action available in special 'exploration' mode.
             <br/>Deprecated in 1.8.0-SNAPSHOT
@@ -377,7 +375,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./FieldOrder-deprecated.html" style="text-decoration: line-through;" >@FieldOrder</a></td>
+        <td><a href="./FieldOrder-deprecated.html"  >@FieldOrder</a></td>
         <td>UI</td>
         <td>Order of properties and collections
         </td>
@@ -389,17 +387,17 @@ go back to: [documentation](../../documentation.html)
         <td>Object member is not visible.
             <br/>Deprecated in 1.8.0-SNAPSHOT
         </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./Idempotent-deprecated.html" style="text-decoration: line-through;" >@Idempotent</a></td>
+        <td><a href="./Idempotent-deprecated.html"  >@Idempotent</a></td>
         <td>Domain</td>
         <td>Replaced by @ActionSemantics.
         </td>
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Ignore-deprecated.html" style="text-decoration: line-through;" >@Ignore</a></td>
+        <td><a href="./Ignore-deprecated.html"  >@Ignore</a></td>
         <td>Domain</td>
         <td>Replaced by @Programmatic.
         </td>
@@ -416,7 +414,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./MemberGroups-deprecated.html">@MemberGroups</a></td>
         <td>UI</td>
         <td>Replaced by @MemberGroupLayout</td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./MultiLine-deprecated.html">@MultiLine</a></td>
@@ -424,7 +422,7 @@ go back to: [documentation](../../documentation.html)
         <td>Render string property over multiple lines (a textarea rather than a textbox).
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@PropertyLayout</code> and <code>@ParameterLayout</code>
             </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Named-deprecated.html">@Named</a></td>
@@ -432,14 +430,14 @@ go back to: [documentation](../../documentation.html)
         <td>Override name inferred from class. Required for parameter names (prior to Java8).
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
             </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Paged-deprecated.html">@Paged</a></td>
         <td>UI</td>
         <td>Number of instances to display in tables representing (parented or standalone) collections.
             <br/>Deprecated in 1.8.0-SNAPSHOT</td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Plural-deprecated.html">@Plural</a></td>
@@ -450,12 +448,11 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsPropertyChangedEvent-deprecated.html" style="text-decoration: line-through;" >@PostsPropertyChangedEvent</a></td>
+        <td><a href="./PostsPropertyChangedEvent-deprecated.html"  >@PostsPropertyChangedEvent</a></td>
         <td>Domain</td>
         <td>Replaced by @PropertyInteraction
         </td>
         <td></td>
-        <td>Y</td>
     </tr>
     <tr>
         <td><a href="./Prototype-deprecated.html">@Prototype</a></td>
@@ -463,10 +460,10 @@ go back to: [documentation](../../documentation.html)
         <td>Indicates that an action should only be visible in 'prototype' mode.
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ActionLayout</code>
             </td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./QueryOnly-deprecated.html" style="text-decoration: line-through;" >@QueryOnly</a></td>
+        <td><a href="./QueryOnly-deprecated.html"  >@QueryOnly</a></td>
         <td>Domain</td>
         <td>Replaced by @ActionSemantics.</td>
         <td></td>
@@ -477,7 +474,7 @@ go back to: [documentation](../../documentation.html)
         <td>Eagerly (or lazily) render the contents of a collection.
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@CollectionLayout</code>
             </td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./RenderedAsDayBefore-deprecated.html">@RenderedAsDayBefore</a></td>
@@ -488,10 +485,10 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Resolve-deprecated.html" style="text-decoration: line-through;" >@Resolve</a></td>
+        <td><a href="./Resolve-deprecated.html"  >@Resolve</a></td>
         <td>UI</td>
         <td>Replaced by <code>@Render</code>.</td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./SortedBy-deprecated.html">@SortedBy</a></td>
@@ -499,7 +496,7 @@ go back to: [documentation](../../documentation.html)
         <td>Display instances in collections in the order determined by the provided Comparator.
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@CollectionLayout</code>
             </td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./TypicalLength-deprecated.html">@TypicalLength</a></td>
@@ -507,6 +504,6 @@ go back to: [documentation](../../documentation.html)
         <td>The typical length of a string property, eg to determine a sensible length for a textbox.
             <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@PropertyLayout</code> and <code>@ParameterLayout</code>
         </td>
-        <td>Y</td>
+        <td>Yes</td>
     </tr>
 </table>
