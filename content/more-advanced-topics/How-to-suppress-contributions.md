@@ -22,32 +22,40 @@ The [PreferenceContributions](https://github.com/isisaddons/isis-app-kitchensink
 
 * `likes(...)` - a contributed collection to `Person`:
 
+<pre>
     @NotContributed(NotContributed.As.ACTION) // ie contributed as collection
     @NotInServiceMenu
     @ActionSemantics(ActionSemantics.Of.SAFE)
     public List<FoodStuff> likes(final Person person) { ... }
+</pre>
 
 * `firstLove(...)` - contributed property, also to `Person`
 
+<pre>
     @NotContributed(NotContributed.As.ACTION) // ie contributed as property
     @NotInServiceMenu
     @ActionSemantics(ActionSemantics.Of.SAFE)
     public FoodStuff firstLove(final Person person) { ... }
+</pre>
 
 * `addPreference(...)` - a contributed action to both `Person` and `FoodStuff`
 
+<pre>
     @NotInServiceMenu
     public Preference addPreference(
             final Person person,
             final @Named("Type") Preference.PreferenceType preferenceType,
             final FoodStuff foodStuff) { ... }
+</pre>
 
 * `removePreference(...)` - a contributed action to both `Person` and `FoodStuff`
 
+<pre>
     @NotInServiceMenu
     public Person removePreference(final Person person, final FoodStuff foodStuff) {
         final List<Preference> preferences1 = preferences.listAllPreferences();
         for (Preference preference : preferences1) { ... }
+</pre>
 
 However, although `addPreference(...)` and `removePreference(...)` *are* contributed to both `Person` and `FoodStuff`, this can be hidden using the `.layout.json` file.  Thus, in [FoodStuff,layout.json](https://github.com/isisaddons/isis-app-kitchensink/tree/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/FoodStuff.layout.json#L57-57) we have:
 
