@@ -27,15 +27,16 @@ The [PreferenceContributions](https://github.com/isisaddons/isis-app-kitchensink
 
 However, although "addPreference" and "removePreference" *are* contributed to both `Person` and `FoodStuff`, this can be hidden using the `.layout.json` file.  Thus, in [FoodStuff,layout.json](https://github.com/isisaddons/isis-app-kitchensink/tree/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/FoodStuff.layout.json#L57-57) we have:
 
-  "actions": {
-    ...
-    "removePreference": {
-      "actionLayout": {
-        "cssClass": "btn-warn",
-        "hidden": "EVERYWHERE"
+
+    "actions": {
+      ...
+      "removePreference": {
+        "actionLayout": {
+          "cssClass": "btn-warn",
+          "hidden": "EVERYWHERE"
+        }
       }
     }
-  }
 
 which means that the "removePreference" action cannot be seen when viewing a FoodStuff entity.
 
