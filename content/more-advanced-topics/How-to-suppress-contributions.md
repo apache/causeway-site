@@ -57,25 +57,52 @@ The [PreferenceContributions](https://github.com/isisaddons/isis-app-kitchensink
         for (Preference preference : preferences1) { ... }
 </pre>
 
-However, although `addPreference(...)` and `removePreference(...)` *are* contributed to both `Person` and `FoodStuff`, this can be hidden using the `.layout.json` file.  Thus, in [FoodStuff,layout.json](https://github.com/isisaddons/isis-app-kitchensink/tree/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/FoodStuff.layout.json#L57-57) we have:
+While `addPreference(...)` and `removePreference(...)` are contributed to both `Person` and `FoodStuff`, each customizes the representation of those action (and in the case of `FoodStuff`, hides one of them completely).
 
+For the `Person` entity, the actions are associated with the (contributed) `likes` collection:
 
-    "actions": {
-      ...
-      "removePreference": {
-        "actionLayout": {
-          "cssClass": "btn-warn",
-          "hidden": "EVERYWHERE"
+<img src="images/suppressing-contributions-person.png" width="800px"/>
+
+which is accomplished using this [fragment](https://github.com/isisaddons/isis-app-kitchensink/blob/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/Person.layout.json#L44-L61
+) in the `Person.layout.json` file:
+
+    "collections": {
+      "likes": {
+        "collectionLayout": {
+          "render": "EAGERLY"
+        },
+        "actions": {
+          "addPreference": {
+            "actionLayout": {
+              "named": "Add"
+            }
+          },
+          "removePreference": {
+            "actionLayout": {
+              "named": "Remove"
+            }
+          }
         }
       }
     }
 
-which means that the "removePreference" action cannot be seen when viewing a FoodStuff entity.
 
-You can see this in the screenshots below; `Person` has both actions:
-
-<img src="images/suppressing-contributions-person.png" width="800px"/>
-
-while `FoodStuff` has only one:
+For the `FoodStuff` entity meanwhile, only the `addPreference` action is made available:
 
 <img src="images/suppressing-contributions-foodstuff.png" width="800px"/>
+
+which is accomplished using this [fragment](https://github.com/isisaddons/isis-app-kitchensink/blob/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/FoodStuff.layout.json#L48-L59) in the `FoodStuff.layout.json` file: we have:
+
+    "actions": {
+      "addPreference": {
+        "actionLayout": {
+          "cssClass": "btn-success"
+        }
+      },
+      "removePreference": {
+        "actionLayout": {
+          "cssClass": "btn-warn",
+          "hidden": "EVERYWHERE" /* contributed action is hidden on one of its contributees */
+        }
+      }
+    }
