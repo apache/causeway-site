@@ -41,8 +41,8 @@ which means that the "removePreference" action cannot be seen when viewing a Foo
 
 You can see this in the screenshots below; `Person` has both actions:
 
-<img src="images/suppressing-contributions-person.png" width="400px"/>
+<img src="images/suppressing-contributions-person.png" width="600px"/>
 
 while `FoodStuff` has only one:
 
-<img src="images/suppressing-contributions-foodstuff.png" width="400px"/>
+<img src="images/suppressing-contributions-foodstuff.png" width="600px"/>
