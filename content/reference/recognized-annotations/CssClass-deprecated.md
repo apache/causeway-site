@@ -1,5 +1,7 @@
 Title: @CssClass
 
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+
 The `CssClass` annotation applies to object and also to any object member 
 (property, collection or action).  It is used by the Wicket viewer as a UI hint 
 to render specified CSS classes around the representation of the element.
@@ -50,6 +52,6 @@ Note that this (currently) only supports class members, not classes
 
 ## See also (1.8.0-SNAPSHOT)
 
-The similar [CssClassFa](./CssClassFa.html) annotation is also used as a hint 
+The similar [CssClassFa](./CssClassFa-deprecated.html) annotation is also used as a hint
 to apply CSS, but in particular to allow [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/icons/)
 to be rendered on action butotns or as the icon for classes.

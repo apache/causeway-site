@@ -1,5 +1,7 @@
 Title: @TypicalLength
 
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@PropertyLayout](./PropertyLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+
 The `@TypicalLength` annotation indicates the typical length of a
 `String` property or `String` parameter in an action. It can also be
 specified for string-based value types.

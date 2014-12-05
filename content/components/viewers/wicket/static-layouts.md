@@ -131,7 +131,7 @@ Below are sketches for the layout of the [ToDoItem](https://github.com/apache/is
 
 ## Other Annotations
 
-The [@Named](../../../reference/recognized-annotations/Named.html), [@DescribedAs](../../../reference/recognized-annotations/DescribedAs.html), [@MultiLine](../../../reference/recognized-annotations/MultiLine.html), [@TypicalLength](../../../reference/recognized-annotations/TypicalLength.html), [@Render](../../../reference/recognized-annotations/Render.html) and [@CssClass](../../../reference/recognized-annotations/CssClass.html) annotations are also all hints that can affect the UI.
+The [@Named](../../../reference/recognized-annotations/Named-deprecated.html), [@DescribedAs](../../../reference/recognized-annotations/DescribedAs-deprecated.html), [@MultiLine](../../../reference/recognized-annotations/MultiLine-deprecated.html), [@TypicalLength](../../../reference/recognized-annotations/TypicalLength-deprecated.html), [@Render](../../../reference/recognized-annotations/Render-deprecated.html) and [@CssClass](../../../reference/recognized-annotations/CssClass-deprecated.html) annotations are also all hints that can affect the UI.
 
 ## <a name="pros-and-cons">Static vs Dynamic Layouts</a>
 

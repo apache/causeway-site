@@ -1,5 +1,7 @@
 Title: @MultiLine
 
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@PropertyLayout](./PropertyLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+
 > **Support**
 >
 > Supported, though the Wicket viewer does not support the `preventWrapping` attribute.

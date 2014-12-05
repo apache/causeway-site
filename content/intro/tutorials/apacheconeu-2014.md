@@ -274,7 +274,7 @@ Domain entities have state: either values (primitives, strings) or references to
 
 * add some [value properties](http://isis.apache.org/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html); also:
   - for string properties
-    - use the [@Multiline](http://isis.apache.org/reference/recognized-annotations/MultiLine.html) annotation to render a text area instead of a text box
+    - use the [@MultiLine](http://isis.apache.org/reference/recognized-annotations/MultiLine-deprecated.html) annotation to render a text area instead of a text box
     - use the [@MaxLength](http://isis.apache.org/reference/recognized-annotations/MaxLength.html) annotation to specify the maximum number of characters allowable
     - use [joda date/time](http://isis.apache.org/components/objectstores/jdo/mapping-joda-dates.html) properties
   - use [bigdecimals](http://isis.apache.org/components/objectstores/jdo/mapping-bigdecimals.html) properties
@@ -287,7 +287,7 @@ Domain entities have state: either values (primitives, strings) or references to
   - might prefer to use [@Title](http://isis.apache.org/reference/recognized-annotations/Title.html) annotation rather than the `title()` method
 * [order the properties](http://isis.apache.org/how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html) using the [@MemberOrder](http://isis.apache.org/reference/recognized-annotations/MemberOrder.html) annotation and [@MemberGroupLayout](http://isis.apache.org/reference/recognized-annotations/MemberGroupLayout.html) annotation
   * see also this [static layouts](http://isis.apache.org/components/viewers/wicket/static-layouts.html) documentation
-* use the [@LabelAt](http://isis.apache.org/reference/recognized-annotations/about.html) annotation to position property labels either to the LEFT, TOP or NONE
+* use the [@PropertyLayout](http://isis.apache.org/reference/recognized-annotations/about.html) annotation and [@ParameterLayout](http://isis.apache.org/reference/recognized-annotations/about.html) annotation to position property/action parameter labels either to the LEFT, TOP or NONE
 
 
 
@@ -324,8 +324,8 @@ Returning back to references, Isis also supports vector (multi-valued) reference
   * use the [ObjectContracts](http://isis.apache.org/reference/Utility.html) utility class to help implement `Comparable` (also `equals()`, `hashCode()`, `toString()`)
 * Add a [one-to-many-collection](http://isis.apache.org/components/objectstores/jdo/managed-1-to-m-relationships.html) to one of the entities
   * Use `SortedSet` as the class
-* Use the @Render (http://isis.apache.org/reference/recognized-annotations/Render.html) annotation to indicate if the collection should be visible or hidden by default
-* optional: Use the [@SortedBy](http://isis.apache.org/reference/recognized-annotations/SortedBy.html) annotation to specify a different comparator than the natural ordering
+* Use the @Render (http://isis.apache.org/reference/recognized-annotations/Render-deprecated.html) annotation to indicate if the collection should be visible or hidden by default
+* optional: Use the [@SortedBy](http://isis.apache.org/reference/recognized-annotations/SortedBy-deprecated.html) annotation to specify a different comparator than the natural ordering
 
 
 
@@ -348,7 +348,7 @@ The Wicket UI doesn't allow collections to be modified (added to/removed from). 
 
 (In 1.8.0-SNAPSHOT), CSS classes can be associated with any class member (property, collection, action).  But for actions in particular:
 - the bootstrap "btn" CSS classes can be used using [@CssClass](http://isis.apache.org/reference/recognized-annotations/CssClass.html) annotation
-- the [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/) icons can be used using the [@CssClassFa](http://isis.apache.org/reference/recognized-annotations/CssClassFa.html) annotation
+- the [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/) icons can be used using the [@CssClassFa](http://isis.apache.org/reference/recognized-annotations/CssClassFa-deprecated.html) annotation
 
 It's also possible to use Font Awesome icons for the [domain object icon](http://isis.apache.org/how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html).
 
@@ -359,7 +359,7 @@ So:
 
 ## Dynamic Layout
 
-Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named`, `@LabelAt`, `@CssClass` and `@CssClassFa` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
+Up to this point we've been using annotations (`@MemberOrder`, `@MemberGroupLayout`, `@Named`, `@PropertyLayout`, `@ParameterLayout`, `@CssClass` and `@CssClassFa` and so on) for UI hints.  However, the feedback loop is not good: it requires us stopping the app, editing the code, recompiling and running again.  So instead, all these UI hints (and more) can be specified dynamically, using a corresponding `.layout.json` file.  If edited while the app is running, it will be reloaded automatically (in IntelliJ, use Run>Reload Changed Classes):
 
 * Delete the various hint annotations and instead specify layout hints using a [.layout.json](http://isis.apache.org/components/viewers/wicket/dynamic-layouts.html) file.
 
@@ -378,7 +378,7 @@ Or, more pithily: "see it, use it, do it"
 
 #### See it!
 
-* Use the [@Hidden](http://isis.apache.org/reference/recognized-annotations/Hidden.html) annotation to make properties/collections/actions invisible
+* Use the [@Hidden](http://isis.apache.org/reference/recognized-annotations/Hidden-deprecated.html) annotation to make properties/collections/actions invisible
   * the [@Programmatic](http://isis.apache.org/reference/recognized-annotations/Programmatic.html) annotation can also be used and in many cases is to be preferred; the difference is that the latter means the member is not part of the Isis metamodel.
 * Use the `hideXxx()` supporting method on [properties](http://isis.apache.org/how-tos/how-to-02-010-How-to-hide-a-property.html), [collections](http://isis.apache.org/how-tos/how-to-02-020-How-to-hide-a-collection.html) and [actions](http://isis.apache.org/how-tos/how-to-02-030-How-to-hide-an-action.html) to make a property/collection/action invisible according to some imperative rule
 

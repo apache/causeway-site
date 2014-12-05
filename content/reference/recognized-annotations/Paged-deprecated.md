@@ -1,8 +1,6 @@
 Title: @Paged
 
-> **Support**
-> 
-> * Supported by: Wicket viewer; not yet supported by other viewers.
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@CollectionLayout](./CollectionLayout.html).
 
 This annotation is used to indicate that parented and/or standalone
 collections should be paginated.

@@ -1,8 +1,6 @@
 Title: @Render
 
-> **Support**
-> 
-> * Supported by: Wicket viewer; not yet supported by other viewers.
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@CollectionLayout](./CollectionLayout.html)
 
 The `@Render` annotation is a hint for properties and collections to
 indicate that a value property should be rendered lazily (rather than

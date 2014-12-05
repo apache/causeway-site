@@ -21,4 +21,4 @@ For example:
     
 #### See also
 
-See also the [@Prototype](./Prototype.html) annotation.
+See also the [@Prototype](./Prototype-deprecated.html) annotation.

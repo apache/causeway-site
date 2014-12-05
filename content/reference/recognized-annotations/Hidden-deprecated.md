@@ -1,8 +1,6 @@
 Title: @Hidden
 
-> **Support**
-> 
-> * Fully supported by: Wicket viewer; other viewers do not yet support the `where` attribute.
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  and [@ActionLayout](./ActionLayout.html).
 
 The `@Hidden` annotation indicates that the member (property, collection
 or action) to which it is applied should never be visible to the user.

@@ -50,7 +50,7 @@ The viewer stops searching as soon as a image file is found.
 
 If a dynamic icon has not been specified, then the viewer will next attempt to load a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon.
 
-For this, the class needs to be annotated with the [`@CssClassFa`](../reference/recognized-annotations/CssClassFa.html) annotation:
+For this, the class needs to be annotated with the [`@CssClassFa`](../reference/recognized-annotations/CssClassFa-deprecated.html) annotation:
 
     @CssClass("fa fa-check-square-o")
     public class TodoItem { 

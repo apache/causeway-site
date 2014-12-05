@@ -1,8 +1,6 @@
 Title: @Plural
 
-> **Support**
-> 
-> * Not supported by: Wicket viewer
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html).
 
 When the framework displays a collection of several objects it may use
 the plural form of the object type in the title. By default the plural

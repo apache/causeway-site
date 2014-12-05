@@ -4,9 +4,7 @@ Some articles and recorded material relating to either Apache Isis (or its prede
 
 2014
 
-<!--
-* Presentation, BDD Exchange: [To those whom much is given, much is expected... ](xxx) (45 min. video)
--->
+* Presentation, BDD Exchange: [To those whom much is given, much is expected... ](https://skillsmatter.com/skillscasts/5638-to-those-whom-much-is-given-much-is-expected) (45 min. video)
 * Presentation, JEEConf: [Extremely rapid application development with Apache Isis](https://www.youtube.com/watch?v=BNGUqZ6YE-M) (50 min. video)
 
 2013
