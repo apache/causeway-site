@@ -34,10 +34,10 @@ Let's see how this is done.
 
 ### Fine-tuning the existing programming model
 
-Suppose that for some reason you wanted to disable support for the `@Aggregated` annotation.  This would be done using:
+Suppose that you wanted to completely remove support for the (already deprecated) `@ActionOrder` annotation.  This would be done using:
 
 <pre>
-isis.reflector.facets.exclude=org.apache.isis.core.progmodel.facets.object.aggregated.annotation.AggregatedAnnotationFacetFactory
+isis.reflector.facets.exclude=org.apache.isis.core.metamodel.facets.object.actionorder.annotation.ActionOrderFacetAnnotationFactory
 </pre>
 
 Or, suppose you wanted to use the example ["namefile"](https://github.com/apache/isis/blob/master/mothballed/misc/metamodel/namefile/src/main/java/org/apache/isis/example/metamodel/namefile/facets/NameFileFacetFactory.java) `FacetFactory` as part of your programming conventions, use:
@@ -52,7 +52,19 @@ To include/exclude more than one `FacetFactory`, specify as a comma-separated li
 
 This [thread](http://isis.markmail.org/thread/472c3mrvcgnripst) from the users mailing list (in Apr 2014) shows a typical customization (to enable per-instance security).
 
-### Specifying a new programming model
+## Specifying a different LayoutMetadataReader
+
+While all facets can be specified using annotations, the facets that provide hints for the user interface can also be specified from a corresponding `.layout.json` file, described in more detail [here](../components/viewers/wicket/dynamic-layouts.html).  It is the role of a `LayoutMetadataReader` to read/parse such a file and create the appropriate facets.
+
+In the case of the `.layout.json` file, the implementation used in `LayoutMetadataReaderFromJson`.  This is also the default implementation.  However, an alternative implementation can be specified using:
+
+<pre>
+isis.reflector.layoutMetadataReaders=org.apache.isis.core.metamodel.layoutmetadata.json.LayoutMetadataReaderFromJson
+</pre>
+
+As of 1.8.0-SNAPSHOT there is only one implementation provided, but we anticipate other implementations in future releases.
+
+## Specifying a new programming model
 
 To specify a completely new programming model, you'll first need an  implementation of `ProgrammingModel`.  One option is to subclass from `ProgammingModelFacetsJava5`; in your subclass you could remove any `FacetFactory`s that you wanted to exclude, as well as registering your own implementations.
 
