@@ -1,6 +1,6 @@
 Title: @DescribedAs
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@DomainObjectLayout](./DomainObjectLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
 
 The `@DescribedAs` annotation is used to provide a short description of
 something that features on the user interface. How this description is

@@ -31,7 +31,7 @@ For example:
 Similar layout annotations exist for other elements of the metamodel:
 
 * [@ActionLayout](./ActionLayout.html) for actions
-* [@ClassLayout](./ClassLayout.html) for domain classes
+* [@DomainObjectLayout](./DomainObjectLayout.html) for domain classes
 * [@PropertyLayout](./PropertyLayout.html) for properties
 * [@ParameterLayout](./ParameterLayout.html) for action parameters
 

@@ -68,7 +68,7 @@ If these are not present then Isis will render according to internal defaults.  
 Similar layout annotations exist for other elements of the metamodel:
 
 * [@ActionLayout](./ActionLayout.html) for actions
-* [@ClassLayout](./ClassLayout.html) for domain classes
+* [@DomainObjectLayout](./DomainObjectLayout.html) for domain classes
 * [@CollectionLayout](./CollectionLayout.html) for collections
 * [@PropertyLayout](./PropertyLayout.html) for properties
 

@@ -1,6 +1,6 @@
-Title: @ClassLayout
+Title: @DomainObjectLayout
 
-The `@ClassLayout` annotation applies to domain classes, collecting together all UI hints within a single
+The `@DomainObjectLayout` annotation applies to domain classes, collecting together all UI hints within a single
 annotation.
 
 * `cssClass` - the css class that a domain class (type) should have, to allow more targetted styling in `application.css`
@@ -12,7 +12,7 @@ annotation.
 
 For example:
 
-    @ClassLayout(
+    @DomainObjectLayout(
         cssClass="x-key",
         describedAs="Capture a task that you need to do",
         paged=30)

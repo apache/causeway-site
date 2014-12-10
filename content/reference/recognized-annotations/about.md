@@ -67,12 +67,6 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./ClassLayout.html">@ClassLayout</a></td>
-        <td>UI</td>
-        <td>User interface hints for domain classes</td>
-        <td>Yes</td>
-    </tr>
-    <tr>
         <td><a href="./CollectionInteraction.html">@CollectionInteraction</a></td>
         <td>Domain</td>
         <td>Enable subscribers to either veto, validate or take further steps before/after a collection has been added to or
@@ -112,10 +106,22 @@ go back to: [documentation](../../documentation.html)
         <td>Yes</td>
     </tr>
     <tr>
+        <td><a href="./DomainObjectLayout.html">@DomainObjectLayout</a></td>
+        <td>UI</td>
+        <td>User interface hints for domain object (entities and view models)</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
         <td><a href="./DomainService.html">@DomainService</a></td>
         <td>Domain</td>
         <td>Class is a domain service (rather than an entity or view model)</td>
         <td></td>
+    </tr>
+    <tr>
+        <td><a href="./DomainServiceLayout.html">@DomainServiceLayout</a></td>
+        <td>UI</td>
+        <td>User interface hints for domain services</td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Encodable.html">@Encodable</a></td>
@@ -339,7 +345,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./CssClass-deprecated.html">@CssClass</a></td>
         <td>UI</td>
         <td>Allow visual representation of individual objects or object members layout to be customized by application-specific CSS.
-        <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+        <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
         </td>
         <td>Yes</td>
     </tr>
@@ -362,7 +368,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./DescribedAs-deprecated.html">@DescribedAs</a></td>
         <td>UI</td>
         <td>Provide a longer description/tool-tip of an object or object member.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
         </td>
         <td>Yes</td>
     </tr>
@@ -428,7 +434,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Named-deprecated.html">@Named</a></td>
         <td>UI</td>
         <td>Override name inferred from class. Required for parameter names (prior to Java8).
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainServiceLayout</code>, <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
             </td>
         <td>Yes</td>
     </tr>
@@ -443,7 +449,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Plural-deprecated.html">@Plural</a></td>
         <td>UI</td>
         <td>For the irregular plural form of an entity type.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ClassLayout</code>
+            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>
             </td>
         <td></td>
     </tr>

@@ -1,6 +1,6 @@
 Title: @CssClassFa (1.8.0-SNAPSHOT)
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@DomainObjectLayout](./DomainObjectLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
 
 The `CssClassFa` annotation applies to objects and also to object actions,
 and is used by the Wicket viewer as a UI hint.

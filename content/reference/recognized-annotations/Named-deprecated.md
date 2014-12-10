@@ -1,6 +1,6 @@
 Title: @Named
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated in 1.8.0-SNAPSHOT, see instead  [@DomainServiceLayout](./DomainServiceLayout.html), [@DomainObjectLayout](./DomainObjectLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
 
 The `@Named` annotation is used when you want to specify the way
 something is named on the user interface i.e. when you do not want to

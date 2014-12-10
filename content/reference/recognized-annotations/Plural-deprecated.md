@@ -1,6 +1,6 @@
 Title: @Plural
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@ClassLayout](./ClassLayout.html).
+> Deprecated in 1.8.0-SNAPSHOT, see instead [@DomainObjectLayout](./DomainObjectLayout.html).
 
 When the framework displays a collection of several objects it may use
 the plural form of the object type in the title. By default the plural
