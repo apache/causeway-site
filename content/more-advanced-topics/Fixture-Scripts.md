@@ -481,3 +481,45 @@ as `executionContext.getParameter("ownedBy"), but if not set then it will defaul
 Similarly, if an integration test programmatically calls `setOwnedBy(...)` on this script, then again the value will be
 set for the script and all child scripts.
 
+
+## Running a fixture script automatically on start up
+
+If working or prototyping a particular user story (running with an in-memory database) it can be useful to have the
+application automatically run a specific fixture script.  There are several ways to accomplish this.
+
+### Using isis.properties
+
+First, the fixture script class name can be specified in `isis.properties` config file:
+
+    isis.fixtures=fixture.todo.scenarios.ToDoItemsRecreateForSven
+
+The app must also be started using the following system property:
+
+    -D isis.persistor.datanucleus.install-fixtures=true
+
+### On the command line, using --fixture
+
+Alternatively, the fixture class itself can be specified on the command line using the `--fixture` flag:
+
+    --fixture fixture.todo.scenarios.ToDoItemsRecreateForSven \
+    -D isis.persistor.datanucleus.install-fixtures=true
+
+### On the command line, using system properties
+
+A variation on this is to specify the fixture class using the following system properties:
+
+    -D isis.fixtures=fixture.todo.scenarios.ToDoItemsRecreateForSven \
+    -D isis.persistor.datanucleus.install-fixtures=true
+
+Note that the key is "isis.fixtures", not "isis.fixture".
+
+### Running the standalone jetty-console
+
+A final variation allows the app to be run as a standalone WAR using jetty-console (ie `xxx-jetty-console.war`).  This
+is accomplished using the `--initParam` flag:
+
+    java -jar todoapp-jetty-console.war \
+        --initParam isis.fixtures=fixture.todo.scenarios.ToDoItemsRecreateForSven \
+        --initParam isis.persistor.datanucleus.install-fixtures=true
+
+In this case any initParam named "isis." wil be loaded into Isis' configuration.
