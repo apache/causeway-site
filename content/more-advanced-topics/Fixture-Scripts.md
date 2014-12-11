@@ -373,13 +373,13 @@ While we suggest that you organize fixture scripts in two levels - coarse-graine
 
 The [todo app](../intro/getting-started/todoapp-archetype.html)'s fixture hierarchy as implemented is quite flat:
 
-<img src="images/fixture-script-hierarchies-1.png" width="600"></img>
+<img src="images/fixture-script-hierarchies-1.PNG" width="600"></img>
 
 where each dependency represents one fixture script using `ExecutionContext#executeChild(...)` to execute another.
 
 However, it could easily be refactored, for example as:
 
-<img src="images/fixture-script-hierarchies-2.png" width="600"></img>
+<img src="images/fixture-script-hierarchies-2.PNG" width="600"></img>
 
 With this design there each fixture script takes responsibility for setting up its prerequisites, up to and including
 running the `ToDoItemsDelete` teardown script.
