@@ -373,7 +373,7 @@ While we suggest that you organize fixture scripts in two levels - coarse-graine
 
 The [todo app](../intro/getting-started/todoapp-archetype.html)'s fixture hierarchy as implemented is quite flat:
 
-<img src="images/fixture-script-hierarchies-1.PNG" width="400"></img>
+<img src="images/fixture-script-hierarchies-1.PNG" width="500"></img>
 
 where each dependency represents one fixture script using `ExecutionContext#executeChild(...)` to execute another.
 
