@@ -430,7 +430,7 @@ As the screenshots above show, the `FixtureScripts#runFixtureScript` action allo
     }
 
 These parameters are then made available in `ExecutionContext` to be consumed by the fixture script (and any child
-fixture scripts that might be called in turn).
+fixture scripts that might be called in turn):
 
     public class ExecutionContext {
         ...
@@ -451,7 +451,10 @@ to support parameters specified in key=value pairs.  These can be read and also 
     }
 
 The last method `setParameterIfNotPresent(...)`, provides a useful way by which the fixture script can supply defaults
-if they haven't been specified in the calling script.  For example, the `ToDoItemsRecreate` fixture script uses this API:
+if they haven't been specified in the calling script.
+
+For example, the `ToDoItemsRecreate` fixture script uses this API to default an "ownedBy" parameter (so that every
+todo item created is for a particular user):
 
     public class ToDoItemsRecreate extends FixtureScript {
         ...
