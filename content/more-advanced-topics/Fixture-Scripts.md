@@ -172,7 +172,7 @@ Fixture scripts are implemented by subclassing the `FixtureScript` class, implem
 
 The `ExecutionContext` provides two main capabilities to the fixture script:
 
-* the script can execute other child fixture scripts
+* the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
 
 <pre>
     executionContext.executeChild(this, someObject);
@@ -183,6 +183,8 @@ The `ExecutionContext` provides two main capabilities to the fixture script:
 <pre>
     executionContext.addResult(this, someObject);
 </pre>
+
+(Prior to 1.8.0-SNAPSHOT, child fixture scripts are executed using the inherited `FixtureScript#executeChild(FixtureScript, ExecutionContext) method.  That has now been deprecated).
 
 The script can do whatever is necessary within its `execute` method to set up the state of the system (read: insert data
 into the database).  One way of doing this would be simple SQL INSERT or UPDATE statements, or calling stored procs to
