@@ -419,7 +419,7 @@ As the screenshots above show, the `FixtureScripts#runFixtureScript` action allo
                 final FixtureScript fixtureScript,
                 @ParameterLayout(
                     named="Parameters",
-                    describedAs="Script-specific parameters (if any).  The format depends on the script implementation (eg key=value, CSV, JSON, XML etc)",
+                    describedAs="Script-specific parameters (if any).  The format depends on the script implementation...",
                     multiLine = 10
                 )
                 @Optional
