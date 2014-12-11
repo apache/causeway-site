@@ -379,7 +379,7 @@ where each dependency represents one fixture script using `ExecutionContext#exec
 
 However, it would be possible to refactor it to use a deeper hierarchy, for example as:
 
-<img src="images/fixture-script-hierarchies-2.PNG" width="400"></img>
+<img src="images/fixture-script-hierarchies-2.PNG" width="370"></img>
 
 With this design each fixture script takes responsibility for setting up its prerequisites, up to and including
 running the `ToDoItemsDelete` teardown script.
