@@ -365,7 +365,7 @@ Second, the scenario script is made available in the UI through the call to `wit
 
 This tells the fixture script framework that the fixture script should be listed as a choice in the UI:
 
-<img src="images/fixture-scenarios.png" width="500"></img>
+<img src="images/fixture-scenarios.png" width="400"></img>
 
 ## Using Deeper Hierarchies
 
@@ -373,15 +373,15 @@ While we suggest that you organize fixture scripts in two levels - coarse-graine
 
 The [todo app](../intro/getting-started/todoapp-archetype.html)'s fixture hierarchy as implemented is quite flat:
 
-<img src="images/fixture-script-hierarchies-1.PNG" width="600"></img>
+<img src="images/fixture-script-hierarchies-1.PNG" width="400"></img>
 
 where each dependency represents one fixture script using `ExecutionContext#executeChild(...)` to execute another.
 
-However, it could easily be refactored, for example as:
+However, it would be possible to refactor it to use a deeper hierarchy, for example as:
 
-<img src="images/fixture-script-hierarchies-2.PNG" width="600"></img>
+<img src="images/fixture-script-hierarchies-2.PNG" width="400"></img>
 
-With this design there each fixture script takes responsibility for setting up its prerequisites, up to and including
+With this design each fixture script takes responsibility for setting up its prerequisites, up to and including
 running the `ToDoItemsDelete` teardown script.
 
 To support this design, by default the fixture script framework (specifically, `ExecutionContext`) will only ever run
