@@ -145,11 +145,9 @@ Names & Descriptions
 
 Layout
 
-* [Ordering prop/colls in the UI](./how-tos/how-to-01-080-How-to-specify-the-order-in-which-properties-or-collections-are-displayed.html)
-* [Ordering actions in the UI](./how-tos/how-to-01-090-How-to-specify-the-order-in-which-actions-appear-on-the-menu.html)
-* [Static layouts](components/viewers/wicket/static-layouts.html)
+* [Layout using annotations](components/viewers/wicket/static-layouts.html)
 * [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-
+* [Application menu layout](components/viewers/wicket/application-menu-layouts.html)
 
 }
 

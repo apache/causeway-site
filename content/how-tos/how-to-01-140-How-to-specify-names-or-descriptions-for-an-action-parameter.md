@@ -6,21 +6,33 @@ parameters that you use within the domain code. By default parameters
 will be labelled only with the type of the object required (e.g.
 'String:' or 'Customer:)
 
-If you want a parameter to have a different name (such as 'First Name',
-'Last Name') then that parameter should be marked up with an `@Named`
-annotation - very often taking the same form as the parameter name used
-in the code. Alternatively though, you could create a user-defined value
-type, using `@Value` (see ?).
+If you want a parameter to have a different name (as is usually the case for value types such as strings and ints)
+then that parameter should be annotated with the `@Named` annotation (prior to 1.8.0-SNAPSHOT) or its replacement,
+the `@ParameterLayout(named=...)` annotation (as of 1.8.0-SNAPSHOT).
 
 Similarly, any parameter may be given a short user-description using the
-`@DescribedAs` annotation. The framework takes responsibility to make
-this available to the user.
+`@DescribedAs` annotation (prior to 1.8.0-SNAPSHOT) or its replacement, `@ParameterLayout(describedAs=...)`.
 
-For example:
+For example (as of 1.8.0-SNAPSHOT):
 
     public class Customer {
         public Order placeOrder(
-                Product p, 
+                Product p,
+                @ParameterLayout(
+                    named="Quantity",
+                    describedAs="The number of units of the specified product in this order"
+                )
+                int quantity) {
+            ...
+        }
+        ...
+    }
+
+or (prior to 1.8.0-SNAPSHOT):
+
+    public class Customer {
+        public Order placeOrder(
+                Product p,
                 @Named("Quantity")
                 @DescribedAs("The number of units of the specified product in this order")
                 int quantity) {
