@@ -17,7 +17,7 @@ Menus for domain services can be placed either on a primary, secondary or tertia
 Within a single top-level menu (eg "Fixed Assets") there can be actions from multiple services.  The Wicket viewer
 automatically adds a divider between each:
 
-<img src="images/application-menu-layout-dividers.png" width="400"></img>
+<img src="images/application-menu-dividers.png" width="300"></img>
 
 In the example above the top-level menu combines the actions from the `Properties`, `Units` and `FixedAssetRegistrations`
 services.  The `Properties` service is annotated:
@@ -102,7 +102,7 @@ is not recommended).
 The tertiary menu bar consists of a single unnamed menu, rendered underneath the user's login, top right.  This is
 intended primarily for actions pertaining to the user themselves, eg their account, profile or settings:
 
-<img src="images/application-menu-layout-tertiary.png" width="400"></img>
+<img src="images/application-menu-tertiary.png" width="300"></img>
 
 Domain services' actions can be associated with the tertiary menu using the same `@DomainServiceLayout` annotation.  For
 example, the `updateEpochDate(...)` and `listAllSettings(...)` actions come from the following service:

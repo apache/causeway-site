@@ -147,7 +147,7 @@ Layout
 
 * [Layout using annotations](components/viewers/wicket/static-layouts.html)
 * [Dynamic layouts](components/viewers/wicket/dynamic-layouts.html) <a href="components/viewers/wicket/dynamic-layouts.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Application menu layout](components/viewers/wicket/application-menu-layouts.html)
+* [Application menu layout](components/viewers/wicket/application-menu-layout.html)
 
 }
 
