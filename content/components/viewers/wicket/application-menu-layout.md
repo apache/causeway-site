@@ -102,7 +102,7 @@ is not recommended).
 The tertiary menu bar consists of a single unnamed menu, rendered underneath the user's login, top right.  This is
 intended primarily for actions pertaining to the user themselves, eg their account, profile or settings:
 
-<img src="images/application-menu-tertiary.png" width="300"></img>
+<img src="images/application-menu-tertiary.png" width="200"></img>
 
 Domain services' actions can be associated with the tertiary menu using the same `@DomainServiceLayout` annotation.  For
 example, the `updateEpochDate(...)` and `listAllSettings(...)` actions come from the following service:
