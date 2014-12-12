@@ -128,7 +128,7 @@ viewer does *not* place dividers between actions from different services on the 
 
 Some of the Isis add-ons modules also provide services whose actions appear in top-level menus.
 
-The [security](http://github.com/isisaddons/isis-module-security]'s module places its domain service menus in three
+The [security](http://github.com/isisaddons/isis-module-security)'s module places its domain service menus in three
 top-level menus:
 
 * its `ApplicationUsers`, `ApplicationRoles`, `ApplicationPermission`, `ApplicationFeatureViewModels` and
@@ -140,7 +140,7 @@ top-level menus:
 
 * its `MeService` domain service, which provides the `me()` action, is placed on the TERTIARY menu bar.
 
-Meanwhile the [devutils](http://github.com/isisaddons/isis-module-devutils] module places its actions - to download layouts and
+Meanwhile the [devutils](http://github.com/isisaddons/isis-module-devutils) module places its actions - to download layouts and
 so forth - on a "Prototyping" top-level menu, on the SECONDARY menu bar.
 
 Currently there is no facility to alter the placement of these services.  However, their UI can be suppressed either
