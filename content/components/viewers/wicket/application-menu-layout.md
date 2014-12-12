@@ -143,6 +143,8 @@ top-level menus:
 Meanwhile the [devutils](http://github.com/isisaddons/isis-module-devutils) module places its actions - to download layouts and
 so forth - on a "Prototyping" top-level menu, on the SECONDARY menu bar.
 
+
 Currently there is no facility to alter the placement of these services.  However, their UI can be suppressed either
-using security or (more sophisticatedly) a [vetoing subscriber](../../../more-advanced-topics/vetoing-subscriber.html).
+using security<!-- or (more sophisticatedly) a [vetoing subscriber](../../../more-advanced-topics/vetoing-subscriber.html)-->.
+
 
