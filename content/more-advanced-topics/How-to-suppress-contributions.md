@@ -63,8 +63,7 @@ For the `Person` entity, the actions are associated with the (contributed) `like
 
 <img src="images/suppressing-contributions-person.png" width="800px"/>
 
-which is accomplished using this [fragment](https://github.com/isisaddons/isis-app-kitchensink/blob/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/Person.layout.json#L44-L61
-) in the `Person.layout.json` file:
+which is accomplished using this <a href="https://github.com/isisaddons/isis-app-kitchensink/blob/d4fd4e8b799af42c343b7e451bbf6f5d218869a1/dom/src/main/java/org/isisaddons/app/kitchensink/dom/contrib/contributee/Person.layout.json#L44-L61">fragment</a> in the `Person.layout.json` file:
 
     "collections": {
       "likes": {
