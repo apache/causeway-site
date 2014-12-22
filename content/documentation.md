@@ -321,19 +321,25 @@ For both:
 * [Externalized Configuration](./reference/externalized-configuration.html)
 * [JVM args](./reference/jvm-args.html)
 
-JDO Objectstore
+#### <a name="more-advanced-topics-jdo-objectstore">JDO Objectstore</a>
 
-* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
+#### <a name="more-advanced-topics-no-sql-support">NoSQL Support</a>
 
+* [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
+* [Using Neo4J](components/objectstores/jdo/using-neo4j.html) (1.8.0-SNAPSHOT)
+
+
+<!--
 #### <a name="core-bundled-components">Other Core Components</a>
 
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 * [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 * ['Bypass' Implementation](core/bypass-security.html) [stub]
+-->
 
 }
 
