@@ -40,10 +40,14 @@ If you want to quickly try out neo4j for yourself:
 
 * build the app:
 
+<pre>
     mvn clean install -P neo4j
+</pre>
 
 * run the app:
 
+<pre>
     mvn antrun:run -P self-host,neo4j -o
+</pre>
 
 If you visit the about page you should see the neo4j JAR files are linked in, and a `neo4j_DB` subdirectory within the `webapp` directory.
