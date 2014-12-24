@@ -8,7 +8,7 @@ Here are some freely accessible (and sometimes open source) applications that ar
 
 Estatio is an open source estate management application, available on [github](https://github.com/estatio/estatio).
 
-<img src="https://raw.githubusercontent.com/estatio/estatio/master/docs/20130715/2.png" width="530"></img>
+<img src="images/estatio-1.png" width="800"></img>
 
 
 Much of Isis' recent development has been driven out by the requirements of this application, so you can see for yourself how many of the features in Isis are used in real life.
