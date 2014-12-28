@@ -333,13 +333,16 @@ For both:
 
 
 <!--
-#### <a name="core-bundled-components">Other Core Components</a>
+
+<a name="core-bundled-components">Other Core Components</a>
 
 * [Core Runtime](core/runtime.html) [stub]
 * [Webserver](core/webserver.html) [stub]
 * [In-memory Object Store](core/inmemory-objectstore.html) [stub]
 * ['Bypass' Implementation](core/bypass-security.html) [stub]
+
 -->
+
 
 }
 
