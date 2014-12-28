@@ -720,12 +720,14 @@ In addition, a full list of all applib services (including those that are implem
 
 Not released since graduation.
 
-* [NoSQL Object Store](components/objectstores/nosql/about.html) [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
-* [XML Object Store](components/objectstores/xml/about.html) [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
-* [XML Profile Store](components/profilestores/xml/about.html) [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 * [Scimpi Viewer](components/viewers/scimpi/about.html) [0.2.0-incubating](components/viewers/scimpi/release-notes/about.html)
-* [DnD Viewer](components/viewers/dnd/about.html) [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
-* [Groovy Programming Model](components/progmodels/groovy/about.html) [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
+
+#### <a name="unreleased-obsolete">Obsolete</a>
+
+Never released, now obsolete
+
+* [SQL Profile Store](components/profilestores/sql/about.html)
+* [XML Profile Store](components/profilestores/xml/about.html) [0.2.0-incubating](components/profilestores/xml/release-notes/about.html)
 
 }
 
@@ -738,9 +740,12 @@ No longer under active development
 * [HTML Viewer](components/viewers/html/about.html) (use Wicket)
 * [LDAP Security](components/security/ldap/about.html) (use Shiro)
 * [SQL Security](components/security/sql/about.html) (use Shiro)
-* [SQL Profile Store](components/profilestores/sql/about.html)
-* [SQL Object Store](components/objectstores/sql/about.html) (use JDO)
 * [BDD (Concordion)](components/viewers/bdd/about.html) (use Cucumber-JVM in unittestsupport and integtestsupport)
+* [SQL Object Store](components/objectstores/sql/about.html) (use JDO)
+* [NoSQL Object Store](components/objectstores/nosql/about.html) [0.2.0-incubating](components/objectstores/nosql/release-notes/about.html)
+* [XML Object Store](components/objectstores/xml/about.html) [0.2.0-incubating](components/objectstores/xml/release-notes/about.html)
+* [DnD Viewer](components/viewers/dnd/about.html) [0.2.0-incubating](components/viewers/dnd/release-notes/about.html)
+* [Groovy Programming Model](components/progmodels/groovy/about.html) [0.2.0-incubating](components/progmodels/groovy/release-notes/about.html)
 
 }
 
