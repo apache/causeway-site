@@ -6,6 +6,17 @@ Title: Step-by-step tutorial: Petclinic
 A step-by-step tutorial to building a petclinic application using Apache Isis.
 }
 
+This tutorial builds a simple petclinic application, consisting of just three domain classes:
+
+![](http://yuml.me/a070d071)
+
+The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
+<pre>
+[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]->[Pet|-name:String;-species:PetSpecies{bg:green}]
+[Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
+</pre>
+
+Either follow along or check out the tags from the corresponding [github repo](https://github.com/danhaywood/isis-app-petclinic).
 
 
 ## Prerequisites
@@ -37,7 +48,11 @@ This will generate the app in a `petclinic` directory.  Move the contents back:
     mv petclinic/* .
     rmdir petclinic
     
-    
+
+> checkpoint:
+> https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451
+
+
         
 ## Build and run
 
@@ -61,7 +76,6 @@ This will accomplish the same thing, though the webapp is mounted at a slightly 
 
 
 
-<!--
 ## Using the app
 
 Navigate to the Wicket UI (eg http://localhost:8080/wicket), and login (sven/pass).
@@ -101,14 +115,14 @@ Then set up a launch configuration and check that you can:
 
 Apache Isis applications are organized into several Maven modules.  Within your IDE navigate to the various classes and correlate back to the generated UI:
 
-* `myapp` : parent module
-* `myapp-dom`: domain objects module
+* `petclinic` : parent module
+* `petclinic-dom`: domain objects module
    - entity: `dom.simple.SimpleObject`
    - repository: `dom.simple.SimpleObjects`
-* `myapp-fixture`: fixtures module
+* `petclinic-fixture`: fixtures module
    - fixture script:`fixture.simple.SimpleObjectsFixture`
-* `myapp-integtests`: integration tests module
-* `myapp-webapp`: webapp module
+* `petclinic-integtests`: integration tests module
+* `petclinic-webapp`: webapp module
   * (builds the WAR file)
 
 
@@ -134,32 +148,25 @@ If you have issues with the integration tests, make sure that the domain classes
 
 
     
-## Prototyping
+## Update POM files
 
-Although testing is important, in this tutorial we want to concentrate on how to write features and to iterate quickly.  So for now, exclude the `integtests` module.  Later on in the tutorial we'll add the tests back in so you can learn how to write automated tests for the features of your app.
+The generated POM files use describe the app as "SimpleApp".  Update them to say "PetClinic".
 
-In the parent `pom.xml`:
+edit:
 
-    <modules>
-        <module>dom</module>
-        <module>fixture</module>
-        <module>integtests</module>
-        <module>webapp</module>
-    </modules>
-
-change to:
-
-    <modules>
-        <module>dom</module>
-        <module>fixture</module>
-        <!--
-        <module>integtests</module>
-        -->
-        <module>webapp</module>
-    </modules>
+> checkpoint:
+> https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944
 
 
+## Delete the BDD specs
 
+During this tutorial we're going to keep the integration tests in-sync with the code, but we're going to stop short of writing BDD/Cucumber specs.
+
+> checkpoint:
+> https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944
+
+
+<!--
 ## Build a domain app
 
 The remainder of the tutorial provides guidance on building a domain application.  We'd rather you build your own app, but if you're not feeling inspired, you could have a go at building our "petclinic" app.  Here's the design:
