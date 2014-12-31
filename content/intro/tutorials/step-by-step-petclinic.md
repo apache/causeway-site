@@ -12,10 +12,20 @@ This tutorial builds a simple petclinic application, consisting of just three do
 
 The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
 
-    [Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:LocalDate;-checkout:LocalDate;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
+    [Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:LocalDate;-checkout:LocalDate;-diagnosis:String|{bg:pink}]
     [Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
     [PetSpecies|-name:String{bg:blue}]<species-[Pet]
 
+This supports the following use cases:
+
+* register an Owner
+* register a Pet
+* check in a Pet to visit the clinic
+* add a note to a Pet during a visit
+* enter a diagnosis
+* check out a Pet to visit the clinic
+
+    
 Either follow along or check out the tags from the corresponding [github repo](https://github.com/danhaywood/isis-app-petclinic).
 
 
