@@ -8,7 +8,7 @@ A step-by-step tutorial to building a petclinic application using Apache Isis.
 
 This tutorial builds a simple petclinic application, consisting of just three domain classes:
 
-![](http://yuml.me/a070d071)
+<img src="resources/petclinic/domain-model.png"></img>
 
 The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
 <pre>
