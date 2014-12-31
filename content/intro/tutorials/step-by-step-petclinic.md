@@ -49,8 +49,7 @@ This will generate the app in a `petclinic` directory.  Move the contents back:
     rmdir petclinic
     
 
-> checkpoint:
-> https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451
+> git checkout [249abe476797438d83faa12ff88365da2c362451](https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451)
 
 
         
@@ -154,8 +153,9 @@ The generated POM files use describe the app as "SimpleApp".  Update them to say
 
 edit:
 
-> checkpoint:
-> git checkout [68904752bc2de9ebb3c853b79236df2b3ad2c944](https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944)
+{note
+git checkout [68904752bc2de9ebb3c853b79236df2b3ad2c944](https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944)
+}
 
 
 ## Delete the BDD specs
