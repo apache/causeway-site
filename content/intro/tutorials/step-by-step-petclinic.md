@@ -101,6 +101,7 @@ To return the objects created:
 <a href="resources/petclinic/010-05-simpleobject-list.png"><img src="resources/petclinic/010-05-simpleobject-list.png" width="600"></img></a>
 
 Experiment some more, to:
+
 * create a new object
 * list all objects
 
