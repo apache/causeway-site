@@ -126,6 +126,8 @@ Then set up a launch configuration and check that you can:
 * Run with different deploymentTypes; note whether `@Prototype` actions are available or not:
   - `--type SERVER_PROTOTYPE`
   - `--type SERVER`
+
+<a href="resources/petclinic/020-01-idea-configuration.png"><img src="resources/petclinic/020-01-idea-configuration.png" width="600"></img></a>
   
   
 ## Explore codebase
