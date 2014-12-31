@@ -80,9 +80,9 @@ This will accomplish the same thing, though the webapp is mounted at a slightly 
 
 ## Using the app
 
-Navigate to the Wicket UI (eg http://localhost:8080/wicket), and login (sven/pass).
+Navigate to the Wicket UI (eg [http://localhost:8080/wicket](http://localhost:8080/wicket)), and login (sven/pass).
 
-<img src="resources/petclinic/010-01-login-page.png" width="900"></img>
+<a href="resources/petclinic/010-01-login-page.png"><img src="resources/petclinic/010-01-login-page.png" width="600"></img></a>
 
 The home page should be shown:
 
