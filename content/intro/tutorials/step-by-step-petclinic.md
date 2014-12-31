@@ -12,9 +12,9 @@ This tutorial builds a simple petclinic application, consisting of just three do
 
 The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
 <pre>
-[Pet|-name:String;-species:PetSpecies{bg:green}]<-0..*[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
+[Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
 [Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
-[PetSpecies|-name:String{bg:blue}]<-[Pet]
+[PetSpecies|-name:String{bg:blue}]<species-[Pet]
 </pre>
 
 Either follow along or check out the tags from the corresponding [github repo](https://github.com/danhaywood/isis-app-petclinic).
@@ -222,6 +222,15 @@ Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` 
 {note
 git checkout [bee3629c0b64058f939b6dd20f226be31810fc66](https://github.com/danhaywood/isis-app-petclinic/commit/bee3629c0b64058f939b6dd20f226be31810fc66)
 }
+
+## Update package names
+
+The classes created by the simpleapp archetype are by default in the `simple` package.  Move these classes to `pets` package instead:
+
+{note
+git checkout [55ec36e520191f5fc8fe7f5b89956814eaf13317](https://github.com/danhaywood/isis-app-petclinic/commit/55ec36e520191f5fc8fe7f5b89956814eaf13317)
+}
+
 
 
 
