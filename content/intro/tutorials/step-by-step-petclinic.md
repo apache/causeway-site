@@ -12,7 +12,7 @@ This tutorial builds a simple petclinic application, consisting of just three do
 
 The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
 <pre>
-[Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
+[Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:LocalDate;-checkout:LocalDate;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
 [Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
 [PetSpecies|-name:String{bg:blue}]<species-[Pet]
 </pre>
@@ -131,7 +131,7 @@ For example, here's what a launch configuration in IntelliJ idea looks like:
 
 where the "before launch" maven goal (to run the DataNucleus enhancer) is defined as:
 
-<a href="resources/petclinic/020-02-idea-configuration.png"><img src="resources/petclinic/020-02-idea-configuration.png" width="300"></img></a>
+<a href="resources/petclinic/020-02-idea-configuration.png"><img src="resources/petclinic/020-02-idea-configuration.png" width="400"></img></a>
 
   
   
@@ -193,7 +193,11 @@ git checkout [9046226249429b269325dfa2baccf03635841c20](https://github.com/danha
 
 ## Rename the app, and rename the SimpleObject entity
 
-Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` concept, so go through the code and refactor.  While we're at it, refactor the app itself from "SimpleApp" to "PetClinicApp":
+{note
+git checkout [bee3629c0b64058f939b6dd20f226be31810fc66](https://github.com/danhaywood/isis-app-petclinic/commit/bee3629c0b64058f939b6dd20f226be31810fc66)
+}
+
+Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` concept, so go through the code and refactor.  While we're at it, refactor the app itself from "SimpleApp" to "PetClinicApp".
 
 * in the `dom` module's production code
     * `SimpleObject` -> `Pet` (entity)
@@ -219,9 +223,8 @@ Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` 
     * update `isis.properties`
     * update `web.xml`
     
-{note
-git checkout [bee3629c0b64058f939b6dd20f226be31810fc66](https://github.com/danhaywood/isis-app-petclinic/commit/bee3629c0b64058f939b6dd20f226be31810fc66)
-}
+
+<a href="resources/petclinic/020-01-idea-configuration.png"><img src="resources/petclinic/020-01-idea-configuration.png" width="600"></img></a>
 
 ## Update package names
 
