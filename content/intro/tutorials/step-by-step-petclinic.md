@@ -82,23 +82,23 @@ This will accomplish the same thing, though the webapp is mounted at a slightly 
 
 Navigate to the Wicket UI (eg http://localhost:8080/wicket), and login (sven/pass).
 
-<img src="resources/petclinic/010-01-login-page.png"></img>
+<img src="resources/petclinic/010-01-login-page.png" width="900"></img>
 
 The home page should be shown:
 
-<img src="resources/petclinic/010-02-home-page.png"></img>
+<img src="resources/petclinic/010-02-home-page.png" width="900"></img>
 
 Install the fixtures (example test data) using the `Prototyping` menu:
 
-<img src="resources/petclinic/010-03-prototyping-menu.png"></img>
+<img src="resources/petclinic/010-03-prototyping-menu.png" width="900"></img>
 
 List all objects using the `Simple Objects` menu:
 
-<img src="resources/petclinic/010-04-simpleobjects.png"></img>
+<img src="resources/petclinic/010-04-simpleobjects.png" width="900"></img>
 
 To return the objects created:
 
-<img src="resources/petclinic/010-05-simpleobject-list.png"></img>
+<img src="resources/petclinic/010-05-simpleobject-list.png" width="900"></img>
 
 Experiment some more, to:
 * create a new object
