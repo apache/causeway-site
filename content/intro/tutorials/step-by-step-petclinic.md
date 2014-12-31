@@ -15,6 +15,7 @@ The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defin
 [Pet|-name:String{bg:green}]<-0..*[Visit|-checkIn:LocalDate;-checkout:LocalDate;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
 [Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
 [PetSpecies|-name:String{bg:blue}]<species-[Pet]
+
 </pre>
 
 Either follow along or check out the tags from the corresponding [github repo](https://github.com/danhaywood/isis-app-petclinic).
