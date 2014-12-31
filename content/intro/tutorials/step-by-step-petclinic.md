@@ -12,8 +12,9 @@ This tutorial builds a simple petclinic application, consisting of just three do
 
 The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defines this diagram is:
 <pre>
-[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]->[Pet|-name:String;-species:PetSpecies{bg:green}]
+[Pet|-name:String;-species:PetSpecies{bg:green}]<-0..*[Visit|-checkIn:DateTime;-checkout:DateTime;-diagnosis:String|+checkin();+checkout();+addNote(){bg:pink}]
 [Owner|-firstName:String;-lastName:String{bg:green}]<0..1-0..*>[Pet]
+[PetSpecies|-name:String{bg:blue}]<-[Pet]
 </pre>
 
 Either follow along or check out the tags from the corresponding [github repo](https://github.com/danhaywood/isis-app-petclinic).
@@ -47,10 +48,12 @@ This will generate the app in a `petclinic` directory.  Move the contents back:
 
     mv petclinic/* .
     rmdir petclinic
+
+
     
-
-> git checkout [249abe476797438d83faa12ff88365da2c362451](https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451)
-
+{note
+git checkout [249abe476797438d83faa12ff88365da2c362451](https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451)
+}
 
         
 ## Build and run
@@ -79,10 +82,25 @@ This will accomplish the same thing, though the webapp is mounted at a slightly 
 
 Navigate to the Wicket UI (eg http://localhost:8080/wicket), and login (sven/pass).
 
-Once at the home page:
+<img src="resources/petclinic/010-01-login-page.png"></img>
 
-* install fixtures
-* list all objects
+The home page should be shown:
+
+<img src="resources/petclinic/010-02-home-page.png"></img>
+
+Install the fixtures (example test data) using the `Prototyping` menu:
+
+<img src="resources/petclinic/010-03-prototyping-menu.png"></img>
+
+List all objects using the `Simple Objects` menu:
+
+<img src="resources/petclinic/010-04-simpleobjects.png"></img>
+
+To return the objects created:
+
+<img src="resources/petclinic/010-05-simpleobject-list.png"></img>
+
+Experiment some more, to:
 * create a new object
 * list all objects
 
