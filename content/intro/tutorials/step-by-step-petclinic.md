@@ -155,7 +155,7 @@ The generated POM files use describe the app as "SimpleApp".  Update them to say
 edit:
 
 > checkpoint:
-> https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944
+> git checkout [68904752bc2de9ebb3c853b79236df2b3ad2c944](https://github.com/danhaywood/isis-app-petclinic/commit/68904752bc2de9ebb3c853b79236df2b3ad2c944)
 
 
 ## Delete the BDD specs
