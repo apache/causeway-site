@@ -18,10 +18,10 @@ The above diagram was built using [yuml.me](http://yuml.me]); the DSL that defin
 
 This supports the following use cases:
 
-* register an Owner
 * register a Pet
+* register an Owner
+* maintain a Pet's details
 * check in a Pet to visit the clinic
-* add a note to a Pet during a visit
 * enter a diagnosis
 * check out a Pet to visit the clinic
 
