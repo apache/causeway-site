@@ -194,6 +194,10 @@ git checkout [68904752bc2de9ebb3c853b79236df2b3ad2c944](https://github.com/danha
 
 During this tutorial we're going to keep the integration tests in-sync with the code, but we're going to stop short of writing BDD/Cucumber specs.
 
+Therefore delete the BDD feature spec and glue in the `integtest` module:
+
+* `integration/specs/*`
+* `integration/glue/*`
 
 {note
 git checkout [9046226249429b269325dfa2baccf03635841c20](https://github.com/danhaywood/isis-app-petclinic/commit/9046226249429b269325dfa2baccf03635841c20)
@@ -202,11 +206,13 @@ git checkout [9046226249429b269325dfa2baccf03635841c20](https://github.com/danha
 
 ## Rename the app, and rename the SimpleObject entity
 
+Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` concept, so go through the code and refactor.  While we're at it, refactor the app itself from "SimpleApp" to "PetClinicApp".
+
 {note
 git checkout [bee3629c0b64058f939b6dd20f226be31810fc66](https://github.com/danhaywood/isis-app-petclinic/commit/bee3629c0b64058f939b6dd20f226be31810fc66)
 }
 
-Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` concept, so go through the code and refactor.  While we're at it, refactor the app itself from "SimpleApp" to "PetClinicApp".
+See the git commit for more detail, but in outline, the renames required are:
 
 * in the `dom` module's production code
     * `SimpleObject` -> `Pet` (entity)
@@ -232,19 +238,85 @@ Time to start refactoring the app.  The heart of the PetClinic app is the `Pet` 
     * update `isis.properties`
     * update `web.xml`
     
+To run the application will require an update to the IDE configuration, for the changed name of the fixture class:
 
-<a href="resources/petclinic/020-01-idea-configuration.png"><img src="resources/petclinic/020-01-idea-configuration.png" width="600"></img></a>
+<a href="resources/petclinic/030-01-idea-configuration.png"><img src="resources/petclinic/030-01-idea-configuration.png" width="600"></img></a>
+
+Running the app should now show `Pet`s:
+
+<a href="resources/petclinic/030-02-updated-app.png"><img src="resources/petclinic/030-02-updated-app.png" width="600"></img></a>
+
 
 ## Update package names
 
 The classes created by the simpleapp archetype are by default in the `simple` package.  Move these classes to `pets` package instead:
 
+See the git commit for full details; it's all pretty mechanical.
+
 {note
 git checkout [55ec36e520191f5fc8fe7f5b89956814eaf13317](https://github.com/danhaywood/isis-app-petclinic/commit/55ec36e520191f5fc8fe7f5b89956814eaf13317)
 }
 
+To run the application will require a further update to the IDE configuration, for the changed package of the fixture class:
+
+<a href="resources/petclinic/040-01-idea-configuration-updated.png"><img src="resources/petclinic/040-01-idea-configuration-updated.png" width="600"></img></a>
 
 
+## Add PetSpecies (as an enum)
+
+Each `Pet` is of a particular species.  Model these as an enum called `PetSpecies`:
+
+    public enum PetSpecies {
+        Cat,
+        Dog,
+        Budgie,
+        Hamster,
+        Tortoise
+    }
+
+Introduce a new property on `Pet` of this type:
+
+    public class Pet {
+        ...   
+        private PetSpecies species;
+        @javax.jdo.annotations.Column(allowsNull = "false")
+        public PetSpecies getSpecies() { return species; }
+        public void setSpecies(final PetSpecies species) { this.species = species; }
+        ...
+    }
+
+Update fixtures, unit tests and integration tests.
+
+{note
+git checkout [55c9cd28ff960220719b3dc7cb8abadace8d0829](https://github.com/danhaywood/isis-app-petclinic/commit/55c9cd28ff960220719b3dc7cb8abadace8d0829)
+}
+
+
+## Icon reflects the pet species
+
+Rather than using a single icon for a domain class, instead a different icon can be supplied for each instance.  We can therefore have different icon files for each pet, reflecting that pet's species.
+
+    public class Pet {
+        ...
+        public String iconName() {
+            return getSpecies().name();
+        }
+        ...
+    }
+
+Download corresponding icon files (`Dog.png`, `Cat.png` etc)
+
+{note
+git checkout [2212765694693eb463f8fa88bab1bad154add0cb](https://github.com/danhaywood/isis-app-petclinic/commit/2212765694693eb463f8fa88bab1bad154add0cb)
+}
+
+Running the app shows the `Pet` and its associated icon:
+
+<a href="resources/petclinic/050-01-list-all.png"><img src="resources/petclinic/050-01-list-all.png" width="600"></img></a>
+
+with the corresponding view of the `Pet`:
+
+<a href="resources/petclinic/050-02-view-pet.png"><img src="resources/petclinic/050-02-view-pet.png" width="600"></img></a>
 
 
 
