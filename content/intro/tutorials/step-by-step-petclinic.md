@@ -250,13 +250,15 @@ Running the app should now show `Pet`s:
 
 ## Update package names
 
-The classes created by the simpleapp archetype are by default in the `simple` package.  Move these classes to `pets` package instead:
-
-See the git commit for full details; it's all pretty mechanical.
-
 {note
 git checkout [55ec36e520191f5fc8fe7f5b89956814eaf13317](https://github.com/danhaywood/isis-app-petclinic/commit/55ec36e520191f5fc8fe7f5b89956814eaf13317)
 }
+
+The classes created by the simpleapp archetype are by default in the `simple` package.  Move these classes to `pets` package instead.  Also adjust package names where they appear as strings:
+
+* in `PetClinicAppFixturesService`, change the package name from "fixture.simple" to "fixture.pets".
+* in `PetClinicAppSystemInitializer`, change the package name "dom.simple" to "dom.pets", and similarly "fixture.simple" to "fixture.pets"
+* in `WEB-INF/isis.properties`, similarly change the package name "dom.simple" to "dom.pets", and similarly "fixture.simple" to "fixture.pets"
 
 To run the application will require a further update to the IDE configuration, for the changed package of the fixture class:
 
