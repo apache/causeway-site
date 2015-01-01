@@ -240,7 +240,7 @@ See the git commit for more detail, but in outline, the renames required are:
     
 To run the application will require an update to the IDE configuration, for the changed name of the fixture class:
 
-<a href="resources/petclinic/030-01-idea-configuration.png"><img src="resources/petclinic/030-01-idea-configuration.png" width="600"></img></a>
+<a href="resources/petclinic/030-01-idea-configuration-updated.png"><img src="resources/petclinic/030-01-idea-configuration-updated.png" width="600"></img></a>
 
 Running the app should now show `Pet`s:
 
