@@ -324,6 +324,24 @@ with the corresponding view of the `Pet`:
 
 
 <!--
+
+## Add Pet Owner
+
+{note
+git checkout [xxx](https://github.com/danhaywood/isis-app-petclinic/commit/xxx)
+}
+
+
+<a href="resources/petclinic/060-01-owners-menu.png"><img src="resources/petclinic/060-01-owners-menu.png" width="600"></img></a>
+
+<a href="resources/petclinic/060-02-owners-list.png"><img src="resources/petclinic/060-02-owners-list.png" width="600"></img></a>
+
+<a href="resources/petclinic/060-03-pets-list.png"><img src="resources/petclinic/060-03-pets-list.png" width="600"></img></a>
+
+<a href="resources/petclinic/060-04-pet-owner-autoComplete.png"><img src="resources/petclinic/060-04-pet-owner-autoComplete.png" width="600"></img></a>
+
+
+
 ## Build a domain app
 
 The remainder of the tutorial provides guidance on building a domain application.  We'd rather you build your own app, but if you're not feeling inspired, you could have a go at building our "petclinic" app.  Here's the design:
