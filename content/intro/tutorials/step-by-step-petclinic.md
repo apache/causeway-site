@@ -398,7 +398,7 @@ and `findByName(...)` in `Owners`:
         ...
     }
 
-Add Pet#owner property, with supporting `autoCompleteXxx()` method (so that available owners are shown in a drop-down list box):
+Add an `owner` property to `Pet`, with supporting `autoCompleteXxx()` method (so that available owners are shown in a drop-down list box):
 
     public class Pet ... {
         ...
@@ -412,7 +412,7 @@ Add Pet#owner property, with supporting `autoCompleteXxx()` method (so that avai
         ...
     }
 
-Also updated fixture data to set up a number of `Owner`s, and associate each `Pet` with an `Owner`.  Also dded unit tests and integration tests for `Owner`/`Owners` and updated for `Pet`/`Pets`.
+Also updated fixture data to set up a number of `Owner`s, and associate each `Pet` with an `Owner`.  Also add unit tests and integration tests for `Owner`/`Owners` and updated for `Pet`/`Pets`.
 
 When running the app, notice the new `Owners` menu:
 
