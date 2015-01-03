@@ -238,7 +238,44 @@ See the git commit for more detail, but in outline, the renames required are:
     * `SimpleApplication` -> `PetClinicApplication`
     * update `isis.properties`
     * update `web.xml`
+
+Note that `Pet` has both both Isis and JDO annotations:
     
+    @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
+    @javax.jdo.annotations.DatastoreIdentity(
+            strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
+             column="id")
+    @javax.jdo.annotations.Version(
+            strategy=VersionStrategy.VERSION_NUMBER, 
+            column="version")
+    @javax.jdo.annotations.Unique(name="Pet_name_UNQ", members = {"name"})
+    @ObjectType("PET")
+    @Bookmarkable
+    public class Pet implements Comparable<Pet> {
+        ...
+    }
+
+where:
+
+* `PersistenceCapable` and `DatastoreIdentity` specify a surrogate `Id` column to be used as the primary key
+* `Version` provides support for optimistic locking
+* `Unique` enforces a uniqueness constraint so that no two `Pet`s can have the same name (unrealistic, but can refactor later)
+* `ObjectType` is used by Isis for its own internal "OID" identifier; this also appears in the URL in Isis' Wicket viewer and REST API
+* `Bookmarkable` indicates that the object can be automatically bookmarked in Isis' Wicket viewer
+
+The `Pets` domain service also has Isis annotations:
+
+    @DomainService(repositoryFor = Pet.class)
+    @DomainServiceLayout(menuOrder = "10")
+    public class Pets {
+        ...
+    }
+    
+where:
+
+* `DomainService` indicates that the service should be instantiated automatically (as a singleton)
+* `DomainServiceLayout` provides UI hints, in this case the positioning of the menu for the actions provided by the service
+
 To run the application will require an update to the IDE configuration, for the changed name of the fixture class:
 
 <a href="resources/petclinic/030-01-idea-configuration-updated.png"><img src="resources/petclinic/030-01-idea-configuration-updated.png" width="600"></img></a>
@@ -323,25 +360,78 @@ with the corresponding view of the `Pet`:
 
 
 
-<!--
-
 ## Add Pet Owner
-
 
 {note
 git checkout [6f92a8ee8e76696d005da2a8b7a746444d017546](https://github.com/danhaywood/isis-app-petclinic/commit/6f92a8ee8e76696d005da2a8b7a746444d017546)
 }
 
+Add the `Owner` entity and corresponding `Owners` domain service (repository).  Add a query to find `Order`s by name:
+
+    ...
+    @javax.jdo.annotations.Queries( {
+            @javax.jdo.annotations.Query(
+                    name = "findByName", language = "JDOQL",
+                    value = "SELECT "
+                            + "FROM dom.owners.Owner "
+                            + "WHERE name.matches(:name)")
+    })
+    public class Owner ... {
+        ...
+    }
+
+and `findByName(...)` in `Owners`:
+
+    public class Owners {
+        ...
+        public List<Owner> findByName(
+                @ParameterLayout(named = "Name")
+                final String name) {
+            final String nameArg = String.format(".*%s.*", name);
+            final List<Owner> owners = container.allMatches(
+                    new QueryDefault<>(
+                            Owner.class,
+                            "findByName",
+                            "name", nameArg));
+            return owners;
+        }
+        ...
+    }
+
+Add Pet#owner property, with supporting `autoCompleteXxx()` method (so that available owners are shown in a drop-down list box):
+
+    public class Pet ... {
+        ...
+        private Owner owner;
+        @javax.jdo.annotations.Column(allowsNull = "false")
+        public Owner getOwner() { return owner; }
+        public void setOwner(final Owner owner) { this.owner = owner; }
+        public Collection<Owner> autoCompleteOwner(final @MinLength(1) String name) {
+            return owners.findByName(name);
+        }
+        ...
+    }
+
+Also updated fixture data to set up a number of `Owner`s, and associate each `Pet` with an `Owner`.  Also dded unit tests and integration tests for `Owner`/`Owners` and updated for `Pet`/`Pets`.
+
+When running the app, notice the new `Owners` menu:
 
 <a href="resources/petclinic/060-01-owners-menu.png"><img src="resources/petclinic/060-01-owners-menu.png" width="600"></img></a>
 
+which when invoked returns all `Owner` objects:
+
 <a href="resources/petclinic/060-02-owners-list.png"><img src="resources/petclinic/060-02-owners-list.png" width="600"></img></a>
+
+Each `Pet` also indicates its corresponding `Owner`:
 
 <a href="resources/petclinic/060-03-pets-list.png"><img src="resources/petclinic/060-03-pets-list.png" width="600"></img></a>
 
+And, on editing a `Pet`, a new `Owner` can be specified using the autoComplete:
+
 <a href="resources/petclinic/060-04-pet-owner-autoComplete.png"><img src="resources/petclinic/060-04-pet-owner-autoComplete.png" width="600"></img></a>
+    
 
-
+<!--
 
 
 {note
