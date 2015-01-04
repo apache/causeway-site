@@ -10,6 +10,28 @@ To support these use cases, Isis therefore allows you to write a view model, eit
 
 View models are immutable; their state is in fact encoded in their identity.  Editable view models can be simulated by implementing the `ViewModel.Cloneable` interface.
 
+#### A word of caution: don't use view models indiscriminately
+
+One of the compelling things about Isis-based applications is that the cost of the UI/Application layer is zero if you don't make use of View Models.  To put that another way: if you develop your Isis application only in terms of view models, then you are throwing away one of the major benefits of the framework.
+
+So, the sensible thing to do when building non-trivial business applications is:
+
+1. Focus on the overall domain model (particularly the shape which in turn gets influenced by the domain behaviour required - so sorting out the business behaviour up front with your business subject matter experts avoids an unsuitable shape that results from a "CRUD" behaviour alone). The domain model as represented by a UML class/object model should be devoid of all infrastructure plumbing concerns.
+
+2. Build the Isis app with just using Domain Objects taken directly from the Domain Model only (do not introduce View Models at this crucial stage).
+
+3. Verify the domain model with the business  using the live application from (2) and adjust as necessary.
+
+4. Once you have a consensus with the overall domain model then you can have a discussion with the business about any specialised UI interactions that might require the use of a View Model or several. 
+
+5. Add as many View Models over time as necessary but don't use these to compensate for an inadequate Domain Model and don't use them in lieu of a required extension to the Domain Model (a good domain model shape that more or less follows Peter Coad's [Domain Neutral Component archetypal](http://www.step-10.com/SoftwareDesign/ModellingInColour/dnc.html) domain shape will stand you in good stead for extensibility and longevity). 
+
+6. Never be tempted to put domain logic into View Models. 
+
+7. Never have any of the domain objects dependent on View Models. I.e. The direction of dependency is one way: The View Models depend on the Domain Layer."
+
+(Adapted from [this post](http://isis.markmail.org/thread/uxo66yc54xdon4u5) on users@isis.a.o; many thanks).
+
 
 ## @ViewModel annotation
 
@@ -72,6 +94,7 @@ View models implemented this way must be instantiated using `DomainObjectContain
 
    
 The `viewModelMemento()` and `viewModelInit()` methods should be reciprocals of each other, but there are no other constraints.  The [MementoService](../reference/services/memento-service.html) provides a convenient mechanism for view models to build up and parse memento strings.  But the methods could do anything; it would even be possible for a view model to store its state in the `HttpSession` and key that state with a GUID.
+
 
 
  
