@@ -77,9 +77,7 @@ Next, you will require a custom implementation of the `ComponentFactoryRegistrar
 
 This will result in the new component being used instead of (that is, discovered prior to) Isis' default implementation.
 
->
 > Previously this page suggested using "replace" rather than "add"; however this has unclear semantics for some component types; see [ISIS-996](https://issues.apache.org/jira/browse/ISIS-996).
->
 
 Finally (as for other customizations), you need to adjust the Guice bindings in your custom subclass of `IsisWicketApplication`:
 
