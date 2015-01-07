@@ -46,9 +46,8 @@ There is no default implementation of the service provided by the core framework
 
 The most common use case is to allow users to sign-up through Isis' Wicket viewer.  Because the process requires email to be sent, the following services must be configured:
 
-* `EmailService` (as described [here](./email-notification-service.html)).
+* `EmailService` (as described [here](./email-service.html)).
 * `EmailNotificationService` (as described [here](./email-notification-service.html)).
 * `UserRegistrationService` (this service)
 
 The `EmailService` in particular requires additional configuration properties to specify the external SMTP service.
-

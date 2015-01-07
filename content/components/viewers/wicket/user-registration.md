@@ -51,3 +51,5 @@ There are two prerequisites:
 * configure the [email service](./../../../reference/services/email-service.html)
 
 The latter is required if you are using the default email notification service and email service.  If you are using your own alternative implementation of the email notification service then it may be omitted (and configure your own alternative implementation as required).
+
+It is also possible to suppress the sign-up page link and/or the password reset page, see [here](suppressing-sign-up.html) and [here](suppressing-password-reset.html).

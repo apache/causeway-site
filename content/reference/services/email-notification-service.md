@@ -54,3 +54,7 @@ To ensure that your alternative implementation takes the place of the default im
 If using the default implementation of the `EmailService` then there is nothing to do because it is automatically registered (it is annotated with `@DomainService`).
 
 If you have written an alternative implementation, then register your implementation in `isis.properties` under the "isis.services" key.
+
+## Related Services
+
+The default implementation of the email service depends upon the `EmailService`, see [here](./email-service.html).
