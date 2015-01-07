@@ -316,7 +316,6 @@ For both:
 
 * [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
-
 #### <a name="more-advanced-topics-deployment">Deployment</a>
 
 * [Externalized Configuration](./reference/externalized-configuration.html)
@@ -324,6 +323,7 @@ For both:
 
 #### <a name="more-advanced-topics-jdo-objectstore">JDO Objectstore</a>
 
+* [Multi-tenancy](more-advanced-topics/multi-tenancy.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
