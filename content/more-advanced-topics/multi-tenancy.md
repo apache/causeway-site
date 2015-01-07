@@ -20,7 +20,7 @@ may be hierarchical.  Thus, we could have global data, then Italian data, and th
 could envisage this as a graph:
 
 <pre>
-/
+/           # ie, root === global
     italy
         milan
         rome
@@ -56,7 +56,7 @@ vetoes access where required.  This vetoing is based on the relationship between
   
 The following table illustrates the visibility rules:
 
-<table>
+<table class="table table-striped table-bordered table-condensed">
     <tr>
         <th>object's tenancy</th><th>user's tenancy</th><th>access</th>
     </tr>
