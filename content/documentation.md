@@ -417,8 +417,9 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 * [Email Service](./reference/services/email-service.html) (1.8.0-SNAPSHOT)
 
-#### <a name="domain-services-user-registration">User Registration</a>
+#### <a name="domain-services-user-profile">User management</a>
 
+* [User Profile Service](./reference/services/user-profile-service.html) (API only)  (1.8.0-SNAPSHOT)
 * [User Registration Service](./reference/services/user-registration-service.html) (API only)  (1.8.0-SNAPSHOT)
 * [Email Notification Service](./reference/services/email-notification-service.html)  (1.8.0-SNAPSHOT)
 
