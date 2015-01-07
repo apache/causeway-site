@@ -32,6 +32,17 @@ recognized by *Apache Isis*' default programming model:
     <td>Return a list of matching elements for a <a href="../how-tos/how-to-03-015-How-to-specify-an-autocomplete-for-a-property.html">property</a> or an <a href="../how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html">action parameter</a>.  <p>Alternatively, can specify for a class using the <a href="recognized-annotations/AutoComplete.html">@AutoComplete </a> annotation.<p>See also <tt>choices</tt></td>
 </tr>
 <tr>
+    <td>cssClass</td>
+    <td>Y</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Provides a CSS class for this object, which is added as a style in the containing &lt;tr&gt; when rendering the object within a table, or to a containing &lt;div&gt; when rendering the object on a page.  In conjunction with <i>css/application.css</i>, can therefore provide custom styling of an object instance wherever it is rendered.
+    <p>See also <tt>title</tt> and <tt>iconName</tt>.
+    </td>
+</tr>
+<tr>
     <td>choices</td>
     <td></td>
     <td>Y</td>
@@ -110,7 +121,7 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Provides the name of the image to render, usually alongside the title, to represent the object.  If not provided, then the class name is used to locate an image.<p>See also <tt>title</tt></td>
+    <td>Provides the name of the image to render, usually alongside the title, to represent the object.  If not provided, then the class name is used to locate an image.<p>See also <tt>title</tt> and <tt>cssClass</tt></td>
 </tr>
 <tr>
     <td>loaded</td>
@@ -209,7 +220,8 @@ recognized by *Apache Isis*' default programming model:
     <td></td>
     <td></td>
     <td></td>
-    <td>Provides a title for the object. <p>Alternatively, use the <a href="recognized-annotations/Title.html">@Title</a> annotation.</td>
+    <td>Provides a title for the object. <p>Alternatively, use the <a href="recognized-annotations/Title.html">@Title</a> annotation.
+     <p>See also <tt>iconName</tt> and <tt>cssClass</tt></td>
 </tr>
 <tr>
     <td>updated</td>
