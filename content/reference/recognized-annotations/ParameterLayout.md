@@ -5,8 +5,9 @@ annotation.
 
 * `cssClass` - the css class that a parameter should have, to allow more targetted styling in `application.css`
 * `describedAs` - description of this parameter, eg to be rendered in a tooltip.
-* `labelPosition` - in forms, the positioning of the label (left, top or none) relative to the parameter value.  Defaults to LEFT unless `multiLine` also specified (see below)
+* `labelPosition` - in forms, the positioning of the label (LEFT, TOP or NONE) relative to the parameter value.  For boolean parameters it is also possible to specify RIGHT.  Defaults to LEFT unless `multiLine` also specified (see below)
 * `named` -the name of this parameter.  For Java 7 this is generally required.  For Java 8, the name can be inferred from the code so this attribute allows the name to be overridden.
+* `namedEscaped` - whether to HTML escape the name of this parameter.  Defaults to true.
 * `multiLine` - for string parameters, render as a text area over multiple lines.  If set >1, then `labelPosition` defaults to TOP unless otherwise specified.
 * `renderedAsDayBefore` - for date parameters only, render the date as one day prior to the actually stored date (eg the end date of an open interval into a closed interval)
 * `typicalLength` -the typical entry length of a field, use to determine the optimum width for display
@@ -20,7 +21,8 @@ For example:
                                     cssClass="x-key",
                                     describedAs="What needs to be done",
                                     labelPosition=LabelPosition.LEFT,
-                                    named="Description",
+                                    named="Description of this <i>item</i>",
+                                    namedEscaped=false,
                                     typicalLength=80)
                                 final String description) {
             setDescription(description);

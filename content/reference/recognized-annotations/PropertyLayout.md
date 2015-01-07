@@ -5,9 +5,10 @@ annotation:
 
 * `cssClass` - the css class that a property should have, to allow more targetted styling in `application.css`
 * `describedAs` - description of this property, eg to be rendered in a tooltip.
-* `labelPosition` - in forms, the positioning of the label (left, top or none) relative to the property value.  Defaults to LEFT unless `multiLine` also specified (see below)
+* `labelPosition` - in forms, the positioning of the label (LEFT, TOP or NONE) relative to the property value.  For boolean properties it is also possible to specify RIGHT.  Defaults to LEFT unless `multiLine` also specified (see below)
 * `hidden` - indicates where in the UI the property should *not* be visible in the UI
 * `named` -the name of this property (overriding the name derived from its name in code)
+* `namedEscaped` - whether to HTML escape the name of this property.  Defaults to true.
 * `multiLine` - for string properties, render as a text area over multiple lines.  If set >1, then `labelPosition` defaults to TOP unless otherwise specified.
 * `renderedAsDayBefore` - for date properties only, render the date as one day prior to the actually stored date (eg the end date of an open interval into a closed interval)
 * `typicalLength` -the typical entry length of a field, use to determine the optimum width for display
@@ -18,6 +19,8 @@ For example:
        
         @PropertyLayout(
             cssClass="x-key",
+            named="Description of this <i>item</i>",
+            namedEscaped=false,
             describedAs="What needs to be done",
             labelPosition=LabelPosition.LEFT,
             typicalLength=80)
