@@ -4,11 +4,11 @@ The 'remember me' checkbox on the login page can be suppressed, if required, by 
 
 ##Screenshots
 
-With 'remember me' flag (the default):
+With 'remember me' not suppressed (the default):
 
-![](images/login-page-remember-me.png)
+![](images/login-page-default.png)
 
-and without:
+and with the checkbox suppressed:
 
 ![](images/login-page-suppress-remember-me.png)
 
@@ -19,4 +19,3 @@ To suppress the 'remember me' checkbox, add the following configuration flag:
     isis.viewer.wicket.suppressRememberMe=true
 
 Typically this should be added to the `viewer_wicket.properties` file (in `WEB-INF`), though you can add to `isis.properties` if you wish.
-

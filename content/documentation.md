@@ -412,6 +412,15 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 {col-md-4
 
+#### <a name="domain-services-email">Email</a>
+
+* [Email Service](./reference/services/email-service.html) (1.8.0-SNAPSHOT)
+
+#### <a name="domain-services-user-registration">User Registration</a>
+
+* [User Registration Service](./reference/services/user-registration-service.html) (API only)  (1.8.0-SNAPSHOT)
+* [Email Notification Service](./reference/services/email-notification-service.html)  (1.8.0-SNAPSHOT)
+
 #### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
@@ -448,9 +457,12 @@ Features, configuration and UI customisation.
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
+* [User Registration](./components/viewers/wicket/user-registration.html) (1.8.0-SNAPSHOT)
 
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
+* [Suppressing 'password reset'](components/viewers/wicket/suppressing-sign-up.html) (1.8.0-SNAPSHOT)
+* [Suppressing 'password reset'](components/viewers/wicket/suppressing-password-reset.html) (1.8.0-SNAPSHOT)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)

@@ -83,6 +83,20 @@ The services listed here are those whose API is defined in Isis applib.  In addi
     <td></td>
 </tr>
 <tr>
+    <th class="heading">o.a.i.applib.services.userreg<br/>EmailNotificationService</th>
+    <td>g:org.apache.isis.core<br/>a:isis-core-runtime</td>
+    <td>EmailNotificationServiceDefault</td>
+    <td>Yes; auto-registered</td>
+    <td>depends on:<br/>EmailService</td>
+</tr>
+<tr>
+    <th class="heading">o.a.i.applib.services.email<br/>EmailService</th>
+    <td>g:org.apache.isis.core<br/>a:isis-core-runtime</td>
+    <td>EmailServiceDefault</td>
+    <td>Yes; auto-registered</td>
+    <td></td>
+</tr>
+<tr>
     <th class="heading">o.a.i.applib.services.eventbus<br/>EventBusService</th>
     <td>g:org.apache.isis.core<br/>a:isis-core-objectstore-jdo-datanucleus</td>
     <td>EventBusServiceJdo</td>
@@ -144,6 +158,13 @@ The services listed here are those whose API is defined in Isis applib.  In addi
     <td>Scratchpad</td>
     <td>Yes; auto-registered</td>
     <td>API is also a concrete class</td>
+</tr>
+<tr>
+    <th class="heading">o.a.i.applib.services.userreg<br/>UserRegistrationService</th>
+    <td>g:org.isisaddons.module.security<br/>a:isis-module-security</td>
+    <td>SecurityModuleAppUserRegistrationService</td>
+    <td>Yes; auto-registered</td>
+    <td></td>
 </tr>
 <tr>
     <th class="heading">o.a.i.applib.services.wrapper<br/>WrapperFactory</th>
