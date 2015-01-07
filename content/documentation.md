@@ -135,8 +135,9 @@ Title: Documentation
 
 Icons and Titles
 
-* [Entity title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
-* [Entity icons](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [Object title](./how-tos/how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html)
+* [Object icon](./how-tos/how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html)
+* [Object CSS styling](./how-tos/how-to-customize-styling-for-a-domain-object.html)
 * [Titles in tables](components/viewers/wicket/titles-in-tables.html)
 
 Names & Descriptions

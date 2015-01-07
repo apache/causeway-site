@@ -1,6 +1,6 @@
 title: How to specify the icon for a domain object
 
-Apache Isis viewers identify objects through both an icon and a [title](./how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html).
+Apache Isis viewers identify objects to the end-user through both an icon and a [title](./how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html).
 
 The icon can be either static and fixed - meaning it is based on the object's class - or dynamic and changing - meaning
 it can change according to the object's state.  For example, an `Order` could indicate its status (pending, shipped), or a `ToDoItem` could indicate if it is complete or not.
