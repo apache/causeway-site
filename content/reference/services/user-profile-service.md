@@ -33,7 +33,7 @@ If the method returns <tt>null</tt> or throws an exception then the framework wi
 The [todoapp](../../intro/getting-started/todoapp-archetype.html) provides a custom implementation that demonstrates the
 use of this service:
 
-![](images/user-profile-service.png)
+<a href="images/user-profile-service.png"><img width="600px" src="images/user-profile-service.png"/></a>
 
 The implementation is very straight-forward:
 

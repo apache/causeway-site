@@ -323,7 +323,7 @@ For both:
 
 #### <a name="more-advanced-topics-jdo-objectstore">JDO Objectstore</a>
 
-* [Multi-tenancy](more-advanced-topics/multi-tenancy.html)
+* [Multi-tenancy](more-advanced-topics/multi-tenancy.html) (1.8.0-SNAPSHOT)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
