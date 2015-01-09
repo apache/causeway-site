@@ -427,6 +427,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
 * [Memento Service](./reference/services/memento-service.html)
+* [Deep Link Service](./reference/services/deep-link-service.html)
 * [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
 
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>

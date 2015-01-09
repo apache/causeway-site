@@ -9,20 +9,22 @@ This is a good way of storing a reference to an arbitrary object (a polymorphic 
 
 The API defined by `BookmarkService` is:
 
-    @Named("Bookmarks")
     public interface BookmarkService {
 
-      @NotInServiceMenu
-      Object lookup(BookmarkHolder bookmarkHolder);
+        @NotInServiceMenu
+        Object lookup(BookmarkHolder bookmarkHolder);
 
-      @Hidden
-      Object lookup(Bookmark bookmark);
+        @Programmatic
+        Object lookup(Bookmark bookmark);
 
-      @Hidden
-      <T> T lookup(Bookmark bookmark, Class<T> requiredType);
+        @Programmatic
+        <T> T lookup(Bookmark bookmark, Class<T> requiredType);
 
-      @Hidden
-      Bookmark bookmarkFor(Object domainObject);
+        @Programmatic
+        Bookmark bookmarkFor(Object domainObject);
+
+        @Programmatic
+        Bookmark bookmarkFor(Class<?> cls, String identifier);
     }
 
 If a domain class implements the `org.apache.isis.applib.bookmarks.BookmarkHolder` interface then the `BookmarkService` will appear as a contributed action.  Otherwise the service is hidden from view, intended to be injected into domain objects as a supporting domain service.
