@@ -13,7 +13,7 @@ while this is the object change JSON:
  ![](images/changed-object-published-to-stderr.png)
 
 
-If you configure the default [PublishingService](../../../reference/services/publishing-service.html) along with the `RestfulObjectsSpecEventSerializer`, then you should see JSON being written to your console.
+If you configure the default [PublishingService](../../../reference/services/publishing-service.html) along with the `RestfulObjectsSpecEventSerializer` (part of [isis-module-publishing](https://github.com/isisaddons/isis-module-publishing)), then you should see JSON being written to your console.
 
 
 ### Registering and Configuring the Serializer
