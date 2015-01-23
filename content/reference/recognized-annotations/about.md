@@ -10,6 +10,12 @@ go back to: [documentation](../../documentation.html)
         <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
     </tr>
     <tr>
+        <td><a href="./Action.html">@Action</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for actions</td>
+        <td></td>
+    </tr>
+    <tr>
         <td><a href="./ActionLayout.html">@ActionLayout</a></td>
         <td>UI</td>
         <td>User interface hints for actions</td>
@@ -19,6 +25,12 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./AutoComplete.html">@AutoComplete</a></td>
         <td>UI</td>
         <td>Repository method to search for entities</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./Collection.html">@Collection</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for collections</td>
         <td></td>
     </tr>
     <tr>
@@ -34,9 +46,15 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
+        <td><a href="./DomainObject.html">@DomainObject</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for domain object (entities and optionally view models, see also <tt>@ViewModel</tt>)</td>
+        <td></td>
+    </tr>
+    <tr>
         <td><a href="./DomainObjectLayout.html">@DomainObjectLayout</a></td>
         <td>UI</td>
-        <td>User interface hints for domain object (entities and view models)</td>
+        <td>User interface hints for domain object (entities and optionally view models, see also <tt>@ViewModelLayout</tt>)</td>
         <td>Yes</td>
     </tr>
     <tr>
@@ -49,7 +67,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./DomainServiceLayout.html">@DomainServiceLayout</a></td>
         <td>UI</td>
         <td>User interface hints for domain services</td>
-        <td>Yes</td>
+        <td></td>
     </tr>
     <tr>
         <td><a href="./Facets.html">@Facets</a></td>
@@ -114,6 +132,12 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
+        <td><a href="./Parameter.html">@Parameter</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for action parameters</td>
+        <td></td>
+    </tr>
+    <tr>
         <td><a href="./ParameterLayout.html">@PropertyLayout</a></td>
         <td>UI</td>
         <td>Layout hints for an action parameter (currently: its label position either to top or the left).</td>
@@ -123,6 +147,12 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Programmatic.html">@Programmatic</a></td>
         <td>Domain</td>
         <td>Ignore a public method, excluded from the Isis metamodel.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./Property.html">@Property</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for properties</td>
         <td></td>
     </tr>
     <tr>
@@ -147,10 +177,15 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./ViewModel.html">@ViewModel</a></td>
         <td>Domain, Persistence</td>
-        <td>Specify that a class is a view model (as opposed to an entity or domain service).
-            <br/>Alternatively, use <tt>@DomainObject(nature=VIEW_MODEL)</tt>.
+        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <tt>@DomainObject(nature=VIEW_MODEL)</tt>.
         </td>
         <td></td>
+    </tr>
+    <tr>
+        <td><a href="./ViewModelLayout.html">@ViewModelLayout</a></td>
+        <td>UI</td>
+        <td>User interface hints for view models (use with <tt>@ViewModel</tt>, else see <tt>@DomainObjectLayout</tt>)</td>
+        <td>Yes</td>
     </tr>
 </table>
 
