@@ -203,31 +203,40 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionOrder-deprecated.html" >@ActionOrder</a></td>
         <td>UI</td>
         <td>Order of buttons and menu items representing actions.
+        <br/>Use instead <tt>@MemberOrder</tt> or dynamic layout.
         </td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./ActionInteraction.html">@ActionInteraction</a></td>
         <td>Domain</td>
-        <td>Enable subscribers to either veto, validate or take further steps before/after an action has been invoked.</td>
+        <td>Enable subscribers to either veto, validate or take further steps before/after an action has been invoked.
+        <br/>Use instead <tt>@Action#domainEvent()</tt>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./ActionSemantics.html">@ActionSemantics</a></td>
         <td>Domain</td>
-        <td>Query-only, idempotent or non-idempotent.</td>
+        <td>Query-only, idempotent or non-idempotent.
+        <br/>Use instead <tt>@Action#semantics()</tt>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Audited.html">@Audited</a></td>
         <td>Domain</td>
-        <td>Audit changes to an object</td>
+        <td>Audit changes to an object.
+        <br/>Use instead <tt>@DomainObject#auditing()</tt>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Bookmarkable.html">@Bookmarkable</a></td>
         <td>UI</td>
-        <td>Whether (and how) to create a bookmark for visited object.</td>
+        <td>Whether (and how) to create a bookmark for visited object.
+        <br/>Use instead <tt>@DomainObjectLayout#bookmarking</tt>
+        </td>
         <td></td>
     </tr>
     <tr>
@@ -235,35 +244,40 @@ go back to: [documentation](../../documentation.html)
         <td>Domain</td>
         <td>Bounded (and limited) number of instances of an entity type, translates into a drop-down for any property of
             that type.
+        <br/>Use instead <tt>@DomainObject#bounded()</tt>
         </td>
-        <td></td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Bulk.html">@Bulk</a></td>
         <td>UI, Domain</td>
-        <td>Indicates an action is a bulk action, can be applied to multiple instances.</td>
+        <td>Indicates an action is a bulk action, can be applied to multiple instances.
+        <br/>Use instead <tt>@Action#invokeOn()</tt>
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./CollectionInteraction.html">@CollectionInteraction</a></td>
         <td>Domain</td>
         <td>Enable subscribers to either veto, validate or take further steps before/after a collection has been added to or
-            removed from.</td>
+            removed from.
+        <br/>Use instead <tt>@Collection#domainEvent()</tt>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Command.html">@Command</a></td>
         <td>Domain</td>
         <td>Action invocation should be reified as a command object, optionally persistable for profiling and enhanced
-            auditing, and background/async support.</td>
+            auditing, and background/async support.
+        <br/>Use instead <tt>@Action#command()</tt>.</td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./CssClass-deprecated.html">@CssClass</a></td>
         <td>UI</td>
         <td>Allow visual representation of individual objects or object members layout to be customized by application-specific CSS.
-        <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+        <br/>Use instead <code>@DomainObjectLayout#cssClass()</code>, <code>@PropertyLayout#cssClass()</code>, <code>@CollectionLayout#cssClass()</code>, <code>@ActionLayout#cssClass()</code> and <code>@ParameterLayout#cssClass()</code>
         </td>
         <td>Yes</td>
     </tr>
@@ -271,7 +285,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./CssClassFa-deprecated.html">@CssClassFa</a></td>
         <td>UI</td>
         <td>So that font awesome icons can be applied to action buttons/menu items and optionally as an object icon.
-        <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ActionLayout</code>
+        <br/>Use instead <code>@ActionLayout#cssClassFa()</code>
         </td>
         <td>Yes</td>
     </tr>
@@ -286,7 +300,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./DescribedAs-deprecated.html">@DescribedAs</a></td>
         <td>UI</td>
         <td>Provide a longer description/tool-tip of an object or object member.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+            <br/>Use instead <code>@DomainObjectLayout#describedAs()</code>, <code>@PropertyLayout#describedAs()</code>, <code>@CollectionLayout#describedAs()</code>, <code>@ActionLayout#describedAs()</code> and <code>@ParameterLayout#describedAs()</code>
         </td>
         <td>Yes</td>
     </tr>
@@ -294,43 +308,46 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Disabled.html">@Disabled</a></td>
         <td>UI, Domain</td>
         <td>Object property cannot be edited, an object collection cannot be added to/removed from, or an
-            object action cannot be invoked.</td>
+            object action cannot be invoked.
+            <br/>Use instead <tt>@Property#editing()</tt> and <code>@Collection#editing()</code>, see also <code>@DomainObject#editing()</code>.
+        </td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Exploration-deprecated.html"  >@Exploration</a></td>
         <td>UI</td>
         <td>Action available in special 'exploration' mode.
-            <br/>Deprecated in 1.8.0-SNAPSHOT
+            <br/>Use <code>@Action#restrictTo()</code> instead (combines exploration and prototyping modes).
         </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./FieldOrder-deprecated.html"  >@FieldOrder</a></td>
         <td>UI</td>
-        <td>Order of properties and collections
+        <td>Order of properties and collections.
+            <br/>Use instead <code>@MemberOrder</code> or dynamic layout.
         </td>
-        <td></td>
+        <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Hidden-deprecated.html">@Hidden</a></td>
         <td>UI, Domain</td>
         <td>Object member is not visible.
-            <br/>Deprecated in 1.8.0-SNAPSHOT
+            <br/>Use instead <code>@Action#hidden()</code>, <code>@Property#hidden()</code> or <code>@Collection#hidden()</code>.
         </td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Idempotent-deprecated.html"  >@Idempotent</a></td>
         <td>Domain</td>
-        <td>Replaced by @ActionSemantics.
+        <td>Use instead <code>@Action#semantics</code>.
         </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Ignore-deprecated.html"  >@Ignore</a></td>
         <td>Domain</td>
-        <td>Replaced by @Programmatic.
+        <td>Use instead <code>@Programmatic</code>.
         </td>
         <td></td>
     </tr>
@@ -339,6 +356,7 @@ go back to: [documentation](../../documentation.html)
         <td>Domain</td>
         <td>An object's state cannot be changed (properties cannot be edited, collections cannot be added to or removed
             from). Actions <i>can</i> still be invoked.
+            <br/>Use instead <code>@DomainObject#editing()</code>.
         </td>
         <td></td>
     </tr>
@@ -352,34 +370,37 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./MaxLength.html">@MaxLength</a></td>
         <td>Domain</td>
-        <td>Maximum length of a property value (strings).</td>
+        <td>Maximum length of a property value (strings).
+            <br/>Use instead <code>@Property#maxLength()</code> or <code>@Parameter#maxLength()</code>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./MemberGroups-deprecated.html">@MemberGroups</a></td>
         <td>UI</td>
-        <td>Replaced by @MemberGroupLayout</td>
+        <td>Use instead <code>@MemberGroupLayout</code> or dynamic layout.</td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./MultiLine-deprecated.html">@MultiLine</a></td>
         <td>UI</td>
         <td>Render string property over multiple lines (a textarea rather than a textbox).
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@PropertyLayout</code> and <code>@ParameterLayout</code>
+            <br/>Use instead <code>@PropertyLayout#multiLine()</code> and <code>@ParameterLayout#multiLine()</code>
             </td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./MustSatisfy.html">@MustSatisfy</a></td>
         <td>Domain</td>
-        <td>Specify arbitrary specification constraints on a class member, action parameter or object.</td>
+        <td>Specify arbitrary specification constraints on a property or action parameter.
+            <br/>Use instead <code>@Property#mustSatisfy()</code> or <code>@Parameter#mustSatisfy()</td>.
         <td></td>
     </tr>
     <tr>
         <td><a href="./Named-deprecated.html">@Named</a></td>
         <td>UI</td>
         <td>Override name inferred from class. Required for parameter names (prior to Java8).
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainServiceLayout</code>, <code>@DomainObjectLayout</code>, <code>@PropertyLayout</code>, <code>@CollectionLayout</code>, <code>@ActionLayout</code> and <code>@ParameterLayout</code>
+            <br/>Use instead <code>@DomainServiceLayout#named()</code>, <code>@DomainObjectLayout#named()</code>, <code>@PropertyLayout#named()</code>, <code>@CollectionLayout#named()</code>, <code>@ActionLayout#named()</code> and <code>@ParameterLayout#named()</code>
             </td>
         <td>Yes</td>
     </tr>
@@ -387,34 +408,38 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ObjectType.html">@ObjectType</a></td>
         <td>Domain</td>
         <td>For constructing the external identifier (URI) of an entity instance (part of its URL in both Wicket viewer and
-            Restful Objects viewer).</td>
+            Restful Objects viewer).
+            <br/>Use instead <code>@DomainObject#objectType()</code>.
+            </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Optional.html">@Optional</a></td>
         <td>Domain</td>
-        <td>Specifies that a property or action parameter is not mandatory.</td>
+        <td>Specifies that a property or action parameter is not mandatory.
+            <br/>Use instead <code>@Property#optionality()</code> or <code>@Parameter#optionality()</code>.
+        </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Paged-deprecated.html">@Paged</a></td>
         <td>UI</td>
-        <td>Number of instances to display in tables representing (parented or standalone) collections.
-            <br/>Deprecated in 1.8.0-SNAPSHOT</td>
+        <td>Number of instances to display in tables representing (standalone or parented) collections.
+            <br/>Use instead <code>@DomainObjectLayout#paged()</code> or <code>@CollectionLayout#paged()</td>.
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./Plural-deprecated.html">@Plural</a></td>
         <td>UI</td>
         <td>For the irregular plural form of an entity type.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@DomainObjectLayout</code>
+            <br/>Use instead <code>@DomainObjectLayout#plural()</code>
             </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./PostsPropertyChangedEvent-deprecated.html"  >@PostsPropertyChangedEvent</a></td>
         <td>Domain</td>
-        <td>Replaced by @PropertyInteraction
+        <td>Use instead <code>@Property#domainEvent()</code>.
         </td>
         <td></td>
     </tr>
@@ -422,14 +447,16 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./PropertyInteraction.html">@PropertyInteraction</a></td>
         <td>Domain</td>
         <td>Enable subscribers to either veto, validate or take further steps before/after a property has been modified or
-            cleared.</td>
+            cleared.
+            <br/>Use instead <code>@Property#domainEvent()</code>.
+            </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Prototype-deprecated.html">@Prototype</a></td>
         <td>UI</td>
         <td>Indicates that an action should only be visible in 'prototype' mode.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@ActionLayout</code>
+            <br/>Use instead <code>@Action#restrictTo()</code>
             </td>
         <td>Yes</td>
     </tr>
@@ -437,33 +464,37 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./PublishedAction.html">@PublishedAction</a></td>
         <td>Domain</td>
         <td>Action invocation should be serialized and published by configured PublishingService (if any), eg to other
-            systems.</td>
+            systems.
+            <br/>Use instead <code>@Action#publishing()</code>.
+            </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./PublishedObject.html">@PublishedObject</a></td>
         <td>Domain</td>
         <td>Change to object should be serialized and published by configured PublishingService (if any), eg to other
-            systems.</td>
+            systems.
+            <br/>Use instead <code>@DomainObject#publishing()</code>.
+            </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./QueryOnly-deprecated.html"  >@QueryOnly</a></td>
         <td>Domain</td>
-        <td>Replaced by @ActionSemantics.</td>
+        <td>Use instead <code>@Action#semantics()</code></td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./RegEx.html">@RegEx</a></td>
         <td>Domain</td>
         <td>Validate change to value of string property.</td>
-        <td></td>
+        <td><br/>Use instead <code>@Property#regexPattern()</code> or <code>@Parameter#regexPattern()</code>.</td>
     </tr>
     <tr>
         <td><a href="./Render-deprecated.html">@Render</a></td>
         <td>UI</td>
         <td>Eagerly (or lazily) render the contents of a collection.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@CollectionLayout</code>
+            <br/>Use instead <code>@CollectionLayout#render()</code>
             </td>
         <td>Yes</td>
     </tr>
@@ -471,21 +502,21 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./RenderedAsDayBefore-deprecated.html">@RenderedAsDayBefore</a></td>
         <td>UI</td>
         <td>Render dates as the day before; ie store [a,b) internally but render [a,b-1]) to end-user.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@PropertyLayout</code> and <code>@ParameterLayout</code>
+            <br/>Use instead <code>@PropertyLayout#renderedAsDayBefore()</code> and <code>@ParameterLayout#renderedAsDayBefore()</code>.
             </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./Resolve-deprecated.html"  >@Resolve</a></td>
         <td>UI</td>
-        <td>Replaced by <code>@Render</code>.</td>
+        <td>Use instead <code>@CollectionLayout#render()</code>.</td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./SortedBy-deprecated.html">@SortedBy</a></td>
         <td>UI</td>
         <td>Display instances in collections in the order determined by the provided Comparator.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@CollectionLayout</code>
+            <br/>Use instead <code>@CollectionLayout#sortedBy()</code>
             </td>
         <td>Yes</td>
     </tr>
@@ -493,6 +524,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./TypeOf.html">@TypeOf</a></td>
         <td>Domain</td>
         <td>The type of entity stored within a collection (if cannot be otherwise inferred, eg from generics).
+            <br/>Use instead <code>@Collection#typeOf()</code>.
         </td>
         <td></td>
     </tr>
@@ -500,7 +532,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./TypicalLength-deprecated.html">@TypicalLength</a></td>
         <td>UI</td>
         <td>The typical length of a string property, eg to determine a sensible length for a textbox.
-            <br/>Deprecated in 1.8.0-SNAPSHOT, see <code>@PropertyLayout</code> and <code>@ParameterLayout</code>
+            <br/>Use instead <code>@PropertyLayout#typicalLength()</code> and <code>@ParameterLayout#typicalLength()</code>.
         </td>
         <td>Yes</td>
     </tr>
