@@ -487,8 +487,10 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./RegEx.html">@RegEx</a></td>
         <td>Domain</td>
-        <td>Validate change to value of string property.</td>
-        <td><br/>Use instead <code>@Property#regexPattern()</code> or <code>@Parameter#regexPattern()</code>.</td>
+        <td>Validate change to value of string property.
+        <br/>Use instead <code>@Property#regexPattern()</code> or <code>@Parameter#regexPattern()</code>.
+        </td>
+        <td></td>
     </tr>
     <tr>
         <td><a href="./Render-deprecated.html">@Render</a></td>
