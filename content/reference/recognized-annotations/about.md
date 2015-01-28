@@ -162,9 +162,9 @@ go back to: [documentation](../../documentation.html)
         <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./RequestScoped.html">@RequestScoped</a></td>
+        <td><a href="./RequestScoped.html">@javax.enterprise.context.RequestScoped</a></td>
         <td>Domain</td>
-        <td>Specify that a domain service has request-scope (rather than a singleton).  (In <code>javax.enterprise.context</code> package).</td>
+        <td>Specify that a domain service has request-scope (rather than a singleton).</td>
         <td></td>
     </tr>
     <tr>
