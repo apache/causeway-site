@@ -48,13 +48,13 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./DomainObject.html">@DomainObject</a></td>
         <td>Domain</td>
-        <td>Domain semantics for domain object (entities and optionally view models, see also <tt>@ViewModel</tt>)</td>
+        <td>Domain semantics for domain object (entities and optionally view models, see also <code>@ViewModel</code>)</td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./DomainObjectLayout.html">@DomainObjectLayout</a></td>
         <td>UI</td>
-        <td>User interface hints for domain object (entities and optionally view models, see also <tt>@ViewModelLayout</tt>)</td>
+        <td>User interface hints for domain object (entities and optionally view models, see also <code>@ViewModelLayout</code>)</td>
         <td>Yes</td>
     </tr>
     <tr>
@@ -177,14 +177,14 @@ go back to: [documentation](../../documentation.html)
     <tr>
         <td><a href="./ViewModel.html">@ViewModel</a></td>
         <td>Domain, Persistence</td>
-        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <tt>@DomainObject(nature=VIEW_MODEL)</tt>.
+        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <code>@DomainObject(nature=VIEW_MODEL)</code>.
         </td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./ViewModelLayout.html">@ViewModelLayout</a></td>
         <td>UI</td>
-        <td>User interface hints for view models (use with <tt>@ViewModel</tt>, else see <tt>@DomainObjectLayout</tt>)</td>
+        <td>User interface hints for view models (use with <code>@ViewModel</code>, else see <code>@DomainObjectLayout</code>)</td>
         <td>Yes</td>
     </tr>
 </table>
@@ -203,7 +203,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionOrder-deprecated.html" >@ActionOrder</a></td>
         <td>UI</td>
         <td>Order of buttons and menu items representing actions.
-        <br/>Use instead <tt>@MemberOrder</tt> or dynamic layout.
+        <br/>Use instead <code>@MemberOrder</code> or dynamic layout.
         </td>
         <td>Yes</td>
     </tr>
@@ -211,7 +211,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionInteraction.html">@ActionInteraction</a></td>
         <td>Domain</td>
         <td>Enable subscribers to either veto, validate or take further steps before/after an action has been invoked.
-        <br/>Use instead <tt>@Action#domainEvent()</tt>.
+        <br/>Use instead <code>@Action#domainEvent()</code>.
         </td>
         <td></td>
     </tr>
@@ -219,7 +219,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionSemantics.html">@ActionSemantics</a></td>
         <td>Domain</td>
         <td>Query-only, idempotent or non-idempotent.
-        <br/>Use instead <tt>@Action#semantics()</tt>.
+        <br/>Use instead <code>@Action#semantics()</code>.
         </td>
         <td></td>
     </tr>
@@ -227,7 +227,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Audited.html">@Audited</a></td>
         <td>Domain</td>
         <td>Audit changes to an object.
-        <br/>Use instead <tt>@DomainObject#auditing()</tt>.
+        <br/>Use instead <code>@DomainObject#auditing()</code>.
         </td>
         <td></td>
     </tr>
@@ -235,7 +235,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Bookmarkable.html">@Bookmarkable</a></td>
         <td>UI</td>
         <td>Whether (and how) to create a bookmark for visited object.
-        <br/>Use instead <tt>@DomainObjectLayout#bookmarking</tt>
+        <br/>Use instead <code>@DomainObjectLayout#bookmarking()</code>
         </td>
         <td></td>
     </tr>
@@ -244,7 +244,7 @@ go back to: [documentation](../../documentation.html)
         <td>Domain</td>
         <td>Bounded (and limited) number of instances of an entity type, translates into a drop-down for any property of
             that type.
-        <br/>Use instead <tt>@DomainObject#bounded()</tt>
+        <br/>Use instead <code>@DomainObject#bounded()</code>
         </td>
         <td></td>
     </tr>
@@ -252,7 +252,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Bulk.html">@Bulk</a></td>
         <td>UI, Domain</td>
         <td>Indicates an action is a bulk action, can be applied to multiple instances.
-        <br/>Use instead <tt>@Action#invokeOn()</tt>
+        <br/>Use instead <code>@Action#invokeOn()</code>
         </td>
         <td></td>
     </tr>
@@ -261,7 +261,7 @@ go back to: [documentation](../../documentation.html)
         <td>Domain</td>
         <td>Enable subscribers to either veto, validate or take further steps before/after a collection has been added to or
             removed from.
-        <br/>Use instead <tt>@Collection#domainEvent()</tt>.
+        <br/>Use instead <code>@Collection#domainEvent()</code>.
         </td>
         <td></td>
     </tr>
@@ -270,7 +270,7 @@ go back to: [documentation](../../documentation.html)
         <td>Domain</td>
         <td>Action invocation should be reified as a command object, optionally persistable for profiling and enhanced
             auditing, and background/async support.
-        <br/>Use instead <tt>@Action#command()</tt>.</td>
+        <br/>Use instead <code>@Action#command()</code>.</td>
         <td></td>
     </tr>
     <tr>
@@ -309,7 +309,7 @@ go back to: [documentation](../../documentation.html)
         <td>UI, Domain</td>
         <td>Object property cannot be edited, an object collection cannot be added to/removed from, or an
             object action cannot be invoked.
-            <br/>Use instead <tt>@Property#editing()</tt> and <code>@Collection#editing()</code>, see also <code>@DomainObject#editing()</code>.
+            <br/>Use instead <code>@Property#editing()</code> and <code>@Collection#editing()</code>, see also <code>@DomainObject#editing()</code>.
         </td>
         <td>Yes</td>
     </tr>
