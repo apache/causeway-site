@@ -572,7 +572,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
 </table>
 
-## Annotations with incomplete/partial support (1.8.0-SNAPSHOT)
+### Annotations with incomplete/partial support
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>
