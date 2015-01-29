@@ -2,7 +2,7 @@ title: Recognized Annotations
 
 go back to: [documentation](../../documentation.html)
 
-### Domain objects, services and members
+### Domain objects, services and members (as of 1.8.0-SNAPSHOT)
 
 `@Xxx` specify domain-layer metadata, `@XxxLayout` specify view-layer metadata
 
