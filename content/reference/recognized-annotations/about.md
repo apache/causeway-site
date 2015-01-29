@@ -2,6 +2,10 @@ title: Recognized Annotations
 
 go back to: [documentation](../../documentation.html)
 
+## Domain objects, services and members
+
+`@Xxx` specify domain-layer metadata, `@XxxLayout` specify view-layer metadata
+
 <table class="table table-bordered table-condensed table-hover">
     <tr>
         <th>Annotation</th>
@@ -22,12 +26,6 @@ go back to: [documentation](../../documentation.html)
         <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./AutoComplete.html">@AutoComplete</a></td>
-        <td>UI</td>
-        <td>Repository method to search for entities</td>
-        <td></td>
-    </tr>
-    <tr>
         <td><a href="./Collection.html">@Collection</a></td>
         <td>Domain</td>
         <td>Domain semantics for collections</td>
@@ -38,12 +36,6 @@ go back to: [documentation](../../documentation.html)
         <td>UI</td>
         <td>User interface hints for collections</td>
         <td>Yes</td>
-    </tr>
-    <tr>
-        <td><a href="./Digits.html">@javax.validation.constraints.Digits</a></td>
-        <td>Domain</td>
-        <td>Precision/scale for BigDecimal values.</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./DomainObject.html">@DomainObject</a></td>
@@ -70,6 +62,60 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
+        <td><a href="./Parameter.html">@Parameter</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for action parameters</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./ParameterLayout.html">@PropertyLayout</a></td>
+        <td>UI</td>
+        <td>Layout hints for an action parameter (currently: its label position either to top or the left).</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td><a href="./Property.html">@Property</a></td>
+        <td>Domain</td>
+        <td>Domain semantics for properties</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./PropertyLayout.html">@PropertyLayout</a></td>
+        <td>UI</td>
+        <td>Layout hints for a property (currently: its label position either to top or the left).</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td><a href="./ViewModel.html">@ViewModel</a></td>
+        <td>Domain, Persistence</td>
+        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <code>@DomainObject(nature=VIEW_MODEL)</code>.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./ViewModelLayout.html">@ViewModelLayout</a></td>
+        <td>UI</td>
+        <td>User interface hints for view models (use with <code>@ViewModel</code>, else see <code>@DomainObjectLayout</code>)</td>
+        <td>Yes</td>
+    </tr>
+</table>
+
+## Other Domain layer annotations
+
+<table class="table table-bordered table-condensed table-hover">
+    <tr>
+        <th>Annotation</th>
+        <th>Layer</th>
+        <th>Purpose</th>
+        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
+    </tr>
+    <tr>
+        <td><a href="./AutoComplete.html">@AutoComplete</a></td>
+        <td>UI</td>
+        <td>Repository method to search for entities</td>
+        <td></td>
+    </tr>
+    <tr>
         <td><a href="./Facets.html">@Facets</a></td>
         <td>(any)</td>
         <td>Install arbitrary facets within the Isis metamodel.
@@ -77,17 +123,40 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
+        <td><a href="./Programmatic.html">@Programmatic</a></td>
+        <td>Domain</td>
+        <td>Ignore a public method, excluded from the Isis metamodel.</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./MinLength.html">@MinLength</a></td>
+        <td>UI</td>
+        <td>Minimum number of characters required for an auto-complete search argument.
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./NotPersisted.html">@NotPersisted</a></td>
+        <td>Domain, Persistence</td>
+        <td>Indicates that an object property is derived, is not persisted.</td>
+        <td></td>
+    </tr>
+</table>
+
+## Other View layer (UI hint) annotations
+
+<table class="table table-bordered table-condensed table-hover">
+    <tr>
+        <th>Annotation</th>
+        <th>Layer</th>
+        <th>Purpose</th>
+        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
+    </tr>
+    <tr>
         <td><a href="./HomePage.html">@HomePage</a></td>
         <td>UI</td>
         <td>Query-only action (on domain service) to be invoked, result of which is
             rendered as the user's home page.</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./Inject.html">@javax.inject.Inject</a></td>
-        <td>Domain</td>
-        <td>Inject domain service into a domain object (entity or view model) or another domain service.
-        </td>
         <td></td>
     </tr>
     <tr>
@@ -104,62 +173,22 @@ go back to: [documentation](../../documentation.html)
         <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./MinLength.html">@MinLength</a></td>
+        <td><a href="./Title.html">@Title</a></td>
         <td>UI</td>
-        <td>Minimum number of characters required for an auto-complete search argument.
+        <td>Indicates which of the object's properties should be used to build up a title for the object.
         </td>
         <td></td>
     </tr>
+</table>
+
+## Java EE Annotations
+
+<table class="table table-bordered table-condensed table-hover">
     <tr>
-        <td><a href="./NotContributed.html">@NotContributed</a></td>
-        <td>UI</td>
-        <td>Indicates that a domain service action is not rendered as an action on the (entity) types of its
-            parameters. For 1-arg query-only actions, controls whether the domain service action is rendered as a property
-            or collection on the entity type of its parameter.</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./NotInServiceMenu.html">@NotInServiceMenu</a></td>
-        <td>UI</td>
-        <td>Indicates that a domain service should not be rendered in the application menu (at top of page in
-            Wicket viewer).</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./NotPersisted.html">@NotPersisted</a></td>
-        <td>Domain, Persistence</td>
-        <td>Indicates that an object property is derived, is not persisted.</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./Parameter.html">@Parameter</a></td>
-        <td>Domain</td>
-        <td>Domain semantics for action parameters</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./ParameterLayout.html">@PropertyLayout</a></td>
-        <td>UI</td>
-        <td>Layout hints for an action parameter (currently: its label position either to top or the left).</td>
-        <td>Yes</td>
-    </tr>
-    <tr>
-        <td><a href="./Programmatic.html">@Programmatic</a></td>
-        <td>Domain</td>
-        <td>Ignore a public method, excluded from the Isis metamodel.</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./Property.html">@Property</a></td>
-        <td>Domain</td>
-        <td>Domain semantics for properties</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><a href="./PropertyLayout.html">@PropertyLayout</a></td>
-        <td>UI</td>
-        <td>Layout hints for a property (currently: its label position either to top or the left).</td>
-        <td>Yes</td>
+        <th>Annotation</th>
+        <th>Layer</th>
+        <th>Purpose</th>
+        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
     </tr>
     <tr>
         <td><a href="./RequestScoped.html">@javax.enterprise.context.RequestScoped</a></td>
@@ -168,24 +197,17 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./Title.html">@Title</a></td>
-        <td>UI</td>
-        <td>Indicates which of the object's properties should be used to build up a title for the object.
+        <td><a href="./Inject.html">@javax.inject.Inject</a></td>
+        <td>Domain</td>
+        <td>Inject domain service into a domain object (entity or view model) or another domain service.
         </td>
         <td></td>
     </tr>
     <tr>
-        <td><a href="./ViewModel.html">@ViewModel</a></td>
-        <td>Domain, Persistence</td>
-        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <code>@DomainObject(nature=VIEW_MODEL)</code>.
-        </td>
+        <td><a href="./Digits.html">@javax.validation.constraints.Digits</a></td>
+        <td>Domain</td>
+        <td>Precision/scale for BigDecimal values.</td>
         <td></td>
-    </tr>
-    <tr>
-        <td><a href="./ViewModelLayout.html">@ViewModelLayout</a></td>
-        <td>UI</td>
-        <td>User interface hints for view models (use with <code>@ViewModel</code>, else see <code>@DomainObjectLayout</code>)</td>
-        <td>Yes</td>
     </tr>
 </table>
 
@@ -403,6 +425,25 @@ go back to: [documentation](../../documentation.html)
             <br/>Use instead <code>@DomainServiceLayout#named()</code>, <code>@DomainObjectLayout#named()</code>, <code>@PropertyLayout#named()</code>, <code>@CollectionLayout#named()</code>, <code>@ActionLayout#named()</code> and <code>@ParameterLayout#named()</code>
             </td>
         <td>Yes</td>
+    </tr>
+    <tr>
+        <td><a href="./NotContributed.html">@NotContributed</a></td>
+        <td>UI</td>
+        <td>Indicates that a domain service action is not rendered as an action on the (entity) types of its
+            parameters. For 1-arg query-only actions, controls whether the domain service action is rendered as a property
+            or collection on the entity type of its parameter.
+            <br/>Use instead <code>@DomainService#nature()</code> to whether any of the actions in a domain service should appear in the menu bars, and use <code>@ActionLayout</code> to specify whether any individual action should be contributed only as an action or as an association (property or collection).
+            </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./NotInServiceMenu.html">@NotInServiceMenu</a></td>
+        <td>UI</td>
+        <td>Indicates that a domain service should not be rendered in the application menu (at top of page in
+            Wicket viewer).
+            <br/>Use instead <code>@DomainService#nature()</code> to specify <i>none</i> of the actions in a domain service should appear in the menu bars.
+            </td>
+        <td></td>
     </tr>
     <tr>
         <td><a href="./ObjectType.html">@ObjectType</a></td>
