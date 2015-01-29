@@ -203,9 +203,7 @@ go back to: [documentation](../../documentation.html)
 </table>
 
 
-### Deprecated Annotations
-
-since 1.8.0-SNAPSHOT
+### Deprecated Annotations (since 1.8.0-SNAPSHOT)
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>
