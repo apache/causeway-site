@@ -101,7 +101,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
 </table>
 
-## Other Isis annotations
+### Other Isis annotations
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>
@@ -172,7 +172,7 @@ go back to: [documentation](../../documentation.html)
 </table>
 
 
-## Java EE Annotations
+### Java EE Annotations
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>
@@ -203,7 +203,9 @@ go back to: [documentation](../../documentation.html)
 </table>
 
 
-## Annotations that have been deprecated (1.8.0-SNAPSHOT)
+### Deprecated Annotations
+
+since 1.8.0-SNAPSHOT
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>
