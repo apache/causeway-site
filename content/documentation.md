@@ -464,6 +464,7 @@ Features, configuration and UI customisation.
 
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
+* [Brand logo](components/viewers/wicket/brand-logo.html) (1.8.0-SNAPSHOT)
 * [Suppressing 'sign up'](components/viewers/wicket/suppressing-sign-up.html) (1.8.0-SNAPSHOT)
 * [Suppressing 'password reset'](components/viewers/wicket/suppressing-password-reset.html) (1.8.0-SNAPSHOT)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)

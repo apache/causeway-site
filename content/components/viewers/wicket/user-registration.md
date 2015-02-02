@@ -11,11 +11,11 @@ In a similar way, if the user has forgotten their password then they can request
 
 To support this the framework requires three services to be registered and configured:
 
-* the [user registration service](./../../../reference/services/user-registration-service.html) provides an API to create the user account
-* the [email notification service](./../../../reference/services/email-notification-service.html) provides an API for to send the verification emails
-* the [email service](./../../../reference/services/email-service.html) that is used by the email notification service to actually send the email.
+* the [user registration service](./../../../reference/services/user-registration-service.html), which provides an API to create the user account
+* the [email notification service](./../../../reference/services/email-notification-service.html), which provides an API for to send the verification emails
+* the [email service](./../../../reference/services/email-service.html), that is used by the email notification service to actually send the email.
 
-The Isis core framework provides a default implementation of both the email notification service and the email service, but there is *no* default implementation of the user registration service as it will depend on how security has been configured.  However, if your application uses the [Isis addons security module](https://github.com/isisaddons/isis-module-security) then an implementation is provided by that module; just add to the classpath.
+The Isis core framework provides a default implementation of both the email notification service and the email service.  If your application uses the [Isis addons security module](https://github.com/isisaddons/isis-module-security) then an implementation is provided by that module; just add to the classpath.  Otherwise you will need to provide your own implementation (there is *no* default implementation of the user registration service in the core framework).
 
 ##Screenshots
 
