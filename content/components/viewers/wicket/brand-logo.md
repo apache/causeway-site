@@ -37,7 +37,7 @@ For example:
 If the logo is hosted locally, add to the relevant directory (eg `src/main/webapp/images`).  It is also valid for the
 URL to be absolute.
 
-You may also wish to tweak the `application.css`.  For example, a logo with height 40px works well with the following:
+You may also wish to tweak the `css/application.css`.  For example, a logo with height 40px works well with the following:
 
     .navbar-brand img {
         margin-top: -5px;
