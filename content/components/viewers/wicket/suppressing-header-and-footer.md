@@ -9,7 +9,7 @@ Currently this support consists simply of being able to suppress the header and/
 
 For example, the regular view is:
 
-![](images/embedded-view/normal.png)
+![](images/embedded-view/regular.png)
 
 With the header and footer both suppressed only the main content is shown:
 
