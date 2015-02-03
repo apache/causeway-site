@@ -9,11 +9,17 @@ The screenshot below shows the todo application with a 'brand logo' image in its
 
 ![](images/brand-logo.png)
 
+A custom brand logo (typically larger) can also be specified for the signin page:
+
+![](images/brand-logo-signin.png)
+
 
 ##Configuration
 
-In the application-specific subclass of `IsisWicketApplication`, bind a string with name "brandLogo" to the URL of
-an image.
+In the application-specific subclass of `IsisWicketApplication`, bind:
+
+* a string with name "brandLogoHeader" to the URL of a header image.  A size of 160x40 works well.
+* a string with name "brandLogoSignin" to the URL of a image for the sign-in page.  A size of 400x100 works well.
 
 For example:
 
@@ -25,7 +31,8 @@ For example:
             @Override
             protected void configure() {
                 ...
-                bind(String.class).annotatedWith(Names.named("brandLogo")).toInstance("/images/todoapp-logo-160x40.png");
+                bind(String.class).annotatedWith(Names.named("brandLogoHeader")).toInstance("/images/todoapp-logo-header.png");
+                bind(String.class).annotatedWith(Names.named("brandLogoSignin")).toInstance("/images/todoapp-logo-signin.png");
                 ...
             }
         };

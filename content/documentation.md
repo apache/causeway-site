@@ -472,6 +472,7 @@ Features, configuration and UI customisation.
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
 * [Showing a theme chooser](components/viewers/wicket/showing-a-theme-chooser.html) (1.8.0-SNAPSHOT)
+* [Suppressing header and footer (embedded view)](components/viewers/wicket/suppressing-header-and-footer.html) (1.8.0-SNAPSHOT)
 
 }
 
