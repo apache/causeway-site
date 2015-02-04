@@ -13,7 +13,7 @@ The API for the service is:
         public void init() ;
 
         @Programmatic
-        boolean send(List<String> to, List<String> cc, List<String> bcc, String subject, String body);
+        boolean send(List<String> to, List<String> cc, List<String> bcc, String subject, String body, DataSource... attachments);
 
         @Programmatic
         boolean isConfigured();
@@ -23,7 +23,7 @@ The API for the service is:
 where:
 
 * `init()` is always called by the framework, and allows the implementation to read configuration properties and initialize itself
-* `send(...)` is the main API to send the email
+* `send(...)` is the main API to send the email (and optional attachments)
 * `isConfigured()` determines whether the implementation was configured and initialized correctly.
 
 If `isConfigured()` returns false then it is NOT valid to call `send(...)` (and doing so will result in an `IllegalStateException` being thrown.
