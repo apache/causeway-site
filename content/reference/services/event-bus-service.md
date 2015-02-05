@@ -2,29 +2,109 @@ Title: Event Bus Service
 
 The `EventBusService` is a wrapper for a [Guava](https://code.google.com/p/guava-libraries/) [`EventBus`](https://code.google.com/p/guava-libraries/wiki/EventBusExplained), allowing arbitrary events to be posted and subscribed to (within the Isis runtime).  The primary use case is for decoupling interactions from one module/package/namespace and another.
 
-Only domain services should be registered as subscribers; not domain entities.  Domain services are guaranteed to be instantiated and resident in memory, whereas the same is not true of domain entities.  
+The framework also provides an implementation of this service (`EventBusServiceJdo`), and this is automatically registered (it is annotated with `@DomainService`).
+
+Domain events are raised automatically whenever any domain object is interacted with.  Domain events can also be raised programmatically if required (though there is rarely any need to do so).
+
+Only domain services should be registered as subscribers; not domain entities.  Domain services are guaranteed to be instantiated and resident in memory, whereas the same is not true of domain entities.
 
 The typical implementation of a domain service subscriber is to identify the impacted entities, load them using a repository query, and then to delegate to the event to them.
 
-## API
 
-The API defined by `EventBusService` is:
+
+## Publishing
+
+### Automatically published events
+
+Domain events are raised automatically whenever an object member (property, collection or action) is interacted with.  Specifically:
+
+* when an object member is to be viewed, an event is fired; subscribers can veto (meaning that the member is hidden)
+* when an object member is to be enabled, the same event instance is fired; subscribers can veto (meaning that the member is disabled, ie cannot be edited/invoked)
+* when an object member is being validated, then a new event instance is fired; subscribers can veto (meaning that the candidate values/action arguments are rejected)
+* when an object member is about to be changed, then the same event instance is fired; subscribers can perform pre-execution operations
+* when an object member has been changed, then the same event instance is fired; subscribers can perform post-execution operations
+
+If a subscriber throws an exception in the first three steps, then the interaction is vetoed.  If a subscriber throws an exception in the last two steps, then the transaction is aborted.
+
+The event class that is raised can be specified using an annotation, as follows:
+
+* as of 1.8.0-SNAPSHOT, using `@Property(domainEvent=...)`, or `@Collection(domainEvent=...)` or `@Action(domainEvent=...)`
+* as of 1.7.0, using `@PropertyInteraction`, or `@CollectionInteraction`, or `@ActionInteraction` (deprecated in 1.8.0-SNAPSHOT)
+* as of 1.6.0, using `@PostsPropertyChangedEvent` or `@PostsCollectionAddedToEvent`/`@PostsCollectionRemovedFromEvent`, or `@PostsActionInvokedEvent` (deprecated in 1.8.0-SNAPSHOT))
+
+### Explicitly publishing events
+
+The publishing API defined by `EventBusService` is:
 
     public abstract class EventBusService {
-        public void register(Object domainObject) { ... }
-        public void unregister(Object domainObject) { ... }
         public void post(Object event) { ... }
+        ...
     }
 
 where
 
-* `register(Object)` registers the object with the event bus (it is simply a wrapper that delegates to `EventBus#register(Object)`)
-* `unregister(Object)` unregisters the object with the event bus (it is simply a wrapper that delegates to `EventBus#unregister(Object)`)
 * `post(Object)` posts the event onto event bus (it is simply a wrapper that delegates to `EventBus#post(Object)`)
 
-## Usage
 
-The actual subscription of events is done by annotating a method on the class (that is, the usual Guava programming model).  
+## Subscribing
+
+The subscribing API defined by `EventBusService` is:
+
+    public abstract class EventBusService {
+        public void post(Object event) { ... }
+        ...
+    }
+
+
+where:
+* `register(Object)` registers the object with the event bus (it is simply a wrapper that delegates to `EventBus#register(Object)`)
+* `unregister(Object)` unregisters the object with the event bus (it is simply a wrapper that delegates to `EventBus#unregister(Object)`)
+
+The are for domain services to call to register themselves with the event bus.  This should be done in the
+
+As of 1.8.0-SNAPSHOT, the `register` and `unregister` methods should be called in the `@PostConstruct` and `@PreDestroy` lifecycle methods:
+
+    @DomainService
+    public class MySubscribingDomainService {
+
+        ...
+
+        @Programmatic
+        @PostConstruct
+        public void postConstruct() {
+            eventBusService.register(this);
+        }
+        @Programmatic
+        @PreDestroy
+        public void preDestroy() {
+            eventBusService.unregister(this);
+        }
+
+        @javax.inject.Inject
+        private EventBusService eventBusService;
+    }
+
+This works for both application-scoped and request-scoped (`@RequestScoped`) domain services.
+
+In 1.7.0, the registration should be done when the `EventBusService` is injected into it:
+
+    @DomainService
+    public class MySubscribingDomainService {
+
+        ...
+
+        private EventBusService eventBusService;
+        public void injectEventBusService(final EventBusService eventBusService) {
+            this.eventBusService = eventBusService;
+            eventBusService.register(this);
+        }
+    }
+
+
+
+### Callbacks
+
+The actual callbacks of events is done by annotating a method on the class (that is, the usual Guava programming model).
 
 For example, suppose in a library domain that a `LibraryMember` wants to leave the library.  A letter should be sent out detailing any books that they still have out on loan:
 
@@ -56,75 +136,10 @@ Meanwhile, in the `BookRepository` domain service, we subscribe to the event and
 
 This design allows the `libraryMember` module to be decoupled from the `book` module.
 
-## Registering for Events
 
-#### 1.8.0-SNAPSHOT
+## Implementation and Registration
 
-Register for events in the `@PostConstruct` lifecycle method (and unregister in `@PreDestroy`):
-
-    @DomainService
-    public class MySubscribingDomainService {
-
-        ...
-        
-        @Programmatic
-        @PostConstruct
-        public void postConstruct() {
-            eventBusService.register(this);
-        }
-        @Programmatic
-        @PreDestroy
-        public void preDestroy() {
-            eventBusService.unregister(this);
-        }
-        
-        @javax.inject.Inject
-        private EventBusService eventBusService;
-    }
-
-This works for both application-scoped and request-scoped (`@RequestScoped`) domain services.
-
-
-#### 1.7.0 and before
-
-Register for events when the `EventBusService` is injected into it:
-
-    @DomainService
-    public class MySubscribingDomainService {
-
-        ...
-        
-        private EventBusService eventBusService;
-        public void injectEventBusService(final EventBusService eventBusService) {
-            this.eventBusService = eventBusService;
-            eventBusService.register(this);
-        }
-    
-    }
-
-
-    
-### `@PostsPropertyChangedEvent` (deprecated)
-
-Isis will also automatically publish (post) an `org.apache.isis.applib.services.eventbus.PropertyChangedEvent` event object on any property that is annotated with [`@PostsPropertyChangedEvent](../recognized-annotations/PostsPropertyChangedEvent.html).  This can remove some boilerplate.
-
-<blockquote>
-<p>A couple of notes:
-<ul>
-<li>The <tt>@PropertyChangedEvent</tt> is only raised for interactions through the UI, or through interactions through a wrapper created by the <a href="wrapper-factory.html">Wrapper Factory</a> service.</li>
-<li>This is work-in-progress.  In the future other interactions (such as action invocations, or collection add to/remove) may also be raised automatically.</li>
-</ul>
-</blockquote>
-
-    
-## Implementation
-
-Isis provides the `org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo` as a default implementation of the `EventBusService` API.
-
-
-## Register the Service
-
-The `EventBusServiceJdo` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
+Isis provides the `org.apache.isis.objectstore.jdo.datanucleus.service.eventbus.EventBusServiceJdo` as a default implementation of the `EventBusService` API.  The `EventBusServiceJdo` class is automatically registered (it is annotated with `@DomainService`) so no further configuration is required.
 
 
 ## Related Services
@@ -132,5 +147,4 @@ The `EventBusServiceJdo` class is automatically registered (it is annotated with
 The `EventBusService` is intended for fine-grained publish/subscribe for object-to-object interactions within an Isis domain object model.  The event propogation is strictly in-memory, and there are no restrictions on the object acting as the event (it need not be serializable, for example).
 
 The [PublishingService](publishing-service.html) meanwhile is intended for coarse-grained publish/subscribe for system-to-system interactions, from Isis to some other system.  Here the only events published are those that action invocations (for actions annotated with [`@PublishedAction`](../recognized-annotations/PublishedAction.html)) and of changed objects (for objects annotated with [`@PublishedObject`](../recognized-annotations/PublishedObject.html).
-
 
