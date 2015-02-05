@@ -139,14 +139,22 @@ In 1.7.0, the registration should be done when the `EventBusService` is injected
 
 The actual callbacks of events is done by annotating a method on the class (that is, the usual Guava programming model).
 
-For example, suppose in a library domain that a `LibraryMember` wants to leave the library.  A letter should be sent out detailing any books that they still have out on loan:
+For example, the subscriber in the todoapp for completed todo items would use the following callback:
+
+    @Programmatic
+    @Subscribe
+    public void on(final ToDoItem.CompletedEvent ev) { ... }
+
+
+As a slightly more interesting example, suppose in a library domain that a `LibraryMember` wants to leave the library.  A letter should be sent out detailing any books that they still have out on loan:
 
 In the `LibraryMember` class, we publish the event:
 
     public class LibraryMember {
         ...
+        @Action(domainEvent=LibraryMemberLeaveEvent.class)
         public void leave() {
-            eventBus.post(new LibraryMemberLeaveEvent(this));
+            ...
         }
         ...
     }
