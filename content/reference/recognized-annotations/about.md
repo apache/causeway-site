@@ -680,51 +680,43 @@ go back to: [documentation](../../documentation.html)
         <th>Annotation</th>
         <th>Purpose</th>
         <th>Layer</th>
-        <th><a href="../../components/viewers/wicket/dynamic-layouts.html">.layout.json</a>?</th>
     </tr>
     <tr>
         <td><a href="./Aggregated.html">@Aggregated</a></td>
         <td>Part of an aggregate root</td>
         <td>Domain, Persistence</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./Defaulted.html">@Defaulted</a></td>
         <td>Indicates that a (value) class has a default value.</td>
         <td>Domain</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./Encodable.html">@Encodable</a></td>
         <td>Indicates that a (value) class can be serialized/encoded.
         </td>
         <td>Persistence</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./EqualByContent.html">@EqualByContent</a></td>
         <td>Indicates that a value class has equality semantics.</td>
         <td>Domain</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./NotPersistable.html">@NotPersistable</a></td>
         <td>Indicates that a domain object may not be programmatically persisted (partly supported).</td>
         <td>Domain, Persistence</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./Parseable.html">@Parseable</a></td>
         <td>Indicates that a (value) class can be reconstructed from a string.</td>
         <td>UI/domain</td>
-        <td></td>
     </tr>
     <tr>
         <td><a href="./Value.html">@Value</a></td>
         <td>Specify that a class has value-semantics.
         </td>
         <td>Domain</td>
-        <td></td>
     </tr>
 </table>
 
