@@ -1,5 +1,7 @@
 Title: @TypeOf
 
+> Deprecated, use instead [@Collection#typeOf](./Collection.html) or [@Action#typeOf](./Action.html).
+
 The `@TypeOf` annotation is used to specify the type of elements in a
 collection, when for whatever reason it is not possible to use generics.
 

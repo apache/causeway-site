@@ -1,8 +1,8 @@
 Title: @Parseable
 
-> **Support**
-> 
-> * Not supported by: Wicket viewer (which uses Wicket's Converter API instead).
+> This annotation has partial/incomplete support.
+
+> In particular, the Wicket viewer uses Apache Wicket's Converter API instead.
 
 Parseability means being able to parse a string representation into an
 object by way of the `org.apache.isis.applib.adapters.Parser` interface.

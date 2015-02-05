@@ -1,8 +1,6 @@
 Title: @PublishedAction
 
-> **Support**
-> 
-> * Requires the JDO/DataNucleus object store; not yet supported by other object stores.
+> Deprecated, use instead [@Action#publishing()](./Action.html).
 
 This annotation on an action causes an events to be published by the registered implementation of a `PublishingService`.
 

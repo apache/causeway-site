@@ -212,15 +212,6 @@ go back to: [documentation](../../documentation.html)
         <td>Yes</td>
     </tr>
     <tr>
-        <td><a href="./AutoComplete.html">@AutoComplete</a></td>
-        <td>Repository method to search for entities
-        </td>
-        <td><code>@DomainObject#autoCompleteRepository()</code>.
-        </td>
-        <td>UI/Domain</td>
-        <td></td>
-    </tr>
-    <tr>
         <td><a href="./ActionInteraction.html">@ActionInteraction</a></td>
         <td>Enable subscribers on the <a href="../services/event-bus-service.html">Event Bus Service</a> to either veto, validate or take further steps before/after an action has been invoked.
         </td>
@@ -245,6 +236,15 @@ go back to: [documentation](../../documentation.html)
         <td><code>@DomainObject#auditing()</code>
         </td>
         <td>Domain</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="./AutoComplete.html">@AutoComplete</a></td>
+        <td>Repository method to search for entities
+        </td>
+        <td><code>@DomainObject#autoCompleteRepository()</code>.
+        </td>
+        <td>UI/Domain</td>
         <td></td>
     </tr>
     <tr>
@@ -386,7 +386,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./Ignore-deprecated.html"  >@Ignore</a></td>
-        <td>
+        <td>Exclude this method from the metamodel.
         </td>
         <td><code>@Programmatic</code>
         </td>
@@ -655,9 +655,9 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./TypeOf.html">@TypeOf</a></td>
-        <td>The type of entity stored within a collection (if cannot be otherwise inferred, eg from generics).
+        <td>The type of entity stored within a collection, or as the result of invoking an action, if cannot be otherwise inferred, eg from generics.
         </td>
-        <td> <code>@Collection#typeOf()</code>
+        <td> <code>@Collection#typeOf() and <code>@Action#typeOf</code></code>
         </td>
         <td>Domain</td>
         <td></td>
@@ -673,7 +673,7 @@ go back to: [documentation](../../documentation.html)
     </tr>
 </table>
 
-n### Annotations with incomplete/partial support
+### Annotations with incomplete/partial support
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>

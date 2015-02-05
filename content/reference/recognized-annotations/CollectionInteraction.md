@@ -1,5 +1,7 @@
 Title: @CollectionInteraction
 
+> Deprecated, use instead [@Collection#domainEvent()](./Collection.html).
+
 > Support
 >
 > The Wicket viewer does NOT support collection modification; instead write a pair of actions to add to/remove from the collection.

@@ -1,6 +1,6 @@
 Title: @Paged
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@CollectionLayout](./CollectionLayout.html).
+> Deprecated, use instead [@CollectionLayout](./CollectionLayout.html) and [@DomainObjectLayout](./DomainObjectLayout.html).
 
 This annotation is used to indicate that parented and/or standalone
 collections should be paginated.

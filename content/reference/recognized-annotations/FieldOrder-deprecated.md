@@ -1,14 +1,6 @@
 Title: @FieldOrder (deprecated)
 
-> **Note**
->
-> The recommended mechanism for specifying the order in which fields are
-> listed to the user is `@MemberOrder` <!--(see ?)-->
-
-> **Support**
-> 
-> * Not supported by: Wicket viewer
-
+> Deprecated, use instead [@MemberOrder#sequence()](./MemberOrder.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 `@FieldOrder` provides a mechanism to specify the order in which fields
 appear in the user interface, in which the order is specified in one

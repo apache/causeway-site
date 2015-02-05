@@ -1,5 +1,7 @@
 Title: @Immutable
 
+> Deprecated, use instead [@DomainObject#editing()](./DomainObject.html).
+
 The `@Immutable` annotation may be applied to a class, and indicates to
 the framework that the state of such objects may not be changed. The
 viewers will prevent any change through the user interface, and moreover

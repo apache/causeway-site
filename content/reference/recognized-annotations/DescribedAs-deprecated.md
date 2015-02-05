@@ -1,6 +1,6 @@
 Title: @DescribedAs
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@DomainObjectLayout](./DomainObjectLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated, use instead [@DomainObjectLayout#describedAs()](./DomainObjectLayout.html), [@PropertyLayout#describedAs()](./PropertyLayout.html), [@CollectionLayout#describedAs()](./CollectionLayout.html), [@ActionLayout#describedAs()](./ActionLayout.html) and [@ParameterLayout#describedAs()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `@DescribedAs` annotation is used to provide a short description of
 something that features on the user interface. How this description is

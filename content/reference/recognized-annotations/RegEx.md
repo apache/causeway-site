@@ -1,5 +1,7 @@
 Title: @RegEx
 
+> Deprecated, use instead [@Property#regex()](./Property.html) and [@Parameter#regex()](./Parameter.html).
+
 The `@RegEx` annotation may be applied to any string property, or to any
 parameter within an action method. It can also be applied to any
 string-based value type. It serves both to validate and potentially to

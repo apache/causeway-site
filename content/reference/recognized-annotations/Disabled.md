@@ -1,5 +1,7 @@
 Title: @Disabled
 
+> Deprecated, use instead [@Property#editing()](./Property.html), [@Collection#editing()](./Collection.html), and also [@DomainObject#editing()](./DomainObject.html)
+
 > **Support**
 > 
 > * Fully supported by: Wicket viewer; other viewers do not yet support the `where` attribute.

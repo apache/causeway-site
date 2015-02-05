@@ -1,5 +1,7 @@
 Title: @Command
 
+> Deprecated, use instead [@Action#command()](./Action.html).
+
 The `@Command` annotation lets you change the way in which the framework invokes an action, most notably to invoke the action in the background.  It works (and influences the behaviour of) the the `CommandContext`, `CommandService`, `BackgroundService` and `BackgroundCommandService` domain services (documented [here](../../../reference/services/command-context.html) and [here](../../../reference/services/background-service.html)). 
 
 By default, actions are invoked in directly in the thread of the invocation.

@@ -1,8 +1,6 @@
 Title: @ActionInteraction
 
-> Support
->
-> Supported by all viewers (implementation is part of core metamodel)
+> Deprecated, use instead [@Action#domainEvent()](./Action.html).
 
 The `@ActionInteraction` annotation applies to domain entity actions, allowing
 subscribers to optionally veto, validate or otherwise perform tasks before 

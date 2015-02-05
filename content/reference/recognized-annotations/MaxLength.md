@@ -1,5 +1,7 @@
 Title: @MaxLength
 
+> Deprecated, use instead [@Property#maxLength()](./Property.html) and [@Parameter#maxLength()](./Parameter.html) .
+
 The `@MaxLength` annotation indicates the maximum number of characters
 that the user may enter into a `String` property, or a `String`
 parameter in an action, or for a string-based value type. It is ignored

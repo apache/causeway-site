@@ -1,6 +1,6 @@
 Title: @Prototype
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@ActionLayout](./ActionLayout.html)
+> Deprecated, use instead [@ActionLayout#restrictTo()](./ActionLayout.html)
 
 The `@Prototype` annotation marks an action method as available in
 prototype mode only, and therefore not intended for use in the

@@ -1,6 +1,6 @@
 Title: @Hidden
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  and [@ActionLayout](./ActionLayout.html).
+> Deprecated.  For object members use [@PropertyLayout#hidden()](./PropertyLayout.html),  [@CollectionLayout#hidden()](./CollectionLayout.html), and [@ActionLayout#hidden()](./ActionLayout.html).  For domain servicesm use [@DomainService#nature()]
 
 The `@Hidden` annotation indicates that the member (property, collection
 or action) to which it is applied should never be visible to the user.

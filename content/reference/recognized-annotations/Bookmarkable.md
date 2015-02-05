@@ -1,8 +1,6 @@
 Title: @Bookmarkable
 
-> Support
->
-> Supported by the Wicket viewer.
+> Deprecated, use instead [@DomainObject#bookmarking()](./DomainObject.html).
 
 The `@Bookmarkable` annotation indicates that an entity or an action (with safe [action semantics](./ActionSemantics.html)) is automatically bookmarked.
 

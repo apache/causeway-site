@@ -1,8 +1,6 @@
 Title: @RenderedAsDayBefore
 
-> Support
->
-> Currently supported only by the Wicket viewer.
+> Deprecated, use instead [@PropertyLayout#renderedAsDayBefore()](./PropertyLayout.html) and [@ParameterLayout#renderedAsDayBefore()](./ParameterLayout.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 A rendering hint, instructing the viewer that the date should as one day prior to the actually stored date. 
 

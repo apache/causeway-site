@@ -1,8 +1,6 @@
 Title: @PropertyInteraction
 
-> Support
->
-> Supported by all viewers (implementation is part of core metamodel)
+> Deprecated, use instead [@Property#domainEvent()](./Property.html).
 
 The `@PropertyInteraction` annotation applies to domain entity properties, allowing
 subscribers to optionally veto, validate or otherwise perform tasks before 

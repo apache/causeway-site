@@ -1,5 +1,7 @@
 Title: @MemberGroupLayout
 
+> See also [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
+
 > **Support**
 > 
 > * Supported by: Wicket viewer; not yet supported by other viewers.

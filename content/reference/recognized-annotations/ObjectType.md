@@ -1,5 +1,7 @@
 Title: @ObjectType
 
+> Deprecated, use instead [@DomainObject#objectType()](./DomainObject.html).
+
 The `@ObjectType` annotation is used to provide a unique abbreviation for
 the object's class name. This is used internally to generate a string
 representation of an objects identity (the `Oid`).

@@ -1,8 +1,6 @@
 Title: @AutoComplete
 
-> **Support**
-> 
-> * Supported by: Wicket viewer; not yet supported by other viewers.
+> Deprecated, use instead [@DomainObject#autoCompleteRepository](./DomainObject.html).
 
 This annotation is to support an auto-complete capability for reference
 properties and action parameters, the idea being that the user enters a

@@ -1,3 +1,3 @@
 Title: @PostsCollectionRemovedFromEvent
 
-> Deprecated, use instead [Collection#domainEvent()](./Collection.html).
+> Deprecated, use instead [@Collection#domainEvent()](./Collection.html).

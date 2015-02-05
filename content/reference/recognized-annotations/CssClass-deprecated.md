@@ -1,6 +1,6 @@
 Title: @CssClass
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@DomainObjectLayout](./DomainObjectLayout.html), [@PropertyLayout](./PropertyLayout.html),  [@CollectionLayout](./CollectionLayout.html),  [@ActionLayout](./ActionLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated, use instead [@DomainObjectLayout#cssClass()](./DomainObjectLayout.html), [@PropertyLayout#cssClass()](./PropertyLayout.html), [@CollectionLayout#cssClass()](./CollectionLayout.html), [@ActionLayout#cssClass()](./ActionLayout.html) and [@ParameterLayout#cssClass()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `CssClass` annotation applies to object and also to any object member 
 (property, collection or action).  It is used by the Wicket viewer as a UI hint 

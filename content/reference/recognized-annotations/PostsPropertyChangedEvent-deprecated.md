@@ -1,3 +1,3 @@
 Title: @PostsPropertyChangedEvent
 
-> Deprecated, use instead [Property#domainEvent()](./Property.html).
+> Deprecated, use instead [@Property#domainEvent()](./Property.html).

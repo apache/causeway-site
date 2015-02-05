@@ -1,5 +1,7 @@
 Title: @Ignore (deprecated)
 
+> Deprecated, use instead [@Action#semantics()](./Action.html).
+
 Equivalent to using `@Programmatic`.
 
 The `@Programmatic` annotation was

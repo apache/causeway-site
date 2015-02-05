@@ -1,5 +1,7 @@
 Title: @Value
 
+> This annotation has partial/incomplete support.
+
 The `@Value` annotation indicates that a class should be treated as a
 value type rather than as a reference (or entity) type. It does this
 providing an implementation of a
@@ -14,5 +16,5 @@ For example:
 
 The `ValueSemanticsProvider` allows the framework to interact with the
 value, parsing strings and displaying as text, and encoding/decoding
-(for serialization). <!--For more information, see ?.-->
+(for serialization).
 

@@ -1,10 +1,7 @@
 Title: @MultiLine
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@PropertyLayout](./PropertyLayout.html) and [@ParameterLayout](./ParameterLayout.html).
+> Deprecated, use instead [@PropertyLayout#multiLine()](./PropertyLayout.html) and [@ParameterLayout#multiLine()](./ParameterLayout.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
-> **Support**
->
-> Supported, though the Wicket viewer does not support the `preventWrapping` attribute.
 
 The `@MultiLine` annotation provides information about the carriage
 returns in a `String` property or action parameter, or for a

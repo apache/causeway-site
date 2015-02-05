@@ -1,6 +1,6 @@
 Title: @Render
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@CollectionLayout](./CollectionLayout.html)
+> Deprecated, use instead [@CollectionLayout#render()](./CollectionLayout.html)
 
 The `@Render` annotation is a hint for properties and collections to
 indicate that a value property should be rendered lazily (rather than

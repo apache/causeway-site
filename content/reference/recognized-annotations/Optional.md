@@ -1,5 +1,7 @@
 Title: @Optional
 
+> Deprecated, use instead [@Property#optionality()](./Property.html) and [@Parameter#optionality()](./Parameter.html).
+
 By default, the system assumes that all properties of an object are
 required, and therefore will not let the user save a new object unless a
 value has been specified for each property. Similarly, by default, the

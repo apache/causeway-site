@@ -1,8 +1,6 @@
 Title: @MemberOrder
 
-> **Support**
-> 
-> * Supported by all viewers; only Wicket viewer currently supports member grouping.
+> See also [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 `@MemberOrder` is the recommended mechanism for specifying the order in
 which fields and/or actions are presented to the user. (`@ActionOrder`

@@ -1,8 +1,6 @@
 Title: @Bulk
 
-> **Support**
-> 
-> * Supported by: Wicket viewer; not yet supported by other viewers.
+> Deprecated, use instead [@Action#invokeOn()](./Action.html).
 
 For actions that should only be applied to a collection of objects of
 the same type, annotate using @Bulk.

@@ -1,8 +1,6 @@
 Title: @Debug
 
-> **Support**
-> 
-> * Not supported by: Wicket viewer
+> Deprecated, use instead [@Action#restrictTo()](./Action.html).
 
 The `@Debug` annotation marks an action method as available in debug mode
 only, and so will not normally be displayed by the user interface.

@@ -1,9 +1,6 @@
 Title: @Programmatic
 
-The `@Programmatic` annotation can be used to cause Apache Isis to
-complete ignore a class member. This means it won't appear in any
-viewer, its value will not be persisted, and it won't appear in any XML
-snapshots <!--(see ?)-->.
+The `@Programmatic` annotation causes the method to be excluded completely from the Apache Isis metamodel.  This means it won't appear in any UI, and it won't appear in any mementos/snapshots.
 
 A common use-case is to ignore implementation-level artifacts. For
 example:

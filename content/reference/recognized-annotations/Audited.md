@@ -1,8 +1,6 @@
 Title: @Audited
 
-> **Support**
-> 
-> * Requires the JDO/DataNucleus object store; not yet supported by other object stores.
+> Deprecated, use instead [@DomainObject#auditing()](./DomainObject.html).
 
 This annotation, which applies only to objects, indicates that if the
 object is modified, then it should be submitted to the

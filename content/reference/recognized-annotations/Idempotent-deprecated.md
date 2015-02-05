@@ -1,3 +1,3 @@
 Title: @Idempotent (deprecated)
 
-Equivalent to using `@ActionSemantics(Of.IDEMPOTENT)` on an action.
+> Deprecated, use instead [@Action#semantics()](./Action.html).

@@ -1,8 +1,7 @@
 Title: @Mask
 
-> **Support**
-> 
-> * Not supported by: Wicket viewer
+> Deprecated, never supported.
+
 
 The `@Mask` annotation may be applied to any property, or to any
 parameter within an action method, that allows the user to type in text

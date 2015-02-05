@@ -1,5 +1,7 @@
 Title: @ActionOrder
 
+> Deprecated, use instead [@MemberOrder#sequence()](./MemberOrder.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
+
 `@ActionOrder` provides a mechanism to specify the order in which
 actions appear in the user interface, in which the order is specified in
 one place in the class.

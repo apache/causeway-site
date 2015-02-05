@@ -1,5 +1,7 @@
 Title: @MustSatisfy
 
+> Deprecated, use instead [@Property#mustSatisfy()](./Property.html) and [@Parameter#mustSatisfy()](./Parameter.html).
+
 The `@MustSatisfy` annotation allows validation to be applied to
 properties and parameters using an (implementation of a)
 `org.apache.isis.applib.spec.Specification` object.
@@ -28,5 +30,5 @@ Or, on an action parameter:
 The `Specification` is consulted during validation, being passed the
 proposed value.
 
-An alternative to using `@MustSatisfy` is to define a custom value type (though this introduces additional mapping complexity for both viewers and objectstore)<!--,
-see ?-->.
+
+An alternative to using `@MustSatisfy` is to define a custom value type (though this introduces additional mapping complexity for both viewers and objectstore).

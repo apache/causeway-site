@@ -1,5 +1,7 @@
 Title: @NotInServiceMenu
 
+> Deprecated, use instead [@DomainService#nature()](./DomainService.html) to specify whether a service's actions are visible on the menu bar.
+
 The `@NotInServiceMenu` annotation applies only to action methods, and
 specifically to the actions of services. If present, it indicates that
 the action should not appear in the service menu for the service. It

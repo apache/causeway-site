@@ -1,6 +1,6 @@
 Title: @SortedBy
 
-> Deprecated in 1.8.0-SNAPSHOT, see instead [@CollectionLayout](./CollectionLayout.html).
+> Deprecated, use instead [@CollectionLayout#sortedBy](./CollectionLayout.html).
 
 The `@SortedBy` annotation is an instruction hint for (`SortedSet`) collections to use the specified comparator rather than the natural ordering of the entity
 (as would usually be the case).
