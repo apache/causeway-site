@@ -26,11 +26,44 @@ Domain events are raised automatically whenever an object member (property, coll
 
 If a subscriber throws an exception in the first three steps, then the interaction is vetoed.  If a subscriber throws an exception in the last two steps, then the transaction is aborted.
 
-The event class that is raised can be specified using an annotation, as follows:
+The event class that is raised can be specified using an annotation:
 
-* as of 1.8.0-SNAPSHOT, using `@Property(domainEvent=...)`, or `@Collection(domainEvent=...)` or `@Action(domainEvent=...)`
-* as of 1.7.0, using `@PropertyInteraction`, or `@CollectionInteraction`, or `@ActionInteraction` (deprecated in 1.8.0-SNAPSHOT)
-* as of 1.6.0, using `@PostsPropertyChangedEvent` or `@PostsCollectionAddedToEvent`/`@PostsCollectionRemovedFromEvent`, or `@PostsActionInvokedEvent` (deprecated in 1.8.0-SNAPSHOT))
+* as of 1.8.0-SNAPSHOT, using:
+
+    * `@Property(domainEvent=...)`
+    * `@Collection(domainEvent=...)`
+    * `@Action(domainEvent=...)`
+
+* as of 1.7.0 (but deprecated in 1.8.0-SNAPSHOT), using :
+    * `@PropertyInteraction`
+    * `@CollectionInteraction`
+    * `@ActionInteraction`
+
+* as of 1.6.0 (but deprecated in 1.8.0-SNAPSHOT), using :
+    * `@PostsPropertyChangedEvent`
+    * `@PostsCollectionAddedToEvent`/`@PostsCollectionRemovedFromEvent`
+    * `@PostsActionInvokedEvent`
+
+For example, in the todo app a custom event is raised when an item is completed:
+
+    public static class CompletedEvent extends AbstractActionDomainEvent {
+        private static final long serialVersionUID = 1L;
+        public CompletedEvent(
+                final ToDoItem source,
+                final Identifier identifier,
+                final Object... arguments) {
+            super("completed", source, identifier, arguments);
+        }
+    }
+
+     @Action(
+             domainEvent =CompletedEvent.class,
+             ...
+     )
+     public ToDoItem completed() { ... }
+
+Subscribers can therefore subscribe to these subclasses, in effect filtering out only the events that are of interest.
+
 
 ### Explicitly publishing events
 
