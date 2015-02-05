@@ -489,9 +489,10 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ObjectType.html">@ObjectType</a></td>
         <td>For constructing the external identifier (URI) of an entity instance (part of its URL in both Wicket viewer and
             Restful Objects viewer).  Also part of the toString representation of bookmarks, if using the <a href="../services/bookmark-service.html">Bookmark Service</a>
-        <td>
-        </td><code>@DomainObject#objectType()</code>
             </td>
+        <td>
+        <code>@DomainObject#objectType()</code>
+        </td>
         <td>Domain</td>
         <td></td>
     </tr>
