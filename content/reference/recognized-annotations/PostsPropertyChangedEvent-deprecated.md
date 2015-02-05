@@ -1,3 +1,5 @@
 Title: @PostsPropertyChangedEvent
 
-Superceded by [PropertyInteraction](./PropertyInteraction.html).
+{note
+Obsolete, superceded by [Property#domainEvent()](./Property.html).
+}
