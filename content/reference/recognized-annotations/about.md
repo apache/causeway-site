@@ -527,7 +527,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsActionInvokedEvent-deprecated.html"  >@PostsActionInvokedEvent</a></td>
+        <td><a href="./PostsActionInvokedEvent-deprecated.html"  >@PostsAction<br/>InvokedEvent</a></td>
         <td>Post a domain event to the <a href="../services/event-bus-service.html">Event Bus Service</a> indicating that an action has been invoked.
         </td>
         <td><code>@Action#domainEvent()</code>
@@ -554,7 +554,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsPropertyChangedEvent-deprecated.html"  >@PostsPropertyChangedEvent</a></td>
+        <td><a href="./PostsPropertyChangedEvent-deprecated.html"  >@PostsProperty<br/>ChangedEvent</a></td>
         <td>Post a domain event to the <a href="../services/event-bus-service.html">Event Bus Service</a> indicating that the value of a property has changed.
         </td>
         <td><code>@Property#domainEvent()</code>
