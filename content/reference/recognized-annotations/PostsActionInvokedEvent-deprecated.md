@@ -1,5 +1,3 @@
 Title: @PostsActionInvokedEvent
 
-{note
-Obsolete, superceded by [Action#domainEvent()](./Action.html).
-}
+> Deprecated, use instead [Action#domainEvent()](./Action.html).

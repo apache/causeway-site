@@ -462,7 +462,8 @@ go back to: [documentation](../../documentation.html)
             parameters. For 1-arg query-only actions, controls whether the domain service action is rendered as a property
             or collection on the entity type of its parameter.
         </td>
-        <td>Use <code>@DomainService#nature()</code> to specify whether <i>any</i> of the actions in a domain service should appear in the menu bars (applies at type level, not action level).  For individual actions, use <code>@ActionLayout</code> to specify whether any individual action should be contributed only as an action or as an association (property or collection).
+        <td>Use <code>@DomainService#nature()</code> to specify whether <i>any</i> of the actions in a domain service should appear in the menu bars (applies at type level, not action level).
+        <br/>For individual actions, use <code>@ActionLayout</code> to specify whether any individual action should be contributed only as an action or as an association (property or collection).
         </td>
         <td>UI</td>
         <td></td>

@@ -1,5 +1,3 @@
 Title: @PostsPropertyChangedEvent
 
-{note
-Obsolete, superceded by [Property#domainEvent()](./Property.html).
-}
+> Deprecated, use instead [Property#domainEvent()](./Property.html).
