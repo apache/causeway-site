@@ -82,20 +82,21 @@ go back to: [documentation](../../documentation.html)
     </tr>
     <tr>
         <td><a href="./PropertyLayout.html">@PropertyLayout</a></td>
-        <td>Layout hints for a property (currently: its label position either to top or the left).</td>
+        <td>Layout hints for a property</td>
         <td>UI</td>
         <td>Yes</td>
     </tr>
     <tr>
         <td><a href="./ViewModel.html">@ViewModel</a></td>
-        <td>Specify that a class is a view model (as opposed to an entity or domain service); alternatively <code>@DomainObject(nature=VIEW_MODEL)</code>.
+        <td>Specify that a class is a view model (as opposed to an entity or domain service); equivalent to <code>@DomainObject(nature=VIEW_MODEL)</code>.
         </td>
         <td>Domain, Persistence</td>
         <td></td>
     </tr>
     <tr>
         <td><a href="./ViewModelLayout.html">@ViewModelLayout</a></td>
-        <td>User interface hints for view models (use with <code>@ViewModel</code>, else see <code>@DomainObjectLayout</code>)</td>
+        <td>User interface hints for view models.
+        <br/>For use with <code>@ViewModel</code>.  If specifying view models using <code>@DomainObject(nature=VIEW_MODEL)</code> then use <code>@DomainObjectLayout</code>)</td> instead.
         <td>UI</td>
         <td>Yes</td>
     </tr>
@@ -205,7 +206,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./ActionOrder-deprecated.html" >@ActionOrder</a></td>
         <td>Order of buttons and menu items representing actions.
         </td>
-        <td><code>@MemberOrder</code> or dynamic layout.
+        <td><code>@MemberOrder</code>
         </td>
         <td>UI</td>
         <td>Yes</td>
@@ -359,7 +360,7 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./FieldOrder-deprecated.html"  >@FieldOrder</a></td>
         <td>Order of properties and collections.
         </td>
-        <td><code>@MemberOrder</code> or dynamic layout.
+        <td><code>@MemberOrder</code>
         </td>
         <td>UI</td>
         <td>Yes</td>
@@ -368,7 +369,8 @@ go back to: [documentation](../../documentation.html)
         <td><a href="./Hidden-deprecated.html">@Hidden</a></td>
         <td>Object member is not visible, or on domain service (to indicate that none of its actions are visible).
         </td>
-        <td>For domain object members, use <code>@Action#hidden()</code>, <code>@Property#hidden()</code> or <code>@Collection#hidden()</code>.  For domain service, use <code>@DomainService(nature=DOMAIN)</code>
+        <td>For domain object members, use <code>@Action#hidden()</code>, <code>@Property#hidden()</code> or <code>@Collection#hidden()</code>.
+            <br/>For domain service, use <code>@DomainService(nature=DOMAIN)</code>
         </td>
         <td>UI, Domain</td>
         <td>Yes</td>
@@ -534,7 +536,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsCollectionAddedToEvent-deprecated.html"  >@PostsCollectionAddedToEvent</a></td>
+        <td><a href="./PostsCollectionAddedToEvent-deprecated.html"  >@PostsCollection<br/>AddedToEvent</a></td>
         <td>Post a domain event to the <a href="../services/event-bus-service.html">Event Bus Service</a> indicating that an element has been added to a collection.
         </td>
         <td><code>@Collection#domainEvent()</code>
@@ -543,7 +545,7 @@ go back to: [documentation](../../documentation.html)
         <td></td>
     </tr>
     <tr>
-        <td><a href="./PostsCollectionRemovedFromEvent-deprecated.html"  >@PostsCollectionRemovedFromEvent</a></td>
+        <td><a href="./PostsCollectionRemovedFromEvent-deprecated.html"  >@PostsCollection<br/>RemovedFromEvent</a></td>
         <td>Post a domain event to the <a href="../services/event-bus-service.html">Event Bus Service</a> indicating that an element has been removed from a collection.
         </td>
         <td><code>@Collection#domainEvent()</code>
