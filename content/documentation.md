@@ -81,6 +81,11 @@ Title: Documentation
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
 
 
+}
+
+
+{col-md-4
+
 #### <a name="core-modules-common">DomainObjectContainer</a>
 
 * [DomainObjectContainer API](./reference/DomainObjectContainer.html)
@@ -88,30 +93,13 @@ Title: Documentation
 
 }
 
-
 {col-md-4
 
 #### <a name="reference-config">Config</a>
 
 * [Configuration Files](./reference/configuration-files.html)
-
-
-#### <a name="reference-deployment-types">Deployment Types</a>
-
-* [Deployment Types](./reference/deployment-type.html)
-
-}
-
-{col-md-4
-
-#### <a name="reference-config">Programming Model Configuration</a>
-
 * [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
-* [Custom validator](config/custom-validator.html)
-* [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
-* [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
-* [i18n Support](config/i18n-support.html)
-* [Standardized font-awesome icons and CSS](config/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
+* [Deployment Types](./reference/deployment-type.html)
 
 
 }
@@ -122,7 +110,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## <a name="how-tos">How-tos (programming model)</a>
+## <a name="how-tos">How-tos</a>
 
 }
 
@@ -308,11 +296,6 @@ For both:
 * [Ensuring object in valid state](./more-advanced-topics/how-to-07-030-How-to-ensure-object-is-in-valid-state.html)
 * [Non-persistable entities](./more-advanced-topics/how-to-07-040-How-to-specify-that-an-object-should-not-be-persisted.html)
 
-
-}
-
-{col-md-4
-
 #### <a name="core-dev-support">Support for testing</a>
 <p class="display:none"/>
 
@@ -322,6 +305,23 @@ For both:
 * [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
 * [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
+
+}
+
+{col-md-4
+
+
+#### <a name="reference-config">Programming Model Configuration</a>
+
+* [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
+* [Custom validator](config/custom-validator.html)
+* [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
+* [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
+* [Standardized font-awesome icons and CSS](config/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
+
+#### <a name="config-i18n">i18n</a>
+
+* [i18n Support](config/i18n-support.html)
 
 #### <a name="more-advanced-topics-deployment">Deployment</a>
 
