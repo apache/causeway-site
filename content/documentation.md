@@ -81,24 +81,28 @@ Title: Documentation
 * [Recognized Methods](./reference/Recognized-Methods-and-Prefixes.html)
 
 
-}
-
-
-{col-md-4
-
 #### <a name="core-modules-common">DomainObjectContainer</a>
 
 * [DomainObjectContainer API](./reference/DomainObjectContainer.html)
 * [Users and Roles](./reference/Security.html)
 
-
 }
+
 
 {col-md-4
 
 #### <a name="reference-config">Config</a>
 
 * [Configuration Files](./reference/configuration-files.html)
+
+
+#### <a name="reference-deployment-types">Deployment Types</a>
+
+* [Deployment Types](./reference/deployment-type.html)
+
+}
+
+{col-md-4
 
 #### <a name="reference-config">Config Settings</a>
 
@@ -108,10 +112,6 @@ Title: Documentation
 * [i18n Support](config/i18n-support.html)
 * [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
 * [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
-
-#### <a name="reference-deployment-types">Deployment Types</a>
-
-* [Deployment Types](./reference/deployment-type.html)
 
 
 }
