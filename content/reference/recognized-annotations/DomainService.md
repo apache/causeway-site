@@ -1,21 +1,18 @@
 Title: @DomainService
 
-Indicates that the (concrete) class should be automatically instantiated as a domain service, and specify a number of
-UI hints.
+Indicates that the (concrete) class should be automatically instantiated as a domain service.
 
 Domain services with this annotation do NOT need to be registered explicitly in `isis.properties`; they will be
 discovered automatically on the CLASSPATH.
 
 The following attributes can be specified:
 
-* `menuBar` - the menubar in which the menu that hold's this service's actions should reside (1.8.0-SNAPSHOT)
-
-* `menuOrder` - the order of the service's menu with respect to other service's.
+* `nature` - the nature of this service: providing actions for menus, contributed actions, or neither (1.8.0-SNAPSHOT)
 
 * `repositoryFor` - if this domain service acts as a repository for an entity type, specify that entity type.  (This is currently informational only)
 
-The `menuBar` can be set to PRIMARY, SECONDARY or TERTIARY.  In the Wicket viewer the PRIMARY menu bar is left-aligned,
-the SECONDARY menu bar is right aligned, and the TERTIARY menu bar is associated with the user's name (far top-right).
+* `menuOrder` - the order of the service's menu with respect to other service's (deprecated in 1.8.0-SNAPSHOT)
+
 
 For example:
 
@@ -32,3 +29,30 @@ or:
     }
 
 It is not (currently) possible to specify the UI hints through any other means (specifically: is *not* supported through a `.layout.json` file).
+
+
+
+## Source code
+
+See <a href="https://issues.apache.org/jira/browse/ISIS-970">ISIS-970</a> and <a href="https://github.com/apache/isis/blob/master/core/applib/src/main/java/org/apache/isis/applib/annotation/DomainObject.java">@DomainObject</a> source code.
+
+## See also
+
+Other domain semantics:
+
+* [@Property](./Property.html)
+* [@Collection](./Collection.html)
+* [@Action](./Action.html)
+* [@Parameter](./Parameter.html)
+* [@DomainObject](./DomainObject.html)
+* [@DomainService](./DomainService.html)
+* [@ViewModel](./ViewModel.html)
+
+Corresponding view layer ("Layout") annotation:
+
+* [@PropertyLayout](./PropertyLayout.html)
+* [@CollectionLayout](./CollectionLayout.html)
+* [@ActionLayout](./ActionLayout.html)
+* [@DomainObjectLayout](./DomainObjectLayout.html)
+* [@DomainServiceLayout](./DomainServiceLayout.html)
+* [@ViewModelLayout](./ViewModelLayout.html)

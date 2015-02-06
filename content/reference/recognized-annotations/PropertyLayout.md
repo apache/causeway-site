@@ -1,7 +1,6 @@
 Title: @PropertyLayout (1.8.0-SNAPSHOT)
 
-The `@PropertyLayout` annotation applies to properties, collecting together all UI hints within a single
-annotation:
+The `@PropertyLayout` annotation applies to properties collecting together all UI hints within a single annotation:
 
 * `cssClass` - the css class that a property should have, to allow more targetted styling in `application.css`
 * `describedAs` - description of this property, eg to be rendered in a tooltip.
@@ -35,6 +34,7 @@ For example:
         ...
     }
 
+It is also possible to apply the annotation to actions of domain services that are acting as [contributed properties](../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html).
 
 ## Alternatives (`.layout.json`)
 
@@ -90,7 +90,13 @@ If these are not present then Isis will render according to internal defaults.  
 
 Similar layout annotations exist for other elements of the metamodel:
 
-* [@ActionLayout](./ActionLayout.html) for actions
-* [@DomainObjectLayout](./DomainObjectLayout.html) for domain classes
 * [@CollectionLayout](./CollectionLayout.html) for collections
+* [@ActionLayout](./ActionLayout.html) for actions
 * [@ParameterLayout](./ParameterLayout.html) for action parameters
+* [@DomainObjectLayout](./DomainObjectLayout.html)
+* [@DomainServiceLayout](./DomainServiceLayout.html)
+* [@ViewModelLayout](./ViewModelLayout.html)
+
+Corresponding domain semantics:
+
+* [@Property](./Property.html)

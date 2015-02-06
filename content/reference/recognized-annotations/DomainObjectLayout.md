@@ -1,4 +1,4 @@
-Title: @DomainObjectLayout
+Title: @DomainObjectLayout (1.8.0-SNAPSHOT)
 
 The `@DomainObjectLayout` annotation applies to domain classes, collecting together all UI hints within a single
 annotation.
@@ -21,6 +21,8 @@ For example:
         ...
     }
 
+For view models that have been annotated with `@ViewModel` (rather than `@DomainObject(nature=VIEW_MODEL)` the
+equivalent [@ViewModelLayout](./ViewModelLayout.html) can be used.
 
 ## See also
 
@@ -30,5 +32,9 @@ Similar layout annotations exist for other elements of the metamodel:
 * [@CollectionLayout](./CollectionLayout.html) for collections
 * [@PropertyLayout](./PropertyLayout.html) for properties
 * [@ParameterLayout](./ParameterLayout.html) for action parameters
+* [@DomainServiceLayout](./DomainServiceLayout.html)
+* [@ViewModelLayout](./ViewModelLayout.html)
 
+Corresponding domain semantics:
 
+* [@DomainObject](./DomainObject.html)

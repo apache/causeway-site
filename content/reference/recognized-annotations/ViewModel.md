@@ -1,6 +1,8 @@
 Title: @ViewModel
 
-The `@ViewModel` annotation, applied to a class, is the simplest way to indicate that the class is a view model.  View models are not persisted to the database, instead their state is encoded within their identity (ultimately represented in the URL).  As such, view models are immutable.
+The `@ViewModel` annotation, applied to a class, is the simplest way to indicate that the class is a view model.
+View models are not persisted to the database, instead their state is encoded within their identity (ultimately
+represented in the URL).  As such, view models are immutable.
 
 For example:
 
@@ -32,3 +34,18 @@ Only properties supported by the configured [MementoService](../reference/servic
 * view models cannot reference other view models
 * collections (of either view models or entities) are ignored.
 
+
+## See also
+
+Other domain semantics:
+
+* [@Property](./Property.html)
+* [@Collection](./Collection.html)
+* [@Action](./Action.html)
+* [@Parameter](./Parameter.html)
+* [@DomainObject](./DomainObject.html)
+* [@DomainService](./DomainService.html)
+
+Corresponding view layer ("Layout") annotation:
+
+* [@ViewModelLayout](./ViewModelLayout.html)

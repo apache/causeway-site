@@ -1,4 +1,4 @@
-Title: @CollectionLayout
+Title: @CollectionLayout (1.8.0-SNAPSHOT)
 
 The `@CollectionLayout` annotation applies to collections, collecting together all UI hints within a single
 annotation.
@@ -29,13 +29,20 @@ For example:
         ...
     }
 
+It is also possible to apply the annotation to actions of domain services that are acting as [contributed collections](../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html).
+
 ## See also
 
 Similar layout annotations exist for other elements of the metamodel:
 
-* [@ActionLayout](./ActionLayout.html) for actions
-* [@DomainObjectLayout](./DomainObjectLayout.html) for domain classes
 * [@PropertyLayout](./PropertyLayout.html) for properties
+* [@ActionLayout](./ActionLayout.html) for actions
 * [@ParameterLayout](./ParameterLayout.html) for action parameters
+* [@DomainObjectLayout](./DomainObjectLayout.html)
+* [@DomainServiceLayout](./DomainServiceLayout.html)
+* [@ViewModelLayout](./ViewModelLayout.html)
 
+Corresponding domain semantics:
+
+* [@Collection](./Collection.html)
 
