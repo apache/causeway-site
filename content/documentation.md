@@ -98,9 +98,20 @@ Title: Documentation
 
 #### <a name="reference-config">Config</a>
 
-* [Deployment Types](./reference/deployment-type.html)
 * [Configuration Files](./reference/configuration-files.html)
 
+#### <a name="reference-config">Config Settings</a>
+
+* [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
+* [Custom validator](config/custom-validator.html)
+* [Standardized font-awesome icons and CSS](more-advanced-topics/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
+* [i18n Support](config/i18n-support.html)
+* [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
+* [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
+
+#### <a name="reference-deployment-types">Deployment Types</a>
+
+* [Deployment Types](./reference/deployment-type.html)
 
 
 }
@@ -311,10 +322,6 @@ For both:
 * [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
 * [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
-
-#### <a name="more-advanced-topics-customisation">Customisation</a>
-
-* [Finetuning the Programming Model](more-advanced-topics/metamodel-finetuning-the-programming-model.html)
 
 #### <a name="more-advanced-topics-deployment">Deployment</a>
 

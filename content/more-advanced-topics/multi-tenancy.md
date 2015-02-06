@@ -46,7 +46,7 @@ is visible to the current user.  If visibility is vetoed (for whatever reason) t
 * if the viewer was attempting to render the object on a page, an authorization exception (404 page) will be thrown.
 * if the viewer was attempting to render the object within a table, that row will simply be excluded.
 
-The Isis addons security module provides an implementation (of a [FacetFactory](./metamodel-finetuning-the-programming-model.html)) that
+The Isis addons security module provides an implementation (of a [FacetFactory](../config/metamodel-finetuning-the-programming-model.html)) that
 vetoes access where required.  This vetoing is based on the relationship between data and the current user.  The security module:
 
 * defines the `ApplicationTenancy` that enumerates the available tenancies, placing them into a hierarchy.
