@@ -104,14 +104,14 @@ Title: Documentation
 
 {col-md-4
 
-#### <a name="reference-config">Config Settings</a>
+#### <a name="reference-config">Programming Model Config Settings</a>
 
 * [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
 * [Custom validator](config/custom-validator.html)
-* [Standardized font-awesome icons and CSS](more-advanced-topics/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
-* [i18n Support](config/i18n-support.html)
-* [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
 * [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
+* [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
+* [i18n Support](config/i18n-support.html)
+* [Standardized font-awesome icons and CSS](more-advanced-topics/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
 
 
 }
