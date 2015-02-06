@@ -98,7 +98,6 @@ Title: Documentation
 #### <a name="reference-config">Config</a>
 
 * [Configuration Files](./reference/configuration-files.html)
-* [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
 * [Deployment Types](./reference/deployment-type.html)
 
 
