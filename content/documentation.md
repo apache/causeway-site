@@ -104,7 +104,7 @@ Title: Documentation
 
 {col-md-4
 
-#### <a name="reference-config">Programming Model Config Settings</a>
+#### <a name="reference-config">Programming Model Configuration</a>
 
 * [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0-SNAPSHOT)
 * [Custom validator](config/custom-validator.html)
