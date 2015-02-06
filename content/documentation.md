@@ -111,7 +111,7 @@ Title: Documentation
 * [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
 * [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
 * [i18n Support](config/i18n-support.html)
-* [Standardized font-awesome icons and CSS](more-advanced-topics/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
+* [Standardized font-awesome icons and CSS](config/standardised-font-awesome-icons-and-CSS.html)  (1.8.0-SNAPSHOT)
 
 
 }
