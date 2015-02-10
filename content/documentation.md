@@ -495,6 +495,7 @@ Features, configuration and UI customisation.
 #### <a name="wicket-viewer-customization">Tips</a>
 
 * [Render abstract properties in tables](components/viewers/wicket/tips-and-workarounds.html)
+* [Auto-refresh page](components/viewers/wicket/how-to-auto-refresh-page.html) (1.8.0-SNAPSHOT)
 
 }
 
