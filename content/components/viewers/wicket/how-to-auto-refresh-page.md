@@ -3,7 +3,7 @@ title: How to auto-refresh an (entity) page (1.8.0-SNAPSHOT)
 This requirement from the users mailing list:
 
 _Suppose you want to build a monitoring application, eg for an electricity grid.  Data is updated in the background (eg via the
-Restful Objects REST API)... what is needed is the ability to show an entity that includes a [map](http://github.com/isisaddons/isis-module-gmap3), and have it auto-refresh every 5 seconds or so._
+Restful Objects REST API)... what is needed is the ability to show an entity that includes a [map](http://github.com/isisaddons/isis-wicket-gmap3), and have it auto-refresh every 5 seconds or so._
 
 First, update the domain object to return custom CSS:
 
