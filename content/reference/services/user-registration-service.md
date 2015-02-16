@@ -10,7 +10,7 @@ Domain objects may also use this service; it will be injected into domain object
 
 The core Isis framework itself defines only an API; there is no default implementation.  Rather, the implementation will depend on the security mechanism being used.  That said, if you have configured your app to use the [Isis addons security module](http://github.com/isisaddons/isis-module-security), then note that the security module does provide an abstract implementation (`SecurityModuleAppUserRegistrationServiceAbstract`) of the user registration service.  You will need to extend that service and provide implementation for the two abstract methods - `#getInitialRole()` and `#getAdditionalInitialRoles()`. This is needed so that the self-registered users are assigned automatically to your application role(s) and be able to use the application. Without any role such user will be able only to see/use the logout link of the application.
 Note: do not forget to register this service in isis.properties!
-An example of such implementation can be seen at isis-module-security's [demo applicatio](https://github.com/isisaddons/isis-module-security/blob/master/webapp/src/main/java/org/isisaddons/module/security/webapp/AppUserRegistrationService.java).
+An example of such implementation can be seen at isis-module-security's [demo application](https://github.com/isisaddons/isis-module-security/blob/master/webapp/src/main/java/org/isisaddons/module/security/webapp/AppUserRegistrationService.java).
 
 ## API
 
