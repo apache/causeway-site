@@ -8,9 +8,9 @@ See [here](../../components/viewers/wicket/user-registration.html) for more on t
 
 Domain objects may also use this service; it will be injected into domain object or other domain services in the usual way.  (That said, we expect that such use cases will be comparatively rare; the primary use case is for the Wicket viewer's sign-up page).
 
-The core Isis framework itself defines only an API; there is no default implementation.  Rather, the implementation will depend on the security mechanism being used.  That said, if you have configured your app to use the [Isis addons security module](http://github.com/isisaddons/isis-module-security), then note that the security module does provide an implementation (`SecurityModuleAppUserRegistrationService`) of the user registration service.  This will be automatically registered if the security module is included on the classpath.
-
-Put another way: using the Isis addon security module will allow users to sign up and create their own account.
+The core Isis framework itself defines only an API; there is no default implementation.  Rather, the implementation will depend on the security mechanism being used.  That said, if you have configured your app to use the [Isis addons security module](http://github.com/isisaddons/isis-module-security), then note that the security module does provide an abstract implementation (`SecurityModuleAppUserRegistrationServiceAbstract`) of the user registration service.  You will need to extend that service and provide implementation for the two abstract methods - `#getInitialRole()` and `#getAdditionalInitialRoles()`. This is needed so that the self-registered users are assigned automatically to your application role(s) and be able to use the application. Without any role such user will be able only to see/use the logout link of the application.
+Note: do not forget to register this service in isis.properties!
+An example of such implementation can be seen at isis-module-security's [demo applicatio](https://github.com/isisaddons/isis-module-security/blob/master/webapp/src/main/java/org/isisaddons/module/security/webapp/AppUserRegistrationService.java).
 
 ## API
 
@@ -40,7 +40,7 @@ where:
       
 ## Implementation
 
-There is no default implementation of the service provided by the core framework.  However, the [Isis addons security module](http://github.com/isisaddons/isis-module-security), provides an implementation which is automatically available if the security module is on the classpath.
+There is no default implementation of the service provided by the core framework.  However, the [Isis addons security module](http://github.com/isisaddons/isis-module-security), provides an abstract implementation with almost all needed functionality. You may extend from it and provide the application role(s) for the self-registered users. **Note**: the custom implementation of this service should be registered manually in Isis!
 
 ## Related Services
 
