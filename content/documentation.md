@@ -644,7 +644,7 @@ Note that Isis addons, while maintained by Isis committers, are not part of the 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
 * [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 * [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Session Logger](http://github.com/isisaddons/isis-session-logger)
+* [Session Logger](http://github.com/isisaddons/isis-module-sessionlogger)
 * [Settings](http://github.com/isisaddons/isis-module-settings)
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
 * [Tags](http://github.com/isisaddons/isis-module-tags)
