@@ -17,10 +17,10 @@ Title: Documentation
 * [Common Use Cases](intro/elevator-pitch/common-use-cases.html)  <a href="intro/elevator-pitch/common-use-cases.html#screencast"><img src="./images/tv_show-25.png"></a>
 * [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
 
-#### <a name="getting-started">Archetypes</a>
+#### <a name="getting-started">Archetypes and Apps</a>
 
 * **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) ([1.7.0](archetypes/release-notes/about.html))**
-* [TodoApp Archetype](intro/getting-started/todoapp-archetype.html) ([1.7.0](archetypes/release-notes/about.html)) <a href="intro/getting-started/todoapp-archetype.html#screencast"><img src="./images/tv_show-25.png"></a>
+* [TodoApp Example App](http://github.com/isisaddons/isis-app-todoapp) (not ASF)
 
 }
 
@@ -644,7 +644,8 @@ Note that Isis addons, while maintained by Isis committers, are not part of the 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
 * [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 * [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Settings](http://github.com/isisaddons/isis-module-settings) 
+* [Session Logger](http://github.com/isisaddons/isis-session-logger)
+* [Settings](http://github.com/isisaddons/isis-module-settings)
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
 * [Tags](http://github.com/isisaddons/isis-module-tags)
 
