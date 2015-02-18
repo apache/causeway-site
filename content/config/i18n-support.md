@@ -18,8 +18,8 @@ The format  of the `.pot` and `.po` files is identical; the only difference is t
 the `.po` file has translations for each of the message strings.  In Isis' implementation,
 if the translation is missing then the original message text will be returned.  What that
 means in practice is that the `.pot` file can be copied to a `.po` file and used as is.
-
-> In fact, if there is no translation available then Isis' implementation will return the original text, so it isn't even necessary for their to be any `.po` files.
+(In fact, if there is no translation available then Isis' implementation will 
+return the original text, so it isn't even necessary for there to be any `.po` files).
 
 There are a couple of advantages of using `.po` files rather than the more Java's own `ResourceBundle` API:
 
@@ -47,12 +47,12 @@ The cornerstone of Isis' support for i18n is the `TranslationService` service.  
 
 where:
 
-* translate(...) : overloaded method to return either the singular/regular or plural form of the text
-* getMode() : indicates whether the translation service is in read or write mode.
+* `translate(...)` : is an overloaded method to return either the singular/regular or plural form of the text
+* `getMode()` : indicates whether the translation service is in read or write mode.
 
-The idea behind these two modes is so that the service can be configured either to run in normal (read) mode, and provide translations, or alternatively in (write) mode whereby messages are simply returned untranslated, but also the fact that the translation was requested is also recorded (a little like a spy/mock in unit testing mock).  
+If the service is running in the normal read mode, then it simply proides translations for the locale of the current user.  If however the service is configured to run in write mode, then it records the fact that the message was requested to be translated (a little like a spy/mock in unit testing mock), and returns the original message.  The service can then be queried to discover which messages need to be translated.
 
-#### `TranslationServicePo`
+### `TranslationServicePo` (implementation)
 
 Isis provides a default implementation of `TranslationService`, namely `TranslationServicePo`.  When in read mode this service locates the appropriate  `.po` file (based on the requesting user's locale), finds the translation and returns it.  When in write mode however it will write all translations into a `.pot` file.
 
@@ -70,7 +70,9 @@ The `TranslationService` it is used internally by Isis when building up the meta
 
 However, for an application to be fully internationalized, any validation messages (from either `disableXxx()` or `validateXxx()` supporting methods) and also possibly an object's title (from the `title()` method) will also require translation.  Moreover, these messages must be captured in the `.pot` file such that they can be translated.
 
-The first part of the puzzle is tackled by an extension to Isis' programming model.  Whereas previously the `disableXxx()`/`validateXxx()`/`title()` methods could only return a `java.lang.String`, they may now optionally return a `TranslatableString` (defined in Isis applib instead).
+### `TranslatableString`
+
+The first part of the puzzle is tackled by an extension to Isis' programming model.  Whereas previously the `disableXxx()` / `validateXxx()` / `title()` methods could only return a `java.lang.String`, they may now optionally return a `TranslatableString` (defined in Isis applib) instead.
 
 Here's a (silly) example from the [simpleapp](../intro/getting-started/simpleapp-archetype.html):
 
@@ -84,7 +86,7 @@ This corresponds to the following entry in the `.pot` file:
     msgid "Exclamation mark is not allowed"
     msgstr ""
 
-The full API of `TranslatableString` is closely modelled on the GNU gettext design:
+The full API of `TranslatableString` is modelled on the design of GNU gettext (in particular the [gettext-commons](https://code.google.com/p/gettext-commons/wiki/Tutorial) library):
 
     public final class TranslatableString {
 
@@ -105,23 +107,29 @@ The full API of `TranslatableString` is closely modelled on the GNU gettext desi
 
 where:
 
-* tr(...) : returns a translatable string with a single pattern for both singular and plural forms.
-* trn(...) : returns a translatable string with different patterns for singular and plural forms; the one to use is determined by the 'number' argument
-* translate(...): translates the string using the provided `TranslationService`, using the appropriate singular/regular or plural form, and interpolating any arguments.
+* `tr(...)` : returns a translatable string with a single pattern for both singular and plural forms.
+* `trn(...)` : returns a translatable string with different patterns for singular and plural forms; the one to use is determined by the 'number' argument
+* `translate(...)`:  translates the string using the provided `TranslationService`, using the appropriate singular/regular or plural form, and interpolating any arguments.
 
-The interpolation uses the format `{xxx}`, where the placeholder can occur multiple times.  For example:
+The interpolation uses the format `{xxx}`, where the placeholder can occur multiple times.  
+
+For example:
 
     final TranslatableString ts = TranslatableString.tr(
         "My name is {lastName}, {firstName} {lastName}.",
         "lastName", "Bond", "firstName", "James");
 
-This would interpolate (for the English locale) as "My name is Bond, James Bond".   But for a German user, if the translation in the corresponding `.po` file was:
+would interpolate (for the English locale) as "My name is Bond, James Bond".   
+
+For a German user, on the other hand, if the translation in the corresponding `.po` file was:
 
     #: xxx.yyy.Whatever#context()
     msgid "My name is {lastName}, {firstName} {lastName}."
     msgstr "Iche heisse {firstName} {lastName}."
 
-Then the translation would be: "Ich heisse James Bond".
+then the translation would be: "Ich heisse James Bond".
+
+### Integration Testing
 
 So much for the API; but as noted, it is also necessary to ensure that the required translations are recorded (by the `TranslationService`) into the `.pot` file.  
 
@@ -157,12 +165,14 @@ To ensure your app is fully internationalized app, you must therefore:
 * use `TranslatableString` rather than `String` for all validation/disable and title methods.
 * ensure that (at a minimum) all validation messages and title methods are integration tested.
 
-> One of the reasons that we decided to implement Isis i18n/translation support in this way is because it encourages (requires) the app to be properly tested.
+Indeed, we make no apologies: one of the reasons that we decided to implement Isis' i18n support in this way is because it encourages/requires the app to be properly tested.
 
 
 ## Configuration
 
-#### Logging
+There are several different aspects of the translation service that can be configured.
+
+### Logging
 
 To configure the `TranslationServicePo` to write to out the `translations.pot` file, add the following to the *integtests* `logging.properties` file:
 
@@ -177,7 +187,7 @@ To configure the `TranslationServicePo` to write to out the `translations.pot` f
 
 Just to repeat, this is *not* the `WEB-INF/logging.properties` file, it should instead be added to the `integtests/logging.properties` file.
 
-#### Location of the `.po` files
+### Location of the `.po` files
 
 The default location of the translated `.po` files is in the `WEB-INF` directory.  These are named and searched for similarly to regular Java resource bundles.
 
@@ -197,7 +207,7 @@ then:
 
 The basename for translation files is always `translations`; this cannot be altered.
     
-#### Externalized translation files
+### Externalized translation files
 
 Normally Isis configuration files are read from the `WEB-INF` file.  However, Isis can be configured to read config files from an [external directory](../reference/externalized-configuration.html); this is also supported for translations.
 
@@ -210,7 +220,7 @@ Thus, if in `web.xml` the external configuration directory has been set:
 
 Then this directory will be used as the base for searching for translations (rather than the default 'WEB-INF/' directory).
 
-#### Force read mode
+### Force read mode
 
 As noted above, if running in prototype mode then `TranslationServicePo` will be in write mode, if in production mode then will be in read mode.  To force read mode (ie use translations) even if in prototype mode, add the following configuration property to `isis.properties`:
 
@@ -220,7 +230,7 @@ As noted above, if running in prototype mode then `TranslationServicePo` will be
 
 The `TranslationServicePo` has a number of supporting/related services.
 
-### LocaleProvider
+### `LocaleProvider`
 
 The `LocaleProvider` API is used by the `TranslationServicePo` implementation to obtain the locale of the "current user".  
 
