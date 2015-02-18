@@ -29,7 +29,7 @@ Core:
 
 * [isis-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/isis-core/isis-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/isis-core/isis-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/isis-core/isis-1.7.0-source-release.zip.md5)) 
 
-nb: In v1.6.0, core incorporates JDO/DataNucleus ObjectStore, Restful Objects viewer and Shiro Security (previously released as separate components).  In v1.7.0, modules released (in `org.apache.isis.module` have been moved to be [http://www.isisaddons.org](Isis add-ons).
+nb: In v1.6.0, core incorporates JDO/DataNucleus ObjectStore, Restful Objects viewer and Shiro Security (previously released as separate components).  In v1.7.0, modules released (in `org.apache.isis.module` have been moved to be [http://www.isisaddons.org](Isis add-ons) (not ASF).
 
 Components:
 

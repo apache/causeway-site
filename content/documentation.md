@@ -507,7 +507,7 @@ Features, configuration and UI customisation.
 * [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
 * [Custom pages](components/viewers/wicket/custom-pages.html)
 
-#### <a name="wicket-viewer-isisaddons">Isis Add-ons</a>
+#### <a name="wicket-viewer-isisaddons">Isis Add-ons (not&nbsp;ASF)</a>
 
 * [Excel download](./components/viewers/wicket/isisaddons/isis-wicket-excel.html)
 * [Fullcalendar2](./components/viewers/wicket/isisaddons/isis-wicket-fullcalendar2.html)
@@ -562,7 +562,7 @@ Hints and Tips
 
 <i>previously released as the Shiro Security Component (v[1.5.0](components/security/shiro/release-notes/about.html))</i>
 
-We recommend the [Security Isis add-on](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+See also the [Security Isis add-on](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a> (not&nbsp;ASF)
 
 * [Configuring Isis to use Shiro](components/security/shiro/configuring-shiro.html)
 * [Configuring Shiro to use LDAP](components/security/shiro/using-ldap.html)
@@ -593,7 +593,7 @@ See also <a href="#jdo-objectstore-jdo-mapping-hints">JDO Mapping Hints</a>, <a 
 {col-md-12
 ## <a name="modules">Add-on Modules/Services</a>
 
-Optional supporting modules to use within your app, with implementations in [Isis addons](http://www.isisaddons.org).  Some modules implement interfaces defined in Isis applib (eg auditing), others are standalone (eg excel and tags).
+Optional supporting modules to use within your app, with implementations in [Isis addons](http://www.isisaddons.org) (not&nbsp;ASF).  Some modules implement interfaces defined in Isis applib (eg auditing), others are standalone (eg excel and tags).
 
 In addition, a full list of all applib services (including those that are implemented by the framework itself, eg `DomainObjectContainer` and `MementoService`) is summarized **[here](./reference/services.html)**.
 
@@ -608,13 +608,13 @@ In addition, a full list of all applib services (including those that are implem
 #### <a name="isis-module-command">Command Service (persistence)</a>
 
 * [API](./reference/services/command-service.html) <a href="./reference/services/command-context.html#screencast"><img src="./images/tv_show-25.png"></a> 
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a> (not&nbsp;ASF)
 
 #### <a name="isis-module-command">Background Command Service</a>
 
 * [API](./reference/services/background-command-service.html)
 * [Background Execution](./reference/non-ui/background-command-execution.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-command) (for both)
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-command) (not&nbsp;ASF)
 
 }
 
@@ -623,13 +623,13 @@ In addition, a full list of all applib services (including those that are implem
 #### <a name="isis-module-auditing">Auditing</a>
 
 * [Auditing API](./reference/services/auditing-service.html)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-audit)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-audit) (not&nbsp;ASF) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 #### <a name="isis-module-publishing">Publishing Service</a>
 
 * [API](./reference/services/publishing-service.html)
 * [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) (out-of-date)
-* [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing)  <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing) (not&nbsp;ASF) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
 
 
 }
@@ -637,6 +637,8 @@ In addition, a full list of all applib services (including those that are implem
 {col-md-4
 
 #### <a name="modules-isisaddons">Other Isis Addons</a>
+
+> Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
 
 * [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)

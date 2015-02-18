@@ -1,8 +1,16 @@
 Title: Externalized Configuration
 
-As described [here](./configuration-files.html), Isis itself bootstraps from the (mandatory) `isis.properties` configuration files and also (optional) component-specific configuration files (such as `persistor_datanucleus.properties` or `viewer_wicket.properties`).
+As described [here](./configuration-files.html), Isis itself bootstraps from the `isis.properties` configuration file.
+It will also read configuration from the (optional) component/implementation-specific configuration files (such as
+`persistor_datanucleus.properties` or `viewer_wicket.properties`) and also (otional) component-specific configuration
+files (such as `persistor.properties` or `viewer.properties`).
 
-By default these are read from the `WEB-INF` directory.  Having this configuration "baked into" the application is okay in a development environment, but when the app needs to be deployed to a test or production environment, this configuration should be read from an external location.
+> By convention we put JDBC URL properties in `persistor.properties`, but they could reside in any of
+> `persistor_datanucleus.properties`, `persistor.properties` or (even) `isis.properties`
+
+By default these are read from the `WEB-INF` directory.  Having this configuration "baked into" the application is
+okay in a development environment, but when the app needs to be deployed to a test or production environment, this
+configuration should be read from an external location.
 
 There are in fact three frameworks involved here, all of which need to be pointed to this external location:
 
@@ -21,6 +29,8 @@ There are in fact three frameworks involved here, all of which need to be pointe
 Each of these frameworks has its own way of externalizing its configuration.
 
 ## <a name="isis">Externalizing Isis' Configuration</a>
+
+> Note that running the app from org.apache.isis.WebServer currently does not externalized Isis configuration.
 
 To tell Isis to load configuration from an external directory, specify the `isis.config.dir` context parameter.  
 
