@@ -638,7 +638,7 @@ In addition, a full list of all applib services (including those that are implem
 
 #### <a name="modules-isisaddons">Other Isis Addons</a>
 
-> Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
+Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
 
 * [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
 * [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
