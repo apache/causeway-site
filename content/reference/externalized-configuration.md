@@ -62,7 +62,7 @@ By default Isis configures log4j to read the `logging.properties` file in the `W
 
 For example, if deploying to Tomcat7, this amounts to adding the following to the `CATALINA_OPTS` flags:
 
-    export CATALINA_OPTS="-Dlog4j.configuration=-Dlog4j.configuration=/usr/local/tomcat/myapp/conf/logging.properties"
+    export CATALINA_OPTS="-Dlog4j.configuration=/usr/local/tomcat/myapp/conf/logging.properties"
 
 Further details an be found in the [log4j documentation](https://logging.apache.org/log4j/1.2/manual.html#Example_Configurations).
 
