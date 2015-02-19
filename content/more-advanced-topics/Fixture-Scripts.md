@@ -117,17 +117,17 @@ All fixture scripts subclass the `FixtureScript` class (defined in the applib), 
 
 The `ExecutionContext` provides three main capabilities to the fixture script:
 
-1. the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
+* the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
 
 <pre>
     executionContext.executeChild(this, someObject);
 </pre>
 
-2. the script can get and set parameters from/to the context.
+* the script can get and set parameters from/to the context.
 
    More on this topic below.
 
-3. the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI.
+* the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI.
 
 <pre>
     executionContext.addResult(this, someObject);
