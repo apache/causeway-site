@@ -15,7 +15,7 @@ a CSS class on the containing &lt;tr&gt; if rendering the object on a table.  By
 
 ## Screenshots
 
-The [todoapp](../intro/getting-started/todoapp-archetype.html) uses this technique to render completed items with a strikethrough:
+The [todoapp addon](https://github.com/isisaddons/isis-app-todoapp) (not ASF) uses this technique to render completed items with a strikethrough:
 
 ![](images/cssclass-todoapp-example.png)
 

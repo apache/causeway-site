@@ -28,21 +28,20 @@ useful for more than "just" testing:
 
 The "fixture script" service is an application-specific subclass of the abstract `FixtureScripts` service provided in
 Isis' applib.  An example of this can be found in the [simple app](../intro/getting-started/simpleapp-archetype.html)
-archetype, which defines `SimpleObjectsFixtureService`.  The [todo app](../intro/getting-started/todoapp-archetype.html)
-archetype also does something very similar, defining a `ToDoItemsFixtureService`.
+archetype, which defines `SimpleObjectsFixtureService`.
 
 ## Using Fixture Scripts in the UI ##
 
 The normal convention is to for the (application's) fixture script service to be surfaced on a "Prototyping" menu.  Here's
-how the [todo app](../intro/getting-started/todoapp-archetype.html) defines its fixture script service:
+how the [simpleapp](../intro/getting-started/simpleapp-archetype.html) defines its fixture script service:
 
     @DomainService
     @DomainServiceLayout(
-        named = "Prototyping",
-        menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        menuOrder = "10"
+            named="Prototyping",
+            menuBar = DomainServiceLayout.MenuBar.SECONDARY,
+            menuOrder = "20"
     )
-    public class ToDoItemsFixturesService extends FixtureScripts {
+    public class SimpleObjectsFixturesService extends FixtureScripts {
         ...
     }
 
@@ -77,85 +76,39 @@ So, for example, the `ToDoItemsFixtureService`'s constructor is:
 
 Fixture scripts can be invoked in integration tests by injecting the `FixtureScripts` service and then using the service to execute the required fixture script.
 
-For example, here's one of the [todo app](../intro/getting-started/todoapp-archetype.html)'s integration tests:
+For example, here's one of the [todo app](../intro/getting-started/simpleapp-archetype.html)'s integration tests:
 
-    public class ToDoItemIntegTest extends AbstractToDoIntegTest {
-
-        ToDoItemsRecreateAndCompleteSeveral fixtureScript;
-
-        @Before
-        public void setUpData() throws Exception {
-            fixtureScript = new ToDoItemsRecreateAndCompleteSeveral();
-            fixtureScripts.runFixtureScript(fixtureScript, null);
-        }
+    public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
 
         @Inject
         FixtureScripts fixtureScripts;
+        ...
 
+        @Before
+        public void setUp() throws Exception {
+            // given
+            fs = new RecreateSimpleObjects().setNumber(1);
+            fixtureScripts.runFixtureScript(fs, null);
+
+            ...
+        }
         ...
     }
 
 The integration test can then lookup the object of interest using the `FixtureScript#lookup(...)` method:
 
-    public class ToDoItemIntegTest extends AbstractToDoIntegTest {
+
+    public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
+
         ...
-        TodoItem toDoItem;
+        SimpleObject simpleObjectPojo;
 
         @Before
         public void setUp() throws Exception {
-
-            toDoItem = fixtureScript.lookup(
-                "to-do-items-recreate-and-complete-several/to-do-item-complete-for-buy-stamps/item-1",
-                ToDoItem.class);
-            assertThat(toDoItem, is(not(nullValue())));
-
-        }
-        ...
-    }
-
-The lookup key is the same as is rendered in the UI, and is also printed to the console.  (Although not done in the
-[todo app](../intro/getting-started/todoapp-archetype.html)) it's probably good practice to encapsulate this string within the fixture script subclass, eg:
-
-
-    public class ToDoItemsRecreateAndCompleteSeveral extends FixtureScript {
-        ...
-        @Override
-        protected void execute(ExecutionContext executionContext) {
             ...
-            toDoItemNotComplete = fixtureScript.lookup(
-                "to-do-items-recreate-and-complete-several/to-do-item-complete-for-buy-stamps/item-1",
-                ToDoItem.class);
+
+            simpleObjectPojo = fs.getSimpleObjects().get(0);
         }
-
-        public TodoItem toDoItemNotComplete;
-    }
-
-allowing the test to be rewritten:
-
-    public class ToDoItemIntegTest extends AbstractToDoIntegTest {
-        ...
-        TodoItem toDoItem;
-
-        @Before
-        public void setUp() throws Exception {
-            toDoItem = fixtureScript.toDoItemNotComplete;
-        }
-        ...
-    }
-
-Alternatively (and arguably a more 'purist' approach), the test could find data just by searching for it, eg:
-
-    public class ToDoItemIntegTest extends AbstractToDoIntegTest {
-        ...
-        TodoItem toDoItem;
-
-        @Before
-        public void setUp() throws Exception {
-            toDoItem = toDoItems.notYetComplete().get(0);
-        }
-
-        @Inject
-        ToDoItems toDoItems;
         ...
     }
 
@@ -170,7 +123,7 @@ Fixture scripts are implemented by subclassing the `FixtureScript` class, implem
         ...
     }
 
-The `ExecutionContext` provides two main capabilities to the fixture script:
+The `ExecutionContext` provides three main capabilities to the fixture script:
 
 * the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
 
@@ -178,7 +131,9 @@ The `ExecutionContext` provides two main capabilities to the fixture script:
     executionContext.executeChild(this, someObject);
 </pre>
 
-* the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI, or looked up by an integration test
+* the script can get and set parameters from/to the context.  More on this topic below.
+
+* the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI.
 
 <pre>
     executionContext.addResult(this, someObject);
@@ -195,223 +150,7 @@ Therefore a better approach is to have the fixture scripts simply invoke the rel
 on the domain objects.  Then, if those actions change in the future, the scripts remain valid.  Put another way: have
 the fixture scripts replay the "cause" of the change (business actions) rather than the "effect" (data inserts).
 
-We therefore find it's helpful to distinguish:
-
-* scenario fixture scripts - coarse-grained, accomplish a single business goal (or set up a bunch of related data)
-* action fixture scripts - fine-grained, perform a single action on a domain object or service
-
-Thus, scenario scripts call action scripts, with the action scripts as the atomic building blocks.
-
-### Example Usage
-
-The [todo app](../intro/getting-started/todoapp-archetype.html)  uses fixture
-scripts to create a number of todo items, in different states (some complete, some not).  Its design is:
-
-* `ToDoItemAbstract` is an (abstract) action script that knows how to create a todo item
-* `ToDoItemXxx` are (concrete) action scripts (subclassing `ToDoItemAbstract`) that specify the "what" (action arguments) to be created
-
-similarly:
-
-* `ToDoItemCompleteAbstract` is an (abstract) action script that knows how to complete a (not yet complete) todo item
-* `ToDoItemCompleteXxx` are (concrete) action scripts (subclassing `ToDoItemCompleteAbstract`) that specify which actual todo item to complete
-
-while:
-
-* `ToDoItemsRecreate` is a scenario script that creates about a dozen or so todo items
-* `ToDoItemsRecreateAndCompleteSeveral` is a scenario script that creates a dozen or so todo items and completes a handful of them
-
-The `ToDoItemsRecreateAndCompleteSeveral` script actually calls `ToDoItemsRecreate`, and so the nesting can be as deep as required.
-In practice though we recommend keeping the hierarchy relatively shallow.
-
-
-### Action script examples
-
-The [todo app](../intro/getting-started/todoapp-archetype.html)'s `ToDoItemForBuyStamps` fixture script creates a single, not yet complete todo item:
-
-    public class ToDoItemForBuyStamps extends ToDoItemAbstract {
-
-        public static final String DESCRIPTION = "Buy stamps";
-
-        @Override
-        protected void execute(ExecutionContext executionContext) {
-            createToDoItem(
-                    DESCRIPTION,
-                    Category.Domestic, Subcategory.Shopping,
-                    nowPlusDays(0),
-                    BD("10.00"),
-                    executionContext);
-        }
-    }
-
-where in turn `ToDoItemAbstract` inherits from `FixtureScript` and provides the `createToDoItem(...)` method:
-
-    public abstract class ToDoItemAbstract extends FixtureScript {
-
-        protected ToDoItem createToDoItem(
-                final String description,
-                final Category category, final Subcategory subcategory,
-                final LocalDate dueBy,
-                final BigDecimal cost,
-                final ExecutionContext executionContext) {
-
-            // validate parameters
-            final String ownedBy = executionContext.getParameter("ownedBy");
-            if(ownedBy == null) {
-                throw new IllegalArgumentException("'ownedBy' must be specified");
-            }
-
-            // execute
-            ToDoItem newToDo = toDoItems.newToDo(
-                    description, category, subcategory, ownedBy, dueBy, cost);
-            return executionContext.addResult(this, newToDo);
-        }
-        ...
-
-        @javax.inject.Inject
-        private ToDoItems toDoItems;
-    }
-
-Similarly, the following fixture script looks up a todo item (assumed to have been created earlier on) and then complete it:
-
-    public class ToDoItemCompleteForBuyStamps extends ToDoItemCompleteAbstract {
-
-        @Override
-        protected void execute(ExecutionContext executionContext) {
-            complete(ToDoItemForBuyStamps.DESCRIPTION, executionContext);
-        }
-    }
-
-where once more the superclass provides the "know-how":
-
-    public abstract class ToDoItemCompleteAbstract extends FixtureScript {
-
-        protected void complete(final String description, final ExecutionContext executionContext) {
-            String ownedBy = executionContext.getParameter("ownedBy");
-            final ToDoItem toDoItem = findToDoItem(description, ownedBy);
-            toDoItem.setComplete(true);
-            executionContext.addResult(this, toDoItem);
-        }
-
-        private ToDoItem findToDoItem(final String description, final String ownedBy) {
-            final Collection<ToDoItem> filtered = Collections2.filter(
-                getContainer().allInstances(ToDoItem.class),
-                    new Predicate<ToDoItem>() {
-                        @Override
-                        public boolean apply(ToDoItem input) {
-                            return Objects.equal(description, input.getDescription()) &&
-                                   Objects.equal(ownedBy, input.getOwnedBy());
-                        }
-                    });
-            return filtered.isEmpty()? null: filtered.iterator().next();
-        }
-    }
-
-
-### Scenario scripts examples
-
-The `ToDoItemsRecreate` fixture script sets up a whole bunch of todo items:
-
-    public class ToDoItemsRecreate extends FixtureScript {
-
-        public ToDoItemsRecreate() {
-            withDiscoverability(Discoverability.DISCOVERABLE);
-        }
-        ...
-        @Override
-        protected void execute(ExecutionContext executionContext) {
-            ...
-
-            // prereqs
-            executionContext.executeChild(this, new ToDoItemsDelete());
-
-            // create items
-            executionContext.executeChild(this, new ToDoItemForBuyMilk());
-            executionContext.executeChild(this, new ToDoItemForBuyBread());
-            executionContext.executeChild(this, new ToDoItemForBuyStamps());
-            executionContext.executeChild(this, new ToDoItemForPickUpLaundry());
-            executionContext.executeChild(this, new ToDoItemForMowLawn());
-            executionContext.executeChild(this, new ToDoItemForVacuumHouse());
-            executionContext.executeChild(this, new ToDoItemForSharpenKnives());
-            executionContext.executeChild(this, new ToDoItemForWriteToPenPal());
-            executionContext.executeChild(this, new ToDoItemForWriteBlogPost());
-            executionContext.executeChild(this, new ToDoItemForOrganizeBrownBag());
-            executionContext.executeChild(this, new ToDoItemForSubmitConferenceSession());
-            executionContext.executeChild(this, new ToDoItemForStageIsisRelease());
-        }
-    }
-
-There's a couple of things worth pointing out here.  First, in the `execute(...)` method, note the call to the `ToDoItemsDelete` fixture script.  This is responsible for tearing down all relevant data first:
-
-    public class ToDoItemsDelete extends FixtureScript {
-
-        protected void execute(ExecutionContext executionContext) {
-            final String ownedBy = executionContext.getParameter("ownedBy");
-            isisJdoSupport.executeUpdate("delete from \"ToDoItem\" where \"ownedBy\" = '" + ownedBy + "'");
-        }
-
-        @javax.inject.Inject
-        private IsisJdoSupport isisJdoSupport;
-    }
-
-Usually tear down fixture scripts will delete some logic partition of data that is under the exclusive control of the test; in the case the fact that every todo item has an owner is exploited.
-
-Second, the scenario script is made available in the UI through the call to `withDiscoverability(...)` in its constructor:
-
-    public class ToDoItemsRecreate extends FixtureScript {
-
-        public ToDoItemsRecreate() {
-            withDiscoverability(Discoverability.DISCOVERABLE);
-        }
-        ...
-    }
-
-This tells the fixture script framework that the fixture script should be listed as a choice in the UI:
-
-<img src="images/fixture-scenarios.png" width="400"></img>
-
-## Using Deeper Hierarchies
-
-While we suggest that you organize fixture scripts in two levels - coarse-grained scenario scripts and fine-grained action scripts - you can if you wish create deeper hierarchies than this.  Put another way: fixture scripts form a hierarchy (composite pattern) and the nesting can be as deep as you require.
-
-The [todo app](../intro/getting-started/todoapp-archetype.html)'s fixture hierarchy as implemented is quite flat:
-
-<img src="images/fixture-script-hierarchies-1.PNG" width="500"></img>
-
-where each dependency represents one fixture script using `ExecutionContext#executeChild(...)` to execute another.
-
-However, it would be possible to refactor it to use a deeper hierarchy, for example as:
-
-<img src="images/fixture-script-hierarchies-2.PNG" width="370"></img>
-
-With this design each fixture script takes responsibility for setting up its prerequisites, up to and including
-running the `ToDoItemsDelete` teardown script.
-
-To support this design, by default the fixture script framework (specifically, `ExecutionContext`) will only ever run
-a fixture script once; or to be more precise, it will only ever run one instance of a given class of fixture script once.
-Thus, although in the refactored design each of `ToDoItemForXxx`, `ToDoItemForYyy`, `ToDoItemForZzz` etc all call
-`ToDoItemsDelete`, it will only be called once for the first of these, and thereafter the call will be skipped.
-
-If you don't want this behaviour (ie you prefer that every script should always be called) then it can be overridden
-in the constructor:
-
-    public class ToDoItemsFixturesService extends FixtureScripts {
-
-        public ToDoItemsFixturesService() {
-            super("fixture.todo", MultipleExecutionStrategy.EXECUTE);
-        }
-
-
-## Parameters
-
-A lot of the value for fixture scripts arises if they can perform their setup with a minimum of inputs, in other words
-using sensible defaults for action arguments if none are created.  Indeed, they may well make use of a library to
-generate random test data (a quick google search throws up [this ASLv2 licensed port](https://github.com/DiUS/java-faker)
-of the popular Ruby Faker library.
-
-But, sometimes we want the ability to influence the behaviour of a fixture script by overriding these defaults.  In the
-context of an automated integration test, the overridden arguments help to highlight the data that is important to the
-test.  In the context of manual exploratory testing, these make it easier for the tester to play around with variations
-on different starting scenarios.
+## Using input and output Parameters
 
 As the screenshots above show, the `FixtureScripts#runFixtureScript` action allows optional parameters to be provided to the called fixture scripts:
 
@@ -440,48 +179,150 @@ fixture scripts that might be called in turn):
         ...
     }
 
-The fixture script framework itself places no conditions on the format of these parameters, but it does provide API
-to support parameters specified in key=value pairs.  These can be read and also updated:
+The fixture script framework itself places no conditions on the format of these parameters, but it would quickly become
+tedious to have to parse that single parameter string.  The `ExecutionContext` therefore provides additional methods
+that parses that initial string into a set of parameters as key=value pairs:
+
+    public class ExecutionContext {
+        ...
+        public Map<String,String> getParameterMap() { ... }
+        ...
+    }
+
+There are also various overloads to retrieve each parameter as a particular datatype:
 
     public class ExecutionContext {
         ...
         public String getParameter(String parameterName) { ... }
-        public Map<String,String> getParameterMap() { ... }
-        ...
-        public void setParameterIfNotPresent(String parameterName, String parameterValue) { ... }
+        public String getParameterAsInteger(String parameterName) { ... }
+        public LocalDate getParameterAsLocalDate(String parameterName) { ... }
+        public Boolean getParameterAsBoolean(String parameterName) { ... }
         ...
     }
 
-The last method `setParameterIfNotPresent(...)`, provides a useful way by which the fixture script can supply defaults
-if they haven't been specified in the calling script.
+and so on.  For example:
 
-For example, the `ToDoItemsRecreate` fixture script uses this API to default an "ownedBy" parameter (so that every
-todo item created is for a particular user):
+<pre>
+    LocalDate dob = executionContext.getParameterAsLocalDate("dateOfBirth");
+</pre>
 
-    public class ToDoItemsRecreate extends FixtureScript {
+Alternatively `getParameter(String, Class<T>)` can be used, specifying the desired datatype:
+
+<pre>
+    LocalDate dob = executionContext.getParameterAsT("dateOfBirth", LocalDate.class);
+</pre>
+
+Parameter values can also be set on `ExecutionContext`:
+
+    public class ExecutionContext {
         ...
-
-        private String ownedBy;
-        public String getOwnedBy() { return ownedBy; }
-        public void setOwnedBy(String ownedBy) { this.ownedBy = ownedBy; }
-
-        @Override
-        protected void execute(ExecutionContext executionContext) {
-
-            // defaults
-            executionContext.setParameterIfNotPresent(
-                    "ownedBy",
-                    Util.coalesce(getOwnedBy(), getContainer().getUser().getName()));
-
-            ...
-        }
+        public void setParameter(String parameterName, String parameterValue) { ... }
+        public void setParameter(String parameterName, Integer parameterValue) { ... }
+        public void setParameter(String parameterName, LocalDate parameterValue) { ... }
+        public void setParameter(String parameterName, Boolean parameterValue) { ... }
+        ...
     }
 
-Thus, if in the UI the end-user specifies a parameter "ownedBy=fred" then this will be available to all fixture scripts
-as `executionContext.getParameter("ownedBy"), but if not set then it will default to the current user.
+and so on.  For example:
 
-Similarly, if an integration test programmatically calls `setOwnedBy(...)` on this script, then again the value will be
-set for the script and all child scripts.
+and
+<pre>
+    executionContext.setParameter("dateOfBirth", clockService.now().minus(new Years(18)));
+</pre>
+
+This provides a useful mechanism for sharing data between fixture scripts that call child fixture scripts.  And on that topic...
+
+## Scenario scripts and action scripts
+
+We find it's helpful to distinguish:
+
+* scenario fixture scripts - coarse-grained, to accomplish a particular business goal (or set up a bunch of related data)
+* action fixture scripts - fine-grained, perform a single action on a domain object or service
+
+Scenario scripts can be called from the UI, making it easy to demonstrate new features, or for manual exploratory testing.
+These scenario scripts then call action scripts, with the action scripts as the atomic building blocks that do the actual work.
+
+We also recommend that fixture scripts define (as simple JavaBean properties) both `input` parameters and also `output` parameters.
+Input parameters/properties are used to adjust the behaviour of the fixture script, while the output properties provide the means for
+the fixture script to make the object(s) created/modified available to a calling integration test.
+
+So that they can be "just be executed" from the UI, scenario scripts should have defaults for all inputs.  A lot of
+the value for fixture scripts arises if they can perform their setup with a minimum of inputs, in other words using
+sensible defaults if none are specified.  Action scripts should also default as much as possible, on the other hand may
+have some mandatory inputs that must be set by the calling scenario.
+
+> Check out libraries that can generate random test data (a quick google search throws up
+[this ASLv2 licensed port](https://github.com/DiUS/java-faker) of the popular Ruby Faker library.
+
+To assist with this all of this, the `FixtureScript` class provides two methods:
+
+* `defaultParam(...)` will attempt to (reflectively) read a parameter the fixture script itself, otherwise from the
+execution context itself, otherwise will fall back on a default value:
+
+<pre>
+    LocalDate dateOfBirth = defaultParam("dateOfBirth", executionContext ec, clockService.now().minus(new Years(18)));
+</pre>
+
+* `checkParam(...)` will attempt to (reflectively) read a parameter the fixture script itself, otherwise from the
+execution context itself, otherwise will throw an exception:
+
+<pre>
+    LocalDate dateOfBirth = defaultParam("dateOfBirth", executionContext ec, LocalDate.class);
+</pre>
+
+As you can probably guess, scenario scripts should only call `defaultParam(...)`, whereas action scripts can also call
+`checkParam(...)` for any mandatory parameters.
+
+### Example Usage (1.8.0-SNAPSHOT)
+
+The [simpleapp](../intro/getting-started/simpleapp-archetype.html) has fixtures that follow this pattern:
+
+* `RecreateSimpleObjects` is a scenario that creates a number of simple objects
+* `SimpleObjectCreate` is an action script that creates a single simple object.
+
+Because the `RecreateSimpleObjects` is a scenario script, it can be run without any input parameters, and will by default
+cause 3 object to be created.  This can be influenced by the "number" input property, a simple JavaBean:
+
+    private Integer number;
+
+    /**
+     * The number of objects to create, up to 10; optional, defaults to 3.
+     */
+    public Integer getNumber() { return number; }
+
+    public RecreateSimpleObjects setNumber(final Integer number) {
+        this.number = number;
+        return this;
+    }
+
+(The setter returns 'this' to allow for chaining).
+
+In the body of the scenario, the script uses `defaultParam(...)` to default this value if not specified:
+
+        final int number = defaultParam("number", ec, 3);
+
+This scenario script also provides an output property, being a list of the objects created by the script:
+
+    private final List<SimpleObject> simpleObjects = Lists.newArrayList();
+
+    /**
+     * The simpleobjects created by this fixture (output).
+     */
+    public List<SimpleObject> getSimpleObjects() { return simpleObjects; }
+
+Together these properties constitute a simple and convenient API for integration tests to use:
+
+    @Before
+    public void setUp() throws Exception {
+        // given
+        fs = new RecreateSimpleObjects().setNumber(1);
+        fixtureScripts.runFixtureScript(fs, null);
+
+        simpleObjectPojo = fs.getSimpleObjects().get(0);
+    }
+
+Or, if the end-user (using the UI) wants to specify a different number of objects to be created than the default, they
+can simply execute the script specifying a parameter such as "number=6" (or whatever).
 
 
 ## Running a fixture script automatically on start up

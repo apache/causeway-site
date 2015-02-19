@@ -2,7 +2,7 @@ Title: Configuring Isis to use Shiro
 
 ### Example Configuration
 
-The [simpleapp archetype](../../../intro/getting-started/simpleapp-archetype.html) and the [todoapp archetype](../../../intro/getting-started/todoapp-archetype.html) are both configured with Shiro; you should see all the configuration explained below in these.
+The [simpleapp archetype](../../../intro/getting-started/simpleapp-archetype.html) is configured with Shiro; you should see all the configuration explained below in these.
 
 
 ## Bootstrapping Shiro

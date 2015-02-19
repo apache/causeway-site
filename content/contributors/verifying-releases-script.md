@@ -92,7 +92,7 @@ Execute...
     
 …and get yourself a cup of coffee.
 
-## Test the archetypes
+## Test the archetype
 
 Assuming that everything builds ok, then test the archetypes (adjust version as necessary):
 
@@ -104,31 +104,10 @@ Assuming that everything builds ok, then test the archetypes (adjust version as 
         -D version=1.0-SNAPSHOT \
         -B \
         -o \
-        -D archetypeVersion=1.7.0   # adjust version as necessary
-
+        -D archetypeVersion=1.8.0   # adjust version as necessary
 
     cd myapp
     mvn clean install -o
     mvn -P self-host antrun:run
     
-and (adjust version as necessary):
-
-    cd ..
-    rm -rf myapp
-
-    mvn archetype:generate  \
-        -D archetypeGroupId=org.apache.isis.archetype \
-        -D archetypeArtifactId=todoapp-archetype \
-        -D groupId=com.mycompany \
-        -D artifactId=myapp \
-        -D version=1.0-SNAPSHOT \
-        -B \
-        -o \
-        -D archetypeVersion=1.7.0   # adjust version as necessary
-
-    cd myapp
-    
-    mvn clean install -o    
-    mvn -P self-host antrun:run
-
-If they run up ok, then it's time to [vote](verifying-releases.html)!
+If it runs up ok, then it's time to [vote](verifying-releases.html)!

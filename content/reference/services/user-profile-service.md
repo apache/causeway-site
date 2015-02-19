@@ -30,8 +30,8 @@ If the method returns <tt>null</tt> or throws an exception then the framework wi
 
 ## Screenshot
 
-The [todoapp](../../intro/getting-started/todoapp-archetype.html) provides a custom implementation that demonstrates the
-use of this service:
+The [todoapp](https://github.com/isisaddons/isis-app-todoapp) (not ASF) provides a custom implementation that
+demonstrates the use of this service:
 
 <a href="images/user-profile-service.png"><img width="600px" src="images/user-profile-service.png"/></a>
 

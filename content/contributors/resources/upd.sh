@@ -12,10 +12,8 @@
 #
 #################################################################
 
-isis_core="1.5.0 1.6.0"
-viewer_wicket="1.5.0 1.6.0"
-archetype_todoapp="1.5.0 1.6.0"
-archetype_simpleapp="1.5.0 1.6.0"
+isis_core="1.7.0 1.8.0"
+archetype_simpleapp="1.7.0 1.8.0"
 
 
 
@@ -60,67 +58,6 @@ if [ "$old_ver" != "$new_ver" ]; then
 fi
 
 
-
-
-#################################################################
-#
-# viewer_wicket
-#
-#################################################################
-old_ver=`echo $viewer_wicket | awk '{print $1}'`
-new_ver=`echo $viewer_wicket | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="viewer"
-	localname="wicket"
-
-	fullname="isis-$type-$localname"
-	pushd component/$type/$localname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
-
-
-
-#################################################################
-#
-# archetype_todoapp
-#
-#################################################################
-old_ver=`echo $archetype_todoapp | awk '{print $1}'`
-new_ver=`echo $archetype_todoapp | awk '{print $2}'`
-
-if [ "$old_ver" != "$new_ver" ]; then 
-
-	type="archetype"
-	fullname="todoapp-archetype"
-	pushd $type/$fullname
-
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
-	svn add $fullname-$new_ver-$md5
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
-	svn add $fullname-$new_ver-$asc
-	curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
-	svn add $fullname-$new_ver-$zip
-
-	svn delete $fullname-$old_ver-$md5
-	svn delete $fullname-$old_ver-$asc
-	svn delete $fullname-$old_ver-$zip
-
-	popd
-fi
 
 
 #################################################################

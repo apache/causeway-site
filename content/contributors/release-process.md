@@ -571,22 +571,18 @@ Use the following subject:
 And use the following body:
 
 <pre>
-I've cut a release for Apache Isis Core and related components:
+I've cut a release for Apache Isis Core and the simpleapp archetype:
 * Core 1.8.0
-* Wicket Viewer 1.8.0
 * SimpleApp Archetype 1.8.0
-* TodoApp Archetype 1.8.0
 
 The source code artifacts have been uploaded to staging repositories on repository.apache.org:
 
 * http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.8.0/isis-1.8.0-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/viewer/isis-viewer-wicket/1.8.0/isis-viewer-wicket-1.8.0-source-release.zip
 * http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.8.0/simpleapp-archetype-1.8.0-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/todoapp-archetype/1.8.0/todoapp-archetype-1.8.0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-1.8.0-RC1, isis-viewer-wicket-1.8.0-RC1, simpleapp-archetype-1.8.0-RC1 and todoapp-archetype-1.8.0-RC1.
+In the source code repo the code has been tagged as isis-1.8.0-RC1 and simpleapp-archetype-1.8.0-RC1.
 
 For instructions on how to verify the release (build from binaries and/or use in Maven directly), see http://isis.apache.org/contributors/verifying-releases.html
 
@@ -821,24 +817,22 @@ The Isis team is pleased to announce the release of:
 New features in this release include:
 - ...
 
-Full release notes are available at [1,2,3,4] on the Isis website.
+Full release notes are available at [1,2] on the Isis website.
 
 Note that:
 * ...
 
-You can access this release directly from the Maven central repo [5], 
-or download the release and build it from source [6].
+You can access this release directly from the Maven central repo [3],
+or download the release and build it from source [4].
 
 Enjoy!
 
 --The Isis team
 
 [1] http://isis.apache.org/core/release-notes/isis-1.x.0.html
-[2] http://isis.apache.org/components/viewers/wicket/release-notes/isis-viewer-wicket-1.x.0.html
-[3] http://isis.apache.org/archetypes/release-notes/todoapp-archetype-1.x.0.html
-[4] http://isis.apache.org/archetypes/release-notes/simpleapp-archetype-1.x.0.html
-[5] http://search.maven.org
-[6] http://isis.apache.org/download.html
+[2] http://isis.apache.org/archetypes/release-notes/simpleapp-archetype-1.x.0.html
+[3] http://search.maven.org
+[4] http://isis.apache.org/download.html
 </pre>
 
 ### Blog post

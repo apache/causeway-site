@@ -4,28 +4,12 @@ Isis archetypes are reverse engineered from example applications.  Once reverse 
 
 ### Setup environment variables
 
-If recreating the **simpleapp** archetype:
+To recreate the **simpleapp** archetype:
 
     cd example/application/simpleapp
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
-    export ISISDEV=1.8.0-SNAPSHOT
-    export ISISREL=1.7.0
-    export ISISPAR=1.7.0
-    export ISISRC=RC1
-
-    export ISISCPT=$(echo $ISISART | cut -d- -f2)
-    export ISISCPN=$(echo $ISISART | cut -d- -f1)
-
-    env | grep ISIS | sort
-
-If recreating the **todoapp** archetype:
-
-    cd example/application/todoapp
-
-    export ISISTMP=/c/tmp   # or as required
-    export ISISART=todoapp-archetype
     export ISISDEV=1.8.0-SNAPSHOT
     export ISISREL=1.7.0
     export ISISPAR=1.7.0
@@ -72,9 +56,8 @@ then using mvn jetty plugin:
     cd webapp
     mvn jetty:run     
 
-If recreating the **simpleapp** archetype, browse to [http://localhost:8080/simpleapp-webapp/](http://localhost:8080/simpleapp-webapp/).
-    
-If recreating the **todoapp** archetype, browse to [http://localhost:8080/todoapp-webapp/](http://localhost:8080/todoapp-webapp/).
+Browse to [http://localhost:8080/simpleapp-webapp/](http://localhost:8080/simpleapp-webapp/).
+
 
     
 Check the about page and confirm built against non-SNAPSHOT versions of the Isis jars.
@@ -120,7 +103,7 @@ and then update the generated files:
 
 where:
 
-- `$ISISCPN` is the component name set earlier (`simpleapp` or `todoapp`)
+- `$ISISCPN` is the component name set earlier (`simpleapp`)
 - `$ISISPAR` is the version of isis core that is to be the parent of the generated archetype, 
     - this will usually be the same as `$ISISREL` unless a patch/interim release of the archetype.
 
@@ -136,18 +119,11 @@ Then, *in a different session*, create a new app from the archetype:
 
 Set up environment variables:
 
-If testing the **simpleapp** archetype:
+To test the **simpleapp** archetype:
 
     export ISISTMP=/c/tmp    # or as required
     export ISISCPN=simpleapp
     env | grep ISIS | sort
-
-If testing the **todoapp** archetype:
-
-    export ISISTMP=/c/tmp    # or as required
-    export ISISCPN=todoapp
-    env | grep ISIS | sort
-
 
 Then recreate:
 
@@ -172,7 +148,7 @@ Build the newly generated app and test:
 
 ### Check the archetype source code into git
 
-Back in the *original session* (at `example/application/simpleapp` or `example/application/todoapp`), we are ready to check the archetype source code into git:
+Back in the *original session* (at `example/application/simpleapp`), we are ready to check the archetype source code into git:
 
     git rm -rf ../../archetype/$ISISCPN
     rm -rf ../../archetype/$ISISCPN
@@ -209,15 +185,9 @@ Using the script does not generate an app from the archetype to test it works.
 
 Make sure you are in the correct directory and environment variables are correct.
 
-If recreating the **simpleapp** archetype:
+To recreate the **simpleapp** archetype:
 
     cd example/application/simpleapp
-
-    env | grep ISIS | sort
-
-If recreating the **todoapp** archetype:
-
-    cd example/application/todoapp
 
     env | grep ISIS | sort
 

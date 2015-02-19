@@ -1,5 +1,9 @@
 Title: TodoApp Archetype
 
+> as of 1.8.0-SNAPSHOT the todoapp is no longer released; the example app has instead moved to [Isis addons](https://github.com/isisaddons/isis-app-todoapp) (not ASF).  This allows us to provide a more fully-fledged example that integrates with other Isis addons modules.
+
+<hr/>
+
 The TodoApp archetype will generate a reasonably complete application for tracking to-do items, based around a single domain class `ToDoItem` and repository, `ToDoItems`.
 
 While not quite a "kitchen-sink" example (there is, after all, just a single domain class), the app nevertheless demonstrates a good number of Isis' capabilities.  In particular, the use of contributed actions etc is demonstrated by `ToDoItemContributions`; view models are demonstrated by `ToDoItemsByCategoryViewModel` and `ToDoItemsByDateRangeViewModel`; a dashboard is demonstrated by `ToDoAppDashboard`. 

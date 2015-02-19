@@ -50,19 +50,6 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <th>todoapp-archetype</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>n/a</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
             <th>simpleapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -102,15 +89,6 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
         </tr>
         <tr>
             <th>isis-viewer-wicket</th>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <th>todoapp-archetype</th>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>

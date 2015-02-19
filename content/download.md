@@ -38,7 +38,6 @@ Components:
 Archetypes:
 
 * [simpleapp-archetype-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip.md5))
-* [todoapp-archetype-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/todoapp-archetype/todoapp-archetype-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/todoapp-archetype/todoapp-archetype-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/todoapp-archetype/todoapp-archetype-1.7.0-source-release.zip.md5))
 
 See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 
