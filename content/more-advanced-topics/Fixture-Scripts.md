@@ -104,10 +104,22 @@ the retrieves that object later:
 
     simpleObjectPojo = fs.getSimpleObjects().get(0);
 
+There's further discussion on this style of writing fixture scripts (with the input "setNumber" property and the
+output "simpleObjects" property) below.
+
+
 ## Writing Fixture Scripts ##
 
-All fixture scripts subclass the `FixtureScript` class (defined in the applib), providing an implementation of the
-`execute(ExecutionContext)` method:
+We find it's helpful to distinguish:
+
+* scenario fixture scripts - coarse-grained, to accomplish a particular business goal (or set up a bunch of related data)
+* action fixture scripts - fine-grained, perform a single action on a domain object or service
+
+Scenario scripts can be called from the UI, making it easy to demonstrate new features, or for manual exploratory testing.
+These scenario scripts then call action scripts, with the action scripts as the atomic building blocks that do the actual work.
+
+Both scenario scripts and action scripts are subclasses of the `FixtureScript` class (defined in the applib), with an
+implementation of the `execute(ExecutionContext)` method:
 
     public abstract class FixtureScript ... {
         @Programmatic
@@ -117,7 +129,7 @@ All fixture scripts subclass the `FixtureScript` class (defined in the applib), 
 
 The `ExecutionContext` provides three main capabilities to the fixture script:
 
-* the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
+* the script can execute other child fixture scripts (eg a scenario script calling an action script) (1.8.0-SNAPSHOT)
 
 <pre>
     executionContext.executeChild(this, someObject);
@@ -133,7 +145,7 @@ The `ExecutionContext` provides three main capabilities to the fixture script:
     executionContext.addResult(this, someObject);
 </pre>
 
-(Prior to 1.8.0-SNAPSHOT, child fixture scripts are executed using the inherited `FixtureScript#executeChild(FixtureScript, ExecutionContext) method.  That has now been deprecated).
+> Prior to 1.8.0-SNAPSHOT, child fixture scripts were executed using the inherited `FixtureScript#executeChild(FixtureScript, ExecutionContext)` method.  That has now been deprecated).
 
 The script can do whatever is necessary within its `execute` method to set up the state of the system (read: insert data
 into the database).  One way of doing this would be simple SQL INSERT or UPDATE statements, or calling stored procs to
@@ -144,7 +156,7 @@ Therefore a better approach is to have the fixture scripts simply invoke the rel
 on the domain objects.  Then, if those actions change in the future, the scripts remain valid.  Put another way: have
 the fixture scripts replay the "cause" of the change (business actions) rather than the "effect" (data inserts).
 
-## Using input and output Parameters
+### Execution context parameters
 
 As the screenshots above show, the `FixtureScripts#runFixtureScript` action allows optional parameters to be provided to the called fixture scripts:
 
@@ -194,15 +206,11 @@ There are also various overloads to retrieve each parameter as a particular data
         ...
     }
 
-and so on.  For example:
+For example:
 
 <pre>
     LocalDate dob = executionContext.getParameterAsLocalDate("dateOfBirth");
-</pre>
-
-Alternatively `getParameter(String, Class<T>)` can be used, specifying the desired datatype:
-
-<pre>
+    // or equivalently:
     LocalDate dob = executionContext.getParameterAsT("dateOfBirth", LocalDate.class);
 </pre>
 
@@ -217,27 +225,19 @@ Parameter values can also be set on `ExecutionContext`:
         ...
     }
 
-and so on.  For example:
+For example:
 
-and
 <pre>
     executionContext.setParameter("dateOfBirth", clockService.now().minus(new Years(18)));
 </pre>
 
 This provides a useful mechanism for sharing data between fixture scripts that call child fixture scripts.  And on that topic...
 
-## Scenario scripts and action scripts
 
-We find it's helpful to distinguish:
+## Input and output properties
 
-* scenario fixture scripts - coarse-grained, to accomplish a particular business goal (or set up a bunch of related data)
-* action fixture scripts - fine-grained, perform a single action on a domain object or service
-
-Scenario scripts can be called from the UI, making it easy to demonstrate new features, or for manual exploratory testing.
-These scenario scripts then call action scripts, with the action scripts as the atomic building blocks that do the actual work.
-
-We also recommend that fixture scripts define (as simple JavaBean properties) both `input` parameters and also `output` parameters.
-Input parameters/properties are used to adjust the behaviour of the fixture script, while the output properties provide the means for
+We also recommend that fixture scripts define both inputs and outputs, as simple JavaBean properties.
+Input properties are used to adjust the behaviour of the fixture script, while the output properties provide the means for
 the fixture script to make the object(s) created/modified available to a calling integration test.
 
 So that they can be "just be executed" from the UI, scenario scripts should have defaults for all inputs.  A lot of
