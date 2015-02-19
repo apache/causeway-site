@@ -304,7 +304,8 @@ This scenario script also provides an output property, being a list of the objec
      */
     public List<SimpleObject> getSimpleObjects() { return simpleObjects; }
 
-Together these properties constitute a simple and convenient API for integration tests to use:
+Then (as already shown in an earlier section on this page), these properties together constitute a simple and
+convenient API for integration tests to use:
 
     @Before
     public void setUp() throws Exception {
