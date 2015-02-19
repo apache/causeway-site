@@ -1,9 +1,9 @@
 Fixture Scripts
 ===============
 
-Fixture scripts are intended to support development and testing, by setting up the system into a known state.  A fixture
-script are invoked using a "fixture script" service, and typically either call business actions on domain objects, or
-call other fixture scripts (that is, the composite pattern).
+Fixture scripts are intended to support development and testing, by setting up the system into a known state.   A 
+fixture script is invoked using a "fixture script" service, and typically invokes business actions on domain objects, 
+either directly, or by delegating to child fixture scripts (the composite pattern).
 
 One simple, but noteworthy point about fixture scripts is that they can be invoked through the UI.  This makes them
 useful for more than "just" testing:
@@ -45,7 +45,8 @@ how the [simpleapp](../intro/getting-started/simpleapp-archetype.html) defines i
         ...
     }
 
-On the prototyping menu the fixture script service's "run fixture script" action can be called:
+On the prototyping menu the fixture script service's "run fixture script" action can be called (these screenshots
+taken from the [todoapp](https://github.com/isisaddons/isis-app-todoapp) (not ASF):
 
 <img src="images/fixture-scenarios-run.png" width="800"></img>
 
@@ -62,11 +63,11 @@ to any of the objects created/updated by the fixture script.
 
 The fixture script framework automatically detects all available fixture scripts by searching the classpath.  The (application-specific) fixture service subclass specifies which packages to search in through the constructor.
 
-So, for example, the `ToDoItemsFixtureService`'s constructor is:
+So, for example, the `SimpleObjectsFixturesService`'s constructor is:
 
-    public class ToDoItemsFixturesService extends FixtureScripts {
+    public class SimpleObjectsFixturesService extends FixtureScripts {
         public ToDoItemsFixturesService() {
-            super("fixture.todo");
+            super("simpleapp.fixture");
         }
         ...
     }
@@ -76,13 +77,13 @@ So, for example, the `ToDoItemsFixtureService`'s constructor is:
 
 Fixture scripts can be invoked in integration tests by injecting the `FixtureScripts` service and then using the service to execute the required fixture script.
 
-For example, here's one of the [todo app](../intro/getting-started/simpleapp-archetype.html)'s integration tests:
+For example, here's one of the [simpleapp](../intro/getting-started/simpleapp-archetype.html)'s integration tests:
 
     public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
 
         @Inject
         FixtureScripts fixtureScripts;
-        ...
+        SimpleObject simpleObjectPojo;
 
         @Before
         public void setUp() throws Exception {
@@ -90,32 +91,23 @@ For example, here's one of the [todo app](../intro/getting-started/simpleapp-arc
             fs = new RecreateSimpleObjects().setNumber(1);
             fixtureScripts.runFixtureScript(fs, null);
 
-            ...
-        }
-        ...
-    }
-
-The integration test can then lookup the object of interest using the `FixtureScript#lookup(...)` method:
-
-
-    public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
-
-        ...
-        SimpleObject simpleObjectPojo;
-
-        @Before
-        public void setUp() throws Exception {
-            ...
-
             simpleObjectPojo = fs.getSimpleObjects().get(0);
         }
         ...
     }
 
+The test invokes the `RecreateSimpleObjects` fixture script, instructing it to set up one object:
+
+    fs = new RecreateSimpleObjects().setNumber(1);
+
+the retrieves that object later:
+
+    simpleObjectPojo = fs.getSimpleObjects().get(0);
 
 ## Writing Fixture Scripts ##
 
-Fixture scripts are implemented by subclassing the `FixtureScript` class, implementing the `execute(ExecutionContext)` method:
+All fixture scripts subclass the `FixtureScript` class (defined in the applib), providing an implementation of the
+`execute(ExecutionContext)` method:
 
     public abstract class FixtureScript ... {
         @Programmatic
@@ -125,15 +117,17 @@ Fixture scripts are implemented by subclassing the `FixtureScript` class, implem
 
 The `ExecutionContext` provides three main capabilities to the fixture script:
 
-* the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
+1. the script can execute other child fixture scripts (1.8.0-SNAPSHOT)
 
 <pre>
     executionContext.executeChild(this, someObject);
 </pre>
 
-* the script can get and set parameters from/to the context.  More on this topic below.
+2. the script can get and set parameters from/to the context.
 
-* the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI.
+   More on this topic below.
+
+3. the script can add created or updated objects to the fixture's results, so that they can be rendered in the UI.
 
 <pre>
     executionContext.addResult(this, someObject);
