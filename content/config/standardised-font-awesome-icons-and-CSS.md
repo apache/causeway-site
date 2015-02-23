@@ -1,4 +1,4 @@
-Title: Standardized Font-Awesome Icons and CSS s (1.8.0-SNAPSHOT)
+Title: Standardized Font-Awesome Icons and CSS s (1.8.0)
 
 > this is a stub
 

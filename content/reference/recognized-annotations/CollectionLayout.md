@@ -1,4 +1,4 @@
-Title: @CollectionLayout (1.8.0-SNAPSHOT)
+Title: @CollectionLayout (1.8.0)
 
 The `@CollectionLayout` annotation applies to collections, collecting together all UI hints within a single
 annotation.

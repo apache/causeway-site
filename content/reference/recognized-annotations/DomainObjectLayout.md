@@ -1,4 +1,4 @@
-Title: @DomainObjectLayout (1.8.0-SNAPSHOT)
+Title: @DomainObjectLayout (1.8.0)
 
 The `@DomainObjectLayout` annotation applies to domain classes, collecting together all UI hints within a single
 annotation.

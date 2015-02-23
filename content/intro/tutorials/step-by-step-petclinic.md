@@ -45,12 +45,12 @@ You'll need:
 git checkout [249abe476797438d83faa12ff88365da2c362451](https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451)
 }
 
-As per the [Isis website](http://isis.apache.org/intro/getting-started/simpleapp-archetype.html), run the simpleapp archetype to build an empty Isis application.  We recommend you use the snapshot release:
+As per the [Isis website](http://isis.apache.org/intro/getting-started/simpleapp-archetype.html), run the simpleapp archetype to build an empty Isis application:
 
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
-        -D archetypeVersion=1.8.0-SNAPSHOT \
+        -D archetypeVersion=1.8.0 \
         -D groupId=com.mycompany \
         -D artifactId=petclinic \
         -D version=1.0-SNAPSHOT \

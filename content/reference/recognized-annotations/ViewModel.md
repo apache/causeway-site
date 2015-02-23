@@ -30,8 +30,8 @@ The view model's memento will be derived from the value of the view model object
 
 Only properties supported by the configured [MementoService](../reference/services/memento-service.html) can be used.  The default implementation supports all the value types and persisted entities.
 
-(As of 1.8.0-SNAPSHOT) there are some limitations:
-* view models cannot reference other view models
+(As of 1.8.0) there are some limitations:
+* view models cannot hold collections other view models (simple properties *are* supported, though)
 * collections (of either view models or entities) are ignored.
 
 

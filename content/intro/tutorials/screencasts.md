@@ -24,7 +24,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     <br/><br/>
     Learn how to generate this app <a href="../getting-started/todoapp-archetype.html#screencast">here</a>
     <br/><br/>
-    <i>nb: the todoapp has (in 1.8.0-SNAPSHOT) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF).</i>
+    <i>nb: the todoapp has (in 1.8.0) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF).</i>
     <br/><br/>
     <i>nb: the todoapp was previously called the 'quickstart' app</i>
     </td>
@@ -37,7 +37,7 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
     <br/><br/>
     Learn how to use the <a href="../getting-started/todoapp-archetype.html#screencast">quickstart archetype</a> here
     <br/><br/>
-    <i>nb: the todoapp has (in 1.8.0-SNAPSHOT) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF).</i>
+    <i>nb: the todoapp has (in 1.8.0) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF).</i>
     <br/><br/>
     <i>nb: the todoapp was previously called the 'quickstart' app</i>
     </td>

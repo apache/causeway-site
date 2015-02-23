@@ -131,7 +131,7 @@ Below are sketches for the layout of the [ToDoItem](https://github.com/apache/is
 
 ## Other Annotations
 
-As of 1.8.0-SNAPSHOT, all the layout annotations have been consolidated into the various `XxxLayout` annotations:
+As of 1.8.0, all the layout annotations have been consolidated into the various `XxxLayout` annotations:
 
 * [@DomainServiceLayout](../../../reference/recognized-annotations/DomainServiceLayout.html)
 * [@DomainObjectLayout](../../../reference/recognized-annotations/DomainObjectLayout.html)
@@ -140,7 +140,7 @@ As of 1.8.0-SNAPSHOT, all the layout annotations have been consolidated into the
 * [@ActionLayout](../../../reference/recognized-annotations/ActionLayout.html)
 * [@ParameterLayout](../../../reference/recognized-annotations/ParameterLayout.html)
 
-Prior to 1.8.0-SNAPSHOT a variety of annotations (now deprecated) are available, including:
+Prior to 1.8.0 a variety of annotations (now deprecated) are available, including:
 [@Named](../../../reference/recognized-annotations/Named-deprecated.html),
 [@DescribedAs](../../../reference/recognized-annotations/DescribedAs-deprecated.html),
 [@MultiLine](../../../reference/recognized-annotations/MultiLine-deprecated.html),

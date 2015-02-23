@@ -2,7 +2,14 @@ Title: Release Matrix
 
 {release-matrix
 
-The table below lists dependencies between core, components and archetypes.
+As of 1.8.0, all components are incorporated into Isis core.  The only dependency is that the [simpleapp archetype](intro/getting-started/simpleapp-archetype.html) depends on core.
+
+Prior to 1.8.0, one or more of the components were released separately to core.  The table below details those dependencies, but in summary:
+* in 1.7.0, the Wicket viewer depended on Core 1.7.0 (and all other components were bundled into Core)
+* in 1.6.0, the Wicket viewer depended on Core 1.6.0 (and all other components were bundled into Core)
+* in 1.5.0 and earlier, the Wicket viewer, Restful Objects viewer, Shiro security and JDO ObjectStore all depended on Core 1.5.0.
+
+In more detail:
 
 <table  class="table table-striped table-bordered table-condensed">
 <tr class="heading">

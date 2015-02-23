@@ -1,4 +1,4 @@
-Title: @Collection (1.8.0-SNAPSHOT)
+Title: @Collection (1.8.0)
 
 > stub
 

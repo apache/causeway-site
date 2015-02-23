@@ -1,4 +1,4 @@
-Title: @DomainServiceLayout (1.8.0-SNAPSHOT)
+Title: @DomainServiceLayout (1.8.0)
 
 The `@DomainServiceLayout` annotation applies to domain services, collecting together all view layout semantics
 within a single annotation.

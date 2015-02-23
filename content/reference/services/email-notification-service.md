@@ -1,4 +1,4 @@
-Title: Email Notification Service (1.8.0-SNAPSHOT)
+Title: Email Notification Service (1.8.0)
 
 The email notification service supports the user registration process whereby a user can sign-up to access an application by providing a valid email address.  The Wicket viewer will check whether an implementation of this service (and also the [user registration service](./user-registration-service.html)) is available, and if so will (unless configured not to) expose a sign-up page where the user enters their email address.  A verification email is sent using this service; the email includes a link back to the running application.  The user then completes the registration process (choosing a user name, password and so on) and the Wicket viewer creates an account for them (using the aforementioned [user registration service](./user-registration-service.html)).
 

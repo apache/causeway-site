@@ -1,4 +1,4 @@
-Title: Simplified Object Representation (1.8.0-SNAPSHOT)
+Title: Simplified Object Representation (1.8.0)
 
 > Enabling these settings makes the representations non-standard with respect to the [Restful Object spec](http://restfulobjects.org).
 

@@ -1,4 +1,4 @@
-title: How to customize the styling of a domain object (1.8.0-SNAPSHOT)
+title: How to customize the styling of a domain object (1.8.0)
 
 The [Wicket viewer](../components/viewers/wicket/about.html) will query each object when being rendered to determine if
 any instance-specific CSS class name should be used to wrap the HTML representing that domain object.

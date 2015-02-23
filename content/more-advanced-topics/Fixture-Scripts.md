@@ -129,7 +129,7 @@ implementation of the `execute(ExecutionContext)` method:
 
 The `ExecutionContext` provides three main capabilities to the fixture script:
 
-* the script can execute other child fixture scripts (eg a scenario script calling an action script) (1.8.0-SNAPSHOT)
+* the script can execute other child fixture scripts (eg a scenario script calling an action script) (1.8.0)
 
 <pre>
     executionContext.executeChild(this, someObject);
@@ -145,7 +145,7 @@ The `ExecutionContext` provides three main capabilities to the fixture script:
     executionContext.addResult(this, someObject);
 </pre>
 
-> Prior to 1.8.0-SNAPSHOT, child fixture scripts were executed using the inherited `FixtureScript#executeChild(FixtureScript, ExecutionContext)` method.  That has now been deprecated).
+> Prior to 1.8.0, child fixture scripts were executed using the inherited `FixtureScript#executeChild(FixtureScript, ExecutionContext)` method.  That has now been deprecated).
 
 The script can do whatever is necessary within its `execute` method to set up the state of the system (read: insert data
 into the database).  One way of doing this would be simple SQL INSERT or UPDATE statements, or calling stored procs to
@@ -267,7 +267,7 @@ execution context itself, otherwise will throw an exception:
 As you can probably guess, scenario scripts should only call `defaultParam(...)`, whereas action scripts can also call
 `checkParam(...)` for any mandatory parameters.
 
-### Example Usage (1.8.0-SNAPSHOT)
+### Example Usage (1.8.0)
 
 The [simpleapp](../intro/getting-started/simpleapp-archetype.html) has fixtures that follow this pattern:
 

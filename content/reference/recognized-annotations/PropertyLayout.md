@@ -1,4 +1,4 @@
-Title: @PropertyLayout (1.8.0-SNAPSHOT)
+Title: @PropertyLayout (1.8.0)
 
 The `@PropertyLayout` annotation applies to properties collecting together all UI hints within a single annotation:
 

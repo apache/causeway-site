@@ -1,4 +1,4 @@
-Title: Migrating from v1.6.0 to 1.7.0
+    Title: Migrating from v1.6.0 to 1.7.0
 
 In v1.7.0 we've continued the work started in [1.6.0](migrating-to-1.6.0.html) in modularizing the framework.  The most important change to note is that all Isis core modules (with the Maven `groupId` of `org.apache.isis.module` have now MOVED to [http://www.isisaddons.org](Isis Addons).
 
@@ -10,7 +10,7 @@ To move up amounts to changing POM files and, where required, updating package n
 
 The following modules are no longer released as part of Isis core and have moved to Isis Addons (or in one case, back into Isis core).
 
-Minor changes are required to `pom.xml` files and (in some cases) to `isis.properties` config file.  
+Minor changes are required to `pom.xml` files and (in some cases) to `isis.properties` config file.
 
 In one or two exceptional cases it may be necessary to fix up import statements if there are reference to changed package/class names in code (most likely any dependency on the `devutils` module or `settings` module).
 
@@ -80,8 +80,8 @@ or to:
 	    <artifactId>isis-module-devutils-impl</artifactId>
     </dependency>
 
-These modules are no longer required (the `org.apache.isis.module:isis-module-devutils-applib` 
-and `org.apache.isis.module:isis-module-devutils-impl` submodules have been combined 
+These modules are no longer required (the `org.apache.isis.module:isis-module-devutils-applib`
+and `org.apache.isis.module:isis-module-devutils-impl` submodules have been combined
 into the new `org.isisaddons.module.devutils:isis-module-devutils-dom` module).
 
 If necessary, also update any services registered in `isis.properties` (package/class names may have changed slightly).
@@ -145,8 +145,8 @@ or to:
 	    <artifactId>isis-module-settings-impl</artifactId>
     </dependency>
 
-These modules are no longer required (the `org.apache.isis.module:isis-module-settings-applib` 
-and `org.apache.isis.module:isis-module-settings-impl` submodules have been combined 
+These modules are no longer required (the `org.apache.isis.module:isis-module-settings-applib`
+and `org.apache.isis.module:isis-module-settings-impl` submodules have been combined
 into the new `org.isisaddons.module.settings:isis-module-settings-dom` module).
 
 If necessary, also update any services registered in `isis.properties` (package/class names may have changed slightly).
@@ -177,11 +177,11 @@ Specifically, remove any dependencies on `org.apache.isis:isis-core-profilestore
     </dependency>
 
 A number of corresponding classes/interfaces have also been removed from the Isis applib:
-    
+
 * `org.apache.isis.applib.fixtures.userprofile.UserProfileService`
 * `org.apache.isis.applib.fixtures.userprofile.UserProfileServiceAware`
 * `org.apache.isis.applib.fixtures.UserProfileFixture`
 * `org.apache.isis.applib.profiles.Profile`
 * `org.apache.isis.applib.profiles.Perspective`
-    
+
 It is highly unlikely that any existing production code references these classes.

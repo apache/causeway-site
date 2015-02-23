@@ -1,4 +1,4 @@
-Title: Email Service (1.8.0-SNAPSHOT)
+Title: Email Service (1.8.0)
 
 The email service provides the ability to send emails to one or more recipients.  The framework also provides a default implementation that sends email as an HTML message, using an external SMTP provider.
 

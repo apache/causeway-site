@@ -12,7 +12,7 @@ SimpleApp archetype:
 
 TodoApp archetype (previously called the Quickstart archetype):
 
-* (not released in 1.8.0-SNAPSHOT; moved to [Isis addons](https://github.com/isisaddons/isis-app-todoapp) (not ASF)
+* (not released in 1.8.0; moved to [Isis addons](https://github.com/isisaddons/isis-app-todoapp) (not ASF)
 * [todoapp-archetype-1.7.0](todoapp-archetype-1.7.0.html)
 * [todoapp-archetype-1.6.0](todoapp-archetype-1.6.0.html)
 * [quickstart_wrj-archetype-1.5.0](quickstart_wrj-archetype-1.5.0.html)

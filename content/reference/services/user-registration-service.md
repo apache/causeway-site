@@ -1,4 +1,4 @@
-Title: User Registration Service (1.8.0-SNAPSHOT)
+Title: User Registration Service (1.8.0)
 
 The user registration service API provides the ability for users to sign-up to access an application by providing a valid email address.  The Wicket viewer will check whether an implementation of this service (and also the [email notification service](./email-notification-service.html)) is available, and if so will (unless configured not to) expose a sign-up page where the user enters their email address.  A verification email is sent (using the aforementioned [email notification service](./email-notification-service.html)) which includes a link back to the running application; this allows the user then to complete their registration process (choose user name, password and so on).  When the user has provided the additional details, the Wicket viewer calls this service in order to create an account for them, and then logs the user on.
 

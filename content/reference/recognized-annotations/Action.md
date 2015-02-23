@@ -1,4 +1,4 @@
-Title: @Action (1.8.0-SNAPSHOT)
+Title: @Action (1.8.0)
 
 > stub
 

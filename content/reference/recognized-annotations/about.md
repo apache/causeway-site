@@ -2,7 +2,7 @@ title: Recognized Annotations
 
 go back to: [documentation](../../documentation.html)
 
-### Domain objects, services and members (as of 1.8.0-SNAPSHOT)
+### Domain objects, services and members (as of 1.8.0)
 
 `@Xxx` specify domain-layer metadata, `@XxxLayout` specify view-layer metadata
 
@@ -192,7 +192,7 @@ go back to: [documentation](../../documentation.html)
 </table>
 
 
-### Deprecated Annotations (since 1.8.0-SNAPSHOT)
+### Deprecated Annotations (since 1.8.0)
 
 <table class="table table-bordered table-condensed table-hover">
     <tr>

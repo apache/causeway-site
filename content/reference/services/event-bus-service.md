@@ -28,18 +28,18 @@ If a subscriber throws an exception in the first three steps, then the interacti
 
 The event class that is raised can be specified using an annotation:
 
-* as of 1.8.0-SNAPSHOT, using:
+* as of 1.8.0, using:
 
     * `@Property(domainEvent=...)`
     * `@Collection(domainEvent=...)`
     * `@Action(domainEvent=...)`
 
-* as of 1.7.0 (but deprecated in 1.8.0-SNAPSHOT), using :
+* as of 1.7.0 (but deprecated in 1.8.0), using :
     * `@PropertyInteraction`
     * `@CollectionInteraction`
     * `@ActionInteraction`
 
-* as of 1.6.0 (but deprecated in 1.8.0-SNAPSHOT), using :
+* as of 1.6.0 (but deprecated in 1.8.0), using :
     * `@PostsPropertyChangedEvent`
     * `@PostsCollectionAddedToEvent`/`@PostsCollectionRemovedFromEvent`
     * `@PostsActionInvokedEvent`
@@ -95,7 +95,7 @@ where:
 
 The are for domain services to call to register themselves with the event bus.  This should be done in the
 
-As of 1.8.0-SNAPSHOT, the `register` and `unregister` methods should be called in the `@PostConstruct` and `@PreDestroy` lifecycle methods:
+As of 1.8.0, the `register` and `unregister` methods should be called in the `@PostConstruct` and `@PreDestroy` lifecycle methods:
 
     @DomainService
     public class MySubscribingDomainService {

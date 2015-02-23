@@ -36,6 +36,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>n/a</td>
             <td>&nbsp;</td>
         </tr>
+<!--        
         <tr>
             <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
@@ -49,6 +50,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>n/a</td>
             <td>&nbsp;</td>
         </tr>
+-->        
         <tr>
             <th>simpleapp-archetype</th>
             <td>&nbsp;</td>
@@ -63,9 +65,6 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
         </tr>
     </tbody>
-</table>
-
-<table class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr>
             <th>Artifact</th>
@@ -87,6 +86,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
+<!--
         <tr>
             <th>isis-viewer-wicket</th>
             <td>&nbsp;</td>
@@ -96,6 +96,7 @@ also as a (published) <a href="https://docs.google.com/a/haywood-associates.co.u
             <td>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
+-->
         <tr>
             <th>simpleapp-archetype</th>
             <td>&nbsp;</td>

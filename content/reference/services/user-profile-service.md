@@ -1,4 +1,4 @@
-Title: User Profile Service (1.8.0-SNAPSHOT)
+Title: User Profile Service (1.8.0)
 
 The user profile service API provides the ability for the domain application to return supplementary metadata about
 the current user.  This information is used (by the Wicket viewer) to customize the appearance of the tertiary

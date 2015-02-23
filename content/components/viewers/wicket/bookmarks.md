@@ -8,7 +8,7 @@ Bookmarking is automatic; whenever a bookmarkable object/action is visited, then
 
 ##Screenshots
 
-> these have not yet been updated for the new look-n-feel introduced in 1.8.0-SNAPSHOT
+> these have not yet been updated for the new look-n-feel introduced in 1.8.0
 
 #### Simple List
 

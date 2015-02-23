@@ -1,4 +1,4 @@
-Title: Application menu layout (1.8.0-SNAPSHOT)
+Title: Application menu layout (1.8.0)
 
 The actions of domain services are made available as an application menu bar.  By default each domain service
 corresponds to a single menu on this menu bar, with its actions as the drop-down menu items.  This is rarely exactly
@@ -94,7 +94,7 @@ Note that the last is also a prototype action (meaning it is only displayed in S
 In the UI it is rendered in italics.
 
 (It is possible to override this place of a given action by specifying `@MemberOrder(name="...")` where the name is
-that of a top-level menu.  Prior to 1.8.0-SNAPSHOT this was the only way of doing things, as of 1.8.0-SNAPSHOT its use
+that of a top-level menu.  Prior to 1.8.0 this was the only way of doing things, as of 1.8.0 its use
 is not recommended).
 
 ## Tertiary menubar

@@ -1,4 +1,4 @@
-Title: @CssClassFa (1.8.0-SNAPSHOT)
+Title: @CssClassFa (1.8.0)
 
 > Deprecated, use instead [@DomainObjectLayout#cssClassFa()](./DomainObjectLayout.html), [@PropertyLayout#cssClassFa()](./PropertyLayout.html), [@CollectionLayout#cssClassFa()](./CollectionLayout.html), [@ActionLayout#cssClassFa()](./ActionLayout.html) and [@ParameterLayout#cssClassFa()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 

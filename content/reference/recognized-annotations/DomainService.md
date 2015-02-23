@@ -7,11 +7,11 @@ discovered automatically on the CLASSPATH.
 
 The following attributes can be specified:
 
-* `nature` - the nature of this service: providing actions for menus, contributed actions, or neither (1.8.0-SNAPSHOT)
+* `nature` - the nature of this service: providing actions for menus, contributed actions, or neither (1.8.0)
 
 * `repositoryFor` - if this domain service acts as a repository for an entity type, specify that entity type.  (This is currently informational only)
 
-* `menuOrder` - the order of the service's menu with respect to other service's (deprecated in 1.8.0-SNAPSHOT)
+* `menuOrder` - the order of the service's menu with respect to other service's (deprecated in 1.8.0)
 
 
 For example:

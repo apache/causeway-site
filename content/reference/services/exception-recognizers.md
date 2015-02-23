@@ -25,7 +25,7 @@ coarse-grained as it wishes.
 Typically implementations of `ExceptionRecognizer` are registered as services (in the `isis.properties` configuration 
 file). More than one recognizer can be registered; all we be checked if an exception is thrown.
 
-## Extended API (1.8.0-SNAPSHOT)
+## Extended API (1.8.0)
 
 The `ExceptionRecognizer2` interface extends the original `ExceptionRecognizer` interface, being defined as:
 
@@ -106,7 +106,7 @@ composite implementation that bundles up your fine-grained implementation; see t
 
 In 1.7.0, only the [Wicket viewer](../../components/viewers/wicket/about.html) supported this API.
 
-In 1.8.0-SNAPSHOT, some checking of exception recognizers has moved deeper into core, specifically the (JDO) objectstore.
+In 1.8.0, some checking of exception recognizers has moved deeper into core, specifically the (JDO) objectstore.
 In particular, if an exception is raised from the loading of an individual object, then this is passed by the
 registered ExceptionRecognizers.  If any of these recognize the exception as representing a not-found exception, then
 a Isis `ObjectNotFoundException` is raised.  Both the viewers interprets this correctly (the 

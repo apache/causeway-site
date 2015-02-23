@@ -1,6 +1,6 @@
-Title: Internationalization (i18n) support (1.8.0-SNAPSHOT)
+Title: Internationalization (i18n) support (1.8.0)
 
-As of 1.8.0-SNAPSHOT (ISIS-903), Isis' support for i18n has been re-implemented
+As of 1.8.0 (ISIS-903), Isis' support for i18n has been re-implemented
 to use GNU [gettext](https://www.gnu.org/software/gettext/manual/index.html) `.pot` and `.po` 
 files.  The implementation does <i>not</i> however use any GNU software (to
 simplify the toolchain/developer experience, and because GNU software is usually
@@ -250,7 +250,7 @@ The `TranslationServicePoMenu` provides a couple of menu actions in the UI (prot
 
 
 
-## Using ResourceBundles (no-op in 1.8.0-SNAPSHOT)
+## Using ResourceBundles (no-op in 1.8.0)
 
 > This earlier i18n implementation only honoured the locale of the server, not of the user making the request.
 

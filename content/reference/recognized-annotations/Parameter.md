@@ -1,4 +1,4 @@
-Title: @Parameter (1.8.0-SNAPSHOT)
+Title: @Parameter (1.8.0)
 
 > stub
 

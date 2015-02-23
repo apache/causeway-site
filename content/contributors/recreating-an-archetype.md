@@ -10,9 +10,9 @@ To recreate the **simpleapp** archetype:
 
     export ISISTMP=/c/tmp   # or as required
     export ISISART=simpleapp-archetype
-    export ISISDEV=1.8.0-SNAPSHOT
-    export ISISREL=1.7.0
-    export ISISPAR=1.7.0
+    export ISISDEV=1.9.0-SNAPSHOT
+    export ISISREL=1.8.0
+    export ISISPAR=1.8.0
     export ISISRC=RC1
 
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
@@ -24,11 +24,10 @@ nb: `$ISISPAR` is the version of the Isis core that will act as the archetype's 
 
 ### Check the example app
 
-Make sure you are in the correct directory, and update the parent `pom.xml` to reference the *released* version of Isis core and the other components:
+Make sure you are in the correct directory, and update the parent `pom.xml` to reference the *released* version of Isis core<!--and the other components-->:
 
     <properties>
-        <isis.version>1.7.0</isis.version>
-        <isis-viewer-wicket.version>1.7.0</isis-viewer-wicket.version>
+        <isis.version>1.8.0</isis.version>
         ...
     </properties>
 
@@ -223,7 +222,7 @@ Then switch the correct directory and release:
     mvn release:prepare -P apache-release \
                     -DreleaseVersion=$ISISREL \
                     -DdevelopmentVersion=$ISISDEV \
-                    -Dtag=$ISISART-$ISISREL-$ISISRC
+                    -Dtag=$ISISART-$ISISREL
     mvn release:perform -P apache-release \
                     -DworkingDirectory=$ISISTMP/checkout
 

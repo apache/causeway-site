@@ -11,7 +11,7 @@ Then run the following command:
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
-        -D archetypeVersion=1.7.0 \
+        -D archetypeVersion=1.8.0 \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \
@@ -34,7 +34,7 @@ The process is almost identical to that for stable releases, however the `archet
     mvn archetype:generate  \
         -D archetypeGroupId=org.apache.isis.archetype \
         -D archetypeArtifactId=simpleapp-archetype \
-        -D archetypeVersion=1.8.0-SNAPSHOT \
+        -D archetypeVersion=1.9.0-SNAPSHOT \
         -D groupId=com.mycompany \
         -D artifactId=myapp \
         -D version=1.0-SNAPSHOT \

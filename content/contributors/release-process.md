@@ -1,32 +1,29 @@
 Title: Formal Release Process
 
-This page details the process for formalling releasing Isis modules.  
+This page details the process for formally releasing Isis modules.
 
-If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html) (that also parameterizes some of the steps listed here 'long-hand'.  There is also an experimental [script](resources/release.sh) for automating the latter part of the process.
+If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html)
+(that also parameterizes some of the steps listed here 'long-hand'.  There is also an experimental
+[script](resources/release.sh) for automating the latter part of the process.
 
 See also the [release checklist](release-checklist.html) for keeping track of where you are while releasing (possibly multiple) components.
 
 ## Intro
 
-Apache Isis consists of a number of separately releasable modules.  Relative to the root of the [source code repo](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree), these are:
+Apache Isis consists of two separately releasable modules.  Relative to the root of the
+[source code repo](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree), these are:
 
 - `core`
-- `component/viewer/wicket`
-- `component/example/archetypes/todoapp`
 - `component/example/archetypes/simpleapp`
 
-Other components, not yet released (but not mothballed yet either) are:
-
-- `component/viewer/scimpi`
-
-
-All the non-core components depend on the `core`, and use the `core`'s parent `pom.xml` as their parent pom.
+Previously there were many other components, but these have either been mothballed or moved into core.  The only
+remaining component that is not in core (though has not yet been released) is `component/viewer/scimpi`.  There is
+currently no plan to release this component.
 
 ##Process Prerequisites
 
-Before releasing `core`, ensure there is consensus on the [dev mailing list](../support.html) that this is the right time for a release.  The discussion should include confirming the version number to be used, and to confirm content.
-
-For non-`core` components, ensure that there is at least awareness on the dev mailing list that a release is to be cut.  In particular, indicate the version of `core` that the component release will depend upon, and the version number to be used for the component's release.
+Before releasing `core`, ensure there is consensus on the [dev mailing list](../support.html) that this is the right
+time for a release.  The discussion should include confirming the version number to be used, and to confirm content.
 
 Once agreed, the formal release can begin.  The steps are:
 
@@ -43,7 +40,8 @@ Once agreed, the formal release can begin.  The steps are:
   - delete the branch and tag
   - fix the problems and go round round the loop again.
 
-Before any of this can happen, there are a number of prerequisites, in terms of (a) the codebase itself, (b) the community process, and (c) the committer acting as release manager and performing the release.
+Before any of this can happen, there are a number of prerequisites, in terms of (a) the codebase itself,
+(b) the community process, and (c) the committer acting as release manager and performing the release.
 
 ### Set up local environment
 
@@ -110,12 +108,27 @@ Then, determine/confirm the version number of the module being released.  This s
 Next, create a release branch in your local Git repo, using the version number determined and as per [these standards](release-branch-and-tag-names.html).  For example, to prepare release candidate #1 for a release 1.8.0 of `core`, use:
 
 <pre>
-git checkout -b prepare/isis-1.8.0
+git checkout -b isis-1.8.0
 </pre>
 
 All release preparation is done locally; if we are successful, this branch will be pushed back to master.
 
 Finally, make sure you have a JIRA ticket open against which to perform all commits.
+
+## Set Environment Variables
+
+If you are releasing `core`:
+
+    cd core
+
+    export ISISTMP=/c/tmp              # or whatever
+    export ISISART=isis
+    export ISISDEV=1.9.0-SNAPSHOT
+    export ISISREL=1.8.0
+    export ISISRC=RC1
+
+    export ISISCOR="Y"
+    env | grep ISIS | sort
 
 ## Code Prerequisites
 
@@ -133,7 +146,7 @@ For example, if releasing `core` version `1.8.0`, the POM should read:
 
     <groupId>org.apache.isis.core</groupId>
     <artifactId>isis</artifactId>
-    <version>1.8.0-SNAPSHOT</version>
+    <version>1.8.0</version>
 
 ### Update parent (Isis Core)
 
@@ -150,6 +163,7 @@ If there is, update the `<version>` in the `<parent>` element in the parent POM 
 
 where `NN` is the updated version number.
 
+<!--
 ### Update parent (non core components)
 
 If releasing a non-core component, then check and if necessary update the `<version>` in the `<parent>` element in the parent POM to match the released (non-SNAPSHOT) version of `org.apache.isis.core:isis`:
@@ -164,6 +178,7 @@ If releasing a non-core component, then check and if necessary update the `<vers
 > This obviously requires that the core has been released previously.  If you also releasing core at the same time as the component, then you will need to go through the release process for core first, then come back round to release the component.
 
 Also, if there is a tck test module with `o.a.isis.core:isis-core-tck` as its parent, then make sure that it the parent is also updated to the non-`SNAPSHOT` version.  *However*, the tck module's dependency on the component (typically a property) should remain as `SNAPSHOT`; it will be updated automatically when the `mvn release:prepare` is performed.
+-->
 
 ### Check no SNAPSHOT dependencies
 
@@ -356,9 +371,9 @@ Most of the work is done using the `mvn release:prepare` goal.  Since this makes
 Run the dry-run as follows:
 
     mvn release:prepare -P apache-release -D dryRun=true \
-        -DreleaseVersion=1.8.0 \
-        -Dtag=isis-1.8.0 \
-        -DdevelopmentVersion=1.9.0-SNAPSHOT
+        -DreleaseVersion=$ISISREL \
+        -Dtag=$ISISART-$ISISREL \
+        -DdevelopmentVersion=$ISISDEV
 
 where:
 
@@ -392,7 +407,7 @@ $ mvn release:prepare -P apache-release -D dryRun=true
 [INFO] Isis Core Integration Testing Support
 [INFO]
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Isis Core 1.8.0-SNAPSHOT
+[INFO] Building Apache Isis Core 1.8.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
 [INFO] --- maven-release-plugin:2.3.2:prepare (default-cli) @ isis ---
@@ -406,9 +421,9 @@ If you didn't provide the `releaseVersion`, `tag` and `developmentVersion` tags,
 Assuming this completes successfully, re-run the command, but without the `dryRun` flag and specifying `resume=false` (to ignore the generated `release.properties` file that gets generated as a side-effect of using `git`).  You can also set the `skipTests` flag since they would have been run during the previous dry run:
 
     mvn release:prepare -P apache-release -D resume=false -DskipTests=true
-            -DreleaseVersion=1.8.0 \
-            -Dtag=isis-1.8.0 \
-            -DdevelopmentVersion=1.9.0-SNAPSHOT
+            -DreleaseVersion=$ISISREL \
+            -Dtag=$ISISART-$ISISREL \
+            -DdevelopmentVersion=$ISISDEV
 
 > If any issues here, then explicitly delete the generated `release.properties` file first.
 
@@ -460,7 +475,7 @@ If running on *nix, then the command to stage the release is:
 but if using mSysGit on windows, specify a different working directory:
 
     mvn release:perform -P apache-release \
-        -DworkingDirectory=/c/tmp/$ISISART-$ISISREL/checkout
+        -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout
 
 You may (again) be prompted for gpg passphrase.
 
@@ -543,12 +558,12 @@ Finally, push both the branch and the tag created locally to the central origin 
 
 To push the branch, for example:
 
-    git checkout prepare/isis-1.8.0
-    git push -u origin prepare/isis-1.8.0
+    git checkout prepare/$ISISART-$ISISREL
+    git push -u origin prepare/$ISISART-$ISISREL
 
 To push the tag, with the `-RCn` suffix, for example:
 
-    git push origin refs/tags/isis-1.8.0:refs/tags/isis-1.8.0-RC1
+    git push origin refs/tags/$ISISART-$ISISREL:refs/tags/$ISISART-$ISISREL-$ISISRC
     git fetch
 
 The remote tag isn't visible locally (eg via `gitk --all`), but can be seen [online](https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary).
@@ -565,7 +580,7 @@ The following boilerplate is for a release of the Apache Isis Core.  Adapt as re
 
 Use the following subject:
 <pre>
-[VOTE] Apache Isis Core release 1.8.0 RC1 and related components
+[VOTE] Apache Isis Core release 1.8.0 RC1
 </pre>
 
 And use the following body:
@@ -632,7 +647,7 @@ If the vote has been successful, then replace the `-RCn` tag with another withou
 
 You can do this using the `scripts/promoterctag.sh` script; for example:
 
-    sh scripts/promoterctag isis-1.8.0 RC1
+    sh scripts/promoterctag isis-1.8.0 RC1    # $ISISART-$SISREL $ISISRC
 
 Or, if you like to execute the steps in that script by hand:
 
@@ -646,14 +661,14 @@ Or, if you like to execute the steps in that script by hand:
 * delete the `-RCn` remote tag, for example:
 
 <pre>
-  git push origin --delete refs/tags/isis-1.8.0-RC1
+  git push origin --delete refs/tags/isis-1.8.0-RC1    # $ISISART-$SISREL-$ISISRC
   git fetch
 </pre>
 
 * delete the `-RCn` local tag, for example:
 
 <pre>
-  git tag -d isis-1.8.0-RC1
+  git tag -d isis-1.8.0-RC1    # $ISISART-$SISREL-$ISISRC
   git fetch
 </pre>
 
@@ -666,13 +681,13 @@ If the vote has been unsuccessful, then:
 * delete the remote branch, for example:
 
 <pre>
-  git push origin --delete prepare/isis-1.8.0
+  git push origin --delete isis-1.8.0    # $ISISART-$SISREL
 </pre>
 
 * delete your local branch, for example:
 
 <pre>
-  git branch -D prepare/isis-1.8.0
+  git branch -D isis-1.8.0               # $ISISART-$SISREL
 </pre>
 
 * delete the remote origin server's tag, for example:
@@ -684,7 +699,7 @@ If the vote has been unsuccessful, then:
 * delete the tag that was created locally, for example:
 
 <pre>
-  git tag -d isis-1.8.0
+  git tag -d isis-1.8.0                  # $ISISART-$SISREL
 </pre>
 
 * drop the staging repository in [Nexus](http://repository.apache.org)
@@ -714,14 +729,10 @@ isis/
   core/
   component/
     objectstore/  # empty, JDO now part of core
-    profilestore/ # empty, no releases
-    progmodel/    # empty, no releases
     security/     # empty, Shiro now part of core
-    viewer/
-      wicket/
+    viewer/       # empty, Restful and Wicket viewers now part of core
   example/
     archetype/
-      todoapp/
       simpleapp/
   tool/
     maven-isis-plugin/   # not yet released
@@ -769,13 +780,16 @@ Update the Isis CMS website:
 
 * Do a search for `x.y.0-SNAPSHOT` and replace with `x.y.0`
 
-* Update the version number on the [quickstart archetype](../intro/getting-started/quickstart-archetype.html) and the [simple archetype](../intro/getting-started/simple-archetype.html) pages.
+* Update the version number on the [simpleapp](../intro/getting-started/simple-archetype.html) archetype pages.
   
 * For core (if released) and for each released component's about page, update the link to the latest release notes providing details of the contents of the release.
 
 * Update the version listed on the [documentation page](../documentation.html).
 
+<!--
+no longer required (since everything bundled together:
 * The [release matrix](../release-matrix.html) indicates the dependencies between components.  Update this as required.
+-->
 
 In addition:
 
@@ -810,9 +824,9 @@ And use the following body (summarizing the main points as required):
 <pre>
 The Isis team is pleased to announce the release of:
 * Apache Isis Core version 1.8.0
-* Wicket Viewer 1.8.0
 * SimpleApp Archetype 1.8.0
-* ToDoApp Archetype 1.8.0
+
+Note that as of 1.8.0 the Wicket Viewer is bundled in with Core.
 
 New features in this release include:
 - ...
@@ -846,11 +860,11 @@ Finally, [log onto](https://blogs.apache.org/roller-ui/login.rol) the [Apache bl
 
 Because we release from a branch, the changes made in the branch (changes to `pom.xml` made by the `maven-release-plugin`, or any manual edits) should be merged back from the release branch back into the `master` branch:
 
-    git checkout master                           # update master with latest
+    git checkout master                   # update master with latest
     git pull
-    git merge prepare/isis-1.8.0                  # merge branch onto master
-    git branch -d prepare/isis-1.8.0              # branch no longer needed
-    git push origin --delete prepare/isis-1.8.0   # remote branch no longer needed
+    git merge isis-1.8.0                  # merge branch onto master
+    git branch -d isis-1.8.0              # branch no longer needed
+    git push origin --delete isis-1.8.0   # remote branch no longer needed
 
 If the core was updated, then you'll most likely need to update other POMs to the new `-SNAPSHOT`.
  

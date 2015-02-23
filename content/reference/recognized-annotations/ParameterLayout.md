@@ -1,4 +1,4 @@
-Title: @ParameterLayout (1.8.0-SNAPSHOT)
+Title: @ParameterLayout (1.8.0)
 
 The `@ParameterLayout` annotation applies to action parameters, collecting together all UI hints within a single
 annotation.

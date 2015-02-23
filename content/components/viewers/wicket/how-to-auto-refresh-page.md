@@ -1,4 +1,4 @@
-title: How to auto-refresh an (entity) page (1.8.0-SNAPSHOT)
+title: How to auto-refresh an (entity) page (1.8.0)
 
 This requirement from the users mailing list:
 

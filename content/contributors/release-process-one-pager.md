@@ -5,84 +5,76 @@ See also the [full release process](release-process.html) and the [release check
 ## Switch to correct directory, parameterize the release
 
 {note
-Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
+Make sure you are in the correct directory (eg core, or example/archetype/zzz)
 }
 
-if releasing `core`, eg:
+if  you are releasing `core`:
 
     cd core
 
     export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis
-    export ISISDEV=1.8.0-SNAPSHOT
-    export ISISREL=1.7.0
+    export ISISDEV=1.9.0-SNAPSHOT
+    export ISISREL=1.8.0
     export ISISRC=RC1
 
     export ISISCOR="Y"
     env | grep ISIS | sort
 
-    
+<!--
 if releasing a `component/xxx/yyy`, eg:
 
     cd component/xxx/yyy
 
     export ISISTMP=/c/tmp              # or whatever
     export ISISART=isis-xxx-yyy
-    export ISISDEV=1.8.0-SNAPSHOT
-    export ISISREL=1.7.0
+    export ISISDEV=1.9.0-SNAPSHOT
+    export ISISREL=1.8.0
     export ISISRC=RC1
 
     export ISISCOR="N"
     export ISISCPT=$(echo $ISISART | cut -d- -f2)
     export ISISCPN=$(echo $ISISART | cut -d- -f3)
     env | grep ISIS | sort
-    
-    
-eg, for Wicket viewer this is:
+-->
 
-    cd component/viewer/wicket
+See [here](recreating-an-archetype.html) for details on recreating and releasing an archetype.    
 
-    export ISISTMP=/c/tmp              # or whatever
-    export ISISART=isis-viewer-wicket
-    export ISISDEV=1.8.0-SNAPSHOT
-    export ISISREL=1.7.0
-    export ISISRC=RC1
 
-    export ISISCOR="N"
-    export ISISCPT=$(echo $ISISART | cut -d- -f2)
-    export ISISCPN=$(echo $ISISART | cut -d- -f3)
-    env | grep ISIS | sort
-        
 ## Get code
 
-If **releasing core**, then pull down latest, create branch (eg `prepare/isis-1.7.0`):
+<--If **releasing core**, then pull --> 
+Pull down latest, create branch (eg `prepare/isis-1.8.0`):
 
     git checkout master
     git pull --ff-only
-    git checkout -b prepare/$ISISART-$ISISREL
+    git checkout -b $ISISART-$ISISREL
 
-If **releasing a component without also releasing core**, then pull down latest, create branch (eg `prepare/isis-viewer-wicket-1.7.0`):
+<!--
+If **releasing a component without also releasing core**, then pull down latest, create branch (eg `isis-xxx-yyy-1.8.0`):
 
     git checkout master
     git pull --ff-only
-    git checkout -b prepare/$ISISART-$ISISREL 
+    git checkout -b $ISISART-$ISISREL
 
 If **releasing a component on top of a core release**, then omit this step (just continue in the same branch as for core).
-
+-->
 
 ##Update parent pom
 
-If **releasing core**, check:
+<!--If **releasing core**, check:-->
+Check:
 
 * parent is `org.apache:apache` (non-SNAPSHOT version)
 
+<!--
 If **releasing a component**, check:
 
 * parent of component is `o.a.isis.core:isis`            (non-SNAPSHOT version)
     * eg `component/viewer/wicket/pom.xml`
 * parent of tck modules is `o.a.isis.core:isis-core-tck` (non-SNAPSHOT version)
     * eg `component/viewer/wicket/tck/pom.xml`
-
+-->
 
 ##Check for SNAPSHOT dependencies
 
@@ -98,16 +90,18 @@ or (more thoroughly):
 ## Sanity check
 
 {note
-Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
+Make sure you are in the correct directory (eg core, <!--component/xxx/yyy--> or example/archetype/zzz)
 }
 
-If **releasing core**, then clean all local mvn artifacts and rebuild with `-o` flag:
+<!--If **releasing core**, then clean-->
+Clean all local mvn artifacts and rebuild with `-o` flag:
 
     cd core
     
     rm -rf ~/.m2/repository/org/apache/isis
     mvn clean install -o
 
+<!--
 If **releasing a component without also releasing core**, then clean all local mvn artifacst and rebuild **without `-o`** flag:
 
     cd component/xxx/yyy
@@ -118,19 +112,25 @@ If **releasing a component without also releasing core**, then clean all local m
 If **releasing a component on top of a core release**, then do not clean, just rebuild with `-o` flag:
 
     mvn clean install -o
-
+-->
     
 ## Check versions
 
 ####Update plugin versions
+
+> Actually, you may want to defer this and do after cutting the release (ie beginning of a new dev cycle)
 
     mvn versions:display-plugin-updates > /tmp/foo
     grep "\->" /tmp/foo | /bin/sort -u
 
 ####Newer dependencies:
 
+> Actually, you may want to defer this and do after cutting the release (ie beginning of a new dev cycle)
+
     mvn versions:display-dependency-updates > /tmp/foo
     grep "\->" /tmp/foo | /bin/sort -u
+
+## Update license information
 
 ####Missing license headers in files:
 
@@ -151,14 +151,14 @@ If **releasing a component on top of a core release**, then do not clean, just r
 
 Commit any changes from the preceding steps:
 
-    git commit -am "ISIS-nnn: updates to pom.xml etc for release"
+    git commit -am "ISIS-nnnn: updates to pom.xml etc for release"
 
 ## Release
 
 #### Prepare:
 
 {note
-Make sure you are in the correct directory (eg core, component/xxx/yyy or example/archetype/zzz)
+Make sure you are in the correct directory (eg core, <!--component/xxx/yyy--> or example/archetype/zzz)
 }
 
 first the dry run:
@@ -214,7 +214,7 @@ Log onto [repository.apache.org](http://repository.apache.org) and close the sta
 
 Push branch:
 
-    git push -u origin prepare/$ISISART-$ISISREL
+    git push -u origin $ISISART-$ISISREL
 
 Then push tag:
 

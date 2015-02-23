@@ -1,4 +1,4 @@
-Title: Suppressing Sign Up (1.8.0-SNAPSHOT)
+Title: Suppressing Sign Up (1.8.0)
 
 If [user registration](./user-registration.html) has been configured, then the Wicket viewer allows the user to
 sign-up a new account and to reset their password from the login page.

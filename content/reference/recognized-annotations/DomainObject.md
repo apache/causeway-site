@@ -1,4 +1,4 @@
-Title: @DomainObject (1.8.0-SNAPSHOT)
+Title: @DomainObject (1.8.0)
 
 > stub
 

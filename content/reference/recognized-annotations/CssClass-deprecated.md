@@ -50,7 +50,7 @@ can be specified, eg:
 Note that this (currently) only supports class members, not classes
 
 
-## See also (1.8.0-SNAPSHOT)
+## See also (1.8.0)
 
 The similar [CssClassFa](./CssClassFa-deprecated.html) annotation is also used as a hint
 to apply CSS, but in particular to allow [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/icons/)

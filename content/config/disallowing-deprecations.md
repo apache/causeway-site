@@ -1,4 +1,4 @@
-Title: Disallowing Deprecations (1.8.0-SNAPSHOT)
+Title: Disallowing Deprecations (1.8.0)
 
 > this is a stub
 

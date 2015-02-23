@@ -1,4 +1,4 @@
-Title: Honor UI Hints (1.8.0-SNAPSHOT)
+Title: Honor UI Hints (1.8.0)
 
 {note
 These configuration settings should be considered beta, and are likely to change in the future in response to emerging requirements.

@@ -1,4 +1,4 @@
-Title: User Registration (1.8.0-SNAPSHOT)
+Title: User Registration (1.8.0)
 
 The Wicket viewer provides the ability for users to sign-up by providing a valid email address:
 

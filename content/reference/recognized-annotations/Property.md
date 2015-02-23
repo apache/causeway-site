@@ -1,4 +1,4 @@
-Title: @Property (1.8.0-SNAPSHOT)
+Title: @Property (1.8.0)
 
 > stub
 

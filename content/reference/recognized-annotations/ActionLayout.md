@@ -1,4 +1,4 @@
-Title: @ActionLayout (1.8.0-SNAPSHOT)
+Title: @ActionLayout (1.8.0)
 
 The `@ActionLayout` annotation applies to actions, collecting together all UI hints within a single
 annotation.

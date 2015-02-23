@@ -62,7 +62,7 @@ In the case of the `.layout.json` file, the implementation used in `LayoutMetada
 isis.reflector.layoutMetadataReaders=org.apache.isis.core.metamodel.layoutmetadata.json.LayoutMetadataReaderFromJson
 </pre>
 
-As of 1.8.0-SNAPSHOT there is only one implementation provided, but we anticipate other implementations in future releases.
+As of 1.8.0 there is only one implementation provided, but we anticipate other implementations in future releases.
 
 ## Specifying a new programming model
 

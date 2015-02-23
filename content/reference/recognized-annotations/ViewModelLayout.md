@@ -1,4 +1,4 @@
-Title: @ViewModelLayout (1.8.0-SNAPSHOT)
+Title: @ViewModelLayout (1.8.0)
 
 > stub
 

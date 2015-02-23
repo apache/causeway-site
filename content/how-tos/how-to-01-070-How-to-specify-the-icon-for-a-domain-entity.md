@@ -9,7 +9,7 @@ In the [Wicket viewer](../components/viewers/wicket/about.html) there are two me
 
 * if the icon is dynamically specified, then it attempts to load an image file (`.png`, `.gif` or `.jpg`) from a well-known location on the classpath; else
 
-* (1.8.0-SNAPSHOT onwards) if the icon is statically specified, then it:
+* (1.8.0 onwards) if the icon is statically specified, then it:
 
     * first attempts to load a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon if defined; else
     * otherwise attempts to load an image file (`.png`, `.gif`, `.jpeg` or `.jpg`) from a well-known location on the classpath
@@ -30,7 +30,7 @@ For example, to indicate that a `com.mycompany.todoapp.dom.TodoItem` object is e
 
 If the method returns "complete", then the viewer will look for an icon file on the classpath as follows:
 
-* first, it will search in the same package as the domain class (1.8.0-SNAPSHOT):
+* first, it will search in the same package as the domain class (1.8.0):
 
     * com/mycompany/todoapp/dom/TodoItem-complete.png
     * com/mycompany/todoapp/dom/TodoItem-complete.gif
@@ -46,7 +46,7 @@ If the method returns "complete", then the viewer will look for an icon file on 
 
 The viewer stops searching as soon as a image file is found.
 
-## Statically-specified font awesome icon (1.8.0-SNAPSHOT)
+## Statically-specified font awesome icon (1.8.0)
 
 If a dynamic icon has not been specified, then the viewer will next attempt to load a [font awesome](http://fortawesome.github.io/Font-Awesome/) icon.
 
@@ -63,7 +63,7 @@ If neither an `iconName()` nor an `@CssClassFa` annotation has been found, then 
 
 For example, a `com.mycompany.todoapp.dom.TodoItem` object will search:
 
-* first, in the same package as the domain class (1.8.0-SNAPSHOT):
+* first, in the same package as the domain class (1.8.0):
 
     * com/mycompany/todoapp/dom/TodoItem.png
     * com/mycompany/todoapp/dom/TodoItem.gif

@@ -1,4 +1,4 @@
-Title: Multi-Tenancy support (1.8.0-SNAPSHOT)
+Title: Multi-Tenancy support (1.8.0)
 
 ## Theory
 
@@ -36,7 +36,7 @@ could envisage this as a graph:
         
 Not only does all data belong to a particular node ("tenancy") within this graph, so is each user associated.
 
-## Support within Isis (1.8.0-SNAPSHOT)
+## Support within Isis (1.8.0)
 
 The Isis core framework provides the infrastructure to implement multi-tenancy, while the [Isis addons security module](https://github.com/isisaddons/isis-module-security) provides a full implementation for you to use out-of-the-box or to fork and adapt as you require.
 
