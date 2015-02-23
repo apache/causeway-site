@@ -312,11 +312,11 @@ For both:
 
 #### <a name="reference-config">Programming Model Configuration</a>
 
-* [Disallowing deprecated annotations](config/disallowing-deprecations.html) (1.8.0)
+* [Disallowing deprecated annotations](config/disallowing-deprecations.html)
 * [Custom validator](config/custom-validator.html)
 * [Finetuning the Programming Model](config/metamodel-finetuning-the-programming-model.html)
 * [Layout metadata reader](config/dynamic-layout-metadata-reader.html)
-* [Standardized font-awesome icons and CSS](config/standardised-font-awesome-icons-and-CSS.html)  (1.8.0)
+* [Standardized font-awesome icons and CSS](config/standardised-font-awesome-icons-and-CSS.html)
 
 #### <a name="config-i18n">i18n</a>
 
@@ -329,14 +329,14 @@ For both:
 
 #### <a name="more-advanced-topics-jdo-objectstore">JDO Objectstore</a>
 
-* [Multi-tenancy](more-advanced-topics/multi-tenancy.html) (1.8.0)
+* [Multi-tenancy](more-advanced-topics/multi-tenancy.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
 #### <a name="more-advanced-topics-no-sql-support">NoSQL Support</a>
 
 * [Deploying on the Google App Engine](components/objectstores/jdo/deploying-on-the-google-app-engine.html)
-* [Using Neo4J](components/objectstores/jdo/using-neo4j.html) (1.8.0)
+* [Using Neo4J](components/objectstores/jdo/using-neo4j.html)
 
 
 <!--
@@ -421,19 +421,19 @@ Co-ordinate sharing of information across multiple objects/interactions
 
 #### <a name="domain-services-email">Email</a>
 
-* [Email Service](./reference/services/email-service.html) (1.8.0)
+* [Email Service](./reference/services/email-service.html)
 
 #### <a name="domain-services-user-profile">User management</a>
 
-* [User Profile Service](./reference/services/user-profile-service.html) (API only)  (1.8.0)
-* [User Registration Service](./reference/services/user-registration-service.html) (API only)  (1.8.0)
-* [Email Notification Service](./reference/services/email-notification-service.html)  (1.8.0)
+* [User Profile Service](./reference/services/user-profile-service.html) (API only)
+* [User Registration Service](./reference/services/user-registration-service.html) (API only)
+* [Email Notification Service](./reference/services/email-notification-service.html)
 
 #### <a name="domain-services-bookmark-memento">Bookmarks and mementos</a>
 
 * [Bookmark Service](./reference/services/bookmark-service.html)
 * [Memento Service](./reference/services/memento-service.html)
-* [Deep Link Service](./reference/services/deep-link-service.html) (1.8.0)
+* [Deep Link Service](./reference/services/deep-link-service.html)
 * [XmlSnapshot Service](./reference/services/xmlsnapshot-service.html)
 
 ####  <a name="reference-non-ui-execution">Non-UI execution</a>
@@ -466,19 +466,19 @@ Features, configuration and UI customisation.
 * [Bookmarked pages (sliding panel)](components/viewers/wicket/bookmarks.html)
 * [Recent pages (drop down)](components/viewers/wicket/recent-pages.html)
 * [Hints and copy URL](components/viewers/wicket/hints-and-copy-url.html)
-* [User Registration](./components/viewers/wicket/user-registration.html) (1.8.0)
+* [User Registration](./components/viewers/wicket/user-registration.html)
 
 #### <a name="wicket-viewer-configuration">Configuration</a>
 
-* [Brand logo](components/viewers/wicket/brand-logo.html) (1.8.0)
-* [Suppressing 'sign up'](components/viewers/wicket/suppressing-sign-up.html) (1.8.0)
-* [Suppressing 'password reset'](components/viewers/wicket/suppressing-password-reset.html) (1.8.0)
+* [Brand logo](components/viewers/wicket/brand-logo.html)
+* [Suppressing 'sign up'](components/viewers/wicket/suppressing-sign-up.html)
+* [Suppressing 'password reset'](components/viewers/wicket/suppressing-password-reset.html)
 * [Suppressing 'remember me'](components/viewers/wicket/suppressing-remember-me.html)
 * [Number of bookmarked pages](components/viewers/wicket/bookmarks.html)
 * [Stripped Wicket tags](components/viewers/wicket/stripped-wicket-tags.html)
 * [Disabling modal dialogs](components/viewers/wicket/disabling-modal-dialogs.html)
-* [Showing a theme chooser](components/viewers/wicket/showing-a-theme-chooser.html) (1.8.0)
-* [Suppressing header and footer (embedded view)](components/viewers/wicket/suppressing-header-and-footer.html) (1.8.0)
+* [Showing a theme chooser](components/viewers/wicket/showing-a-theme-chooser.html)
+* [Suppressing header and footer (embedded view)](components/viewers/wicket/suppressing-header-and-footer.html)
 
 }
 
@@ -488,14 +488,14 @@ Features, configuration and UI customisation.
 
 * [Customising the Welcome page](components/viewers/wicket/customizing-the-welcome-page.html)
 * [Customising the About page](components/viewers/wicket/configuring-the-about-page.html)
-* [Specifying a default theme](components/viewers/wicket/specifying-a-default-theme.html) (1.8.0)
+* [Specifying a default theme](components/viewers/wicket/specifying-a-default-theme.html)
 * [Tweaking CSS classes](./components/viewers/wicket/how-to-tweak-the-ui-using-css-classes.html)
 * [Custom Javascript](./components/viewers/wicket/how-to-tweak-the-ui-using-javascript.html)
 
 #### <a name="wicket-viewer-customization">Tips</a>
 
 * [Render abstract properties in tables](components/viewers/wicket/tips-and-workarounds.html)
-* [Auto-refresh page](components/viewers/wicket/how-to-auto-refresh-page.html) (1.8.0)
+* [Auto-refresh page](components/viewers/wicket/how-to-auto-refresh-page.html)
 
 }
 
@@ -503,7 +503,7 @@ Features, configuration and UI customisation.
 
 #### <a name="wicket-viewer-extensions">Extending the viewer</a>
 
-* [Writing a custom theme](components/viewers/wicket/writing-a-custom-theme.html) (1.8.0)
+* [Writing a custom theme](components/viewers/wicket/writing-a-custom-theme.html)
 * [Replacing page elements](components/viewers/wicket/customizing-the-viewer.html)
 * [Custom pages](components/viewers/wicket/custom-pages.html)
 
@@ -540,13 +540,13 @@ Features, configuration and UI customisation.
 Features
 
 * [Restful Objects Specification](http://restfulobjects.org)
-* [Pretty printing](components/viewers/restfulobjects/pretty-printing.html) (1.8.0)
+* [Pretty printing](components/viewers/restfulobjects/pretty-printing.html)
 
 Configuration & Customisation
 
-* [Honor UI hints](components/viewers/restfulobjects/honor-ui-hints.html) (1.8.0)
-* [Suppressing elements of the representations](components/viewers/restfulobjects/suppressing-elements-of-the-representations.html) (1.8.0)
-* [Simplified object representation](components/viewers/restfulobjects/simplified-object-representation.html) (1.8.0)
+* [Honor UI hints](components/viewers/restfulobjects/honor-ui-hints.html)
+* [Suppressing elements of the representations](components/viewers/restfulobjects/suppressing-elements-of-the-representations.html)
+* [Simplified object representation](components/viewers/restfulobjects/simplified-object-representation.html)
 * [Custom representations](components/viewers/restfulobjects/custom-representations.html) 
 
 Hints and Tips
