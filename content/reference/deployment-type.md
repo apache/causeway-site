@@ -41,7 +41,7 @@ The Wicket configuration type is set in the usual way for a Wicket application, 
 
     <context-param>
         <param-name>configuration</param-name>
-        <param-value>deployment</param-name>
+        <param-value>deployment</param-value>
     </context-param>
 
 (Alternative ways of specifying the Wicket configuration type can be found [in this blog post](http://www.mysticcoders.com/blog/development-and-deployment-mode-how-to-configure-it/)).
