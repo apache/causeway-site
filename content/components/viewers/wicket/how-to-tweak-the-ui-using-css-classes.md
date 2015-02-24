@@ -21,7 +21,7 @@ These customizations should generally be added to `src/main/webapp/css/applicati
 
 ## Targetting individual members
 
-For example, the `ToDoItem` object of the Isis addons [ToDo app](../../../intro/getting-started/quickstart-archetype.html) has a `notes` property.  The HTML for this will be something like:
+For example, the `ToDoItem` object of the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF) has a `notes` property.  The HTML for this will be something like:
 
     <div>
         <div class="property ToDoItem-notes">

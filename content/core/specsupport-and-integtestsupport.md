@@ -252,16 +252,16 @@ The [`RunSpecs`](https://github.com/apache/isis/blob/master/example/application/
         // intentionally empty 
     }
 
-The JSON formatter allows integration with enhanced reports, for example as provided by [Masterthought.net](http://www.masterthought.net/section/cucumber-reporting) (screenshots at end of page).  (Commented out) configuration for this is provided in the example todo app `integtests` module's [pom.xml](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/pom.xml).
+The JSON formatter allows integration with enhanced reports, for example as provided by [Masterthought.net](http://www.masterthought.net/section/cucumber-reporting) (screenshots at end of page).  (Commented out) configuration for this is provided in the [simpleapp](../intro/getting-started/simpleapp-archetype.html)  `integtests` module's [pom.xml](https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/pom.xml#L52).
 
-The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/BootstrappingGlue.java) step definition:
+The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/specglue/BootstrappingGlue.java#L26) step definition:
 
     public class BootstrappingGlue extends CukeGlueAbstract {
     
         @Before(value={"@integration"}, order=100)
         public void beforeScenarioIntegrationScope() {
             PropertyConfigurator.configure("logging.properties");
-            ToDoSystemInitializer.initIsft();
+            SimpleAppSystemInitializer.initIsft();
             
             before(ScenarioExecutionScope.INTEGRATION);
         }
@@ -275,85 +275,41 @@ The bootstrapping of Isis can be moved into a [`BootstrappingGlue`](https://gith
         // bootstrapping of @unit scope omitted
     }
 
-The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/CatalogOfFixturesGlue.java):
+The fixture to run also lives in its own step definition, [`CatalogOfFixturesGlue`](https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/specglue/CatalogOfFixturesGlue.java#L24):
 
     public class CatalogOfFixturesGlue extends CukeGlueAbstract {
-            
-        @Before(value={"@integration", "@ToDoItemsFixture"}, order=20000)
+
+        @Before(value={"@integration", "@SimpleObjectsFixture"}, order=20000)
         public void integrationFixtures() throws Throwable {
-            scenarioExecution().install(new ToDoItemsFixture());
-        }        
+            scenarioExecution().install(new RecreateSimpleObjects());
+        }
 
-        // fixture for @unit, @ToDoItemsFixture omitted
-    
     }
 
-Note that this is annotated with a tag (`@ToDoItemsFixture`) so that the correct fixture runs.  (We might have a whole variety of these).
+Note that this is annotated with a tag (`@SimpleObjectsFixture`) so that the correct fixture runs.  (We might have a whole variety of these).
      
-The step definitions pertaining to `ToDoItem` then reside in the [`ToDoItemGlue`](https://github.com/apache/isis/blob/master/example/application/todoapp/integtests/src/test/java/integration/glue/todoitem/ToDoItemGlue.java) class.  This is where the heavy lifting gets done:
+The step definitions pertaining to `SimpleObject` domain entity then reside in the [`SimpleObjectGlue`](https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/specglue/modules/simple/SimpleObjectGlue.java#L31) class.  This is where the heavy lifting gets done:
 
-    public class ToDoItemGlue extends CukeGlueAbstract {
-    
-        @Given("^there are a number of incomplete ToDo items$")
-        public void there_are_a_number_of_incomplete_ToDo_items() throws Throwable {
-            final List<ToDoItem> notYetComplete = service(ToDoItems.class).notYetComplete();
-            assertThat(notYetComplete.isEmpty(), is(false));
-            putVar("list", "notYetCompleteItems", notYetComplete);
-        }
-        
-        @When("^I choose the first of the incomplete items$")
-        public void I_choose_the_first_one() throws Throwable {
-            List<ToDoItem> notYetComplete = getVar(null, "notYetCompleteItems", List.class);
-            assertThat(notYetComplete.isEmpty(), is(false));
-            
-            putVar("todo", "toDoItem", notYetComplete.get(0));
-        }
-        
-        @When("^mark the item as complete$")
-        public void mark_it_as_complete() throws Throwable {
-            ToDoItem toDoItem = getVar(null, "toDoItem", ToDoItem.class);
-            wrap(toDoItem).completed();
-        }
-        
-        @Then("^the item is no longer listed as incomplete$")
-        public void the_item_is_no_longer_listed_as_incomplete() throws Throwable {
-            ToDoItem toDoItem = getVar(null, "toDoItem", ToDoItem.class);
-            whetherNotYetCompletedContains(toDoItem, false);
-        }
-    
-        @Given("^.*completed .*item$")
-        public void a_completed_ToDo_item() throws Throwable {
-            final List<ToDoItem> allToDos = service(ToDoItems.class).allToDos();
-            for (ToDoItem toDoItem : allToDos) {
-                if(toDoItem.isComplete()) {
-                    putVar("todo", "toDoItem", toDoItem);
-                    return;
-                }
+    public class SimpleObjectGlue extends CukeGlueAbstract {
+
+        @Given("^there are.* (\\d+) simple objects$")
+        public void there_are_N_simple_objects(int n) throws Throwable {
+            try {
+                final List<SimpleObject> findAll = service(SimpleObjects.class).listAll();
+                assertThat(findAll.size(), is(n));
+                putVar("list", "all", findAll);
+
+            } finally {
+                assertMocksSatisfied();
             }
-            Assert.fail("could not locate any completed ToDo items");
         }
-    
-        @When("^I mark the .*item as not yet complete$")
-        public void I_mark_it_as_not_yet_complete() throws Throwable {
-            ToDoItem toDoItem = getVar(null, "toDoItem", ToDoItem.class);
-            assertThat(toDoItem.isComplete(), is(true));
-            
-            toDoItem.setComplete(false);
+
+        @When("^I create a new simple object$")
+        public void I_create_a_new_simple_object() throws Throwable {
+            service(SimpleObjects.class).create(UUID.randomUUID().toString());
         }
-    
-        @Then("^the .*item is listed as incomplete$")
-        public void the_item_is_listed_as_incomplete() throws Throwable {
-            ToDoItem toDoItem = getVar(null, "toDoItem", ToDoItem.class);
-            whetherNotYetCompletedContains(toDoItem, true);
-        }
-    
-        private void whetherNotYetCompletedContains(ToDoItem toDoItem, final boolean whetherContained) {
-            final List<ToDoItem> notYetComplete = service(ToDoItems.class).notYetComplete();
-            assertThat(notYetComplete.contains(toDoItem), is(whetherContained));
-        }
+
     }
-    
-If you look at the code in the github repo, you will see that the code is slightly more complex than this, because it also uses mocks to enable it to run under `@unit` scope.  
 
 ## BDD Tooling ##
 

@@ -5,7 +5,7 @@ display a png logo instead.
 
 ##Screenshots
 
-The screenshot below shows the todo application with a 'brand logo' image in its header:
+The screenshot below shows the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF) with a 'brand logo' image in its header:
 
 ![](images/brand-logo.png)
 

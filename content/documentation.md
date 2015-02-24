@@ -15,7 +15,7 @@ Title: Documentation
 
 * **[What's Isis?](intro/elevator-pitch/isis-in-pictures.html) ... in pictures**
 * [Common Use Cases](intro/elevator-pitch/common-use-cases.html)  <a href="intro/elevator-pitch/common-use-cases.html#screencast"><img src="./images/tv_show-25.png"></a>
-* [Online demo](http://isisdemo.mmyco.co.uk/) (ToDo App)
+* [Online demo](http://isisdemo.mmyco.co.uk/) (todoapp)
 
 #### <a name="getting-started">Archetypes and Apps</a>
 

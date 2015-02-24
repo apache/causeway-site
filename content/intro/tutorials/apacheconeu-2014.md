@@ -208,7 +208,7 @@ In the simpleapp archetype the `SimpleObjects` service is a factory/repository f
 * note the `@DomainService` annotation
 * optional: add an action to a return subset of objects
   - use `@Query` annotation
-  - see for example the todo app, see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L93) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItems.java#L63)
+  - see for example the Isisaddons example [todoapp](https://github.com/isisaddons/isis-app-todoapp) (not ASF), see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L93) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItems.java#L63)
 
 
 
@@ -280,7 +280,7 @@ Domain entities have state: either values (primitives, strings) or references to
   - use [bigdecimals](http://isis.apache.org/components/objectstores/jdo/mapping-bigdecimals.html) properties
   - use [blob/clobs](http://isis.apache.org/components/objectstores/jdo/mapping-blobs.html) properties
   - specify whether [optional or mandatory](http://isis.apache.org/components/objectstores/jdo/mapping-mandatory-and-optional-properties.html)
-  - enums (eg as used in the example Todo app, see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L207) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L266)
+  - enums (eg as used in the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp) (not ASF), see [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L207) and [here](https://github.com/apache/isis/blob/b3e936c9aae28754fb46c2df52b1cb9b023f9ab8/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java#L266)
 * update the corresponding domain service for creating new instances
   - for all non-optional properties will either need to prompt for a value, or calculate some suitable default
 * change the implementation of title, if need be

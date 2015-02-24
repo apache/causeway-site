@@ -232,16 +232,6 @@ and the entry in `web.xml` for the Quartz servlet:
      </servlet>
 
 
-     
-<!--
-All of this stuff is configured in the example todo app, found on github (as of Isis 1.5.0):
-
-* [BackgroundCommandExecutionQuartzJob](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/java/webapp/scheduler/BackgroundCommandExecutionQuartzJob.java)
-* [AbstractIsisQuartzJob](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/java/webapp/scheduler/AbstractIsisQuartzJob.java)
-* [quartz-config.xml](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/resources/webapp/scheduler/quartz-config.xml)
-* [quartz.properties](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/resources/webapp/scheduler/quartz.properties)
-* [web.xml](https://github.com/apache/isis/blob/isis-1.5.0/example/application/quickstart_wicket_restful_jdo/webapp/src/main/webapp/WEB-INF/web.xml#L308)
--->
 
 
 ## Registering the Services

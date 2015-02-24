@@ -44,7 +44,7 @@ The event class that is raised can be specified using an annotation:
     * `@PostsCollectionAddedToEvent`/`@PostsCollectionRemovedFromEvent`
     * `@PostsActionInvokedEvent`
 
-For example, in the todo app a custom event is raised when an item is completed:
+For example, in the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF) a custom event is raised when an item is completed:
 
     public static class CompletedEvent extends AbstractActionDomainEvent {
         private static final long serialVersionUID = 1L;
