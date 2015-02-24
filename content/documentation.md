@@ -19,8 +19,13 @@ Title: Documentation
 
 #### <a name="getting-started">Archetypes and Apps</a>
 
-* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) ([1.7.0](archetypes/release-notes/about.html))**
+* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) **
 * [TodoApp Example App](http://github.com/isisaddons/isis-app-todoapp) (not ASF)
+
+#### <a name="release-notes">Release notes</a>
+
+* [Core v1.8.0](core/release-notes/about.html)
+* [Simpleapp v1.8.0](archetypes/release-notes/about.html)
 
 }
 
@@ -65,7 +70,7 @@ Title: Documentation
 {row
 
 {col-md-12
-## <a name="core">Core Concepts [1.7.0](core/release-notes/about.html)</a>
+## <a name="core">Core Concepts</a>
 
 }
 
@@ -448,7 +453,7 @@ Co-ordinate sharing of information across multiple objects/interactions
 {row
 
 {col-md-12
-## <a name="wicket-viewer">Wicket Viewer</a> [1.7.0](components/viewers/wicket/release-notes/about.html) [About](components/viewers/wicket/about.html)
+## <a name="wicket-viewer">Wicket Viewer</a> [About](components/viewers/wicket/about.html)
 
 Features, configuration and UI customisation.
 

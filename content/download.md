@@ -12,7 +12,7 @@ For example:
 mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simpleapp-archetype \
-    -D archetypeVersion=1.7.0 \
+    -D archetypeVersion=1.8.0 \
     -D groupId=com.mycompany \
     -D artifactId=myapp \
     -D version=1.0-SNAPSHOT \
@@ -27,19 +27,18 @@ If you want to build Isis from formally released source tarballs, you can downlo
 
 Core:
 
-* [isis-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/isis-core/isis-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/isis-core/isis-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/isis-core/isis-1.7.0-source-release.zip.md5)) 
+* [isis-1.8.0](https://www.apache.org/dyn/closer.cgi/isis/isis-core/isis-1.8.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/isis-core/isis-1.8.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/isis-core/isis-1.8.0-source-release.zip.md5)) 
 
-nb: In v1.6.0, core incorporates JDO/DataNucleus ObjectStore, Restful Objects viewer and Shiro Security (previously released as separate components).  In v1.7.0, modules released (in `org.apache.isis.module` have been moved to be [http://www.isisaddons.org](Isis add-ons) (not ASF).
+Notes:
+* in v1.6.0, core incorporates JDO/DataNucleus ObjectStore, Restful Objects viewer and Shiro Security (previously released as separate components).
+* in v1.7.0, modules released (in `org.apache.isis.module` have been moved to be [http://www.isisaddons.org](Isis add-ons) (not ASF).
+* in v1.8.0, core incorporates Wicket viewer (previously released as separate components).
 
-Components:
-
-* [isis-viewer-wicket-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/component/viewer/wicket/isis-viewer-wicket-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/component/viewer/wicket/isis-viewer-wicket-1.7.0-source-release.zip.md5))
 
 Archetypes:
 
-* [simpleapp-archetype-1.7.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.7.0-source-release.zip.md5))
+* [simpleapp-archetype-1.8.0](https://www.apache.org/dyn/closer.cgi/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.8.0-source-release.zip) ([asc](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.8.0-source-release.zip.asc), [md5](http://www.apache.org/dist/isis/archetype/simpleapp-archetype/simpleapp-archetype-1.8.0-source-release.zip.md5))
 
-See the [release matrix](release-matrix.html) for details on the dependencies between core, components and archetypes.
 
 ## Verifying Releases
 
@@ -54,19 +53,19 @@ Then verify the signatures using a command such as:
 
 <pre>
 pgpk -a KEYS
-pgpv isis-1.7.0-source-release.zip.asc
+pgpv isis-1.8.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 pgp -ka KEYS
-pgp isis-1.7.0-source-release.zip.asc
+pgp isis-1.8.0-source-release.zip.asc
 </pre>
 
 or
 <pre>
 gpg --import KEYS
-gpg --verify isis-1.7.0-source-release.zip.asc
+gpg --verify isis-1.8.0-source-release.zip.asc
 </pre>
 
 Alternatively, you can verify the MD5 signature on the files. A Unix/Linux

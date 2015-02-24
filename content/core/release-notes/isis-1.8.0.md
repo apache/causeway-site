@@ -1,4 +1,4 @@
-Release Notes - Isis - Version core-1.8.0
+Title: isis-1.8.0
 
 Note that Isis 1.8.0 now incorporates the Wicket viewer, which was previously a separately released component.  Other components that are included in core (that were previously released separately are: the Restful Objects viewer, Shiro Security and the JDO/DataNucleus ObjectStore.
 
