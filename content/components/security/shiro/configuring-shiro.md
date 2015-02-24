@@ -27,7 +27,7 @@ Shiro will then read `WEB-INF/shiro.ini` file to configure its Realm definitions
 
 
 ## Telling Isis to use Shiro for authentication and authorization
-
+w
 Isis itself supports multiple authentication/authorization mechanisms.  To tell it to use shiro, update the `WEB-INF/isis.properties` file:
 
     isis.authentication=shiro
@@ -87,17 +87,17 @@ See [here](./format-of-permissions.html) for further discussion.
 
 ## Multiple Realms
 
-The `shiro.ini` file as configured in the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html) is a little more complex.  Here there are two text-based realms defined, `realm1` and `realm2`.  The `resourcePath` for these realms is in the form:
+A more sophisticated approach is to use external realms.  For example, to configure two text-based realms defined, `realm1` and `realm2`, we would define a `resourcePath` for each, in the form:
 
     realm1.resourcePath=classpath:webapp/realm1.ini
 
 that is, the `src/main/resources/webapp/realm1.ini` file in the webapp project.
 
-The security manager for the app only references these two realms:
+The security manager for the app would then be told to use these two realms:
 
     securityManager.realms = $realm1,$realm2
 
-meaning that the `[users]` and `[roles]` sections of `shiro.ini` are unused.  Instead, you'll find these sections in both `realm1.ini` and `realm2.ini` (because both are coincidentally implementations of the same `org.apache.shiro.realm.text.IniRealm` class).
+The the `[users]` and `[roles]` sections of `shiro.ini` would then be unused.  Instead, you'll find these sections in both `realm1.ini` and `realm2.ini` (because both are coincidentally implementations of the same `org.apache.shiro.realm.text.IniRealm` class).
 
 ## What the user/roles translate to
 
@@ -112,7 +112,7 @@ In your domain objects you can find the users/roles for the current user using:
 
 The role `name` property encodes both the realm that provided the role, and the role identity itself.
 
-For example, in the quickstart/todo app, if logging in as `dick` with the following entries for `realm1`:
+For example, in the simpleapp, if logging in as `dick` with the following entries for `realm1`:
 
     dick = pass, user_role, analysis_role, self-install_role
 
@@ -141,3 +141,13 @@ Something like the following should do:
     ds = com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     ds ...etc
     securityManager.realms = $jdbcRealm
+
+## Configuring Shiro to use the Security Isis Addons
+
+The Isisaddons [security module](https://github.com/isisaddons/isis-module-security) (not ASF) provides a complete
+security subdomain for users, roles, permissions; all persisted as JDO domain objects.  It also includes a Shiro realm
+integration.
+
+See the module's README for details of how to configure an existing app to use this module.  Or, look at the the
+Isisaddons [todoapp example](https://github.com/isisaddons/isis-app-todoapp) (not ASF), which is preconfigured to use
+the security module.

@@ -5,7 +5,7 @@ Title: @SortedBy
 The `@SortedBy` annotation is an instruction hint for (`SortedSet`) collections to use the specified comparator rather than the natural ordering of the entity
 (as would usually be the case).
 
-For example, this is taken from the [quickstart archetype](../../../getting-started/quickstart-archetype.html):
+For example, this is taken from the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF):
 
 
     public class ToDoItem implements Comparable<ToDoItem> {

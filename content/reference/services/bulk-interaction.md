@@ -41,7 +41,7 @@ render a graph etc).
 
 More prosaically, the `Bulk.InteractionContext` can be used to ensure that the bulk action behaves appropriately
 depending on whether it is called in bulk mode or regular mode.  Here's a snippet of code from the bulk action in 
-the [quickstart app](../../intro/getting-started/quickstart-archetype.html):
+the Isis addon example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF):
 
     @Bulk
     public ToDoItem completed() {

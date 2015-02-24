@@ -13,7 +13,7 @@ The library provides two separate components/extensions for the Wicket viewer:
 
 ## Screenshots
 
-The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-wickedcharts/tree/master/zzzdemo) (adapted from Isis' quickstart archetype).
+The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-wickedcharts/tree/master/zzzdemo) for this module.
 
 #### Summary Charts
 

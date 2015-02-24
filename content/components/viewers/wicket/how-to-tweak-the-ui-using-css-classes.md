@@ -21,7 +21,7 @@ These customizations should generally be added to `src/main/webapp/css/applicati
 
 ## Targetting individual members
 
-For example, the `ToDoItem` object of the [ToDo app](../../../intro/getting-started/quickstart-archetype.html) has a `notes` property.  The HTML for this will be something like:
+For example, the `ToDoItem` object of the Isis addons [ToDo app](../../../intro/getting-started/quickstart-archetype.html) has a `notes` property.  The HTML for this will be something like:
 
     <div>
         <div class="property ToDoItem-notes">
@@ -82,12 +82,12 @@ This can then be targeted, for example using:
 Note also that instead of using `@CssClass` annotation, you can also specify the CSS style using a [dynamic layout](./dynamic-layouts.html) JSON file:
 
     ...
-    dueBy: {
-        cssClass: { value: "x-key" }
+    "dueBy": {
+        "propertyLayout": {
+            "cssClass": "x-key"
+        }
     },
     ...
-
-This is in fact how the `ToDoItem` class has been refactored to, as shown [here](https://github.com/apache/isis/blob/5e5b07c4691cbd651023c6ed8b7b756bc8370e09/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.layout.json#L94).
 
 
 ### Application-specific 'theme' class

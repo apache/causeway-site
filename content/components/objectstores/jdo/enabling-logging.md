@@ -14,7 +14,7 @@ As per the [DN logging page](http://www.datanucleus.org/products/accessplatform/
 
 Configure log4jdbc JDBC rather than the vanilla driver (see `WEB-INF/persistor_datanucleus.properties`) and configure log4j logging (see `WEB-INF/logging.properties`).
 
-There are examples of both in the quickstart archetype.
+There are examples of both in the [simpleapp archetype](../../../intro/getting-started/simpleapp-archetype.html).
 
 ### In the Database
 

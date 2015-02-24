@@ -17,12 +17,15 @@ To use, update the `pom.xml`:
         <artifactId>isis-core-wrapper</artifactId>
     </dependency>
 
-A full example is provided in the [quickstart archetype](../intro/getting-started/quickstart-archetype.html).  But to briefly explain; the recommended approach is to create an abstract class for all your integration tests.  Here is the one from the quickstart archetype:
+A full example is provided in the [simpleapp archetype](../intro/getting-started/simpleapp-archetype.html).  But to briefly explain; the recommended approach is to create an abstract class for all your integration tests.  Here's an example derived from the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF):
 
     public abstract class AbstractIntegTest {
-    
+
+        @Inject
         protected ToDoItems toDoItems;
+        @Inject
         protected WrapperFactory wrapperFactory;
+        @Inject
         protected DomainObjectContainer container;
     
         @Rule
@@ -42,13 +45,6 @@ A full example is provided in the [quickstart archetype](../intro/getting-starte
          */
         public IsisSystemForTest getIsft() {
             return bootstrapIsis.getIsisSystemForTest();
-        }
-    
-        @Before
-        public void init() {
-            toDoItems = getIsft().getService(ToDoItemsJdo.class);
-            wrapperFactory = getIsft().getService(WrapperFactoryDefault.class);
-            container = getIsft().container;
         }
     
         protected <T> T wrap(T obj) {
@@ -121,4 +117,4 @@ Each of the integration tests then inherit from this abstract class.  For exampl
 
 Note that when the `ToDoItem` is wrapped, it is not possible to call `setComplete()` directly on the object; but when it is unwrapped then this call can be made as per normal.
 
-The full source code, plus other example tests, can be found [here](https://github.com/apache/isis/tree/master/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java).
+The full source code, plus other example tests, can be found [here](https://github.com/apache/isis/tree/3dcfb2fcd61636ff2fac66a3c7c54a500fdf2c6a/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/tests).

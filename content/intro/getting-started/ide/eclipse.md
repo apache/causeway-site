@@ -9,7 +9,7 @@ Title: Setting up Eclipse (with JDO/DataNucleus)
 
 We highly recommend that you develop your Isis application using an IDE.  Isis is built with Maven, and all modern IDEs can import Maven projects.  The most commonly used IDE is [Eclipse](http://www.eclipse.org), which can be downloaded in various configurations, all of which are free for use.  We recommend you download the "Eclipse JEE package".
 
-If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) (the default if using the [simple](../simple-archetype.html) or [quickstart](../quickstart-archetype.html) archetypes), then the development environment must be configured such that the Java bytecode can be enhanced by a [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  If working in Eclipse, then JDO enhancement is most easily done by installing the [DataNucleus' plugin](http://www.datanucleus.org/products/datanucleus/jdo/guides/eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.  This plugin needs to be configured for each of your domain modules (usually just one in any given app).
+If using the [JDO Objectstore](../../../components/objectstores/jdo/about.html) (the default if using the [simple](../simple-archetype.html) archetype), then the development environment must be configured such that the Java bytecode can be enhanced by a [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  If working in Eclipse, then JDO enhancement is most easily done by installing the [DataNucleus' plugin](http://www.datanucleus.org/products/datanucleus/jdo/guides/eclipse.html).  This hooks the bytecode enhancement of your domain objects into Eclipse's normal incremental compilation.  This plugin needs to be configured for each of your domain modules (usually just one in any given app).
 
 The steps are therefore:
 
@@ -126,7 +126,7 @@ Not ideal, we know.  Please feel free to contribute a better solution :-)
 
 ## Running the App
 
-The simple and quickstart archetypes automatically generate `.launch` configurations in the `webapp` module.  You can therefore very simply run the application by right-clicking on one of these files, and choosing "Run As..." or "Debug As...".
+The simpleapp archetype automatically provides a `.launch` configurations in the `webapp` module.  You can therefore very simply run the application by right-clicking on one of these files, and choosing "Run As..." or "Debug As...".
 
 > the screencast shows this in action.
 

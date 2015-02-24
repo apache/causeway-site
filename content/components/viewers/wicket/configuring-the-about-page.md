@@ -17,59 +17,57 @@ If none of these are found, then no version is displayed.
 
 ## Configuration
 
-*Note: the configuration described here will also be part of the quickstart_wicket_restful_jdo archetype (1.0.3+).*
+_This configuration is included within the [simpleapp archetype](../../../intro/getting-started/simpleapp-archetype.html)._
 
-#### Adding attributes to the WAR's manifest 
+#### Adding attributes to the WAR's manifest
 
 Add the following to the webapp's `pom.xml` (under `<build><plugins>`):
 
-<pre>
-&lt;plugin&gt;
-    &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-    &lt;artifactId&gt;build-helper-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.5&lt;/version&gt;
-      &lt;executions&gt;
-        &lt;execution&gt;
-          &lt;phase&gt;validate&lt;/phase&gt;
-          &lt;goals&gt;
-            &lt;goal&gt;maven-version&lt;/goal&gt;
-          &lt;/goals&gt;
-        &lt;/execution&gt;
-      &lt;/executions&gt;
-&lt;/plugin&gt;
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.5</version>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>maven-version</goal>
+              </goals>
+            </execution>
+          </executions>
+    </plugin>
 
-&lt;plugin&gt;
-    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
-    &lt;configuration&gt;
-        &lt;archive&gt;
-            &lt;manifest&gt;
-                &lt;addDefaultImplementationEntries&gt;true&lt;/addDefaultImplementationEntries&gt;
-            &lt;/manifest&gt;
-            &lt;manifestEntries&gt;
-                &lt;Build-Time&gt;${maven.build.timestamp}&lt;/Build-Time&gt;
-                &lt;Build-Number&gt;${buildNumber}&lt;/Build-Number&gt;
-                &lt;Build-Host&gt;${agent.name}&lt;/Build-Host&gt;
-                &lt;Build-User&gt;${user.name}&lt;/Build-User&gt;
-                &lt;Build-Maven&gt;Maven ${maven.version}&lt;/Build-Maven&gt;
-                &lt;Build-Java&gt;${java.version}&lt;/Build-Java&gt;
-                &lt;Build-OS&gt;${os.name}&lt;/Build-OS&gt;
-                &lt;Build-Label&gt;${project.version}&lt;/Build-Label&gt;
-            &lt;/manifestEntries&gt;
-        &lt;/archive&gt;
-    &lt;/configuration&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;phase&gt;package&lt;/phase&gt;
-            &lt;goals&gt;
-                &lt;goal&gt;war&lt;/goal&gt;
-            &lt;/goals&gt;
-            &lt;configuration&gt;
-                &lt;classifier&gt;${env}&lt;/classifier&gt;
-            &lt;/configuration&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-&lt;/plugin&gt;
-</pre>
+    <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifest>
+                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                </manifest>
+                <manifestEntries>
+                    <Build-Time>${maven.build.timestamp}</Build-Time>
+                    <Build-Number>${buildNumber}</Build-Number>
+                    <Build-Host>${agent.name}</Build-Host>
+                    <Build-User>${user.name}</Build-User>
+                    <Build-Maven>Maven ${maven.version}</Build-Maven>
+                    <Build-Java>${java.version}</Build-Java>
+                    <Build-OS>${os.name}</Build-OS>
+                    <Build-Label>${project.version}</Build-Label>
+                </manifestEntries>
+            </archive>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>war</goal>
+                </goals>
+                <configuration>
+                    <classifier>${env}</classifier>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
 
 If you then build the webapp from the Maven command line (`mvn clean package`), then the WAR should contain a `META-INF/MANIFEST.MF` with those various attribute entries.
 
@@ -84,7 +82,7 @@ In your subclass of `IsisWicketApplication`, there is a method `newIsisWicketMod
 
         ...
 
-        final Module quickstartOverrides = new AbstractModule() {
+        final Module simpleappOverrides = new AbstractModule() {
             @Override
             protected void configure() {
                 ...

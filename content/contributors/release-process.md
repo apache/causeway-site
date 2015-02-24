@@ -441,20 +441,6 @@ You should end up with artifacts in your local repo with the new version `1.8.0`
 
   This file should be in the root of the extracted ZIP. In particular, check that there are no category-x dependencies.
 
-<!--
-TODO: for archetype projects
-* Use the locally built quickstart archetype to generate the application, and make sure that the generated application runs ok.
-
-mvn archetype:generate  \
-    -D groupId=com.mycompany \
-    -D artifactId=myapp \
-    -D archetypeCatalog=local \
-    -D archetypeGroupId=org.apache.isis \
-    -D archetypeArtifactId=quickstart-archetype \
-    -D archetypeVersion=0.x.x-incubating
-Check that the generated app's artifacts point to the correct version of Isis (specifically: without a -SNAPSHOT suffix), and runs as expected.
--->
-
 If you find problems and the release was performed on a branch, then just delete the branch and start over.
 
 ## Upload Release for Voting

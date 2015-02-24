@@ -6,20 +6,16 @@ It is, however, necessary to annotate your properties with `@javax.jdo.annotatio
 
 Moreover, these datatypes are *not* in the default fetch group, meaning that JDO/DataNucleus will perform an additional `SELECT` query for each attribute.  To avoid this extra query, the annotation should indicate that the property is in the default fetch group.
 
-For example, the `ToDoItem` (in the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html)) defines the `dueBy` property as follows:
+For example, the `ToDoItem` (in the [todoapp example app](https://github.com/isisaddons/isis-app-todoapp) (not ASF)) defines the `dueBy` property as follows:
 
 <pre>
-  @javax.jdo.annotations.Persistent
-  private LocalDate dueBy;
+    @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
+    private LocalDate dueBy;
 
-  @MemberOrder(name="Detail", sequence = "3")
-  @Optional
-  public LocalDate getDueBy() {
-    return dueBy;
-  }
-  public void setDueBy(final LocalDate dueBy) {
-    this.dueBy = dueBy;
-  }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public LocalDate getDueBy() {
+        return dueBy;
+    }
 </pre>
 
 

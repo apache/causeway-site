@@ -115,7 +115,7 @@ If the sum of all the columns exceeds 12, then the collections are placed undern
 
 ## <a name="example-layouts">Example Layouts</a>
 
-Below are sketches for the layout of the [ToDoItem](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java) class of the [quickstart archetype](../../../intro/getting-started/quickstart-archetype.html).
+Below are sketches for the layout of the [ToDoItem](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java) class of the Isis addons example [todoapp](https://github.com/isisaddons/isis-app-todoapp/) (not ASF):
 
 #### &nbsp;
     

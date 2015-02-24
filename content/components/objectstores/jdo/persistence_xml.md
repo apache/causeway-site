@@ -24,7 +24,7 @@ Specify a suitable value for the `<persistence-unit>`:
     xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd&quot; version=&quot;1.0&quot;&gt;
 
-    &lt;persistence-unit name=&quot;quickstart&quot;&gt;
+    &lt;persistence-unit name=&quot;simpleapp&quot;&gt;
     &lt;/persistence-unit&gt;
 &lt;/persistence&gt;
 </pre>

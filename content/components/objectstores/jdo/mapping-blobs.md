@@ -8,24 +8,23 @@ As for [Joda dates](mapping-joda-dates.html), this requires the `@javax.jdo.anno
 
 ### Mapping Blobs
 
-For example, in the `ToDoItem` class (of the [quickstart archetype](../../../getting-started/quickstart-archetype.html)) the `attachment` property (v1.5.0 onwards) is as follows:
+For example, in the `ToDoItem` class (of the [todoapp example app](https://github.com/isisaddons/isis-app-todoapp/blob/61b8114a8e01dbb3c380b31cf09eaed456407570/dom/src/main/java/todoapp/dom/module/todoitem/ToDoItem.java#L475) (non-ASF) the `attachment` property is as follows:
 
-<pre>
-  @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
-      @javax.jdo.annotations.Column(name = "attachment_name"),
-      @javax.jdo.annotations.Column(name = "attachment_mimetype"),
-      @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType="BLOB", sqlType = "BLOB")
-  })
-  private Blob attachment;
-
-  @Optional
-  public Blob getAttachment() {
-    return attachment;
-  }
-  public void setAttachment(final Blob attachment) {
-    this.attachment = attachment;
-  }
-</pre>
+    @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
+        @javax.jdo.annotations.Column(name = "attachment_name"),
+        @javax.jdo.annotations.Column(name = "attachment_mimetype"),
+        @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType="BLOB", sqlType = "BLOB")
+    })
+    private Blob attachment;
+    @Property(
+            optionality = Optionality.OPTIONAL
+    )
+    public Blob getAttachment() {
+        return attachment;
+    }
+    public void setAttachment(final Blob attachment) {
+        this.attachment = attachment;
+    }
 
 The three `@javax.jdo.annotations.Column` annotations are required because the mapping classes that Isis provides ([IsisBlobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisBlobMapping.java#L59) and [IsisClobMapping](https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisClobMapping.java#L59)) map to 3 columns.  (It is not an error to omit these `@Column` annotations, but without them the names of the table columns are simply suffixed `_0`, `_1`, `_2` etc.
 

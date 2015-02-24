@@ -4,7 +4,7 @@ This [Wicket extension](https://github.com/isisaddons/isis-wicket-excel) allow a
 
 ## Screenshots
 
-The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-excel/tree/master/zzzdemo) (adapted from Isis' quickstart archetype).
+The following screenshots are taken from [demo app](https://github.com/isisaddons/isis-wicket-excel/tree/master/zzzdemo) for this module.
 
 The extension renders a new tab (highlighted): 
 

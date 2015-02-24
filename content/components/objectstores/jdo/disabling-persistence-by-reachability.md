@@ -14,7 +14,7 @@ We therefore **recommend that you disable persistence-by-reachability**, add the
     #
     isis.persistor.datanucleus.impl.datanucleus.persistenceByReachabilityAtCommit=false
 
-This change has been made to the [simple](../../../intro/getting-started/simple-archetype.html) and [quickstart](../../../intro/getting-started/quickstart-archetype.html) archetypes.
+This change has been made to the [simple](../../../intro/getting-started/simple-archetype.html) archetype.
 
 If you do disable this feature, then you will (of course) need to ensure that you explicitly persist all entities using the `DomainObjectContainer#persist(.)` or `DomainObjectContainer#persistIfNotAlready(.)` methods.
 

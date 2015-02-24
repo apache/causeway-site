@@ -11,93 +11,97 @@ How to layout properties and collections dynamically, in the Wicket viewer.
 
 ## JSON layout file
 
-The JSON layout file for class `Xxx` takes the name `Xxx.layout.json`, and resides in the same package as the class.  For example, the layout for the [ToDoItem](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java) class is [ToDoItem.layout.json](https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.layout.json)  
-
-The format of the `.layout.json` file is:
+The JSON layout file for class `Xxx` takes the name `Xxx.layout.json`, and resides in the same package as the class.
+The format of the file is:
 
     {
-      columns: [                                   // list of columns
+      "columns": [                                // list of columns
         {
-          span: 6,                                 // span of the left-hand property column
-          memberGroups: {                          // ordered map of member (property) groups
-            General: {                             // member group name
-              members: {           
-                description: {                     // property, no associated actions, but with UI hint
-                  typicalLength: {                 // UI hint for size of field
-                    value: 50
-                  }
-                },            
-                category: {},               
-                complete: {                        // property, with associated actions
-                  actions: {              
-                    completed: {
-                      named: {                     // naming UI hint
-                        value: "Done"
-                      }
-                      cssClass: {                  // CSS UI hint
-                        value: "x-highlight"
-                      },
-                    },       
-                  notYetCompleted: {
-                    named: { value: "Not done" }
-                  },
-                  describedAs: {
-                    value: "Whether this todo item has been completed"
-                  }
-                }
-              }
-            },
-            Misc: {
-              members: {
-                notes: {
-                  multiLine: {                     // UI hint for text area
-                      numberOfLines: 5
+          "span": 6,                              // span of the left-hand property column
+          "memberGroups": {                       // ordered map of member (property) groups
+            "General": {                          // member group name
+              "members": {
+                "description": {                  // property, no associated actions, but with UI hint
+                  "propertyLayout": {
+                    "typicalLength": 50           // UI hint for size of field (no longer used in ISIS 1.8.0)
                   }
                 },
-                versionSequence: {}
+                "category": {},
+                "complete": {                     // property, with associated actions
+                  "propertyLayout": {
+                    "describedAs": "Whether this todo item has been completed"
+                  },
+                  "actions": {
+                    "completed": {
+                      "actionLayout": {
+                        "named": "Done",          // naming UI hint
+                        "cssClass": "x-highlight" // CSS UI hint
+                      }
+                    },
+                    "notYetCompleted": {
+                      "actionLayout": {
+                        "named": "Not done"
+                      }
+                    }
+                  }
+                }
+              },
+              "Misc": {
+                "members": {
+                  "notes": {
+                    "propertyLayout": {
+                      "multiLine": 5              // UI hint for text area
+                    }
+                  },
+                  "versionSequence": {}
+                }
               }
             }
           }
         },
         {
-          span: 6,                                 // span of the middle property column
-          memberGroups: { ... }
+          "span": 6,                              // span of the middle property column
+          "memberGroups": { ... }
         },
         {
-          span: 0                                  // span of the right property column (if any)
+          "span": 0                               // span of the right property column (if any)
         },
         {
-          span: 6,
-          collections: {                           // ordered map of collections
-            dependencies: {                        // collection, with associated actions
-              actions: {                      
-                add:{},
-                delete: {}
+          "span": 6,
+          "collections": {                        // ordered map of collections
+            "dependencies": {                     // collection, with associated actions
+              "collectionLayout": {
+                "paged": 10,                      // pagination UI hint
+                "render": "EAGERLY"               // lazy-loading UI hint
               },
-              paged: {                             // pagination UI hint
-                value: 10                          // 10 items to a page 
+              "actions": {
+                "add":{},
+                "delete": {}
               },
-              render: {                            // lazy-loading UI hint
-                value: EAGERLY
-              }
             },
-            similarItems: {}                       // collection, no associated actions
+            "similarItems": {}                    // collection, no associated actions
           }
         }
       ],
-      actions: {                                   // actions not associated with any member
-        delete: {},
-        duplicate: {
-          named: {                                             
-            value: "Clone"
+      "actions": {                                // actions not associated with any member
+        "delete": {},
+        "duplicate": {
+          "actionLayout": {
+            "named": {
+              "value": "Clone"
+            }
           }
         }
       }
     }
  
-Although advisable, it is not necessary to list all class members in this file.  Any members not listed with be ordered according either to annotations (if present) or fallback/default values.
+Although advisable, it is not necessary to list all class members in this file.  Any members not listed with be
+ordered according either to annotations (if present) or fallback/default values.
 
-Note also that the layout file may contain entries for [contributed associations and actions](../../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html); this allows each contributee classes to define their own layout for their contributions, possibly overriding any static metadata on the original domain service contributor.
+Note also that the layout file may contain entries for
+[contributed associations and actions](../../../more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html);
+this allows each contributee classes to define their own layout for their contributions, possibly overriding any
+static metadata on the original domain service contributor.
 
 ## Downloading an initial layout file
 

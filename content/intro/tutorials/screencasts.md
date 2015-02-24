@@ -33,13 +33,9 @@ We've prepared some screencasts to help you quickly see what Apache Isis has to 
       </td>
   </tr>
   <tr>
-    <td>Todoapp (quickstart) Archetype<br/><br/><i>How to use the Apache Isis quickstart archetype to generate your first Apache Isis application</i>
+    <td>Todoapp Archetype<br/><br/><i>How to use the Apache Isis quickstart archetype to generate your first Apache Isis application</i>
     <br/><br/>
-    Learn how to use the <a href="../getting-started/todoapp-archetype.html#screencast">quickstart archetype</a> here
-    <br/><br/>
-    <i>nb: the todoapp has (in 1.8.0) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF).</i>
-    <br/><br/>
-    <i>nb: the todoapp was previously called the 'quickstart' app</i>
+    <i>nb: the todoapp has (in 1.8.0) moved to <a href="https://github.com/isisaddons/isis-app-todoapp">Isis addons</a> (not ASF); simply fork.</i>
     </td>
     <td>
       <iframe width="420" height="315" src="http://www.youtube.com/embed/RH6J4gx8OoA" frameborder="0" allowfullscreen></iframe>

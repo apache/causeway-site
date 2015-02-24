@@ -36,7 +36,7 @@ Secondly, in the `WEB-INF/web.xml`, declare the resource reference:
 <pre>
 &lt;resource-ref&gt;
     &lt;description&gt;db&lt;/description&gt;
-    &lt;res-ref-name&gt;jdbc/quickstart&lt;/res-ref-name&gt;
+    &lt;res-ref-name&gt;jdbc/simpleapp&lt;/res-ref-name&gt;
     &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
     &lt;res-auth&gt;Container&lt;/res-auth&gt;
 &lt;/resource-ref&gt;
@@ -45,7 +45,7 @@ Secondly, in the `WEB-INF/web.xml`, declare the resource reference:
 Finally, declare the datasource as required by the servlet container.  For example, if using Tomcat 7, the datasource can be specified by adding the following to `$TOMCAT_HOME/conf/context.xml`:
 
 <pre>
-&lt;Resource name="jdbc/quickstart" 
+&lt;Resource name="jdbc/simpleapp"
   auth="Container" 
   type="javax.sql.DataSource" 
   maxActive="100" 
@@ -54,7 +54,7 @@ Finally, declare the datasource as required by the servlet container.  For examp
   username="sa"
   password="p4ssword" 
   driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-  url="jdbc:sqlserver://127.0.0.1:1433;instance=.;databaseName=quickstart"/&gt;
+  url="jdbc:sqlserver://127.0.0.1:1433;instance=.;databaseName=simpleapp"/&gt;
 </pre>
 
 You will also need to make sure that the JDBC driver is on the servlet container's classpath.  For Tomcat, this means copying the driver to `$TOMCAT_HOME/lib`.

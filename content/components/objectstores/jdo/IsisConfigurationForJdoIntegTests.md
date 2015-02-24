@@ -4,4 +4,4 @@ When running integration tests with the JDO Objectstore, there are certain stand
 
 To remove a little bit of boilerplate, the `IsisConfigurationForJdoIntegTests` class (in the `org.apache.isis.objectstore.jdo.datanucleus` package) can be used to bootstrap the application.
 
-The (example applications that we reverse engineer into our) [two](../../../intro/getting-started/simple-archetype.html) [archetypes](../../../intro/getting-started/quickstart-archetype.html) show this; see for example the [`ToDoSystemInitializer`](https://github.com/apache/isis/blob/3dcfb2fcd61636ff2fac66a3c7c54a500fdf2c6a/example/application/quickstart_wicket_restful_jdo/integtests/src/test/java/integration/ToDoSystemInitializer.java#L70) class.
+The simpleapp example application (that we reverse engineer into our) [simpleapp archetype](../../../intro/getting-started/simple-archetype.html) shows this; see for example the [`SystemAppSystemInitializer`](https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/bootstrap/SimpleAppSystemInitializer.java#L49) class.

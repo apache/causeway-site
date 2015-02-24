@@ -4,7 +4,7 @@ This [Wicket extension](https://github.com/isisaddons/isis-wicket-fullcalendar2)
 
 ## Screenshots
 
-The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-fullcalendar2/tree/master/zzzdemo) (adapted from Isis' quickstart archetype).
+The following screenshots are taken from the [demo app](https://github.com/isisaddons/isis-wicket-fullcalendar2/tree/master/zzzdemo) for this module.
 
 Standalone collection:
 
