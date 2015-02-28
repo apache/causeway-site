@@ -14,9 +14,11 @@ In the `customers` module, we have the `Customer` entity that implements `Commun
 
 For both `Customer` and `FixedAsset` (and any other future implementation) we would want to have some means to add and remove `CommunicationChannel`s).  Rather than having very similar collections and actions in each, we can implement the requirement by defining the behaviour in the `communicationChannels` module, through a domain service.  It would look something like:
 
+    @DomainService(
+        nature=NatureOfService.VIEW_CONTRIBUTIONS_ONLY
+    )
     public class CommunicationChannelContributions {
 
-        @NotInServiceMenu
         public CommunicationChannelOwner addPostalAddress(
                         final CommunicationChannelOwner owner,
                         final @Named("Address line 1") String addressLine1,
@@ -25,17 +27,28 @@ For both `Customer` and `FixedAsset` (and any other future implementation) we wo
             ...
         }
 
-        @NotInServiceMenu
-        @NotContributed(As.ACTION)
+        @Action(
+            semantics=SemanticsOf.SAFE
+        )
+        @ActionLayout(
+            contributed=Contributed.AS_ASSOCIATION)
+        }
+        @CollectionLayout(
+            render=RenderType.EAGERLY
+        )
         public Collection<CommunicationChannel> communicationChannels(
-                        final CommunicationOwner owner) {
+                        final CommunicationChannelOwner owner) {
             ...
         }
 
-        @NotInServiceMenu
-        @NotContributed(As.ACTION)
+        @Action(
+            semantics=SemanticsOf.SAFE
+        )
+        @ActionLayout(
+            contributed=Contributed.AS_ASSOCIATION)
+        }
         public CommunicationChannel preferredCommunicationChannels(
-                        final CommunicationOwner owner) {
+                        final CommunicationChannelOwner owner) {
             ...
         }
 
@@ -43,12 +56,11 @@ For both `Customer` and `FixedAsset` (and any other future implementation) we wo
 
 The first action, `addPostalAddress` will be rendered seemingly as a regular action for all implementations of `CommunicationChannelOwner`, but with that parameter omitted.  This is a contributed action.
 
-The second action - whose implementation will be some repository query to search for all `CommunicationChannel`s for the given owner - will be rendered as a collection of the owner; this is a contributed collection.  The `@NotContributed(As.ACTION)` suppresses the action from being contributed as an action also.
+The second action - whose implementation will be some repository query to search for all `CommunicationChannel`s for the given owner - will be rendered as a collection of the owner; this is a contributed collection.  The `@ActionLayout(contributed=Contributed.AS_ASSOCIATION)` suppresses the action from being contributed as an action also.  Note that the action must have safe semantics, specified using `@Action(semantics=SemanticsOf.SAFE)`; otherwise the rendering of the collection could cause unwanted side-effects.  Note also that it is valid to apply a `@CollectionLayout` annotation; or this could be specified using a `Xxx.layout.json` file for each contributee (implementing `CommunicationChannelOwner`).
 
-Finally, the third action - that again will be some sort of repository query - will be rendered as a property o fhte owner; this is a contributed property.  Again, the `@NotContributed(As.ACTION)` suppresses the action from being contributed as an action also.
-
+Finally, the third action - that again will be some sort of repository query - will be rendered as a property of hte owner; this is a contributed property.  Again, the action must have safe semantics, specified using `@Action(semantics=SemanticsOf.SAFE)`.  And, again, , the `@ActionLayout(contributed=Contributed.AS_ASSOCIATION)` suppresses the action from being contributed as an action also.  Analogously to the contributed collection, a `@PropertyLayout` annotation could be also be specified.
 
 ## See also
 
-For another example of contributions, see [this page](./how-to-suppress-contributions.html) describing how to suppress contributions for one action parameter but not another.
+See also: how to [suppress contributions for one action parameter](./how-to-suppress-contributions-to-action-parameter.html) but not another.
 
