@@ -19,9 +19,27 @@ and
             table="AuditEntry")
     public class AuditEntry ... { ... }
 
+This results in `CREATE TABLE` statements such as:
+
+    CREATE TABLE IsisAddonsSecurity."ApplicationUser" (
+        ...
+    )
+
+and
+
+    CREATE TABLE IsisAddonsSecurity."ApplicationUser" (
+        ...
+    )
+
+> If you don't want to use schemas, then note that the JDO annotations can be overridden by providing XML metadata;
+> see [here](./overriding-annotations.html) for a write-up of how to do this.
+
+## Listener to create DB schema objects
+
 Unfortunately JDO/DataNucleus does not automatically create these schema objects, but it *does* provide a listener
 on the initialization of each class into the JDO metamodel.  Apache Isis attaches a listener,
 `CreateSchemaObjectFromClassMetadata`, that checks for the schema's existence, and creates the schema if required.
+
 The guts of its implementation is:
 
     package org.apache.isis.objectstore.jdo.datanucleus;
@@ -46,6 +64,9 @@ The guts of its implementation is:
     }
 
 This implementation works for HSQLDB, PostgreSQL and MS SQL Server, but has not been tested on other RDBMS vendors.
+
+## Registering an Alternative Implementation
+
 An alternative implementation can be registered and used through the following key in `WEB-INF/persistor_datanucleus.properties` (you could also put it in `isis.properties` if you prefer):
 
     #
