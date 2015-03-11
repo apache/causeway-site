@@ -270,7 +270,7 @@ For both:
 
 * [Are you sure?](./more-advanced-topics/are-you-sure-idiom.html)
 * [Singleton &amp; request-scoped services](./more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)
-* [Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)
+* **[Decoupling dependencies using contributions](./more-advanced-topics/how-to-01-062-How-to-decouple-dependencies-using-contributions.html)**
 * [How to suppress contributions](./more-advanced-topics/how-to-suppress-contributions-to-action-parameter.html)
 * [Bulk actions, acting upon lists](./more-advanced-topics/how-to-01-065-How-to-add-an-action-to-be-called-on-every-object-in-a-list.html)
 * [Bidirectional relationships](./more-advanced-topics/how-to-04-060-How-to-set-up-and-maintain-bidirectional-relationships.html)
@@ -336,6 +336,8 @@ For both:
 
 * [Multi-tenancy](more-advanced-topics/multi-tenancy.html)
 * [Using a JNDI Datasource](components/objectstores/jdo/using-jndi-datasource.html)
+* [Overriding Annotations](components/objectstores/jdo/overriding-annotations.html)
+* [Autocreating schema objects](components/objectstores/jdo/autocreating-schema-objects.html) (1.9.0-SNAPSHOT)
 * [Enabling Logging](components/objectstores/jdo/enabling-logging.html)
 
 #### <a name="more-advanced-topics-no-sql-support">NoSQL Support</a>
@@ -394,7 +396,7 @@ JDO Objectstore
 
 #### <a name="domain-services-event-bus">Event Bus</a>
 
-Decouple business logic across modules using intra-process publish/subscribe 
+Decouple business logic across modules using intra-process **domain events**
 
 * [EventBusService API](./reference/services/event-bus-service.html) [Impl](components/objectstores/jdo/services/event-bus-service-jdo.html)
 

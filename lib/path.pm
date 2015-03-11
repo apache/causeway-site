@@ -13,7 +13,9 @@ our @patterns = (
 
 	[qr!/index.md(text)?$!, 
           basic => { template => "index.html" }]
-	,[qr!/isis-in-pictures.md(text)?$!, 
+	[qr!/index-new.md(text)?$!,
+          basic => { template => "index-new.html" }]
+	,[qr!/isis-in-pictures.md(text)?$!,
           basic => { template => "isis-in-pictures.html" }]
 	,[qr!\.md(text)?$!, 
           basic => { template => "basic.html" }]
