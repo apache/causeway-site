@@ -1,5 +1,7 @@
 Title: Dynamically builds the UI
 
+{isis-in-pictures
+
 Isis dynamically builds a generic UI directlyo from the underlying domain objects.  It works by building an internal metamodel that describes the structure and behaviour of the domain objects, and then uses this metamodel to render the objects.  You can think of it as akin to an object-relational mapper; however rather than projecting the domain objects into a database, it projects them onto a web page.
 
 The screenshots below are taken from the Isis Addons' [todoapp example](http://github.com/isisaddons/isis-app-todoapp), which you are free to fork and use as you will.   The corresponding domain classes from which this UI was built can be found [here](https://github.com/isisaddons/isis-app-todoapp/tree/0669d6e2acc5bcad1d9978a4514a17bcf7beab1f/dom/src/main/java/todoapp/dom/module/todoitem). 
@@ -176,3 +178,4 @@ In fact, the domain event is fired not once, but (up to) 5 times.  It is called 
 
 Moreover, domain events are fired for all properties and collections, not just actions.  Thus, subscribers can therefore switch on or switch off different parts of an application.  Indeed, the example todoapp demonstrates this.
 
+}
