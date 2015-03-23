@@ -267,70 +267,6 @@ the `Command` itself is persisted.
 
 If the `BackgroundService` is configured, then commands can be invoked by means of a separate background process.  If an appropriate `BackgroundCommandService` service is configured (for example, the [BackgroundCommandServiceJdo](../../../components/objectstores/jdo/services/background-command-service-jdo.html) JDO implementation), then the background command is persisted.
 
-The `@Action(command=...)` annotation can be annotated on action methods, to influence this behaviour:
-
-    public class Order {
-
-        @Action(
-	    command=CommandReified.ENABLED,
-            commandExecuteIn=ExecuteIn.FOREGROUND,
-            persistence=Persistence.PERSISTED)
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-or alternatively just:
-
-    public class Order {
-
-        @Command
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-corresponds to the behaviour described above; the `Command` object is persisted (assuming an appropriate `CommandService` is defined, and executed immediately in the foreground).
-
-As a variation:
-
-    public class Order {
-
-        @Command(
-            executeIn=ExecuteIn.FOREGROUND,
-            persistence=Persistence.IF_HINTED)
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-will suppress the persistence of the `Command` object *unless* a child background `Command` has been created in the body of the action by way of the `BackgroundService`.
-
-Next:
-
-    public class Order {
-
-        @Command(
-            executeIn=ExecuteIn.FOREGROUND,
-            persistence=Persistence.NOT_PERSISTED)
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-will prevent the parent `Command` object from being persisted, *even if* a child background `Command` is created.
-
-
-Turning to the `executeIn` attribute:
-
-    public class Order {
-
-        @Command(
-            executeIn=ExecuteIn.BACKGROUND)
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-will result in the `Command` being persisted but its execution deferred to a background execution mechanism.  The returned object from this action is the persisted `Command` itself.
-
-
-
 #### `command()`
 
 The `command()` attribute determines whether the action invocation should be reified into a `Command` object.
@@ -347,10 +283,61 @@ is used to determine the whether the action is reified:
 
 This default can be overridden on an action-by-action basis; if `command()` is set to `ENABLED` then the action is reified irrespective of the configured value; if set to `DISABLED` then the action is NOT reified irrespective of the configured value.
 
+
+The `@Action(command=...)` annotation can be annotated on action methods, to influence this behaviour:
+
+    public class Order {
+
+        @Action(
+            command=CommandReification.ENABLED,
+            commandExecuteIn=CommandExecuteIn.FOREGROUND,
+            commandPersistence=CommandPersistence.PERSISTED)
+        public Invoice generateInvoice(...) { ... }
+
+    }
+
+or alternatively just:
+
+    public class Order {
+
+        @Action(command=CommandReification.ENABLED)
+        public Invoice generateInvoice(...) { ... }
+
+    }
+
+corresponds to the behaviour described above; the `Command` object is persisted (assuming an appropriate `CommandService` is defined, and executed immediately in the foreground).
+
 #### `commandPersistence()`
 
 If the action has been reified, then the `commandPersistence()` attribute determines whether that `Command` object
-should then also be persisted (the default) or not persisted.
+should then also be persisted (the default), or not persisted, or only if hinted.
+
+To explain this last alternative:
+
+    public class Order {
+
+        @Action(
+            command=CommandReification.ENABLED,
+            commandPersistence=CommandPersistence.IF_HINTED)
+        public Invoice generateInvoice(...) { ... }
+
+    }
+
+will suppress the persistence of the `Command` object *unless* a child background `Command` has been created in the body of the action by way of the `BackgroundService`.
+
+Next:
+
+    public class Order {
+
+        @Command(
+            command=CommandReification.ENABLED,
+            commandExecuteIn=CommandExecuteIn.FOREGROUND,
+            commandPersistence=CommandPersistence.NOT_PERSISTED)
+        public Invoice generateInvoice(...) { ... }
+
+    }
+
+will prevent the parent `Command` object from being persisted, *even if* a child background `Command` is created.
 
 
 #### `commandExecuteIn()`
@@ -361,8 +348,24 @@ foreground (the default) or executed in the background.
 Background execution means that the command is not executed immediately, but is available for a configured
 [background service](../services/background-service.html) to execute, eg by way of an in-memory scheduler such as Quartz.
 
+For example:
+
+    public class Order {
+
+        @Action(
+            command=CommandReification.ENABLED,
+            commandExecuteIn=CommandExecuteIn.BACKGROUND)
+        public Invoice generateInvoice(...) { ... }
+
+    }
+
+will result in the `Command` being persisted but its execution deferred to a background execution mechanism.  The
+returned object from this action is the persisted `Command` itself.
+
+
 ## Publishing
 
+Publishing is managed by the `publishing()` and `publishingPayloadFactory()` attributes.
 
 #### `publishing()`
 
