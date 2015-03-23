@@ -172,11 +172,6 @@ Normally events are only raised for interactions through the UI.  However, event
 wrapping the target object using the [Wrapper Factory](../services/wrapper-factory.html) service.
 
 
-#### See also
-
-Domain events can also be raised for [properties](./Property.html) and [collections](./Collection.html).
-
-
 
 ## Hidden
 
@@ -258,7 +253,7 @@ The annotation works (and influences the behaviour of) the `CommandContext`, `Co
 
 By default, actions are invoked in directly in the thread of the invocation.
 
-If the `CommandContext` service is configured, then this action invocation is reified into a `Command` object,
+Each action invocation is reified by the `CommandContext` service into a `Command` object,
 capturing details of the target object, the action, the parameter arguments, the user, a timestamp and so on.
 
 If an appropriate `CommandService` service is configured (for example the
@@ -269,7 +264,7 @@ If the `BackgroundService` is configured, then commands can be invoked by means 
 
 ### `command()`
 
-The `command()` attribute determines whether the action invocation should be reified into a `Command` object.
+The `command()` attribute determines whether the action invocation should be reified into a `Command` object (by the `CommandContext` service).
 
 The default is `AS_CONFIGURED`, meaning that the configuration property:
 
@@ -288,24 +283,13 @@ The `@Action(command=...)` annotation can be annotated on action methods, to inf
 
     public class Order {
 
-        @Action(
-            command=CommandReification.ENABLED,
-            commandExecuteIn=CommandExecuteIn.FOREGROUND,
-            commandPersistence=CommandPersistence.PERSISTED)
-        public Invoice generateInvoice(...) { ... }
-
-    }
-
-or alternatively just:
-
-    public class Order {
-
         @Action(command=CommandReification.ENABLED)
         public Invoice generateInvoice(...) { ... }
 
     }
 
 corresponds to the behaviour described above; the `Command` object is persisted (assuming an appropriate `CommandService` is defined, and executed immediately in the foreground).
+
 
 ### `commandPersistence()`
 
