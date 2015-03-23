@@ -19,7 +19,7 @@ Title: Documentation
 
 #### <a name="getting-started">Archetypes and Apps</a>
 
-* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html) **
+* **[SimpleApp Archetype](intro/getting-started/simpleapp-archetype.html)**
 * [TodoApp Example App](http://github.com/isisaddons/isis-app-todoapp) (not ASF)
 
 #### <a name="release-notes">Release notes</a>
