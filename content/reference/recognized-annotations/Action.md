@@ -267,7 +267,7 @@ the `Command` itself is persisted.
 
 If the `BackgroundService` is configured, then commands can be invoked by means of a separate background process.  If an appropriate `BackgroundCommandService` service is configured (for example, the [BackgroundCommandServiceJdo](../../../components/objectstores/jdo/services/background-command-service-jdo.html) JDO implementation), then the background command is persisted.
 
-#### `command()`
+### `command()`
 
 The `command()` attribute determines whether the action invocation should be reified into a `Command` object.
 
@@ -307,7 +307,7 @@ or alternatively just:
 
 corresponds to the behaviour described above; the `Command` object is persisted (assuming an appropriate `CommandService` is defined, and executed immediately in the foreground).
 
-#### `commandPersistence()`
+### `commandPersistence()`
 
 If the action has been reified, then the `commandPersistence()` attribute determines whether that `Command` object
 should then also be persisted (the default), or not persisted, or only if hinted.
@@ -340,7 +340,7 @@ Next:
 will prevent the parent `Command` object from being persisted, *even if* a child background `Command` is created.
 
 
-#### `commandExecuteIn()`
+### `commandExecuteIn()`
 
 For persisted commands, the `commandExecuteIn()` attribute determines whether the `Command` should be executed in the
 foreground (the default) or executed in the background.
@@ -367,7 +367,7 @@ returned object from this action is the persisted `Command` itself.
 
 Publishing is managed by the `publishing()` and `publishingPayloadFactory()` attributes.
 
-#### `publishing()`
+### `publishing()`
 
 Indicates whether the action invocation should be published to the [publishing service](../publishing-service.html).
 
@@ -383,7 +383,7 @@ is used to determine the whether the action is published:
 
 This default can be overridden on an action-by-action basis; if `command()` is set to `ENABLED` then the action is reified irrespective of the configured value; if set to `DISABLED` then the action is NOT reified irrespective of the configured value.
 
-#### `publishingPayloadFactory()`
+### `publishingPayloadFactory()`
 
 The `publishingPayloadFactory()` specifies the class to use to create the (payload of the) event to be published by the publishing factory.
 Rather than simply broadcast that the action was invoked, the payload factory allows a "fatter" payload to be isntantiated
