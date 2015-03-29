@@ -193,16 +193,16 @@ The default location of the translated `.po` files is in the `WEB-INF` directory
 
 For example, assuming these translations:
 
-    /WEB-INF/translations_en-US.po    
-    /WEB-INF/translations_en.po
-    /WEB-INF/translations_fr-FR.po
+    /WEB-INF/translations-en-US.po    
+    /WEB-INF/translations-en.po
+    /WEB-INF/translations-fr-FR.po
     /WEB-INF/translations.po
 
 then:
 
-* a user with `en-US` locale will use `translations_en-US.po`
-* a user with `en-GB` locale will use `translations_en.po`
-* a user with `fr-FR` locale will use `translations_fr-FR.po`
+* a user with `en-US` locale will use `translations-en-US.po`
+* a user with `en-GB` locale will use `translations-en.po`
+* a user with `fr-FR` locale will use `translations-fr-FR.po`
 * a user with `fr-CA` locale will use `translations.po`
 
 The basename for translation files is always `translations`; this cannot be altered.
