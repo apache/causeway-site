@@ -307,6 +307,7 @@ For both:
 * [Integration Test Support](core/integtestsupport.html)
 * [BDD/Integ Test Support](core/specsupport-and-integtestsupport.html)
 * [Fixture Scripts](./more-advanced-topics/Fixture-Scripts.html)
+* [SudoService](./services/sudo-service.html) (1.9.0-SNAPSHOT)
 * [IsisConfigurationForJdoIntegTests](components/objectstores/jdo/IsisConfigurationForJdoIntegTests.html)
 
 
