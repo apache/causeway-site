@@ -1,7 +1,7 @@
 Title: HTML Viewer
 
 {note
-This component is no longer under active development.  We recommend you use either the [Wicket](../wicket/about.html) viewer or the [Scimpi](../scimpi/about.html) viewer instead.
+This component has been retired.  The source is in mothballed/component/viewer/dnd.
 }
 
 The HTML viewer provides a simple webapp interface for interacting with an Isis domain model.

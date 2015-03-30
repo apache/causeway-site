@@ -1,5 +1,9 @@
 Title: Scimpi viewer
 
+{note
+This component has been retired.  The source is in mothballed/component/viewer/dnd.
+}
+
 The scimpi module provides a webapp viewer that out-of-the-box provides a similar interface to that provided by the [HTML viewer](../html/about.html).
 
 However, unlike the HTML viewer it allows the user interface to be extensively customized.
