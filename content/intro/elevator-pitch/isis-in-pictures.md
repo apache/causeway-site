@@ -4,13 +4,15 @@ Title: Dynamically builds the UI
 
 Isis dynamically builds a generic UI directlyo from the underlying domain objects.  It works by building an internal metamodel that describes the structure and behaviour of the domain objects, and then uses this metamodel to render the objects.  You can think of it as akin to an object-relational mapper; however rather than projecting the domain objects into a database, it projects them onto a web page.
 
-The screenshots below are taken from the Isis Addons' [todoapp example](http://github.com/isisaddons/isis-app-todoapp), which you are free to fork and use as you will.   The corresponding domain classes from which this UI was built can be found [here](https://github.com/isisaddons/isis-app-todoapp/tree/0669d6e2acc5bcad1d9978a4514a17bcf7beab1f/dom/src/main/java/todoapp/dom/module/todoitem). 
+The screenshots below are taken from the Isis Addons' [todoapp example](http://github.com/isisaddons/isis-app-todoapp) (non ASF), which you are free to fork and use as you will.   The corresponding domain classes from which this UI was built can be found [here](https://github.com/isisaddons/isis-app-todoapp/tree/0669d6e2acc5bcad1d9978a4514a17bcf7beab1f/dom/src/main/java/todoapp/dom/module/todoitem). 
 
-The todoapp also integrates with a number of other [Isis Addons](http://www.isisaddons.org) modules.  (Please note that the Isis Addons are not part of ASF, but they are all licensed under Apache License 2.0 and are maintained by the Isis committers).
+The todoapp also integrates with a number of other [Isis Addons](http://www.isisaddons.org) modules.  
+
+> Please note that the Isis Addons are not part of ASF, but they are all licensed under Apache License 2.0 and are maintained by the Isis committers).
 
 ### Sign-in
 
-Apache Isis integrates with [Apache Shiro](http://shiro.apacheorg)™.  The core framework supports file-based realms, while the Isis Addons [security module](http://github.com/isisaddons/isis-module-security) provides a well-features subdomain of users, roles and permissions against features derived from the Isis metamodel.  The example todoapp integrates with the security module.
+Apache Isis integrates with [Apache Shiro](http://shiro.apache.org)™.  The core framework supports file-based realms, while the Isis Addons [security module](http://github.com/isisaddons/isis-module-security) (non ASF) provides a well-features subdomain of users, roles and permissions against features derived from the Isis metamodel.  The example todoapp integrates with the security module.
 
 ![](https://raw.github.com/apache/isis/master/images/010-login.png)
 
@@ -74,31 +76,31 @@ The Apache Isis viewer is implemented using [Apache Wicket](http://wicket.apache
 
 ![](https://raw.github.com/apache/isis/master/images/070-pluggable-views.png)
 
-The Isis Addons' [gmap3 component](https://github.com/isisaddons/isis-wicket-gmap3) will render any domain entity (such as `ToDoItem`) that implements its `Locatable` interface:
+The Isis Addons' [gmap3 component](https://github.com/isisaddons/isis-wicket-gmap3) (non ASF) will render any domain entity (such as `ToDoItem`) that implements its `Locatable` interface:
 
 ![](https://raw.github.com/apache/isis/master/images/080-gmap3-view.png)
 
-Simiarly the Isis Addons' [fullcalendar2 component](https://github.com/isisaddons/isis-wicket-fullcalendar2) will render any domain entity (such as `ToDoItem`) that implements its `Calendarable` interface:
+Simiarly the Isis Addons' [fullcalendar2 component](https://github.com/isisaddons/isis-wicket-fullcalendar2) (non ASF) will render any domain entity (such as `ToDoItem`) that implements its `Calendarable` interface:
 
 ![](https://raw.github.com/apache/isis/master/images/090-fullcalendar2-view.png)
 
-Yet another "view" (though this one is rather simpler is that provided by the Isis Addons [excel component](https://github.com/isisaddons/isis-wicket-excel).  This provides a download button to the table as a spreadsheet:
+Yet another "view" (though this one is rather simpler is that provided by the Isis Addons [excel component](https://github.com/isisaddons/isis-wicket-excel) (non ASF).  This provides a download button to the table as a spreadsheet:
 
 ![](https://raw.github.com/apache/isis/master/images/100-excel-view-and-docx.png)
 
-The screenshot above also shows an "export to Word" action.  This is *not* a view but instead is a (contributed) action that uses the Isis Addons [docx module](https://github.com/isisaddons/isis-module-docx) to perform a "mail-merge":
+The screenshot above also shows an "export to Word" action.  This is *not* a view but instead is a (contributed) action that uses the Isis Addons [docx module](https://github.com/isisaddons/isis-module-docx) (non ASF) to perform a "mail-merge":
 
 ![](https://raw.github.com/apache/isis/master/images/110-docx.png)
 
 ## Security, Auditing and other Services
 
-As well as providing extensions to the UI, the Isis addons provides a rich set of modules to support various cross-cutting concerns.
+As well as providing extensions to the UI, the Isis Addons provides a rich set of modules to support various cross-cutting concerns.
 
-Under the activity menu are four sets of services which provide support for [user session logging/auditing](https://github.com/isisaddons/isis-module-sessionlogger), [command profiling](https://github.com/isisaddons/isis-module-command), [(object change) auditing](https://github.com/isisaddons/isis-module-audit) (shown) and (inter-system) [event publishing](https://github.com/isisaddons/isis-module-publishing):
+Under the activity menu are four sets of services which provide support for [user session logging/auditing](https://github.com/isisaddons/isis-module-sessionlogger) (non ASF), [command profiling](https://github.com/isisaddons/isis-module-command) (non ASF), [(object change) auditing](https://github.com/isisaddons/isis-module-audit) (shown, non-ASF) and (inter-system) [event publishing](https://github.com/isisaddons/isis-module-publishing) (non ASF):
 
 ![](https://raw.github.com/apache/isis/master/images/120-auditing.png)
 
-In the security menu is access to the rich set of functionality provided by the Isis addons [security module](https://github.com/isisaddons/isis-module-security):
+In the security menu is access to the rich set of functionality provided by the Isis addons [security module](https://github.com/isisaddons/isis-module-security) (non ASF):
 
 ![](https://raw.github.com/apache/isis/master/images/130-security.png)
 
@@ -106,7 +108,7 @@ In the prototyping menu is the ability to download a GNU gettext `.po` file for 
 
 ![](https://raw.github.com/apache/isis/master/images/140-i18n.png)
 
-The Isis addons also provides a module for managing application and user [settings](https://github.com/isisaddons/isis-module-settings).  Most apps (the todoapp example included) won't expose these services directly, but will usually wrap them in their own app-specific settings service that trivially delegates to the settings module's services:
+The Isis addons also provides a module for managing application and user [settings](https://github.com/isisaddons/isis-module-settings) (non ASF).  Most apps (the todoapp example included) won't expose these services directly, but will usually wrap them in their own app-specific settings service that trivially delegates to the settings module's services:
 
 ![](https://raw.github.com/apache/isis/master/images/150-appsettings.png)
 
