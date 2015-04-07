@@ -605,6 +605,8 @@ Optional supporting modules to use within your app, with implementations in [Isi
 
 In addition, a full list of all applib services (including those that are implemented by the framework itself, eg `DomainObjectContainer` and `MementoService`) is summarized **[here](./reference/services.html)**.
 
+<i><b>Note that Isis addons, while maintained by Isis committers, are not part of the ASF.</b></i>
+
 }
 
 }
@@ -654,8 +656,6 @@ In addition, a full list of all applib services (including those that are implem
 * [Settings](http://github.com/isisaddons/isis-module-settings) (not&nbsp;ASF)
 * [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator) (not&nbsp;ASF)
 * [Tags](http://github.com/isisaddons/isis-module-tags) (not&nbsp;ASF)
-
-Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
 
 
 }
