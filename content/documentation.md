@@ -663,11 +663,8 @@ In addition, a full list of all applib services (including those that are implem
 
 {row
 
-{col-md-12
+#### Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
 
-### Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
-
-}
 }
 
 
