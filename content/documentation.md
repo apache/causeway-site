@@ -646,16 +646,16 @@ In addition, a full list of all applib services (including those that are implem
 
 #### <a name="modules-isisaddons">Other Isis Addons</a>
 
-Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
+* [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) (not&nbsp;ASF)
+* [Docx Mail merge](http://github.com/isisaddons/isis-module-docx) (not&nbsp;ASF)
+* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) (not&nbsp;ASF) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Security](http://github.com/isisaddons//isis-module-security) (not&nbsp;ASF) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Session Logger](http://github.com/isisaddons/isis-module-sessionlogger) (not&nbsp;ASF)
+* [Settings](http://github.com/isisaddons/isis-module-settings) (not&nbsp;ASF)
+* [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator) (not&nbsp;ASF)
+* [Tags](http://github.com/isisaddons/isis-module-tags) (not&nbsp;ASF)
 
-* [Developer Utilities](http://github.com/isisaddons/isis-module-devutils) 
-* [Docx Mail merge](http://github.com/isisaddons/isis-module-docx)
-* [Excel download/upload](http://github.com/isisaddons/isis-module-excel) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Security](http://github.com/isisaddons//isis-module-security) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
-* [Session Logger](http://github.com/isisaddons/isis-module-sessionlogger)
-* [Settings](http://github.com/isisaddons/isis-module-settings)
-* [String interpolator](http://github.com/isisaddons//isis-module-stringinterpolator)
-* [Tags](http://github.com/isisaddons/isis-module-tags)
+Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
 
 
 }
