@@ -636,8 +636,8 @@ In addition, a full list of all applib services (including those that are implem
 #### <a name="isis-module-publishing">Publishing Service</a>
 
 * [API](./reference/services/publishing-service.html)
-* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) (out-of-date)
 * [Isis addons implementation](http://github.com/isisaddons/isis-module-publishing) (not&nbsp;ASF) <a href="./intro/tutorials/screencasts.html"><img src="./images/tv_show-25.png"></a>
+* [Event Serializer per RO Spec](components/viewers/restfulobjects/event-serializer-rospec.html) (out-of-date)
 
 
 }
@@ -663,7 +663,7 @@ In addition, a full list of all applib services (including those that are implem
 
 {row
 
-#### Note that Isis addons, while maintained by Isis committers, are not part of the ASF.
+#### <i>Note that Isis addons, while maintained by Isis committers, are not part of the ASF.</i>
 
 }
 
