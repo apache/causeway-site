@@ -1,0 +1,780 @@
+<!doctype html>
+
+<html class="no-js" lang="en">
+
+<head>
+
+    <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+
+    <title>User Guide: How-tos: Persistence Lifecycle</title>
+
+
+
+    <!--
+
+        Licensed to the Apache Software Foundation (ASF) under one
+
+        or more contributor license agreements.  See the NOTICE file
+
+        distributed with this work for additional information
+
+        regarding copyright ownership.  The ASF licenses this file
+
+        to you under the Apache License, Version 2.0 (the
+
+        "License"); you may not use this file except in compliance
+
+        with the License.  You may obtain a copy of the License at
+
+
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+
+
+        Unless required by applicable law or agreed to in writing,
+
+        software distributed under the License is distributed on an
+
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+
+        KIND, either express or implied.  See the License for the
+
+        specific language governing permissions and limitations
+
+        under the License.
+
+    -->
+
+
+
+    <!-- No caching headers -->
+
+    <meta http-equiv="cache-control" content="no-cache" />
+
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta http-equiv="expires" content="-1" />
+
+
+
+
+
+    <link rel="stylesheet" href="../css/foundation/5.5.1/foundation.css"/>
+
+    <script src="../js/foundation/5.5.1/vendor/modernizr.js"></script>
+
+
+
+    <link href="../css/asciidoctor/stylesheets/foundation-potion.css" rel="stylesheet">
+
+
+
+    <link href="../css/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <style type="text/css">
+
+        #forkongithub a{
+
+            display: none;
+
+            background:#090;
+
+            color:#fff;
+
+            text-decoration:none;
+
+            font-family:arial, sans-serif;
+
+            text-align:center;
+
+            font-weight:bold;
+
+            padding:5px 40px;
+
+            font-size:1rem;
+
+            line-height:2rem;
+
+            position:relative;
+
+            transition:0.5s;
+
+        }
+
+        #forkongithub a:hover{
+
+            background:#0D0;
+
+            color:#fff;
+
+        }
+
+        #forkongithub a::before,
+
+        #forkongithub a::after{
+
+            content:"";width:100%;
+
+            display:block;
+
+            position:fixed;
+
+            top:1px;
+
+            left:0;
+
+            height:1px;
+
+            background:#fff;
+
+            z-index: 9999;
+
+        }
+
+        #forkongithub a::after{
+
+            bottom:1px;
+
+            top:auto;
+
+        }
+
+        @media screen and (min-width:768px){
+
+            #forkongithub{
+
+                position:fixed;
+
+                display:block;
+
+                top:0;
+
+                right:0;
+
+                width:250px;
+
+                overflow:hidden;
+
+                height:250px;
+
+                z-index: 9999;
+
+            }
+
+            #forkongithub a{
+
+                display:inherit;
+
+                width:250px;
+
+                position:fixed;
+
+                font-size:small;
+
+                top:40px;
+
+                right:-60px;
+
+                transform:rotate(45deg);
+
+                -webkit-transform:rotate(45deg);
+
+                -ms-transform:rotate(45deg);
+
+                box-shadow:4px 4px 10px rgba(0,0,0,0.8);
+
+            }
+
+        }
+
+    </style>
+
+
+
+    <style>
+
+        body {
+
+          position: relative;
+
+        }
+
+
+
+        body div#toc li,
+
+        body div#toc2 li {
+
+            list-style-type: none;
+
+        }
+
+
+
+        div#doc-content {
+
+            margin-top: 30px;
+
+        }
+
+
+
+        body div#toc li.active-region:before,
+
+        body div#toc2 li.active-region:before {
+
+            content: "\00BB \0020";
+
+            margin-left: -12px;
+
+        }
+
+
+
+        body div#toc li a.active,
+
+        body div#toc2 li a.active {
+
+            color: red;
+
+        }
+
+
+
+        body div#toc.toc,
+
+        body div#toc.toc2 {
+
+            position: fixed;
+
+            left: auto;
+
+            padding-top: 120px;
+
+            z-index: auto;
+
+            background-color: white;
+
+            border-left-color: #eee;
+
+            border-left-style: solid;
+
+            border-right: none;
+
+        }
+
+    </style>
+
+
+
+</head>
+
+<body>
+
+
+
+    <span id="forkongithub">
+
+        <a href="https://github.com/apache/isis">Fork me on GitHub</a>
+
+    </span>
+
+
+
+<div class="row">
+
+
+
+    <div class="fixed contain-to-grid">
+
+        <nav class="top-bar" data-topbar role="navigation">
+
+            <ul class="title-area">
+
+                <li class="name">
+
+                    <h1>
+
+                        <a href="/index.html">Apache Isis&trade;</a>
+
+                    </h1>
+
+                </li>
+
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+
+            </ul>
+
+
+
+            <section class="top-bar-section">
+
+                <ul class="right">
+
+
+
+                    <li class="has-form">
+
+                       <FORM class="searchbox navbar-form navbar-right" id="searchbox_012614087480249044419:dn-q5gtwxya" action="http://www.google.com/cse">
+
+                        <div class="row collapse">
+
+                            <input type="hidden" name="cx" value="012614087480249044419:dn-q5gtwxya">
+
+                            <INPUT type="hidden" name="cof" value="FORID:0">
+
+                            <INPUT class="form-control" name="q" type="text" placeholder="Search">
+
+                        </div>
+
+                    </FORM>
+
+                     </li>
+
+
+
+                </ul>
+
+
+
+                <!-- Left Nav Section -->
+
+                <ul class="left">
+
+
+
+                    <li class="has-dropdown">
+
+                      <a href="#" >Demos</b></a>
+
+                      <ul class="dropdown">
+
+                        <li><a href="/intro/elevator-pitch/isis-in-pictures.html">Screenshots</a></li>
+
+                        <li><a href="/intro/tutorials/screencasts.html">Screencasts&nbsp;<img src="/images/tv_show-25.png"></a></li>
+
+                        <li><a href="/intro/powered-by/powered-by.html">Powered by</a></li>
+
+                        <li><a href="http://isisdemo.mmyco.co.uk/" target="_blank">Online Demo</a></li>
+
+                      </ul>
+
+                    </li>
+
+
+
+                    <li><a href="/documentation">Documentation</a></li>
+
+
+
+                    <li class="has-dropdown">
+
+                      <a href="#">Downloads</a>
+
+                      <ul class="dropdown">
+
+                        <li><a href="/intro/getting-started/simpleapp-archetype.html">Isis (Maven archetype)</a></li>
+
+                        <li><a href="/download.html">Isis (downloads)</a></li>
+
+                        <li><a href="http://www.isisaddons.org" target="_blank">Isis Add-ons (not ASF)</a></li>
+
+                      </ul>
+
+                    </li>
+
+
+
+                    <li class="has-dropdown">
+
+                      <a href="#">Help</a>
+
+                      <ul class="dropdown">
+
+                        <li><a href="/support.html">Mailing Lists</a></li>
+
+                        <li><a href="http://isis.markmail.org/search/?q=" target="_blank">Mailing List Archives</a></li>
+
+                        <li><a href="https://issues.apache.org/jira/browse/ISIS" target="_blank">JIRA</a></li>
+
+                        <li><a href="http://github.com/apache/isis" target="_blank">Github mirror</a></li>
+
+                        <li><a href="http://stackoverflow.com/questions/tagged/isis" target="_blank">Stack Overflow</a></li>
+
+                        <li><a href="/contributors/contributing.html">How to contribute</a></li>
+
+                      </ul>
+
+                    </li>
+
+
+
+                    <li class="has-dropdown">
+
+                      <a href="#" >@ASF</a>
+
+                      <ul class="dropdown">
+
+                        <li>
+
+                          <a href="http://www.apache.org/" target="_blank">Apache Homepage <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                        <li>
+
+                          <a href="http://www.apache.org/licenses/" target="_blank">Licenses <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                        <li>
+
+                          <a href="http://www.apache.org/security/" target="_blank">Security <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                        <li>
+
+                          <a href="http://www.apache.org/foundation/sponsorship.html" target="_blank">Sponsorship <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                        <li>
+
+                          <a href="http://www.apache.org/foundation/thanks.html">Thanks <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                        <li>
+
+                          <a href="{{base}}more-thanks.html">More thanks <i class="icon-share-alt"></i></a>
+
+                        </li>
+
+                      </ul>
+
+                    </li>
+
+
+
+                </ul>
+
+
+
+            </section>
+
+        </nav>
+
+    </div>
+
+</div>
+
+
+
+<div class="row">
+
+    <div class="large-8 medium-8 columns">
+
+
+
+        <div id="doc-content">
+
+          <div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+
+        </div>
+
+
+
+        <hr>
+
+        <footer>
+
+          <p class="small">
+
+          Copyright &copy; 2010~2015 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+
+          <br/>
+
+          Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
+
+          </p>
+
+        </footer>
+
+
+
+    </div>
+
+
+
+    <div class="large-4 medium-4 columns">
+
+        <!-- the 'hide' class is removed by Javascript -->
+
+        <div id="toc" class="toc2 hide">
+
+          
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+    <script src="../js/foundation/5.5.1/vendor/jquery.js"></script>
+
+    <script src="../js/foundation/5.5.1/foundation.min.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+
+      $(document).foundation();
+
+
+
+      $(document).ready(function(){
+
+        // Cache selectors
+
+        var lastId,
+
+            topMenu = $("div#toc ul"),
+
+            topMenuHeight = 70,
+
+
+
+            menuItems = topMenu.find("a"),
+
+            menuItemsHrefs = menuItems.map(function(){
+
+              var item = $($(this).attr("href"));
+
+              if (item.length) { return item; }
+
+            });
+
+
+
+        // Bind click handler to menu items to scroll animation
+
+        menuItems.click(function(e){
+
+          var href = $(this).attr("href"),
+
+              offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+
+          $('html, body').stop().animate({
+
+              scrollTop: offsetTop
+
+          }, 300);
+
+
+
+          e.preventDefault();
+
+        });
+
+
+
+        // Bind to scroll of window
+
+        $(  window ).scroll(function(){
+
+
+
+           // Get container scroll position
+
+           var fromTop = $(this).scrollTop()+topMenuHeight;
+
+
+
+           var cur = menuItemsHrefs.map(function(){
+
+             if ($(this).offset().top < fromTop)
+
+               return this;
+
+           });
+
+
+
+           // Get the id of the current element
+
+           cur = cur[cur.length-1];
+
+
+
+           var id = cur && cur.length ? cur[0].id : "";
+
+
+
+           //console.log("id = " + id + ", lastId = "  + lastId);
+
+
+
+           if (lastId !== id && id) {
+
+               scrollTo(id);
+
+           }
+
+        });
+
+
+
+        scrollTo = function(id) {
+
+              lastId = id;
+
+
+
+              menuItems
+
+                .removeClass("active");
+
+
+
+              menuItems
+
+                .parents()
+
+                .removeClass("active-region");
+
+
+
+              menuItems
+
+                .parents("ul").hide();
+
+
+
+              menuItems
+
+                .filter("[href=#"+id+"]")
+
+                .addClass("active");
+
+
+
+              menuItems
+
+                .filter("[href=#"+id+"]")
+
+                .parents("ul").show();
+
+
+
+              menuItems
+
+                .filter("[href=#"+id+"]")
+
+                .parent().children("ul").show();
+
+
+
+              menuItems
+
+                .filter("[href=#"+id+"]")
+
+                .parents("li").addClass("active-region");
+
+
+
+        }
+
+      menuItems
+
+        .removeClass("active");
+
+
+
+      menuItems
+
+        .parents()
+
+        .removeClass("active-region");
+
+
+
+        var syncMenuItem;
+
+        if(window.location.hash!=="") {
+
+            var menuItemFor = $.grep(menuItems, function(e) {
+
+                return e.hash === window.location.hash;
+
+            });
+
+            console.log(menuItemFor);
+
+            if(menuItemFor.length === 1) {
+
+                syncMenuItem = menuItemFor[0];
+
+            }
+
+        }
+
+
+
+        if(!syncMenuItem){
+
+            syncMenuItem = menuItems[0];
+
+        }
+
+
+
+        $("#toc").removeClass("hide");
+
+
+
+        $(syncMenuItem).click();
+
+
+
+      });
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
