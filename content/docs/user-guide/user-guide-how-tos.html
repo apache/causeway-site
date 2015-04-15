@@ -1316,10 +1316,135 @@ methods for properties (see ?).</p>
 </table>
 </div>
 <div class="paragraph">
-<p>## Idioms and Patterns</p>
+<p>## Tips n Tricks</p>
 </div>
 <div class="paragraph">
-<p>Unresolved directive in user-guide-how-tos.adoc - include::user-guide-how-tos-patterns.adoc[leveloffset=+1]</p>
+<p>= User Guide: How-tos: Tips n Tricks
+:Notice: Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at. <a href="http://www.apache.org/licenses/LICENSE-2.0" class="bare">http://www.apache.org/licenses/LICENSE-2.0</a> . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR  CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+:_basedir: ../
+:_imagesdir: images/</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>## Are You Sure? idiom</p>
+</div>
+<div class="paragraph">
+<p>== How Tos: Tips n Tricks: 'Are you sure?' idiom
+:Notice: Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at. <a href="http://www.apache.org/licenses/LICENSE-2.0" class="bare">http://www.apache.org/licenses/LICENSE-2.0</a> . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR  CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+:_basedir: ../
+:_imagesdir: images/</p>
+</div>
+<div class="paragraph">
+<p>If providing an action that will perform irreversible changes, include a
+mandatory boolean parameter that must be explicitly checked by the end-user
+in order for the action to proceed.</p>
+</div>
+<div class="paragraph">
+<p>== Screenshots</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//user-guide-how-tos-tips-n-tricks-are-you-sure.png" alt="user guide how tos tips n tricks are you sure">
+</div>
+</div>
+<div class="paragraph">
+<p>If the user checks the box:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//user-guide-how-tos-tips-n-tricks-are-you-sure-happy-case.png" alt="user guide how tos tips n tricks are you sure happy case">
+</div>
+</div>
+<div class="paragraph">
+<p>then the action will complete.</p>
+</div>
+<div class="paragraph">
+<p>However, if the user fails to check the box, then a validation message is shown:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//user-guide-how-tos-tips-n-tricks-are-you-sure-sad-case.png" alt="user guide how tos tips n tricks are you sure sad case">
+</div>
+</div>
+<div class="paragraph">
+<p>== Code example</p>
+</div>
+<div class="paragraph">
+<p>The code for this is pretty simple:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@Named</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Are you sure?</span><span class="delimiter">&quot;</span></span>) <span class="type">boolean</span> areYouSure) {
+
+    container.removeIfNotAlready(<span class="local-variable">this</span>);
+
+    container.informUser(<span class="string"><span class="delimiter">&quot;</span><span class="content">Deleted </span><span class="delimiter">&quot;</span></span> + container.titleOf(<span class="local-variable">this</span>));
+
+    <span class="comment">// invalid to return 'this' (cannot render a deleted object)</span>
+    <span class="keyword">return</span> toDoItems.notYetComplete();
+}
+<span class="directive">public</span> <span class="predefined-type">String</span> validateDelete(<span class="type">boolean</span> areYouSure) {
+    <span class="keyword">return</span> areYouSure? <span class="predefined-constant">null</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Please confirm you are sure</span><span class="delimiter">&quot;</span></span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the action itself does not use the boolean parameter, it is only
+used by the supporting <code>validateXxx()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>## To review&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>Most of these will move elsewhere, I think:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Singleton &amp; request-scoped services</p>
+</li>
+<li>
+<p>Decoupling dependencies using contributions</p>
+</li>
+<li>
+<p>How to suppress contributions</p>
+</li>
+<li>
+<p>Bulk actions, acting upon lists</p>
+</li>
+<li>
+<p>Bidirectional relationships</p>
+</li>
+<li>
+<p>View models</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>## Overriding JDO Annotations</p>
+</div>
+<div class="paragraph">
+<p>== How Tos: Tips n Tricks: Overriding JDO Annotations
+:Notice: Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at. <a href="http://www.apache.org/licenses/LICENSE-2.0" class="bare">http://www.apache.org/licenses/LICENSE-2.0</a> . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR  CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+:_basedir: ../
+:_imagesdir: images/</p>
+</div>
+<div class="paragraph">
+<p>## Render abstract properties in tables</p>
 </div>
 <div class="paragraph">
 <p>## Error Handling</p>
@@ -1410,12 +1535,6 @@ TODO
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>## Programming Model</p>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in user-guide-how-tos.adoc - include::user-guide-how-tos-programming-model.adoc[leveloffset=+1]</p>
 </div>
 </div>
 </div>
