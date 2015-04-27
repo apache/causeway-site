@@ -6,150 +6,195 @@ By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. H
 
 If working from the Maven command line, JDO enhancement is done using the `maven-datanucleus-plugin`.
 
-However there are a couple of issues you may encounter:
+However, if running on Windows, then there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). Fortunately, the workaround is straight-forward: configure a `persistence.xml` file, as described [here](./persistence_xml.html).
 
-* if running on Windows, then there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). Fortunately, the workaround is straight-forward: configure a `persistence.xml` file.  (This workaround is also required if [developing in Eclipse](./datanucleus-and-eclipse.html)).
+> Note: this workaround is also required if [developing in Eclipse](./datanucleus-and-eclipse.html)).
 
-* New releases of DataNucleus plugins in the Maven central repo can cause versioning problems.
+## Upgrading to DataNucleus 4.0.0 (1.9.0-SNAPSHOT)
 
-  (This is no longer an issue for in Isis 1.4.0).
+Isis 1.9.0 updates to DataNucleus 4.0.0, which requires some changes (simplifications) to the Maven configuration.  
 
-We have workarounds for both.
+If you starting a new app then you can start from the simpleapp archetype; its Maven configuration has been updated.
 
-## Workaround for path limits: Configuring the `persistence.xml` file
+If you have an existing Isis app that you want to upgrade, then you'll need to make some changes.
 
-Configuring a `persistence.xml` 
-Details of how to configure the `persistence.xml` file can be found [here](./persistence_xml.html).
+### In the parent `pom.xml`
 
-There is no additional configuration required in any Maven `pom.xml`; you are done.
-
-## DN versioning issues: using a Maven profile (prior to 1.4.0)
-
-{note
-v1.4.0 of Isis uses DN 3.3.x, which means that the problems addressed in this section should no longer arise.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) for further discussion.
-}
-
-### Isis 1.3.x
-
-> This workaround applies to v1.3.x releases.  See [this mail](http://markmail.org/message/2ns3z3aywwtljawy) describing the required (simpler) configuration for v1.4.0 and later.
-
-Every so often there will be a new release of DataNucleus plugins to the [Maven central repo](http://search.maven.org)  For better or for worse, the Maven DataNucleus enhancer plugin defines a range dependency: it will always use the latest version of the DN modules available.
-
-The DataNucleus plugin for Eclipse on the other hand is configured to use the project classpath, and so it will remain compatible with the version referenced by Isis' own JDO objectstore.
-
-Unfortunately, if the enhancer is run referencing two different versions of the `org.datanucleus:dataducleus-core` jar, then it will fail:
+under the `<project>/<properties>`, remove:
 
 <pre>
-[INFO] Example Claims .................................... SUCCESS [0.017s]
-[INFO] Example Claims App DOM ............................ FAILURE [1.532s]
-[INFO] Example Claims App Repositories (for ObjectStore Default)  SKIPPED
-[INFO] Example Claims App Fixtures ....................... SKIPPED
-[INFO] Example Claims App Repositories (for JDO ObjectStore)  SKIPPED
-...
-...
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time: 5:49.374s
-[INFO] Finished at: Thu Dec 06 15:54:44 GMT 2012
-[INFO] Final Memory: 113M/883M
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.datanucleus:maven-datanucleus-plugin:3.1.1:en
-hance (default) on project claims-dom: Error executing DataNucleus tool org.data
-nucleus.enhancer.DataNucleusEnhancer: InvocationTargetException: Plugin (Bundle)
- "org.datanucleus" is already registered. Ensure you dont have multiple JAR vers
-ions of the same plugin in the classpath. The URL "file:/C:/MVN/.m2/repository/o
-rg/datanucleus/datanucleus-core/3.1.3/datanucleus-core-3.1.3.jar" is already reg
-istered, and you are trying to register an identical plugin located at URL "file
-:/C:/MVN/.m2/repository/org/datanucleus/datanucleus-core/3.1.2/datanucleus-core-
-3.1.2.jar." -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e swit
-ch.
+&lt;!-- must be consistent with the versions defined by the JDO Objectstore --&gt;
+&lt;datanucleus-accessplatform-jdo-rdbms.version&gt;3.3.6&lt;/datanucleus-accessplatform-jdo-rdbms.version&gt;
+&lt;datanucleus-maven-plugin.version&gt;3.3.2&lt;/datanucleus-maven-plugin.version&gt;
 </pre>
 
 
-The preferred solution forces the version of DataNucleus and jdo-api to be the version referenced by the JDO ObjectStore.    If you have created your app from the v1.3.x archetypes, then they will be set up correctly.
+## In `dom/pom.xml`, 
 
-In the root project's `pom.xml`, specify the properties:
+under `<build>/<plugins>`, remove:
 
-    <properties>
-        <!-- must be consistent with the versions defined by the JDO Objectstore -->
-        <datanucleus-core.version>3.2.7</datanucleus-core.version>
-        <jdo-api.version>3.0.1</jdo-api.version>
-        ...
-    </properties>
+<pre>
+&lt;plugin&gt;
+    &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+    &lt;artifactId&gt;datanucleus-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;${datanucleus-maven-plugin.version}&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;fork&gt;false&lt;/fork&gt;
+        &lt;log4jConfiguration&gt;${basedir}/log4j.properties&lt;/log4jConfiguration&gt;
+        &lt;verbose&gt;true&lt;/verbose&gt;
+        &lt;props&gt;${basedir}/datanucleus.properties&lt;/props&gt;
+    &lt;/configuration&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;phase&gt;compile&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;enhance&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;
+</pre>
 
-where the versions should be the same as the one referenced by the 
-JDO Objectstore.  (The apps generated by the [archetype](../../../intro/getting-started/simple-archetype.html) are
-configured with the correct versions to use).
+and (if you have it) under `<build>/<pluginManagement>/<plugins>`, remove:
 
-Then, in the `dom` project's `pom.xml`, update the DataNucleus enhancer plugin to force it to use a specific version of the DataNucleus core: 
+<pre>
+&lt;!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.--&gt;
+&lt;plugin&gt;
+    &lt;groupId&gt;org.eclipse.m2e&lt;/groupId&gt;
+    &lt;artifactId&gt;lifecycle-mapping&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;lifecycleMappingMetadata&gt;
+            &lt;pluginExecutions&gt;
+                &lt;pluginExecution&gt;
+                    &lt;pluginExecutionFilter&gt;
+                        &lt;groupId&gt;
+                            org.datanucleus
+                        &lt;/groupId&gt;
+                        &lt;artifactId&gt;
+                            datanucleus-maven-plugin
+                        &lt;/artifactId&gt;
+                        &lt;versionRange&gt;
+                            [3.2.0-release,)
+                        &lt;/versionRange&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;enhance&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/pluginExecutionFilter&gt;
+                    &lt;action&gt;
+                        &lt;ignore&gt;&lt;/ignore&gt;
+                    &lt;/action&gt;
+                &lt;/pluginExecution&gt;
+            &lt;/pluginExecutions&gt;
+        &lt;/lifecycleMappingMetadata&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
+
+and instead in `<profiles>` add:
+
+<pre>
+&lt;profile&gt;
+    &lt;id&gt;enhance&lt;/id&gt;
+    &lt;activation&gt;
+        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+    &lt;/activation&gt;
+    &lt;properties&gt;
+        &lt;datanucleus-maven-plugin.version&gt;4.0.0-release&lt;/datanucleus-maven-plugin.version&gt;
+    &lt;/properties&gt;
+    &lt;build&gt;
+        &lt;pluginManagement&gt;
+            &lt;plugins&gt;
+                &lt;plugin&gt;
+                    &lt;!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.--&gt;
+                    &lt;groupId&gt;org.eclipse.m2e&lt;/groupId&gt;
+                    &lt;artifactId&gt;lifecycle-mapping&lt;/artifactId&gt;
+                    &lt;version&gt;1.0.0&lt;/version&gt;
+                    &lt;configuration&gt;
+                        &lt;lifecycleMappingMetadata&gt;
+                            &lt;pluginExecutions&gt;
+                                &lt;pluginExecution&gt;
+                                    &lt;pluginExecutionFilter&gt;
+                                        &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+                                        &lt;artifactId&gt;datanucleus-maven-plugin&lt;/artifactId&gt;
+                                        &lt;versionRange&gt;[${datanucleus-maven-plugin.version},)&lt;/versionRange&gt;
+                                        &lt;goals&gt;
+                                            &lt;goal&gt;enhance&lt;/goal&gt;
+                                        &lt;/goals&gt;
+                                    &lt;/pluginExecutionFilter&gt;
+                                    &lt;action&gt;
+                                        &lt;ignore&gt;&lt;/ignore&gt;
+                                    &lt;/action&gt;
+                                &lt;/pluginExecution&gt;
+                            &lt;/pluginExecutions&gt;
+                        &lt;/lifecycleMappingMetadata&gt;
+                    &lt;/configuration&gt;
+                &lt;/plugin&gt;
+            &lt;/plugins&gt;
+        &lt;/pluginManagement&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+                &lt;artifactId&gt;datanucleus-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;${datanucleus-maven-plugin.version}&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;fork&gt;false&lt;/fork&gt;
+                    &lt;log4jConfiguration&gt;${basedir}/log4j.properties&lt;/log4jConfiguration&gt;
+                    &lt;verbose&gt;true&lt;/verbose&gt;
+                    &lt;props&gt;${basedir}/datanucleus.properties&lt;/props&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;phase&gt;process-classes&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;enhance&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+            &lt;artifactId&gt;datanucleus-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+            &lt;artifactId&gt;datanucleus-jodatime&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.datanucleus&lt;/groupId&gt;
+            &lt;artifactId&gt;datanucleus-api-jdo&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/profile&gt;
+</pre>
+    
+If you don't use Eclipse then you can omit the `org.eclipse.m2e` plugin in `<pluginManagement>`.
 
 
-    <plugins>
-        <plugin>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-maven-plugin</artifactId>
-            <version>3.2.0-release</version>
-            <dependencies>
-              <dependency>
-                  <!-- Force the enhancer to use the same version of core as the JDO objectstore -->
-                  <groupId>org.datanucleus</groupId>
-                  <artifactId>datanucleus-core</artifactId>
-                  <version>${datanucleus-core.version}</version>
-              </dependency>
-              <dependency>
-                  <!-- Force the enhancer to use the same version of jdo-api as the JDO objectstore -->
-                  <groupId>javax.jdo</groupId>
-                  <artifactId>jdo-api</artifactId>
-                  <version>${jdo-api.version}</version>
-              </dependency>
-            </dependencies>
-            <configuration>
-            	<fork>false</fork>
-                <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
-                <verbose>true</verbose>
-                <props>${basedir}/datanucleus.properties</props>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>compile</phase>
-                    <goals>
-                        <goal>enhance</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-       ...
-    </plugins>
+## In the webapp's `persistor_datanucleus.properties`
 
- 
+in `src/main/webapp/WEB-INF/`, 
 
-### Isis 1.2.0 and previous
+change:
 
-This solution attempts to use the latest-n-greatest version of DataNucleus, and was the approach used in Isis Core 1.2.0 and earlier.  However, it has been found to be flawed if a new version of the DataNucleus enhancer was released that had an incompatibility with the version of DN referenced by the JDO ObjectStore.
+    isis.persistor.datanucleus.impl.datanucleus.autoCreateSchema=true
+    isis.persistor.datanucleus.impl.datanucleus.validateTables=true
+    isis.persistor.datanucleus.impl.datanucleus.validateConstraints=true
 
-The fix is to use a Maven profile.  The following is correct as of the JDO ObjectStore v1.1.0:
+to:
 
-    <profiles>
-        <profile>
-            <id>not-m2e</id>
-            <activation>
-                <property>
-                    <name>!m2e.version</name>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-core</artifactId>
-                    <version>(3.2.0-m1, 3.2.99)</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+    isis.persistor.datanucleus.impl.datanucleus.schema.autoCreateAll=true
+    isis.persistor.datanucleus.impl.datanucleus.schema.validateTables=true
+    isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true
 
-This says that when *not* run within Eclipse (the ${m2e.version} property is *not* set), then to use the latest version of the DataNucleus dependency can be referenced.  You can maintain the <version> to keep track with the latest-n-greatest available in the Maven repo.
+and change:
+
+    isis.persistor.datanucleus.impl.datanucleus.identifier.case=PreserveCase
+
+to:
+
+    isis.persistor.datanucleus.impl.datanucleus.identifier.case=MixedCase
 
