@@ -1,5 +1,7 @@
 Title: BackgroundCommandExecution
 
+[//]: # (content copied to user-guide_background-execution)
+
 The `BackgroundCommandExecution` class (a subclass of [AbstractIsisSessionTemplate](./isis-session-template.html) is intended to simplify the execution of background `Command`s persisted by way of the [CommandService](../services/command-context.html) and the [BackgroundCommandService](../services/background-service.html).  Its signature is:
 
     public abstract class BackgroundCommandExecution extends AbstractIsisSessionTemplate {

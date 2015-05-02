@@ -17,7 +17,7 @@ The API defined by `MementoService` is:
             @Programmatic
             public <T> T get(String name, Class<T> cls);
             @Programmatic
-            public String asString();
+            public String valueOf();
             public Set<String> keySet();
         }
         

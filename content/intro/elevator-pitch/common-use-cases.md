@@ -10,7 +10,7 @@ How Apache Isis builds a webapp from the underlying domain object model...
 
 Isis is great for rapid prototyping, because all you need to write in order to get an application up-and-running is the domain model objects.
 
-By focussing just on the domain, you'll also find that you start to develop a ubiquitous language - a set of terms and concepts that the entire team (business and technologists alike) have a shared understanding.
+By focussing just on the domain, you'll also find that you start to develop a ubiquitous language - a set of terms and concepts that the entire teamEnum (business and technologists alike) have a shared understanding.
 
 Once you've sketched out your domain model, you can then either start-over using your preferred framework, or you might choose to take the domain model forward into more formal specification and testing.
 

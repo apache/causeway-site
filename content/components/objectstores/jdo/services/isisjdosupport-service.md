@@ -1,5 +1,7 @@
 Title: Using the IsisJdoSupport service
 
+[//]: # (content copied to user-guide_reference_domain-services_isis-jdo-support)
+
 The `IsisJdoSupport` service  provides a number of general purpose methods for working with DataNucleus.
 
 ## Executing arbitrary SQL
@@ -42,7 +44,8 @@ For example:
 
 ## Accessing the JDO `PersistenceManager`
 
-Isis currently only supports JDO named queries.  If you require more flexibility than this, eg for dynamically constructed queries, then the `IsisJdoSupport` interface can be used to obtain access to the underlying JDO `PersistenceManager`.
+Apache Isis provides a simplified API on top of only supports JDO, and so does not support all of JDO's features.  For example, Isis (currently) only supports named queries.  If you require more flexibility than this, eg for dynamically constructed queries, then the service provides access to the underlying JDO `PersistenceManager` API.
+
 
 For example:
 

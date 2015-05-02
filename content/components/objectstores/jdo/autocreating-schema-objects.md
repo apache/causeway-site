@@ -1,5 +1,7 @@
 Title: Autocreating Schema Objects (1.9.0-SNAPSHOT)
 
+[//]: # (content copied to user-guide_how-tos_using-modules)
+
 We use Java packages as a way to group related domain objects together; the package name forms a namespace.  We can then
 reason about all the classes in that package/namespace as a single unit.  Good examples are the various
 [Isis Addons](http://github.com/isisaddons) (not ASF): security, commands, auditing and so on.
@@ -8,14 +10,14 @@ In the same way that Java packages act as a namespace for domain objects, it's g
 their own (database) schemas.  As of 1.9.0-SNAPSHOT, all the IsisAddons modules do this, for example:
 
     @javax.jdo.annotations.PersistenceCapable( ...
-            schema = "IsisAddonsSecurity",
+            schema = "isissecurity",
             table = "ApplicationUser")
     public class ApplicationUser ... { ... }
 
 and
 
     @javax.jdo.annotations.PersistenceCapable( ...
-            schema = "IsisAddonsAudit",
+            schema = "isisaudit",
             table="AuditEntry")
     public class AuditEntry ... { ... }
 

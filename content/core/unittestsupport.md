@@ -1,5 +1,7 @@
 Title: Unit Test Support
 
+[//]: # (content copied to user-guide_testing_unit-test-support)
+
 This module provides unit test helpers for use by all other modules.  There are also utilities that you may find useful in testing your domain objects:
 
 To use, update the `pom.xml`:

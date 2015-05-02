@@ -1,16 +1,22 @@
 Title: Using JDO/DataNucleus with Maven
 
+[//]: # (content copied to user-guide_getting-started_datanucleus-enhancer)
+
 > See also [how to use JDO/DataNucleus with Eclipse](./datanucleus-and-eclipse.html).  
 
 By leveraging the JDO/Datanucleus ORM, Isis' JDO objectstore is very powerful. However, with such power comes a little bit of complexity to the development environment: all domain objects must be enhanced through the [JDO enhancer](http://db.apache.org/jdo/enhancement.html).  So the enhancer must, in one way or another, be integrated into your development environment.
 
-If working from the Maven command line, JDO enhancement is done using the `maven-datanucleus-plugin`.
 
 However, if running on Windows, then there's a good chance you'll hit the [maximum path length limit](http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath). Fortunately, the workaround is straight-forward: configure a `persistence.xml` file, as described [here](./persistence_xml.html).
 
 > Note: this workaround is also required if [developing in Eclipse](./datanucleus-and-eclipse.html)).
 
+
+
+
 ## Upgrading to DataNucleus 4.0.0 (1.9.0-SNAPSHOT)
+
+[//]: # (content copied to user-guide_appendices_migration-notes)
 
 Isis 1.9.0 updates to DataNucleus 4.0.0, which requires some changes (simplifications) to the Maven configuration.  
 

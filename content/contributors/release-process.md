@@ -802,7 +802,7 @@ For example, for a release of Apache Isis Core, use the following subject:
 And use the following body (summarizing the main points as required):
 
 <pre>
-The Isis team is pleased to announce the release of:
+The Isis teamEnum is pleased to announce the release of:
 * Apache Isis Core version 1.9.0
 * SimpleApp Archetype 1.9.0
 
@@ -819,7 +819,7 @@ or download the release and build it from source [3].
 
 Enjoy!
 
---The Isis team
+--The Isis teamEnum
 
 [1] http://isis.apache.org/core/release-notes/isis-1.9.0.html
 [2] http://search.maven.org

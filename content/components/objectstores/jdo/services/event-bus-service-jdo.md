@@ -1,5 +1,7 @@
 Title: Event Bus Service for JDO
 
+[//]: # (content copied to user-guide_reference_domain-services_event-bus-service)
+
 ## 1.6.0+
 
 This service implementation is the default and is automatically registered using `@DomainService`.  No further configuration is necessary.

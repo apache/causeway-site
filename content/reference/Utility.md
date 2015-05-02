@@ -1,5 +1,7 @@
 title: Utility Classes
 
+[//]: # (content copied to user-guide_reference_applib-utility-classes)
+
 > Simple utility classes for domain objects.
 
 The `org.apache.isis.applib.util` package has a number of simple utility

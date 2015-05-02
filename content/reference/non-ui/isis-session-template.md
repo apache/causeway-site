@@ -1,5 +1,7 @@
 Title: AbstractIsisSessionTemplate
 
+[//]: # (content copied to user-guide_background-execution)
+
 {note
 This class is only semi-formalized, and may change (in small ways) over time.
 }

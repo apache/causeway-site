@@ -1,5 +1,7 @@
 Title: Deploying on the Google App Engine
 
+[//]: # (content copied to _user-guide_config-and-deployment_deployment-gae)
+
 The Google App Engine (GAE) provides a JDO API, meaning that you can deploy Isis onto GAE using the JDO objectstore.
 
 However, GAE is not an RDBMS, and so there are some limitations that it imposes.  This page gathers together various hints, tips and workarounds.

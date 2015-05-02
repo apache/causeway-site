@@ -1,6 +1,8 @@
 Title: 'Are you sure?' idiom
 ----------
 
+[//]: # (content copied to user-guide_how-tos_tips-n-tricks_are-you-sure)
+
 If providing an action that will perform irreversible changes, include a
 mandatory boolean parameter that must be explicitly checked by the end-user
 in order for the action to proceed.
