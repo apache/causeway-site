@@ -1,5 +1,7 @@
 Title: Eagerly Registering Entity Types
 
+[//]: # (content copied to _user-guide_reference_configuration-properties_datanucleus-objectstore_eagerly-registering-entities)
+
 *in 1.6.0 and 1.7.0, this feature may be (partly?) broken; see [ISIS-847](https://issues.apache.org/jira/browse/ISIS-847)*
 
 Both Apache Isis and DataNucleus have their own metamodels of the domain entities.  Isis builds its metamodel by walking the graph of types from the services registered using

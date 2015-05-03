@@ -1,5 +1,7 @@
 Title: Lazy Loading
 
+[//]: # (content copied to _user-guide_how-tos_ui-hints_eager-rendering)
+
 By default, collections all rendered lazily and are thus also loaded lazily from the database.
 
 However, even in the case of collections that have annotated with `@CollectionLayout(render=RenderType.EAGERLY)` (or equivalently in `.layout.json` file, or using the now deprecated `@Render(Type.EAGERLY)`, these should probably still be lazily loaded.  Otherwise, there will always be an unnecessary cost when rendering the object in a table.

@@ -1,5 +1,7 @@
 Title: Enabling Logging
 
+[//]: # (content copied to _user-guide_troubleshooting_enabling-logging)
+
 Sometimes you just need to see what is going on.  There are various ways in which logging can be enabled, here are some ideas.
 
 ### In Apache Isis

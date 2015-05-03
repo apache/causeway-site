@@ -1,5 +1,8 @@
 Title: `IsisConfigurationForJdoIntegTests`
 
+[//]: # (content copied to _user-guide_testing_integ-test-support)
+
+
 When running integration tests with the JDO Objectstore, there are certain standard configuration properties that are usually set.  For example, integration tests are usually run against an in-memory HSQLDB database.
 
 To remove a little bit of boilerplate, the `IsisConfigurationForJdoIntegTests` class (in the `org.apache.isis.objectstore.jdo.datanucleus` package) can be used to bootstrap the application.
