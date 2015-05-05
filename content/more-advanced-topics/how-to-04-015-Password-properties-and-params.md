@@ -1,6 +1,8 @@
 How to use a Password field
 --------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis provides the `org.apache.isis.applib.value.Password` value type which the Wicket viewer will automatically render
 using an appropriate `input type=password` field.
 

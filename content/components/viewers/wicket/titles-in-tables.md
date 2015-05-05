@@ -1,5 +1,7 @@
 Title: Titles in Tables
 
+[//]: # (content copied to _user-guide_xxx)
+
 Object titles can often be quite long if the intention is to uniquely identify the object.  While this is appropriate for the object view, it can be cumbersome within tables.
 
 Isis' Wicket viewer implements two features to shorten these titles.

@@ -1,5 +1,7 @@
 Title: Verifying Releases using Creadur Tools
 
+[//]: # (content copied to _user-guide_xxx)
+
 The [Apache Creadur](http://creadur.apache.org) project exists to provide a set of tools to ensure compliance with Apache's licensing standards.  The main release auditing tool, [Apache RAT](http://creadur.apache.org/rat), is used in the preparation of the release (as documented [here](release-process.html)).  Creadur's remaining tools are to support the verification process.
 
 At the time of writing, these additional tools are quite young and haven't been formally released; so to use them will take a little bit of work.  In the future we expect these tools to mature and ease the effort required to verify releases.

@@ -1,5 +1,7 @@
 Title: Multi-Tenancy support (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Theory
 
 Sometimes data belonging to one population of users should not be visible to another population

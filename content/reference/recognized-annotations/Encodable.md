@@ -1,5 +1,7 @@
 Title: @Encodable
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This annotation has partial/incomplete support.
 
 > In particular, the Wicket viewer uses Apache Wicket's Converter API instead.

@@ -1,5 +1,7 @@
 Title: Powered by
 
+[//]: # (content copied to _user-guide_xxx)
+
 Here are some freely accessible (and sometimes open source) applications that are powered by Isis.
 
 >If you have written an app in Isis that you'd like to share, please mention it on the [mailing list](../../support.html).

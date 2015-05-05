@@ -1,5 +1,7 @@
 Title: Integration testing Support
 
+[//]: # (content copied to _user-guide_xxx)
+
 > See also Isis' [BDD support](specsupport-and-integtestsupport.html).
 
 The `isis-core-integtestsupport` module provides the ability to bootstrap Isis within a JUnit testing framework, using any object store.  This is done using a JUnit rule.

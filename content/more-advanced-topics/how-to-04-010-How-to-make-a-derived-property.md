@@ -1,6 +1,8 @@
 How to make a derived property
 ------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Read-only
 
 Most derived properties are read-only, their value being derived from

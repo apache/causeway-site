@@ -1,5 +1,7 @@
 Title: Wrapper Factory
 
+[//]: # (content copied to _user-guide_xxx)
+
 The 'wrapper' factory provides the ability to enforce business rules for programmatic interactions between domain objects.  For example, if the calling object attempts to modify an unmodifiable property on the target object, then an exception will be thrown.  Said another way: interactions are performed "as if" they are through the viewer.
 
 This capability goes beyond enforcing the (imperative) constraints within the `hideXxx()`, `disableXxx()` and `validateXxx()` supporting methods; it also enforces (declarative) constraints such as those represented by annotations, eg `@MaxLength` or `@Regex`.

@@ -1,5 +1,7 @@
 Title: @EqualByContent
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This annotation has partial/incomplete support.
 
 Equal-by-content is a characteristic of value types, and is implied by

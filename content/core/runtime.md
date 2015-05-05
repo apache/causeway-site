@@ -1,5 +1,7 @@
 Title: Core Runtime
 
+[//]: # (content copied to _user-guide_xxx)
+
 {stub
 This page is a stub.
 }

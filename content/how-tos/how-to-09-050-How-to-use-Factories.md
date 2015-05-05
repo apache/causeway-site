@@ -1,6 +1,8 @@
 How to use Factories
 --------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Like repositories, factories are defined by interface in the domain, decoupling the domain objects from their actual implementation.
 
 Unlike repositories, there is no particular need to change the implementation when moving from one object store to another, because in all cases the factory can simply delegate to its injected `DomainObjectContainer`.

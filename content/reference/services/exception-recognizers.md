@@ -1,5 +1,7 @@
 Title: Exception Recognizers
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `ExceptionRecognizer` API (in the `org.apache.isis.applib.services.exceprecog` package) provides the mechanism for 
 both the domain programmer and also for components to be able to recognize and handle certain exceptions that may be 
 thrown by the system.

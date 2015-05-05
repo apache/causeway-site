@@ -1,5 +1,7 @@
 Title: Configuration Files
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis has one mandatory configuration file, `isis.properties`.  For the webapp viewers, this typically lives alongside the `web.xml` file in the `WEB-INF` directory.
 
 In addition, Isis will also read from a number of supplementary configuration files (if present), for each of the configured components.  For example:

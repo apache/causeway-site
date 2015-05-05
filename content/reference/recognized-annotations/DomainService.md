@@ -1,5 +1,7 @@
 Title: @DomainService
 
+[//]: # (content copied to _user-guide_xxx)
+
 Indicates that the (concrete) class should be automatically instantiated as a domain service.
 
 Domain services with this annotation do NOT need to be registered explicitly in `isis.properties`; they will be

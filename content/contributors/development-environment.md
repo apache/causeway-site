@@ -1,5 +1,7 @@
 Title: Development Environment
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Git
 
 The Isis source code lives in a git repo.

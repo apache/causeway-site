@@ -1,5 +1,7 @@
 Title: @Audited
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#auditing()](./DomainObject.html).
 
 This annotation, which applies only to objects, indicates that if the

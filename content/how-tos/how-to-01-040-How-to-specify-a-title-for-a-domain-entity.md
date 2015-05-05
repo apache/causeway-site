@@ -1,6 +1,8 @@
 How to specify a title for a domain entity
 ------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Apache Isis viewers identify objects through both an [icon](./how-to-01-070-How-to-specify-the-icon-for-a-domain-entity.html) 
 and a title.  For example, a `Customer`'s title might be the organization's customer reference, or perhaps (more 
 informally) their first and last names.

@@ -1,5 +1,7 @@
 Title: Fine-tuning the Programming Model
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Core MetaModel
 
 The core metamodel defines APIs and implementations for building the Isis metamodel: a description of the set of entities, domain services and values that make up the domain model.

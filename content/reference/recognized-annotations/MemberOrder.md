@@ -1,5 +1,7 @@
 Title: @MemberOrder
 
+[//]: # (content copied to _user-guide_xxx)
+
 > See also [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 `@MemberOrder` is the recommended mechanism for specifying the order in

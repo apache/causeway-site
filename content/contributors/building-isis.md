@@ -1,5 +1,7 @@
 Title: Building Isis
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis is build using Maven; details of setting up your development environment can be found [here](development-environment.html).
 
 In particular, note that you'll need to set up `MAVEN_OPTS`:

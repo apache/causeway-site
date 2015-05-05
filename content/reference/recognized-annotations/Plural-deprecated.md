@@ -1,5 +1,7 @@
 Title: @Plural
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObjectLayout#plural()](./DomainObjectLayout.html).
 
 When the framework displays a collection of several objects it may use

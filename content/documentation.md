@@ -1,5 +1,7 @@
 Title: Documentation
 
+[//]: # (content copied to _user-guide_xxx)
+
 <blockquote>
   <p>Perfection is finally attained not when there is no longer anything to add but when there is no longer anything to take away.
   <p class="author">Antoine de Saint-Exupery</em></br>

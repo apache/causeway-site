@@ -1,6 +1,8 @@
 How to specify an auto-complete for an action parameter [1.3.0+]
 -------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Using the auto-complete method you can allow the user to search for objects based on a single string.  These will be made available to the user through a device such as a drop-down list.
 
 The syntax is:

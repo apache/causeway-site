@@ -1,5 +1,7 @@
 Title: @Collection (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > stub
 
 The `@Collection` annotation applies to collections collecting together all domain semantics within a single annotation.

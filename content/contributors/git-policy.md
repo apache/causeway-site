@@ -1,5 +1,7 @@
 Title: Git Policy
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Introduction
 
 These notes recommend how contributors should work with git.  To understand these notes, the only real concepts that you need to grok are:

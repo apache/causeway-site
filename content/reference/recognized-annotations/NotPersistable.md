@@ -1,5 +1,7 @@
 Title: @NotPersistable
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This annotation has partial/incomplete support.
 
 > In particular, it is not supported by: Wicket viewer.  [ISIS-743](https://issues.apache.org/jira/browse/ISIS-743) has been raised contemplating the removal of this annotation.

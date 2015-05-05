@@ -1,5 +1,7 @@
 Title: AngularJS Tips
 
+[//]: # (content copied to _user-guide_xxx)
+
 The hypermedia API exposed by Isis' Restful Objects viewer is intended be support both bespoke custom-written viewers as well as generic viewers.  Indeed, we expect most clients consuming the API will be bespoke, not generic.
 
 This page captures one or two tips on using AngularJS to write such a bespoke client.

@@ -1,6 +1,8 @@
 How to prevent an action from being invoked
 -------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Preventing the user from invoking an action is known as 'disabling' the
 action.
 

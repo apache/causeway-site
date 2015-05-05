@@ -1,5 +1,7 @@
 Title: @NotContributed
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainService#nature()](./DomainService.html) to specify whether a service's actions are contributed, and use [@ActionLayout#contributed()](./ActionLayout.html) to specify how they are contributed.
 
 The `@NotContributed` annotation applies only to action methods, and

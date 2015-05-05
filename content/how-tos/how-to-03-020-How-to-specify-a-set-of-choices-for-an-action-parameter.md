@@ -1,6 +1,8 @@
 How to specify a set of choices for an action parameter
 -------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The programmer may provide a set of choices for the value of any or all
 of the parameters of an action. These will be made available to the user
 - for example as a drop-down list.

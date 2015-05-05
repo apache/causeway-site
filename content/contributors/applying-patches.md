@@ -1,5 +1,7 @@
 Title: Applying Patches
 
+[//]: # (content copied to _user-guide_xxx)
+
 If a patch is received on a JIRA ticket, then it should be reviewed and applied.  The commands are slightly different for diff files vs patch files.
 
 ## Diff files

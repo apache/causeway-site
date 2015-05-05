@@ -1,6 +1,8 @@
 How to validate an object being added or removed from a collection
 ------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 A `validateAddToXxx()` method can be used to check that an object is
 valid to be added to a collection. Conversely, the
 validateRemoveFromXxx() method can be used to check that it is valid to

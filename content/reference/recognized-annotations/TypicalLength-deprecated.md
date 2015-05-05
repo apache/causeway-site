@@ -1,5 +1,7 @@
 Title: @TypicalLength
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@PropertyLayout#typicalLength()](./PropertyLayout.html) and [@ParameterLayout#typicalLength()](./ParameterLayout.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `@TypicalLength` annotation indicates the typical length of a

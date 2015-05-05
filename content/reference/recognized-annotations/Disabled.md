@@ -1,5 +1,7 @@
 Title: @Disabled
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Property#editing()](./Property.html), [@Collection#editing()](./Collection.html), and also [@DomainObject#editing()](./DomainObject.html)
 
 > **Support**

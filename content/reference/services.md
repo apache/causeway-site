@@ -1,5 +1,7 @@
 Title: Applib Services and Implementations
 
+[//]: # (content copied to _user-guide_xxx)
+
 {domain-services
 
 The services listed here are those whose API is defined in Isis applib.  In addition the [Isis addons](http://www.isisaddons.org) website lists a number of services (such as [security](http://github.com/isisaddons/isis-module-security) service or the [settings](http://github.com/isisaddons/isis-module-settings) service that are standalone)

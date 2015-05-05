@@ -1,6 +1,8 @@
 How to add an action to be called on every entity within a list
 ---------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Usually an action is performed on a single instance of an entity (or domain service).  To indicate that a given action should be called for every instance of a list (eg as returned by a domain service finder), add the `@Bulk` annotation:
 
     public class SomeDomainService {

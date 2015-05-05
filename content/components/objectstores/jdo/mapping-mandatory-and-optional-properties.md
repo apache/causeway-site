@@ -1,5 +1,7 @@
 Title: Mapping Optional Properties
 
+[//]: # (content copied to _user-guide_how-tos_class-structure_properties)
+
 ### Isis vs JDO Annotations
 
 In the standard Isis programming model, optional properties are specified with the `@Optional` annotation.  However, this annotation is not recognized by the JDO Objectstore, optionality is specified using the `javax.jdo.annotations.Column(allowNulls="true")` annotation.

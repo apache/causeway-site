@@ -1,5 +1,7 @@
 Title: Bookmark Service
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `BookmarkService` provides the ability to obtain a serializable `org.apache.isis.applib.bookmarks.Bookmark` for any (persisted) domain object, and to lookup domain objects given a `Bookmark`.
 
 This is a good way of storing a reference to an arbitrary object (a polymorphic relationship).  The downside is that there is no way for the objectstore (eg JDO objectstore) to enforce any kind of referental integrity.

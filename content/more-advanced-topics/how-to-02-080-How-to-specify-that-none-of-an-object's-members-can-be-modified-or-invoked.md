@@ -1,6 +1,8 @@
 How to specify that none of an object's members can be modified/invoked
 -----------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Some objects have state which should not be modifiable only under
 certain conditions; for example an invoice can not be modified after it
 has been paid. The viewer is expected to interpret this by suppressing

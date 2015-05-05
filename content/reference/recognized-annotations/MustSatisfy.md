@@ -1,5 +1,7 @@
 Title: @MustSatisfy
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Property#mustSatisfy()](./Property.html) and [@Parameter#mustSatisfy()](./Parameter.html).
 
 The `@MustSatisfy` annotation allows validation to be applied to

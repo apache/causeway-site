@@ -1,6 +1,8 @@
 How to make a derived collection
 --------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Collections can be derived by omitting the mutator (the same way as
 [properties](./how-to-04-010-How-to-make-a-derived-property.html).  It should however be annotated with Isis' `@NotPersisted` annotation.
 

@@ -1,5 +1,7 @@
 Title: @DomainObject (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > stub
 
 The `@DomainObject` annotation applies to domain objects, collecting together all domain semantics within a single annotation.

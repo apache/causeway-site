@@ -1,5 +1,7 @@
 Title: @ViewModelLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > stub
 
 The `@ViewModelLayout` annotation is identical to the [@DomainObjectLayout](./DomainObjectLayout.html), but is provided

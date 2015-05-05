@@ -1,5 +1,7 @@
 Title: CommandService (isis-module-command-jdo)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `CommandService` service supports the [CommandContext](./command-context.html) service such that `Command` objects (that reify the invocation of an action on a domain object into an object) can be persisted.
 
 Persistent `Command`s support several use cases:

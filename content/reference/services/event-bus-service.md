@@ -1,5 +1,7 @@
 Title: Event Bus Service
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `EventBusService` is a wrapper for a [Guava](https://code.google.com/p/guava-libraries/) [`EventBus`](https://code.google.com/p/guava-libraries/wiki/EventBusExplained), allowing arbitrary events to be posted and subscribed to (within the Isis runtime).  The primary use case is for decoupling interactions from one module/package/namespace and another.
 
 The framework also provides an implementation of this service (`EventBusServiceJdo`), and this is automatically registered (it is annotated with `@DomainService`).

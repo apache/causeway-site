@@ -1,5 +1,7 @@
 Title: @CssClassFa (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObjectLayout#cssClassFa()](./DomainObjectLayout.html), [@PropertyLayout#cssClassFa()](./PropertyLayout.html), [@CollectionLayout#cssClassFa()](./CollectionLayout.html), [@ActionLayout#cssClassFa()](./ActionLayout.html) and [@ParameterLayout#cssClassFa()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `CssClassFa` annotation applies to objects and also to object actions,

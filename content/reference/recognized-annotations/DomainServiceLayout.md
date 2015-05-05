@@ -1,5 +1,7 @@
 Title: @DomainServiceLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@DomainServiceLayout` annotation applies to domain services, collecting together all view layout semantics
 within a single annotation.
 

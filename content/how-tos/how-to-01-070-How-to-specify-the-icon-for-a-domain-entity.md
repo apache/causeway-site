@@ -1,5 +1,7 @@
 title: How to specify the icon for a domain object
 
+[//]: # (content copied to _user-guide_xxx)
+
 Apache Isis viewers identify objects to the end-user through both an icon and a [title](./how-to-01-040-How-to-specify-a-title-for-a-domain-entity.html).
 
 The icon can be either static and fixed - meaning it is based on the object's class - or dynamic and changing - meaning

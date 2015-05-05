@@ -1,5 +1,8 @@
 Title: Configuring Isis to use Shiro
 
+[//]: # (content copied to _user-guide_xxx)
+
+
 ### Example Configuration
 
 The [simpleapp archetype](../../../intro/getting-started/simpleapp-archetype.html) is configured with Shiro; you should see all the configuration explained below in these.

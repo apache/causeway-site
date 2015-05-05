@@ -1,6 +1,8 @@
 How to add an action to a domain entity or service
 --------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 An 'action' is a method that we expect the user to be able to invoke on
 a domain entity via the user interface, though it may also be invoked
 programmatically within the object model. The following conventions are

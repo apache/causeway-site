@@ -1,6 +1,8 @@
 How to register domain services, repositories and factories
 -----------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Domain services (which includes repositories and factories) can either be automatically registered (by virtue of being present on the classpath and annotated appropriately) or must be explicitly registered in the `isis.properties` configuration file, under the `isis.services` key (a comma-separated list).
 
 ### Automatic Registration

@@ -1,5 +1,7 @@
 Title: @Named
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObjectLayout#named()](./DomainObjectLayout.html), [@PropertyLayout#named()](./PropertyLayout.html), [@CollectionLayout#named()](./CollectionLayout.html), [@ActionLayout#named()](./ActionLayout.html) and [@ParameterLayout#named()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `@Named` annotation is used when you want to specify the way

@@ -1,5 +1,7 @@
 title: Security Classes
 
+[//]: # (content copied to _user-guide_xxx)
+
 > A simple set of classes to represent the currently logged on user and
 > their roles.
 

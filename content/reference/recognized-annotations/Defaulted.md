@@ -1,5 +1,7 @@
 Title: @Defaulted
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This annotation has partial/incomplete support.
 
 The concept of "defaulted" means being able to provide a default value

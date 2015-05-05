@@ -1,5 +1,7 @@
 Title: Copy URL and Hints
 
+[//]: # (content copied to _user-guide_xxx)
+
 While the user can often copy the URL of a domain object directly from the browser's address bar, the Wicket viewer also allows the URL of domain objects to be easily copied from a dialog. 
 
 More interestingly, this URL can also contain hints capturing any sorting or page numbering, or hiding/viewing of collections.  End-users can therefore share these URLs as a form of deep linking into a particular view on a domain object. 

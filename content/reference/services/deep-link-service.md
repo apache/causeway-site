@@ -1,5 +1,7 @@
 Title: Deep Link Service (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `DeepLinkService` provides the ability to obtain a `java.net.URI` that links to a representation of any (persisted) domain entity or
 view model.
 

@@ -1,6 +1,8 @@
 Object lifecycle callbacks
 --------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis supports a number of callback methods corresponding to the persistence lifecycle of the object.
 
 They are:

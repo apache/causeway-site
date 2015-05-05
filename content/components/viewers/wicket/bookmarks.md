@@ -1,5 +1,7 @@
 Title: Bookmarks
 
+[//]: # (content copied to _user-guide_xxx)
+
 The Wicket viewer supports the bookmarking of both domain objects and [safe](../../../reference/recognized-annotations/ActionSemantics.html) (query-only) actions.  
 
 Domain objects, if bookmarkable, can be nested.

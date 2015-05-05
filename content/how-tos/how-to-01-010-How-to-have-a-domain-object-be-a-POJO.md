@@ -1,6 +1,8 @@
 Pojos vs Inheriting from framework superclasses
 -------------------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 {note
 A lot of the programming conventions described in these how-tos are encapsulated in the [Eclipse templates](../intro/resources/editor-templates.html).  If you use Eclipse, do install these first; they will save a lot of time.
 }

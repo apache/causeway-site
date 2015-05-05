@@ -1,5 +1,7 @@
 Title: User Profile Service (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The user profile service API provides the ability for the domain application to return supplementary metadata about
 the current user.  This information is used (by the Wicket viewer) to customize the appearance of the tertiary
 "Me" menu bar (top right).  For example, rather than display the username, instead the user's first and last name

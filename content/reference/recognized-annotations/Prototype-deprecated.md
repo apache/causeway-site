@@ -1,5 +1,7 @@
 Title: @Prototype
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@ActionLayout#restrictTo()](./ActionLayout.html)
 
 The `@Prototype` annotation marks an action method as available in

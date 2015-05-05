@@ -1,6 +1,8 @@
 How to add a collection to a domain entity
 ------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 A collection is a multi-valued attribute/field of a entity, in other
 words a `List` or a `Set`, containing references to other domain
 entities. `Map`s are not supported. Collections of value types are not

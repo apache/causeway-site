@@ -1,5 +1,7 @@
 Title: Restful Objects viewer
 
+[//]: # (content copied to _user-guide_xxx)
+
 The restfulobjects viewer provides a RESTful interface to the domain object model, running over the HTTP protocol, and implemented as a webapp (servlet).
 
 Each domain object (or part of object) is exposed as a RESTful resource, in a JSON representation.

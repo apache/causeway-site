@@ -1,5 +1,7 @@
 title: Events
 
+[//]: # (content copied to _user-guide_xxx)
+
 > The InteractionEvent hierarchy.
 
 Although not supported by the default programming model, the applib

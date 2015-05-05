@@ -1,6 +1,8 @@
 How to specify the order in which properties or collections are displayed
 -------------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This material more-or-less duplicates the information to be found in [here](../components/viewers/wicket/static-layouts.html).
 
 The `@MemberOrder` annotation provides a hint to the viewer as to the

@@ -1,6 +1,8 @@
 How to hide a collection
 ------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The mechanism for hiding a collection is broadly the same as for hiding
 a property <!--(see ?)--> or an action <!--(see ?)-->.
 

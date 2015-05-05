@@ -1,6 +1,8 @@
 How to validate user input for a property
 -----------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Declarative validation
 
 For properties that accept a text input string, such as `String` and

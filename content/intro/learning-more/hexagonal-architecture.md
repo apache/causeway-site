@@ -1,5 +1,7 @@
 Title: Hexagonal Architecture
 
+[//]: # (content copied to _user-guide_core-concepts_hexagonal-architecture)
+
 {stub
 This page is a stub.
 }

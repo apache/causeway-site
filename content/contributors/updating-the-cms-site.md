@@ -1,5 +1,7 @@
 Title: Updating the CMS site
 
+[//]: # (content copied to _user-guide_xxx)
+
 Apache Isis uses the Apache CMS to manage this website.
 
 ##About the Apache CMS

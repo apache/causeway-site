@@ -1,5 +1,7 @@
 Title: @Action
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `Action` annotation groups together all domain-specific metadata for an invokable action on a domain object or domain service:
 
 * `domainEvent` - specifies the subtype of the `ActionDomainEvent` that should be posted to the [Event Bus service](../services/event-bus-service.htm) to broadcast the action's business rule checking (hide, disable, validate) and its invocation (pre-execute and post-execution).

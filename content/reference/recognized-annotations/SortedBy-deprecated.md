@@ -1,5 +1,7 @@
 Title: @SortedBy
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@CollectionLayout#sortedBy](./CollectionLayout.html).
 
 The `@SortedBy` annotation is an instruction hint for (`SortedSet`) collections to use the specified comparator rather than the natural ordering of the entity

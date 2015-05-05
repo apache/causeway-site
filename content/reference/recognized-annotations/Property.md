@@ -1,5 +1,7 @@
 Title: @Property (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > stub
 
 The `@Property` annotation applies to properties collecting together all domain semantics within a single annotation.

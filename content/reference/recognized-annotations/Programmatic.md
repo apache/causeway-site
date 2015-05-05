@@ -1,5 +1,7 @@
 Title: @Programmatic
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@Programmatic` annotation causes the method to be excluded completely from the Apache Isis metamodel.  This means it won't appear in any UI, and it won't appear in any mementos/snapshots.
 
 A common use-case is to ignore implementation-level artifacts. For

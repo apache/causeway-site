@@ -1,6 +1,8 @@
 How to write a custom repository
 --------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Repositories are defined as interfaces within the domain, and their implementation will vary by object store. During prototyping and for much of development, you will probably find it easiest to use an in-memory object store or perhaps the XML object store, with only a small number of instances. The `DomainObjectContainer` provides a set of methods that make it easy to pull back all instances from the object store which can then be filtered as required. Later on, you can replace
 the implementation depending upon the specifics of the object store that you'll be using for production.
 

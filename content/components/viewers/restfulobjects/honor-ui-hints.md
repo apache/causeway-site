@@ -1,5 +1,7 @@
 Title: Honor UI Hints (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 {note
 These configuration settings should be considered beta, and are likely to change in the future in response to emerging requirements.
 }

@@ -1,5 +1,7 @@
 Title: Screencasts
 
+[//]: # (content copied to _user-guide_xxx)
+
 We've prepared some screencasts to help you quickly see what Apache Isis has to offer.
 
 <table class="table table-bordered table-hover">

@@ -1,5 +1,7 @@
 Title: Git Cookbook
 
+[//]: # (content copied to _user-guide_xxx)
+
 This page describes the commands often used while working with git.
 
 In addition to these basic commands, please make sure you have read:

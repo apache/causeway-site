@@ -1,5 +1,7 @@
 Title: Configuring the persistence.xml file
 
+[//]: # (content copied to _user-guide_getting-started_datanucleus-enhancer)
+
 > See also:
 >
 > * [how to use JDO/DataNucleus with Maven](./datanucleus-and-maven.html).  
@@ -41,14 +43,3 @@ If you do this, make sure that each project has its own `persistence.xml` file.
 
 And, if you are using Eclipse, remember also to configure Eclipse's DataNucleus plugin for these other domain projects; details can be found [here](./datanucleus-and-eclipse.html).
 
-## JDO Applib domain projects.
-
-The JDO objectstore also defines some of its own persistable domain entities, these being used in its implementation of the [Publishing Service](./services/publishing-service-jdo.html) and the [Settings Services](./services/settings-services-jdo.html).  These persistable domain entities are defined in the JDO applib, and must be enhanced.
-
-If just using released versions of Isis, then there is nothing to be done.
-
-However, if building Isis from source code and in Eclipse, and if using either of these services, then you must also configure Eclipse's DataNucleus plugin; details can be found [here](./datanucleus-and-eclipse.html).
-
-As the screenshot below shows, the `persistence-unit` name to configure is called `jdo-applib`:
-
-![](resources/jdo-applib-persistence-xml.png)

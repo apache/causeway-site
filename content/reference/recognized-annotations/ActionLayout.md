@@ -1,5 +1,7 @@
 Title: @ActionLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@ActionLayout` annotation applies to actions, collecting together all UI hints within a single
 annotation.
 

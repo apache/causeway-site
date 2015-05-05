@@ -1,5 +1,6 @@
 Title: Snapshot Release Process
 
+[//]: # (content copied to _user-guide_xxx)
 
 Apache Isis consists of a number of separately releasable modules; see the main [release process](release-process.html) documentation for full details.  All the non-core components depend on the `core`, and use the `core`'s parent `pom.xml` as their parent pom.
 

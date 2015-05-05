@@ -1,6 +1,8 @@
 Singleton &amp; request-scoped domain services
 -----------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Domain services (by which we also mean repositories and factories) consist of a set 
 of logically grouped actions, and as such follow the same conventions as for entities. However, a service cannot have (persisted) properties, nor can it have (persisted) collections.
 

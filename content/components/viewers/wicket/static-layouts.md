@@ -1,5 +1,7 @@
 Title: Static Layouts
 
+[//]: # (content copied to _user-guide_xxx)
+
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  Traditionally this metadata has been specified using annotations.
 
 > It's also possible to specify much UI metadata using a `.layout.json` file; see [dynamic layouts](./dynamic-layouts.html) for more details.  One benefit is that layout can be refreshed without recompiling/redeploying the app.  There's further discussion on this topic <a href="#pros-and-cons">below</a>.

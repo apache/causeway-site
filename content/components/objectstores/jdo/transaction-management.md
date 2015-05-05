@@ -1,5 +1,7 @@
 Title: Transaction Management
 
+[//]: # (content copied to _user-guide_more-advanced_transaction-mgmt-and-error-handling)
+
 In Isis, every action invocation (in fact, every interaction) is automatically wrapped in a transaction, and any repository query automatically does a flush.
 
 What that means is that there's no need to explicitly start or commit transactions in Isis; this will be done for you.  Indeed, if you do try to manage transactions (eg by reaching into the JDO PersistenceManager exposed by the [IsisJdoSupport service](services/isisjdosupport-service.html), then you are likely to confuse Isis and get a stack trace for your trouble.

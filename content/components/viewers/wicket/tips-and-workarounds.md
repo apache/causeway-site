@@ -1,5 +1,7 @@
 Title: Rendering of abstract properties in tables
 
+[//]: # (content copied to _user-guide_xxx)
+
 > For more info, see [ISIS-582](https://issues.apache.org/jira/browse/ISIS-582).
 
 Suppose you have a hierarchy of classes where a property is derived and abstract in the superclass, concrete implementations in the subclasses.  For example:

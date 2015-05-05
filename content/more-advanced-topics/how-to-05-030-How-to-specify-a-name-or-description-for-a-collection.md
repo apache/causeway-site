@@ -1,6 +1,8 @@
 How to specify a name and/or description for a collection
 ---------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Specifying the name for a collection
 
 By default the framework will use the collection name itself to label

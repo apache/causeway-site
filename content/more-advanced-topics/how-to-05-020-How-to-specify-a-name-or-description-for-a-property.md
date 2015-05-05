@@ -1,6 +1,8 @@
 How to specify a name and/or description for a property
 -------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Specifying the name for a property
 
 By default the framework will use the property name itself to label the

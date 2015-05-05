@@ -1,5 +1,7 @@
 Title: @DomainObjectLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@DomainObjectLayout` annotation applies to domain classes, collecting together all UI hints within a single
 annotation.
 

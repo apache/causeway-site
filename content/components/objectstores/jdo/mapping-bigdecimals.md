@@ -1,5 +1,7 @@
 Title: Mapping BigDecimals
 
+[//]: # (content copied to _user-guide_how-tos_class-structure_properties)
+
 Working with `java.math.BigDecimal` properties takes a little care due to scale/precision issues.
 
 For example, suppose we have:

@@ -1,5 +1,7 @@
 Title: @Title
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@Title` annotation is used to indicate which property or properties
 make up the object title. If more than one property is used, the order
 can be specified (using the same Dewey-decimal notation as used by

@@ -1,6 +1,8 @@
 How to suppress contributions to action parameters
 ------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 If a contributed action has multiple parameters, then that action will be contributed to each of the parameter types.
 While this will often be what you want (or at least harmless), on some occasions you may want to suppress the contributed
 action on one of those parameter types.

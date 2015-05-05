@@ -1,5 +1,7 @@
 Title: Versioning Policy
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Semantic Versioning
 
 Starting from v1.0.0, Isis has adopted [semantic versioning](http://semver.org)

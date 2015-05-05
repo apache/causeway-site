@@ -1,5 +1,7 @@
 Title: Disabling Modal Dialogs
 
+[//]: # (content copied to _user-guide_xxx)
+
 By default the Isis Wicket viewer uses a modal dialog for action parameters.  
 Before this feature was implemented (prior to 1.4.0), Isis rendered action parameters
 on its own page.  This old behaviour can be re-enabled using:

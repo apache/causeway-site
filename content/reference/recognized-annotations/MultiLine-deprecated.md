@@ -1,5 +1,7 @@
 Title: @MultiLine
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@PropertyLayout#multiLine()](./PropertyLayout.html) and [@ParameterLayout#multiLine()](./ParameterLayout.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 

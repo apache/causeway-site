@@ -1,5 +1,7 @@
 Title: Overriding Annotations
 
+[//]: # (content copied to _user-guide_more-advanced_assembling)
+
 The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by
  reading both annotations on the class and also by searching for metadata in XML files.  The metadata in the XML files
  takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.

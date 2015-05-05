@@ -1,5 +1,7 @@
 Title: @DescribedAs
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObjectLayout#describedAs()](./DomainObjectLayout.html), [@PropertyLayout#describedAs()](./PropertyLayout.html), [@CollectionLayout#describedAs()](./CollectionLayout.html), [@ActionLayout#describedAs()](./ActionLayout.html) and [@ParameterLayout#describedAs()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `@DescribedAs` annotation is used to provide a short description of

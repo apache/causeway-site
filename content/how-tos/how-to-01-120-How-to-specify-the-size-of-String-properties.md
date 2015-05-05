@@ -1,6 +1,8 @@
 How to specify the size of String properties
 --------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Use:
 
 -   the `@MaxLength` to specify the maximum number of characters that

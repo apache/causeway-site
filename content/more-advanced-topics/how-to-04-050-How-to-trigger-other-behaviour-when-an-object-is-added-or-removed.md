@@ -1,6 +1,8 @@
 How to trigger other behaviour when an object is added or removed
 -----------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 A collection may have a corresponding `addToXxx()` and/or
 `removeFromXxx()` method. If present, and direct manipulation of the
 contents of the connection has not been disabled (see ?), then they will

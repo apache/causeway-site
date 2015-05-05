@@ -1,5 +1,7 @@
 Title: @Debug
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Action#restrictTo()](./Action.html).
 
 The `@Debug` annotation marks an action method as available in debug mode

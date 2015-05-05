@@ -1,6 +1,8 @@
 How to trigger other behaviour when a property is changed
 ---------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 If you want to invoke functionality whenever a property is changed by
 the user, then you should create a supporting `modifyXxx()` method and
 include the functionality within that. The syntax is:

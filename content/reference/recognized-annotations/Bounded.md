@@ -1,5 +1,7 @@
 Title: @Bounded
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#bounded()](./DomainObject.html).
 
 For immutable objects where there is a bounded set of instances, the

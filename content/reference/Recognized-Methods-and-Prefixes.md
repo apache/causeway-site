@@ -1,5 +1,7 @@
 title: Recognized Methods and Prefixes
 
+[//]: # (content copied to _user-guide_xxx)
+
 The following table lists all of the methods or method prefixes that are
 recognized by *Apache Isis*' default programming model:
 

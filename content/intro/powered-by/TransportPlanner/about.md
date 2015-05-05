@@ -1,5 +1,7 @@
 Title: TransportPlanner Script
 
+[//]: # (content copied to _user-guide_xxx)
+
 ###Log in
 - log in with chris/pass
 - a user with less privileges is arne/pass (Arne is not allowed to plan. He represents a customer who only is able to create a transport demand)

@@ -1,5 +1,7 @@
 Title: Custom Pages
 
+[//]: # (content copied to _user-guide_xxx)
+
 The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:
 
 * through CSS (see [here](./how-to-tweak-the-ui-using-css-classes.html))

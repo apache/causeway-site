@@ -1,6 +1,8 @@
 How to insert behaviour into the object life cycle
 --------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 *Apache Isis* is responsible for managing the object lifecycle,
 persisting, updating or removing objects from the persistent object
 store as required. For many applications the domain objects are unaware

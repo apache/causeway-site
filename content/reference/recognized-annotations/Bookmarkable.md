@@ -1,5 +1,7 @@
 Title: @Bookmarkable
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#bookmarking()](./DomainObject.html).
 
 The `@Bookmarkable` annotation indicates that an entity or an action (with safe [action semantics](./ActionSemantics.html)) is automatically bookmarked.

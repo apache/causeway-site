@@ -1,5 +1,7 @@
 Title: @Immutable
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#editing()](./DomainObject.html).
 
 The `@Immutable` annotation may be applied to a class, and indicates to

@@ -1,5 +1,7 @@
 Title: @ObjectType
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#objectType()](./DomainObject.html).
 
 The `@ObjectType` annotation is used to provide a unique abbreviation for

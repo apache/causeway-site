@@ -1,6 +1,8 @@
 How to inject services into a domain entity or other service
 ------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Apache Isis autowires (automatically injects) domain services into each entity, as well as into the domain services themselves, using either method injection or field injection.  The applib `DomainObjectContainer` is also a service, so can be injected in exactly the same manner.
 
 ### Method Injection

@@ -1,6 +1,8 @@
 How to create or delete objects within your code
 ------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 When you create any domain object within your application code, it is
 important that the framework is made aware of the existence of this new
 object - in order that it may be persisted to the object store, and in

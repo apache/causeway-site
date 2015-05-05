@@ -1,5 +1,7 @@
 Title: @Hidden
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated.  For object members use [@PropertyLayout#hidden()](./PropertyLayout.html),  [@CollectionLayout#hidden()](./CollectionLayout.html), and [@ActionLayout#hidden()](./ActionLayout.html).  For domain servicesm use [@DomainService#nature()]
 
 The `@Hidden` annotation indicates that the member (property, collection

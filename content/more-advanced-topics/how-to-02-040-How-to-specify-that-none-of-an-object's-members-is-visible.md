@@ -1,6 +1,8 @@
 How to specify that none of an object's members is visible
 ----------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 To when an object is visible, provide a `hidden()` method:
 
     public class TrackingAction implements Tracking {

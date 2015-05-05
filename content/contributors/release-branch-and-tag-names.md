@@ -1,5 +1,7 @@
 Title: Release Branch and Tag Names
 
+[//]: # (content copied to _user-guide_xxx)
+
 As described in the [release process](release-process.html) documentation, each release of core or a component is prepared in a separate branch, and ultimately results in a tag in the central repo.
 
 In Isis the version numbers of core and each component can vary independently 

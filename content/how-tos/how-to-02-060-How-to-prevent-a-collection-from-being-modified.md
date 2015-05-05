@@ -1,6 +1,8 @@
 How to prevent a collection from being modified
 -----------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Preventing the user from adding to or removing from a collection is
 known as 'disabling' the collection.
 

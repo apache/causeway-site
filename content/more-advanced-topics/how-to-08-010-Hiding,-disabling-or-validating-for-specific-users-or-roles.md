@@ -1,6 +1,8 @@
 Hiding, disabling or validating for specific users or roles
 -----------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Generally it is not good practice to embed knowledge of roles and/or
 users into the domain classes; instead, this should be the
 responsibility of the framework or platform and should be specified and

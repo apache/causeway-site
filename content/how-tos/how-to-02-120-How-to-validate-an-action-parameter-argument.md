@@ -1,6 +1,8 @@
 How to validate an action parameter argument
 --------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Declarative validation
 
 For parameters that accept a text input string, such as `String` and

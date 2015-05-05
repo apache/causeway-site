@@ -1,6 +1,8 @@
 How to hide a property
 ----------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The mechanism for hiding a property is broadly the same as for hiding a
 collection <!--(see ?)--> or an action <!--(see ?)-->.
 

@@ -1,5 +1,7 @@
 Title: CommandContext
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `CommandContext` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service that reifies the invocation of an action on a domain object into an object itself.  This reified information is encapsulated within the `Command` object.
 
 By default, the `Command` is held in-memory only; once the action invocation has completed, the `Command` object is gone.  The optional

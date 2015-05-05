@@ -1,5 +1,7 @@
 Title: @FieldOrder (deprecated)
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@MemberOrder#sequence()](./MemberOrder.html) or [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 `@FieldOrder` provides a mechanism to specify the order in which fields

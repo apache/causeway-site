@@ -1,5 +1,7 @@
 Title: @MemberGroupLayout
 
+[//]: # (content copied to _user-guide_xxx)
+
 > See also [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 > **Support**

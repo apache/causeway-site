@@ -1,5 +1,7 @@
 title: How to auto-refresh an (entity) page (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 This requirement from the users mailing list:
 
 _Suppose you want to build a monitoring application, eg for an electricity grid.  Data is updated in the background (eg via the

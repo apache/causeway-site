@@ -1,5 +1,7 @@
 Title: Mapping Blobs (and Clobs)
 
+[//]: # (content copied to _user-guide_how-tos_class-structure_properties)
+
 > *Note:* prior to v1.5.0, the Isis mapping for `Blob`s and `Clob`s is broken (the mapping classes are not correctly registered with DataNucleus), and so the `Blob` or `Clob` are stored as a serialized Java object... not ideal.
 
 Isis configures JDO/DataNucleus so that the properties of type `org.apache.isis.applib.value.Blob` and `org.apache.isis.applib.value.Clob` can also be persisted.

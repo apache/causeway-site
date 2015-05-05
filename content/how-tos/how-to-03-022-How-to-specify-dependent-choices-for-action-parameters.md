@@ -1,6 +1,8 @@
 How to specify dependent choices for action parameters
 ------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Sometimes there is a dependency between the value of one parameter and the set of values to another.  For example, if selecting a particular category, then this implies a set of subcategories belonging to that category.  Or, if selecting a particular country, then this implies a set of states/counties within that country.
 
 To specify such a dependency, the `choicesNActionName()` can be overloaded with  the `N-1` preceding parameters. 

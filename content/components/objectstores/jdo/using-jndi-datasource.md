@@ -1,5 +1,7 @@
 Title: Using JNDI Datasource
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis' JDO objectstore can be configured either to connect to the database using its own connection pool, or by using a container-managed datasource.
 
 #### Application managed connections

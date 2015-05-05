@@ -1,5 +1,7 @@
 Title: ViewModels
 
+[//]: # (content copied to _user-guide_xxx)
+
 In most cases users can accomplish the business operations they need by invoking actions directly on domain entities.  For some high-volume or specialized uses cases, 
 though, there may be a requirement to bring together data or functionality that spans several entities.
 

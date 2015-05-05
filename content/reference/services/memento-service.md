@@ -1,5 +1,7 @@
 Title: Memento Service
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `MementoService` was originally introduced to simplify the implementation of [ViewModel](../../more-advanced-topics/ViewModel.html)s, which are required to return a string representation of all of their backing state, moreover which is safe for use within a URL.
 
 However, it can also be used to create a memento of arbitrary objects.  Indeed, it is used internally by the core implementation of [BackgroundService](./background-service.html) for capture the state of action invocations so that they can be executed by a background process.

@@ -1,6 +1,8 @@
 How to hide part of a title
 --------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Normally the visibility of doamin object properties is solely the framework viewers' concern; the domain objects do not
 need to know which class members are visible or not.
  

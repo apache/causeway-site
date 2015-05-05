@@ -1,5 +1,7 @@
 Title: @Exploration
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Action#restrictTo()](./Action.html).
 
 The `@Exploration` annotation marks an action method as available in

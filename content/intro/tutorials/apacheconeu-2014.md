@@ -1,5 +1,7 @@
 Title: Stop scaffolding, start coding
 
+[//]: # (content copied to _user-guide_xxx)
+
 {apacheconeu2014
 
 {note

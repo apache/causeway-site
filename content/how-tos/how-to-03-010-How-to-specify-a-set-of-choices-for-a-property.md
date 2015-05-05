@@ -1,6 +1,8 @@
 How to specify a set of choices for a property
 ----------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The simplest way to provide the user with a set of choices for a
 property (possibly rendered as a drop-down list, for example) is to
 ensure that the type used by the property is marked up as `@Bounded`

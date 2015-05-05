@@ -1,5 +1,7 @@
 Title: Query Results Cache
 
+[//]: # (content copied to _user-guide_xxx)
+
 The purpose of the `QueryResultsCache` is to improve response times to the user, by providing a short-term ([request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html)) cache of the value of some (safe or idempotent) method call.  This will typically be as the result of running a query, but could be any expensive operation.
 
 Caching such values is useful for code that loops "naively" through a bunch of stuff, performing an expensive operation each time.  If the data is such that the same expensive operation is made many times, then the query cache is a perfect fit.

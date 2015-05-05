@@ -1,5 +1,7 @@
 Title: @CssClass
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObjectLayout#cssClass()](./DomainObjectLayout.html), [@PropertyLayout#cssClass()](./PropertyLayout.html), [@CollectionLayout#cssClass()](./CollectionLayout.html), [@ActionLayout#cssClass()](./ActionLayout.html) and [@ParameterLayout#cssClass()](./ParameterLayout.html), or use [dynamic layouts](../../components/viewers/wicket/dynamic-layouts.html).
 
 The `CssClass` annotation applies to object and also to any object member 

@@ -1,5 +1,7 @@
 Title: @ParameterLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@ParameterLayout` annotation applies to action parameters, collecting together all UI hints within a single
 annotation.
 

@@ -1,5 +1,7 @@
 Title: Tutorials
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## Stop Scaffolding, Start Coding
 
 This [tutorial](apacheconeu-2014.html) was originally put together for Apache Con Europe 2014.

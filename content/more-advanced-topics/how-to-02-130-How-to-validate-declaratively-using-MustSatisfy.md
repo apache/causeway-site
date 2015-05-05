@@ -1,6 +1,8 @@
 How to validate declaratively using @MustSatisfy
 ------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@MustSatisfy` annotation is an alternative to using imperative
 validation, allowing validation rules to be captured in an
 (implementation of a) `org.apache.isis.applib.spec.Specification`.

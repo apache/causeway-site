@@ -1,5 +1,7 @@
 Title: Email Service (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The email service provides the ability to send emails to one or more recipients.  The framework also provides a default implementation that sends email as an HTML message, using an external SMTP provider.
 
 ## API

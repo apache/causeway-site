@@ -1,6 +1,8 @@
 How to ensure object is in valid state
 --------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 A `validate()` method may be added to provided validation at object level, prior to making an object persistent.
 
 The syntax is:

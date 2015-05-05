@@ -1,5 +1,7 @@
 Title: Release Checklist
 
+[//]: # (content copied to _user-guide_xxx)
+
 See also the [full release process](release-process.html) and [one-pager](release-process-one-pager.html).
 
 ## Checklist

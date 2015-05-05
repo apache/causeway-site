@@ -1,5 +1,7 @@
 Title: Recreating an Archetype
 
+[//]: # (content copied to _user-guide_xxx)
+
 Isis archetypes are reverse engineered from example applications.  Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.
 
 ### Setup environment variables

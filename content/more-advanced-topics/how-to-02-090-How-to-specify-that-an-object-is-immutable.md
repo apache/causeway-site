@@ -1,6 +1,8 @@
 How to specify that an object is immutable (that none of its members can ever be modified)
 ------------------------------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Some objects have state which should not be modifiable; for example
 those representing reference data. The viewer is expected to interpret
 this by which suppressing any sort of "edit" button.

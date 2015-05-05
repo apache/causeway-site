@@ -1,5 +1,7 @@
 Title: @NotInServiceMenu
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainService#nature()](./DomainService.html) to specify whether a service's actions are visible on the menu bar.
 
 The `@NotInServiceMenu` annotation applies only to action methods, and

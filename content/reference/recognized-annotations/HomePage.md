@@ -1,5 +1,7 @@
 Title: @HomePage
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Support
 >
 > Currently only by the Wicket viewer

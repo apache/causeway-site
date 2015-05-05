@@ -1,5 +1,7 @@
 Title: Editor Templates
 
+[//]: # (content copied to _user-guide_xxx)
+
 The following table lists various IDE templates (for IntelliJ and Eclipse) when writing Isis domain objects and unit tests:
 
 <table  class="table table-striped table-bordered table-condensed">

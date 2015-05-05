@@ -1,5 +1,7 @@
 Title: Common Use Cases
 
+[//]: # (content copied to _user-guide_xxx)
+
 ## <a name="screencast"></a>Screencast
 
 How Apache Isis builds a webapp from the underlying domain object model...

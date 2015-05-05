@@ -1,5 +1,7 @@
 Title: Auditing Service
 
+[//]: # (content copied to _user-guide_xxx)
+
 The auditing service provides a simple mechanism to capture changes to data.  It is called for each property that has changed on any domain object, as a set of pre- and post-values.
 
 ## API

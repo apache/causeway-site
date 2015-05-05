@@ -1,5 +1,7 @@
 Title: @RegEx
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Property#regex()](./Property.html) and [@Parameter#regex()](./Parameter.html).
 
 The `@RegEx` annotation may be applied to any string property, or to any

@@ -1,5 +1,7 @@
 Title: Customizing the Welcome Page
-    
+
+[//]: # (content copied to _user-guide_xxx)
+
 It's possible to customize the application name, welcome message and about message can also be customized.  This is done by adjusting the Guice bindings (part of Isis' bootstrapping) in your custom subclass of `IsisWicketApplication`:
 
     public class MyAppApplication extends IsisWicketApplication {

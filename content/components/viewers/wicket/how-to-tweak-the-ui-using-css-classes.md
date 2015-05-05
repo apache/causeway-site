@@ -1,5 +1,7 @@
 title: Tweaking the UI using CSS classes
 
+[//]: # (content copied to _user-guide_xxx)
+
 The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:
 
 * through CSS (described below)

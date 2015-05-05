@@ -1,5 +1,7 @@
 Title: @Bulk
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Action#invokeOn()](./Action.html).
 
 For actions that should only be applied to a collection of objects of

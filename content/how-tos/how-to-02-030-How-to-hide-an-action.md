@@ -1,6 +1,8 @@
 How to hide an action
 ---------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 The mechanism for hiding an action is broadly the same as for hiding a
 property <!--(see ?)--> or a collection <!--(see ?)-->.
 

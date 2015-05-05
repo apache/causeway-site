@@ -1,5 +1,7 @@
 Title: Brand Logo (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 By default the Wicket viewer will display the application name top-left in the header menu.  This can be changed to
 display a png logo instead.
 

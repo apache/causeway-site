@@ -1,6 +1,8 @@
 How to specify default values for an action parameter
 -----------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 When an action is about to be invoked, then default values can be
 provided for any or all of its parameters.
 

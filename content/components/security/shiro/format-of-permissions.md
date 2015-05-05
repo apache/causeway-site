@@ -1,5 +1,8 @@
 Title: Format of Permissions
 
+[//]: # (content copied to _user-guide_xxx)
+
+
 Shiro converts permission strings (as found in `WEB-INF/shiro.ini`) internally into `Permission` instances.
 
 The default implementation converts these strings to `WildcardPermission` instances, which allows permissions to be organized hierarchical and with wildcarding.  

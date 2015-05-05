@@ -1,5 +1,7 @@
 Title: Suppressing Password Reset (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 If [user registration](./user-registration.html) has been configured, then the Wicket viewer allows the user to
 sign-up a new account and to reset their password from the login page.
 

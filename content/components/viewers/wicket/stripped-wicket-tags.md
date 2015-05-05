@@ -1,5 +1,7 @@
 Title: Stripped Wicket Tags
 
+[//]: # (content copied to _user-guide_xxx)
+
 ##  1.8.0
 
 By default the Isis Wicket viewer will always strip wicket tags.  However, this behaviour can be overridden using a configuration setting.

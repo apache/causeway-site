@@ -1,5 +1,7 @@
 Title: Contributing
 
+[//]: # (content copied to _user-guide_xxx)
+
 This page explains how you can contribute to Apache Isis.  You'll probably also want [set up your development environment](development-environment.html) and learn [how to build Isis](building-isis.html). 
 
 Thanks for considering to help out, your contributions are appreciated!

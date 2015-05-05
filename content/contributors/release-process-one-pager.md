@@ -1,5 +1,7 @@
 Title: Release Process (1 pager)
 
+[//]: # (content copied to _user-guide_xxx)
+
 See also the [full release process](release-process.html) and the [release checklist](release-checklist.html).
 
 ## Switch to correct directory, parameterize the release

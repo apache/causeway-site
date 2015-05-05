@@ -1,5 +1,7 @@
 Title: @PropertyLayout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@PropertyLayout` annotation applies to properties collecting together all UI hints within a single annotation:
 
 * `cssClass` - the css class that a property should have, to allow more targetted styling in `application.css`

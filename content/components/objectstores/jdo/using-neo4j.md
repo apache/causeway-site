@@ -1,5 +1,7 @@
 Title: Using Neo4J (1.8.0).
 
+[//]: # (content copied to _user-guide_xxx)
+
 As of 1.8.0 Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' [Neo4J Datastore](http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html) implementation.
 
 The [simpleapp](../../../intro/getting-started/simpleapp-archetype.html) and [todoapp](../../../intro/getting-started/simpleapp-archetype.html) archetypes have been updated so that they can be optionally run under Neo4J.

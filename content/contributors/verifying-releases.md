@@ -1,5 +1,7 @@
 Title: Verifying Releases
 
+[//]: # (content copied to _user-guide_xxx)
+
 Whenever a committer announces a vote on a release on the [dev mailing list](../support.html), it is the responsibility of the project's PMC to cast their vote on the release.  Anyone else can also vote, but only members of the Apache Isis PMC's vote are binding.
 
 This page provides some guidance on what a voter is expected to verify before casting their vote. 

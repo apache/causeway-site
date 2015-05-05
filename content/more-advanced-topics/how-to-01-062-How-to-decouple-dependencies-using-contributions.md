@@ -1,6 +1,8 @@
 How to decouple dependencies using contributions
 ------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 In a small application (a dozen or less entities, say) there is little risk in having cyclic
 dependencies between entities, but as your application gets larger this coupling will cause problems - the inevitable [big ball of mud](http://en.wikipedia.org/wiki/Big_ball_of_mud).
 

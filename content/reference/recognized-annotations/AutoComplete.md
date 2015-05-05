@@ -1,5 +1,7 @@
 Title: @AutoComplete
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@DomainObject#autoCompleteRepository](./DomainObject.html).
 
 This annotation is to support an auto-complete capability for reference

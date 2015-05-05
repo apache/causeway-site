@@ -1,5 +1,7 @@
 Title: Icons
 
+[//]: # (content copied to _user-guide_xxx)
+
 Most Isis viewers use icons to help identify domain objects in the user interface.  It's a good idea to ensure that these are styled consistently.  To get you started, we couple of basic icon sets:
 
 * [haywood](https://github.com/apache/isis/blob/master/src/site/resources/images/icons/haywood.zip?raw=true)

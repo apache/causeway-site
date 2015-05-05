@@ -1,5 +1,7 @@
 Title: @Render
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@CollectionLayout#render()](./CollectionLayout.html)
 
 The `@Render` annotation is a hint for properties and collections to

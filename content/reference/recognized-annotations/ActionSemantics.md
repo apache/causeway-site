@@ -1,5 +1,7 @@
 Title: @ActionSemantics
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Action#semantics()](./Action.html).
 
 This annotation, which applies only to actions, describes whether the

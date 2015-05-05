@@ -1,5 +1,7 @@
 title: DomainObjectContainer interface
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Provides a single point of contact from domain objects into the
 > *Apache Isis* framework.
 

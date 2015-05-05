@@ -1,5 +1,7 @@
 Title: upd.sh script
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `upd.sh` script automates the downloading of the zip, asc and md5 scripts from the official Apache repository.
 
 To use:

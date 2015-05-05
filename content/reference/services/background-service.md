@@ -1,5 +1,7 @@
 Title: Background Service
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `BackgroundService`, and its companion `BackgroundCommandService`, enable action invocations to be persisted such that they may be invoked in the background.
  
 The `BackgroundService` is responsible for capturing a memento representing the action invocation, and persisting it.  The default `BackgroundServiceDefault` implementation (provided by isis-core) uses (a private copy of) [MementoService](./memento-service.html), and then delegates the persistence of the memento to an appropriate implementation of the companion `BackgroundCommandService`.  One such implementation is `isis-module-command-jdo`'s [BackgroundCommandServiceJdo](./background-command-service.html).

@@ -1,5 +1,7 @@
 Title: @ActionInteraction
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Action#domainEvent()](./Action.html).
 
 The `@ActionInteraction` annotation applies to domain entity actions, allowing

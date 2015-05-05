@@ -1,6 +1,8 @@
 How to specify names and/or descriptions for an action parameter
 ----------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Unlike with properties, the framework cannot pick up the names of
 parameters that you use within the domain code. By default parameters
 will be labelled only with the type of the object required (e.g.

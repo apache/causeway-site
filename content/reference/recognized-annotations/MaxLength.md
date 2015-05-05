@@ -1,5 +1,7 @@
 Title: @MaxLength
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Property#maxLength()](./Property.html) and [@Parameter#maxLength()](./Parameter.html) .
 
 The `@MaxLength` annotation indicates the maximum number of characters

@@ -1,5 +1,7 @@
 Title: PMC Notes
 
+[//]: # (content copied to _user-guide_xxx)
+
 > These are some general jottings on occasionally performed tasks by the PMC
 
 ASF documents can be found [here](http://www.apache.org/dev/pmc.html)

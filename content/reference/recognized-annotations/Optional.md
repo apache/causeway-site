@@ -1,5 +1,7 @@
 Title: @Optional
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, use instead [@Property#optionality()](./Property.html) and [@Parameter#optionality()](./Parameter.html).
 
 By default, the system assumes that all properties of an object are

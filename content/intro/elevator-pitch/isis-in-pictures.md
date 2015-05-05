@@ -1,5 +1,7 @@
 Title: Dynamically builds the UI
 
+[//]: # (content copied to _user-guide_xxx)
+
 {isis-in-pictures
 
 Isis dynamically builds a generic UI directlyo from the underlying domain objects.  It works by building an internal metamodel that describes the structure and behaviour of the domain objects, and then uses this metamodel to render the objects.  You can think of it as akin to an object-relational mapper; however rather than projecting the domain objects into a database, it projects them onto a web page.

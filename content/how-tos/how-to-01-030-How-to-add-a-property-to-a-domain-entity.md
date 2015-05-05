@@ -1,6 +1,8 @@
 How to add a property to a domain entity
 ----------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 A property is a scalar attribute or field of a domain entity. Its type
 can be either a value type (such as an int, Date or String), or a
 reference to another entity.

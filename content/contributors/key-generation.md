@@ -1,5 +1,7 @@
 Title: Key Generation
 
+[//]: # (content copied to _user-guide_xxx)
+
 In order that a contributor can make a release it is necessary for them to have generated a key and had that key recognized by other members of the Apache Software Foundation. 
 
 For further background information on this topic, see the [release signing page](http://www.apache.org/dev/release-signing.html) and the [openpgp page](http://www.apache.org/dev/openpgp.html#generate-key) on the Apache wiki.

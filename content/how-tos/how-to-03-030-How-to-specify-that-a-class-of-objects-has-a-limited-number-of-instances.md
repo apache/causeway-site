@@ -1,6 +1,8 @@
 How to specify that a class of objects has a limited number of instances
 ------------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Sometimes an entity may only have a relatively small number of
 instances, for example the types of credit cards accepted (Visa,
 Mastercard, Amex). Viewers will typically expected to render the

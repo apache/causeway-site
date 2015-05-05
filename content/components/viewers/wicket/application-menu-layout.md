@@ -1,5 +1,7 @@
 Title: Application menu layout (1.8.0)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The actions of domain services are made available as an application menu bar.  By default each domain service
 corresponds to a single menu on this menu bar, with its actions as the drop-down menu items.  This is rarely exactly
 what is required, however.  The `@MemberOrder` and `@DomainServiceLayout` annotations can be used to rearrange the

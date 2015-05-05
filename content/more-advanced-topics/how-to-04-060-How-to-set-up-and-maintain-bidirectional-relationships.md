@@ -1,6 +1,8 @@
 How to set up and maintain bidirectional relationships
 ------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 > **Note**: 
 > 
 > If using the [JDO Objectstore](../../components/objectstores/jdo/about.html) then there is generally no need to explicitly maintain bidirectional relationships.  Indeed, doing so may cause subtle errors.  See [here](../../components/objectstores/jdo/managed-1-to-m-relationships.html) for more details.

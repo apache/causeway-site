@@ -1,5 +1,7 @@
 Title: Wicket viewer
 
+[//]: # (content copied to _user-guide_xxx)
+
 The wicket viewer provides a customizable webapp for an Isis domain model, implemented using the [Apache Wicket](http://wicket.apache.org) web framework.
 
 ## Releases

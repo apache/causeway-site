@@ -1,6 +1,8 @@
 SudoService (1.9.0-SNAPSHOT)
 ===========
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `SudoService` allows the current user reported by the `DomainObjectContainer` to be temporarily changed to some 
 other user.  This is valuable during both integration testing (eg if testing a workflow system whereby objects are
 moved from one user to another) and during fixture scripts (eg setting up objects that would normally require several

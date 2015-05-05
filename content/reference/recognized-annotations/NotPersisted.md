@@ -1,5 +1,7 @@
 Title: @NotPersisted
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@NotPersisted` annotation indicates that the property is not to be
 persisted.
 

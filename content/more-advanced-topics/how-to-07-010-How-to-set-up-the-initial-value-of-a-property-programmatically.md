@@ -1,6 +1,8 @@
 How to set up the initial value of a property programmatically
 --------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 After an object has been created <!--(see ?)-->, there are several different
 ways to setup the initial values for an object's properties.
 

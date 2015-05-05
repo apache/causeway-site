@@ -1,5 +1,7 @@
 Title: Scratchpad
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `Scratchpad` service is a [request-scoped](../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html) service to allow objects to exchange information even if they do not directly call each other.
 
 ### API & Implementation

@@ -1,5 +1,7 @@
 Title: Value Types
 
+[//]: # (content copied to _user-guide_xxx)
+
 The state of any given entity is characterized by properties <!--(?)--> and
 collections <!--(?)-->. A collections is a one-to-many reference to another
 entities, while a property is either a one-to-one reference to another

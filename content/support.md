@@ -1,5 +1,7 @@
 Title: Support
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Mailing Lists
 
 Apache Isis has two public mailing lists.

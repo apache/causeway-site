@@ -1,6 +1,8 @@
 Fixture Scripts
 ===============
 
+[//]: # (content copied to _user-guide_xxx)
+
 Fixture scripts are intended to support development and testing, by setting up the system into a known state.   A 
 fixture script is invoked using a "fixture script" service, and typically invokes business actions on domain objects, 
 either directly, or by delegating to child fixture scripts (the composite pattern).

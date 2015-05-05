@@ -1,5 +1,7 @@
 Title: Step-by-step tutorial: Petclinic
 
+[//]: # (content copied to _user-guide_xxx)
+
 {step-by-step
 
 {note

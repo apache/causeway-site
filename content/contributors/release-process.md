@@ -1,5 +1,7 @@
 Title: Formal Release Process
 
+[//]: # (content copied to _user-guide_xxx)
+
 This page details the process for formally releasing Isis modules.
 
 If you've done this before and just want the bare essentials, see this [one-pager](release-process-one-pager.html)

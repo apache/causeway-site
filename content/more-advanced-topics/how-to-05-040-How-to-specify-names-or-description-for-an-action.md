@@ -1,6 +1,8 @@
 How to specify names and/or description for an action
 -----------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 ### Specifying the name for an action
 
 By default the framework will use the action name itself to label the

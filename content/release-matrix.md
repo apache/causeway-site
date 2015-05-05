@@ -1,5 +1,7 @@
 Title: Release Matrix
 
+[//]: # (content copied to _user-guide_xxx)
+
 {release-matrix
 
 As of 1.8.0, all components are incorporated into Isis core.  The only dependency is that the [simpleapp archetype](intro/getting-started/simpleapp-archetype.html) depends on core.

@@ -1,5 +1,7 @@
 Title: Background Command Service (isis-module-command-jdo)
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `BackgroundCommandService` supports the [BackgroundService](./background-service.html), persisting action invocations as commands such that they can subsequently be invoked in the background.
  
 The `BackgroundService` is responsible for capturing a memento representing the action invocation, and then hands off to the `BackgroundCommandService` to actually persist it.  The `isis-module-command-jdo` module provides an implementation of `BackgroundCommandService` ([BackgroundCommandServiceJdo](../../components/objectstores/jdo/services/background-command-service-jdo.html)) that persists to an RBMS entities.

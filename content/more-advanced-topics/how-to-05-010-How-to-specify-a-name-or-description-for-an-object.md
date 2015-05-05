@@ -1,6 +1,8 @@
 How to specify a name and/or description for an object
 ------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 By default, the name (or type) of an object, as displayed to the user
 will be the class name. However, if an `@Named` annotation is included,
 then this will override the default name. This might be used to include

@@ -1,5 +1,7 @@
 Title: @MinLength
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@MinLength` annotation is used to specify the minimum number of characters in a search of an [auto-complete](../../how-tos/how-to-03-025-How-to-specify-an-autocomplete-for-an-action-parameter.html).
 
 For example:

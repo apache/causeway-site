@@ -1,5 +1,7 @@
 Title: @ViewModel
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `@ViewModel` annotation, applied to a class, is the simplest way to indicate that the class is a view model.
 View models are not persisted to the database, instead their state is encoded within their identity (ultimately
 represented in the URL).  As such, view models are immutable.

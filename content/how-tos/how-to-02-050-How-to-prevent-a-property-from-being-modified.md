@@ -1,6 +1,8 @@
 How to prevent a property from being modified
 ---------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Preventing the user from modifying a property value is known as
 'disabling' the property. Note that this doesn't prevent the property
 from being modified programmatically.

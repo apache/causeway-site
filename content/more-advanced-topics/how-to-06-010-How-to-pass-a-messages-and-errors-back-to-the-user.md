@@ -1,6 +1,8 @@
 How to pass a messages and errors back to the user
 --------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Sometimes, within an action it is necessary or desirable to pass a
 message to the user, for example to inform them of the results of their
 action ('5 payments have been issued') or that the action was not

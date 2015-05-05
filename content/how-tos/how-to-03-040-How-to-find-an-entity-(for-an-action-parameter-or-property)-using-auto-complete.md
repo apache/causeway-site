@@ -1,6 +1,8 @@
 How to find an entity (for an action parameter or property) using auto-complete
 -------------------------------------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 Some viewers (eg the Wicket viewer) allow an entity to be specified (as
 an argument for an action parameter, or as the new value of a property)
 by enabling the user to type its title. The framework then searches for

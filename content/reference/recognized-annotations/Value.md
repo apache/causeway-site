@@ -1,5 +1,7 @@
 Title: @Value
 
+[//]: # (content copied to _user-guide_xxx)
+
 > This annotation has partial/incomplete support.
 
 The `@Value` annotation indicates that a class should be treated as a

@@ -1,5 +1,7 @@
 Title: Deployment Types
 
+[//]: # (content copied to _user-guide_xxx)
+
 The `deploymentType` configuration setting is used to specify whether Isis is running in development mode or production mode (similar to Apache Wicket's concept of the application's [configuration type](http://ci.apache.org/projects/wicket/apidocs/6.0.x/org/apache/wicket/Application.html#getConfigurationType()).
 
 The most notable thing that varies by `deploymentType` is simply whether actions annotated with [@Prototype](./recognized-annotations/Prototype-deprecated.html) are visible.

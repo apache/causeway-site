@@ -1,5 +1,7 @@
 Title: @Mask
 
+[//]: # (content copied to _user-guide_xxx)
+
 > Deprecated, never supported.
 
 

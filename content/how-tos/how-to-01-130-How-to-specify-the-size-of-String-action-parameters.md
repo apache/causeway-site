@@ -1,6 +1,8 @@
 How to specify the size of String action parameters
 ---------------------------------------------------
 
+[//]: # (content copied to _user-guide_xxx)
+
 As for properties (see ?), use:
 
 -   the `@MaxLength` to specify the maximum number of characters that

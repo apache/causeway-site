@@ -1,5 +1,7 @@
 Title: Suppressing Remember Me
 
+[//]: # (content copied to _user-guide_xxx)
+
 The 'remember me' checkbox on the login page can be suppressed, if required, by setting a configuration flag.
 
 ##Screenshots
