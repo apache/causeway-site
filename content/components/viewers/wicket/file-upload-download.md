@@ -1,6 +1,6 @@
 Title: File upload/download
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_features)
 
 The Isis application library provides the [Blob](../../../reference/value-types.html) type (binary large objects) and 
 [Clob](../../../reference/value-types.html) type (character large object), each of which also includes metadata about the data (specifically the filename and mime type).

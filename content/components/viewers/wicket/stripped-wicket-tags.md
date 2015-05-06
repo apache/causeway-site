@@ -1,6 +1,6 @@
 Title: Stripped Wicket Tags
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_configuration_properties)
 
 ##  1.8.0
 

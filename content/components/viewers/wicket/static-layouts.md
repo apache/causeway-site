@@ -1,6 +1,6 @@
 Title: Static Layouts
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_layout_static-object-layout)
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  Traditionally this metadata has been specified using annotations.
 

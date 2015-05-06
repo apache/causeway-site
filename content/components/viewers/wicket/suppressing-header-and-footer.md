@@ -1,6 +1,6 @@
 Title: Suppressing Header and Footer (Embedded View) (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_request-parameters)
 
 The Wicket viewer provides some support such that an Isis application can be
 embedded within a host webapp, for example within an iframe.  

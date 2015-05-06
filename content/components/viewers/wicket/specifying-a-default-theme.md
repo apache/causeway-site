@@ -1,6 +1,6 @@
 Title: Specifying a Default Theme (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_customisation)
 
 The Isis Wicket viewer uses [Bootstrap](http://getbootstrap.com/) styles and components (courtesy of the 
 [Wicket Bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap) integration).

@@ -1,6 +1,6 @@
 Title: Rendering of abstract properties in tables
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_more-advanced_tips-n-tricks_render-all-properties-in-tables)
 
 > For more info, see [ISIS-582](https://issues.apache.org/jira/browse/ISIS-582).
 

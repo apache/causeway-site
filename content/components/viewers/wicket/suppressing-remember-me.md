@@ -1,6 +1,6 @@
 Title: Suppressing Remember Me
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_configuration_properties)
 
 The 'remember me' checkbox on the login page can be suppressed, if required, by setting a configuration flag.
 

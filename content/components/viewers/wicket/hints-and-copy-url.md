@@ -1,6 +1,6 @@
 Title: Copy URL and Hints
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_features)
 
 While the user can often copy the URL of a domain object directly from the browser's address bar, the Wicket viewer also allows the URL of domain objects to be easily copied from a dialog. 
 
@@ -14,7 +14,7 @@ The copy URL and hinting is automatic.
 
 #### Copy URL
 
-The following screenshot, taken from the [Estatio](https://github.com/estatio/estatio) application, shows the copy URL button (top right):
+The following screenshot, taken from the link:https://github.com/estatio/estatio[Estatio] application, shows the copy URL button (top right):
 
 <a href="images/copy-link/010-copy-link-button.png"><img src="images/copy-link/010-copy-link-button-940.png"/></a>
 

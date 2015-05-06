@@ -1,6 +1,6 @@
 Title: Custom Pages
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_extending_wicket-viewer)
 
 The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:
 

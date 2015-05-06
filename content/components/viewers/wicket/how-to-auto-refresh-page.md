@@ -1,6 +1,6 @@
 title: How to auto-refresh an (entity) page (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_customisation)
 
 This requirement from the users mailing list:
 

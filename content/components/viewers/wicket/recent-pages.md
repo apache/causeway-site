@@ -1,6 +1,6 @@
 Title: Recent Pages
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_features)
 
 The Wicket viewer provides a recent pages drop-down that acts as a breadcrumb trail.  Using it, the user can quickly open a recently accessed domain object.
 

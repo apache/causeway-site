@@ -1,6 +1,6 @@
 Title: Tweaking the UI using Javascript
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_customisation)
 
 The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:
 

@@ -1,6 +1,6 @@
 Title: Dynamic Layouts
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_layout_dynamic-object-layout)
 
 Because Isis implements the [naked objects pattern](http://en.wikipedia.org/wiki/Naked_objects), the domain objects are rendered in the UI based only metadata gleaned from the domain classes themselves.  Traditionally this metadata has been specified [statically](./static-layouts.html), using annotations.  However, it is also possible to specify it using a JSON file.  This brings the advantage that the layout can be refreshed dynamically, without recompiling/redeploying the app.
 
