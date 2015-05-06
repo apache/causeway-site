@@ -1,6 +1,6 @@
 Title: Format of Permissions
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_configuration_configuring-shiro)
 
 
 Shiro converts permission strings (as found in `WEB-INF/shiro.ini`) internally into `Permission` instances.

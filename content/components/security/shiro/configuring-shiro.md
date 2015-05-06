@@ -1,6 +1,6 @@
 Title: Configuring Isis to use Shiro
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_configuration_configuring-shiro)
 
 
 ### Example Configuration

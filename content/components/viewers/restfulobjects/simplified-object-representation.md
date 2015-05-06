@@ -1,6 +1,6 @@
-Title: Simplified Object Representation (1.8.0)
+Title: Simplified Object Representation
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_restful-objects-viewer)
 
 > Enabling these settings makes the representations non-standard with respect to the [Restful Object spec](http://restfulobjects.org).
 

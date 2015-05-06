@@ -1,6 +1,6 @@
-Title: Suppressing Elements of the Representations (1.8.0)
+Title: Suppressing Elements of the Representations
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_restful-objects-viewer)
 
 > Enabling these settings makes the representations non-standard with respect to the [Restful Object spec](http://restfulobjects.org).
 > In the future the spec may be updated to allow such extensions.

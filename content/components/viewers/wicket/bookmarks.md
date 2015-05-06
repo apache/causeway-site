@@ -1,6 +1,6 @@
 Title: Bookmarks
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer)
 
 The Wicket viewer supports the bookmarking of both domain objects and [safe](../../../reference/recognized-annotations/ActionSemantics.html) (query-only) actions.  
 

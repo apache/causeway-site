@@ -1,6 +1,6 @@
 Title: Disabling Persistence by Reachability
 
-[//]: # (content copied to _user-guide_configuration-properties_datanucleus-objectstore_disabling-persistence-by-reachability)
+[//]: # (content copied to _user-guide_configuration_properties_datanucleus-objectstore_disabling-persistence-by-reachability)
 
 By default, JDO/DataNucleus supports the concept of [persistence-by-reachability](http://www.datanucleus.org/products/datanucleus/jdo/orm/cascading.html).  That is, if
 a non-persistent entity is associated with an already-persistent entity, then DataNucleus will detect this and will automatically persist the associated object.  Put another way: there is no need to call Isis' `DomainObjectContainer#persist(.)` or `DomainObjectContainer#persistIfNotAlready(.)` methods.

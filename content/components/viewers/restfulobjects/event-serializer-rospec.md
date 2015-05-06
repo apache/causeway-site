@@ -1,6 +1,6 @@
 Title: Event Serializer for the RO Spec
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_isis-addons-modules)
 
 The [Publishing Service](../../../reference/services/publishing-service.html) enables Isis to publish action invocations and also changes of domain objects to third party systems.
 

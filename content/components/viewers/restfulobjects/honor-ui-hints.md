@@ -1,6 +1,6 @@
-Title: Honor UI Hints (1.8.0)
+Title: Honor UI Hints 
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_restful-objects-viewer)
 
 {note
 These configuration settings should be considered beta, and are likely to change in the future in response to emerging requirements.

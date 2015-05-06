@@ -1,6 +1,6 @@
 Title: Transaction Management
 
-[//]: # (content copied to _user-guide_more-advanced_transaction-mgmt-and-error-handling)
+[//]: # (content copied to _user-guide_more-advanced_transactions-and-errors)
 
 In Isis, every action invocation (in fact, every interaction) is automatically wrapped in a transaction, and any repository query automatically does a flush.
 

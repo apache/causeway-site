@@ -1,6 +1,6 @@
 Title: Using Neo4J (1.8.0).
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_more-advanced_neo4j)
 
 As of 1.8.0 Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' [Neo4J Datastore](http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html) implementation.
 
