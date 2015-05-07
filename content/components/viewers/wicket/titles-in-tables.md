@@ -1,6 +1,6 @@
 Title: Titles in Tables
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_features and to _user-guide_wicket-viewer_configuration_properties)
 
 Object titles can often be quite long if the intention is to uniquely identify the object.  While this is appropriate for the object view, it can be cumbersome within tables.
 

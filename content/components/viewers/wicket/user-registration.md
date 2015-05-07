@@ -1,6 +1,6 @@
 Title: User Registration (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_wicket-viewer_features)
 
 The Wicket viewer provides the ability for users to sign-up by providing a valid email address:
 
