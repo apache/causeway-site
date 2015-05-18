@@ -1,6 +1,6 @@
 Title: Standardized Font-Awesome Icons and CSS s (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_how-tos_ui-hints_action-icons-and-css)
 
 > this is a stub
 

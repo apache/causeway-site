@@ -1,6 +1,6 @@
 Title: Dynamic Layout Metadata Reader
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_extending_programming-model_layout-metadata-reader)
 
 > this is a stub.  See also the [built-in support](../components/viewers/wicket/dynamic-layouts.html) for reading metadata from `Xxx.layout.json` files.
 

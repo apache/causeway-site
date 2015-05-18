@@ -1,6 +1,6 @@
 Title: Using Shiro with an LDAP Server
 
-[//]: # (content copied to _user-guide_configuration_configuring-shiro)
+[//]: # (content copied to _user-guide_security_configuring-shiro)
 
 
 Isis ships with an implementation of [Apache Shiro](http://shiro.apache.org)'s `Realm` class that allows user authentication and authorization to be performed against an LDAP server.
@@ -70,7 +70,7 @@ where `myroles.ini` is in `src/main/resources/webapp`, and takes the form:
 
 This separation of the role/mapping can be useful if Shiro is configured to support multiple realms (eg an LdapRealm based one and also an TextRealm)
 
-### Active DS LDAP Configuration
+### Setting up LDAP accounts using Apache Directory Studio
 
 The screenshot below shows the ApacheDS using Apache Directory Studio.  The setup here was initially base on [this tutorial](http://krams915.blogspot.co.uk/2011/01/ldap-apache-directory-studio-basic.html).  However, user accounts have been moved to a separate node.
 
@@ -114,6 +114,7 @@ This is, unfortunately, a Shiro "feature".  The only solution to this is to use 
 Use this technique for both group to roles mapping and role to permission mapping. If you use the '\' after the "," that separates the key:value pairs it is more readable.
 
 If you repeat the entries above then it's "last one wins".
+
 
 
 > **Note** you can't use a [roles] section because that triggers Shiro to use the simple "INI" realm and not your defined realm (in most cases you are going to use an LDAP realm in an enterprise environment and the "simple" realm in Shiro isn't much use beyond prototyping work).

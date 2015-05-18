@@ -1,6 +1,6 @@
 Title: Integration testing Support
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_testing_integ-test-support)
 
 > See also Isis' [BDD support](specsupport-and-integtestsupport.html).
 

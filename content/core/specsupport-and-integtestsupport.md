@@ -1,6 +1,6 @@
 Title: BDD Specs and Integration testing Support
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_testing_bdd-spec-support)
 
 > This new feature replaces the integration test support provided in 1.2.0.  Please note that some small changes to your tests will be required.
 

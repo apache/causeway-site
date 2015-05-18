@@ -1,6 +1,6 @@
 Title: Eagerly Registering Entity Types
 
-[//]: # (content copied to _user-guide_configuration_properties_datanucleus-objectstore_eagerly-registering-entities)
+[//]: # (content copied to _user-guide_runtime_configuring-datanucleus_eagerly-registering-entities)
 
 *in 1.6.0 and 1.7.0, this feature may be (partly?) broken; see [ISIS-847](https://issues.apache.org/jira/browse/ISIS-847)*
 

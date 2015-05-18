@@ -1,6 +1,6 @@
 Title: Internationalization (i18n) support (1.8.0)
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_more-advanced_i18n)
 
 As of 1.8.0 (ISIS-903), Isis' support for i18n has been re-implemented
 to use GNU [gettext](https://www.gnu.org/software/gettext/manual/index.html) `.pot` and `.po` 

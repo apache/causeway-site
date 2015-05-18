@@ -1,6 +1,6 @@
 Title: Custom Validator
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_extending_programming-model_custom-validator)
 
 > this is a stub
 

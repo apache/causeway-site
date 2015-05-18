@@ -1,6 +1,6 @@
 Title: Fine-tuning the Programming Model
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_extending_programming-model_finetuning)
 
 ## Core MetaModel
 

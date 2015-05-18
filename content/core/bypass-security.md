@@ -1,5 +1,7 @@
 Title: Bypass Security
 
+[//]: # (content copied to _user-guide_security)
+
 {stub
 This page is a stub.
 }
