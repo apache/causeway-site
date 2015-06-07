@@ -36,8 +36,8 @@ For example:
     public class Exam {
         public int getMark() { ... }
         public void setMark(int mark) { ... }
-        public validateMark(int mark) {
-            return !withinRange(mark)? "Mark must be in range 0 to 30":null;
+        public String validateMark(int mark) {
+            return !withinRange(mark)? "Mark must be in range 0 to 30": null;
         }
         private boolean withinRange(int mark) { return mark >= 0 && mark <= 30; }
     }
