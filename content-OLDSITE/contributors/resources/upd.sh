@@ -1,3 +1,4 @@
+#!/bin/bash
 #################################################################
 #
 # update the variables in this first section as required; 

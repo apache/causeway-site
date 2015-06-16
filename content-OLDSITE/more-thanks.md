@@ -7,7 +7,7 @@ In addition to the [support given to Apache Foundation as a whole](http://www.ap
 <table class="table table-bordered table-condensed table-hover">
 <tr>
     <td style="background-color: #426779">
-        <a href="<a href="http://www.eurocommercialproperties.com/"><img src="http://www.eurocommercialproperties.com/assets/images/logos/logo.png"></a>
+        <a href="<a href="http://www.eurocommercialproperties.com/"><img src="images/more-thanks/ecp.png"></a>
     </td>
     <td style="padding: 10px">
         <a href="http://www.eurocommercialproperties.com/">Eurocommercial Properties</a>, for sponsoring the development of Isis in support of the <a href="getting-started/powered-by/powered-by.html">Estatio</a> estate management application.  Our heart-felt thanks.

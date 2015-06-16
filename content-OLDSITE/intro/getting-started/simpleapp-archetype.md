@@ -1,8 +1,10 @@
 Title: SimpleApp Archetype
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_getting-started_simpleapp-archetype)
 
 The quickest way to get started with Apache Isis is to run the simple archetype.  This will generate a very simple one-class domain model, called `SimpleObject`, with a single property `name`.  There is also a corresponding `SimpleObjectRepository` domain service.  From this you can easily rename these initial classes, and extend to build up your own Isis domain application.
+
+
 
 ## Generating the App (stable release)
 

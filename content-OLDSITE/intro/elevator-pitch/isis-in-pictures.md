@@ -1,6 +1,6 @@
 Title: Dynamically builds the UI
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_isis-in-pictures)
 
 {isis-in-pictures
 

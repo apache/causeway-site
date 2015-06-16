@@ -1,6 +1,6 @@
 Title: Common Use Cases
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _user-guide_core-concepts_other-deployment-options)
 
 ## <a name="screencast"></a>Screencast
 

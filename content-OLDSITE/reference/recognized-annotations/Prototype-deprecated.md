@@ -2,7 +2,7 @@ Title: @Prototype
 
 [//]: # (content copied to _user-guide_xxx)
 
-> Deprecated, use instead [@ActionLayout#restrictTo()](./ActionLayout.html)
+> Deprecated, use instead [@Action#restrictTo()](./Action.html)
 
 The `@Prototype` annotation marks an action method as available in
 prototype mode only, and therefore not intended for use in the

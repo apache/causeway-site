@@ -1,5 +1,7 @@
 Title: Setting up Eclipse (with JDO/DataNucleus)
 
+[//]: # (content copied to _user-guide_appendices_xxx)
+
 > See also:
 > 
 > * setting up [IntelliJ IDE](./intellij.html).  

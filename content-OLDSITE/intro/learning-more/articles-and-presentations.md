@@ -1,6 +1,6 @@
 Title: Articles, Conference Sessions, Podcasts
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content to copy to ???)
 
 Some articles and recorded material relating to either Apache Isis (or its predecessor, the Naked Objects framework), or its 'sister' open source project on the .NET platform, Naked Objects .NET.  We've **highlighted** some of the better ones...
 
