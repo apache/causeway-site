@@ -849,8 +849,8 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="ini">isis.services = \
-    # customizable exception handling, \
-    org.apache.isis.objectstore.jdo.applib.service.exceprecog.ExceptionRecognizerCompositeForJdoObjectStore,\   <i class="conum" data-value="1"></i><b>(1)</b>
+    # \
+    #org.apache.isis.objectstore.jdo.applib.service.exceprecog.ExceptionRecognizerCompositeForJdoObjectStore,\   <i class="conum" data-value="1"></i><b>(1)</b>
     #</code></pre>
 </div>
 </div>
@@ -858,32 +858,21 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remove/comment out this line</td>
+<td>remove this line (or comment it out, as shown)</td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>in integration tests, if the service is explicitly registered, then it should be removed:<br></p>
+<p>in integration tests, if the service is explicitly registered, then it should be removed; for example:<br></p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">EstatioIntegTestBuilder</span> <span class="directive">extends</span> IsisSystemForTest.Builder {
-
     <span class="directive">public</span> EstatioIntegTestBuilder() {
-
-        <span class="comment">// no need to add, because each test will set up its own test fixtures</span>
-        <span class="comment">// anyway.</span>
-        withLoggingAt(<span class="predefined-type">Level</span>.DEBUG);
-        with(testConfiguration());
-        with(<span class="keyword">new</span> DataNucleusPersistenceMechanismInstaller());
-
-        withServicesIn(
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">org.estatio</span><span class="delimiter">&quot;</span></span>,
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">org.isisaddons</span><span class="delimiter">&quot;</span></span>
+        ...
+        withServices(
+        <span class="comment">//    new ExceptionRecognizerCompositeForJdoObjectStore()   </span><i class="conum" data-value="1"></i><b>(1)</b>
         );
-
-        <span class="comment">//withServices(</span>
-        <span class="comment">//        new ExceptionRecognizerCompositeForJdoObjectStore());     </span><i class="conum" data-value="1"></i><b>(1)</b>
     }
     ...
 }</code></pre>
@@ -893,7 +882,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remove this line</td>
+<td>remove this line (or comment it out, as shown)</td>
 </tr>
 </table>
 </div>
@@ -901,10 +890,10 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </ul>
 </div>
 <div class="paragraph">
-<p>(otherwise you will get an exception to the effect of duplicate service Ids being registered.</p>
+<p>If you fail to do this you will get an exception to the effect of duplicate service Ids being registered.</p>
 </div>
 <div class="paragraph">
-<p>If you want to disable the service, then you can add in a new <a href="ug.html#_ug_runtime_configuring-core">configuration property</a> <code>isis.services.ExceptionRecognizerCompositeForJdoObjectStore.disable</code>:</p>
+<p>Now that the <code>ExceptionRecognizerCompositeForJdoObjectStore</code> no longer needs to be explicitly registered, you might (very rarely) require the opposite situation, namely to disable the service.  As this can&#8217;t be done by just removing it from <code>isis.poperties</code>, you instead can set a new <a href="ug.html#_ug_runtime_configuring-core">configuration property</a> <code>isis.services.ExceptionRecognizerCompositeForJdoObjectStore.disable</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
