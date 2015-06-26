@@ -1,6 +1,6 @@
 Title: Externalized Configuration
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _ug_deployment_externalized-configuration)
 
 As described [here](./configuration-files.html), Isis itself bootstraps from the `isis.properties` configuration file.
 It will also read configuration from the (optional) component/implementation-specific configuration files (such as

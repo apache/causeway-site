@@ -1,6 +1,6 @@
 Title: Suggested JVM args
 
-[//]: # (content copied to _user-guide_xxx)
+[//]: # (content copied to _ug_deployment_jvm-flags)
 
 The default JVM configuration will most likely not be appropriate for running Isis as a webapp.  Some args that you will 
 
