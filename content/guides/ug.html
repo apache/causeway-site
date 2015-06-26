@@ -11921,6 +11921,22 @@ TODO - <a href="rg.html#_rg_annotations_manpage-Action_restrictTo"><code>@Action
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Can be set to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SERVER</code> - broadly corresponds to Wicket&#8217;s <code>PRODUCTION</code> mode</p>
+</li>
+<li>
+<p><code>PROTOTYPING</code> - the default; broadly corresponds to Wicket&#8217;s <code>DEVELOPMENT</code> mode</p>
+</li>
+<li>
+<p><code>OTHER</code></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_ug_runtime_configuration-files">9.2. Configuration Files</h3>
@@ -11948,7 +11964,10 @@ TODO - <a href="rg.html#_rg_annotations_manpage-Action_restrictTo"><code>@Action
 <p><code>persistor_datanucleus.properties</code> - assuming the JDO/DataNucleus objectstore is in use</p>
 </li>
 <li>
-<p><code>persistor.properties</code> - for any other objectstore configuration.  This typically is used to hold <code>JDBC</code> <code>URL</code>s</p>
+<p><code>persistor.properties</code> - for any other objectstore configuration. <br></p>
+<div class="paragraph">
+<p>This typically is used to hold <code>JDBC</code> <code>URL</code>s, which is arguably a slight violation of the file (because there&#8217;s nothing in Isis to say that persistors have to use <code>JDBC</code>.  However, it is generally convenient to put these <code>JDBC</code> settings into a single location.  If you want, they could reside inin any of <code>persistor_datanucleus.properties</code>, <code>persistor.properties</code> or (even) <code>isis.properties</code></p>
+</div>
 </li>
 <li>
 <p><code>authentication_shiro.properties</code>, <code>authorization_shiro.properties</code></p>
@@ -12284,8 +12303,33 @@ See <a href="#_ug_extending_programming-model_finetuning">finetuning the program
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.services.</code><br>
+<code>container.disableAutoFlush</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Whether the <code>DomainObjectContainer</code> should automatically flush pending changes prior to querying (via <code>allMatches()</code>, <code>firstMatch()</code> and so on).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>ContentNegotiation-</code><br>
+<code>ServiceXRoDomainType</code><br>
+.prettyPrint</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (depends)</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If a domain object has been mapped to the specified JAXB <code>x-ro-domain-type</code>, then determines whether the result is pretty-printed or not.<br></p>
+</div>
+<div class="paragraph">
+<p>+
+If no configuration property is available, then the defaults is determined by the <a href="#_ug_runtime_deployment-types">deployment type</a>: production mode disables pretty printing, while prototype mode enables it.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p><code>isis.service.</code><br>
-<code>email.tls.enabled</code><br></p>
+<code>email.tls.enabled</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>true</em></code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -13136,35 +13180,296 @@ TODO
 </div>
 <div class="sect2">
 <h3 id="_ug_deployment_externalized-configuration">11.3. Externalized Configuration</h3>
-<div class="admonitionblock important">
+<div class="paragraph">
+<p>As described <a href="#_ug_runtime_configuration-files">here</a>, by default Apache Isis itself bootstraps from the <code>isis.properties</code> configuration file.  It will also read configuration from the (optional) component/implementation-specific configuration files (such as
+<code>persistor_datanucleus.properties</code> or <code>viewer_wicket.properties</code>), and also (optional) component-specific configuration
+files (such as <code>persistor.properties</code> or <code>viewer.properties</code>).</p>
+</div>
+<div class="paragraph">
+<p>By default these are read from the <code>WEB-INF</code> directory. Having this configuration "baked into" the application is
+okay in a development environment, but when the app needs to be deployed to a test or production environment, this
+configuration should be read from an external location.</p>
+</div>
+<div class="paragraph">
+<p>There are in fact three frameworks involved here, all of which need to be pointed to this external location:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Apache Isis itself</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>which as already discussed reads <code>isis.properties</code> and optional component-specific config files.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://shiro.apache.org">Apache Shiro</a> (if using the Isis' <a href="../components/security/shiro/about.html">Shiro integration</a> for authentication and/or authorization</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>which reads the <code>shiro.ini</code> file (and may read other files referenced from that file)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://logging.apache.org/log4j/1.2">Apache log4j 1.2</a>, for logging</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>which reads <code>logging.properties</code> file</p>
+</div>
+<div class="paragraph">
+<p>Each of these frameworks has its own way of externalizing its configuration.</p>
+</div>
+<div class="sect3">
+<h4 id="_ug_deployment_externalized-configuration_Isis">11.3.1. Externalizing Isis' Config</h4>
+<div class="paragraph">
+<p>To tell Isis to load configuration from an external directory, specify the <code>isis.config.dir</code> context parameter.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Note that running the app using Isis' <code>org.apache.isis.WebServer</code> bootstrapper currently does not externalized Isis configuration.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_ug_deployment_gae">11.4. Deploying to Google App Engine</h3>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-TODO
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The Google App Engine (GAE) provides a JDO API, meaning that you can deploy Isis onto GAE using the JDO objectstore.</p>
+<p>If the external configuration directory is fixed for all environments (systest, UAT, prod etc), then you can specify within the <code>web.xml</code> itself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>isis.config.dir<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>location of external config directory<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If however the configuration directory varies by environment, then the context parameter will be specified to each installation of your servlet container. Most (if not all) servlet containers will provide a means to define context parameters through proprietary config files.</p>
+</div>
+<div class="paragraph">
+<p>For example, if using Tomcat 7.0, you would typically copy the empty <code>$TOMCAT_HOME/webapps/conf/context.xml</code> to a file specific to the webapp, for example <code>$TOMCAT_HOME/webapps/conf/todo.xml</code>. The context parameter would then be specified by adding the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Parameter</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">isis.config.dir</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/usr/local/tomcat/myapp/conf/</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more detail, see the Tomcat documentation on <a href="http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Defining_a_context">defining a context</a> and on <a href="http://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Context_Parameters">context parameters</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_deployment_externalized-configuration_Shiro">11.3.2. Externalizing Shiro&#8217;s Config</h4>
+<div class="paragraph">
+<p>If using Isis' <a href="#_ug_security_configuring-isis-to-use-shiro">Shiro integration</a> for authentication and/or authorization, note that it reads from the <code>shiro.ini</code> configuration file. By default this also resides in <code>WEB-INF</code>.</p>
+</div>
+<div class="paragraph">
+<p>Similar to Isis, Shiro lets this configuration directory be altered, by specifying the <code>shiroConfigLocations</code> context parameter.</p>
+</div>
+<div class="paragraph">
+<p>You can therefore override the default location using the same technique as described above for Isis' <code>isis.config.dir</code> context parameter. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Parameter</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">shiroConfigLocations</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file:/usr/local/myapp/conf/shiro.ini</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that Shiro is more flexible than Isis; it will read its configuration from any URL, not just a directory on the local filesystem.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_deployment_externalized-configuration_Log4j">11.3.3. Externalizing Log4j&#8217;s Config</h4>
+<div class="paragraph">
+<p>By default Isis configures log4j to read the <code>logging.properties</code> file in the <code>WEB-INF</code> directory. This can be overridden by setting the <code>log4j.properties</code> system property to the URL of the log4j properties file.</p>
+</div>
+<div class="paragraph">
+<p>For example, if deploying to Tomcat7, this amounts to adding the following to the <code>CATALINA_OPTS</code> flags:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export CATALINA_OPTS=&quot;-Dlog4j.configuration=/usr/local/tomcat/myapp/conf/logging.properties&quot;</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>CATALINA_OPTS</code> was called <code>TOMCAT_OPTS</code> in earlier versions of Tomcat.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Further details an be found in the <a href="https://logging.apache.org/log4j/1.2/manual.html#Example_Configurations">log4j documentation</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_externalizing_spring_s_config">11.3.4. Externalizing Spring&#8217;s Config</h4>
+<div class="paragraph">
+<p>Although Isis does not use Spring, it&#8217;s possible that your app may use other components that do use Spring.  For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module uses ActiveMQ and Camel to support publishing; both of these leverage Spring.</p>
+</div>
+<div class="paragraph">
+<p>There are several ways to externalized Spring config, but the mechanism described here is similar in nature to those that we use for externalizing Isis' and Shiro&#8217;s configuration.  In your <code>web.xml</code>, you will probably load the Spring application context using code such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;listener&gt;</span>
+    <span class="tag">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/listener-class&gt;</span>
+<span class="tag">&lt;/listener&gt;</span>
+<span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>contextConfigLocation<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>
+        classpath:my-application-context-config.xml
+    <span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a new application context <code>propertyPlaceholderConfigurer-config.xml</code> defining a <code>PropertyPlaceholderConfigurer</code> bean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;beans</span>
+  <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span><span class="delimiter">&quot;</span></span>
+  <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+  <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+  <span class="content">http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.beans.factory.config.PropertyPlaceholderConfigurer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">locations</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;list&gt;</span>
+                <span class="tag">&lt;value&gt;</span>${spring.config.file}<span class="tag">&lt;/value&gt;</span>
+            <span class="tag">&lt;/list&gt;</span>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This reads the properties from a <code>spring.config.file</code>, defined as a context-param in the <code>web.xml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>spring.config.file<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>classpath:spring.properties<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then update the bootstrapping in <code>web.xml</code> to use this new application context, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>contextConfigLocation<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>
+        classpath:my-application-context-config.xml,
+        classpath:propertyPlaceholderConfigurer-config.xml
+    <span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use some other externalized configuration, override the <code>spring.config.file</code> property, eg using Tomcat&#8217;s config file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Parameter</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spring.config.dir</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file:/usr/local/myapp/conf/spring.properties</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_an_alternative_approach">An alternative approach</h5>
+<div class="paragraph">
+<p>As mentioned, there are several other ways to externalize Spring&#8217;s config; one approach is to use Spring&#8217;s profile support.</p>
+</div>
+<div class="paragraph">
+<p>For example, in the application context you could have:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;beans</span> <span class="attribute-name">profile</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.beans.factory.config.PropertyPlaceholderConfigurer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">locations</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;list&gt;</span>
+                <span class="tag">&lt;value&gt;</span>classpath:dev.properties<span class="tag">&lt;/value&gt;</span>
+            <span class="tag">&lt;/list&gt;</span>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+<span class="tag">&lt;/beans&gt;</span>
+<span class="tag">&lt;beans</span> <span class="attribute-name">profile</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">externalized</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">propertyPlaceHolder</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.beans.factory.config.PropertyPlaceholderConfigurer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">locations</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;list&gt;</span>
+                <span class="tag">&lt;value&gt;</span>classpath:prod.properties<span class="tag">&lt;/value&gt;</span>
+            <span class="tag">&lt;/list&gt;</span>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The idea being that specifying the "prod" profile rather than the "default" profile would cause a different set of configuration properties to be read.</p>
+</div>
+<div class="paragraph">
+<p>The active profile can be overridden with a system property, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">-Dspring.active.profiles=prod</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>take a look at <a href="http://stackoverflow.com/a/10041835/56880">this SO answer</a> on using Spring profiles.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_see_also_3">11.3.5. See also</h4>
+<div class="paragraph">
+<p>See <a href="./_ug_deployment_jvm-flags">JVM args</a> for other JVM args and system properties that you might want to consider setting.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ug_deployment_gae">11.4. Deploying to Google App Engine</h3>
+<div class="paragraph">
+<p>The <a href="https://cloud.google.com/appengine/docs">Google App Engine</a> (GAE) provides a JDO API, meaning that you can deploy Isis onto GAE using the JDO objectstore.</p>
 </div>
 <div class="paragraph">
 <p>However, GAE is not an RDBMS, and so there are some limitations that it imposes. This page gathers together various hints, tips and workarounds.</p>
@@ -13208,7 +13513,7 @@ TODO
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">if</span> (!supportedTypes.contains(value.getClass())) {
-     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalArgumentException</span>(prefix + value.getClass().getName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> is not a supported property type.</span><span class="delimiter">&quot;</span></span>);
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalArgumentException</span>(prefix + value.getClass().getName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> is not a supported property type.</span><span class="delimiter">&quot;</span></span>);
 }</code></pre>
 </div>
 </div>
@@ -13322,6 +13627,54 @@ TODO
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>The default JVM configuration will most likely not be appropriate for running Isis as a webapp.  The table below suggests some JVM args that you will probably want to modify:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 8. JVM args</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run the JVM in server mode, meaning that the JVM should spend more time on the optimization of the fragments of codes that are most often used (hotspots). This leads to better performance at the price of a higher overhead at startup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Xms128m
+Minimum heap size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-Xmx768m</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum heap size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-XX:PermSize=64m</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum perm size (for class definitions)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-XX:MaxPermSize=256m</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum perm size (for class definitions)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-XX:+DisableExplicitGC</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>There are also a whole bunch of GC-related flags, that you might want to explore; see this detailed <a href="http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html">Hotspot JVM</a> documentation and also this <a href="http://blog.ragozin.info/2011/09/hotspot-jvm-garbage-collection-options.html">blog post</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_configuring_in_tomcat">11.6.1. Configuring in Tomcat</h4>
+<div class="paragraph">
+<p>If using Tomcat, update the <code>CATALINA_OPTS</code> variable.  (This variable is also updated if <a href="#_ug_deployment_externalized-configuration_Log4j">configuring logging to run externally</a>).</p>
+</div>
 </div>
 </div>
 </div>
@@ -14195,7 +14548,7 @@ CustomerRepository customers;</code></pre>
 <p>To remove a little bit of boilerplate, the <code>IsisConfigurationForJdoIntegTests</code> class (in the <code>org.apache.isis.objectstore.jdo.datanucleus</code> package) can be used to bootstrap the application.  If necessary, this class can be subclassed to override these defaults.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. Default Configuration Properties for Integration Tests</caption>
+<caption class="title">Table 9. Default Configuration Properties for Integration Tests</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 16%;">
@@ -16417,7 +16770,7 @@ Your new <code>Component</code> uses the information in the provided model (eg <
 <p>Isis defines eight page types (see the <code>org.apache.isis.viewer.wicket.model.models.PageType</code> enum):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. PageType enum</caption>
+<caption class="title">Table 10. PageType enum</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -17453,7 +17806,19 @@ TODO
 <li><a href="#_using_a_jndi_datasource">11.2.3. Using a JNDI Datasource</a></li>
 </ul>
 </li>
-<li><a href="#_ug_deployment_externalized-configuration">11.3. Externalized Configuration</a></li>
+<li><a href="#_ug_deployment_externalized-configuration">11.3. Externalized Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#_ug_deployment_externalized-configuration_Isis">11.3.1. Externalizing Isis' Config</a></li>
+<li><a href="#_ug_deployment_externalized-configuration_Shiro">11.3.2. Externalizing Shiro&#8217;s Config</a></li>
+<li><a href="#_ug_deployment_externalized-configuration_Log4j">11.3.3. Externalizing Log4j&#8217;s Config</a></li>
+<li><a href="#_externalizing_spring_s_config">11.3.4. Externalizing Spring&#8217;s Config</a>
+<ul class="sectlevel4">
+<li><a href="#_an_alternative_approach">An alternative approach</a></li>
+</ul>
+</li>
+<li><a href="#_see_also_3">11.3.5. See also</a></li>
+</ul>
+</li>
 <li><a href="#_ug_deployment_gae">11.4. Deploying to Google App Engine</a>
 <ul class="sectlevel3">
 <li><a href="#_primary_keys_and_owned_unowned_relationships">11.4.1. Primary Keys and Owned/Unowned Relationships</a></li>
@@ -17467,7 +17832,11 @@ TODO
 <li><a href="#_try_it_out">11.5.3. Try it out!</a></li>
 </ul>
 </li>
-<li><a href="#_ug_deployment_jvm-flags">11.6. JVM Flags</a></li>
+<li><a href="#_ug_deployment_jvm-flags">11.6. JVM Flags</a>
+<ul class="sectlevel3">
+<li><a href="#_configuring_in_tomcat">11.6.1. Configuring in Tomcat</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_ug_testing">12. Testing</a>
