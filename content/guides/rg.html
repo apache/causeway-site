@@ -11568,7 +11568,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@RequestScoped</span>                                                  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">ObjectChangedListenerService</span>
         <span class="directive">implements</span> javax.jdo.listener.StoreLifecycleListener {   <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Programmatic</span>
@@ -11581,9 +11582,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
     <span class="directive">public</span> <span class="type">void</span> tidyUp() {
         getPmFactory().removeInstanceLifecycleListener(<span class="local-variable">this</span>);
     }
-    <span class="directive">private</span> PersistenceManagerFactory getPmFactory() {
-        <span class="keyword">return</span> jdoSupport.getPersistenceManager()
-               .getPersistenceManagerFactory();                 <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">private</span> PersistenceManager getPersistenceManager() {
+        <span class="keyword">return</span> jdoSupport.getPersistenceManager();              <i class="conum" data-value="3"></i><b>(3)</b>
     }
     <span class="annotation">@Programmatic</span>
     <span class="directive">public</span> <span class="type">void</span> preStore (InstanceLifecycleEvent event) { ... }
@@ -11598,13 +11598,20 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>implement whichever callback lifecycle listeners are of interest</td>
+<td>must be <code>@RequestScoped</code> because we register on the <code>PersistenceManager</code>, which is different for each request.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>register on the factory so set up for every subsequent session.</td>
+<td>implement whichever callback lifecycle listeners are of interest</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>use the injected <a href="#_rg_services-api_manpage-IsisJdoSupport"><code>IsisJdoSupport</code></a> service to obtain the <code>PersistenceManager</code>.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Note that it isn&#8217;t possible to register on the <code>PersistenceManagerFactory</code> because listeners cannot be attached once a persistence session has been created (which it will have been when the service&#8217;s <code>@PostConstruct</code> method is called).</p>
 </div>
 </div>
 </div>
