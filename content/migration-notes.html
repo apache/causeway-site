@@ -841,7 +841,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8"><code>ExceptionRecognizerCompositeForJdoObjectStore</code></h3>
+<h3 id="_migration-notes_1.8.0-to-1.9.0_exception-recognizer"><code>ExceptionRecognizerCompositeForJdoObjectStore</code></h3>
 <div class="paragraph">
 <p>The <code>ExceptionRecognizerCompositeForJdoObjectStore</code> service (an implementation of the <a href="rg.html#_rg_services-spi_manpage-ExceptionRecognizer"><code>ExceptionRecognizer</code></a> SPI) recognizes certain expected exceptions thrown by the JDO objectstore (for example, violations of uniqueness) and converts them into meaningful messages for the end-user.</p>
 </div>
@@ -911,6 +911,18 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </div>
 <div class="paragraph">
 <p>If you did not register this service directly but instead registered a subclass of this service, then you should refactor your code so that your implementation is in a separate service, eg by subclassing <code>ExceptionRecognizerComposite</code>.  You should probably also annotate with <code>@DomainService</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_migration-notes_1.8.0-to-1.9.0_fixture-scripts-specification-provider"><code>FixtureScriptsSpecificationProvider</code></h3>
+<div class="paragraph">
+<p>The <code>FixtureScriptsSpecificationProvider</code> SPI service is an alternative to subclassing the <a href="rg.html#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a> domain service.  The logic that would normally be in the subclass moves to the provider service instead, and the framework instantiates a fallback default instance, <a href="rg.html#_rg_services-api_manpage-FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This new design is optional; if you continue to provide your own subclass then everything will continue as before.  However the new design is more flexible and involves less code.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">user guide</a> for further discussion.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1305,7 +1317,8 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
 <li><a href="#_in_the_parent_code_pom_xml_code_2">In the parent <code>pom.xml</code></a></li>
 </ul>
 </li>
-<li><a href="#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8"><code>ExceptionRecognizerCompositeForJdoObjectStore</code></a></li>
+<li><a href="#_migration-notes_1.8.0-to-1.9.0_exception-recognizer"><code>ExceptionRecognizerCompositeForJdoObjectStore</code></a></li>
+<li><a href="#_migration-notes_1.8.0-to-1.9.0_fixture-scripts-specification-provider"><code>FixtureScriptsSpecificationProvider</code></a></li>
 <li><a href="#_migration-notes_1.8.0-to-1.9.0_war-packaging">War packaging</a></li>
 </ul>
 </li>
