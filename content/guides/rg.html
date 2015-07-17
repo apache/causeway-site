@@ -11835,6 +11835,24 @@ depends on:<br>
 <td class="tableblock halign-left valign-top"><div></div></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_services-api_manpage-FixtureScriptsDefault"><code>o.a.i.applib.</code><br>
+<code>services.</code><br>
+<code>fixturespec</code><br>
+<code>FixtureScriptsDefault</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Fallback implementation of <a href="#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a>, providing the ability to execute fixture scripts.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>FixtureScriptsDefault</code><br>
+<code>o.a.i.core</code><br>
+<code>isis-core-applib</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Interacts with <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScripts-
+SpecificationProvider</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_services-api_manpage-GuiceBeanProvider"><code>o.a.i.applib.</code><br>
 <code>services.guice</code><br>
 <code>GuiceBeanProvider</code></a></p></td>
@@ -14406,7 +14424,71 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-GuiceBeanProvider">4.10. <code>GuiceBeanProvider</code></h3>
+<h3 id="_rg_services-api_manpage-FixtureScriptsDefault">4.10. <code>FixtureScriptsDefault</code></h3>
+<div class="paragraph">
+<p>The <code>FixtureScriptsDefault</code> service provides the ability to execute <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">fixture scripts</a> .</p>
+</div>
+<div class="paragraph">
+<p>The service extends from the <a href="#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a>, and is only instantiated by the framework if there no custom implementation of <code>FixtureScripts</code> has been otherwise provided; in other words it is a fallback.</p>
+</div>
+<div class="paragraph">
+<p>If this service is instantiated (as a fallback) then it uses the <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> to obtain a <code>FixtureScriptsSpecification</code>.  This configures this service, telling it which package to search for <code>FixtureScript</code> classes, how to execute those classes, and hints that influence the UI.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We recommend using <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> rather than subclassing <a href="#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_api_implementation_7">4.10.1. API &amp; Implementation</h4>
+<div class="paragraph">
+<p>The API for the service is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">FixtureScriptsDefault</span> ... {
+    <span class="annotation">@Programmatic</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;FixtureResult&gt; runFixtureScript(
+        FixtureScript fixtureScript,
+        <span class="predefined-type">String</span> parameters) { ... }
+}</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>in other words the same as <a href="#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a> superclass that it inherits from.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_2">4.10.2. Configuration</h4>
+<div class="paragraph">
+<p>As noted in the introduction, this service is only instantiated if there is no other implementation of <code>FixtureScripts</code> available on the classpath.</p>
+</div>
+<div class="paragraph">
+<p>If an instance of <code>FixtureScriptsSpecificationProvider</code> is available on the classpath, then the service will be visible in the UI (assuming <a href="#_rg_runtime_deployment-types">prototype mode</a>).  Otherwise the service will be available only to be injected and invoked programmatically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_related_services_5">4.10.3. Related Services</h4>
+<div class="paragraph">
+<p>The service interacts with <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_services-api_manpage-GuiceBeanProvider">4.11. <code>GuiceBeanProvider</code></h3>
 <div class="paragraph">
 <p>The <code>GuiceBeanProvider</code> domain service acts as a bridge between Apache Isis' <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a> internal bootstrapping using <a href="https://github.com/google/guice">Google Guice</a>.</p>
 </div>
@@ -14428,7 +14510,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_7">4.10.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_8">4.11.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by this service is:</p>
 </div>
@@ -14447,7 +14529,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_4">4.10.2. Usage</h4>
+<h4 id="_usage_4">4.11.2. Usage</h4>
 <div class="paragraph">
 <p>Using the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a> requires subclassing of <code>IsisWicketApplication</code>.  In the subclass it is commonplace to override <code>newIsisWicketModule()</code>, for example:</p>
 </div>
@@ -14494,7 +14576,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_6">4.10.3. Registering the Services</h4>
+<h4 id="_registering_the_services_6">4.11.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -14509,7 +14591,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-IsisJdoSupport">4.11. <code>IsisJdoSupport</code></h3>
+<h3 id="_rg_services-api_manpage-IsisJdoSupport">4.12. <code>IsisJdoSupport</code></h3>
 <div class="paragraph">
 <p>The <code>IsisJdoSupport</code> service provides a number of general purpose methods for working with the JDO/DataNucleus objectstore.  In general these act at a lower-level of abstraction than the APIs normally used (specifically, those of <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a>), but nevertheless deal with some of the most common use cases.  For service also provides access to the underlying JDO <code>PersistenceManager</code> for full control.</p>
 </div>
@@ -14517,7 +14599,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <p>The following sections discuss the functionality provided by the service, broken out into categories.</p>
 </div>
 <div class="sect3">
-<h4 id="_rg_services-api_manpage-IsisJdoSupport_executing-sql">4.11.1. Executing SQL</h4>
+<h4 id="_rg_services-api_manpage-IsisJdoSupport_executing-sql">4.12.1. Executing SQL</h4>
 <div class="paragraph">
 <p>You can use the <code>IsisJdoSupportService</code> to perform arbitrary SQL SELECTs or UPDATEs:</p>
 </div>
@@ -14570,7 +14652,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_services-api_manpage-IsisJdoSupport_type-safe-jdoql-queries">4.11.2. Type-safe JDOQL Queries</h4>
+<h4 id="_rg_services-api_manpage-IsisJdoSupport_type-safe-jdoql-queries">4.12.2. Type-safe JDOQL Queries</h4>
 <div class="paragraph">
 <p>DataNucleus provides an <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">extension to JDO</a>,  so that JDOQL queries can be built up and executed using a set of type-safe classes.</p>
 </div>
@@ -14665,7 +14747,7 @@ DataNucleus <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_services-api_manpage-IsisJdoSupport_fixture-support">4.11.3. Fixture support</h4>
+<h4 id="_rg_services-api_manpage-IsisJdoSupport_fixture-support">4.12.3. Fixture support</h4>
 <div class="paragraph">
 <p>When writing <a href="ug.html#_ug_testing_integ-test-support">integration tests</a> you&#8217;ll usually need to tear down some/all mutable transactional data before each test.  One way to do that is to use the <code>executeUpdate(&#8230;&#8203;)</code> method described <a href="#_rg_services-api_manpage-IsisJdoSupport_executing-sql">above</a>.</p>
 </div>
@@ -14718,7 +14800,7 @@ is temporarily disabled while this method is performed.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_services-api_manpage-IsisJdoSupport_reloading-entities">4.11.4. Reloading entities</h4>
+<h4 id="_rg_services-api_manpage-IsisJdoSupport_reloading-entities">4.12.4. Reloading entities</h4>
 <div class="paragraph">
 <p>An <a href="http://www.datanucleus.org/products/datanucleus/jdo/orm/relationships.html">(intentional) limitation</a> of JDO/DataNucleus is that persisting a child entity (in a 1:n bidirectional relationship) does not cause the parent&#8217;s collection to be updated.</p>
 </div>
@@ -14793,7 +14875,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_services-api_manpage-IsisJdoSupport_jdo-persistencemanager">4.11.5. JDO <code>PersistenceManager</code></h4>
+<h4 id="_rg_services-api_manpage-IsisJdoSupport_jdo-persistencemanager">4.12.5. JDO <code>PersistenceManager</code></h4>
 <div class="paragraph">
 <p>The functionality provided by <code>IsisJdoSupport</code> focus only on the most common use cases.  If you require more flexibility than this, eg for dynamically constructed queries, then you can use the service to access the underlying JDO <code>PersistenceManager</code> API:</p>
 </div>
@@ -14822,7 +14904,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_7">4.11.6. Registering the Services</h4>
+<h4 id="_registering_the_services_7">4.12.6. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -14837,7 +14919,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-MementoService">4.12. <code>MementoService</code></h3>
+<h3 id="_rg_services-api_manpage-MementoService">4.13. <code>MementoService</code></h3>
 <div class="paragraph">
 <p>The <code>MementoService</code> was originally introduced to simplify the implementation of <a href="ug.html#_ug_more-advanced_view-models">ViewModel</a>s which are required by the framework to return string representation of all of their backing state, moreover which is safe for use within a URL.</p>
 </div>
@@ -14845,7 +14927,7 @@ refresh the parent.</p>
 <p>However, it can also be used to create a memento of arbitrary objects. Indeed, it is used internally by the core implementation of <a href="#_rg_services-api_manpage-BackgroundService"><code>BackgroundService</code></a> to capture the state of action invocations so that they can be executed by a background process.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_8">4.12.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_9">4.13.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>MementoService</code> is:</p>
 </div>
@@ -14944,7 +15026,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_5">4.12.2. Usage</h4>
+<h4 id="_usage_5">4.13.2. Usage</h4>
 <div class="paragraph">
 <p>As noted in the introduction, a common use case for this service is in the implementation of the <a href="#_rg_classes_super_manpage-AbstractViewModel"><code>ViewModel</code></a> interface.</p>
 </div>
@@ -15006,13 +15088,13 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_5">4.12.3. Related Services</h4>
+<h4 id="_related_services_6">4.13.3. Related Services</h4>
 <div class="paragraph">
 <p>The memento service is used by the <a href="#_rg_services-api_manpage-CommandContext"><code>CommandContext</code></a> service and also <a href="#_rg_services-spi_manpage-BackgroundCommandService"><code>BackgroundCommandService</code></a>. These both use a memento to capture a representation of an action invocation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_5">4.12.4. Registering the Service</h4>
+<h4 id="_registering_the_service_5">4.13.4. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15027,7 +15109,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-MetamodelService">4.13. <code>MetamodelService</code></h3>
+<h3 id="_rg_services-api_manpage-MetamodelService">4.14. <code>MetamodelService</code></h3>
 <div class="paragraph">
 <p>The <code>MetaModelService</code> provides access (albeit currently extremely limited) to aspects of Apache Isis' internal metamodel.</p>
 </div>
@@ -15035,7 +15117,7 @@ refresh the parent.</p>
 <p>Currently this is limited to looking up the object type (as specified in <a href="#_rg_annotations_manpage-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> and equivalent mechanisms, and as used in  <a href="#_rg_services-api_manpage-BookmarkService"><code>Bookmark</code></a>s and elsewhere) from an object&#8217;s class, and vice versa.  In the future we expect other aspects of the metamodel to also be formally surfaced through this API.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_9">4.13.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_10">4.14.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by the service is:</p>
 </div>
@@ -15063,7 +15145,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_6">4.13.2. Registering the Service</h4>
+<h4 id="_registering_the_service_6">4.14.2. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15078,7 +15160,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-QueryResultsCache">4.14. <code>QueryResultsCache</code></h3>
+<h3 id="_rg_services-api_manpage-QueryResultsCache">4.15. <code>QueryResultsCache</code></h3>
 <div class="paragraph">
 <p>The purpose of the <code>QueryResultsCache</code> is to improve response times to the user, by providing a short-term (<a href="../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html">request-scoped</a>) cache of the value of some (safe or idempotent) method call. This will typically be as the result of running a query, but could be any expensive operation.</p>
 </div>
@@ -15100,7 +15182,7 @@ refresh the parent.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_10">4.14.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_11">4.15.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>QueryResultsCache</code> is:</p>
 </div>
@@ -15142,7 +15224,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_6">4.14.2. Usage</h4>
+<h4 id="_usage_6">4.15.2. Usage</h4>
 <div class="paragraph">
 <p>Suppose that there&#8217;s a <code>TaxService</code> that calculates tax on <code>Taxable</code> items, with respect to some <code>TaxType</code>, and for a given <code>LocalDate</code>. To calculate tax it must run a database query and then perform some additional calculations.</p>
 </div>
@@ -15203,7 +15285,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_7">4.14.3. Registering the Service</h4>
+<h4 id="_registering_the_service_7">4.15.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15217,19 +15299,19 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_6">4.14.4. Related Services</h4>
+<h4 id="_related_services_7">4.15.4. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rg_services-api_manpage-Scratchpad"><code>Scratchpad</code></a> service is also intended for actions that are called many times, allowing arbitrary information to be shared between them. Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the <a href="#_rg_annotations_manpage-Action_invokeOn"><code>@Action#invokeOn()</code></a> annotation attribute set to <code>OBJECT_AND_COLLECTION</code> or <code>COLLECTION_ONLY</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-Scratchpad">4.15. <code>Scratchpad</code></h3>
+<h3 id="_rg_services-api_manpage-Scratchpad">4.16. <code>Scratchpad</code></h3>
 <div class="paragraph">
 <p>The <code>Scratchpad</code> service is a <a href="../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html">request-scoped</a> service to allow objects to exchange information even if they do not directly call each other.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_11">4.15.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_12">4.16.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API of <code>Scratchpad</code> service is:</p>
 </div>
@@ -15251,7 +15333,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_7">4.15.2. Usage</h4>
+<h4 id="_usage_7">4.16.2. Usage</h4>
 <div class="paragraph">
 <p>The most common use-case is for <a href="#_rg_annotations_manpage-Action_invokeOn">bulk</a> actions that act upon multiple objects in a list.  The (same) <code>Scratchpad</code> service is injected into each of these objects, and so they can use pass information.</p>
 </div>
@@ -15339,7 +15421,7 @@ Scratchpad scratchpad;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_8">4.15.3. Registering the Service</h4>
+<h4 id="_registering_the_service_8">4.16.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15353,7 +15435,7 @@ Scratchpad scratchpad;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_7">4.15.4. Related Services</h4>
+<h4 id="_related_services_8">4.16.4. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rg_services-api_manpage-ActionInteractionContext"><code>ActionInteractionContext</code></a> service allows <a href="#_rg_annotations_manpage-Action_invokeOn">bulk actions</a> to co-ordinate with each other.</p>
 </div>
@@ -15363,13 +15445,13 @@ Scratchpad scratchpad;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-SudoService">4.16. <code>SudoService</code></h3>
+<h3 id="_rg_services-api_manpage-SudoService">4.17. <code>SudoService</code></h3>
 <div class="paragraph">
 <p>The <code>SudoService</code> allows the current user reported by the <code>DomainObjectContainer</code> to be temporarily changed to some
 other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="ug.html#_ug_testing_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_12">4.16.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_13">4.17.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -15395,7 +15477,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_8">4.16.2. Usage</h4>
+<h4 id="_usage_8">4.17.2. Usage</h4>
 <div class="paragraph">
 <p>A good example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> which uses the <code>SudoService</code> in a fixture script to set up <code>ToDoItem</code> objects:</p>
 </div>
@@ -15416,7 +15498,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_9">4.16.3. Registering the Service</h4>
+<h4 id="_registering_the_service_9">4.17.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15431,7 +15513,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-WrapperFactory">4.17. <code>WrapperFactory</code></h3>
+<h3 id="_rg_services-api_manpage-WrapperFactory">4.18. <code>WrapperFactory</code></h3>
 <div class="paragraph">
 <p>The <code>WrapperFactory</code> provides the ability to enforce business rules for programmatic interactions between domain objects.  If there is a (lack-of-) trust boundary between the caller and callee&#8201;&#8212;&#8201;eg if they reside in different modules&#8201;&#8212;&#8201;then the wrapper factory is a useful mechanism to ensure that any business constraints defined by te callee are honoured.</p>
 </div>
@@ -15459,7 +15541,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 <p>This capability is frequently used within <a href="ug.html#_ug_testing_integ-test-support">integration tests</a>, but can also be used in production code. (There are analogies that can be drawn here with the way that JEE beans can interact through an EJB local interface).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_2">4.17.1. API</h4>
+<h4 id="_api_2">4.18.1. API</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -15568,7 +15650,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_9">4.17.2. Usage</h4>
+<h4 id="_usage_9">4.18.2. Usage</h4>
 <div class="paragraph">
 <p>The caller will typically obtain the target object (eg from some repository) and then use the injected <code>WrapperFactory</code> to wrap it before interacting with it.</p>
 </div>
@@ -15627,7 +15709,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_listener_api">4.17.3. Listener API</h4>
+<h4 id="_listener_api">4.18.3. Listener API</h4>
 <div class="paragraph">
 <p>The <code>WrapperFactory</code> also provides a listener API to allow other services to listen in on interactions.</p>
 </div>
@@ -15671,7 +15753,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_10">4.17.4. Registering the Service</h4>
+<h4 id="_registering_the_service_10">4.18.4. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15686,7 +15768,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-api_manpage-XmlSnapshotService">4.18. <code>XmlSnapshotService</code></h3>
+<h3 id="_rg_services-api_manpage-XmlSnapshotService">4.19. <code>XmlSnapshotService</code></h3>
 <div class="paragraph">
 <p>The <code>XmlSnapshotService</code> provides the capability to generate XML snapshots (and if required corresponding XSD schemas) based on graphs of domain objects.</p>
 </div>
@@ -15703,7 +15785,7 @@ other user. This is useful both for <a href="ug.html#_ug_testing_integ-test-supp
 <p>The core framework provides an implementation of this service (<code>o.a.i.core.runtime.services.xmlsnapshot.XmlSnapshotServiceDefault</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_standard_api">4.18.1. Standard API</h4>
+<h4 id="_standard_api">4.19.1. Standard API</h4>
 <div class="paragraph">
 <p>The (basic) API of <code>XmlSnapshotService</code> is:</p>
 </div>
@@ -15749,7 +15831,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_builder_api">4.18.2. Builder API</h4>
+<h4 id="_builder_api">4.19.2. Builder API</h4>
 <div class="paragraph">
 <p>The contents of the snapshot can be adjusted by including "paths" to other references or collections. To do this, the
 builder is used.  The API for this is:</p>
@@ -15833,7 +15915,7 @@ product of every order:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_automatic_inclusions">4.18.3. Automatic inclusions</h4>
+<h4 id="_automatic_inclusions">4.19.3. Automatic inclusions</h4>
 <div class="paragraph">
 <p>If the domain object being snapshotted implements the <code>SnapshottableWithInclusions</code> interace, then this moves the
 responsibility for determining what is included within the snapshot from the caller to the snapshottable object itself:</p>
@@ -15867,7 +15949,7 @@ responsibility for determining what is included within the snapshot from the cal
 </div>
 </div>
 <div class="sect3">
-<h4 id="_convenience_api">4.18.4. Convenience API</h4>
+<h4 id="_convenience_api">4.19.4. Convenience API</h4>
 <div class="paragraph">
 <p>The <code>XmlSnapshotService</code> also provides some API for simply manipulating XML:</p>
 </div>
@@ -15910,7 +15992,7 @@ responsibility for determining what is included within the snapshot from the cal
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_11">4.18.5. Registering the Service</h4>
+<h4 id="_registering_the_service_11">4.19.5. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -15924,7 +16006,7 @@ responsibility for determining what is included within the snapshot from the cal
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_8">4.18.6. Related Services</h4>
+<h4 id="_related_services_9">4.19.6. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rg_services-api_manpage-BookmarkService"><code>BookmarkService</code></a> provides a mechanism for obtaining a string representations of a single domain object.</p>
 </div>
@@ -16085,6 +16167,17 @@ a configured <code>EmailService</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>LocaleProviderWicket</code><br>
 <code>o.a.i.viewer</code><br>
 <code>isis-viewer-wicket-impl</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>o.a.i.applib.</code><br>
+<code>services.fixturespec</code><br>
+<code>FixtureScripts-</code><br>
+<code>SpecificationProvider</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Provides settings for <a href="#_rg_services-api_manpage-FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> fallback domain service for executing fixture scripts.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -16339,7 +16432,7 @@ Impl&#8217;n (g: a:)</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_9">5.1.5. Related Services</h4>
+<h4 id="_related_services_10">5.1.5. Related Services</h4>
 <div class="paragraph">
 <p>The auditing service works very well with the <a href="#<em>rg_services-spi_manpage-CommandService"><code>CommandService</code></a>.  The <code>CommandService</code> captures the _cause</em> of an interaction (an action was invoked, a property was edited), while the <code>AuditingService3</code> captures the <em>effect</em> of that interaction in terms of changed state.</p>
 </div>
@@ -16501,7 +16594,7 @@ Impl&#8217;n (g: a:)</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_10">5.2.6. Related Services</h4>
+<h4 id="_related_services_11">5.2.6. Related Services</h4>
 <div class="paragraph">
 <p>As discussed above, this service supports the <a href="#_rg_services-api_manpage-BackgroundService"><code>BackgroundService</code></a> , persisting `Command`s such that they can be executed in the background.</p>
 </div>
@@ -16728,7 +16821,7 @@ Impl&#8217;n (g: a:)</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_11">5.4.5. Related Services</h4>
+<h4 id="_related_services_12">5.4.5. Related Services</h4>
 <div class="paragraph">
 <p>As discussed above, this service supports the <a href="#_rg_services-api_manpage-CommandContext"><code>CommandContext</code></a>, providing the ability for <code>Command</code> objects to be
 persisted. This is closely related to the <a href="#_rg_services-spi_manpage-BackgroundCommandService"><code>BackgroundCommandService</code></a>that allows the <a href="#_rg_services-api_manpage-BackgroundService"><code>BackgroundService</code></a> to schedule commands for background/asynchronous execution.</p>
@@ -16901,7 +16994,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_12">5.5.3. Related Services</h4>
+<h4 id="_related_services_13">5.5.3. Related Services</h4>
 <div class="paragraph">
 <p>This service is a companion to the default implementation of the <a href="#_rg_services-spi_manpage-ContentNegotiationService"><code>ContentNegotiationService</code></a>.</p>
 </div>
@@ -17159,7 +17252,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_2">5.6.4. Configuration</h4>
+<h4 id="_configuration_3">5.6.4. Configuration</h4>
 <div class="paragraph">
 <p>The default <code>ContentNegotiationServiceXRoDomainType</code> implementation provides a <a href="#_rg_runtime_configuring-core">configuration property</a> which controls whether a mapped domain object is pretty-printed (formatted, indented) or not:</p>
 </div>
@@ -17187,7 +17280,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_13">5.6.6. Related Services</h4>
+<h4 id="_related_services_14">5.6.6. Related Services</h4>
 <div class="paragraph">
 <p>The default implementation of <code>ContentNegotiationService</code> delegates to <a href="#_rg_services-spi_manpage-ContentMappingService"><code>ContentMappingService</code></a> (if present) to convert domain entities into a stable form (eg DTO).</p>
 </div>
@@ -17296,7 +17389,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_14">5.7.4. Related Services</h4>
+<h4 id="_related_services_15">5.7.4. Related Services</h4>
 <div class="paragraph">
 <p>As noted elsewhere, the default implementation of this service uses <a href="#_rg_services-api_manpage-EmailService"><code>EmailService</code></a>.  This service has no specific configuration properties but does require that the <code>EmailService</code> has been configured.</p>
 </div>
@@ -17389,7 +17482,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_15">5.8.4. Related Services</h4>
+<h4 id="_related_services_16">5.8.4. Related Services</h4>
 <div class="paragraph">
 <p>This service is intended (though not mandated) to be used by implementations of <a href="#_rg_services-spi_manpage-PublishingService"><code>PublishingService</code></a>.</p>
 </div>
@@ -17580,7 +17673,86 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-LocaleProvider">5.10. <code>LocaleProvider</code></h3>
+<h3 id="_rg_services-spi_manpage-FixtureScriptsSpecificationProvider">5.10. <code>FixtureScriptsSpecificationProvider</code></h3>
+<div class="paragraph">
+<p>The <code>FixtureScriptsSpecificationProvider</code> configures the <a href="#_rg_services-api_manpage-FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> domain service, providing the location to search for fixture scripts and other settings.</p>
+</div>
+<div class="paragraph">
+<p>The service is only used if the <code>FixtureScriptsDefault</code> service is instantiated as a fallback by the framework.  If the application provides its own subclass of <a href="#_rg_classes_utility_manpage-FixtureScripts"><code>FixtureScripts</code></a> superclass, then this provider service is not used.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Of the two designs, we encourage you to implement this "provider" SPI rather than subclass <code>FixtureScripts</code>.  The primary benefit (apart from decoupling responsibilities) is that it ensures that there is always an instance of <code>FixtureScripts</code> available for use.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_spi_10">5.10.1. SPI</h4>
+<div class="paragraph">
+<p>The SPI defined by the service is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">FixtureScriptsSpecificationProvider</span> {
+    <span class="annotation">@Programmatic</span>
+    FixtureScriptsSpecification getSpecification();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>FixtureScriptsSpecification</code> exposes these values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">FixtureScriptsSpecification</span> {
+    <span class="directive">public</span> <span class="predefined-type">String</span> getPackagePrefix() { ... }
+    <span class="directive">public</span> FixtureScripts.NonPersistedObjectsStrategy getNonPersistedObjectsStrategy() { ... }
+    <span class="directive">public</span> FixtureScripts.MultipleExecutionStrategy getMultipleExecutionStrategy() { ... }
+    <span class="directive">public</span> <span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt; getRunScriptDefaultScriptClass() { ... }
+    <span class="directive">public</span> DropDownPolicy getRunScriptDropDownPolicy() { ... }
+    <span class="directive">public</span> <span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt; getRecreateScriptClass() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class is immutable but it has a builder (obtained using <code>FixturescriptsSpecification.builder(&#8230;&#8203;)</code>) for a fluent API.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementation_9">5.10.2. Implementation</h4>
+<div class="paragraph">
+<p>The <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a> has a simple implementation of this service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppFixturesProvider</span> <span class="directive">implements</span> FixtureScriptsSpecificationProvider {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> FixtureScriptsSpecification getSpecification() {
+        <span class="keyword">return</span> FixtureScriptsSpecification
+                .builder(DomainAppFixturesProvider.class)
+                .with(FixtureScripts.MultipleExecutionStrategy.EXECUTE)
+                .withRunScriptDefault(RecreateSimpleObjects.class)
+                .withRunScriptDropDown(FixtureScriptsSpecification.DropDownPolicy.CHOICES)
+                .withRecreate(RecreateSimpleObjects.class)
+                .build();
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_services-spi_manpage-LocaleProvider">5.11. <code>LocaleProvider</code></h3>
 <div class="paragraph">
 <p>The <code>LocaleProvider</code> service is one of the services that work together to implement Apache Isis' support for i18n, being used by Isis' default implementation of <a href="#_rg_services-spi_manpage-TranslationService"><code>TranslationService</code></a>.</p>
 </div>
@@ -17602,7 +17774,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_10">5.10.1. SPI</h4>
+<h4 id="_spi_11">5.11.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -17619,7 +17791,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_9">5.10.2. Implementation</h4>
+<h4 id="_implementation_10">5.11.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis' <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a> provides an implementation of this service (<code>LocaleProviderWicket</code>) which leverages Apache Wicket APIs.</p>
 </div>
@@ -17639,7 +17811,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_15">5.10.3. Registering the Services</h4>
+<h4 id="_registering_the_services_15">5.11.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -17653,19 +17825,19 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_16">5.10.4. Related Services</h4>
+<h4 id="_related_services_17">5.11.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rg_services-spi_manpage-TranslationService"><code>TranslationService</code></a> and <a href="#_rg_services-spi_manpage-TranslationsResolver"><code>TranslationsResolver</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-PublishingService">5.11. <code>PublishingService</code></h3>
+<h3 id="_rg_services-spi_manpage-PublishingService">5.12. <code>PublishingService</code></h3>
 <div class="paragraph">
 <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Here the only events published are those that action invocations and of changed objects.  A typical use case is to publish onto a pub/sub bus such as <a href="http://activemq.apache.org/">ActiveMQ</a> with <a href="http://camel.apache.org">Camel</a> to keep other systems up to date.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_11">5.11.1. SPI</h4>
+<h4 id="_spi_12">5.12.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -17712,7 +17884,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_10">5.11.2. Implementation</h4>
+<h4 id="_implementation_11">5.12.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an implementation (<code>org.isisaddons.module.publishing.dom.org.apache.isis.applib.services.publish</code>) that persists each event as a <code>PublishedEvent</code> entity.  This holds the serialized form of the event metadata and payload as translated into a string by the injected <code>EventSerializer</code>.  The module also provides its own implementation of <code>EventSerializer</code>, namely <code>RestfulObjectsSpecEventSerializer</code>, which represents the event payload using the representation defined by the <a href="http://restfulobjects.org">Restful Objects spec</a> of (transient) objects, grafting on the metadata as additional JSON nodes.</p>
 </div>
@@ -17721,7 +17893,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_15">5.11.3. Usage</h4>
+<h4 id="_usage_15">5.12.3. Usage</h4>
 <div class="paragraph">
 <p>To indicate that an action invocation should be published, annotate it with the <a href="#_rg_annotations_manpage-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p>
 </div>
@@ -17815,7 +17987,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_16">5.11.4. Registering the Services</h4>
+<h4 id="_registering_the_services_16">5.12.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -17829,7 +18001,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_17">5.11.5. Related Services</h4>
+<h4 id="_related_services_18">5.12.5. Related Services</h4>
 <div class="paragraph">
 <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system. Here the only events published are those that action invocations (for actions annotated with <a href="#_rg_annotations_manpage-Action_publishing"><code>@Action#publishing()</code></a>) and of changed objects (for objects annotated with <a href="#_rg_annotations_manpage-DomainObject_publishing"><code>@DomainObject#publishing()</code></a>.</p>
 </div>
@@ -17841,7 +18013,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_design_notes">5.11.6. Design Notes</h4>
+<h4 id="_design_notes">5.12.6. Design Notes</h4>
 <div class="paragraph">
 <p>The following class diagram shows how the above components fit together:</p>
 </div>
@@ -17856,7 +18028,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-RepresentationService">5.12. <code>RepresentationService</code></h3>
+<h3 id="_rg_services-spi_manpage-RepresentationService">5.13. <code>RepresentationService</code></h3>
 <div class="paragraph">
 <p>The <code>RepresentationService</code> is the main plug-in point for the <a href="ug.html#_ug_restfulobjects-viewer">RestfulObjects viewer</a> to generate representations.</p>
 </div>
@@ -17878,7 +18050,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 <p>The <code>RepresentationServiceForRestfulObjects</code> is the default implementation of this service; likewise <code>ContentNegotiationServiceXRoDomainType</code> is the default implementation of the <code>ContentNegotiationService</code>.  If you inspect the source code you&#8217;ll see that the default implementation of this service&#8217;s primary responsibility is to generate the default Restful Objects representations.  Therefore, if you what you want to do is to generate a <em>different _representation then in many cases replacing either this service _or</em> the <code>ContentNegotiationService</code> will be equivalent (you&#8217;ll notice that their SPIs are very similar).</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_12">5.12.1. SPI</h4>
+<h4 id="_spi_13">5.13.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -17976,13 +18148,13 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_11">5.12.2. Implementation</h4>
+<h4 id="_implementation_12">5.13.2. Implementation</h4>
 <div class="paragraph">
 <p>As discussed in the introduction, the framework provides a default implementation, <code>o.a.i.v.ro.rendering.service.RepresentationServiceForRestfulObjects</code>.   This delegates to <a href="#_rg_services-spi_manpage-ContentNegotiationService"><code>ContentNegotiationService</code></a> to generate an alternative representation; but if none is provided then it falls back on generating the representations as defined in the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_17">5.12.3. Registering the Services</h4>
+<h4 id="_registering_the_services_17">5.13.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -17996,14 +18168,14 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_18">5.12.4. Related Services</h4>
+<h4 id="_related_services_19">5.13.4. Related Services</h4>
 <div class="paragraph">
 <p>The default implementation delegates to <a href="#_rg_services-spi_manpage-ContentNegotiationService"><code>ContentNegotiationService</code></a>, whose default implementation may delegate in turn to <a href="#_rg_services-spi_manpage-ContentMappingService"><code>ContentMappingService</code></a> (if present).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-TranslationService">5.13. <code>TranslationService</code></h3>
+<h3 id="_rg_services-spi_manpage-TranslationService">5.14. <code>TranslationService</code></h3>
 <div class="paragraph">
 <p>The <code>TranslationService</code> is the cornerstone of Apache Isis' i18n support.  Its role is to be able to provide translated versions of the various elements within the Apache Isis metamodel (service and object classes, properties, collections, actions, action parameters) and also to translate business rule (disable/valid) messages, and exceptions.  These translations provide for both singular and plural forms.</p>
 </div>
@@ -18022,7 +18194,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_13">5.13.1. SPI</h4>
+<h4 id="_spi_14">5.14.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -18066,7 +18238,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_12">5.13.2. Implementation</h4>
+<h4 id="_implementation_13">5.14.2. Implementation</h4>
 <div class="paragraph">
 <p>The Apache Isis framework provides a default implementation (<code>TranslationServicePo</code>) that uses the GNU <code>.pot</code> and <code>.po</code> files for translations.  It relies on the <code>LocaleProvider</code> service (to return the <code>Locale</code> of the current user) and also the <code>TranslationsResolver</code> service (to read existing translations).</p>
 </div>
@@ -18078,7 +18250,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_18">5.13.3. Registering the Services</h4>
+<h4 id="_registering_the_services_18">5.14.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -18092,14 +18264,14 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_19">5.13.4. Related Services</h4>
+<h4 id="_related_services_20">5.14.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rg_services-spi_manpage-LocaleProvider"><code>LocaleProvider</code></a> and <a href="#_rg_services-spi_manpage-TranslationsResolver"><code>TranslationsResolver</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-TranslationsResolver">5.14. <code>TranslationsResolver</code></h3>
+<h3 id="_rg_services-spi_manpage-TranslationsResolver">5.15. <code>TranslationsResolver</code></h3>
 <div class="paragraph">
 <p>The <code>TranslationsResolver</code> service is one of the services that work together to implement Apache Isis' support for i18n, being used by Isis' default implementation of <a href="#_rg_services-spi_manpage-TranslationService"><code>TranslationService</code></a>.</p>
 </div>
@@ -18121,7 +18293,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_14">5.14.1. SPI</h4>
+<h4 id="_spi_15">5.15.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -18135,7 +18307,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_13">5.14.2. Implementation</h4>
+<h4 id="_implementation_14">5.15.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis' <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a> provides an implementation of this service (<code>TranslationsResolverWicket</code>) which leverages Apache Wicket APIs.  This searches for translation files in the standard <code>WEB-INF/</code> directory.</p>
 </div>
@@ -18155,7 +18327,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_13">5.14.3. Registering the Service</h4>
+<h4 id="_registering_the_service_13">5.15.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -18169,14 +18341,14 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_20">5.14.4. Related Services</h4>
+<h4 id="_related_services_21">5.15.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rg_services-spi_manpage-LocaleProvider"><code>LocaleProvider</code></a> and <a href="#_rg_services-spi_manpage-TranslationService"><code>TranslationService</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-UserProfileService">5.15. <code>UserProfileService</code></h3>
+<h3 id="_rg_services-spi_manpage-UserProfileService">5.16. <code>UserProfileService</code></h3>
 <div class="paragraph">
 <p>The <code>UserProfileService</code> provides the ability for the domain application to return supplementary metadata about the current user. This information is used (by the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a>) to customize the appearance of the tertiary "Me" menu bar (top right). For example, rather than display the username, instead the user&#8217;s first and last name could be displayed.</p>
 </div>
@@ -18184,7 +18356,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 <p>Another use case is to allow the user to switch context in some fashion or other. This might be to emulate a sort of "sudo"-like function, or perhaps to focus on some particular set of data.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_15">5.15.1. SPI</h4>
+<h4 id="_spi_16">5.16.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -18212,7 +18384,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_14">5.15.2. Implementation</h4>
+<h4 id="_implementation_15">5.16.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> has a simple implementation of this service:</p>
 </div>
@@ -18238,7 +18410,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_services-spi_manpage-UserRegistrationService">5.16. <code>UserRegistrationService</code></h3>
+<h3 id="_rg_services-spi_manpage-UserRegistrationService">5.17. <code>UserRegistrationService</code></h3>
 <div class="paragraph">
 <p>The <code>UserRegistrationService</code> provides the ability for users to sign-up to access an application by providing a valid email address, and also provides the capability for users to reset their password if forgotten.</p>
 </div>
@@ -18266,7 +18438,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_16">5.16.1. SPI</h4>
+<h4 id="_spi_17">5.17.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -18306,7 +18478,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_15">5.16.2. Implementation</h4>
+<h4 id="_implementation_16">5.17.2. Implementation</h4>
 <div class="paragraph">
 <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p>
 </div>
@@ -18318,7 +18490,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_19">5.16.3. Registering the Services</h4>
+<h4 id="_registering_the_services_19">5.17.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured:</p>
 </div>
@@ -18332,7 +18504,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_21">5.16.4. Related Services</h4>
+<h4 id="_related_services_22">5.17.4. Related Services</h4>
 <div class="paragraph">
 <p>The most common use case is to allow users to sign-up through Apache Isis' Wicket viewer. Because the process requires email to be sent, the following services must be configured:</p>
 </div>
@@ -18669,7 +18841,7 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO
+TODO - see also user guide&#8217;s <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">fixture scripts' API and usage</a>, <a href="#_rg_services-api_manpage-FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> (fallback implementation) and <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>.
 </td>
 </tr>
 </table>
@@ -22124,76 +22296,83 @@ determines which additional configuration files to search for
 <li><a href="#_related_services_4">4.9.10. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-GuiceBeanProvider">4.10. <code>GuiceBeanProvider</code></a>
+<li><a href="#_rg_services-api_manpage-FixtureScriptsDefault">4.10. <code>FixtureScriptsDefault</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_7">4.10.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_4">4.10.2. Usage</a></li>
-<li><a href="#_registering_the_services_6">4.10.3. Registering the Services</a></li>
+<li><a href="#_configuration_2">4.10.2. Configuration</a></li>
+<li><a href="#_related_services_5">4.10.3. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport">4.11. <code>IsisJdoSupport</code></a>
+<li><a href="#_rg_services-api_manpage-GuiceBeanProvider">4.11. <code>GuiceBeanProvider</code></a>
 <ul class="sectlevel3">
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport_executing-sql">4.11.1. Executing SQL</a></li>
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport_type-safe-jdoql-queries">4.11.2. Type-safe JDOQL Queries</a></li>
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport_fixture-support">4.11.3. Fixture support</a></li>
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport_reloading-entities">4.11.4. Reloading entities</a></li>
-<li><a href="#_rg_services-api_manpage-IsisJdoSupport_jdo-persistencemanager">4.11.5. JDO <code>PersistenceManager</code></a></li>
-<li><a href="#_registering_the_services_7">4.11.6. Registering the Services</a></li>
+<li><a href="#_api_implementation_8">4.11.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_4">4.11.2. Usage</a></li>
+<li><a href="#_registering_the_services_6">4.11.3. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-MementoService">4.12. <code>MementoService</code></a>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport">4.12. <code>IsisJdoSupport</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_8">4.12.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_5">4.12.2. Usage</a></li>
-<li><a href="#_related_services_5">4.12.3. Related Services</a></li>
-<li><a href="#_registering_the_service_5">4.12.4. Registering the Service</a></li>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport_executing-sql">4.12.1. Executing SQL</a></li>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport_type-safe-jdoql-queries">4.12.2. Type-safe JDOQL Queries</a></li>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport_fixture-support">4.12.3. Fixture support</a></li>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport_reloading-entities">4.12.4. Reloading entities</a></li>
+<li><a href="#_rg_services-api_manpage-IsisJdoSupport_jdo-persistencemanager">4.12.5. JDO <code>PersistenceManager</code></a></li>
+<li><a href="#_registering_the_services_7">4.12.6. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-MetamodelService">4.13. <code>MetamodelService</code></a>
+<li><a href="#_rg_services-api_manpage-MementoService">4.13. <code>MementoService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_9">4.13.1. API &amp; Implementation</a></li>
-<li><a href="#_registering_the_service_6">4.13.2. Registering the Service</a></li>
+<li><a href="#_usage_5">4.13.2. Usage</a></li>
+<li><a href="#_related_services_6">4.13.3. Related Services</a></li>
+<li><a href="#_registering_the_service_5">4.13.4. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-QueryResultsCache">4.14. <code>QueryResultsCache</code></a>
+<li><a href="#_rg_services-api_manpage-MetamodelService">4.14. <code>MetamodelService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_10">4.14.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_6">4.14.2. Usage</a></li>
-<li><a href="#_registering_the_service_7">4.14.3. Registering the Service</a></li>
-<li><a href="#_related_services_6">4.14.4. Related Services</a></li>
+<li><a href="#_registering_the_service_6">4.14.2. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-Scratchpad">4.15. <code>Scratchpad</code></a>
+<li><a href="#_rg_services-api_manpage-QueryResultsCache">4.15. <code>QueryResultsCache</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_11">4.15.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_7">4.15.2. Usage</a></li>
-<li><a href="#_registering_the_service_8">4.15.3. Registering the Service</a></li>
+<li><a href="#_usage_6">4.15.2. Usage</a></li>
+<li><a href="#_registering_the_service_7">4.15.3. Registering the Service</a></li>
 <li><a href="#_related_services_7">4.15.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-SudoService">4.16. <code>SudoService</code></a>
+<li><a href="#_rg_services-api_manpage-Scratchpad">4.16. <code>Scratchpad</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_12">4.16.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_8">4.16.2. Usage</a></li>
-<li><a href="#_registering_the_service_9">4.16.3. Registering the Service</a></li>
+<li><a href="#_usage_7">4.16.2. Usage</a></li>
+<li><a href="#_registering_the_service_8">4.16.3. Registering the Service</a></li>
+<li><a href="#_related_services_8">4.16.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-WrapperFactory">4.17. <code>WrapperFactory</code></a>
+<li><a href="#_rg_services-api_manpage-SudoService">4.17. <code>SudoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_2">4.17.1. API</a></li>
-<li><a href="#_usage_9">4.17.2. Usage</a></li>
-<li><a href="#_listener_api">4.17.3. Listener API</a></li>
-<li><a href="#_registering_the_service_10">4.17.4. Registering the Service</a></li>
+<li><a href="#_api_implementation_13">4.17.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_8">4.17.2. Usage</a></li>
+<li><a href="#_registering_the_service_9">4.17.3. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-api_manpage-XmlSnapshotService">4.18. <code>XmlSnapshotService</code></a>
+<li><a href="#_rg_services-api_manpage-WrapperFactory">4.18. <code>WrapperFactory</code></a>
 <ul class="sectlevel3">
-<li><a href="#_standard_api">4.18.1. Standard API</a></li>
-<li><a href="#_builder_api">4.18.2. Builder API</a></li>
-<li><a href="#_automatic_inclusions">4.18.3. Automatic inclusions</a></li>
-<li><a href="#_convenience_api">4.18.4. Convenience API</a></li>
-<li><a href="#_registering_the_service_11">4.18.5. Registering the Service</a></li>
-<li><a href="#_related_services_8">4.18.6. Related Services</a></li>
+<li><a href="#_api_2">4.18.1. API</a></li>
+<li><a href="#_usage_9">4.18.2. Usage</a></li>
+<li><a href="#_listener_api">4.18.3. Listener API</a></li>
+<li><a href="#_registering_the_service_10">4.18.4. Registering the Service</a></li>
+</ul>
+</li>
+<li><a href="#_rg_services-api_manpage-XmlSnapshotService">4.19. <code>XmlSnapshotService</code></a>
+<ul class="sectlevel3">
+<li><a href="#_standard_api">4.19.1. Standard API</a></li>
+<li><a href="#_builder_api">4.19.2. Builder API</a></li>
+<li><a href="#_automatic_inclusions">4.19.3. Automatic inclusions</a></li>
+<li><a href="#_convenience_api">4.19.4. Convenience API</a></li>
+<li><a href="#_registering_the_service_11">4.19.5. Registering the Service</a></li>
+<li><a href="#_related_services_9">4.19.6. Related Services</a></li>
 </ul>
 </li>
 </ul>
@@ -22206,7 +22385,7 @@ determines which additional configuration files to search for
 <li><a href="#_implementation">5.1.2. Implementation</a></li>
 <li><a href="#_usage_10">5.1.3. Usage</a></li>
 <li><a href="#_registering_the_services_8">5.1.4. Registering the Services</a></li>
-<li><a href="#_related_services_9">5.1.5. Related Services</a></li>
+<li><a href="#_related_services_10">5.1.5. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-BackgroundCommandService">5.2. <code>BackgroundCommandService</code></a>
@@ -22216,7 +22395,7 @@ determines which additional configuration files to search for
 <li><a href="#_implementation_2">5.2.3. Implementation</a></li>
 <li><a href="#_usage_11">5.2.4. Usage</a></li>
 <li><a href="#_registering_the_services_9">5.2.5. Registering the Services</a></li>
-<li><a href="#_related_services_10">5.2.6. Related Services</a></li>
+<li><a href="#_related_services_11">5.2.6. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-ClassDiscoveryService">5.3. <code>ClassDiscoveryService</code></a>
@@ -22233,14 +22412,14 @@ determines which additional configuration files to search for
 <li><a href="#_implementation_4">5.4.2. Implementation</a></li>
 <li><a href="#_usage_13">5.4.3. Usage</a></li>
 <li><a href="#_registering_the_services_11">5.4.4. Registering the Services</a></li>
-<li><a href="#_related_services_11">5.4.5. Related Services</a></li>
+<li><a href="#_related_services_12">5.4.5. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-ContentMappingService">5.5. <code>ContentMappingService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_5">5.5.1. SPI</a></li>
 <li><a href="#_implementations_2">5.5.2. Implementations</a></li>
-<li><a href="#_related_services_12">5.5.3. Related Services</a></li>
+<li><a href="#_related_services_13">5.5.3. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-ContentNegotiationService">5.6. <code>ContentNegotiationService</code></a>
@@ -22248,9 +22427,9 @@ determines which additional configuration files to search for
 <li><a href="#_spi_6">5.6.1. SPI</a></li>
 <li><a href="#_implementation_5">5.6.2. Implementation</a></li>
 <li><a href="#_usage_14">5.6.3. Usage</a></li>
-<li><a href="#_configuration_2">5.6.4. Configuration</a></li>
+<li><a href="#_configuration_3">5.6.4. Configuration</a></li>
 <li><a href="#_registering_the_services_12">5.6.5. Registering the Services</a></li>
-<li><a href="#_related_services_13">5.6.6. Related Services</a></li>
+<li><a href="#_related_services_14">5.6.6. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-EmailNotificationService">5.7. <code>EmailNotificationService</code></a>
@@ -22262,7 +22441,7 @@ determines which additional configuration files to search for
 </ul>
 </li>
 <li><a href="#_registering_the_service_12">5.7.3. Registering the Service</a></li>
-<li><a href="#_related_services_14">5.7.4. Related Services</a></li>
+<li><a href="#_related_services_15">5.7.4. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-EventSerializer">5.8. <code>EventSerializer</code></a>
@@ -22270,7 +22449,7 @@ determines which additional configuration files to search for
 <li><a href="#_spi_8">5.8.1. SPI</a></li>
 <li><a href="#_implementation_7">5.8.2. Implementation</a></li>
 <li><a href="#_registering_the_services_13">5.8.3. Registering the Services</a></li>
-<li><a href="#_related_services_15">5.8.4. Related Services</a></li>
+<li><a href="#_related_services_16">5.8.4. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rg_services-spi_manpage-ExceptionRecognizer">5.9. <code>ExceptionRecognizer</code></a>
@@ -22280,60 +22459,66 @@ determines which additional configuration files to search for
 <li><a href="#_registering_the_services_14">5.9.3. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-LocaleProvider">5.10. <code>LocaleProvider</code></a>
+<li><a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider">5.10. <code>FixtureScriptsSpecificationProvider</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_10">5.10.1. SPI</a></li>
 <li><a href="#_implementation_9">5.10.2. Implementation</a></li>
-<li><a href="#_registering_the_services_15">5.10.3. Registering the Services</a></li>
-<li><a href="#_related_services_16">5.10.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-PublishingService">5.11. <code>PublishingService</code></a>
+<li><a href="#_rg_services-spi_manpage-LocaleProvider">5.11. <code>LocaleProvider</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_11">5.11.1. SPI</a></li>
 <li><a href="#_implementation_10">5.11.2. Implementation</a></li>
-<li><a href="#_usage_15">5.11.3. Usage</a></li>
-<li><a href="#_registering_the_services_16">5.11.4. Registering the Services</a></li>
-<li><a href="#_related_services_17">5.11.5. Related Services</a></li>
-<li><a href="#_design_notes">5.11.6. Design Notes</a></li>
+<li><a href="#_registering_the_services_15">5.11.3. Registering the Services</a></li>
+<li><a href="#_related_services_17">5.11.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-RepresentationService">5.12. <code>RepresentationService</code></a>
+<li><a href="#_rg_services-spi_manpage-PublishingService">5.12. <code>PublishingService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_12">5.12.1. SPI</a></li>
 <li><a href="#_implementation_11">5.12.2. Implementation</a></li>
-<li><a href="#_registering_the_services_17">5.12.3. Registering the Services</a></li>
-<li><a href="#_related_services_18">5.12.4. Related Services</a></li>
+<li><a href="#_usage_15">5.12.3. Usage</a></li>
+<li><a href="#_registering_the_services_16">5.12.4. Registering the Services</a></li>
+<li><a href="#_related_services_18">5.12.5. Related Services</a></li>
+<li><a href="#_design_notes">5.12.6. Design Notes</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-TranslationService">5.13. <code>TranslationService</code></a>
+<li><a href="#_rg_services-spi_manpage-RepresentationService">5.13. <code>RepresentationService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_13">5.13.1. SPI</a></li>
 <li><a href="#_implementation_12">5.13.2. Implementation</a></li>
-<li><a href="#_registering_the_services_18">5.13.3. Registering the Services</a></li>
+<li><a href="#_registering_the_services_17">5.13.3. Registering the Services</a></li>
 <li><a href="#_related_services_19">5.13.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-TranslationsResolver">5.14. <code>TranslationsResolver</code></a>
+<li><a href="#_rg_services-spi_manpage-TranslationService">5.14. <code>TranslationService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_14">5.14.1. SPI</a></li>
 <li><a href="#_implementation_13">5.14.2. Implementation</a></li>
-<li><a href="#_registering_the_service_13">5.14.3. Registering the Service</a></li>
+<li><a href="#_registering_the_services_18">5.14.3. Registering the Services</a></li>
 <li><a href="#_related_services_20">5.14.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-UserProfileService">5.15. <code>UserProfileService</code></a>
+<li><a href="#_rg_services-spi_manpage-TranslationsResolver">5.15. <code>TranslationsResolver</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_15">5.15.1. SPI</a></li>
 <li><a href="#_implementation_14">5.15.2. Implementation</a></li>
+<li><a href="#_registering_the_service_13">5.15.3. Registering the Service</a></li>
+<li><a href="#_related_services_21">5.15.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rg_services-spi_manpage-UserRegistrationService">5.16. <code>UserRegistrationService</code></a>
+<li><a href="#_rg_services-spi_manpage-UserProfileService">5.16. <code>UserProfileService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_16">5.16.1. SPI</a></li>
 <li><a href="#_implementation_15">5.16.2. Implementation</a></li>
-<li><a href="#_registering_the_services_19">5.16.3. Registering the Services</a></li>
-<li><a href="#_related_services_21">5.16.4. Related Services</a></li>
+</ul>
+</li>
+<li><a href="#_rg_services-spi_manpage-UserRegistrationService">5.17. <code>UserRegistrationService</code></a>
+<ul class="sectlevel3">
+<li><a href="#_spi_17">5.17.1. SPI</a></li>
+<li><a href="#_implementation_16">5.17.2. Implementation</a></li>
+<li><a href="#_registering_the_services_19">5.17.3. Registering the Services</a></li>
+<li><a href="#_related_services_22">5.17.4. Related Services</a></li>
 </ul>
 </li>
 </ul>
