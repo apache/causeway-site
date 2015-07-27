@@ -1838,10 +1838,10 @@ This annotation  indicates that transient instances of this class may be created
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_annotations_manpage-Action_semantics"><code>semantics()</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>QUERY</code>, <code>IDEMPOTENT</code>, <code>NON_IDEMPOTENT</code><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SAFE_AND_REQUEST_CACHEABLE</code>, <code>SAFE</code>, <code>IDEMPOTENT</code>, <code>NON_IDEMPOTENT</code><br>
 (<code>NON_IDEMPOTENT</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>the action&#8217;s semantics (ie whether objects are modified as the result of invoking this action, and if so whether reinvoking the action would result in no further change)</p>
+<p>the action&#8217;s semantics (ie whether objects are modified as the result of invoking this action, and if so whether reinvoking the action would result in no further change; if not whether the results can be cached for the remainder of the request)</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2520,24 +2520,62 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
 <div class="sect3">
 <h4 id="_rg_annotations_manpage-Action_semantics">2.2.7. <code>semantics()</code></h4>
 <div class="paragraph">
-<p>The <code>semantics()</code> attribute describes whether the invocation is safe (as no side-effects), is idempotent (may have side-effects but always has the same post-conditions), or is neither safe nor idempotent. If the annotation is missing then the framework assumes non-idempotent.</p>
+<p>The <code>semantics()</code> attribute describes whether the invocation modifies state of the system, and if so whether it does so idempotently.  If the action invocation does <em>not</em> modify the state of the system, in other words is safe, then it also can beused to specify whether the results of the action can be cached automatically for the remainder of the request.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
+<div class="paragraph">
+<p>The attribute was originally introduced for the <a href="ug.html#_ug_restfulobjects-viewer">RestfulObjects viewer</a> in order that action invocations could be using the appropriate <code>HTTP</code> verb (<code>GET</code>, <code>PUT</code> and <code>POST</code>).</p>
+</div>
+<div class="paragraph">
+<p>The table below summarizes the semantics:</p>
+</div>
+<div class="paragraph">
+<p>Action semantics</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 16%;">
+<col style="width: 33%;">
+<col style="width: 16%;">
+</colgroup>
+<thead>
 <tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The attribute was originally introduced for the <a href="ug.html#_ug_restfulobjects-viewer">RestfulObjects viewer</a> in order that action invocations could be made available using either HTTP GET, PUT or POST (respectively).</p>
-</div>
-<div class="paragraph">
-<p>Since then its use has been extended into the core runtime.  For example, it is now aso used for the in-built concurrency checking; the invocation of a safe action does not perform a concurrency check, whereas non-safe actions do perform a concurrency check.</p>
-</div>
-</td>
+<th class="tableblock halign-left valign-top">Semantic</th>
+<th class="tableblock halign-left valign-top">Changes state</th>
+<th class="tableblock halign-left valign-top">Effect of multiple calls</th>
+<th class="tableblock halign-left valign-top">HTTP verb<br>
+(Restful Objects)</th>
 </tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SAFE_AND_REQUEST_CACHEABLE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Will always return the same result each time invoked (within a given request scope)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SAFE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Might result in different results each invocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDEMPOTENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Will make no further changes if called multiple times (eg sets a property or adds to a <code>Set</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PUT</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NON_IDEMPOTENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Might change the state of the system each time called (eg increments a counter or adds to a <code>List</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+</tr>
+</tbody>
 </table>
+<div class="paragraph">
+<p>The actions' semantics are also used by the core runtime as part of the in-built concurrency checkng; invocation of a safe action (which includes request-cacheable) does <em>not</em> perform a concurrency check, whereas non-safe actions <em>do</em> perform a concurrency check.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -2545,7 +2583,7 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE_AND_REQUEST_CACHEABLE)
     <span class="directive">public</span> CreditRating checkCredit() { ... }
 
     <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
@@ -2556,6 +2594,38 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
     ...
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Actions that are safe and request-cacheable automatically use the <a href="#_rg_services-api_manpage-QueryResultsCache"><code>QueryResultsCache</code></a> service to cache the result of the method.  Note though that the results of this caching will only be apparent if the action is invoked from another method using the <a href="#_rg_services-api_manpage-WrapperFactory"><code>WrapperFactory</code></a> service.</p>
+</div>
+<div class="paragraph">
+<p>Continuing the example above, imagine code that loops over a set of <code>Order</code>s where each <code>Order</code> has an associated <code>Customer</code>.  We want to check the credit rating of each <code>Customer</code> (a potentially expensive operation) but we don&#8217;t want to do it more than once per <code>Customer</code>.  Invoking through the <code>WrapperFactory</code> will allow us to accomplish this by exploiting the semantics of <code>checkCredit()</code> action:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> dispatchToCreditWorthyCustomers(<span class="directive">final</span> <span class="predefined-type">List</span>&lt;Order&gt; orders) {
+    <span class="keyword">for</span>(Order order: orders) {
+        Customer customer = order.getCustomer();
+        CreditRating creditRating = wrapperFactory.wrapSkipRules(customer).checkCredit();  <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="keyword">if</span>(creditRating.isWorthy()) {
+            order.dispatch();
+        }
+    }
+}
+<span class="annotation">@Inject</span>
+WrapperFactory wrapperFactory;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>wrap the customer to dispatch.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the above example we&#8217;ve used <code>wrapSkipRules(&#8230;&#8203;)</code> but if we wanted to enforce any business rules associated with the <code>checkCredit()</code> method, we would have used <code>wrap(&#8230;&#8203;)</code>.</p>
 </div>
 </div>
 <div class="sect3">
