@@ -6922,6 +6922,27 @@ container.persist(cust);</code></pre>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>It is also possible to provide translatable reasons.  Rather than implement <code>Specification</code>, instead implement <code>Specification2</code> which defines the API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Specification2</span> <span class="directive">extends</span> Specification {
+    <span class="directive">public</span> TranslatableString satisfiesTranslatable(<span class="predefined-type">Object</span> obj); <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Return <code>null</code> if specification satisfied, otherwise the reason as a translatable string</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With <code>Specification2</code> there is no need to implement the inherited <code>satifies(Object)</code>; that method will never be called.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_rg_annotations_manpage-Parameter_optionality">2.20.3. <code>optionality()</code></h4>
@@ -8332,7 +8353,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
     }
 }
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
-    <span class="annotation">@MustSatisfy</span>(StartWithCapitalLetterSpecification.class)
+    <span class="annotation">@Property</span>(mustSatisfy=StartWithCapitalLetterSpecification.class)
     <span class="directive">public</span> <span class="predefined-type">String</span> getFirstName() { ... }
     ...
 }</code></pre>
@@ -8345,6 +8366,27 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 <td>the <code>AbstractSpecification</code> class conveniently handles type-safety and dealing with null values.  The applib also provides <code>SpecificationAnd</code> and <code>SpecificationOr</code> to allow specifications to be combined "algebraically".</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>It is also possible to provide translatable reasons.  Rather than implement <code>Specification</code>, instead implement <code>Specification2</code> which defines the API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Specification2</span> <span class="directive">extends</span> Specification {
+    <span class="directive">public</span> TranslatableString satisfiesTranslatable(<span class="predefined-type">Object</span> obj); <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Return <code>null</code> if specification satisfied, otherwise the reason as a translatable string</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With <code>Specification2</code> there is no need to implement the inherited <code>satifies(Object)</code>; that method will never be called.</p>
 </div>
 </div>
 <div class="sect3">
@@ -19371,12 +19413,172 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_mixins">6.4. Mixins</h3>
+<h3 id="_rg_classes_spec">6.4. Specification pattern</h3>
+<div class="paragraph">
+<p>The interfaces and classes listed in this chapter provide support for the  <code>Specification</code> pattern, as described in Eric Evans' book <em>Domain Driven Design</em>, p224.</p>
+</div>
+<div class="paragraph">
+<p>Apache Isis will automatically apply such specifications as validation rules on properties (as per <a href="#_rg_annotations_manpage-Property_mustSatisfy"><code>@Property#mustSatisfy()</code></a>) and on action parameters (as per <a href="#_rg_annotations_manpage-Parameter_mustSatisfy"><code>@Parameter#mustSatisfy()</code></a>).</p>
+</div>
+<div class="sect3">
+<h4 id="__code_specification_code">6.4.1. <code>Specification</code></h4>
+<div class="paragraph">
+<p>The heart of the support for this pattern is the <code>Specification</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Specification</span> {
+    <span class="directive">public</span> <span class="predefined-type">String</span> satisfies(<span class="predefined-type">Object</span> obj);  <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>if returns <code>null</code>, then the constraint is satisfies; otherwise returns the reason why the constraint has not been satisfied.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">StartWithCapitalLetterSpecification</span> <span class="directive">implements</span> Specification {
+    <span class="directive">public</span> <span class="predefined-type">String</span> satisfies(<span class="predefined-type">Object</span> proposedObj) {
+        <span class="predefined-type">String</span> proposed = (<span class="predefined-type">String</span>)proposedObj;               <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>.equals(proposed)
+            ? <span class="string"><span class="delimiter">&quot;</span><span class="content">Empty string</span><span class="delimiter">&quot;</span></span>
+            : !<span class="predefined-type">Character</span>.isUpperCase(proposed.charAt(<span class="integer">0</span>))
+                ? <span class="string"><span class="delimiter">&quot;</span><span class="content">Does not start with a capital letter</span><span class="delimiter">&quot;</span></span>
+                : <span class="predefined-constant">null</span>;
+    }
+}
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+    <span class="annotation">@Property</span>(mustSatisfy=StartWithCapitalLetterSpecification.class)
+    <span class="directive">public</span> <span class="predefined-type">String</span> getFirstName() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>this ugly cast can be avoided using some of the other classes available; see below.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__code_specification2_code">6.4.2. <code>Specification2</code></h4>
+<div class="paragraph">
+<p>The <code>Specification2</code> interface extends the <code>Specification</code> API to add support for i18n.  This is done by defining an additional method that returns a <a href="#_rg_classes_i18n_manpage-TranslatableString">translatable string</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Specification2</span> <span class="directive">extends</span> Specification {
+    <span class="directive">public</span> TranslatableString satisfiesTranslatable(<span class="predefined-type">Object</span> obj);  <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>if returns <code>null</code>, then the constraint is satisfies; otherwise returns the reason why the constraint has not been satisfied.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that if implementing <code>Specification2</code> then there is no need to also provide an implementation of the inherited <code>satisfies(Object)</code> method; this will never be called by the framework for <code>Specification2</code> instances.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adapter_classes">6.4.3. Adapter classes</h4>
+<div class="paragraph">
+<p>The <code>AbstractSpecification</code> and <code>AbstractSpecification2</code> adapter classes provide a partial implementation of the respective interfaces, providing type-safety.  (Their design is modelled on the <code>TypesafeMatcher</code> class within <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>).</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">StartWithCapitalLetterSpecification</span> <span class="directive">extends</span> AbstractSpecification&lt;<span class="predefined-type">String</span>&gt; {
+    <span class="directive">public</span> <span class="predefined-type">String</span> satisfiesSafely(<span class="predefined-type">String</span> proposed) {
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>.equals(proposed)
+            ? <span class="string"><span class="delimiter">&quot;</span><span class="content">Empty string</span><span class="delimiter">&quot;</span></span>
+            : !<span class="predefined-type">Character</span>.isUpperCase(proposed.charAt(<span class="integer">0</span>))
+                ? <span class="string"><span class="delimiter">&quot;</span><span class="content">Does not start with a capital letter</span><span class="delimiter">&quot;</span></span>
+                : <span class="predefined-constant">null</span>;
+    }
+}
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+    <span class="annotation">@Property</span>(mustSatisfy=StartWithCapitalLetterSpecification.class)
+    <span class="directive">public</span> <span class="predefined-type">String</span> getFirstName() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>AbstractSpecification2</code> class is almost identical; its type-safe method is <code>satisfiesTranslatableSafely(T)</code> instead.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_combining_specifications">6.4.4. Combining specifications</h4>
+<div class="paragraph">
+<p>There are also adapter classes that can be inherited from to combine specifications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SpecificationAnd</code> - all provided specifications' constraints must be met</p>
+</li>
+<li>
+<p><code>SpecificationOr</code> - at least one provided specifications' constraints must be met</p>
+</li>
+<li>
+<p><code>SpecificationNot</code> - its constraints are met if-and-only-if the provided specification&#8217;s constraint was <em>not</em> met.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that these adapter classes inherit <code>Specification</code> but do not inherit <code>Specification2</code>; in other words they do not support i18n.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_classes_i18n">6.5. i18n support</h3>
+<div class="paragraph">
+<p>The <code>org.apache.isis.applib.services.i18n</code> package contains a single class to support i18n.</p>
+</div>
+<div class="sect3">
+<h4 id="_rg_classes_i18n_manpage-TranslatableString">6.5.1. <code>TranslatableString</code></h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>TranslatableString</code> utility class &#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_classes_mixins">6.6. Mixins</h3>
 <div class="paragraph">
 <p>The interfaces listed in this chapter act like "mix-ins"; they allow domain services to contribute actions/properties/collections to any domain objects that implement these interfaces.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_hastransactionid_code">6.4.1. <code>HasTransactionId</code></h4>
+<h4 id="__code_hastransactionid_code">6.6.1. <code>HasTransactionId</code></h4>
 <div class="paragraph">
 <p>The <code>HasTransactionId</code> interface is a mix-in for any domain objects that pertain</p>
 </div>
@@ -19415,7 +19617,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_hasusername_code">6.4.2. <code>HasUsername</code></h4>
+<h4 id="__code_hasusername_code">6.6.2. <code>HasUsername</code></h4>
 <div class="paragraph">
 <p>The <code>HasUsername</code> interface is a mix-in for domain objects to be associated with a username.  Other services and modules can then contribute actions/collections to render such additional information relating to the activities of the user.</p>
 </div>
@@ -22631,10 +22833,23 @@ determines which additional configuration files to search for
 <li><a href="#_rg_classes_utility_manpage-TitleBuffer">6.3.4. <code>TitleBuffer</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_mixins">6.4. Mixins</a>
+<li><a href="#_rg_classes_spec">6.4. Specification pattern</a>
 <ul class="sectlevel3">
-<li><a href="#__code_hastransactionid_code">6.4.1. <code>HasTransactionId</code></a></li>
-<li><a href="#__code_hasusername_code">6.4.2. <code>HasUsername</code></a></li>
+<li><a href="#__code_specification_code">6.4.1. <code>Specification</code></a></li>
+<li><a href="#__code_specification2_code">6.4.2. <code>Specification2</code></a></li>
+<li><a href="#_adapter_classes">6.4.3. Adapter classes</a></li>
+<li><a href="#_combining_specifications">6.4.4. Combining specifications</a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_i18n">6.5. i18n support</a>
+<ul class="sectlevel3">
+<li><a href="#_rg_classes_i18n_manpage-TranslatableString">6.5.1. <code>TranslatableString</code></a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_mixins">6.6. Mixins</a>
+<ul class="sectlevel3">
+<li><a href="#__code_hastransactionid_code">6.6.1. <code>HasTransactionId</code></a></li>
+<li><a href="#__code_hasusername_code">6.6.2. <code>HasUsername</code></a></li>
 </ul>
 </li>
 </ul>
