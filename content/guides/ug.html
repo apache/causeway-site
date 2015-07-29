@@ -13409,6 +13409,73 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 <div class="paragraph">
 <p>See the implementation of the built-in <code>LayoutMetadataReaderFromJson</code> for more detail.</p>
 </div>
+<div class="paragraph">
+<p>Returning either <code>null</code> or throwing an exception indicates that the reader was unable to load any metadata for the specified class.</p>
+</div>
+<div class="sect5">
+<h6 id="_extended_api">Extended API</h6>
+<div class="paragraph">
+<p>Optionally the reader can implement the extended <code>LayoutMetadaReader2</code> API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">LayoutMetadataReader2</span> <span class="directive">extends</span> LayoutMetadataReader {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Support</span> {
+        <span class="directive">public</span> <span class="directive">static</span> Support entitiesOnly() {
+            <span class="keyword">return</span> <span class="keyword">new</span> Support(<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>);
+        }
+        ...
+        public <span class="type">boolean</span> interfaces() { ... } <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> anonymous() { ... }  <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> synthetic() { ... }  <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> array() { ... }      <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> enums() { ... }      <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> applibValueTypes() { <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> services() { ... }   <i class="conum" data-value="7"></i><b>(7)</b>
+    }
+    Support support();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>whether this implementation can provide metadata for interface types.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>whether this implementation can provide metadata for anonymous classes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>whether this implementation can provide metadata for synthetic types.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>whether this implementation can provide metadata for arrays.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>whether this implementation can provide metadata for enums.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>whether this implementation can provide metadata for applib value types.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>whether this implementation can provide metadata for domain services.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>support()</code> method returns a struct class that describes the types of classes are supported by this implementation.</p>
+</div>
+<div class="paragraph">
+<p>The <code>LayoutMetadataReaderFromJson</code> implements this extended API.</p>
+</div>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_configuration_11">Configuration</h5>
