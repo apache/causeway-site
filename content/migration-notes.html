@@ -754,6 +754,66 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </div>
 </div>
 <div class="sect2">
+<h3 id="_migration-notes_1.8.0-to-1.9.0_specify-all-dom-packages">Specify all <code>dom</code> packages</h3>
+<div class="paragraph">
+<p>Apache Isis automatically scans for certain classes on the classpath in order to configure itself.  Specifically these are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>searching for classes annotated with <a href="rg.html#_rg_annotations_manpage-DomainService"><code>@DomainService</code></a>.</p>
+</li>
+<li>
+<p>searching for classes extending <a href="rg.html#_rg_classes_super_manpage-FixtureScript"><code>FixtureScript</code></a></p>
+</li>
+<li>
+<p>searching for classes annotated with <a href="rg.html#_rg_annotations_manpage-PersistenceCapable"><code>@PersistenceCapable</code></a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Prior to 1.9.0 we used the <a href="https://github.com/ronmamo/reflections">Reflections</a> library to do this, which under the covers uses <a href="http://www.javassist.org/">Javassist</a>.  This is a relatively heavyweight approach.</p>
+</div>
+<div class="paragraph">
+<p>In 1.9.0 we have changed to using the <a href="https://github.com/lukehutch/fast-classpath-scanner">Fast-Classpath-Scanner</a> library, which is altogether more lightweight and has no dependencies.</p>
+</div>
+<div class="paragraph">
+<p>Generally this change should be transparent, however you should ensure that all domain classes are correctly registered using the <code>isis.persistor.datanucleus.RegisterEntities.packagePrefix</code> key.  This should include any domain classes for addon modules.</p>
+</div>
+<div class="paragraph">
+<p>For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>'s configuration now reads:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.persistor.datanucleus.RegisterEntities.packagePrefix=\
+                todoapp.dom.module,\
+                org.isisaddons.module.security.dom,\
+                org.isisaddons.module.settings.dom,\
+                org.isisaddons.module.sessionlogger.dom,\
+                org.isisaddons.module.command.dom,\
+                org.isisaddons.module.audit.dom,\
+                org.isisaddons.module.publishing.dom</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Alternatively, could have just specified <code>org.isisaddons.module</code> instead of enumerating every addon.  This would be a bit slower, but more maintainable.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you fail to do this then DataNucleus will build up its metamodel lazily, rather than validate all classes up-front.  This can call issues: we&#8217;ve seen malformed SQL being submitted when DN wasn&#8217;t aware of subclasses of a superclass, and we&#8217;ve also seen deadlocks when running against HSQLDB as it attempts to perform a DDL statement intermixed with DML statements.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">Upgrading to Java 8</h3>
 <div class="paragraph">
 <p>Apache Isis 1.9.0 is the first version to support Java 8.  You can continue to use Java 7, but if you want to move to Java 8 then there are several small changes to be made.</p>
@@ -761,7 +821,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="sect3">
 <h4 id="_in_the_parent_code_pom_xml_code_2">In the parent <code>pom.xml</code></h4>
 <div class="paragraph">
-<p>under <code>&lt;build&gt;/&lt;pluginManagement&gt;/&lt;plugins&gt;</code>, add (or update) maven-enforcer-plugin:</p>
+<p>under <code>build/pluginManagement/plugins</code>, add (or update) <code>maven-compiler-plugin</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1312,6 +1372,7 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
 <li><a href="#_run_code_mvn_clean_code">Run <code>mvn clean</code> !</a></li>
 </ul>
 </li>
+<li><a href="#_migration-notes_1.8.0-to-1.9.0_specify-all-dom-packages">Specify all <code>dom</code> packages</a></li>
 <li><a href="#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">Upgrading to Java 8</a>
 <ul class="sectlevel3">
 <li><a href="#_in_the_parent_code_pom_xml_code_2">In the parent <code>pom.xml</code></a></li>
