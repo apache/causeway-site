@@ -1428,7 +1428,7 @@ TODO
 <div class="sect2">
 <h3 id="_download">3.1. Download</h3>
 <div class="paragraph">
-<p>The following table lists the templates to download</p>
+<p>The following table lists the templates available to download:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1488,6 +1488,20 @@ TODO
 <p><a href="./resources/templates/jmock2-templates.xml">Download</a></p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Asciidoc</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>ad</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="./resources/templates/asciidoc-templates-idea.xml">Download</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(none )</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -1499,20 +1513,23 @@ TODO
 <div class="sect3">
 <h4 id="_intellij">3.2.1. IntelliJ</h4>
 <div class="paragraph">
-<p>To install in IntelliJ, copy to the relevant <code>config/templates</code> directory, eg:</p>
+<p>To install in IntelliJ (Community edition 14), copy to the relevant <code>config/templates</code> directory, eg:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Windows <code>&lt;User home&gt;\.IntelliJIdea14\config\templates</code></p>
+<p>Windows <code>&lt;User home&gt;\.IdeaIC14\config\templates</code></p>
 </li>
 <li>
-<p>Linux <code>~/.IntelliJIdea14/config/templates</code></p>
+<p>Linux <code>~/.IdeaIC14/config/templates</code></p>
 </li>
 <li>
-<p>Mac OS <code>~/Library/Preferences/IntelliJIdea14/templates</code></p>
+<p>Mac OS <code>~/Library/Preferences/IdeaIC14/templates</code></p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>If using the Ultimate edition, the directory is <code>.IntelliJIdea14</code> rather than <code>IdeaIC14</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2356,7 +2373,16 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_build_and_review_using_maven">9.3. Build and Review (using Maven)</h3>
+<h3 id="_writing_the_docs">9.3. Writing the docs</h3>
+<div class="paragraph">
+<p>We highly recommend that you install the (IntelliJ) live templates for Asciidoctor, as described in <a href="#_cg_ide-templates">IDE templates</a>.  These provide a large number of helper templates.</p>
+</div>
+<div class="paragraph">
+<p>An <a href="#_cg_appendix_asciidoc-templates">appendix</a> lists all the templates available, demonstrating their intended usage and output.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_and_review_using_maven">9.4. Build and Review (using Maven)</h3>
 <div class="paragraph">
 <p>To (re)build the documentation locally prior to release, use:</p>
 </div>
@@ -2373,10 +2399,12 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_instant_rebuild_using_ruby">9.4. Instant Rebuild (using Ruby)</h3>
+<h3 id="_instant_rebuild_using_ruby">9.5. Instant Rebuild (using Ruby)</h3>
 <div class="paragraph">
-<p>The ruby script, <code>monitor.rb</code> emulates the <code>mvn site</code> command, regenerating any changed Asciidoctor files to the relevant <code>target/site</code> directory. If any included files are changed then it rebuilds the parent (per the above naming convention).</p>
+<p>The ruby script, <code>monitor.rb</code> emulates the <code>mvn compile</code> command, regenerating any changed Asciidoctor files to the relevant <code>target/site</code> directory.  Moreover if any included files are changed then it rebuilds the parent (per the above naming convention).</p>
 </div>
+<div class="sect3">
+<h4 id="_one_time_setup">9.5.1. One-time setup</h4>
 <div class="paragraph">
 <p>To setup:</p>
 </div>
@@ -2405,7 +2433,7 @@ git push origin --delete ISIS-999</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>To install:</p>
+<p>To download the required Ruby dependencies, use:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2413,27 +2441,22 @@ git push origin --delete ISIS-999</code></pre>
 bundle install</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_instant_rebuild">9.5.2. Instant Rebuild</h4>
 <div class="paragraph">
 <p>To run, we typically just use:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">ruby monitor.rb</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sh monitor.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will start monitoring all files under <code>src/main/asciidoc</code>, and start up a web server on port 4000 so you can review results.  If any <code>.adoc</code> changes, then the appropriate HTML will be regenerated.  And, if any new assets (CSS, images etc) are added, they will be copied across.</p>
+<p>This script simply runs <code>mvn clean compile &amp;&amp; ruby monitor.rb -b</code>.  The <code>mvn</code> command performs a clean rebuild of the site, and then the ruby script monitors for any further changes under <code>src/main/asciidoc</code>.</p>
 </div>
 <div class="paragraph">
-<p>It often makes sense to combine this with <code>mvn</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install &amp;&amp; ruby monitor.rb</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This directory contains a tiny script, <code>r.sh</code>, that executes exactly the above line.</p>
+<p>The script also starts up a web server on port 4000 so you can review results.  If any <code>.adoc</code> changes, then the appropriate HTML will be regenerated.  And, if any new assets (CSS, images etc) are added, they will be copied across.  The <code>-b</code> flag passed through means that the script also starts a web browser pointing at the newly generated docs.</p>
 </div>
 <div class="paragraph">
 <p>The <code>monitor.rb</code> script has a couple of other options, use <code>-h</code> flag for usage:</p>
@@ -2455,13 +2478,14 @@ bundle install</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_publish_procedure">9.5. Publish procedure</h3>
+<h3 id="_publish_procedure">9.6. Publish procedure</h3>
 <div class="paragraph">
 <p>Only Apache Isis committers can publish to <a href="http://isis.apache.org">isis.apache.org</a>.  We&#8217;ve decided to include these procedures here here (rather than put them in the <a href="#_cg_committers">committers' section</a> of this guide, just to keep things together.</p>
 </div>
 <div class="sect3">
-<h4 id="_one_time_setup">9.5.1. One-time setup</h4>
+<h4 id="_one_time_setup_2">9.6.1. One-time setup</h4>
 <div class="paragraph">
 <p>The generated site is published by copying into the <code>content/</code> directory of the <a href="https://git-wip-us.apache.org/repos/asf/isis-site.git">isis-site git repo</a>. You therefore need to check this out this repo.</p>
 </div>
@@ -2493,7 +2517,7 @@ bundle install</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publishing">9.5.2. Publishing</h4>
+<h4 id="_publishing">9.6.2. Publishing</h4>
 <div class="paragraph">
 <p>Back in the main <code>isis-git.repo</code>, to copy the generated documents to the <code>isis-site.git</code> repo , run:</p>
 </div>
@@ -2524,16 +2548,11 @@ bundle install</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sh publish.sh &quot;ISIS-nnnn: a custom commit message&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will use a standard commit message (in the <code>isis-site.git</code> repo).  If you want to specify a custom message, use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install -Dmessage=&quot;ISIS-nnnn: a custom commit message&quot;</code></pre>
-</div>
+<p>Behind the scenes this just calls <code>mvn clean install -Dmessage=&#8230;&#8203;</code>.</p>
 </div>
 <div class="paragraph">
 <p>Pushing the commits (in the <code>isis-site.git</code> directory, of course) will publishing the changes:</p>
@@ -5266,7 +5285,7 @@ modify_committee.pl gump --remove joebloggs</code></pre>
 <h2 id="_cg_git-cookbook">11. Appendix: Git Cookbook</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes the commands often used while working with git.  In addition to these basic commands, please make sure you have read:</p>
+<p>This appendix describes the commands often used while working with git.  In addition to these basic commands, please make sure you have read:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -5543,6 +5562,1342 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_cg_asciidoc-templates">12. Appendix: Asciidoc Templates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This appendix lists the (IntelliJ) live templates available for <a href="#_cg_asciidoc">writing documentation</a> using Asciidoc.  Instructions for installing the templates can be found <a href="#_cg_ide-templates">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>In the examples below the text <code>xxx</code>, <code>yyy</code>, <code>zzz</code> are correspond to template variables (ie placeholders).</p>
+</div>
+<div class="sect2">
+<h3 id="_callouts">12.1. Callouts</h3>
+<div class="paragraph">
+<p>The Asciidoctor terminology is an "admonition".</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adadmimportant</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[IMPORTANT]<br>
+====<br>
+xxx<br>
+====</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>xxx</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adadmnote</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[NOTE]<br>
+====<br>
+xxx<br>
+====</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>xxx</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adadmtip</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[TIP]<br>
+====<br>
+xxx<br>
+====</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>xxx</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adadmwarning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[WARNING]<br>
+====<br>
+xxx<br>
+====</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>xxx</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_todo_notes">12.2. TODO notes</h3>
+<div class="paragraph">
+<p>Add as a placeholder for documentation still to be written or which is work-in-progress.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adtodo</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>NOTE: TODO</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adwip</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>NOTE: WIP - xxx</pre></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is additional explanatory text</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+WIP - cool new feature
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_xref_to_contributors_guide">12.3. Xref to Contributors' Guide</h3>
+<div class="paragraph">
+<p>Cross-references (links) to the <a href="#_cg">Contributors' Guide</a> (this document).</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adcg</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:cg.adoc#_cg[Contributors' Guide]</pre><br></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the contributors guide.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="#_cg">Contributors' Guide</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adcg1</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:cg.adoc#_cg_xxx[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 1 (chapter) within the contributors guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the chapter&#8217;s anchor</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:cg.adoc#_cg_asciidoc-templates[Asciidoc templates/&lt;/pre&gt;]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="#_cg_asciidoc-templates">Asciidoc templates</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adcg2</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:cg.adoc#_cg_xxx_yyy[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 2 (chapter and section) within the contributors guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> and <code>yyy</code> make up the anchor to the section within the chapter</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:cg.adoc#_cg_committers_release-process[Release process/&lt;/pre&gt;]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="#_cg_committers_release-process">Release process</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_xref_to_reference_guide">12.4. Xref to Reference Guide</h3>
+<div class="paragraph">
+<p>Cross-references (links) to the <a href="rg.html#_rg">Reference Guide</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrg</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg[Reference Guide]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the Reference Guide.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg">Reference Guide</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrg1</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_xxx[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 1 (chapter) within the reference guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the chapter&#8217;s anchor</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_annotations[Annotations]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_annotations">Annotations</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrg2</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_xxx_yyy[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 2 (chapter and section) within the reference guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> and <code>yyy</code> make up the anchor to the section within the chapter</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_object-layout_dynamic_[Dynamic object layout&lt;/pre&gt;]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_object-layout_dynamic">Dynamic object layout</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrg3</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_xxx_yyy_zzz[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 3 (chapter, section, subsection) within the reference guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code>, <code>yyy</code>, <code>zzz</code> make up the anchor to the subsection within the chapter</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_runtime_application-specific_application-css[Application-specific CSS]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_runtime_application-specific_application-css">Application-specific CSS</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgcfg</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_runtime_configuring-core[configuration properties&lt;/pre&gt;]</p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the reference guide&#8217;s catalogue of the Apache Isis configuration properties.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_runtime_configuring-core">configuration properties</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgcs</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_super_manpage-xxx[`xxx`]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for a superclass, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the superclass (eg <code>AbstractDomainService</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_super_manpage-AbstractDomainService[`AbstractDomainService`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_classes_super_manpage-AbstractDomainService"><code>AbstractDomainService</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgcu</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_utility_manpage-xxx[`xxx`]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for a utility class, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the utility class (eg <code>TitleBuffer</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_utility_manpage-TitleBuffer[`TitleBuffer`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_classes_utility_manpage-TitleBuffer"><code>TitleBuffer</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgcv</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_value-types_manpage-xxx[`xxx`]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for an applib value class, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the utility class (eg <code>Blob</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_classes_value-types_manpage-Blob[`Blob`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_classes_value-types_manpage-Blob"><code>Blob</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgmp</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_methods_prefixes_manpage-xxx[`xxx...()`]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for a prefixed method, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the method prefix (eg <code>disable&#8230;&#8203;()</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_methods_prefixes_manpage-disable[`disable...()`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_methods_prefixes_manpage-disable"><code>disable&#8230;&#8203;()</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgmr</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre></pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for a reserved method, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the method prefix (eg <code>title()</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_methods_reserved_manpage-title[`title()`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_methods_reserved_manpage-title"><code>title()</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgna</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_annotations_manpage-xxx[`@xxx`&lt;/pre&gt;]</p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for an annotation, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the annotation type (eg <code>@Action</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_annotations_manpage-Action[`@Action`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_annotations_manpage-Action"><code>@Action</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgnt</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_annotations_manpage-xxx_ttt[`@xxx#ttt()`&lt;/pre&gt;]</p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for the specific attribute (field) of an annotation, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the annotation type (eg <code>@Action</code>)</p>
+</li>
+<li>
+<p><code>ttt</code> is the attribute (eg <code>@semantics</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_annotations_manpage-Action_semantics[`@Action#semantics()`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_annotations_manpage-Action_semantics"><code>@Action#semantics()</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgsa</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre></pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for an (API) domain service, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the domain service (eg <code>DomainObjectContainer</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_services-api_manpage-DomainObjectContainer[`DomainObjectContainer`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adrgss</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre></pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the "man page" for an (SPI) domain service, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the domain service (eg <code>ContentMappingService</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:rg.adoc#_rg_services-spi_manpage-ContentMappingService[`ContentMappingService`]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="rg.html#_rg_services-spi_manpage-ContentMappingService"><code>ContentMappingService</code></a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_xref_to_the_users_guide">12.5. Xref to the Users' Guide</h3>
+<div class="paragraph">
+<p>Cross-references (links) to the <a href="ug.html#_ug">Users' Guide</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adug</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#_ug[Users' Guide]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to the Users' Guide.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug">Users' Guide</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adug1</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#xxx[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 1 (chapter) within the users' guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the chapter&#8217;s anchor</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:ug.adoc#_ug_core-concepts[Core concepts]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug_core-concepts">Core concepts</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adug2</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#xxx_yyy[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 2 (chapter and section) within the users' guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> and <code>yyy</code> make up the anchor to the section within the chapter</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:ug.adoc#core-concepts_philosophy[Philosophy]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#core-concepts_philosophy">Philosophy</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adug3</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#xxx_yyy_zzz[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>a hyperlink to a level 3 (chapter, section, subsection) within the users' guide, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code>, <code>yyy</code>, <code>zzz</code> make up the anchor to the subsection within the chapter</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>xref:ug.adoc#_ug_core-concepts_philosophy_naked-objects-pattern[Naked objects pattern]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug_core-concepts_philosophy_naked-objects-pattern">Naked objects pattern</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adugsimpleapp</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#_ug_getting-started_simpleapp-archetype[SimpleApp archetype]</pre></p>
+</div>
+<div class="paragraph">
+<p>A hyperlink to the <code>simpleapp</code> archetype in the "getting started" chapter.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adugvro</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#_ug_restfulobjects-viewer[RestfulObjects viewer]</pre></p>
+</div>
+<div class="paragraph">
+<p>A hyperlink to the Restful Objects viewer chapter.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug_restfulobjects-viewer">RestfulObjects viewer</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adugvw</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:ug.adoc#_ug_wicket-viewer[Wicket viewer]</pre></p>
+</div>
+<div class="paragraph">
+<p>A hyperlink to the Wicket viewer chapter.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="ug.html#_ug_wicket-viewer">Wicket viewer</a></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_link_to_isis_addons">12.6. Link to Isis Addons</h3>
+<div class="paragraph">
+<p>Links to (non-ASF) <a href="http://isisaddons.org">Isis Addons</a></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adlinkaddons</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>(non-ASF) link:http://isisaddons.org[Isis Addons]</pre></p>
+</div>
+<div class="paragraph">
+<p>link to the Isis Addons website.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(non-ASF) <a href="http://isisaddons.org">Isis Addons</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adlinkaddonsapp</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>(non-ASF) http://github.com/isisaddons/isis-app-xxx[Isis addons' xxx&lt;/pre&gt;]</p>
+</div>
+<div class="paragraph">
+<p>link to the github repo for an example app from the Isis addons; where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the name of the example app being linked to</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>(non-ASF) http://github.com/isisaddons/isis-app-todoapp[Isis addons' todoapp]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adlinkaddonsmodule</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre></pre></p>
+</div>
+<div class="paragraph">
+<p>link to the github repo for a module from the Isis addons; where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the name of the module being linked to</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>(non-ASF) http://github.com/isisaddons/isis-module-security[Isis addons' security] module</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adlinkaddonswicket</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre></pre></p>
+</div>
+<div class="paragraph">
+<p>link to the github repo for a wicket UI component from the Isis addons; where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the name of the wicket UI component being linked to</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>(non-ASF) http://github.com/isisaddons/isis-wicket-gmap3[Isis addons' gmap3 ] wicket extension</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(non-ASF) <a href="http://github.com/isisaddons/isis-wicket-gmap3">Isis addons' gmap3 </a> wicket extension</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_source_code">12.7. Source code</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcjava</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>[source,java]<br>
+----<br>
+xxx<br>
+----</code></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the source code snippet.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {
+    ...
+}</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcjavac</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adsrcjava</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcjavascript</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>[source,javascript]<br>
+----<br>
+xxx<br>
+----</code></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the source code snippet.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="predefined">$</span>(document).ready(<span class="keyword">function</span>() {
+        ...
+});</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcjavascriptc</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adsrcjavascript</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcother</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>[source,nnn]<br>
+----<br>
+xxx<br>
+----</code></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>nnn</code> is the programming language</p>
+</li>
+<li>
+<p><code>xxx</code> is the source code snippet.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcotherc</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adsrcother</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcxml</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>[source,javascript]<br>
+----<br>
+xxx<br>
+----</code></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the source code snippet.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;html&gt;</span>
+    <span class="tag">&lt;title&gt;</span>
+       hello world!
+    <span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adsrcxmlc</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adsrcxml</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_images">12.8. Images</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adimgfile</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>image::{_imagesdir}xxx/yyy.png[width="WWWpx",link="{_imagesdir}xxx/yyy.png"]</pre></p>
+</div>
+<div class="paragraph">
+<p>embeds specified image, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the subdirectory under the <code>images/</code> directory</p>
+</li>
+<li>
+<p><code>yyy</code> is the image</p>
+</li>
+<li>
+<p><code>WWW</code> is the width, in pixels.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>image::{_imagesdir}wicket-viewer/layouts/estatio-Lease.png[width="300px",link="{_imagesdir}wicket-viewer/layouts/estatio-Lease.png"]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/layouts/estatio-Lease.png"><img src="images/wicket-viewer/layouts/estatio-Lease.png" alt="estatio Lease" width="300px"></a>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adimgfilec</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adimgfile</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adimgurl</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>image::xxx[width="WWWpx",link="xxx"]</pre></p>
+</div>
+<div class="paragraph">
+<p>embeds image from specified URL, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the URL to the image</p>
+</li>
+<li>
+<p><code>WWW</code> is the width, in pixels.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adimgurlc</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>adimgurl</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_youtube_screencasts">12.9. YouTube (screencasts)</h3>
+<div class="paragraph">
+<p>Embedded youtube screencasts</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adyoutube</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>video::xxx[youtube,width="WWWpx",height="HHHpx"]</pre></p>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the youtube reference</p>
+</li>
+<li>
+<p><code>WWW</code> is the width, in pixels</p>
+</li>
+<li>
+<p><code>HHH</code> is the height, in pixels</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>video::bj8735nBRR4[youtube,width="210px",height="118px"] </pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="videoblock">
+<div class="content">
+<iframe width="210px" height="118px" src="//www.youtube.com/embed/bj8735nBRR4?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adyoutubec</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>as for <code>youtube</code>, but with a caption above</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_tables">12.10. Tables</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adtbl3</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Table with 3 columns, 3 rows.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_misc">12.11. Misc.</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Abbrev.</th>
+<th class="tableblock halign-left valign-top">Produces</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adai</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>Apache Isis</pre><br></p>
+</div>
+<div class="paragraph">
+<p>That is, the literal text "Apache Isis".</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Apache Isis</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adlink</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>link:xxx[ttt]</pre></p>
+</div>
+<div class="paragraph">
+<p>, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is</p>
+</li>
+<li>
+<p><code>ttt</code> is the text to display as the hyperlink</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>for example:</p>
+</div>
+<div class="paragraph">
+<p><pre>link:http://isis.apache.org[Apache Isis website]</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><a href="http://isis.apache.org">Apache Isis website</a></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adanchany</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>= anchor:[xxx]</pre></p>
+</div>
+<div class="paragraph">
+<p>defines an inline anchor to any heading, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the anchor text.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="paragraph">
+<p><pre>= anchor:[_ug_i18n] Internationalization</pre></p>
+</div>
+<div class="paragraph">
+<p>An alternative (more commonly used in our documentation) is to use the <code>[[&#8230;&#8203;]]</code> directly above the heading:</p>
+</div>
+<div class="paragraph">
+<p><pre>[[_ug_i18n]]
+= Internationalization</pre></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adxrefany</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>xref:[xxx]</pre></p>
+</div>
+<div class="paragraph">
+<p>cross-reference to any document/anchor, where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx</code> is the fully qualified document with optional anchor</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adfootnote</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><pre>.footnote:[]</pre></p>
+</div>
+<div class="paragraph">
+<p>defines a footnote</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
         </div>
 
         <footer>
@@ -5692,12 +7047,18 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 <ul class="sectlevel2">
 <li><a href="#_where_to_find_the_docs">9.1. Where to find the Docs</a></li>
 <li><a href="#_naming_conventions">9.2. Naming Conventions</a></li>
-<li><a href="#_build_and_review_using_maven">9.3. Build and Review (using Maven)</a></li>
-<li><a href="#_instant_rebuild_using_ruby">9.4. Instant Rebuild (using Ruby)</a></li>
-<li><a href="#_publish_procedure">9.5. Publish procedure</a>
+<li><a href="#_writing_the_docs">9.3. Writing the docs</a></li>
+<li><a href="#_build_and_review_using_maven">9.4. Build and Review (using Maven)</a></li>
+<li><a href="#_instant_rebuild_using_ruby">9.5. Instant Rebuild (using Ruby)</a>
 <ul class="sectlevel3">
 <li><a href="#_one_time_setup">9.5.1. One-time setup</a></li>
-<li><a href="#_publishing">9.5.2. Publishing</a></li>
+<li><a href="#_instant_rebuild">9.5.2. Instant Rebuild</a></li>
+</ul>
+</li>
+<li><a href="#_publish_procedure">9.6. Publish procedure</a>
+<ul class="sectlevel3">
+<li><a href="#_one_time_setup_2">9.6.1. One-time setup</a></li>
+<li><a href="#_publishing">9.6.2. Publishing</a></li>
 </ul>
 </li>
 </ul>
@@ -5856,6 +7217,21 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 </li>
 <li><a href="#_if_you_ve_accidentally_worked_on_code_master_code_branch">11.10. If you&#8217;ve accidentally worked on <code>master</code> branch</a></li>
 <li><a href="#_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">11.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</a></li>
+</ul>
+</li>
+<li><a href="#_cg_asciidoc-templates">12. Appendix: Asciidoc Templates</a>
+<ul class="sectlevel2">
+<li><a href="#_callouts">12.1. Callouts</a></li>
+<li><a href="#_todo_notes">12.2. TODO notes</a></li>
+<li><a href="#_xref_to_contributors_guide">12.3. Xref to Contributors' Guide</a></li>
+<li><a href="#_xref_to_reference_guide">12.4. Xref to Reference Guide</a></li>
+<li><a href="#_xref_to_the_users_guide">12.5. Xref to the Users' Guide</a></li>
+<li><a href="#_link_to_isis_addons">12.6. Link to Isis Addons</a></li>
+<li><a href="#_source_code">12.7. Source code</a></li>
+<li><a href="#_images">12.8. Images</a></li>
+<li><a href="#_youtube_screencasts">12.9. YouTube (screencasts)</a></li>
+<li><a href="#_tables">12.10. Tables</a></li>
+<li><a href="#_misc">12.11. Misc.</a></li>
 </ul>
 </li>
 </ul>
