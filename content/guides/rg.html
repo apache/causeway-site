@@ -18641,36 +18641,367 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rg_classes">6. Classes</h2>
+<h2 id="_rg_classes">6. Classes and Interfaces</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This chapter describes the usage of various classes and interfaces that are not otherwise associated with <a href="#_rg_services-api">domain</a> <a href="#_rg_services-spi">services</a>, <a href="#_rg_object-layout">object layout</a> or <a href="#_rg_runtime">configuration</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_super">6.1. Superclasses</h3>
-<div class="admonitionblock note">
+<h3 id="_rg_classes_AppManifest-bootstrapping">6.1. <code>AppManifest</code> (bootstrapping)</h3>
+<div class="paragraph">
+<p>This section describes how to implement the <code>AppManifest</code> interface to bootstrap both an Apache Isis web application, and also its integration tests.</p>
+</div>
+<div class="sect3">
+<h4 id="_api_3">6.1.1. API</h4>
+<div class="paragraph">
+<p>The <code>AppManifest</code> interface allows the constituent parts of an application to be defined programmatically, most specifically the packages that contain domain services and/or persistent entities.  Its API is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AppManifest</span> {
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules();                         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getAdditionalServices();              <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthenticationMechanism();                 <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthorizationMechanism();                  <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt;&gt; getFixtures();  <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt; getConfigurationProperties();     <i class="conum" data-value="6"></i><b>(6)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Must return a non-null list of classes, each of which representing the root of one of the modules containing services and possibly entities, which together makes up the running application.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If non-<code>null</code>, overrides the value of <code>isis.services</code> configuration property to specify a list of additional classes to be instantiated as domain services (over and above the domain services defined via <code>getModules()</code> method.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If non-<code>null</code>, overrides the value of <code>isis.authentication</code> configuration property to specify the authentication mechanism.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If non-<code>null</code>, overrides the value of <code>isis.authorization</code> configuration property to specify the authorization mechanism.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>If non-<code>null</code>, overrides the value of <code>isis.fixtures</code> configuration property to specify a fixture script to be installed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Overrides for any other configuration properties.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The table below summarizes all the convenience superclasses defined by Apache Isis.</p>
+<p>The following sections describe each of these methods in a little more detail.</p>
+</div>
+<div class="sect4">
+<h5 id="__code_getmodules_code"><code>getModules()</code></h5>
+<div class="paragraph">
+<p>The most significant method (the only one which must return a non-<code>null</code> value) is the <code>getModules()</code> method.  Each module is identified by a class; the framework simply uses that class' package as the root to search for domain services (annotated with <a href="#_rg_annotations_manpage-DomainService"><code>@DomainService</code></a>) and entities (annotated with <a href="#_rg_annotations_manpage-PersistenceCapable"><code>@PersistenceCapable</code></a>).  Generally there is one such module class per Maven module.</p>
+</div>
+<div class="paragraph">
+<p>A module class for a domain module might for example be defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">com.mycompany.myapp.dom</span>;
+<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">MyAppDomainModule</span> {
+    <span class="directive">private</span> MyAppDomainModule() {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This tells the framework that the package and subpackages under <code>com.mycompany.myapp.dom</code> should be searched for domain services and entities.</p>
+</div>
+<div class="paragraph">
+<p>As is perhaps apparent, the <code>getModules()</code> method replaces and overrides both the <code>isis.services.ServicesInstallerFromAnnotation.packagePrefix</code> key (usually found in the <code>isis.properties</code>  file) and also the`isis.persistor.datanucleus.RegisterEntities.packagePrefix` key (usually found in the <code>persistor_datanucleus.properties</code> file).  The value of the <code>isis.services-installer</code> configuration property is also ignored.</p>
+</div>
+<div class="paragraph">
+<p>For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> defines the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
+    <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
+            ToDoAppDomainModule.class,
+            ToDoAppFixtureModule.class,
+            ToDoAppAppModule.class,
+            org.isisaddons.module.audit.AuditModule.class,
+            org.isisaddons.module.command.CommandModule.class,
+            org.isisaddons.module.devutils.DevUtilsModule.class,
+            org.isisaddons.module.docx.DocxModule.class,
+            org.isisaddons.module.publishing.PublishingModule.class,
+            org.isisaddons.module.sessionlogger.SessionLoggerModule.class,
+            org.isisaddons.module.settings.SettingsModule.class
+    );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As can be seen, the various (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> modules also each provide a module class that can be easily referenced.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__code_getadditionalservices_code"><code>getAdditionalServices()</code></h5>
+<div class="paragraph">
+<p>We normally we recommend that services are defined exclusively through <code>getModules()</code>, and that this method should therefore return an empty list.  However, there are certain use cases where the a service must be explicitly specified either because the service required does not (for whatever reason) have a <a href="#_rg_annotations_manpage-DomainService"><code>@DomainService</code></a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module (v1.9.0) allows the policy to evaluate conflicting permissions to be specified by explicitly registering either the <code>PermissionsEvaluationServiceAllowBeatsVeto</code> domain service or the <code>PermissionsEvaluationServiceVetoBeatsAllow</code> domain service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getAdditionalServices() {
+    <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
+            org.isisaddons.module.security.dom.permission.PermissionsEvaluationServiceVetoBeatsAllow.class
+    );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If this method returns a non-<code>null</code> value, then it overrides the value of <code>isis.services</code> configuration property.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__code_getauthenticationmechanism_code"><code>getAuthenticationMechanism()</code></h5>
+<div class="paragraph">
+<p>If non-<code>null</code>, this method specifies the authentication mechanism to use.  The valid values are currently <code>"shiro"</code>  or <code>"bypass"</code>.  If null is returned then the value of the <code>isis.authentication</code> configuration property (in <code>isis.properties</code> file) is used instead.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="ug.html#_ug_security">user guide</a> for further details on configuring shiro or bypass security.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This property is ignored for integration tests (which always uses the <code>"bypass"</code> mechanism).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__code_getauthorizationmechanism_code"><code>getAuthorizationMechanism()</code></h5>
+<div class="paragraph">
+<p>If non-<code>null</code>, this method specifies the authorization mechanism to use.  The valid values are currently <code>"shiro"</code>  or <code>"bypass"</code>.  If null is returned then the value of the <code>isis.authorization</code> configuration property (in <code>isis.properties</code> file) is used instead.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="ug.html#_ug_security">user guide</a> for further details on configuring shiro or bypass security.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This property is ignored for integration tests (which always uses the <code>"bypass"</code> mechanism).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__code_getfixtures_code"><code>getFixtures()</code></h5>
+<div class="paragraph">
+<p>If non-<code>null</code>, this method specifies the fixture script(s) to be run on startup.  This is particularly useful when developing or demoing while using an in-memory database.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt;&gt; getFixtures() {
+    <span class="keyword">return</span> Lists.newArrayList(todoapp.fixture.demo.DemoFixture.class);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in order for fixtures to be installed it is also necessary to set the <code>isis.persistor.datanucleus.install-fixtures</code> key to <code>true</code>.  This can most easily be done using the <code>getConfigurationProperties()</code> method, discussed below.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__code_getconfigurationproperties_code"><code>getConfigurationProperties()</code></h5>
+<div class="paragraph">
+<p>This method allow arbitrary other configuration properties to be overridden.  One common use case is in conjunction with the <code>getFixtures()</code> method, discussed above:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
+    <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; props = Maps.newHashMap();
+    props.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">isis.persistor.datanucleus.install-fixtures</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>);
+    <span class="keyword">return</span> props;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bootstrapping">6.1.2. Bootstrapping</h4>
+<div class="paragraph">
+<p>One of the primary goals of the <code>AppManifest</code> is to unify the bootstrapping of both integration tests and the webapp.  This requires that the integration tests and webapp can both reference the implementation.</p>
+</div>
+<div class="paragraph">
+<p>We strongly recommend using a <code>myapp-app</code> Maven module to hold the implementation of the <code>AppManifest</code>.  This Maven module can then also hold dependencies which are common to both integration tests and the webapp, specifically the <code>org.apache.isis.core:isis-core-runtime</code> and the <code>org.apache.isis.core:isis-core-wrapper</code> modules.</p>
+</div>
+<div class="paragraph">
+<p>We also strongly recommend that any application-layer domain services and view models (code that references persistent domain entities but that is not referenced back) is moved to this <code>myapp-app</code> module.  This will allow the architectural layering of the overall application to be enforced by Maven.</p>
+</div>
+<div class="paragraph">
+<p>What then remains is to update the bootstrapping code itself.</p>
+</div>
+<div class="sect4">
+<h5 id="_integration_tests">Integration Tests</h5>
+<div class="paragraph">
+<p>Bootstrapping integration tests is still performed using the <code>IsisSystemForTest.Builder</code>, but very often the bootstrapping code can be substantially simplified (compared to not using an <code>AppManifest</code>, that is).</p>
+</div>
+<div class="paragraph">
+<p>For example, this is the bootstrapping code for the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a> looks something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
+        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
+        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
+            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
+                    .withLoggingAt(org.apache.log4j.Level.INFO)
+                    .with(<span class="keyword">new</span> MyAppAppManifest())
+                    .with(<span class="keyword">new</span> IsisConfigurationForJdoIntegTests())
+                    .build()
+                    .setUpSystem();
+            IsisSystemForTest.set(isft);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_webapps">Webapps</h5>
+<div class="paragraph">
+<p>To bootstrap an Apache Isis webapp (using the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a>), there are two choices:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>either specify the <code>AppManifest</code> by overriding the <code>IsisWicketApplication#newWicketModule()</code>, eg:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Module newIsisWicketModule() {
+    <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+    ...
+    final Module overrides = <span class="keyword">new</span> AbstractModule() {
+        <span class="annotation">@Override</span>
+        <span class="directive">protected</span> <span class="type">void</span> configure() {
+            ...
+            bind(AppManifest.class).toInstance(<span class="keyword">new</span> MyAppAppManifest());
+        }
+    };
+    <span class="keyword">return</span> Modules.override(isisDefaults).with(overrides);
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>alternatively update <code>isis.properties</code>, using the <code>isis.appManifest</code> key to specify the <code>AppManifest</code> implementation, eg:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.appManifest=domainapp.app.MyAppAppManifest</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The first (programmatic) approach takes precedence over the second approach (configuration properties).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you use the <code>org.apache.isis.WebServer</code> class to launch your application from the <a href="ug.html#_ug_deployment_cmd-line">command line</a>, then should be aware that arbitrary configuration properties can be specified as system properties.  In particular, therefore, you can override the <code>isis.appManifest</code> configuration property:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">java -Disis.appManifest=com.mycompany.myapp.MyAppAppManifestWithFixtures \
+     org.apache.isis.WebServer</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_subsidiary_goals">6.1.3. Subsidiary Goals</h4>
+<div class="paragraph">
+<p>There are a number of subsidiary goals of the <code>AppManifest</code> class (though as of v1.9.0 these have not yet implemented):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allow different integration tests to run with different manifests.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Normally the running application is shared (on a thread-local) between integration tests. What the framework could do is to be intelligent enough to keep track of the manifest in use for each integration test and tear down the shared state if the "next" test uses a different manifest</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Speed up bootstrapping by only scanning for classes annotated by <code>@DomainService</code> and <code>@PersistenceCapable</code> once.</p>
+</li>
+<li>
+<p>Provide a programmatic way to contribute elements of <code>web.xml</code>.</p>
+</li>
+<li>
+<p>Provide a programmatic way to configure Shiro security.</p>
+</li>
+<li>
+<p>Anticipate the module changes forthcoming in Java 9.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Eventually we see that the <code>AppManifest</code> class acting as an "aggregator", with the list of modules will become Java 9 modules each advertising the types that they export.</p>
+</li>
+<li>
+<p>It might even be possible for <code>AppManifest</code>s to be switched on and off dynamically (eg if Java9 is compatible with OSGi, being one of the design goals).</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_classes_super">6.2. Superclasses</h3>
+<div class="paragraph">
+<p>This section catalogues the various convenience superclasses defined by Apache Isis.  These are listed in the table below.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 29. Convenience Superclasses</caption>
@@ -18810,7 +19141,7 @@ Impl&#8217;n (g: a:)</th>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractContainedObject">6.1.1. <code>AbstractContainedObject</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractContainedObject">6.2.1. <code>AbstractContainedObject</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18825,7 +19156,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractDomainEvent">6.1.2. <code>AbstractDomainEvent</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractDomainEvent">6.2.2. <code>AbstractDomainEvent</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18840,7 +19171,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractDomainObject">6.1.3. <code>AbstractDomainObject</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractDomainObject">6.2.3. <code>AbstractDomainObject</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18855,7 +19186,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractFactoryAndRepository">6.1.4. <code>AbstractFactoryAndRepository</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractFactoryAndRepository">6.2.4. <code>AbstractFactoryAndRepository</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18870,7 +19201,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractService">6.1.5. <code>AbstractService</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractService">6.2.5. <code>AbstractService</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18885,7 +19216,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-AbstractViewModel">6.1.6. <code>AbstractViewModel</code></h4>
+<h4 id="_rg_classes_super_manpage-AbstractViewModel">6.2.6. <code>AbstractViewModel</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18900,7 +19231,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-ActionDomainEvent">6.1.7. <code>ActionDomainEvent</code></h4>
+<h4 id="_rg_classes_super_manpage-ActionDomainEvent">6.2.7. <code>ActionDomainEvent</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18915,7 +19246,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-CollectionDomainEvent">6.1.8. <code>CollectionDomainEvent</code></h4>
+<h4 id="_rg_classes_super_manpage-CollectionDomainEvent">6.2.8. <code>CollectionDomainEvent</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18930,7 +19261,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-FixtureScript">6.1.9. <code>FixtureScript</code></h4>
+<h4 id="_rg_classes_super_manpage-FixtureScript">6.2.9. <code>FixtureScript</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18945,7 +19276,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-FixtureScripts">6.1.10. <code>FixtureScripts</code></h4>
+<h4 id="_rg_classes_super_manpage-FixtureScripts">6.2.10. <code>FixtureScripts</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18960,7 +19291,7 @@ TODO - see also user guide&#8217;s <a href="ug.html#_ug_testing_fixture-scripts_
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_super_manpage-PropertyDomainEvent">6.1.11. <code>PropertyDomainEvent</code></h4>
+<h4 id="_rg_classes_super_manpage-PropertyDomainEvent">6.2.11. <code>PropertyDomainEvent</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -18976,7 +19307,7 @@ TODO
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_value-types">6.2. Value Types</h3>
+<h3 id="_rg_classes_value-types">6.3. Value Types</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19125,7 +19456,7 @@ TODO
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_rg_classes_value-types_manpage-Blob">6.2.1. <code>Blob</code></h4>
+<h4 id="_rg_classes_value-types_manpage-Blob">6.3.1. <code>Blob</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19140,7 +19471,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_value-types_manpage-Clob">6.2.2. <code>Clob</code></h4>
+<h4 id="_rg_classes_value-types_manpage-Clob">6.3.2. <code>Clob</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19155,7 +19486,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_value-types_manpage-Color">6.2.3. <code>Color</code></h4>
+<h4 id="_rg_classes_value-types_manpage-Color">6.3.3. <code>Color</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19170,7 +19501,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_value-types_manpage-Money">6.2.4. <code>Money</code></h4>
+<h4 id="_rg_classes_value-types_manpage-Money">6.3.4. <code>Money</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19185,7 +19516,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_value-types_manpage-Password">6.2.5. <code>Password</code></h4>
+<h4 id="_rg_classes_value-types_manpage-Password">6.3.5. <code>Password</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19201,13 +19532,13 @@ TODO
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_utility">6.3. Applib Utility Classes</h3>
+<h3 id="_rg_classes_utility">6.4. Applib Utility Classes</h3>
 <div class="paragraph">
 <p>The <code>org.apache.isis.applib.util</code> package has a number of simple utility
 classes designed to simplify the coding of some common tasks.</p>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_utility_manpage-Enums">6.3.1. <code>Enums</code></h4>
+<h4 id="_rg_classes_utility_manpage-Enums">6.4.1. <code>Enums</code></h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -19222,7 +19553,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_utility_manpage-ObjectContracts">6.3.2. <code>ObjectContracts</code></h4>
+<h4 id="_rg_classes_utility_manpage-ObjectContracts">6.4.2. <code>ObjectContracts</code></h4>
 <div class="paragraph">
 <p>The <code>ObjectContracts</code> test provides a series of methods to make it easy for your domain objects to:</p>
 </div>
@@ -19367,7 +19698,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_utility_manpage-Reasons">6.3.3. <code>Reasons</code></h4>
+<h4 id="_rg_classes_utility_manpage-Reasons">6.4.3. <code>Reasons</code></h4>
 <div class="paragraph">
 <p>There are two different classes provided to help build reasons returned
 by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
@@ -19403,7 +19734,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_utility_manpage-TitleBuffer">6.3.4. <code>TitleBuffer</code></h4>
+<h4 id="_rg_classes_utility_manpage-TitleBuffer">6.4.4. <code>TitleBuffer</code></h4>
 <div class="paragraph">
 <p>The <code>TitleBuffer</code> utility class is intended to make it easy to construct title strings (returned from the <a href="#_rg_methods_reserved_manpage-title"><code>title()</code></a> method).</p>
 </div>
@@ -19413,7 +19744,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_spec">6.4. Specification pattern</h3>
+<h3 id="_rg_classes_spec">6.5. Specification pattern</h3>
 <div class="paragraph">
 <p>The interfaces and classes listed in this chapter provide support for the  <code>Specification</code> pattern, as described in Eric Evans' book <em>Domain Driven Design</em>, p224.</p>
 </div>
@@ -19421,7 +19752,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 <p>Apache Isis will automatically apply such specifications as validation rules on properties (as per <a href="#_rg_annotations_manpage-Property_mustSatisfy"><code>@Property#mustSatisfy()</code></a>) and on action parameters (as per <a href="#_rg_annotations_manpage-Parameter_mustSatisfy"><code>@Parameter#mustSatisfy()</code></a>).</p>
 </div>
 <div class="sect3">
-<h4 id="__code_specification_code">6.4.1. <code>Specification</code></h4>
+<h4 id="__code_specification_code">6.5.1. <code>Specification</code></h4>
 <div class="paragraph">
 <p>The heart of the support for this pattern is the <code>Specification</code> interface:</p>
 </div>
@@ -19472,7 +19803,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_specification2_code">6.4.2. <code>Specification2</code></h4>
+<h4 id="__code_specification2_code">6.5.2. <code>Specification2</code></h4>
 <div class="paragraph">
 <p>The <code>Specification2</code> interface extends the <code>Specification</code> API to add support for i18n.  This is done by defining an additional method that returns a <a href="#_rg_classes_i18n_manpage-TranslatableString">translatable string</a>:</p>
 </div>
@@ -19496,7 +19827,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_adapter_classes">6.4.3. Adapter classes</h4>
+<h4 id="_adapter_classes">6.5.3. Adapter classes</h4>
 <div class="paragraph">
 <p>The <code>AbstractSpecification</code> and <code>AbstractSpecification2</code> adapter classes provide a partial implementation of the respective interfaces, providing type-safety.  (Their design is modelled on the <code>TypesafeMatcher</code> class within <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>).</p>
 </div>
@@ -19526,7 +19857,7 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_combining_specifications">6.4.4. Combining specifications</h4>
+<h4 id="_combining_specifications">6.5.4. Combining specifications</h4>
 <div class="paragraph">
 <p>There are also adapter classes that can be inherited from to combine specifications:</p>
 </div>
@@ -19549,12 +19880,12 @@ by <code>disableXxX()</code> and <code>validateXxx()</code> methods:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_i18n">6.5. i18n support</h3>
+<h3 id="_rg_classes_i18n">6.6. i18n support</h3>
 <div class="paragraph">
 <p>The <code>org.apache.isis.applib.services.i18n</code> package contains a single class to support i18n.</p>
 </div>
 <div class="sect3">
-<h4 id="_rg_classes_i18n_manpage-TranslatableString">6.5.1. <code>TranslatableString</code></h4>
+<h4 id="_rg_classes_i18n_manpage-TranslatableString">6.6.1. <code>TranslatableString</code></h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -19573,12 +19904,12 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_mixins">6.6. Mixins</h3>
+<h3 id="_rg_classes_mixins">6.7. Mixins</h3>
 <div class="paragraph">
 <p>The interfaces listed in this chapter act like "mix-ins"; they allow domain services to contribute actions/properties/collections to any domain objects that implement these interfaces.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_hastransactionid_code">6.6.1. <code>HasTransactionId</code></h4>
+<h4 id="__code_hastransactionid_code">6.7.1. <code>HasTransactionId</code></h4>
 <div class="paragraph">
 <p>The <code>HasTransactionId</code> interface is a mix-in for any domain objects that pertain</p>
 </div>
@@ -19617,7 +19948,7 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_hasusername_code">6.6.2. <code>HasUsername</code></h4>
+<h4 id="__code_hasusername_code">6.7.2. <code>HasUsername</code></h4>
 <div class="paragraph">
 <p>The <code>HasUsername</code> interface is a mix-in for domain objects to be associated with a username.  Other services and modules can then contribute actions/collections to render such additional information relating to the activities of the user.</p>
 </div>
@@ -22795,61 +23126,82 @@ determines which additional configuration files to search for
 </li>
 </ul>
 </li>
-<li><a href="#_rg_classes">6. Classes</a>
+<li><a href="#_rg_classes">6. Classes and Interfaces</a>
 <ul class="sectlevel2">
-<li><a href="#_rg_classes_super">6.1. Superclasses</a>
+<li><a href="#_rg_classes_AppManifest-bootstrapping">6.1. <code>AppManifest</code> (bootstrapping)</a>
 <ul class="sectlevel3">
-<li><a href="#_rg_classes_super_manpage-AbstractContainedObject">6.1.1. <code>AbstractContainedObject</code></a></li>
-<li><a href="#_rg_classes_super_manpage-AbstractDomainEvent">6.1.2. <code>AbstractDomainEvent</code></a></li>
-<li><a href="#_rg_classes_super_manpage-AbstractDomainObject">6.1.3. <code>AbstractDomainObject</code></a></li>
-<li><a href="#_rg_classes_super_manpage-AbstractFactoryAndRepository">6.1.4. <code>AbstractFactoryAndRepository</code></a></li>
-<li><a href="#_rg_classes_super_manpage-AbstractService">6.1.5. <code>AbstractService</code></a></li>
-<li><a href="#_rg_classes_super_manpage-AbstractViewModel">6.1.6. <code>AbstractViewModel</code></a></li>
-<li><a href="#_rg_classes_super_manpage-ActionDomainEvent">6.1.7. <code>ActionDomainEvent</code></a></li>
-<li><a href="#_rg_classes_super_manpage-CollectionDomainEvent">6.1.8. <code>CollectionDomainEvent</code></a></li>
-<li><a href="#_rg_classes_super_manpage-FixtureScript">6.1.9. <code>FixtureScript</code></a></li>
-<li><a href="#_rg_classes_super_manpage-FixtureScripts">6.1.10. <code>FixtureScripts</code></a></li>
-<li><a href="#_rg_classes_super_manpage-PropertyDomainEvent">6.1.11. <code>PropertyDomainEvent</code></a></li>
+<li><a href="#_api_3">6.1.1. API</a>
+<ul class="sectlevel4">
+<li><a href="#__code_getmodules_code"><code>getModules()</code></a></li>
+<li><a href="#__code_getadditionalservices_code"><code>getAdditionalServices()</code></a></li>
+<li><a href="#__code_getauthenticationmechanism_code"><code>getAuthenticationMechanism()</code></a></li>
+<li><a href="#__code_getauthorizationmechanism_code"><code>getAuthorizationMechanism()</code></a></li>
+<li><a href="#__code_getfixtures_code"><code>getFixtures()</code></a></li>
+<li><a href="#__code_getconfigurationproperties_code"><code>getConfigurationProperties()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_value-types">6.2. Value Types</a>
-<ul class="sectlevel3">
-<li><a href="#_rg_classes_value-types_manpage-Blob">6.2.1. <code>Blob</code></a></li>
-<li><a href="#_rg_classes_value-types_manpage-Clob">6.2.2. <code>Clob</code></a></li>
-<li><a href="#_rg_classes_value-types_manpage-Color">6.2.3. <code>Color</code></a></li>
-<li><a href="#_rg_classes_value-types_manpage-Money">6.2.4. <code>Money</code></a></li>
-<li><a href="#_rg_classes_value-types_manpage-Password">6.2.5. <code>Password</code></a></li>
+<li><a href="#_bootstrapping">6.1.2. Bootstrapping</a>
+<ul class="sectlevel4">
+<li><a href="#_integration_tests">Integration Tests</a></li>
+<li><a href="#_webapps">Webapps</a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_utility">6.3. Applib Utility Classes</a>
+<li><a href="#_subsidiary_goals">6.1.3. Subsidiary Goals</a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_super">6.2. Superclasses</a>
 <ul class="sectlevel3">
-<li><a href="#_rg_classes_utility_manpage-Enums">6.3.1. <code>Enums</code></a></li>
-<li><a href="#_rg_classes_utility_manpage-ObjectContracts">6.3.2. <code>ObjectContracts</code></a>
+<li><a href="#_rg_classes_super_manpage-AbstractContainedObject">6.2.1. <code>AbstractContainedObject</code></a></li>
+<li><a href="#_rg_classes_super_manpage-AbstractDomainEvent">6.2.2. <code>AbstractDomainEvent</code></a></li>
+<li><a href="#_rg_classes_super_manpage-AbstractDomainObject">6.2.3. <code>AbstractDomainObject</code></a></li>
+<li><a href="#_rg_classes_super_manpage-AbstractFactoryAndRepository">6.2.4. <code>AbstractFactoryAndRepository</code></a></li>
+<li><a href="#_rg_classes_super_manpage-AbstractService">6.2.5. <code>AbstractService</code></a></li>
+<li><a href="#_rg_classes_super_manpage-AbstractViewModel">6.2.6. <code>AbstractViewModel</code></a></li>
+<li><a href="#_rg_classes_super_manpage-ActionDomainEvent">6.2.7. <code>ActionDomainEvent</code></a></li>
+<li><a href="#_rg_classes_super_manpage-CollectionDomainEvent">6.2.8. <code>CollectionDomainEvent</code></a></li>
+<li><a href="#_rg_classes_super_manpage-FixtureScript">6.2.9. <code>FixtureScript</code></a></li>
+<li><a href="#_rg_classes_super_manpage-FixtureScripts">6.2.10. <code>FixtureScripts</code></a></li>
+<li><a href="#_rg_classes_super_manpage-PropertyDomainEvent">6.2.11. <code>PropertyDomainEvent</code></a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_value-types">6.3. Value Types</a>
+<ul class="sectlevel3">
+<li><a href="#_rg_classes_value-types_manpage-Blob">6.3.1. <code>Blob</code></a></li>
+<li><a href="#_rg_classes_value-types_manpage-Clob">6.3.2. <code>Clob</code></a></li>
+<li><a href="#_rg_classes_value-types_manpage-Color">6.3.3. <code>Color</code></a></li>
+<li><a href="#_rg_classes_value-types_manpage-Money">6.3.4. <code>Money</code></a></li>
+<li><a href="#_rg_classes_value-types_manpage-Password">6.3.5. <code>Password</code></a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_utility">6.4. Applib Utility Classes</a>
+<ul class="sectlevel3">
+<li><a href="#_rg_classes_utility_manpage-Enums">6.4.1. <code>Enums</code></a></li>
+<li><a href="#_rg_classes_utility_manpage-ObjectContracts">6.4.2. <code>ObjectContracts</code></a>
 <ul class="sectlevel4">
 <li><a href="#_the_issue_in_more_detail">The issue in more detail</a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_utility_manpage-Reasons">6.3.3. <code>Reasons</code></a></li>
-<li><a href="#_rg_classes_utility_manpage-TitleBuffer">6.3.4. <code>TitleBuffer</code></a></li>
+<li><a href="#_rg_classes_utility_manpage-Reasons">6.4.3. <code>Reasons</code></a></li>
+<li><a href="#_rg_classes_utility_manpage-TitleBuffer">6.4.4. <code>TitleBuffer</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_spec">6.4. Specification pattern</a>
+<li><a href="#_rg_classes_spec">6.5. Specification pattern</a>
 <ul class="sectlevel3">
-<li><a href="#__code_specification_code">6.4.1. <code>Specification</code></a></li>
-<li><a href="#__code_specification2_code">6.4.2. <code>Specification2</code></a></li>
-<li><a href="#_adapter_classes">6.4.3. Adapter classes</a></li>
-<li><a href="#_combining_specifications">6.4.4. Combining specifications</a></li>
+<li><a href="#__code_specification_code">6.5.1. <code>Specification</code></a></li>
+<li><a href="#__code_specification2_code">6.5.2. <code>Specification2</code></a></li>
+<li><a href="#_adapter_classes">6.5.3. Adapter classes</a></li>
+<li><a href="#_combining_specifications">6.5.4. Combining specifications</a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_i18n">6.5. i18n support</a>
+<li><a href="#_rg_classes_i18n">6.6. i18n support</a>
 <ul class="sectlevel3">
-<li><a href="#_rg_classes_i18n_manpage-TranslatableString">6.5.1. <code>TranslatableString</code></a></li>
+<li><a href="#_rg_classes_i18n_manpage-TranslatableString">6.6.1. <code>TranslatableString</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_mixins">6.6. Mixins</a>
+<li><a href="#_rg_classes_mixins">6.7. Mixins</a>
 <ul class="sectlevel3">
-<li><a href="#__code_hastransactionid_code">6.6.1. <code>HasTransactionId</code></a></li>
-<li><a href="#__code_hasusername_code">6.6.2. <code>HasUsername</code></a></li>
+<li><a href="#__code_hastransactionid_code">6.7.1. <code>HasTransactionId</code></a></li>
+<li><a href="#__code_hasusername_code">6.7.2. <code>HasUsername</code></a></li>
 </ul>
 </li>
 </ul>
