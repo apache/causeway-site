@@ -215,6 +215,7 @@ table.CodeRay td.code>pre{padding:0}
             color: #003b6b;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
+        
     </style>
 
     <style>
@@ -239,6 +240,11 @@ table.CodeRay td.code>pre{padding:0}
 
         div#doc-content {
             margin-top: 30px;
+        }
+
+        div#doc-content table.frame-all {
+            border-left: none;
+            border-right: none;
         }
 
         body div#toc li.active-region:before,
@@ -494,7 +500,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Later chapters discuss essential topics such as <a href="#_ug_testing">testing</a> and how to <a href="#_ug_deployment">deploy</a> your app, and discuss other ways in which you can <a href="#_ug_extending">extend</a> or adapt the framework itself to your particular needs.</p>
 </div>
 <div class="paragraph">
-<p>The users' guide is <em>not</em> intended as a reference manual; for that see the <strong><a href="rg.html#<em>rg">Reference Guide</a></strong>.  The users' guide also does _not</em> explain how to setup your development environment; for that see the <strong><a href="cg.adoc#_cg">Contributors' Guide</a></strong>.</p>
+<p>The users' guide is <em>not</em> intended as a reference manual; for that see the <strong><a href="rg.html#_rg">Reference Guide</a></strong>.  The users' guide also doesn&#8217;t explain how to setup your development environment; for that see the <strong><a href="cg.html#_cg">Contributors' Guide</a></strong>.</p>
 </div>
 </div>
 </div>
@@ -13571,6 +13577,9 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 <div class="paragraph">
 <p>The first two of these options are discussed in the <a href="#_ug_wicket-viewer">Wicket viewer</a> chapter.  This chapter describes the remaining "heavier-weight/more powerful" options.</p>
 </div>
+<div class="paragraph">
+<p>The chapter wraps up with a technique for prototyping, allowing user/passwords to be specified as query arguments.</p>
+</div>
 <div class="sect3">
 <h4 id="_ug_extending_wicket-viewer_custom-bootstrap-theme">12.2.1. Custom Bootstrap theme</h4>
 <div class="paragraph">
@@ -13943,6 +13952,54 @@ TODO
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_extending_wicket-viewer_login-via-query-args-prototyping">12.2.5. Login via Query Args (for Prototyping)</h4>
+<div class="paragraph">
+<p>This section describes a (slightly hacky) way of allowing logins using query args, eg <a href="http://localhost:8080/?user=sven&amp;pass=pass">http://localhost:8080/?user=sven&amp;pass=pass</a>.  This might be useful while prototyping or demonstrating a scenario involving multiple different interacting users.</p>
+</div>
+<div class="paragraph">
+<p>Add the following code to your application&#8217;s subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">private final static boolean DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS = false;
+
+@Override
+public Session newSession(final Request request, final Response response) {
+    if(!DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS) {
+        return super.newSession(request, response);
+    }
+    // else demo mode
+    final AuthenticatedWebSessionForIsis s = (AuthenticatedWebSessionForIsis) super.newSession(request, response);
+    IRequestParameters requestParameters = request.getRequestParameters();
+    final org.apache.wicket.util.string.StringValue user = requestParameters.getParameterValue(&quot;user&quot;);
+    final org.apache.wicket.util.string.StringValue password = requestParameters.getParameterValue(&quot;pass&quot;);
+    s.signIn(user.toString(), password.toString());
+    return s;
+}
+
+@Override
+public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
+    if(!DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS) {
+        return super.newWebRequest(servletRequest, filterPath);
+    }
+    // else demo mode
+    try {
+        String uname = servletRequest.getParameter(&quot;user&quot;);
+        if (uname != null) {
+            servletRequest.getSession().invalidate();
+        }
+    } catch (Exception e) {
+    }
+    WebRequest request = super.newWebRequest(servletRequest, filterPath);
+    return request;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rather than using the static <code>DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS</code>, you might also explore using the feature toggle library provided by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-togglz">Isis addons' togglz</a> module.</p>
 </div>
 </div>
 </div>
@@ -14876,6 +14933,7 @@ TODO
 </li>
 <li><a href="#_ug_extending_wicket-viewer_custom-pages">12.2.3. Custom pages</a></li>
 <li><a href="#_ug_extending_wicket-viewer_isis-addons-extensions">12.2.4. Isis Addons Extensions</a></li>
+<li><a href="#_ug_extending_wicket-viewer_login-via-query-args-prototyping">12.2.5. Login via Query Args (for Prototyping)</a></li>
 </ul>
 </li>
 <li><a href="#_ug_extending_restfulobjects-viewer">12.3. Restful Objects viewer</a></li>
