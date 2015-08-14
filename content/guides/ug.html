@@ -242,7 +242,7 @@ table.CodeRay td.code>pre{padding:0}
             margin-top: 30px;
         }
 
-        div#doc-content table.frame-all {
+        div.documentation-page table.frame-all {
             border-left: none;
             border-right: none;
         }
@@ -12299,220 +12299,210 @@ toDoItem = sudoService.sudo(username,
 <p>This chapter provides guidance on some common deployment scenarios.</p>
 </div>
 <div class="sect2">
-<h3 id="_ug_deployment_cmd-line">10.1. Command Line</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="__code_webserver_code_class">10.1.1. <code>WebServer</code> class</h4>
+<h3 id="_ug_deployment_cmd-line">10.1. Command Line (<code>WebServer</code>)</h3>
 <div class="paragraph">
-<p>The <code>org.apache.isis.WebServer</code> utility class provides a <code>main(String[])</code> method so that an Apache Isis application can be run from within the IDE or command line, without the need to package the app as a WAR file and deploying to a servlet container.  Internally the class it uses jetty to programmatically bootstrap the app.</p>
+<p>As well as deploying an Apache Isis application into a servlet container, it is also possible to invoke from the command line using the <code>org.apache.isis.WebServer</code> utility class.  This is especially useful while developing and testing, but may also suit some deployment scenarios (eg running as a standalone EXE within a Docker container, for example).  Internally the <code>WebServer</code> spins up a Jetty servlet container.</p>
 </div>
 <div class="paragraph">
-<p>The utility class also supports a number of command line arguments:</p>
+<p>The class also supports a number of command line arguments:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 5. Command line args for <code>org.apache.isis.Webserver</code></caption>
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 40%;">
+<col style="width: 11%;">
+<col style="width: 22%;">
+<col style="width: 22%;">
+<col style="width: 44%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Flag</th>
 <th class="tableblock halign-left valign-top">Long format</th>
-<th class="tableblock halign-left valign-top">Values (default)</th>
+<th class="tableblock halign-left valign-top">Values<br>
+(default)</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-t</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>server_prototype</code>,<code>server</code><br>
-(<code>server</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Deployment type</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-t</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--type</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>server_prototype</code>, <code>server</code><br>
+(<code>server</code>)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Deployment type</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-f</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--fixture</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-m</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--manifest</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>FQCN</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Fully qualified class name of the <a href="rg.html#_rg_classes_super_manpage-AppManifest"><code>AppManifest</code></a> to use to bootstrap the system.<br></p>
+</div>
+<div class="paragraph">
+<p>This flag sets/overrides the <code>isis.appManifest</code> configuration property to the specified class name.</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-u</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--user</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-f</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--fixture</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>FQCN</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Fully qualified class name of the fixture (extending <a href="rg.html#_rg_classes_super_manpage-FixtureScript"><code>FixtureScript</code></a>) to be run to setup data.<br></p>
+</div>
+<div class="paragraph">
+<p>This flag sets/overrides the <code>isis.fixtures</code> configuration property to the specified class name, and also sets the <code>isis.persistor.datanucleus.install-fixtures</code> configuration property to <code>true</code> to instruct the JDO/DataNucleus objectstore to actually load in the fixtures.<br></p>
+</div>
+<div class="paragraph">
+<p>It is also possible to specify the fixture class name using either the <code>$IsisFixture</code> or <code>$IsisFixtures</code> environment variable (case insensitive).</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-p</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--password</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-p</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--port</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(8080)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The port number to listen on.<br></p>
+</div>
+<div class="paragraph">
+<p>This flag sets/overrides the <code>isis.embedded-web-server.port</code> configuration property.</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-D</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Additional property, in form <code>-Dxxx=yyy</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-c</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--config</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>filename</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>configuration file containing additional configuration properties</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-h</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--help</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>xxx=yyy</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Specify additional arbitrary configuration properties.  This can be specified multiple times.<br></p>
+</div>
+<div class="paragraph">
+<p>Further discussion below.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-v</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--version</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Prints the version, then quits</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>-h</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>--help</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Prints a usage message, then quits</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The utility class also supports a number of other flags, but their usage is extremely rare (and some may be removed in the future):</p>
+<p>Note that the <code>-D</code> argument is <strong>not</strong> a system property, it is parsed by <code>WebServer</code> itself.  That said, it is <em>also</em> possible to specify system properties, and these will also be processed in the exact same way.<br></p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. Command line args for <code>org.apache.isis.Webserver</code></caption>
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
+<div class="paragraph">
+<p>Said another way, properties can be specified either as application arguments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">java org.apache.isis.WebServer -Dxxx=yyy -Daaa=bbb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or as system properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">java -Dxxx=yyy -Daaa=bbb org.apache.isis.WebServer</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
 <tr>
-<th class="tableblock halign-left valign-top">Flag</th>
-<th class="tableblock halign-left valign-top">Long format</th>
-<th class="tableblock halign-left valign-top">Values (default)</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">The <code>Dummy</code> class</div>
+<div class="paragraph">
+<p>The framework also provides the <code>org.apache.isis.Dummy</code> class, which consists of a single empty <code>main(String[])</code> method.  It was introduced as a convenience for developers using Eclipse in combination with the DataNucleus plugin; if used as a launch target then it allow the entities to be enhanced withouth the running an app.</p>
+</div>
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-l</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--reflector</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FQCN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implementing <code>ObjectReflectorInstaller</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-c</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--config</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-s</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--nosplash</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--diagnostics</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--version</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--debug</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--verbose</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--quiet</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="__code_dummy_code_class">10.1.2. <code>Dummy</code> class</h4>
-<div class="paragraph">
-<p><code>org.apache.isis.Dummy</code></p>
-</div>
-<div class="paragraph">
-<p>This dummy class provides a single empty <code>main(String[])</code> method.  It was introduced as a convenience for developers using Eclipse in combination with the DataNucleus plugin; if used as a launch target then it allow the entities to be enhanced withouth the running an app.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_ug_deployment_tomcat">10.2. Deploying to Tomcat</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Some pointers when deploying to Tomcat (or any other servlet container).</p>
 </div>
 <div class="sect3">
 <h4 id="_externalized_configuration">10.2.1. Externalized Configuration</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>See the guidance <a href="#_ug_deployment_externalized-configuration">below</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_jvm_args">10.2.2. JVM Args</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p>for the <code>WrapperFactory</code> (uses <a href="http://www.javassist.org">Javassist</a>)</p>
-</div>
-<div class="paragraph">
-<p>using:</p>
+<p>The <a href="rg.html#_rg_services-api_manpage-WrapperFactory"><code>WrapperFactory</code></a> uses <a href="http://www.javassist.org">Javassist</a> to create on-the-fly classes acting as a proxy.  The cost of these proxies can be mitigated using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="ini">-XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>You can hint the JVM to unload dynamically created classes which ClassLoaders are still around.</p>
 </div>
 </div>
 <div class="sect3">
@@ -12976,7 +12966,7 @@ TODO
 <p>The default JVM configuration will most likely not be appropriate for running Isis as a webapp.  The table below suggests some JVM args that you will probably want to modify:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. JVM args</caption>
+<caption class="title">Table 6. JVM args</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -13828,7 +13818,7 @@ Your new <code>Component</code> uses the information in the provided model (eg <
 <p>Isis defines eight page types (see the <code>org.apache.isis.viewer.wicket.model.models.PageType</code> enum):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. PageType enum</caption>
+<caption class="title">Table 7. PageType enum</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -14840,12 +14830,7 @@ TODO
 </li>
 <li><a href="#_ug_deployment">10. Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#_ug_deployment_cmd-line">10.1. Command Line</a>
-<ul class="sectlevel3">
-<li><a href="#__code_webserver_code_class">10.1.1. <code>WebServer</code> class</a></li>
-<li><a href="#__code_dummy_code_class">10.1.2. <code>Dummy</code> class</a></li>
-</ul>
-</li>
+<li><a href="#_ug_deployment_cmd-line">10.1. Command Line (<code>WebServer</code>)</a></li>
 <li><a href="#_ug_deployment_tomcat">10.2. Deploying to Tomcat</a>
 <ul class="sectlevel3">
 <li><a href="#_externalized_configuration">10.2.1. Externalized Configuration</a></li>
