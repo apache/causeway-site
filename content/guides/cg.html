@@ -2822,7 +2822,7 @@ git checkout -b isis-1.9.0</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">grep SNAPSHOT `/bin/find . -name pom.xml | grep -v target | sort`</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">grep SNAPSHOT `/bin/find . -name pom.xml | grep -v target | grep -v mothball | sort`</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2891,7 +2891,8 @@ env | grep ISIS | sort</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o &amp;&amp; \
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done</code></pre>
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done || \
+for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2968,20 +2969,6 @@ licenses to remove from supplemental-models.xml (are spurious):
 </div>
 <div class="paragraph">
 <p>If any missing entries are listed or are spurious, then update <code>supplemental-models.xml</code> and try again.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Ignore any missing license warnings for the TCK modules; this is a result of the TCK modules for the viewers (eg <code>isis-viewer-bdd-concordion-tck</code>) depending on the TCK dom, fixtures etc.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect4">
@@ -3076,7 +3063,7 @@ What is the release version for &quot;Apache Isis Core&quot;? (org.apache.isis.c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D resume=false -DskipTests=true
+<pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D resume=false -DskipTests=true \
         -DreleaseVersion=$ISISREL \
         -Dtag=$ISISART-$ISISREL \
         -DdevelopmentVersion=$ISISDEV</code></pre>
@@ -3257,8 +3244,9 @@ env | grep ISIS | sort</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o &amp;&amp; \
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done || \
+for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3270,13 +3258,13 @@ for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done</code></pre
 <p>first, as self-hosted webconsole (browse to <a href="http://localhost:8080">http://localhost:8080</a>):<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install
+<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install &amp;&amp; \
 mvn antrun:run -P self-host</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>then using mvn jetty plugin (browse to <a href="http://localhost:8080/simpleapp-webapp/">http://localhost:8080/simpleapp-webapp/</a>):<br></p>
+<p>then using mvn jetty plugin (browse to <a href="http://localhost:8080">http://localhost:8080</a>):<br></p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">cd webapp
@@ -3329,33 +3317,17 @@ rm -rf $ISISTMP/checkout
 mvn release:prepare -P apache-release \
                 -DreleaseVersion=$ISISREL \
                 -DdevelopmentVersion=$ISISDEV \
-                -Dtag=$ISISART-$ISISREL
-mvn release:perform -P apache-release \
-                -DworkingDirectory=$ISISTMP/checkout</code></pre>
+                -Dtag=$ISISART-$ISISREL</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_post_prepare_sanity_check_2">Post-prepare sanity check</h5>
 <div class="paragraph">
-<p>This is a good point to test the archetype; nothing has yet been uploaded.
-First, build the archetype:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cd target/generated-sources/archetype
-mvn clean install
-cd ../../..</code></pre>
-</div>
+<p>This is a good point to test the archetype; nothing has yet been uploaded.</p>
 </div>
 <div class="paragraph">
-<p>Then, <em>in a different session</em>, create a new app from the archetype:</p>
-</div>
-<div class="paragraph">
-<p>Set up environment variables:</p>
-</div>
-<div class="paragraph">
-<p>To test the <strong>simpleapp</strong> archetype:</p>
+<p><em>In a different session</em>, create a new app from the archetype.  First set up environment variables:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3365,7 +3337,7 @@ env | grep ISIS | sort</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then recreate:</p>
+<p>Then generate a new app from the archetype:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3397,19 +3369,16 @@ mvn jetty:run                  # runs as mvn jetty plugin</code></pre>
 <div class="sect4">
 <h5 id="_release_perform_upload_2">Release Perform (upload)</h5>
 <div class="paragraph">
-<p>Still in the <strong>archetype</strong> directory and execute the <code>release:perform</code> to upload the artifacts to the ASF Nexus repository:</p>
+<p>Back in the original session (in the <strong>archetype</strong> directory, <code>example/archetype/$ISISCPN</code>), execute <code>release:perform</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>cd ../../../example/archetype/$ISISCPN
-rm -rf $ISISTMP/checkout
-mvn release:prepare -P apache-release \
-                -DreleaseVersion=$ISISREL \
-                -DdevelopmentVersion=$ISISDEV \
-                -Dtag=$ISISART-$ISISREL
-mvn release:perform -P apache-release \
+<pre class="CodeRay highlight"><code>mvn release:perform -P apache-release \
                 -DworkingDirectory=$ISISTMP/checkout</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>This will upload the artifacts to the ASF Nexus repository.</p>
 </div>
 </div>
 </div>
