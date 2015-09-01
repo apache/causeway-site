@@ -1801,7 +1801,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 <p>The first time you do this, you&#8217;ll find it takes a while since Maven needs to download all of the Apache Isis prerequisites.</p>
 </div>
 <div class="paragraph">
-<p>Thereafter you can speed up the build by adding the <code>-o</code> (offline flag).  To save more time still, we also recommend that you build in parallel.  You could also experiment with a number of JDK parameters that we&#8217;ve found also speed up Maven:</p>
+<p>Thereafter you can speed up the build by adding the <code>-o</code> (offline flag).  To save more time still, we also recommend that you build in parallel.  (Per this <a href="http://zeroturnaround.com/rebellabs/your-maven-build-is-slow-speed-it-up/">blog post</a>), you could also experiment with a number of JDK parameters that we&#8217;ve found also speed up Maven:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2796,7 +2796,58 @@ git checkout master &amp;&amp; git merge --no-ff ISIS-1162_pr-31 &amp;&amp; git 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_pull-down-code-to-release">10.2.2. Pull down code to release</h4>
+<h4 id="_cg_committers_cutting-a-release_set-environment-variables">10.2.2. Set environment variables</h4>
+<div class="paragraph">
+<p>We use environment variables to parameterize as many of the steps as possible.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd core
+export ISISTMP=/c/tmp              <i class="conum" data-value="1"></i><b>(1)</b>
+export ISISDEV=1.11.0-SNAPSHOT
+export ISISREL=1.10.0
+export ISISRC=RC1
+export ISISBRANCH=release-$ISISREL-$ISISRC
+export ISISJIRA=ISIS-9999          <i class="conum" data-value="2"></i><b>(2)</b>
+
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adjust by platform</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to an "umbrella" ticket for all release activities.  (One should exist already, <a href="#_cg_committers_post-release-successful_update-jira_create-new-jira">created at</a> the beginning of the development cycle now completing).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Obviously, alter <code>$ISISDEV</code> and <code>$ISISREL</code> as required, and bump <code>$ISISRC</code> for re-releasing following an <a href="#_cg_committers_post-release-unsuccessful">unsuccessful</a> releases.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the branch name is <strong>not</strong> the same any of the eventual tag names (eg <code>isis-1.10.0</code> or <code>simpleapp-archetype-1.10.0</code>).</p>
+</div>
+<div class="paragraph">
+<p>If they did have the same name, then what would happen is that the <code>maven-release-plugin</code> would checkout the (HEAD of the) branch and thus upload a SNAPSHOT to the snapshot repository.  What it should of course do is checkout the tag and then upload that to the release staging repository.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cg_committers_cutting-a-release_pull-down-code-to-release">10.2.3. Pull down code to release</h4>
 <div class="paragraph">
 <p>Set the HEAD of your local git repo to the commit to be released.  This will usually be the tip of the origin&#8217;s <code>master</code> branch.  Then, create a release branch for the version number being released; eg:</p>
 </div>
@@ -2804,7 +2855,7 @@ git checkout master &amp;&amp; git merge --no-ff ISIS-1162_pr-31 &amp;&amp; git 
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">git checkout master
 git pull --ff-only
-git checkout -b isis-1.9.0</code></pre>
+git checkout -b $ISISBRANCH</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2814,13 +2865,13 @@ git checkout -b isis-1.9.0</code></pre>
 <p>Double check that the version number of the parent pom should reflect the branch name that you are now on (with a <code>-SNAPSHOT</code> suffix).  his will normally have been done already during earlier development; but confirm that it has been updated. If it has not, make the change.</p>
 </div>
 <div class="paragraph">
-<p>For example, if releasing <code>core</code> version <code>1.9.0</code>, the POM should read:</p>
+<p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on.  For example, if releasing version <code>1.10.0</code>, the POM should read:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.core<span class="tag">&lt;/groupId&gt;</span>
 <span class="tag">&lt;artifactId&gt;</span>isis<span class="tag">&lt;/artifactId&gt;</span>
-<span class="tag">&lt;version&gt;</span>1.9.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre>
+<span class="tag">&lt;version&gt;</span>1.11.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2850,7 +2901,7 @@ git checkout -b isis-1.9.0</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_releasing-core">10.2.3. Releasing Core</h4>
+<h4 id="_cg_committers_cutting-a-release_releasing-core">10.2.4. Releasing Core</h4>
 <div class="paragraph">
 <p>First, we release <code>core</code>.  Switch to the appropriate directory:</p>
 </div>
@@ -2862,18 +2913,13 @@ git checkout -b isis-1.9.0</code></pre>
 <div class="sect4">
 <h5 id="_cg_committers_cutting-a-release_releasing-core_set-environment-variables">Set environment variables</h5>
 <div class="paragraph">
-<p>We use environment variables to parameterize as many of the steps as possible.</p>
+<p>Set additional environment variables for the core "artefact":</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cd core
-export ISISTMP=/c/tmp              <i class="conum" data-value="1"></i><b>(1)</b>
-export ISISART=isis
-export ISISDEV=1.10.0-SNAPSHOT
-export ISISREL=1.9.0
-export ISISRC=RC1
-
+<pre class="CodeRay highlight"><code data-lang="bash">export ISISART=isis
 export ISISCOR=&quot;Y&quot;
+
 env | grep ISIS | sort</code></pre>
 </div>
 </div>
@@ -3052,13 +3098,13 @@ mvn clean install -o</code></pre>
 [INFO] Apache Isis Core Integration Testing Support
 [INFO]
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Isis Core 1.9.0
+[INFO] Building Apache Isis Core 1.10.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
 [INFO] --- maven-release-plugin:2.3.2:prepare (default-cli) @ isis ---
 [INFO] Resuming release from phase 'map-release-versions'
 What is the release version for &quot;Apache Isis Core&quot;? (org.apache.isis.core:isis)
-1.9.0: :</code></pre>
+1.10.0: :</code></pre>
 </div>
 </div>
 </div>
@@ -3093,7 +3139,7 @@ What is the release version for &quot;Apache Isis Core&quot;? (org.apache.isis.c
 <div class="sect4">
 <h5 id="_cg_committers_cutting-a-release_releasing-core_post-prepare-sanity-check">Post-prepare sanity check</h5>
 <div class="paragraph">
-<p>You should end up with artifacts in your local repo with the new version (eg <code>1.9.0</code>).  This is a good time to do some quick sanity checks; nothing has yet been uploaded:</p>
+<p>You should end up with artifacts in your local repo with the new version (eg <code>1.10.0</code>).  This is a good time to do some quick sanity checks; nothing has yet been uploaded:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3160,17 +3206,17 @@ popd</code></pre>
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
 re
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C &quot;git clone --branch isis-1.9.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout&quot;
+[INFO] Executing: cmd.exe /X /C &quot;git clone --branch isis-1.10.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout&quot;
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
 [INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C &quot;git clone --branch isis-1.9.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout&quot;
+[INFO] Executing: cmd.exe /X /C &quot;git clone --branch isis-1.10.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout&quot;
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target
 [INFO] Executing: cmd.exe /X /C &quot;git ls-remote file:///C:\APACHE\isis-git-rw&quot;
 [INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
 [INFO] Executing: cmd.exe /X /C &quot;git fetch file:///C:\APACHE\isis-git-rw&quot;
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C &quot;git checkout isis-1.9.0&quot;
+[INFO] Executing: cmd.exe /X /C &quot;git checkout isis-1.10.0&quot;
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
 [INFO] Executing: cmd.exe /X /C &quot;git ls-files&quot;
 [INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
@@ -3185,7 +3231,7 @@ re
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_releasing-the-archetype">10.2.4. Releasing the Archetype</h4>
+<h4 id="_cg_committers_cutting-a-release_releasing-the-archetype">10.2.5. Releasing the Archetype</h4>
 <div class="paragraph">
 <p>Apache Isis archetypes are reverse engineered from example applications. Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p>
 </div>
@@ -3200,18 +3246,12 @@ re
 <div class="sect4">
 <h5 id="_cg_committers_cutting-a-release_releasing-the-archetype_setup-environment-variables">Setup environment variables</h5>
 <div class="paragraph">
-<p>To recreate the <code>simpleapp</code> archetype:</p>
+<p>Set additional environment variables for the <code>simpleapp-archetype</code> artefact:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cd example/application/simpleapp
-
-export ISISTMP=/c/tmp                   <i class="conum" data-value="1"></i><b>(1)</b>
-export ISISART=simpleapp-archetype
-export ISISDEV=1.10.0-SNAPSHOT
-export ISISREL=1.9.0
-export ISISPAR=$ISISREL                 <i class="conum" data-value="2"></i><b>(2)</b>
-export ISISRC=RC1
+<pre class="CodeRay highlight"><code data-lang="bash">export ISISART=simpleapp-archetype
+export ISISPAR=$ISISREL                 <i class="conum" data-value="1"></i><b>(1)</b>
 
 export ISISCPT=$(echo $ISISART | cut -d- -f2)
 export ISISCPN=$(echo $ISISART | cut -d- -f1)
@@ -3223,10 +3263,6 @@ env | grep ISIS | sort</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>adjust by platform</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td><code>$ISISPAR</code> is the version of the Apache Isis core that will act as the archetype&#8217;s parent. Usually this is the same as <code>$ISISREL</code>.</td>
 </tr>
 </table>
@@ -3240,7 +3276,7 @@ env | grep ISIS | sort</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;isis.version&gt;</span>1.9.0<span class="tag">&lt;/isis.version&gt;</span>
+    <span class="tag">&lt;isis.version&gt;</span>1.10.0<span class="tag">&lt;/isis.version&gt;</span>
     ...
 <span class="tag">&lt;/properties&gt;</span></code></pre>
 </div>
@@ -3389,7 +3425,7 @@ mvn jetty:run                  # runs as mvn jetty plugin</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_check-close-staging-repo">10.2.5. Check/Close Staging Repo</h4>
+<h4 id="_cg_committers_cutting-a-release_check-close-staging-repo">10.2.6. Check/Close Staging Repo</h4>
 <div class="paragraph">
 <p>The <code>mvn release:perform</code> commands will have put release artifacts for both <code>core</code> and the <code>simpleapp</code> archetype into a newly created staging repository on the ASF Nexus repository server.</p>
 </div>
@@ -3472,13 +3508,13 @@ mvn jetty:run                  # runs as mvn jetty plugin</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_push-branches">10.2.6. Push branches</h4>
+<h4 id="_cg_committers_cutting-a-release_push-branches">10.2.7. Push branches</h4>
 <div class="paragraph">
 <p>Push the release branch to origin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">git push -u origin $ISISREL</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">git push -u origin $ISISBRANCH</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3507,7 +3543,7 @@ git fetch</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cg_committers_cutting-a-release_voting">10.2.7. Voting</h4>
+<h4 id="_cg_committers_cutting-a-release_voting">10.2.8. Voting</h4>
 <div class="paragraph">
 <p>Once the artifacts have been uploaded, you can call a vote.</p>
 </div>
@@ -3524,7 +3560,7 @@ git fetch</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 1.9.0 RC1</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 1.10.0 RC1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3533,17 +3569,18 @@ git fetch</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">I've cut a release for Apache Isis Core and the simpleapp archetype:
-* Core 1.9.0
-* SimpleApp Archetype 1.9.0
+
+* Core 1.10.0
+* SimpleApp Archetype 1.10.0
 
 The source code artifacts have been uploaded to staging repositories on repository.apache.org:
 
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.9.0/isis-1.9.0-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.9.0/simpleapp-archetype-1.9.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.10.0/isis-1.10.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.10.0/simpleapp-archetype-1.10.0-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-1.9.0-RC1 and simpleapp-archetype-1.9.0-RC1.
+In the source code repo the code has been tagged as isis-1.10.0-RC1 and simpleapp-archetype-1.10.0-RC1; see https://git-wip-us.apache.org/repos/asf?p=isis.git
 
 For instructions on how to verify the release (build from binaries and/or use in Maven directly), see http://isis.apache.org/guides/cg.html#_cg_committers_verifying-releases
 
@@ -3560,7 +3597,7 @@ Please verify the release and cast your vote.  The vote will be open for a minim
 <div class="ulist">
 <ul>
 <li>
-<p>the version number (1.9.0 or whatever)</p>
+<p>the version number (1.10.0 or whatever)</p>
 </li>
 <li>
 <p>the release candidate number (<code>RC1</code> or whatever)</p>
@@ -3994,8 +4031,8 @@ The vote is SUCCESSFUL.</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag isis-1.9.0 RC1
-sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-1.9.0 RC1
+sh scripts/promoterctag.sh simpleapp-archetype-1.9.0 RC1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4042,7 +4079,74 @@ sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Next, add the new release into the appropriate directory, and delete any previous release. You can use <a href="upd_sh">the upd.sh script</a> to help; this downloads the artefacts from the Nexus release repository, adds the artefacts to subsversion and deletes the previous version.</p>
+<p>Next, add the new release into the appropriate directory, and delete any previous release.  The <code>upd.sh</code> script can be used to automate this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">old_ver=$1
+new_ver=$2
+
+
+# constants
+repo_root=https://repository.apache.org/content/repositories/releases/org/apache/isis
+
+zip=&quot;source-release.zip&quot;
+asc=&quot;$zip.asc&quot;
+md5=&quot;$zip.md5&quot;
+
+
+#
+# isis-core
+#
+type=&quot;core&quot;
+fullname=&quot;isis&quot;
+pushd isis-core
+
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
+svn add $fullname-$new_ver-$asc
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
+svn add $fullname-$new_ver-$md5
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
+svn add $fullname-$new_ver-$zip
+
+svn delete $fullname-$old_ver-$asc
+svn delete $fullname-$old_ver-$md5
+svn delete $fullname-$old_ver-$zip
+
+popd
+
+
+#
+# simpleapp-archetype
+#
+type=&quot;archetype&quot;
+fullname=&quot;simpleapp-archetype&quot;
+pushd $type/$fullname
+
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
+svn add $fullname-$new_ver-$md5
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
+svn add $fullname-$new_ver-$asc
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
+svn add $fullname-$new_ver-$zip
+
+svn delete $fullname-$old_ver-$md5
+svn delete $fullname-$old_ver-$asc
+svn delete $fullname-$old_ver-$zip
+
+popd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh upd.sh 1.9.0 1.10.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The script downloads the artefacts from the Nexus release repository, adds the artefacts to subsversion and deletes the previous version.</p>
 </div>
 <div class="paragraph">
 <p>At the end, commit the changes:</p>
@@ -4062,7 +4166,7 @@ sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 1.9.0 &gt; /tmp/1</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 1.10.0 &gt; /tmp/1</code></pre>
 </div>
 </div>
 </div>
@@ -4099,7 +4203,7 @@ sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
 <p>Search for any <code>-SNAPSHOT</code> suffices, and remove</p>
 </li>
 <li>
-<p>Update the <a href="../download.html">download page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p>
+<p>Update the <a href="../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p>
 </li>
 <li>
 <p>update the <a href="../doap_isis.rdf">DOAP RDF</a> file (which provides a machine-parseable description of the project) should also be updated with details of the new release. Validate using the <a href="http://www.w3.org/RDF/Validator/">W3C RDF Validator</a> service.<br></p>
@@ -4126,7 +4230,7 @@ sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">[ANN] Apache Isis version 1.9.0 Released</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">[ANN] Apache Isis version 1.10.0 Released</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4134,12 +4238,10 @@ sh scripts/promoterctag simpleapp-archetype-1.9.0 RC1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of:
-* Apache Isis Core version 1.9.0
-* SimpleApp Archetype 1.9.0
+<pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis v1.10.0.
 
 New features in this release include:
-- ...
+* ...
 
 Full release notes are available on the Apache Isis website at [1].
 
@@ -4153,9 +4255,9 @@ Enjoy!
 
 --The Apache Isis team
 
-[1] http://isis.apache.org/core/release-notes/isis-1.9.0.html
+[1] http://isis.apache.org/release-notes.html#r1.10.0
 [2] http://search.maven.org
-[3] http://isis.apache.org/download.html</code></pre>
+[3] http://isis.apache.org/downloads.html</code></pre>
 </div>
 </div>
 </div>
@@ -4172,11 +4274,11 @@ Enjoy!
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">git checkout master                   # update master with latest
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout master                           # update master with latest
 git pull
-git merge isis-1.9.0                  # merge branch onto master
-git branch -d isis-1.9.0              # branch no longer needed
-git push origin --delete isis-1.9.0   # remote branch no longer needed</code></pre>
+git merge release-1.10.0-RC1                  # merge branch onto master
+git branch -d release-1.10.0-RC1              # branch no longer needed
+git push origin --delete release-1.10.0-RC1   # remote branch no longer needed</code></pre>
 </div>
 </div>
 </div>
@@ -7190,8 +7292,9 @@ xxx<br>
 <li><a href="#_cg_committers_cutting-a-release">10.2. Cutting a Release</a>
 <ul class="sectlevel3">
 <li><a href="#_cg_committers_cutting-a-release_obtain-consensus">10.2.1. Obtain Consensus</a></li>
-<li><a href="#_cg_committers_cutting-a-release_pull-down-code-to-release">10.2.2. Pull down code to release</a></li>
-<li><a href="#_cg_committers_cutting-a-release_releasing-core">10.2.3. Releasing Core</a>
+<li><a href="#_cg_committers_cutting-a-release_set-environment-variables">10.2.2. Set environment variables</a></li>
+<li><a href="#_cg_committers_cutting-a-release_pull-down-code-to-release">10.2.3. Pull down code to release</a></li>
+<li><a href="#_cg_committers_cutting-a-release_releasing-core">10.2.4. Releasing Core</a>
 <ul class="sectlevel4">
 <li><a href="#_cg_committers_cutting-a-release_releasing-core_set-environment-variables">Set environment variables</a></li>
 <li><a href="#_cg_committers_cutting-a-release_releasing-core_license-headers">License headers</a></li>
@@ -7204,7 +7307,7 @@ xxx<br>
 <li><a href="#_cg_committers_cutting-a-release_releasing-core_release-perform-upload">Release perform (Upload)</a></li>
 </ul>
 </li>
-<li><a href="#_cg_committers_cutting-a-release_releasing-the-archetype">10.2.4. Releasing the Archetype</a>
+<li><a href="#_cg_committers_cutting-a-release_releasing-the-archetype">10.2.5. Releasing the Archetype</a>
 <ul class="sectlevel4">
 <li><a href="#_cg_committers_cutting-a-release_releasing-the-archetype_setup-environment-variables">Setup environment variables</a></li>
 <li><a href="#_cg_committers_cutting-a-release_releasing-the-archetype_check-the-example-app">Check the example app</a></li>
@@ -7214,9 +7317,9 @@ xxx<br>
 <li><a href="#_cg_committers_cutting-a-release_releasing-the-archetype_release-perform-upload">Release Perform (upload)</a></li>
 </ul>
 </li>
-<li><a href="#_cg_committers_cutting-a-release_check-close-staging-repo">10.2.5. Check/Close Staging Repo</a></li>
-<li><a href="#_cg_committers_cutting-a-release_push-branches">10.2.6. Push branches</a></li>
-<li><a href="#_cg_committers_cutting-a-release_voting">10.2.7. Voting</a>
+<li><a href="#_cg_committers_cutting-a-release_check-close-staging-repo">10.2.6. Check/Close Staging Repo</a></li>
+<li><a href="#_cg_committers_cutting-a-release_push-branches">10.2.7. Push branches</a></li>
+<li><a href="#_cg_committers_cutting-a-release_voting">10.2.8. Voting</a>
 <ul class="sectlevel4">
 <li><a href="#_cg_committers_cutting-a-release_voting-start-voting-thread">Start voting thread on <a href="mailto:&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g">&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g</a></a></li>
 </ul>
