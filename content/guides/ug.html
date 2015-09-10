@@ -3521,6 +3521,31 @@ TODO - <a href="rg.html#_rg_annotations_manpage-ActionLayout_cssClass"><code>@Ac
 <div class="sect2">
 <h3 id="_ug_how-tos_domain-services">4.3. Domain Services</h3>
 <div class="paragraph">
+<p>In Apache Isis domain services have several responsibilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>to expose actions to be rendered in the menu</p>
+</li>
+<li>
+<p>to provide actions that are rendered as contributed actions/properties/collections on the contributee domain object</p>
+</li>
+<li>
+<p>they act as subscribers to the event bus</p>
+</li>
+<li>
+<p>they act as repositories (find existing objects) or as factories (create new objects)</p>
+</li>
+<li>
+<p>they provide other services (eg performing calculations, attach a barcode, send an email etc).</p>
+</li>
+<li>
+<p>to implement an SPI of the framework, most notably cross-cutting concerns such as security, command profiling, auditing and publishing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
 <p>It&#8217;s worth extending the <a href="#_ug_core-concepts_philosophy_hexagonal-architecture">Hexagonal Architecture</a> to show where domain services&#8201;&#8212;&#8201;and in particular the domain services provided by <a href="http://www.isisaddons.org">Isis Addons</a> (non-ASF)&#8201;&#8212;&#8201;fit in:</p>
 </div>
 <div class="imageblock">
@@ -3530,13 +3555,273 @@ TODO - <a href="rg.html#_rg_annotations_manpage-ActionLayout_cssClass"><code>@Ac
 <div class="title">Figure 2. The hexagonal architecture with Isis addons</div>
 </div>
 <div class="paragraph">
-<p>Here, we can see that the addons provide services both to the Apache Isis framework (for example security, command and auditing) and also - by way of dependency injection - to the domain objects (eg tags, excel, settings). Of course, you can also write your own domain services as well, for example to interface with some external CMS system, say.</p>
+<p>The (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> are a good source of domain services, providing SPI implementations of the common cross-cutting concerns, and also a number of APIs for domain objects to invoke (eg tags, excel, settings).  Of course, you can also write your own domain services as well, for example to interface with some external CMS system, say.</p>
 </div>
 <div class="paragraph">
 <p>The Apache Isis framework also provides numerous in-built domain services.  These are catalogued in the reference guide, see <a href="rg.html#_rg_services-api">here</a> and <a href="rg.html#_rg_services-spi">here</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_scoped_services">4.3.1. Scoped services</h4>
+<h4 id="_ug_how-tos_domain-services_organizing-services">4.3.1. Organizing Services</h4>
+<div class="paragraph">
+<p>In larger applications we have found it worthwhile to ensure that our domain services only act aligned with these responsibilities, employing a naming convention so that it is clear what the responsibilities of each domain service is.</p>
+</div>
+<div class="paragraph">
+<p>The application provides the <code>@DomainService(nature=&#8230;&#8203;)</code> annotation that helps distinguish some of these responsibilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>VIEW</code> indicates that the actions should appear both on the menu and also be used as contributions</p>
+</li>
+<li>
+<p><code>VIEW_MENU_ONLY</code> indicates that the actions should appear on the menu</p>
+</li>
+<li>
+<p><code>VIEW_CONTRIBUTED_ONLY</code> indicates that the actions should appear on the menu</p>
+</li>
+<li>
+<p><code>DOMAIN</code> indicates that the actions are for other domain objects to invoke (either directly or indirectly through the event bus), but in any case should not be rendered at all in the UI</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pulling all the above together, here are our suggestions as to how you should organize your domain services.</p>
+</div>
+<div class="sect4">
+<h5 id="_factory_and_repository">Factory and Repository</h5>
+<div class="paragraph">
+<p>The factory/repository uses an injected <code>DomainObjectContainer</code> to both instantiate new objects and to query the database for existing objects of a given entity type.  It is not visible in UI, rather other services delegate to it.</p>
+</div>
+<div class="paragraph">
+<p>We suggest naming such classes <code>XxxRepository</code>, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature=NatureOfService.DOMAIN                               <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> CustomerRepository {
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; findCustomerBy...(...) {
+        <span class="keyword">return</span> allMatches(...);
+    }
+    <span class="directive">public</span> Customer newCustomer(...) {
+        Customer Customer = container.newTransientInstance(Customer.class);
+        ...
+        persistIfNotAlready(Customer);
+        <span class="keyword">return</span> Customer;
+    }
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; allCustomers() {
+        <span class="keyword">return</span> container.allInstances(Customer.class);
+    }
+    <span class="annotation">@Inject</span>
+    DomainObjectContainer container;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>interacted with only programmatically by other objects in the domain layer.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There is no need to annotate the actions; they are implicitly hidden because of the domain service&#8217;s nature.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_menu">Menu</h5>
+<div class="paragraph">
+<p>Menu services provide actions to be rendered on the menu.</p>
+</div>
+<div class="paragraph">
+<p>For the Wicket viewer, each service&#8217;s actions appear as a collection of menu items of a named menu, and this menu is on one of the three menu bars provided by the Wicket viewer.  It is possible for more than one menu service&#8217;s actions to appear on the same menu; a separator is shown between each.</p>
+</div>
+<div class="paragraph">
+<p>For the Restful Objects viewer, all menu services are shown in the services representation.</p>
+</div>
+<div class="paragraph">
+<p>We suggest naming such classes <code>XxxMenu</code>, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature = NatureOfService.VIEW_MENU_ONLY                     <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="annotation">@DomainServiceLayout</span>(
+        named = <span class="string"><span class="delimiter">&quot;</span><span class="content">Customers</span><span class="delimiter">&quot;</span></span>,                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        menuBar = DomainServiceLayout.MenuBar.PRIMARY,
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerMenu</span> {
+    <span class="annotation">@Action</span>(
+            semantics = SemanticsOf.SAFE
+    )
+    <span class="annotation">@MemberOrder</span>( sequence = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span> )
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; findCustomerBy...(...) {
+        <span class="keyword">return</span> CustomerRepository.findCustomerBy(...);          <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+
+    <span class="annotation">@Action</span>(
+            semantics = SemanticsOf.NON_IDEMPOTENT
+    )
+    <span class="annotation">@MemberOrder</span>( sequence = <span class="string"><span class="delimiter">&quot;</span><span class="content">3</span><span class="delimiter">&quot;</span></span> )
+    <span class="directive">public</span> Customer newCustomer(...) {
+        <span class="keyword">return</span> CustomerRepository.newCustomer(...);
+    }
+
+    <span class="annotation">@Action</span>(
+            semantics = SemanticsOf.SAFE,
+            restrictTo = RestrictTo.PROTOTYPING
+    )
+    <span class="annotation">@MemberOrder</span>( sequence = <span class="string"><span class="delimiter">&quot;</span><span class="content">99</span><span class="delimiter">&quot;</span></span> )
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; allCustomers() {
+        <span class="keyword">return</span> CustomerRepository.allBankMandates();
+    }
+
+    <span class="annotation">@Inject</span>
+    <span class="directive">protected</span> CustomerRepository customerRepository;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the service&#8217;s actions should be rendered as menu items</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specifies the menu name.  All services with the same menu name will be displayed on the same menu, with separators between</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>delegates to an injected repository.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Not every action on the repository need to be delegated to of course (the above example does but only because it is very simple).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note also that while there&#8217;s nothing to stop <code>VIEW_MENU</code> domain services being injected into other domain objects and interacted with programmatically, we recommend against it.  Instead, inject the underlying repository.  If there is additional business logic, then consider introducing a further <code>DOMAIN</code>-scoped service and call that instead.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_contributions_2">Contributions</h5>
+<div class="paragraph">
+<p>Services can contribute either actions, properties or collections, based on the type of their parameters.</p>
+</div>
+<div class="paragraph">
+<p>We suggest naming such classes <code>XxxContributions</code>, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature=NatureOfService.VIEW_CONTRIBUTIONS_ONLY              <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="annotation">@DomainServiceLayout</span>(
+    menuOrder=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span>,
+    name=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>,
+}
+<span class="directive">public</span> OrderContributions {
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
+    <span class="annotation">@ActionLayout</span>(contributed=Contributed.AS_ASSOCIATION)       <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@CollectionLayout</span>(render=RenderType.EAGERLY)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Order&gt; orders(Customer customer) {              <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="keyword">return</span> container.allMatches(...);
+    }
+
+    <span class="annotation">@Inject</span>
+    CustomerRepository customerRepository;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the service&#8217;s actions should be contributed to the entities of the parameters of those actions</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>contributed as an association, in particular as a collection because returns a <code>List&lt;T&gt;</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Only actions with a single argument can be contributed as associations</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>More information about contributions can be found <a href="#_ug_how-tos_contributed-members">here</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_event_subscribers">Event Subscribers</h5>
+<div class="paragraph">
+<p>Event subscribers can both veto interactions (hiding members, disabling members or validating changes), or can react to interactions (eg action invocation or property edit).</p>
+</div>
+<div class="paragraph">
+<p>We suggest naming such classes <code>XxxSubscriptions</code>, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature=NatureOfService.DOMAIN                       <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="annotation">@DomainServiceLayout</span>(
+    menuOrder=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span>,
+    name=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>,
+}
+<span class="directive">public</span> CustomerOrderSubscriptions {
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="directive">public</span> <span class="type">void</span> on(<span class="directive">final</span> Customer.DeletedEvent ev) {
+        Customer customer = ev.getSource();
+        orderRepository.delete(customer);
+    }
+    <span class="annotation">@Inject</span>
+    OrderRepository orderRepository;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>subscriptions do not appear in the UI at all, so should use the domain nature of service</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_prototyping">4.3.2. Prototyping</h4>
+<div class="paragraph">
+<p>While for long-term maintainability we do recommend the naming conventions described <a href="#_ug_how-tos_domain-services_organizing-services">above</a>, you can get away with far fewer services when just prototyping a domain.</p>
+</div>
+<div class="paragraph">
+<p>If the domain service nature is not specified (or is left to its default, <code>VIEW</code>), then the service&#8217;s actions will
+appear in the UI both as menu items <em>and</em> as contributions (and the service can of course be injected into other domain objects for programmatic invocation).</p>
+</div>
+<div class="paragraph">
+<p>Later on it is easy enough to refactor the code to tease apart the different responsibilities.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_scoped_services">4.3.3. Scoped services</h4>
 <div class="paragraph">
 <p>By default all domain services are considered to be singletons, and thread-safe.</p>
 </div>
@@ -3559,24 +3844,33 @@ TODO - <a href="rg.html#_rg_annotations_manpage-ActionLayout_cssClass"><code>@Ac
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_domain_services">4.3.2. Registering domain services</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - discuss @DomainService if <code>isis.services-installer=annotation-and-configuration</code>; how to override these defaults by explicit registration
-</td>
-</tr>
-</table>
-</div>
+<h4 id="_registering_domain_services">4.3.4. Registering domain services</h4>
 <div class="paragraph">
-<p>Domain services (which includes repositories and factories) can be registered in the <code>isis.properties</code> configuration file, under <code>isis.services</code> key (a comma-separated list):</p>
+<p>The easiest way to register domain services is using <a href="rg.html#_rg_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to specify the modules
+which contain <a href="rg.html#_rg_annotations_manpage-DomainService"><code>@DomainService</code></a>-annotated classes.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">public class MyAppManifest implements AppManifest {
+    public List&lt;Class&lt;?&gt;&gt; getModules() {
+        return Arrays.asList(
+                ToDoAppDomainModule.class,
+                ToDoAppFixtureModule.class,
+                ToDoAppAppModule.class,
+                org.isisaddons.module.audit.AuditModule.class);
+    }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will load all services in the packages underneath the four modules listed.</p>
+</div>
+<div class="paragraph">
+<p>An alternative (older) mechanism is to registered domain services in the <code>isis.properties</code> configuration file, under <code>isis.services</code> key (a comma-separated list); for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3607,95 +3901,7 @@ isis.services = employee.Employees,\
 </div>
 </div>
 <div class="sect3">
-<h4 id="_contributions_2">4.3.3. Contributions</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - just xref <a href="#_ug_how-tos_contributed-members">contributed members</a> section.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_menu_items">4.3.4. Menu items</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - update to new annotations, including @DomainService(nature=&#8230;&#8203;)
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>By default every action of a service (by which we also mean repositories and factories) will be rendered in the viewer, eg as a menu item for that service menu. This behaviour can be suppressed by annotating the action using <code>@org.apache.isis.applib.annotations.NotInServiceMenu</code>.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Library</span> {
-    <span class="annotation">@NotInServiceMenu</span>
-    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that an action annotated as being <code>@NotInServiceMenu</code> will still be contributed. If an action should neither be contributed nor appear in service menu items, then simply annotate it as <code>@Hidden</code>.</p>
-</div>
-<div class="paragraph">
-<p>Alternatively, this can be performed using a supporting method:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryImpl</span> <span class="directive">implements</span> Library {
-    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b) { ... }
-    <span class="directive">public</span> <span class="type">boolean</span> notInServiceMenuBorrow() { ... }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_menus">4.3.5. Menus</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - update to new annotations, including @DomainService(nature=&#8230;&#8203;)
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If none of the service menu items should appear, then the service itself should be annotated as <code>@Hidden</code>.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Hidden</span>
-<span class="directive">public</span> <span class="type">interface</span> <span class="class">EmailService</span> {
-    <span class="directive">public</span> <span class="type">void</span> sendEmail(<span class="predefined-type">String</span> to, <span class="predefined-type">String</span> from, <span class="predefined-type">String</span> subject, <span class="predefined-type">String</span> body);
-    <span class="directive">public</span> <span class="type">void</span> forwardEmail(<span class="predefined-type">String</span> to, <span class="predefined-type">String</span> from, <span class="predefined-type">String</span> subject, <span class="predefined-type">String</span> body);
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_initialization">4.3.6. Initialization</h4>
+<h4 id="_initialization">4.3.5. Initialization</h4>
 <div class="paragraph">
 <p>Services can optionally declare lifecycle callbacks to initialize them (when the app is deployed) and to shut them down (when the app is undeployed).</p>
 </div>
@@ -3716,7 +3922,7 @@ TODO - update to new annotations, including @DomainService(nature=&#8230;&#8203;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_getid_method">4.3.7. The getId() method</h4>
+<h4 id="_the_getid_method">4.3.6. The getId() method</h4>
 <div class="paragraph">
 <p>Optionally, a service may provide a <a href="rg.html#_rg_methods_reserved_manpage-getId"><code>getId()</code></a> method.  This method returns a logical identifier for a service, independent of its implementation.</p>
 </div>
@@ -4634,7 +4840,6 @@ on the initialization of each class into the JDO metamodel.</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CreateSchemaObjectFromClassMetadata</span>
         <span class="directive">implements</span> MetaDataListener,
-                   PersistenceManagerFactoryAware,
                    DataNucleusPropertiesAware {
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> loaded(<span class="directive">final</span> AbstractClassMetaData cmd) { ... }
@@ -4687,17 +4892,7 @@ need to tweak it to support other RDBMS'.  Any implementation must implement <co
 <p>Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>.  In many cases simply subclassing from <code>CreateSchemaObjectFromClassMetadata</code> and overriding <code>buildSqlToCheck(&#8230;&#8203;)</code> and <code>buildSqlToExec(&#8230;&#8203;)</code> should suffice.</p>
 </div>
 <div class="paragraph">
-<p>If you <em>do</em> need more control, your implementation can also optionally implement <code>org.apache.isis.objectstore.jdo.datanucleus.PersistenceManagerFactoryAware</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">PersistenceManagerFactoryAware</span> {
-    <span class="directive">public</span> <span class="type">void</span> setPersistenceManagerFactory(<span class="directive">final</span> PersistenceManagerFactory persistenceManagerFactory);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and also <code>org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPropertiesAware</code>:</p>
+<p>If you <em>do</em> need more control, your implementation can also optionally implement  <code>org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPropertiesAware</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4707,7 +4902,7 @@ need to tweak it to support other RDBMS'.  Any implementation must implement <co
 </div>
 </div>
 <div class="paragraph">
-<p>This latter interface provides access to the properties passed through to JDO/DataNucleus.</p>
+<p>This provides access to the properties passed through to JDO/DataNucleus.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -12583,7 +12778,7 @@ configuration should be read from an external location.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Note that the <code>override</code> key should be set to "false"; not "true"; it indicates whether this parameter is overridable by the application&#8217;s own <code>web.xml</code>. In most cases, you probably want to disallow that.</p>
+<p>Note that the <code>override</code> key should be set to "false", not "true".  It indicates whether the application&#8217;s own <code>web.xml</code> can override the setting.  In most cases, you probably want to disallow that.</p>
 </div>
 </td>
 </tr>
@@ -12622,7 +12817,7 @@ configuration should be read from an external location.</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Parameter</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">shiroConfigLocations</span><span class="delimiter">&quot;</span></span>
            <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file:/usr/local/myapp/conf/shiro.ini</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -12744,7 +12939,7 @@ configuration should be read from an external location.</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;Parameter</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spring.config.dir</span><span class="delimiter">&quot;</span></span>
            <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file:/usr/local/myapp/conf/spring.properties</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+           <span class="attribute-name">override</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="sect4">
@@ -14351,13 +14546,19 @@ TODO
 </li>
 <li><a href="#_ug_how-tos_domain-services">4.3. Domain Services</a>
 <ul class="sectlevel3">
-<li><a href="#_scoped_services">4.3.1. Scoped services</a></li>
-<li><a href="#_registering_domain_services">4.3.2. Registering domain services</a></li>
-<li><a href="#_contributions_2">4.3.3. Contributions</a></li>
-<li><a href="#_menu_items">4.3.4. Menu items</a></li>
-<li><a href="#_menus">4.3.5. Menus</a></li>
-<li><a href="#_initialization">4.3.6. Initialization</a></li>
-<li><a href="#_the_getid_method">4.3.7. The getId() method</a></li>
+<li><a href="#_ug_how-tos_domain-services_organizing-services">4.3.1. Organizing Services</a>
+<ul class="sectlevel4">
+<li><a href="#_factory_and_repository">Factory and Repository</a></li>
+<li><a href="#_menu">Menu</a></li>
+<li><a href="#_contributions_2">Contributions</a></li>
+<li><a href="#_event_subscribers">Event Subscribers</a></li>
+</ul>
+</li>
+<li><a href="#_prototyping">4.3.2. Prototyping</a></li>
+<li><a href="#_scoped_services">4.3.3. Scoped services</a></li>
+<li><a href="#_registering_domain_services">4.3.4. Registering domain services</a></li>
+<li><a href="#_initialization">4.3.5. Initialization</a></li>
+<li><a href="#_the_getid_method">4.3.6. The getId() method</a></li>
 </ul>
 </li>
 <li><a href="#_ug_how-tos_crud">4.4. Object Management (CRUD)</a>
