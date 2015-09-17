@@ -1205,7 +1205,21 @@ if you forget to set up the enhancer goal, or don&#8217;t run it on the correct 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_advanced">2.1.5. Advanced</h4>
+<h4 id="_running_integration_tests">2.1.5. Running Integration Tests</h4>
+<div class="paragraph">
+<p>When running integration tests from within IntelliJ, make sure that the <code>search for tests</code> radio button is set to <code>In single module</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/appendices/dev-env/intellij-idea/400-running-integtests/run-debug-configuration-single-module.png"><img src="images/appendices/dev-env/intellij-idea/400-running-integtests/run-debug-configuration-single-module.png" alt="run debug configuration single module" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>If this radio button is set to one of the other options then you may obtain class loading issues; these result from IntelliJ attempting to run unit tests of the <code>dom</code> project that depend on test classes in that module, but using the classpath of the <code>integtests</code> module whereby the <code>dom</code> test-classes (<code>test-jar</code> artifact) are not exposed on the Maven classpath.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_advanced">2.1.6. Advanced</h4>
 <div class="paragraph">
 <p>In this section are a couple of options that will reduce the length of the change code/build/deploy/review feedback loop.</p>
 </div>
@@ -1573,6 +1587,18 @@ TODO
 <div class="sect1">
 <h2 id="_cg_isis-maven-plugin">5. Apache Isis Maven Plugin</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The Apache Isis programming model requires that a number of naming conventions are followed.</p>
+</div>
+<div class="paragraph">
+<p>For example, the validator will detect any orphaned supporting methods (eg <code>hideXxx()</code>) if the corresponding property or action has been renamed or deleted but the supporting method was not also updated.  Another example is that a class cannot have a title specified both using <code>title()</code> method and also using <code>@Title</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>When running the application these are enforced by the <code>MetaModelValidator</code> component that detects these errors, failing fast.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of the <code>isis-maven-plugin</code> is to enforce these naming conventions at build time, typically enforced by way of a continuous integration server.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1580,10 +1606,296 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>The instructions given here relate to <code>1.10.0-SNAPSHOT</code>.   The plugin was also released for <code>1.9.0</code>, but with a slightly different configuration; see the final section for differences.</p>
+</div>
 </td>
 </tr>
 </table>
+</div>
+<div class="sect2">
+<h3 id="__code_dom_code_project">5.1. <code>dom</code> project</h3>
+<div class="paragraph">
+<p>To start with, we need an <a href="rg.html#_rg_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to point the plugin at so that it knows which services and entities are to be validated.</p>
+</div>
+<div class="paragraph">
+<p>This can be extremely minimal.  For example, the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp</a>'s manifest is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
+...
+public <span class="type">class</span> <span class="class">DomainAppDomManifest</span> <span class="directive">implements</span> AppManifest {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
+        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
+                DomainAppDomainModule.class  <span class="comment">// domain (entities and repositories)</span>
+        );
+    }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getAdditionalServices() { <span class="keyword">return</span> <span class="predefined-type">Collections</span>.emptyList(); }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthenticationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthorizationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt;&gt; getFixtures() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>DomainAppDomainModule</code> simply identifies the package for the manifest to search under:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
+<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">DomainAppDomainModule</span> {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, update the <code>pom.xml</code> (in your project&#8217;s <code>dom</code> module):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>isis-validate<span class="tag">&lt;/name&gt;</span>                                                  <span class="comment">&lt;!-- 1 --&gt;</span>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                      <span class="comment">&lt;!-- 2 --&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;appManifest&gt;</span>domainapp.dom.DomainAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>       <span class="comment">&lt;!-- 3 --&gt;</span>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>org.apache.isis.example.application<span class="tag">&lt;/groupId&gt;</span>          <span class="comment">&lt;!-- 4 --&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>1.10.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>                                       <span class="comment">&lt;!-- 5 --&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the profile can be activated using <code>-Disis-validate</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to <code>1.10.0-SNAPSHOT</code> or any later version</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the manifest discussed previously; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the <code>dom</code> module containing itself; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>binds the plugin&#8217;s <code>validate</code> goal to the Maven <code>test</code> lifecycle phase (ie will be called using <code>mvn test</code>).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_to_run">5.2. To run</h3>
+<div class="paragraph">
+<p>The plugin is activated by enabling the profile and invoking the <code>test</code> phase:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn test -Disis-validate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will run any tests, and then also - because the plugin is activated by the <code>isis-validate</code> property and bound to the <code>test</code> phase, will run the plugin&#8217;s <code>validate</code> goal.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_of_failure">5.3. Example of failure</h3>
+<div class="paragraph">
+<p>In the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp</a> application the <code>SimpleObject</code> defines an <code>updateName</code> action.  This has a supporting method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SimpleObject updateName( ... ) { ... }
+<span class="directive">public</span> <span class="predefined-type">String</span> default0UpdateName() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can introduce an error by misspelling the supporting method, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> default0XUpdateName() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running <code>mvn -Disis-valdate test</code> then generates this output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[error]
+[error]
+[error]
+[error] domainapp.dom.simple.SimpleObject#default0XUpdateName: has prefix default, is probably a supporting method for a property, collection or action.  If the method is intended to be an action, then rename and use @ActionLayout(named=&quot;...&quot;) or ignore completely using @Programmatic
+[error]
+[error]
+[error]
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] Simple App ......................................... SUCCESS [  0.087 s]
+[INFO] Simple App DOM ..................................... FAILURE [  4.182 s]
+[INFO] Simple App Fixtures ................................ SKIPPED
+[INFO] Simple App Application ............................. SKIPPED
+[INFO] Simple App Integration Tests ....................... SKIPPED
+[INFO] Simple App Webapp .................................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] ...
+[ERROR] Failed to execute goal org.apache.isis.tool:isis-maven-plugin:1.10.0-SNAPSHOT:validate (default) on project simpleapp-dom: 1 problems found. -&gt; [Help 1]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If one were to attempt to run the application, the same error would appear in the log files on startup (and the application would not boot).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_validation_rules">5.4. Custom validation rules</h3>
+<div class="paragraph">
+<p>It is also possible to customize the validation, explained <a href="ug.html#_ug_extending_programming-model_custom-validator">here</a>.  For example, you could enforce project-specific conventions by implementing a custom <code>MetaModelValidator</code>, and registering using a configuration property.</p>
+</div>
+<div class="paragraph">
+<p>To support this using <code>AppManifest`s, override its `getConfigurationProperties()</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">public class DomainAppDomManifest implements AppManifest {
+    ...
+    public Map&lt;String, String&gt; getConfigurationProperties() {
+        final Map&lt;String, String&gt; map = Maps.newTreeMap();
+        map.put(&quot;isis.reflector.validator&quot;,&quot;com.mycompany.myapp.MyMetaModelValidator&quot;);
+        return map;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1_9_0_version">5.5. 1.9.0 version</h3>
+<div class="paragraph">
+<p>The <code>1.9.0</code> version of the plugin requires slightly different configuratoin.  Rather than using an <code>AppManifest</code>, instead the configuration directory containing <code>isis.properties</code> is specified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;activeByDefault&gt;</span>false<span class="tag">&lt;/activeByDefault&gt;</span>                                        <span class="comment">&lt;!-- 1 --&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>1.9.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;isisConfigDir&gt;</span>../webapp/src/main/webapp/WEB-INF<span class="tag">&lt;/isisConfigDir&gt;</span>    <span class="comment">&lt;!-- 2 --&gt;</span>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>org.apache.isis.example.application<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>1.9.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>activated using the <code>-P</code> profile flag rather than a <code>-D</code> system property</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specify the <code>isisConfigDir</code> directory (containing the <code>isis.properties</code> file).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To use the <code>1.9.0</code> version, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -P isis-validate test</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the <code>isisConfigDir</code> property was removed in <code>1.10.0</code>; only the <code>AppManifest</code> approach is supported.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -1769,7 +2081,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">MAVEN_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=256m</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">export MAVEN_OPTS=&quot;-Xms512m -Xmx1024m&quot;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1780,7 +2092,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Previously we suggested <code>128m</code> for the <code>MaxPermSize</code>, but that would no longer seem to be sufficient.</p>
+<p>Previously we suggested <code>-XX:MaxPermSize=256m</code>, but this option has been removed in Java 8.  (As of 1.9.0, Apache Isis is built using Java 8 but with source and target set to JDK 1.7).</p>
 </div>
 </td>
 </tr>
@@ -1805,7 +2117,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">export MAVEN_OPTS=&quot;-XX:+TieredCompilation -XX:TieredStopAtLevel=1&quot;
+<pre class="CodeRay highlight"><code data-lang="bash">export MAVEN_OPTS=&quot;-Xms512m -Xmx1024m -XX:+TieredCompilation -XX:TieredStopAtLevel=1&quot;
 mvn clean install -o -T1C</code></pre>
 </div>
 </div>
@@ -7165,7 +7477,8 @@ xxx<br>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
-<li><a href="#_advanced">2.1.5. Advanced</a>
+<li><a href="#_running_integration_tests">2.1.5. Running Integration Tests</a></li>
+<li><a href="#_advanced">2.1.6. Advanced</a>
 <ul class="sectlevel4">
 <li><a href="#_setting_up_dynamic_reloading">Setting up Dynamic Reloading</a></li>
 <li><a href="#_setting_up_jrebel">Setting up JRebel</a></li>
@@ -7203,7 +7516,15 @@ xxx<br>
 </ul>
 </li>
 <li><a href="#_cg_cmd-line">4. Command Line and CI</a></li>
-<li><a href="#_cg_isis-maven-plugin">5. Apache Isis Maven Plugin</a></li>
+<li><a href="#_cg_isis-maven-plugin">5. Apache Isis Maven Plugin</a>
+<ul class="sectlevel2">
+<li><a href="#__code_dom_code_project">5.1. <code>dom</code> project</a></li>
+<li><a href="#_to_run">5.2. To run</a></li>
+<li><a href="#_example_of_failure">5.3. Example of failure</a></li>
+<li><a href="#_custom_validation_rules">5.4. Custom validation rules</a></li>
+<li><a href="#_1_9_0_version">5.5. 1.9.0 version</a></li>
+</ul>
+</li>
 <li><a href="#_cg_building-isis">6. Building Apache Isis</a>
 <ul class="sectlevel2">
 <li><a href="#_git">6.1. Git</a>
