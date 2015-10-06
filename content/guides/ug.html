@@ -6392,11 +6392,12 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> ... {
-    ...
+    <span class="annotation">@Action</span>(
+        semantics=SemanticsOf.SAFE
+    )
     <span class="annotation">@ActionLayout</span>(
          bookmarking=BookmarkPolicy.AS_ROOT
      )
-    <span class="annotation">@ActionSemantics</span>(Of.SAFE)
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; notYetComplete() { ... }
     ...
 }</code></pre>
@@ -8530,9 +8531,13 @@ controls and metadata, intended to support a wide variety of possible REST clien
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerService</span> {
-  <span class="directive">public</span> <span class="predefined-type">String</span> id() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">customers</span><span class="delimiter">&quot;</span></span>; }
-  <span class="annotation">@ActionSemantics</span>(Of.SAFE)
-  <span class="directive">public</span> Customer findCustomer(<span class="annotation">@Named</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">customerName</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> customerName) { ... }
+    <span class="directive">public</span> <span class="predefined-type">String</span> id() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">customers</span><span class="delimiter">&quot;</span></span>; }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
+    <span class="directive">public</span> Customer findCustomer(
+            <span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">&quot;</span><span class="content">customerName</span><span class="delimiter">&quot;</span></span>)
+            <span class="directive">final</span> <span class="predefined-type">String</span> customerName) {
+        ...
+    }
 }</code></pre>
 </div>
 </div>

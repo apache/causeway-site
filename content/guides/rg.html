@@ -1844,10 +1844,15 @@ This annotation  indicates that transient instances of this class may be created
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_annotations_manpage-Action_semantics"><code>semantics()</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SAFE_AND_REQUEST_CACHEABLE</code>, <code>SAFE</code>, <code>IDEMPOTENT</code>, <code>NON_IDEMPOTENT</code><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SAFE_AND_REQUEST_CACHEABLE</code>, <code>SAFE</code>,<br>
+<code>IDEMPOTENT</code>, <code>IDEMPOTENT_ARE_YOU_SURE</code><br>
+<code>NON_IDEMPOTENT</code>, <code>NON_IDEMPOTENT_ARE_YOU_SURE</code> +<br>
 (<code>NON_IDEMPOTENT</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>the action&#8217;s semantics (ie whether objects are modified as the result of invoking this action, and if so whether reinvoking the action would result in no further change; if not whether the results can be cached for the remainder of the request)</p>
+<p>the action&#8217;s semantics (ie whether objects are modified as the result of invoking this action, and if so whether reinvoking the action would result in no further change; if not whether the results can be cached for the remainder of the request).</p>
+</div>
+<div class="paragraph">
+<p>The <code>&#8230;&#8203;ARE_YOU_SURE</code> variants (1.10.0-SNAPSHOT) cause a confirmation dialog to be displayed in the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1905,6 +1910,20 @@ This annotation  indicates that transient instances of this class may be created
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>default value, so could be omitted</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Currently are you sure semantics (1.10.0-SNAPSHOT) only work for actions that take one or more parameters (that is, generate a dialog).</p>
+</div>
+</td>
 </tr>
 </table>
 </div>
@@ -15520,8 +15539,10 @@ refresh the parent.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ActionSemantics</span>(Of.SAFE)
-<span class="annotation">@Bulk</span>(AppliesTo.BULK_ONLY)
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Action</span>(
+    semantics=SemanticsOf.SAFE,
+    invokeOn=InvokeOn.COLLECTION_ONLY
+)
 <span class="directive">public</span> <span class="predefined-type">BigDecimal</span> totalCost() {
     <span class="predefined-type">BigDecimal</span> total = (<span class="predefined-type">BigDecimal</span>) scratchpad.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">runningTotal</span><span class="delimiter">&quot;</span></span>);
     <span class="keyword">if</span>(getCost() != <span class="predefined-constant">null</span>) {
