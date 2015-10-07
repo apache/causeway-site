@@ -19229,14 +19229,49 @@ Impl&#8217;n (g: a:)</th>
 </table>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractContainedObject">6.2.1. <code>AbstractContainedObject</code></h4>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>This class is a convenience superclass for domain objects and services, providing general purpose methods for interacting with the framework.  These include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>allMatches(Query)</code> - search for all objects matching the specified <code>Query</code>.<br></p>
+<div class="paragraph">
+<p>+ Note that this, and other similar methods (eg <code>firstMatch(&#8230;&#8203;)</code>, <code>uniqueMatch(&#8230;&#8203;)</code>) will automatically flush the
+current transactoin.</p>
+</div>
+</li>
+<li>
+<p><code>newTransientInstance(Class)</code> - to create a new instance of an object, with any services injected into it</p>
+</li>
+<li>
+<p><code>persistIfNotAlready(Object)</code> - to persist an object<br></p>
+<div class="paragraph">
+<p>In fact, the object is queued up to be persisted, and is only actually persisted either when the transaction commits, or
+when the transaction is flushed (typically when a query is performed).</p>
+</div>
+</li>
+<li>
+<p><code>warnUser(String)</code> - generate a warning to the user</p>
+</li>
+<li>
+<p><code>getContainer()</code> - which returns the <code>DomainObjectContainer</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of these methods simply delegates to an equivalent method in <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a>.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>In practice we find that there&#8217;s little to gain from subclassing; it&#8217;s easier/less obscure to simply inject <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a> into a simple pojo class.</p>
+</div>
 </td>
 </tr>
 </table>
@@ -19244,74 +19279,77 @@ TODO
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractDomainEvent">6.2.2. <code>AbstractDomainEvent</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This class is the superclass for all domain events that are raised by the framework when interacting with actions, properties or collections.</p>
+</div>
+<div class="paragraph">
+<p>Its immediate subclasses are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#_rg_classes_super_manpage-ActionDomainEvent"><code>ActionDomainEvent</code></a></p>
+</li>
+<li>
+<p><a href="#_rg_classes_super_manpage-PropertyDomainEvent"><code>PropertyDomainEvent</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This class defines the <code>Phase</code> enum that is common to all domain events (hide/disable/validate/pre-execute/post-execute), and provides methods such as <code>veto(&#8230;&#8203;)</code> by which subscribers can influence the interaction (eg hide a collection, disable a property, validate action arguments).</p>
+</div>
+<div class="paragraph">
+<p>It class also provides <code>get(&#8230;&#8203;)</code> and <code>put(&#8230;&#8203;)</code> methods that allow adhoc sharing of user data between different phases.  One event instance is used for both the hide and disable phases, and a different event instance is shared between validate/pre-execute/post-execute.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractDomainObject">6.2.3. <code>AbstractDomainObject</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This class extends <a href="#_rg_classes_super_manpage-AbstractContainedObject"><code>AbstractContainedObject</code></a>, adding
+in convenience methods for managing the persistence lifecycle of the object instance.</p>
+</div>
+<div class="paragraph">
+<p>Each of these methods, eg <code>isPersistent(&#8230;&#8203;)</code>, delegates to an equivalent method in
+<a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractFactoryAndRepository">6.2.4. <code>AbstractFactoryAndRepository</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This class extends <a href="#_rg_classes_super_manpage-AbstractContainedObject"><code>AbstractContainedObject</code></a>.  Its
+intent was to be a convenience subclass for services acting as either a repository or a factory, however note that
+ all of the methods that it defines are now deprecated.</p>
+</div>
+<div class="paragraph">
+<p>Instead, indicate that a service is repository using the <a href="#_rg_annotations_manpage-DomainService_repositoryFor"><code>@DomainService#repositoryFor()</code></a> attribute.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractService">6.2.5. <code>AbstractService</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This class extends <a href="#_rg_classes_super_manpage-AbstractContainedObject"><code>AbstractContainedObject</code></a>, adding
+in an implementation of <code>getId()</code> based upon the classes name.</p>
+</div>
+<div class="paragraph">
+<p>In practice there is little to gain from subclassing; simply inject <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a> for broadly equivalent functionality.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractViewModel">6.2.6. <code>AbstractViewModel</code></h4>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>This class extends <a href="#_rg_classes_super_manpage-AbstractContainedObject"><code>AbstractContainedObject</code></a>, also
+implementing the <a href="#_rg_classes_super_manpage-ViewModel"><code>ViewModel</code></a> interface.  In and of itself it provides no new behaviour.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>As an alternative, consider simply annotating the view model class with {@link org.apache.isis.applib.annotation.ViewModel}.</p>
+</div>
 </td>
 </tr>
 </table>
@@ -19319,77 +19357,111 @@ TODO
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-ActionDomainEvent">6.2.7. <code>ActionDomainEvent</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Subclass of <a href="#_rg_classes_super_manpage-AbstractDomainEvent"><code>AbstractDomainEvent</code></a> for actions.</p>
+</div>
+<div class="paragraph">
+<p>The class has a number of responsibilities (in addition to those it inherits):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>capture the target object being interacted with</p>
+</li>
+<li>
+<p>capture the arguments for each of the action&#8217;s parameters</p>
+</li>
+<li>
+<p>provide selected metadata about the action parameters from the metamodel (names, types)</p>
+</li>
+<li>
+<p>link back to the <a href="#_rg_services-api_manpage-CommandContext"><code>CommandContext</code></a> service&#8217;s <code>Command</code> object</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s action.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-CollectionDomainEvent">6.2.8. <code>CollectionDomainEvent</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Subclass of <a href="#_rg_classes_super_manpage-AbstractDomainEvent"><code>AbstractDomainEvent</code></a> for collections.</p>
+</div>
+<div class="paragraph">
+<p>The class has a couple of responsibilities (in addition to those it inherits):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>capture the target object being interacted with</p>
+</li>
+<li>
+<p>indicate whether the interaction is to add or remove an object from the collection (or simply to indicate that the collection is being accessed/read)</p>
+</li>
+<li>
+<p>capture the object reference being added or removed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s collection.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-FixtureScript">6.2.9. <code>FixtureScript</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>The <code>FixtureScript</code> class is an abstract class defining an API to set up data within the object store, either for integration tests or while demoing/prototyping.</p>
+</div>
+<div class="paragraph">
+<p>The primary method that subclasses must implement is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="directive">abstract</span> <span class="type">void</span> execute(<span class="directive">final</span> ExecutionContext executionContext);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this method the fixture script can in theory do anything, but in practice it is recommended that it uses injected
+domain services to set up data.  The provided <code>ExecutionContext</code> is used to invoke child fixture scripts, and alsocan be used to store references to any created objects (so that the calling test can access these objects/so that they are rendered in the view model).</p>
+</div>
+<div class="paragraph">
+<p>See the see the <a href="ug.html#_ug_testing_fixture-scripts">user guide&#8217;s testing chapter</a> for further discussion on the use of fixture scripts, in particular <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">fixture scripts' API and usage</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-FixtureScripts">6.2.10. <code>FixtureScripts</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - see also user guide&#8217;s <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">fixture scripts' API and usage</a>, <a href="#_rg_services-api_manpage-FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> (fallback implementation) and <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This abstract class is intended to allow a domain service that can execute <a href="#_rg_classes_super_manpage-FixtureScript"><code>FixtureScript</code></a>s to be easily written.</p>
+</div>
+<div class="paragraph">
+<p>However, it has now been deprecated; instead we recommend that the <a href="#_rg_services-spi_manpage-FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> service is
+implemented instead.  The framework will then automatically use.adoc#_rg_services-api_manpage-FixtureScriptsDefault[<code>FixtureScriptsDefault</code>] as a fallback implementation of this class.</p>
+</div>
+<div class="paragraph">
+<p>See the see the <a href="ug.html#_ug_testing_fixture-scripts">user guide&#8217;s testing chapter</a> for further discussion on the use of fixture scripts, in particular <a href="ug.html#_ug_testing_fixture-scripts_api-and-usage">fixture scripts' API and usage</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-PropertyDomainEvent">6.2.11. <code>PropertyDomainEvent</code></h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Subclass of <a href="#_rg_classes_super_manpage-AbstractDomainEvent"><code>AbstractDomainEvent</code></a> for properties.</p>
+</div>
+<div class="paragraph">
+<p>The class has a couple of responsibilities (in addition to those it inherits):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>capture the target object being interacted with</p>
+</li>
+<li>
+<p>capture the old and new values of the property</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s property.</p>
 </div>
 </div>
 </div>
@@ -19508,21 +19580,22 @@ TODO
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 32. Isis Applib classes</caption>
 <colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top"><code>o.a.i.applib.value.</code><br>
-<code>Blob</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
+<code>Blob</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
 <code>Clob</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -19531,11 +19604,13 @@ TODO
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
 <code>Color</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
-<code>Money</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
+<code>Money</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>o.a.i.applib.value.</code><br>
 <code>Password</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
