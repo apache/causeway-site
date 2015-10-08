@@ -20071,9 +20071,13 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 <p>The interfaces listed in this chapter act like "mix-ins"; they allow domain services to contribute actions/properties/collections to any domain objects that implement these interfaces.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_hastransactionid_code">6.7.1. <code>HasTransactionId</code></h4>
+<h4 id="_rg_classes_mixins_manpage-HasTransactionId">6.7.1. <code>HasTransactionId</code></h4>
 <div class="paragraph">
-<p>The <code>HasTransactionId</code> interface is a mix-in for any domain objects that pertain</p>
+<p>The <code>HasTransactionId</code> interface is a mix-in for any domain objects that reference a transaction id, such as
+auditing entries or commands.</p>
+</div>
+<div class="paragraph">
+<p>The interface is defined is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -20110,7 +20114,7 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_hasusername_code">6.7.2. <code>HasUsername</code></h4>
+<h4 id="_rg_classes_mixins_manpage-HasUserName">6.7.2. <code>HasUsername</code></h4>
 <div class="paragraph">
 <p>The <code>HasUsername</code> interface is a mix-in for domain objects to be associated with a username.  Other services and modules can then contribute actions/collections to render such additional information relating to the activities of the user.</p>
 </div>
@@ -20148,6 +20152,97 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 <p>(non-ASF) <a href="http://github.com/isisaddons/isis-module-settings">Isis addons' settings</a> module (<code>UserSettingJdo</code> entity)</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rg_classes_roles">6.8. Roles</h3>
+<div class="paragraph">
+<p>The interfaces listed in this chapter are role interfaces; they define a contract for the framework
+ to interact with those domain objects that implement these interfaces.</p>
+</div>
+<div class="sect3">
+<h4 id="_rg_classes_roles_manpage-HoldsUpdatedAt">6.8.1. <code>HoldsUpdatedAt</code></h4>
+<div class="paragraph">
+<p>The <code>HoldsUpdatedAt</code> role interface allows the (framework-provided) <code>TimestampService</code> to update each object with
+the current timestamp whenever it is modified in a transaction.</p>
+</div>
+<div class="paragraph">
+<p>The interface is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">HoldsUpdatedAt</span> {
+    <span class="type">void</span> setUpdatedAt(java.sql.Timestamp updatedAt);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current time is obtained from the <a href="#_rg_services-api_manpage-ClockService"><code>ClockService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Entities that implement this interface often also implement <a href="#_rg_classes_roles_manpage-HoldsUpdatedBy"><code>HoldsUpdatedBy</code></a> role interface; as a convenience the <a href="#_rg_classes_roles_manpage-Timestampable"><code>Timestampable</code></a> interface combines the two roles.</p>
+</div>
+<div class="sect4">
+<h5 id="_alternative_approaches">Alternative approaches</h5>
+<div class="paragraph">
+<p>An alternative way to maintain a timestamp is to use JDO&#8217;s <code>@Version</code> annotation.  With this approach, it is the JDO/DataNucleus that maintains the version, rather than the framework&#8217;s <code>TimestampService</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Version(
+        strategy=VersionStrategy.DATE_TIME,
+        column=<span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+    ...
+    public java.sql.Timestamp getVersionSequence() {
+        <span class="keyword">return</span> (java.sql.Timestamp) JDOHelper.getVersion(<span class="local-variable">this</span>);
+    }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rg_classes_roles_manpage-HoldsUpdatedBy">6.8.2. <code>HoldsUpdatedBy</code></h4>
+<div class="paragraph">
+<p>The <code>HoldsUpdatedBy</code> role interface &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">HoldsUpdatedBy</span> {
+    <span class="type">void</span> setUpdatedBy(<span class="predefined-type">String</span> updatedBy);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Entities that implement this interface often also implement <a href="#_rg_classes_roles_manpage-HoldsUpdatedAt"><code>HoldsUpdatedAt</code></a> role interface; as a convenience the <a href="#_rg_classes_roles_manpage-Timestampable"><code>Timestampable</code></a> interface combines the two roles.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rg_classes_roles_manpage-Timestampable">6.8.3. <code>Timestampable</code></h4>
+<div class="paragraph">
+<p>The <code>Timestampable</code> role interface is a convenience that combines the <a href="#_rg_classes_roles_manpage-HoldsUpdatedAt"><code>HoldsUpdatedAt</code></a> and <a href="#_rg_classes_roles_manpage-HoldsUpdatedBy"><code>HoldsUpdatedBy</code></a> interfaces.  It is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Timestampable</span>
+    <span class="directive">extends</span> HoldsUpdatedAt, HoldsUpdatedBy {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The interface no additional methods of its own.</p>
+</div>
+<div class="sect4">
+<h5 id="_alternatives_4">Alternatives</h5>
+<div class="paragraph">
+<p>An alternative way to maintain a timestamp is to use JDO&#8217;s <code>@Version</code> annotation.  With this approach, it is the JDO/DataNucleus that maintains the version, rather than the framework&#8217;s <code>TimestampService</code>.  See <a href="#_rg_classes_roles_manpage-HoldsUpdatedBy"><code>HoldsUpdatedBy</code></a> for further details.</p>
+</div>
 </div>
 </div>
 </div>
@@ -23450,8 +23545,23 @@ determines which additional configuration files to search for
 </li>
 <li><a href="#_rg_classes_mixins">6.7. Mixins</a>
 <ul class="sectlevel3">
-<li><a href="#__code_hastransactionid_code">6.7.1. <code>HasTransactionId</code></a></li>
-<li><a href="#__code_hasusername_code">6.7.2. <code>HasUsername</code></a></li>
+<li><a href="#_rg_classes_mixins_manpage-HasTransactionId">6.7.1. <code>HasTransactionId</code></a></li>
+<li><a href="#_rg_classes_mixins_manpage-HasUserName">6.7.2. <code>HasUsername</code></a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_roles">6.8. Roles</a>
+<ul class="sectlevel3">
+<li><a href="#_rg_classes_roles_manpage-HoldsUpdatedAt">6.8.1. <code>HoldsUpdatedAt</code></a>
+<ul class="sectlevel4">
+<li><a href="#_alternative_approaches">Alternative approaches</a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_roles_manpage-HoldsUpdatedBy">6.8.2. <code>HoldsUpdatedBy</code></a></li>
+<li><a href="#_rg_classes_roles_manpage-Timestampable">6.8.3. <code>Timestampable</code></a>
+<ul class="sectlevel4">
+<li><a href="#_alternatives_4">Alternatives</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
