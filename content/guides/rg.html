@@ -1870,14 +1870,22 @@ This annotation  indicates that transient instances of this class may be created
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { } <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> CompletedEvent(
+                <span class="directive">final</span> ToDoItem source,
+                <span class="directive">final</span> Identifier identifier,
+                <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {
+            <span class="local-variable">super</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">completed</span><span class="delimiter">&quot;</span></span>, source, identifier, arguments);
+        }
+    }
     <span class="annotation">@Action</span>(
         command=CommandReification.ENABLED,
-        commandExecuteIn=CommandExecuteIn.FOREGROUND,          <i class="conum" data-value="2"></i><b>(2)</b>
-        commandPersistence=CommandPersistence.NOT_PERSISTED,   <i class="conum" data-value="3"></i><b>(3)</b>
+        commandExecuteIn=CommandExecuteIn.FOREGROUND,          <i class="conum" data-value="1"></i><b>(1)</b>
+        commandPersistence=CommandPersistence.NOT_PERSISTED,   <i class="conum" data-value="2"></i><b>(2)</b>
         domainEvent=CompletedEvent.class,
-        hidden = Where.NOWHERE,                                <i class="conum" data-value="4"></i><b>(4)</b>
-        invokeOn = InvokeOn.OBJECT_ONLY,                       <i class="conum" data-value="5"></i><b>(5)</b>
+        hidden = Where.NOWHERE,                                <i class="conum" data-value="3"></i><b>(3)</b>
+        invokeOn = InvokeOn.OBJECT_ONLY,                       <i class="conum" data-value="4"></i><b>(4)</b>
         publishing = Publishing.ENABLED,
         semantics = SemanticsOf.IDEMPOTENT
     )
@@ -1889,7 +1897,7 @@ This annotation  indicates that transient instances of this class may be created
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>1.10.0-SNAPSHOT</code>, can use no-arg constructor.</td>
+<td>default value, so could be omitted</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1901,10 +1909,6 @@ This annotation  indicates that transient instances of this class may be created
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>default value, so could be omitted</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>default value, so could be omitted</td>
 </tr>
 </table>
@@ -2167,7 +2171,7 @@ returned object from this action is the persisted <code>Command</code> itself.</
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>inherit from <code>ActionDomainEvent&lt;T&gt;</code> where <code>T</code> is the type of the domain object being interacted with.</td>
+<td>inherit from <code>ActionDomainEvent&lt;T&gt;</code> where <code>T</code> is the type of the domain object being interacted with</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -2189,21 +2193,6 @@ returned object from this action is the persisted <code>Command</code> itself.</
 </div>
 <div class="paragraph">
 <p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
-</div>
-<div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { }
-    <span class="annotation">@Action</span>(domainEvent=CompletedEvent.class)
-    <span class="directive">public</span> ToDoItem completed() { ... }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
 <div class="sect4">
 <h5 id="_subscribers">Subscribers</h5>
@@ -3477,13 +3466,22 @@ can be used instead, eg:</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DependenciesChangedEvent</span>
-            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; { } <i class="conum" data-value="1"></i><b>(1)</b>
+            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> DependenciesChangedEvent(
+                ToDoItem source,
+                Identifier identifier,
+                Of of,
+                ToDoItem value) {
+            <span class="local-variable">super</span>(source, identifier, of, value);
+        }
+    }
     <span class="annotation">@Collection</span>(
         domainEvent=DependenciesChangedEvent.class,
         editing = Editing.ENABLED,
-        hidden = Where.NOWHERE,                                   <i class="conum" data-value="2"></i><b>(2)</b>
-        notPersisted = <span class="predefined-constant">false</span>,                                     <i class="conum" data-value="3"></i><b>(3)</b>
-        typeOf = ToDoItem.class                                   <i class="conum" data-value="4"></i><b>(4)</b>
+        hidden = Where.NOWHERE,                       <i class="conum" data-value="1"></i><b>(1)</b>
+        notPersisted = <span class="predefined-constant">false</span>,                         <i class="conum" data-value="2"></i><b>(2)</b>
+        typeOf = ToDoItem.class                       <i class="conum" data-value="3"></i><b>(3)</b>
     )
     <span class="directive">public</span> <span class="predefined-type">SortedSet</span>&lt;ToDoItem&gt; getDependencies() { ... }
     ...
@@ -3494,7 +3492,7 @@ can be used instead, eg:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>1.10.0-SNAPSHOT</code>, can use no-arg constructor.</td>
+<td>default value, so could be omitted</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -3503,25 +3501,6 @@ can be used instead, eg:</p>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>default value, so could be omitted</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>default value, so could be omitted</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The annotation is one of a handful (others including <a href="#_rg_annotations_manpage-CollectionLayout"><code>@CollectionLayout</code></a>, <a href="#_rg_annotations_manpage-Property"><code>@Property</code></a> and <a href="#_rg_annotations_manpage-PropertyLayout"><code>@PropertyLayout</code></a>) that can also be applied to the field, rather than the getter method.  This is specifically
-so that boilerplate-busting tools such as <a href="https://projectlombok.org/">Project Lombok</a> can be used.</p>
-</div>
-</td>
 </tr>
 </table>
 </div>
@@ -3639,25 +3618,6 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 <div class="paragraph">
 <p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
-</div>
-<div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DependenciesChangedEvent</span>
-            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; { }
-    <span class="annotation">@Collection</span>(
-        domainEvent=DependenciesChangedEvent.class
-    )
-    <span class="directive">public</span> <span class="predefined-type">SortedSet</span>&lt;ToDoItem&gt; getDependencies() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
 <div class="sect4">
 <h5 id="_subscribers_2">Subscribers</h5>
@@ -4151,21 +4111,6 @@ annotation.  It is also possible to apply the annotation to actions of domain se
     }
 }</code></pre>
 </div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The annotation is one of a handful (others including <a href="#_rg_annotations_manpage-Collection"><code>@Collection</code></a>, <a href="#_rg_annotations_manpage-Property"><code>@Property</code></a> and <a href="#_rg_annotations_manpage-PropertyLayout"><code>@PropertyLayout</code></a>) that can also be applied to the field, rather than the getter method.  This is specifically
-so that boilerplate-busting tools such as <a href="https://projectlombok.org/">Project Lombok</a> can be used.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_rg_annotations_manpage-CollectionLayout_cssClass">2.5.1. <code>cssClass()</code></h4>
@@ -6797,22 +6742,6 @@ container.persist(cust);</code></pre>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The annotation is one of a handful (others including <a href="#_rg_annotations_manpage-Collection"><code>@Collection</code></a>, <a href="#_rg_annotations_manpage-CollectionLayout"><code>@CollectionLayout</code></a>, <a href="#_rg_annotations_manpage-Property"><code>@Property</code></a>)
- and <a href="#_rg_annotations_manpage-PropertyLayout"><code>@PropertyLayout</code></a> that can also be applied to the field, rather than the getter method.  This is specifically
-so that boilerplate-busting tools such as <a href="https://projectlombok.org/">Project Lombok</a> can be used.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_rg_annotations_manpage-NotPersistent">2.18. <code>@NotPersistent</code> (<code>javax.jdo</code>)</h3>
@@ -8040,21 +7969,6 @@ declaration.</p>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The annotation is one of a handful (others including <a href="#_rg_annotations_manpage-Collection"><code>@Collection</code></a>, <a href="#_rg_annotations_manpage-CollectionLayout"><code>@CollectionLayout</code></a> and <a href="#_rg_annotations_manpage-PropertyLayout"><code>@PropertyLayout</code></a>) that can also be applied to the field, rather than the getter method.  This is specifically
-so that boilerplate-busting tools such as <a href="https://projectlombok.org/">Project Lombok</a> can be used.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="sect3">
 <h4 id="_rg_annotations_manpage-Property_domainEvent">2.27.1. <code>domainEvent()</code></h4>
 <div class="paragraph">
@@ -8149,22 +8063,6 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 <div class="paragraph">
 <p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
-</div>
-<div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DueByChangedEvent</span> <span class="directive">extends</span> PropertyDomainEvent&lt;ToDoItem, LocalDate&gt; { }
-    <span class="annotation">@Property</span>(domainEvent=ToDoItem.DueByChangedEvent)
-    <span class="directive">public</span> LocalDate getDueBy() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
 <div class="sect4">
 <h5 id="_subscribers_3">Subscribers</h5>
@@ -8969,21 +8867,6 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
     }
 }</code></pre>
 </div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The annotation is one of a handful (others including <a href="#_rg_annotations_manpage-Collection"><code>@Collection</code></a>, <a href="#_rg_annotations_manpage-CollectionLayout"><code>@CollectionLayout</code></a> and <a href="#_rg_annotations_manpage-Property"><code>@Property</code></a>) that can also be applied to the field, rather than the getter method.  This is specifically
-so that boilerplate-busting tools such as <a href="https://projectlombok.org/">Project Lombok</a> can be used.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_rg_annotations_manpage-PropertyLayout_cssClass">2.28.1. <code>cssClass()</code></h4>
@@ -14494,8 +14377,16 @@ container.persist(cust);</code></pre>
 public <span class="directive">static</span> <span class="type">class</span> <span class="class">LibMemModule</span> {
     <span class="directive">private</span> LibMemModule() {}
     <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>&lt;S&gt;
-                <span class="directive">extends</span> org.apache.isis.applib.event.ActionDomainEvent&lt;S&gt; {} <i class="conum" data-value="1"></i><b>(1)</b>
-...                                                                          <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="directive">extends</span> org.apache.isis.applib.event.ActionDomainEvent&lt;S&gt; {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> ActionDomainEvent(
+            <span class="directive">final</span> S source,
+            <span class="directive">final</span> Identifier identifier,
+            <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {
+            <span class="local-variable">super</span>(source, identifier, arguments);
+        }
+    }
+    ...         <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
 </div>
@@ -14503,10 +14394,6 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>similar events for properties and collections should also be defined</td>
 </tr>
 </table>
@@ -14517,9 +14404,16 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
-    <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>
-            <span class="directive">extends</span> LibMemModule.ActionDomainEvent&lt;LibraryMember&gt; { }       <i class="conum" data-value="1"></i><b>(1)</b>
-    ...                                                                     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span> <span class="directive">extends</span> LibMemModule.ActionDomainEvent&lt;LibraryMember&gt; {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> ActionDomainEvent(
+            <span class="directive">final</span> LibraryMember source,
+            <span class="directive">final</span> Identifier identifier,
+            <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {
+            <span class="local-variable">super</span>(source, identifier, arguments);
+        }
+    }
+    ...         <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
 </div>
@@ -14527,10 +14421,6 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>similar events for properties and collections should also be defined</td>
 </tr>
 </table>
@@ -14541,58 +14431,24 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LeaveEvent</span>
-            <span class="directive">extends</span> LibraryMember.ActionDomainEvent { } <i class="conum" data-value="1"></i><b>(1)</b>
+    ...
+    public <span class="directive">static</span> <span class="type">class</span> <span class="class">LeaveEvent</span> <span class="directive">extends</span> LibraryMember.ActionDomainEvent {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> PlaceOrderEvent(
+            <span class="directive">final</span> Customer source,
+            <span class="directive">final</span> Identifier identifier,
+            <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {
+        <span class="local-variable">super</span>(source, identifier, arguments);
+        }
     }
     <span class="annotation">@Action</span>(domainEvent=LeaveEvent.class)
     <span class="directive">public</span> <span class="type">void</span> leave() { ... }
     ...
 }</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>The subscriber can subscribe either to the general superclass (as before), or to any of the classes in the hierarchy.</p>
-</div>
-<div class="sect4">
-<h5 id="_variation_for_contributing_services">Variation (for contributing services)</h5>
-<div class="paragraph">
-<p>A slight variation on this is to not fix the generic parameter at the class level, ie:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
-    <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>&lt;S&gt;
-            <span class="directive">extends</span> LibMemModule.ActionDomainEvent&lt;S&gt; { }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and instead parameterize down at the action level:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LeaveEvent</span>
-            <span class="directive">extends</span> LibraryMember.ActionDomainEvent&lt;LibraryMember&gt; { } <i class="conum" data-value="1"></i><b>(1)</b>
-    }
-    <span class="annotation">@Action</span>(domainEvent=LeaveEvent.class)
-    <span class="directive">public</span> <span class="type">void</span> leave() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This then allows for other classes - in particular domain services contributing members - to also inherit from the class-level domain events.</p>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -23379,11 +23235,7 @@ determines which additional configuration files to search for
 <li><a href="#_rg_services-api_manpage-EventBusService_api-and-implementation">4.9.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_subscribers">4.9.2. Registering Subscribers</a></li>
 <li><a href="#_annotating_members">4.9.3. Annotating Members</a></li>
-<li><a href="#_rg_services-api_manpage-EventBusService_event-hierarchy">4.9.4. Event hierarchy</a>
-<ul class="sectlevel4">
-<li><a href="#_variation_for_contributing_services">Variation (for contributing services)</a></li>
-</ul>
-</li>
+<li><a href="#_rg_services-api_manpage-EventBusService_event-hierarchy">4.9.4. Event hierarchy</a></li>
 <li><a href="#_programmatic_posting">4.9.5. Programmatic posting</a></li>
 <li><a href="#_using_code_wrapperfactory_code">4.9.6. Using <code>WrapperFactory</code></a></li>
 <li><a href="#_implementation_spi">4.9.7. Implementation SPI</a></li>
