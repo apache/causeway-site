@@ -5938,12 +5938,42 @@ TODO
 <div class="sect3">
 <h4 id="_ug_more-advanced_tips-n-tricks_are-you-sure">5.10.1. 'Are you sure?' idiom</h4>
 <div class="paragraph">
-<p>If providing an action that will perform irreversible changes, include a
-mandatory boolean parameter that must be explicitly checked by the end-user
-in order for the action to proceed.</p>
+<p>Sometimes an action might perform irreversible changes.  In such a case it&#8217;s probably a good idea for the UI to require that the
+end-user explicitly confirms that they intended to invoke the action.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots">Screenshots</h5>
+<h5 id="_using_action_semantics_code_1_10_0_snapshot_code">Using action semantics (<code>1.10.0-SNAPSHOT</code>)</h5>
+<div class="paragraph">
+<p>One way to meet this requirement is using the framework&#8217;s built-in <a href="rg.html#_rg_annotations_manpage-Action_semantics"><code>@Action#semantics()</code></a> attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Action</span>(
+        semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE
+)
+<span class="directive">public</span> SimpleObject updateName(
+        <span class="annotation">@Parameter</span>(maxLength = NAME_LENGTH)
+        <span class="annotation">@ParameterLayout</span>(named = <span class="string"><span class="delimiter">&quot;</span><span class="content">New name</span><span class="delimiter">&quot;</span></span>)
+        <span class="directive">final</span> <span class="predefined-type">String</span> name) {
+    setName(name);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will render as:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//how-tos/tips-n-tricks/action-semantics-are-you-sure.png" alt="action semantics are you sure">
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_using_a_checkbox">Using a checkbox</h5>
+<div class="paragraph">
+<p>An alternative approach (for all versions of the framework) is to require the end-user to check a dummy checkbox parameter (and prevent the action from being invoked if the user hasn&#8217;t checked that parameter).</p>
+</div>
 <div class="paragraph">
 <p>For example:</p>
 </div>
@@ -5985,9 +6015,6 @@ in order for the action to proceed.</p>
 <img src="images//how-tos/tips-n-tricks/are-you-sure-sad-case.png" alt="are you sure sad case">
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_code_example">Code example</h5>
 <div class="paragraph">
 <p>The code for this is pretty simple:</p>
 </div>
@@ -6263,7 +6290,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>The Wicket viewer provides a recent pages drop-down that acts as a breadcrumb trail. Using it, the user can quickly open a recently accessed domain object.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_2">Screenshots</h5>
+<h5 id="_screenshots">Screenshots</h5>
 <div class="paragraph">
 <p>The following screenshot, taken from the <a href="https://github.com/estatio/estatio">Estatio</a> application, shows the recent pages drop-down after a number of pages have been accessed.</p>
 </div>
@@ -6324,7 +6351,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>Bookmarking is automatic; whenever a bookmarkable object/action is visited, then a bookmark is created. To avoid the number of bookmarks from indefinitely growing, bookmarks that have not been followed after a whle are automatically removed (an MRU/LRU algorithm). The number of bookmarks to preserve can be configured.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_3">Screenshots</h5>
+<h5 id="_screenshots_2">Screenshots</h5>
 <div class="paragraph">
 <p>The following screenshot, taken from <a href="https://github.com/isisaddons/isis-app-todoapp">Isisaddons example todoapp</a> (not ASF) shows how the bookmarks are listed in a sliding panel.</p>
 </div>
@@ -6457,7 +6484,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>The copy URL and hinting is automatic.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_4">Screenshots</h5>
+<h5 id="_screenshots_3">Screenshots</h5>
 <div class="paragraph">
 <p>The following screenshots are taken from the [Estatio](<a href="https://github.com/estatio/estatio" class="bare">https://github.com/estatio/estatio</a>) application.</p>
 </div>
@@ -6672,7 +6699,7 @@ value type (character large object), each of which also includes metadata about 
 <p>A class can define a property using either of these types, for example:</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_5">Screenshots</h5>
+<h5 id="_screenshots_4">Screenshots</h5>
 <div class="paragraph">
 <p>The following screenshots are taken from the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp">todoapp</a> (not ASF):</p>
 </div>
@@ -6868,7 +6895,7 @@ value type (character large object), each of which also includes metadata about 
 </table>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_6">Screenshots</h5>
+<h5 id="_screenshots_5">Screenshots</h5>
 <div class="paragraph">
 <p>The user is presented with a login page:</p>
 </div>
@@ -7130,7 +7157,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
 <p>The 'remember me' checkbox on the login page can be suppressed, if required, by setting a configuration flag.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_7">Screenshots</h5>
+<h5 id="_screenshots_6">Screenshots</h5>
 <div class="paragraph">
 <p>With 'remember me' not suppressed (the default):</p>
 </div>
@@ -7169,7 +7196,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
 <p>The 'sign up' link can be suppressed, if required, by setting a configuration flag.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_8">Screenshots</h5>
+<h5 id="_screenshots_7">Screenshots</h5>
 <div class="paragraph">
 <p>With 'sign up' not suppressed (the default):</p>
 </div>
@@ -7214,7 +7241,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
 <p>The 'password reset' link can be suppressed, if required, by setting a configuration flag.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_9">Screenshots</h5>
+<h5 id="_screenshots_8">Screenshots</h5>
 <div class="paragraph">
 <p>With 'password reset' not suppressed (the default):</p>
 </div>
@@ -7352,7 +7379,7 @@ property:</p>
 <p>Currently this support consists simply of being able to suppress the header and/or footer.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_10">Screenshots</h5>
+<h5 id="_screenshots_9">Screenshots</h5>
 <div class="paragraph">
 <p>For example, the regular view is:</p>
 </div>
@@ -7532,7 +7559,7 @@ property:</p>
 display a png logo instead.</p>
 </div>
 <div class="sect4">
-<h5 id="_screenshots_11">Screenshots</h5>
+<h5 id="_screenshots_10">Screenshots</h5>
 <div class="paragraph">
 <p>The screenshot below shows the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF) with a 'brand logo' image in its header:</p>
 </div>
@@ -14727,8 +14754,8 @@ TODO
 <ul class="sectlevel3">
 <li><a href="#_ug_more-advanced_tips-n-tricks_are-you-sure">5.10.1. 'Are you sure?' idiom</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots">Screenshots</a></li>
-<li><a href="#_code_example">Code example</a></li>
+<li><a href="#_using_action_semantics_code_1_10_0_snapshot_code">Using action semantics (<code>1.10.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_using_a_checkbox">Using a checkbox</a></li>
 </ul>
 </li>
 <li><a href="#_ug_more-advanced_tips-n-tricks_simulating-collections-of-values">5.10.2. Collections of values</a>
@@ -14750,7 +14777,7 @@ TODO
 <ul class="sectlevel3">
 <li><a href="#_ug_wicket-viewer_features_recent-pages">6.1.1. Recent pages (drop down)</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_2">Screenshots</a></li>
+<li><a href="#_screenshots">Screenshots</a></li>
 <li><a href="#_domain_code">Domain Code</a></li>
 <li><a href="#_user_experience">User Experience</a></li>
 <li><a href="#_related_functionality">Related functionality</a></li>
@@ -14759,7 +14786,7 @@ TODO
 </li>
 <li><a href="#_ug_wicket-viewer_features_bookmarked-pages">6.1.2. Bookmarked pages</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_3">Screenshots</a></li>
+<li><a href="#_screenshots_2">Screenshots</a></li>
 <li><a href="#_domain_code_2">Domain Code</a></li>
 <li><a href="#_user_experience_2">User Experience</a></li>
 <li><a href="#_configuration_3">Configuration</a></li>
@@ -14767,20 +14794,20 @@ TODO
 </li>
 <li><a href="#_ug_wicket-viewer_features_hints-and-copy-url">6.1.3. Hints and copy URL</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_4">Screenshots</a></li>
+<li><a href="#_screenshots_3">Screenshots</a></li>
 <li><a href="#_user_experience_3">User Experience</a></li>
 </ul>
 </li>
 <li><a href="#_ug_wicket-viewer_features_titles-in-tables">6.1.4. Titles in Tables</a></li>
 <li><a href="#_ug_wicket-viewer_features_blob-attachments">6.1.5. File upload/download</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_5">Screenshots</a></li>
+<li><a href="#_screenshots_4">Screenshots</a></li>
 <li><a href="#_domain_code_3">Domain Code</a></li>
 </ul>
 </li>
 <li><a href="#_ug_wicket-viewer_features_user-registration">6.1.6. User Registration</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_6">Screenshots</a></li>
+<li><a href="#_screenshots_5">Screenshots</a></li>
 <li><a href="#_configuration_4">Configuration</a></li>
 </ul>
 </li>
@@ -14791,20 +14818,20 @@ TODO
 <li><a href="#_ug_wicket-viewer_configuration-properties_abbreviating-titles">6.2.1. Abbreviating/suppressing titles in tables</a></li>
 <li><a href="#_ug_wicket-viewer_configuration-properties_suppressing-remember-me">6.2.2. Suppressing 'remember me'</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_7">Screenshots</a></li>
+<li><a href="#_screenshots_6">Screenshots</a></li>
 <li><a href="#_configuration_5">Configuration</a></li>
 </ul>
 </li>
 <li><a href="#_ug_wicket-viewer_configuration-properties_suppressing-sign-up">6.2.3. Suppressing 'sign up'</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_8">Screenshots</a></li>
+<li><a href="#_screenshots_7">Screenshots</a></li>
 <li><a href="#_configuration_6">Configuration</a></li>
 <li><a href="#_see_also">See also</a></li>
 </ul>
 </li>
 <li><a href="#_ug_wicket-viewer_configuration-properties_suppressing-password-reset">6.2.4. Suppressing 'password reset'</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_9">Screenshots</a></li>
+<li><a href="#_screenshots_8">Screenshots</a></li>
 <li><a href="#_configuration_7">Configuration</a></li>
 <li><a href="#_see_also_2">See also</a></li>
 </ul>
@@ -14817,7 +14844,7 @@ TODO
 <ul class="sectlevel3">
 <li><a href="#_suppressing_header_and_footer_embedded_view">6.3.1. Suppressing Header and Footer (Embedded View)</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_10">Screenshots</a></li>
+<li><a href="#_screenshots_9">Screenshots</a></li>
 <li><a href="#_request_parameters">Request parameters</a></li>
 </ul>
 </li>
@@ -14833,7 +14860,7 @@ TODO
 <ul class="sectlevel3">
 <li><a href="#_ug_wicket-viewer_customisation_brand-logo">6.5.1. Brand logo</a>
 <ul class="sectlevel4">
-<li><a href="#_screenshots_11">Screenshots</a></li>
+<li><a href="#_screenshots_10">Screenshots</a></li>
 <li><a href="#_configuration_8">Configuration</a></li>
 </ul>
 </li>
