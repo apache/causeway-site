@@ -4947,9 +4947,9 @@ can be used instead, eg:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_annotations_manpage-DomainObject_nature"><code>nature()</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NOT_SPECIFIED</code>, <code>JDO_ENTITY</code>, <code>EXTERNAL_ENTITY</code>, <code>INMEMORY_ENTITY</code>, <code>VIEW_MODEL</code> (<code>NOT_SPECIFIED</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NOT_SPECIFIED</code>, <code>JDO_ENTITY</code>, <code>EXTERNAL_ENTITY</code>, <code>INMEMORY_ENTITY</code>, <code>MIXIN</code>, <code>VIEW_MODEL</code> (<code>NOT_SPECIFIED</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>whether the domain object logically is an entity (part of the domain layer) or is a view model (part of the application layer); and if an entity, how is its persistence managed</p>
+<p>whether the domain object logically is an entity (part of the domain layer) or is a view model (part of the application layer); or is a mixin.  If an entity, indicates how its persistence is managed.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -5325,6 +5325,19 @@ can be used instead, eg:</p>
 <p>The identity of an inmemory entity is determined solely by the state of entity&#8217;s properties.  The framework will automatically recreate the domain object each time it is interacted with.</p>
 </div>
 </li>
+<li>
+<p><code>MIXIN</code><br></p>
+<div class="paragraph">
+<p>(<code>1.10.0-SNAPSHOT</code>) indicates that the domain object is part of the domain layer, and is contributing behaviour to objects of some other type as a mixin (also known as a trait).</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Equivalent to annotating with <a href="#_rg_annotations_manpage-Mixin"><code>@Mixin</code></a>.  For further discussion on using mixins, see <a href="ug.html#_ug_more-advanced_decoupling_mixins">mixins</a> in the user guide.</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p><code>VIEW_MODEL</code><br></p>
 <div class="paragraph">
@@ -13514,6 +13527,8 @@ view model.</p>
     &lt;T&gt; T newTransientInstance(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType);                              <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Programmatic</span>
     &lt;T&gt; T newViewModelInstance(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">String</span> memento);        <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@Programmatic</span>
+    &lt;T&gt; T mixin();                                                                  <i class="conum" data-value="3"></i><b>(3)</b>
     ...
 }</code></pre>
 </div>
@@ -13527,6 +13542,11 @@ view model.</p>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>create a new view model, with the specified memento (as per <a href="#_rg_classes_super_manpage-AbstractViewModel">ViewModel#viewModelMemento()</a>.  In general it is easier to just annotate with <a href="#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a> and let Apache Isis manage the memento automatically.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(<code>1.10.0-SNAPSHOT</code>) programmatically instantiate a mixin, as annotated with
+<a href="#_rg_annotations_manpage-Mixin"><code>@Mixin</code></a> or <a href="#_rg_annotations_manpage-DomainObject_nature"><code>@DomainObject#nature()</code></a>.</td>
 </tr>
 </table>
 </div>
@@ -13542,7 +13562,8 @@ container.persist(cust);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As an alternative to using <code>newTransientInstance(&#8230;&#8203;)</code>, you could also simply <code>new()</code> up the object.  Doing this will not inject any domain services, but they can be injected manually using <a href="#_rg_services-api_manpage-DomainObjectContainer_services-api">#injectServicesInto(&#8230;&#8203;)`</a>.</p>
+<p>As an alternative to using <code>newTransientInstance(&#8230;&#8203;)</code> or <code>mixin(&#8230;&#8203;)</code>, you could also simply <code>new()</code> up the object.
+Doing this will not inject any domain services, but they can be injected manually using <a href="rg .html#_rg_services-api_manpage-DomainObjectContainer_services-api">#injectServicesInto(&#8230;&#8203;)`</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -13552,7 +13573,11 @@ container.persist(cust);</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Calling <code>new(&#8230;&#8203;)</code> also this circumvents Apache Isis' <a href="#_rg_methods_reserved_manpage-created"><code>created()</code></a> callback, and in addition any default values for properties (either explicitly set by <a href="#_rg_methods_prefixes_manpage-default"><code>default&#8230;&#8203;()</code></a> or defaulted implicitly according to Apache Isis' own conventions) will not be called either.  If you don&#8217;t intend to use these features, though, the net effect is code that has less coupling to Isis and is arguably easier to understand (has "less magic" happening).</p>
+<p>Calling <code>new(&#8230;&#8203;)</code> also this circumvents Apache Isis' <a href="#_rg_methods_reserved_manpage-created"><code>created()</code></a>
+callback, and in addition any default values for properties (either explicitly set by
+<a href="#_rg_methods_prefixes_manpage-default"><code>default&#8230;&#8203;()</code></a> or defaulted implicitly according to Apache Isis'
+own conventions) will not be called either.  If you don&#8217;t intend to use these features, though, the net effect is code
+that has less coupling to Isis and is arguably easier to understand (has "less magic" happening).</p>
 </div>
 </td>
 </tr>
@@ -16536,7 +16561,7 @@ a configured <code>EmailService</code></p></td>
 <code>isis-module-publishing</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">related services:
 <code>PublishingService-</code> 
-`Contributions`,
+``Contributions``,
 `PublishingService-` 
 <code>Repository</code>. <br>
 depends on:<br>
@@ -20211,9 +20236,9 @@ TODO - see <a href="ug.html#_ug_more-advanced_i18n">user guide, i18n</a>.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_mixins">6.7. Mixins</h3>
+<h3 id="_rg_classes_contributee">6.7. Contributee</h3>
 <div class="paragraph">
-<p>The interfaces listed in this chapter act like "mix-ins"; they allow domain services to contribute actions/properties/collections to any domain objects that implement these interfaces.</p>
+<p>The interfaces listed in this chapter act as contributees; they allow domain services to contribute actions/properties/collections to any domain objects that implement these interfaces.</p>
 </div>
 <div class="sect3">
 <h4 id="_rg_classes_mixins_manpage-HasTransactionId">6.7.1. <code>HasTransactionId</code></h4>
@@ -23692,7 +23717,7 @@ determines which additional configuration files to search for
 <li><a href="#_rg_classes_i18n_manpage-TranslatableString">6.6.1. <code>TranslatableString</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_mixins">6.7. Mixins</a>
+<li><a href="#_rg_classes_contributee">6.7. Contributee</a>
 <ul class="sectlevel3">
 <li><a href="#_rg_classes_mixins_manpage-HasTransactionId">6.7.1. <code>HasTransactionId</code></a></li>
 <li><a href="#_rg_classes_mixins_manpage-HasUserName">6.7.2. <code>HasUsername</code></a></li>

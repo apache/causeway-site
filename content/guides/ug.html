@@ -829,7 +829,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Finally, Isis also a feature that is akin to AOP mix-ins.  A "contributed action" is one that is implemented on a domain service but that appears to be a behaviour of rendered domain object.  In other words, we can dissociate behaviour from data.  That&#8217;s not always the right thing to do of course.  In Richard Pawson&#8217;s description of the <a href="#_ug_core-concepts_philosophy_naked-objects-pattern">naked objects pattern</a> he talks about "behaviourally rich" objects, in other words where the business functionality encapsulated the data.   But on the other hand sometimes the behaviour and data structures change at different rates.  The <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a> says we should only lump code together that changes at the same rate.  Apache Isis' support for contributions (not only contributed actions, but also contributed properties and contributed collections) enables this.  And again, to loop back to the topic of this section, it&#8217;s an AOP concept that being implemented by the framework.</p>
 </div>
 <div class="paragraph">
-<p>The nice thing about aspect orientation is that for the most part you can ignore these cross-cutting concerns and - at least initially at least - just focus on implementing your domain object.  Later when your app starts to grow and you start to break it out into smaller modules, you can leverage Apache Isis' AOP support for mixins (<a href="#_ug_more-advanced_decoupling_contributions">contributions</a>) and interceptors (the <a href="#_ug_more-advanced_decoupling_event-bus">event bus</a>) to ensure that your codebase remains maintainable.</p>
+<p>The nice thing about aspect orientation is that for the most part you can ignore these cross-cutting concerns and - at least initially at least - just focus on implementing your domain object.  Later when your app starts to grow and you start to break it out into smaller modules, you can leverage Apache Isis' AOP support for (<a href="#_ug_more-advanced_decoupling_mixins">mixins</a>), (<a href="#_ug_more-advanced_decoupling_contributions">contributions</a>) and interceptors (the <a href="#_ug_more-advanced_decoupling_event-bus">event bus</a>) to ensure that your codebase remains maintainable.</p>
 </div>
 </div>
 </div>
@@ -1261,7 +1261,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_domain_objects_and_domain_services">2.3.2. Domain Objects and Domain Services</h4>
+<h4 id="_objects_services">2.3.2. Objects &amp; Services</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3766,7 +3766,8 @@ TODO - <a href="rg.html#_rg_annotations_manpage-ActionLayout_cssClass"><code>@Ac
 </table>
 </div>
 <div class="paragraph">
-<p>More information about contributions can be found <a href="#_ug_how-tos_contributed-members">here</a>.</p>
+<p>More information about contributions can be found <a href="#_ug_how-tos_contributed-members">here</a>.  More information
+about using contributions and mixins to keep your domain application decoupled can be found <a href="#_ug_more-advanced_decoupling_contributions">here</a> and <a href="#_ug_more-advanced_decoupling_mixins">here</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -4921,22 +4922,263 @@ need to tweak it to support other RDBMS'.  Any implementation must implement <co
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ug_more-advanced_decoupling_contributions">5.1.2. Contributions</h4>
-<div class="admonitionblock note">
+<h4 id="_ug_more-advanced_decoupling_mixins">5.1.2. Mixins</h4>
+<div class="paragraph">
+<p>A mixin object (<code>1.10.0-SNAPSHOT</code>) allows one class to contribute behaviour - actions, (derived) properties and
+(derived) collections - to another domain object, either a domain entity or view model.</p>
+</div>
+<div class="paragraph">
+<p>Some programming languages use the term "trait" instead of mixin, and some languages (such as AspectJ) define their own
+syntax for defining such constructs.  In Apache Isis a mixin is very similar to a domain service, however it also
+defines a single 1-arg constructor that defines the type of the domain objects that it contributes to.</p>
+</div>
+<div class="paragraph">
+<p>Why do this?  The main reason is to allow the app to be decoupled, so that it doesn&#8217;t degrade into the proverbial
+<a href="http://www.laputan.org/mud/mud.html#BigBallOfMud">"big ball of mud"</a>.  Mixins (and contributions) allow dependency
+to be inverted, so that the dependencies between modules can be kept acyclic and under control.</p>
+</div>
+<div class="sect4">
+<h5 id="_example">Example</h5>
+<div class="paragraph">
+<p>This is probably best explained by way of an example.  Suppose we have the <code>Customer</code> domain object which implements
+a <code>DocumentHolder</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">implements</span> DocumentHolder {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We could then imagine a mixin that would contribute behaviour to list, add and remove the <code>Document</code>s for this holder:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>                                                          <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
+    <span class="directive">public</span> DocumentHolder_documents(DocumentHolder holder) {    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="local-variable">this</span>.holder = holder;
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
+    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)
+    <span class="annotation">@CollectionLayout</span>(render = RenderType.EAGERLY)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() {
+        ...                                                     <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> DocumentHolder add(<span class="predefined-type">Document</span> document) {
+        ...                                                     <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> DocumentHolder remove(<span class="predefined-type">Document</span> document) {
+        ...                                                     <i class="conum" data-value="5"></i><b>(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>alternatively can use <code>@DomainObject(nature=Nature.MIXIN)</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>constructor indicates the type that is contributed to</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>implementation could, for example, use the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>implementation would probably delegate to an injected repository to (ultimately) insert data into some table</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>implementation would probably delegate to an injected repository to (ultimately) delete data from some table</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example also omits any supporting methods, eg <code>hideXxx()</code>, <code>disableXxx()</code>, <code>validateXxx()</code>, etc.</p>
+</div>
+<div class="paragraph">
+<p>In the user interface the "documents" collection, the "add" and the "delete" actions will appear to be part of
+<code>Customer</code>.  In essence the framework constructs a composite UI from the parts of multiple objects.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://github.com/incodehq/incode-module-note">Incode note</a> and
+<a href="http://github.com/incodehq/incode-module-commchannel">Incode commchannel</a> modules are real-world examples that use this
+technique throughout.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_contributing_a_single_member">Contributing a single member</h5>
+<div class="paragraph">
+<p>The mixin can contribute as much or as little behaviour as makes sense.  For example, in the example above it might be
+that <code>Document</code>s are created through some other mechanism (eg scanned) and are never deleted.  In that case, the
+mixin might be simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the case where there is only a single member being contributed, the special name "__" (that is, two underscores)
+can be used instead.  In this case, the contributee member&#8217;s name will be inferred from the mixin&#8217;s class name.  If the
+class name itself contains an underscore, then the last part of the class name will be used.</p>
+</div>
+<div class="paragraph">
+<p>Thus, for a mixin whose class name is <code>DocumentHolder_documents</code>, the effective member name is <code>documents</code>.  We could
+therefore rewrite the mixin as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The benefit of this is marginal unless there are supporting methods, in which case the removal of boilerplate is welcome:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
+    <span class="directive">public</span> <span class="type">boolean</span> hide__() { ... }
+    <span class="directive">public</span> <span class="predefined-type">String</span> disable__() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_programmatic_usage">Programmatic usage</h5>
+<div class="paragraph">
+<p>When a domain object is rendered, the framework will automatically instantiate all required mixins and delegate to them
+dynamically.  If writing integration tests or fixtures, or (sometimes) just regular domain logic, then you may need to
+instantiate mixins directly.</p>
+</div>
+<div class="paragraph">
+<p>For this you can use the
+xref:rg.adoc#_rg_services-api_manpage-DomainObjectContainer_object-creation-api[<code>DomainObjectContainer#mixin(&#8230;&#8203;)</code>
+method.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">DocumentHolder_documents mixin = container.mixin(DocumentHolder_documents.class, customer);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="#_ug_testing_integ-test-support_bootstrapping_IntegrationTestAbstract"><code>IntegrationTestAbstract</code></a> and
+<a href="rg.html#_rg_classes_super_manpage-FixtureScript"><code>FixtureScript</code></a> classes both provide a <code>mixin(&#8230;&#8203;)</code> convenience
+method.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_other_reasons_to_use_mixins">Other reasons to use mixins</h5>
+<div class="paragraph">
+<p>In the introduction to this topic we mentioned that mixins are most useful for ensuring that the domain app remains
+decoupled.  This applies to the case where the contributee (eg <code>Customer</code>, being mixed into) is in one module, while
+the contributor mixin (<code>DocumentHolder_documents</code>) is in some other module.  The <code>customer</code> module knows about the
+<code>document</code> module, but not vice versa.</p>
+</div>
+<div class="paragraph">
+<p>However, you might also want to consider moving behaviour out of entities even within the same module, perhaps even
+within the same Java package.  And the reason for this is to support hot-reloading of Java classes, so that you can
+modify and recompile your application without having to restart it.  This can provide substantial productivity gains.</p>
+</div>
+<div class="paragraph">
+<p>The Hotspot JVM has limited support for hot reloading; generally you can change method implementations but you cannot
+introduce new methods.  However, the <a href="https://dcevm.github.io/">DCEVM</a> open source project will patch the JVM to
+support much more complete hot reloading support.  There are also, of course, commercial products such as JRebel.</p>
+</div>
+<div class="paragraph">
+<p>The main snag in all this is the DataNucleus enhancer&#8230;&#8203; any change to entities is going to require the entity to be
+re-enhanced, and the JDO metamodel recreated, which usually "stuffs things up".  So hot-reloading of an app whose
+fundamental structure is changing is likely to remain a no-no.</p>
+</div>
+<div class="paragraph">
+<p>However, chances are that the structure of your domain objects (the data) will change much less rapidly than
+the behaviour of those domain objects.  Thus, it&#8217;s the behaviour that you&#8217;re most likely wanting to change while the
+app is still running.  If you move that behaviour out into mixins (or
+<a href="#_ug_more-advanced_decoupling_contributions">contributed services</a>), then these can be reloaded happily.
+(When running in prototype mode), Apache Isis will automatically recreate the portion of the metamodel for any domain
+object as it is rendered.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_related_reading">Related reading</h5>
+<div class="paragraph">
+<p>Mixins are an implementation of the <a href="http://www.artima.com/articles/dci_vision.html">DCI architecture</a> architecture, as formulated and described by <a href="https://en.wikipedia.org/wiki/Trygve_Reenskaug">Trygve Reenskaug</a> and <a href="https://en.wikipedia.org/wiki/Jim_Coplien">Jim Coplien</a>.  Reenskaug was the inventor of the MVC pattern (and also the external
+examiner for Richard Pawson&#8217;s PhD thesis), while Coplien has a long history in object-orientation, C++ and patterns.</p>
+</div>
+<div class="paragraph">
+<p>DCI stands for Data-Context-Interaction and is presented as an evolution of object-oriented programming, but one where
+behaviour is bound to objects dynamically rather than statically in some context or other.  The <code>@Mixin</code>
+pattern is Apache Isis' straightforward take on the same basic concept.</p>
+</div>
+<div class="paragraph">
+<p>You might also wish to check out <a href="http://zest.apache.org">Apache Zest</a> (formerly Qi4J), which implements a much more
+general purpose implementation of the same concepts.</p>
+</div>
+</div>
+</div>
 <div class="sect3">
-<h4 id="_ug_more-advanced_decoupling_vetoing-visibility">5.1.3. Vetoing Visibility</h4>
+<h4 id="_ug_more-advanced_decoupling_contributions">5.1.3. Contributions</h4>
+<div class="paragraph">
+<p>Contributed services provide many of the same benefits as <a href="#_ug_more-advanced_decoupling_mixins">mixins</a>;
+indeed mixins (<code>1.10.0-SNAPSHOT</code>) are an evolution and refinement of the contributions concept.</p>
+</div>
+<div class="paragraph">
+<p>The main difference between contributed services and mixins is that the actions of a contributed service will
+contribute to <em>all</em> the parameters of its actions, whereas a mixin only contributes to the type accepted in its
+constructor.  Also, contributed services are long-lived
+singletons, whereas mixins are instantiated as required (by the framework) and then discarded almost immediately.</p>
+</div>
+<div class="paragraph">
+<p>For more on contributed services:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the syntax of writing contributed actions/properties/collections is described in this <a href="#_ug_how-tos_contributed-members">how-to</a></p>
+</li>
+<li>
+<p>there&#8217;s also useful information in the reference guide, discussing the <a href="rg.html#_rg_annotations_manpage-DomainService_nature">@DomainService#nature()</a> attribute, for the <code>NatureOfService.VIEW_CONTRIBUTIONS_ONLY</code> nature.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_more-advanced_decoupling_vetoing-visibility">5.1.4. Vetoing Visibility</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4960,7 +5202,7 @@ TODO - a write-up of the "vetoing subscriber" design pattern, eg as described in
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ug_more-advanced_decoupling_event-bus">5.1.4. Event Bus</h4>
+<h4 id="_ug_more-advanced_decoupling_event-bus">5.1.5. Event Bus</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4975,7 +5217,7 @@ TODO - see <a href="rg.html#_rg_services-api_manpage-EventBusService"><code>Even
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ug_more-advanced_decoupling_pushing-changes">5.1.5. Pushing Changes</h4>
+<h4 id="_ug_more-advanced_decoupling_pushing-changes">5.1.6. Pushing Changes</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -11190,7 +11432,7 @@ CustomerRepository customers;</code></pre>
 </table>
 </div>
 <div class="sect5">
-<h6 id="__code_integrationtestabstract_code"><code>IntegrationTestAbstract</code></h6>
+<h6 id="_ug_testing_integ-test-support_bootstrapping_IntegrationTestAbstract"><code>IntegrationTestAbstract</code></h6>
 <div class="paragraph">
 <p>In fact, we recommend that your base class inherit from Apache Isis' <code>IntegrationTestAbstract</code> class:</p>
 </div>
@@ -14459,7 +14701,7 @@ TODO
 <li><a href="#_ug_core-concepts_building-blocks">2.3. Building Blocks</a>
 <ul class="sectlevel3">
 <li><a href="#_a_metamodel_with_explicit_and_inferred_semantics">2.3.1. A MetaModel with Explicit and Inferred Semantics</a></li>
-<li><a href="#_domain_objects_and_domain_services">2.3.2. Domain Objects and Domain Services</a></li>
+<li><a href="#_objects_services">2.3.2. Objects &amp; Services</a></li>
 <li><a href="#_properties_collections_and_actions">2.3.3. Properties, Collections and Actions</a></li>
 <li><a href="#_domain_entities_vs_view_models">2.3.4. Domain Entities vs View Models</a></li>
 <li><a href="#_domain_services">2.3.5. Domain Services</a>
@@ -14694,10 +14936,19 @@ TODO
 <li><a href="#_alternative_implementation">Alternative implementation</a></li>
 </ul>
 </li>
-<li><a href="#_ug_more-advanced_decoupling_contributions">5.1.2. Contributions</a></li>
-<li><a href="#_ug_more-advanced_decoupling_vetoing-visibility">5.1.3. Vetoing Visibility</a></li>
-<li><a href="#_ug_more-advanced_decoupling_event-bus">5.1.4. Event Bus</a></li>
-<li><a href="#_ug_more-advanced_decoupling_pushing-changes">5.1.5. Pushing Changes</a>
+<li><a href="#_ug_more-advanced_decoupling_mixins">5.1.2. Mixins</a>
+<ul class="sectlevel4">
+<li><a href="#_example">Example</a></li>
+<li><a href="#_contributing_a_single_member">Contributing a single member</a></li>
+<li><a href="#_programmatic_usage">Programmatic usage</a></li>
+<li><a href="#_other_reasons_to_use_mixins">Other reasons to use mixins</a></li>
+<li><a href="#_related_reading">Related reading</a></li>
+</ul>
+</li>
+<li><a href="#_ug_more-advanced_decoupling_contributions">5.1.3. Contributions</a></li>
+<li><a href="#_ug_more-advanced_decoupling_vetoing-visibility">5.1.4. Vetoing Visibility</a></li>
+<li><a href="#_ug_more-advanced_decoupling_event-bus">5.1.5. Event Bus</a></li>
+<li><a href="#_ug_more-advanced_decoupling_pushing-changes">5.1.6. Pushing Changes</a>
 <ul class="sectlevel4">
 <li><a href="#_when_a_property_is_changed">When a property is changed</a></li>
 <li><a href="#_when_a_collection_is_modified">When a collection is modified</a></li>
