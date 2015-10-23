@@ -5143,6 +5143,20 @@ can be used instead, eg:</p>
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The method specified must be an action, that is, part of the Isis metamodel.  Said another way: it must not be annotated with <a href="#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a>.  However, it <strong>can</strong> be hidden or placed on a domain service with <a href="#_rg_annotations_manpage-DomainService_nature">nature</a> of <code>DOMAIN</code>, such that the action would not be rendered otherwise in the UI.  Also, the action cannot be <a href="#_rg_annotations_manpage-Action_restrictTo">restricted to</a> prototyping only.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -17037,36 +17051,32 @@ Impl&#8217;n (g: a:)</th>
 <div class="sect3">
 <h4 id="_usage_12">5.3.3. Usage</h4>
 <div class="paragraph">
-<p>The usage will vary depending upon the conventions of the design.  In the case of fixture scripts, the convention is to implement scripts by subclassing <a href="#_rg_classes_super_manpage-FixtureScript"><code>FixtureScript</code></a>, and to specify the package prefix in the constructor for <a href="#_rg_classes_super_manpage-FixtureScripts"><code>FixtureScripts</code></a>.</p>
+<p>The usage will vary depending upon the conventions of the design.  As of 1.9.0, the usage of the service has been
+centralized such that the packages to be scanned are located from the <a href="#_rg_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>'s <code>#getModules()</code> method.</p>
 </div>
 <div class="paragraph">
-<p>For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> has its fixture scripts in the <code>todoapp.fixture</code> package.  the <code>ToDoAppFixturesService</code> (its subclass of <a href="#_rg_classes_super_manpage-FixtureScripts"><code>FixtureScripts</code></a> is in the same package, so its constructor is:</p>
+<p>For example, the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s app manifest includes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.fixture</span>;
-...
-<span class="annotation">@DomainService</span>(nature = NatureOfService.VIEW_MENU_ONLY)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoAppFixturesService</span> <span class="directive">extends</span> FixtureScripts {
-    <span class="directive">public</span> ToDoAppFixturesService() {
-        <span class="local-variable">super</span>(
-                ToDoAppFixturesService.class.getPackage().getName(),    <i class="conum" data-value="1"></i><b>(1)</b>
-                MultipleExecutionStrategy.EXECUTE);
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">implements</span> AppManifest {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
+        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
+                DomainAppDomainModule.class,  <span class="comment">// domain (entities and repositories)</span>
+                DomainAppFixtureModule.class, <span class="comment">// fixtures</span>
+                DomainAppAppModule.class      <span class="comment">// home page service etc</span>
+        );
     }
     ...
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>specify the package prefix to search under for fixture scripts</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>where the three module classes in effect define three different package prefixes to search under (for domain services, fixture scripts and persistent entities).</p>
 </div>
 <div class="paragraph">
-<p>Other designs using this service are likely to work in a similar way, requiring some sort of scope to be specified.</p>
+<p>Other usages of the <code>ClassDiscoveryService</code> are likely to work in a similar way, requiring some sort of scope to be specified.</p>
 </div>
 </div>
 <div class="sect3">
