@@ -7728,6 +7728,9 @@ declaration.</p>
 <p>The <code>@javax.annotation.PostConstruct</code> annotation, as defined in <a href="https://jcp.org/en/jsr/detail?id=250">JSR-250</a>,  is recognized by Apache Isis as a callback method on domain services to be called just after they have been constructed, in order that they initialize themselves.</p>
 </div>
 <div class="paragraph">
+<p>It is also recognized (<code>1.10.0-SNAPSHOT</code>) for <a href="ug.html#http://localhost:4000/guides/ug.html">view models</a> (eg annotated with <a href="#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a>).</p>
+</div>
+<div class="paragraph">
 <p>For the default application-scoped (singleton) domain services, this means that the method, if present, is called during the bootstrapping of the application.  For <a href="#_rg_annotations_manpage-RequestScoped"><code>@RequestScoped</code></a> domain services, the method is called at the beginning of the request.</p>
 </div>
 <div class="paragraph">
@@ -7735,15 +7738,15 @@ declaration.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@PostConstruct</span>                          <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="directive">public</span> <span class="type">void</span> postConstruct() { ... }     <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@PostConstruct</span>                 <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">void</span> init() { ... }     <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>(As of 1.9.0) it is not necessary to annotate the method with <a href="#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a>; it will be automatically excluded from the Apache Isis metamodel.</td>
+<td>It is not necessary to annotate the method with <a href="#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a>; it will be automatically excluded from the Apache Isis metamodel.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -7752,13 +7755,13 @@ declaration.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>In the form shown above the method can either accept no arguments.  Alternatively, the method can accept a parameter of type <code>Map&lt;String,String&gt;</code>:</p>
+<p>In the form shown above the method accepts no arguments.  Alternatively - for domain services only, not view models - the method can accept a parameter of type <code>Map&lt;String,String&gt;</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@PostConstruct</span>
 <span class="annotation">@Programmatic</span>
-<span class="directive">public</span> <span class="type">void</span> postConstruct(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt; properties) { ... }</code></pre>
+<span class="directive">public</span> <span class="type">void</span> init(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt; properties) { ... }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7772,7 +7775,7 @@ declaration.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Alternatively, you could inject <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a> into the service and read configuration properties using <code>DomainObjectContainer#getProperty(&#8230;&#8203;)</code> and related methods.</p>
+<p>Alternatively, you could inject <a href="#_rg_services-api_manpage-DomainObjectContainer"><code>DomainObjectContainer</code></a> into the service and read configuration properties using <code>DomainObjectContainer#getProperty(&#8230;&#8203;)</code> and related methods.  Note that when using this latter API only those configuration properties prefixes <code>application.</code> key are provided.</p>
 </div>
 </td>
 </tr>
@@ -7785,12 +7788,10 @@ declaration.</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MySubscribingService</span> {
-    <span class="annotation">@Programmatic</span>
     <span class="annotation">@PostConstruct</span>
     <span class="directive">public</span> <span class="type">void</span> postConstruct() {
         eventBusService.register(<span class="local-variable">this</span>);
     }
-    <span class="annotation">@Programmatic</span>
     <span class="annotation">@PreDestroy</span>
     <span class="directive">public</span> <span class="type">void</span> preDestroy() {
         eventBusService.unregister(<span class="local-variable">this</span>);
@@ -7800,6 +7801,20 @@ declaration.</p>
     EventBusService eventBusService;
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this particular use case, it is generally simpler to just subclass from <a href="#_rg_classes_super_manpage-AbstractSubscriber"><code>AbstractSubscriber</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Other use cases include obtaining connections to external datasources, eg subscribing to an ActiveMQ router, say, or initializing/cleaning up a background scheduler such as Quartz.</p>
@@ -7822,14 +7837,14 @@ declaration.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@PreDestroy</span>                         <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="directive">public</span> <span class="type">void</span> preDestroy() { ... }    <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<span class="directive">public</span> <span class="type">void</span> deinit() { ... }    <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>(As of 1.9.0) it is not necessary to annotate the method with <a href="#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a>; it will be automatically excluded from the Apache Isis metamodel.</td>
+<td>It is not necessary to annotate the method with <a href="#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a>; it will be automatically excluded from the Apache Isis metamodel.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -7844,14 +7859,12 @@ declaration.</p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MySubscribingService</span> {
-    <span class="annotation">@Programmatic</span>
     <span class="annotation">@PostConstruct</span>
-    <span class="directive">public</span> <span class="type">void</span> postConstruct() {
+    <span class="directive">public</span> <span class="type">void</span> init() {
         eventBusService.register(<span class="local-variable">this</span>);
     }
-    <span class="annotation">@Programmatic</span>
     <span class="annotation">@PreDestroy</span>
-    <span class="directive">public</span> <span class="type">void</span> preDestroy() {
+    <span class="directive">public</span> <span class="type">void</span> deinit() {
         eventBusService.unregister(<span class="local-variable">this</span>);
     }
     ...
@@ -7859,6 +7872,20 @@ declaration.</p>
     EventBusService eventBusService;
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this particular use case, it is generally simpler to just subclass from <a href="#_rg_classes_super_manpage-AbstractSubscriber"><code>AbstractSubscriber</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Other use cases include obtaining connections to external datasources, eg subscribing to an ActiveMQ router, say, or initializing/cleaning up a background scheduler such as Quartz.</p>
