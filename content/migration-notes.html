@@ -491,9 +491,37 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_release-notes_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Existing projects written against v1.9.0 should run against v1.10.0 with few if any changes.  If you <strong>do</strong> encounter
+<p>Existing projects written against v1.9.0 should run against v1.10.0 with only a few minor changes.  If you <strong>do</strong> encounter
 any difficulties then let us know via the <a href="support.html">users mailing list</a>, so we can support you and document
 issues here.</p>
+</div>
+<div class="sect2">
+<h3 id="_remove_references_to_code_isis_viewer_wicket_code_parent_pom">Remove references to <code>isis-viewer-wicket</code> parent pom.</h3>
+<div class="paragraph">
+<p>In earlier releases the Wicket viewer defined its own parent <code>pom.xml</code> for dependency management and its dependencies
+and to declare the various submodules that make up the viewer.  This <code>pom.xml</code> has now been incorporated into the
+parent <code>pom.xml</code> for the Core framework.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, in the parent <code>pom.xml</code> of your own domain applications, remove:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependencyManagement&gt;</span>
+    <span class="tag">&lt;dependencies&gt;</span>
+        ...
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.apache.isis.viewer<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>isis-viewer-wicket<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;type&gt;</span>pom<span class="tag">&lt;/type&gt;</span>
+            <span class="tag">&lt;scope&gt;</span>import<span class="tag">&lt;/scope&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        ...
+    <span class="tag">&lt;/dependencies&gt;</span>
+<span class="tag">&lt;/dependencyManagement&gt;</span></code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="__code_allowlateregistration_code"><code>allowLateRegistration</code></h3>
@@ -1772,6 +1800,7 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
                 <ul class="sectlevel1">
 <li><a href="#_release-notes_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</a>
 <ul class="sectlevel2">
+<li><a href="#_remove_references_to_code_isis_viewer_wicket_code_parent_pom">Remove references to <code>isis-viewer-wicket</code> parent pom.</a></li>
 <li><a href="#__code_allowlateregistration_code"><code>allowLateRegistration</code></a></li>
 </ul>
 </li>
