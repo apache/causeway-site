@@ -1271,17 +1271,80 @@ are set up correctly.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_advanced">2.1.6. Advanced</h4>
+<h4 id="_cg_ide_intellij_advanced">2.1.6. Advanced</h4>
 <div class="paragraph">
 <p>In this section are a couple of options that will reduce the length of the change code/build/deploy/review feedback loop.</p>
 </div>
 <div class="sect4">
-<h5 id="_setting_up_dynamic_reloading">Setting up Dynamic Reloading</h5>
+<h5 id="_cg_ide_intellij_advanced_dcevm">Setting up Dynamic Reloading</h5>
 <div class="paragraph">
-<p>See the <a href="http://blog.jetbrains.com/idea/2013/07/get-true-hot-swap-in-java-with-dcevm-and-intellij-idea/">IntelliJ blog</a> for setting up DCEVM.</p>
+<p><a href="github.com/dcevm/dcevm">DCEVM</a> enhances the JVM with true hot-swap adding/removing of methods as well as more
+reliable hot swapping of the implementation of existing methods.</p>
 </div>
 <div class="paragraph">
-<p>This is supported for Eclipse, too.</p>
+<p>In the context of Apache Isis, this is very useful for contributed actions and mixins and also view models; you should
+then be able to write these actions and have them be picked up without restarting the application.</p>
+</div>
+<div class="paragraph">
+<p>Changing persisting domain entities is more problematic, for two reasons: the JDO/DataNucleus enhancer needs to run on
+domain entities, and also at runtime JDO/DataNucleus would need to rebuild its own metamodel.  You may find that adding
+actions will work, but adding new properties or collections is much less likely to.</p>
+</div>
+<div class="paragraph">
+<p>To set up DCEVM, download the appropriate JAR from the <a href="https://dcevm.github.io/">github page</a>, and run the
+installer.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">java -jar DCEVM-light-8u51-installer.jar</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Be sure to run with appropriate privileges to be able to write to the installation directories of the JDK.  If running
+on Windows, that means running as <code>Administrator</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After a few seconds this will display a dialog listing all installations of JDK that have been found:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/appendices/dev-env/intellij-idea/070-advanced/010-dcevm-list-of-found-jdk-installations.png"><img src="images/appendices/dev-env/intellij-idea/070-advanced/010-dcevm-list-of-found-jdk-installations.png" alt="010 dcevm list of found jdk installations" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Select the corresponding installation, and select <code>Replace by DCEVM</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/appendices/dev-env/intellij-idea/070-advanced/020-dcevm-once-installed.png"><img src="images/appendices/dev-env/intellij-idea/070-advanced/020-dcevm-once-installed.png" alt="020 dcevm once installed" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>In IntelliJ, register the JDK in <code>File &gt; Project Structure</code> dialog:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/appendices/dev-env/intellij-idea/070-advanced/030-dcevm-intellij-project-structure.png"><img src="images/appendices/dev-env/intellij-idea/070-advanced/030-dcevm-intellij-project-structure.png" alt="030 dcevm intellij project structure" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, in the run configuration, select the patched JDK:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/appendices/dev-env/intellij-idea/070-advanced/040-dcevm-run-configuration.png"><img src="images/appendices/dev-env/intellij-idea/070-advanced/040-dcevm-run-configuration.png" alt="040 dcevm run configuration" width="600px"></a>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -1476,6 +1539,31 @@ non-commercial free license (though note this comes with some usage conditions).
 </div>
 <div class="paragraph">
 <p>And, remember also to configure Eclipse&#8217;s DataNucleus plugin for these other domain projects.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_advanced">2.2.6. Advanced</h4>
+<div class="paragraph">
+<p>In this section are a couple of options that will reduce the length of the change code/build/deploy/review feedback loop.</p>
+</div>
+<div class="sect4">
+<h5 id="_setting_up_dynamic_reloading">Setting up Dynamic Reloading</h5>
+<div class="paragraph">
+<p><a href="github.com/dcevm/dcevm">DCEVM</a> enhances the JVM with true hot-swap adding/removing of methods as well as more
+reliable hot swapping of the implementation of existing methods.</p>
+</div>
+<div class="paragraph">
+<p>In the context of Apache Isis, this is very useful for contributed actions and mixins and also view models; you should
+then be able to write these actions and have them be picked up without restarting the application.</p>
+</div>
+<div class="paragraph">
+<p>Changing persisting domain entities is more problematic, for two reasons: the JDO/DataNucleus enhancer needs to run on
+domain entities, and also at runtime JDO/DataNucleus would need to rebuild its own metamodel.  You may find that adding
+actions will work, but adding new properties or collections is much less likely to.</p>
+</div>
+<div class="paragraph">
+<p>For details of setting up DCEVM, see the <a href="#_cg_ide_intellij_advanced_dcevm">corresponding section</a> in the IntelliJ documentation.</p>
+</div>
 </div>
 </div>
 </div>
@@ -7625,9 +7713,9 @@ xxx<br>
 </ul>
 </li>
 <li><a href="#_running_integration_tests">2.1.5. Running Integration Tests</a></li>
-<li><a href="#_advanced">2.1.6. Advanced</a>
+<li><a href="#_cg_ide_intellij_advanced">2.1.6. Advanced</a>
 <ul class="sectlevel4">
-<li><a href="#_setting_up_dynamic_reloading">Setting up Dynamic Reloading</a></li>
+<li><a href="#_cg_ide_intellij_advanced_dcevm">Setting up Dynamic Reloading</a></li>
 <li><a href="#_setting_up_jrebel">Setting up JRebel</a></li>
 </ul>
 </li>
@@ -7646,6 +7734,11 @@ xxx<br>
 </li>
 <li><a href="#_running_the_app_2">2.2.4. Running the App</a></li>
 <li><a href="#_other_domain_projects">2.2.5. Other domain projects.</a></li>
+<li><a href="#_advanced">2.2.6. Advanced</a>
+<ul class="sectlevel4">
+<li><a href="#_setting_up_dynamic_reloading">Setting up Dynamic Reloading</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_cg_ide_project-lombok">2.3. Project Lombok</a>
