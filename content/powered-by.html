@@ -544,7 +544,7 @@ of the company&#8217;s operations (eg to support purchase and disposal of shoppi
 </div>
 </div>
 <div class="paragraph">
-<p>The development team for the original implementation consisted of just two developers (both of which are Apache Isis committers); the first version of the application was developed over 2 years and 2 man-years effort.  Since the initial release - as the scope of the application has grown -  the team has expanded to take on a further part-time developer along with two interns.</p>
+<p>The development team for the original implementation consisted of just two developers (both of which are Apache Isis committers); the first version of the application was developed over 2 years and 2 man-years effort.  Since the initial release - as the scope of the application has grown - the team has expanded to take on a further part-time developer and also some interns.</p>
 </div>
 <div class="sect2">
 <h3 id="_supporting_open_source">Supporting Open Source</h3>
@@ -555,130 +555,10 @@ of the company&#8217;s operations (eg to support purchase and disposal of shoppi
 <p>Estatio itself is also open source, licensed under Apache Software License and available on <a href="https://github.com/estatio/estatio">github</a>.</p>
 </div>
 <div class="paragraph">
-<p>The Apache Isis committers are extremely grateful for Eurocommercial&#8217;s investment in the framework in order in order to make Estatio a reality.  Our heart-felt thanks.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_typical_lifecycle_of_a_lease">Typical Lifecycle of a Lease</h3>
-<div class="paragraph">
-<p>The central concept of Estatio is a <code>Lease</code>, from which <code>Invoice</code>s are generated over a period of time.  It is also possible to retrospectively generate invoices; the idempotency of these "retro-runs" is an important design feature of the application.</p>
+<p>The Apache Isis committers are extremely grateful for Eurocommercial&#8217;s investment in the framework in order to make Estatio a reality.  Our heart-felt thanks.</p>
 </div>
 <div class="paragraph">
-<p>The script below was originally developed to allow Eurocommercial&#8217;s accountants to understand and audit the application.  A longer version can be found <a href="https://github.com/estatio/estatio/blob/master/adocs/documentation/src/main/asciidoc/auditability.adoc">here</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="_create_a_lease">Create a Lease</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>choose an existing property (any will do)</p>
-</li>
-<li>
-<p>choose an existing party to act as the tenant with valid bank details (any will do); identify the party to act as the landlord (usually the operating company)</p>
-</li>
-<li>
-<p>create a Lease for the tenant and landlord</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.1-Create new lease.png[width="900px",link="images/powered-by/estatio/0.1-Create new lease.png"]</p>
-</div>
-</li>
-<li>
-<p>create an Occupancy for the Lease, eg starting Q2 (1-Apr)</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.2-Create new occupancy.png[width="900px",link="images/powered-by/estatio/0.2-Create new occupancy.png"]</p>
-</div>
-</li>
-<li>
-<p>create a new item, eg (indexable) rent</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.3-Create new Item.png[width="900px",link="images/powered-by/estatio/0.3-Create new Item.png"]</p>
-</div>
-</li>
-<li>
-<p>create a new term for the first year, eg starting Q2 (1-Apr)</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.4-Create new term.png[width="900px",link="images/powered-by/estatio/0.4-Create new term.png"]</p>
-</div>
-</li>
-<li>
-<p>change the parameters on the term, specifying the index to use, with an effective date set to beginning of Q3 (1-Jul)</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.5-Change parameters.png[width="900px",link="images/powered-by/estatio/0.5-Change parameters.png"]</p>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_normal_run_and_retro_run">Normal Run and Retro Run</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>change the (base) value of the term</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/0.6-Change values.png[width="900px",link="images/powered-by/estatio/0.6-Change values.png"]</p>
-</div>
-</li>
-<li>
-<p>on the lease, perform a (normal) calculate, eg for just Q2 (1-Apr to 1-Jul)</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/1.1-Calculate 2nd quarter.png[width="900px",link="images/powered-by/estatio/1.1-Calculate 2nd quarter.png"]</p>
-</div>
-</li>
-<li>
-<p>on the generated invoice run, all the "temporary" draft (status=new) invoices are listed for the period over which the calculation was performed</p>
-</li>
-<li>
-<p>approve all invoices; the invoice is shown for the lease, with a single invoice item (for Q2)</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/1.2-Approve the results.png[width="900px",link="images/powered-by/estatio/1.2-Approve the results.png"]</p>
-</div>
-</li>
-<li>
-<p>on the lease, perform a retro run for the period for Q2 and Q3</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/1.3-Calculate 3rd quarter including retro run.png[width="900px",link="images/powered-by/estatio/1.3-Calculate 3rd quarter including retro run.png"]</p>
-</div>
-</li>
-<li>
-<p>a new "temporary" draft (new) invoice is created, with two invoice items; one for Q3 and a delta for Q2.</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/1.4-Approve the results.png[width="900px",link="images/powered-by/estatio/1.4-Approve the results.png"]</p>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_pro_rata_reconciliation_after_lease_termination">Pro Rata Reconciliation after Lease Termination</h4>
-<div class="paragraph">
-<p>Normally leases are set to terminate in the future.  However, if a <code>Lease</code> terminated in the past but this was not recorded, then Estatio would have created invoices when in fact none was actually due.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Terminate the lease in the past</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/2.1-Terminate the lease prematurely.png[width="900px",link="images/powered-by/estatio/2.1-Terminate the lease prematurely.png"]</p>
-</div>
-</li>
-<li>
-<p>Recalculate the lease&#8217;s invoices using a retro run</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/2.2-Calculate 3rd quarter including retro run.png[width="900px",link="images/powered-by/estatio/2.2-Calculate 3rd quarter including retro run.png"]</p>
-</div>
-</li>
-<li>
-<p>The approved "temporary" draft (new) invoice should have invoice items that credit the tenant.</p>
-<div class="paragraph">
-<p>image::images/powered-by/estatio/2.3-Approve the results.png[width="900px",link="images/powered-by/estatio/2.3-Approve the results.png"]</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>End users may also have their own user guides/cheatsheets that can be used to crib from.</p>
-</div>
+<p>And to learn a little more about the Estatio domain model itself, take a look at both the source code (of course) and also at <a href="https://github.com/estatio/estatio/blob/master/adocs/documentation/src/main/asciidoc/auditability.adoc">this documentation</a>, developed to allow Eurocommercial&#8217;s accountants to understand and audit the application.</p>
 </div>
 </div>
 </div>
@@ -953,13 +833,6 @@ is necessary).</p>
 <li><a href="#_powered-by_estatio">Estatio</a>
 <ul class="sectlevel2">
 <li><a href="#_supporting_open_source">Supporting Open Source</a></li>
-<li><a href="#_typical_lifecycle_of_a_lease">Typical Lifecycle of a Lease</a>
-<ul class="sectlevel3">
-<li><a href="#_create_a_lease">Create a Lease</a></li>
-<li><a href="#_normal_run_and_retro_run">Normal Run and Retro Run</a></li>
-<li><a href="#_pro_rata_reconciliation_after_lease_termination">Pro Rata Reconciliation after Lease Termination</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#_powered-by_gesconsultor-grc">GESCONSULTOR GRC</a>
