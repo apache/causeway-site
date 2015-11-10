@@ -488,7 +488,7 @@ table.CodeRay td.code>pre{padding:0}
 
         <div id="doc-content">
           <div class="sect1">
-<h2 id="_release-notes_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</h2>
+<h2 id="_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Existing projects written against v1.9.0 should run against v1.10.0 with only a few minor changes.  If you <strong>do</strong> encounter
@@ -580,6 +580,44 @@ internally to sequence the internal list of services being initialized.</p>
 </div>
 <div class="paragraph">
 <p>For more details, see the <a href="rg.html#_rg_services-api_manpage-EventBusService"><code>EventBusService</code></a> man page.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_simplify_domain_events">Simplify domain events</h3>
+<div class="paragraph">
+<p>The domain event superclasses now provide no-arg versions; the framework will use new (non-API) setters to initialize.</p>
+</div>
+<div class="paragraph">
+<p>This means that domain events can be substantially simplified, eg from this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; {
+        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
+        <span class="directive">public</span> CompletedEvent(
+                <span class="directive">final</span> ToDoItem source,
+                <span class="directive">final</span> Identifier identifier,
+                <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {
+            <span class="local-variable">super</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">completed</span><span class="delimiter">&quot;</span></span>, source, identifier, arguments);
+        }
+    }
+    <span class="annotation">@Action</span>(domainEvent=CompletedEvent.class)
+    <span class="directive">public</span> ToDoItem completed() { ... }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to just this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { }  <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="annotation">@Action</span>(domainEvent=CompletedEvent.class)
+    <span class="directive">public</span> ToDoItem completed() { ... }
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1798,10 +1836,11 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
         <div id="toc" class="toc2">
             <div class="fallback-toc">
                 <ul class="sectlevel1">
-<li><a href="#_release-notes_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</a>
+<li><a href="#_migration-notes_1.9.0-to-1.10.0">From v1.9.0 to 1.10.0</a>
 <ul class="sectlevel2">
 <li><a href="#_remove_references_to_code_isis_viewer_wicket_code_parent_pom">Remove references to <code>isis-viewer-wicket</code> parent pom.</a></li>
 <li><a href="#__code_allowlateregistration_code"><code>allowLateRegistration</code></a></li>
+<li><a href="#_simplify_domain_events">Simplify domain events</a></li>
 </ul>
 </li>
 <li><a href="#_release-notes_migration-notes_1.8.0-to-1.9.0">From v1.8.0 to 1.9.0</a>

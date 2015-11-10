@@ -1852,7 +1852,7 @@ This annotation  indicates that transient instances of this class may be created
 <p>the action&#8217;s semantics (ie whether objects are modified as the result of invoking this action, and if so whether reinvoking the action would result in no further change; if not whether the results can be cached for the remainder of the request).</p>
 </div>
 <div class="paragraph">
-<p>The <code>&#8230;&#8203;ARE_YOU_SURE</code> variants (1.10.0-SNAPSHOT) cause a confirmation dialog to be displayed in the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a>.</p>
+<p>The <code>&#8230;&#8203;ARE_YOU_SURE</code> variants cause a confirmation dialog to be displayed in the <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1870,14 +1870,14 @@ This annotation  indicates that transient instances of this class may be created
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { } <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { }
     <span class="annotation">@Action</span>(
         command=CommandReification.ENABLED,
-        commandExecuteIn=CommandExecuteIn.FOREGROUND,          <i class="conum" data-value="2"></i><b>(2)</b>
-        commandPersistence=CommandPersistence.NOT_PERSISTED,   <i class="conum" data-value="3"></i><b>(3)</b>
+        commandExecuteIn=CommandExecuteIn.FOREGROUND,          <i class="conum" data-value="1"></i><b>(1)</b>
+        commandPersistence=CommandPersistence.NOT_PERSISTED,   <i class="conum" data-value="2"></i><b>(2)</b>
         domainEvent=CompletedEvent.class,
-        hidden = Where.NOWHERE,                                <i class="conum" data-value="4"></i><b>(4)</b>
-        invokeOn = InvokeOn.OBJECT_ONLY,                       <i class="conum" data-value="5"></i><b>(5)</b>
+        hidden = Where.NOWHERE,                                <i class="conum" data-value="3"></i><b>(3)</b>
+        invokeOn = InvokeOn.OBJECT_ONLY,                       <i class="conum" data-value="4"></i><b>(4)</b>
         publishing = Publishing.ENABLED,
         semantics = SemanticsOf.IDEMPOTENT
     )
@@ -1889,7 +1889,7 @@ This annotation  indicates that transient instances of this class may be created
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>1.10.0-SNAPSHOT</code>, can use no-arg constructor.</td>
+<td>default value, so could be omitted</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1902,24 +1902,6 @@ This annotation  indicates that transient instances of this class may be created
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>default value, so could be omitted</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>default value, so could be omitted</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Currently are you sure semantics (1.10.0-SNAPSHOT) only work for actions that take one or more parameters (that is, generate a dialog).</p>
-</div>
-</td>
 </tr>
 </table>
 </div>
@@ -2149,61 +2131,29 @@ returned object from this action is the persisted <code>Command</code> itself.</
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
-        <span class="directive">public</span> CompletedEvent(                                               <i class="conum" data-value="2"></i><b>(2)</b>
-                <span class="directive">final</span> ToDoItem source,                                       <i class="conum" data-value="3"></i><b>(3)</b>
-                <span class="directive">final</span> Identifier identifier,                                 <i class="conum" data-value="4"></i><b>(4)</b>
-                <span class="directive">final</span> <span class="predefined-type">Object</span>... arguments) {                                 <i class="conum" data-value="5"></i><b>(5)</b>
-            <span class="local-variable">super</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">completed</span><span class="delimiter">&quot;</span></span>, source, identifier, arguments);
-        }
-    }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { }  <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Action</span>(domainEvent=CompletedEvent.class)
     <span class="directive">public</span> ToDoItem completed() { ... }
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
+<div class="paragraph">
+<p>The benefit is that subscribers can be more targeted as to the events that they subscribe to.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>inherit from <code>ActionDomainEvent&lt;T&gt;</code> where <code>T</code> is the type of the domain object being interacted with.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>constructor called reflectively by the framework</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>populated with the object being interacted with (the source of the event)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>identifier of the collection</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>action argument(s)</td>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As of <code>1.10.0</code> the framework provides no-arg constructor and will initialize the domain event using (non-API) setters
+rather than through the constructor.  This substantially reduces the boilerplate.</p>
+</div>
+</td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
-</div>
-<div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CompletedEvent</span> <span class="directive">extends</span> ActionDomainEvent&lt;ToDoItem&gt; { }
-    <span class="annotation">@Action</span>(domainEvent=CompletedEvent.class)
-    <span class="directive">public</span> ToDoItem completed() { ... }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
 <div class="sect4">
 <h5 id="_subscribers">Subscribers</h5>
@@ -2598,7 +2548,7 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
 <code>IDEMPOTENT_ARE_YOU_SURE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Will make no further changes if called multiple times (eg sets a property or adds to a <code>Set</code>).<br>
-The "are you sure" variant (<code>1.10.0-SNAPSHOT</code>) requires that the user must explicitly confirm the action.</p></td>
+The "are you sure" variant requires that the user must explicitly confirm the action.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
 </tr>
 <tr>
@@ -2606,7 +2556,7 @@ The "are you sure" variant (<code>1.10.0-SNAPSHOT</code>) requires that the user
 <code>NON_IDEMPOTENT_ARE_YOU_SURE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Might change the state of the system each time called (eg increments a counter or adds to a <code>List</code>).<br>
-The "are you sure" variant (<code>1.10.0-SNAPSHOT</code>) requires that the user must explicitly confirm the action.</p></td>
+The "are you sure" variant requires that the user must explicitly confirm the action.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
 </tr>
 </tbody>
@@ -3495,7 +3445,7 @@ can be used instead, eg:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>1.10.0-SNAPSHOT</code>, can use no-arg constructor.</td>
+<td>as of <code>1.10.0</code>, can use no-arg constructor.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -3592,16 +3542,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DependenciesChangedEvent</span>
-            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
-        <span class="directive">public</span> DependenciesChangedEvent(                        <i class="conum" data-value="2"></i><b>(2)</b>
-                ToDoItem source,                                <i class="conum" data-value="3"></i><b>(3)</b>
-                Identifier identifier,                          <i class="conum" data-value="4"></i><b>(4)</b>
-                Of of,                                          <i class="conum" data-value="5"></i><b>(5)</b>
-                ToDoItem value) {                               <i class="conum" data-value="6"></i><b>(6)</b>
-            <span class="local-variable">super</span>(source, identifier, of, value);
-        }
-    }
+            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; { } <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Collection</span>(
         domainEvent=DependenciesChangedEvent.class
     )
@@ -3616,49 +3557,25 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>inherit from <code>CollectionDomainEvent&lt;T,E&gt;</code> where <code>T</code> is the type of the domain object being interacted with, and <code>E</code> is the type of the element in the collection (both <code>ToDoItem</code> in this example)</td>
 </tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>constructor called reflectively by the framework</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>populated with the object being interacted with (the source of the event)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>identifier of the collection</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>indicates if the collection is being accessed, added to or removed from.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>the element being added or removed from the collection</td>
-</tr>
 </table>
 </div>
 <div class="paragraph">
 <p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
+<p>As of <code>1.10.0</code> the framework provides no-arg constructor and will initialize the domain event using (non-API) setters
+rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DependenciesChangedEvent</span>
-            <span class="directive">extends</span> CollectionDomainEvent&lt;ToDoItem, ToDoItem&gt; { }
-    <span class="annotation">@Collection</span>(
-        domainEvent=DependenciesChangedEvent.class
-    )
-    <span class="directive">public</span> <span class="predefined-type">SortedSet</span>&lt;ToDoItem&gt; getDependencies() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="_subscribers_2">Subscribers</h5>
@@ -4063,8 +3980,7 @@ annotation.  It is also possible to apply the annotation to actions of domain se
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_annotations_manpage-CollectionLayout_defaultView"><code>defaultView()</code></a><br>
-(<code>1.10.0-SNAPSHOT</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_annotations_manpage-CollectionLayout_defaultView"><code>defaultView()</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>table</code>, <code>excel</code>, <code>calendar</code>, <code>map</code>, &#8230;&#8203;</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Which view is selected by default, if multiple views are available.</p>
@@ -4219,7 +4135,7 @@ can be used instead, eg:</p>
 <p>The <a href="ug.html#_ug_wicket-viewer">Wicket viewer</a> allows additional views to be configured to render collections of objects; at the time of writing thesee include the (non-ASF) (non-ASF) <a href="http://isisaddons.org">Isis Addons</a>' (non-ASF) <a href="http://github.com/isisaddons/isis-wicket-excel">excel</a> view, the <a href="http://github.com/isisaddons/isis-wicket-fullcalendar2">fullcalendar2</a> view, and the <a href="http://github.com/isisaddons/isis-wicket-gmap3">gmap3</a> view.  If the objects to be rendered have the correct "shape", then the appropriate view will be made available.  For example, objects with a date can be rendered using <code>calendar</code>; objects with locations can be rendered using <code>map</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>defaultView()</code> attribute (<code>1.10.0-SNAPSHOT</code>) is used to select which of these views should be used by default for a given collection.</p>
+<p>The <code>defaultView()</code> attribute is used to select which of these views should be used by default for a given collection.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -5408,7 +5324,7 @@ can be used instead, eg:</p>
 <li>
 <p><code>MIXIN</code><br></p>
 <div class="paragraph">
-<p>(<code>1.10.0-SNAPSHOT</code>) indicates that the domain object is part of the domain layer, and is contributing behaviour to objects of some other type as a mixin (also known as a trait).</p>
+<p>indicates that the domain object is part of the domain layer, and is contributing behaviour to objects of some other type as a mixin (also known as a trait).</p>
 </div>
 </li>
 </ul>
@@ -6694,7 +6610,7 @@ discovered automatically on the CLASSPATH.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_injecting_collection_of_services_1_10_0_snapshot">2.15.2. Injecting collection of services (1.10.0-SNAPSHOT)</h4>
+<h4 id="_injecting_collection_of_services">2.15.2. Injecting collection of services</h4>
 <div class="paragraph">
 <p>It can sometimes be useful to have declared multiple implementations of a particular domain service.  For example,
 you may have a module that defines an SPI service, where multiple other modules might provide implementations of that SPI
@@ -7794,7 +7710,7 @@ declaration.</p>
 <p>The <code>@javax.annotation.PostConstruct</code> annotation, as defined in <a href="https://jcp.org/en/jsr/detail?id=250">JSR-250</a>,  is recognized by Apache Isis as a callback method on domain services to be called just after they have been constructed, in order that they initialize themselves.</p>
 </div>
 <div class="paragraph">
-<p>It is also recognized (<code>1.10.0-SNAPSHOT</code>) for <a href="ug.html#http://localhost:4000/guides/ug.html">view models</a> (eg annotated with <a href="#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a>).</p>
+<p>It is also recognized for <a href="ug.html#http://localhost:4000/guides/ug.html">view models</a> (eg annotated with <a href="#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a>).</p>
 </div>
 <div class="paragraph">
 <p>For the default application-scoped (singleton) domain services, this means that the method, if present, is called during the bootstrapping of the application.  For <a href="#_rg_annotations_manpage-RequestScoped"><code>@RequestScoped</code></a> domain services, the method is called at the beginning of the request.</p>
@@ -8224,16 +8140,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DueByChangedEvent</span> <span class="directive">extends</span> PropertyDomainEvent&lt;ToDoItem, LocalDate&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> serialVersionUID = <span class="integer">1L</span>;
-        <span class="directive">public</span> DueByChangedEvent(                                                            <i class="conum" data-value="2"></i><b>(2)</b>
-                ToDoItem source,                                                             <i class="conum" data-value="3"></i><b>(3)</b>
-                Identifier identifier,                                                       <i class="conum" data-value="4"></i><b>(4)</b>
-                LocalDate oldValue,                                                          <i class="conum" data-value="5"></i><b>(5)</b>
-                LocalDate newValue) {                                                        <i class="conum" data-value="6"></i><b>(6)</b>
-            <span class="local-variable">super</span>(source, identifier, oldValue, newValue);
-        }
-    }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DueByChangedEvent</span> <span class="directive">extends</span> PropertyDomainEvent&lt;ToDoItem, LocalDate&gt; { }  <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Property</span>(domainEvent=ToDoItem.DueByChangedEvent)
     <span class="directive">public</span> LocalDate getDueBy() { ... }
     ...
@@ -8246,46 +8153,25 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>inherit from <code>PropertyDomainEvent&lt;T,P&gt;</code> where <code>T</code> is the type of the domain object being interacted with, and <code>P</code> is the type of the property (<code>LocalDate</code> in this example)</td>
 </tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>constructor called reflectively by the framework</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>populated with the object being interacted with (the source of the event)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>identifier of the property</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>current value of the property</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>proposed new value for the property; if being cleared then will be <code>null</code>.</td>
-</tr>
 </table>
 </div>
 <div class="paragraph">
 <p>The benefit is that subscribers can be more targetted as to the events that they subscribe to.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>As of <code>1.10.0-SNAPSHOT</code> this can be simplified to just:</p>
+<p>As of <code>1.10.0</code> the framework provides no-arg constructor and will initialize the domain event using (non-API) setters
+rather than through the constructor.  This substantially reduces the boilerplate.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DueByChangedEvent</span> <span class="directive">extends</span> PropertyDomainEvent&lt;ToDoItem, LocalDate&gt; { }
-    <span class="annotation">@Property</span>(domainEvent=ToDoItem.DueByChangedEvent)
-    <span class="directive">public</span> LocalDate getDueBy() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the framework will initialize the domain event using setters rather than through the constructor.  This substantially reduces the boilerplate.</p>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="_subscribers_3">Subscribers</h5>
@@ -10369,7 +10255,7 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 </div>
 <div class="paragraph">
-<p>It is also valid to return <code>T[]</code> or (from <code>1.10.0-SNAPSHOT onwards</code>) either <code>Set&lt;T&gt;</code> or <code>Collection&lt;T&gt;</code>.</p>
+<p>It is also valid to return <code>T[]</code>, a <code>Set&lt;T&gt;</code> or a <code>Collection&lt;T&gt;</code>.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -10426,7 +10312,7 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 </div>
 <div class="paragraph">
-<p>(As for action parameters) it is also valid to return <code>T[]</code> or (from <code>1.10.0-SNAPSHOT onwards</code>) either <code>Set&lt;T&gt;</code> or <code>Collection&lt;T&gt;</code>.</p>
+<p>(As for action parameters) it is also valid to return <code>T[]</code>, a <code>Set&lt;T&gt;</code> or a <code>Collection&lt;T&gt;</code>.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -11805,7 +11691,7 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 listener; see <a href="#_rg_methods_lifecycle_jdo-api">here</a> for further discussion.</p>
 </li>
 <li>
-<p>alternatively (1.10.0-SNAPSHOT), you can use a subscriber for the <a href="#_rg_classes_lifecycleevent">lifecycle event</a>s fired in Isis.</p>
+<p>alternatively, you can use a subscriber for the <a href="#_rg_classes_lifecycleevent">lifecycle event</a>s fired in Isis.</p>
 </li>
 </ul>
 </div>
@@ -13784,7 +13670,7 @@ view model.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>(<code>1.10.0-SNAPSHOT</code>) programmatically instantiate a mixin, as annotated with
+<td>programmatically instantiate a mixin, as annotated with
 <a href="#_rg_annotations_manpage-Mixin"><code>@Mixin</code></a> or <a href="#_rg_annotations_manpage-DomainObject_nature"><code>@DomainObject#nature()</code></a>.</td>
 </tr>
 </table>
@@ -14761,8 +14647,12 @@ container.persist(cust);</code></pre>
 public <span class="directive">static</span> <span class="type">class</span> <span class="class">LibMemModule</span> {
     <span class="directive">private</span> LibMemModule() {}
     <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>&lt;S&gt;
-                <span class="directive">extends</span> org.apache.isis.applib.event.ActionDomainEvent&lt;S&gt; {} <i class="conum" data-value="1"></i><b>(1)</b>
-...                                                                          <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="directive">extends</span> org.apache.isis.applib.event.ActionDomainEvent&lt;S&gt; {}
+    ...                                                                             <i class="conum" data-value="1"></i><b>(1)</b>
+    public <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">PropertyDomainEvent</span>&lt;S,T&gt;
+                <span class="directive">extends</span> org.apache.isis.applib.event.PropertyDomainEvent&lt;S,T&gt; {}
+    <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CollectionDomainEvent</span>&lt;S,E&gt;
+                <span class="directive">extends</span> org.apache.isis.applib.event.CollectionDomainEvent&lt;S,E&gt; {}
 }</code></pre>
 </div>
 </div>
@@ -14770,10 +14660,6 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>similar events for properties and collections should also be defined</td>
 </tr>
 </table>
@@ -14785,8 +14671,8 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
     <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>
-            <span class="directive">extends</span> LibMemModule.ActionDomainEvent&lt;LibraryMember&gt; { }       <i class="conum" data-value="1"></i><b>(1)</b>
-    ...                                                                     <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="directive">extends</span> LibMemModule.ActionDomainEvent&lt;LibraryMember&gt; { }
+    ...                                                                             <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
 </div>
@@ -14794,10 +14680,6 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>similar events for properties and collections should also be defined</td>
 </tr>
 </table>
@@ -14808,22 +14690,12 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryMember</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LeaveEvent</span>
-            <span class="directive">extends</span> LibraryMember.ActionDomainEvent { } <i class="conum" data-value="1"></i><b>(1)</b>
-    }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LeaveEvent</span> <span class="directive">extends</span> LibraryMember.ActionDomainEvent { }
     <span class="annotation">@Action</span>(domainEvent=LeaveEvent.class)
     <span class="directive">public</span> <span class="type">void</span> leave() { ... }
     ...
 }</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>as of 1.10.0-SNAPSHOT, can use the no-arg constructor</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>The subscriber can subscribe either to the general superclass (as before), or to any of the classes in the hierarchy.</p>
@@ -16758,7 +16630,7 @@ a configured <code>EmailService</code></p></td>
 <p>Record details of an error occurring in the system (eg in an external incident recording system such as JIRA), and return a more friendly (jargon-free) message to display to the end user, with optional reference (eg <code>XXX-1234</code>).</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">(none)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1.10.0-SNAPSHOT</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rg_services-spi_manpage-EventSerializer"><code>o.a.i.applib.</code><br>
@@ -18033,7 +17905,7 @@ persisted. This is closely related to the <a href="#_rg_services-spi_manpage-Bac
 <div class="sect2">
 <h3 id="_rg_services-spi_manpage-ErrorReportingService">5.8. <code>ErrorReportingService</code></h3>
 <div class="paragraph">
-<p>The <code>ErrorReportingService</code> service (<code>1.10.0-SNAPSHOT</code>) is an optional SPI that providies the ability to record any errors/exceptions that
+<p>The <code>ErrorReportingService</code> service is an optional SPI that providies the ability to record any errors/exceptions that
  might occur in the application into an external incident recording system (such as JIRA).  The service also allows
  a user-friendly (jargon-free) error message to be returned and rendered to the end-user, along with an optional
  incident reference (eg a JIRA issue <code>XXX-1234</code>).</p>
@@ -20099,9 +19971,9 @@ is specified.</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rg_classes_lifecycleevent">6.4. Lifecycle Events (1.10.0-SNAPSHOT)</h3>
+<h3 id="_rg_classes_lifecycleevent">6.4. Lifecycle Events</h3>
 <div class="paragraph">
-<p>This section catalogues the various lifecycle event classes defined by Apache Isis (1.10.0-SNAPSHOT).  These events
+<p>This section catalogues the various lifecycle event classes defined by Apache Isis.  These events
 are fired automatically when a domain object is loaded, created, updated and so forth.</p>
 </div>
 <div class="paragraph">
@@ -22325,8 +22197,7 @@ using security or using a <a href="ug.html#_ug_more-advanced_decoupling_vetoing-
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p><code>isis.reflector.facet.</code><br>
-<code>filterVisibility</code><br>
-(1.10.0-SNAPSHOT)</p>
+<code>filterVisibility</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code>true</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -22677,7 +22548,7 @@ If no configuration property is available, then the defaults is determined by th
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_rg_runtime_configuring-core_filterVisibility">8.4.1. Filtering visibility (1.10.0-SNAPSHOT)</h4>
+<h4 id="_rg_runtime_configuring-core_filterVisibility">8.4.1. Filtering visibility</h4>
 <div class="paragraph">
 <p>The framework provides the <code>isis.reflector.facet.filterVisibility</code> configuration property that influences whether a returned object is visible to the end-user:</p>
 </div>
@@ -23969,7 +23840,7 @@ determines which additional configuration files to search for
 <li><a href="#_rg_annotations_manpage-Inject">2.15. <code>@Inject</code> (<code>javax</code>)</a>
 <ul class="sectlevel3">
 <li><a href="#_alternative_syntaxes">2.15.1. Alternative syntaxes</a></li>
-<li><a href="#_injecting_collection_of_services_1_10_0_snapshot">2.15.2. Injecting collection of services (1.10.0-SNAPSHOT)</a></li>
+<li><a href="#_injecting_collection_of_services">2.15.2. Injecting collection of services</a></li>
 <li><a href="#_manually_injecting_services">2.15.3. Manually injecting services</a></li>
 </ul>
 </li>
@@ -24515,7 +24386,7 @@ determines which additional configuration files to search for
 <li><a href="#_rg_classes_domainevent_manpage-PropertyDomainEvent">6.3.4. <code>PropertyDomainEvent</code></a></li>
 </ul>
 </li>
-<li><a href="#_rg_classes_lifecycleevent">6.4. Lifecycle Events (1.10.0-SNAPSHOT)</a>
+<li><a href="#_rg_classes_lifecycleevent">6.4. Lifecycle Events</a>
 <ul class="sectlevel3">
 <li><a href="#_rg_classes_lifecycleevent_manpage-AbstractLifecycleEvent">6.4.1. <code>AbstractLifecycleEvent</code></a></li>
 <li><a href="#_rg_classes_lifecycleevent_manpage-ObjectCreatedEvent">6.4.2. <code>ObjectCreatedEvent</code></a></li>
@@ -24632,7 +24503,7 @@ determines which additional configuration files to search for
 </li>
 <li><a href="#_rg_runtime_configuring-core">8.4. Configuring Core</a>
 <ul class="sectlevel3">
-<li><a href="#_rg_runtime_configuring-core_filterVisibility">8.4.1. Filtering visibility (1.10.0-SNAPSHOT)</a></li>
+<li><a href="#_rg_runtime_configuring-core_filterVisibility">8.4.1. Filtering visibility</a></li>
 <li><a href="#_rg_runtime_configuring-core_isis-objects-editing">8.4.2. <code>objects.editing</code></a></li>
 <li><a href="#_rg_runtime_configuring-core_isis-viewers-propertyLayout-labelPosition">8.4.3. <code>propertyLayout.labelPosition</code></a></li>
 </ul>
