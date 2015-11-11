@@ -2463,7 +2463,7 @@ script to be run.</p>
 <h2 id="_ug_how-tos">4. How tos</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter provides instructions on how to go about actually developing Apache Isis domain applications.</p>
+<p>This chapter provides a grab bag of "how-to"s and tips to help you go about actually developing Apache Isis domain applications.</p>
 </div>
 <div class="sect2">
 <h3 id="_ug_how-tos_class-structure">4.1. Class Structure</h3>
@@ -4862,6 +4862,94 @@ TODO - <a href="rg.html#_rg_annotations_manpage-DomainObject_bounded"><code>@Dom
 </div>
 <div class="paragraph">
 <p>The above is probably the easiest and most straightforward design. One could imagine other designs where the persisted title is stored elsewhere.  It could even be stored off into an <a href="http://lucene.apache.org/">Apache Lucene</a> (or similar) database to allow for free-text searches.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ug_how-tos_replacing-default-service-implementations">4.11. Replacing Service Implns</h3>
+<div class="paragraph">
+<p>The framework provides default implementations for many of the <a href="rg.html#_rg_services-api">API Services</a>.  This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p>
+</div>
+<div class="paragraph">
+<p>The trick is to use the <a href="rg.html#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p>
+</div>
+<div class="paragraph">
+<p>For example, suppose you wanted to provide your own implementation of <a href="rg.html#_rg_services-api_manpage-LocaleProvider"><code>LocaleProvider</code></a>.  Here&#8217;s how:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+        nature = NatureOfService.DOMAIN
+)
+<span class="annotation">@DomainServiceLayout</span>(
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                             <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
+        <span class="keyword">return</span> ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>takes precedence over the default implementation.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy if using <code>1.10.0</code> or later:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+        nature = NatureOfService.DOMAIN
+)
+<span class="annotation">@DomainServiceLayout</span>(
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                                                                             <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
+        <span class="keyword">return</span> getDelegateLocaleProvider().getLocale();                                             <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+    Optional&lt;LocaleProvider&gt; delegateLocaleProvider;                                                <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">private</span> LocaleProvider getDelegateLocaleProvider() {
+        <span class="keyword">if</span>(delegateLocaleProvider == <span class="predefined-constant">null</span>) {
+            delegateLocaleProvider = Iterables.tryFind(localeProviders, input -&gt; input != <span class="local-variable">this</span>);    <i class="conum" data-value="4"></i><b>(4)</b>
+        }
+        <span class="keyword">return</span> delegateLocaleProvider.orNull();
+    }
+    <span class="annotation">@Inject</span>
+    <span class="predefined-type">List</span>&lt;LocaleProvider&gt; localeProviders;                                                           <i class="conum" data-value="5"></i><b>(5)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>takes precedence over the default implementation when injected elsewhere.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>this implementation merely delegates to the default implementation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>lazily populated</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>delegate to the first implementation that isn&#8217;t <em>this</em> implementation (else infinite loop!)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Injects all implementations, including this implemenation</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -15111,6 +15199,7 @@ TODO
 </ul>
 </li>
 <li><a href="#_ug_how-tos_persisted-title">4.10. Persisted Title</a></li>
+<li><a href="#_ug_how-tos_replacing-default-service-implementations">4.11. Replacing Service Implns</a></li>
 </ul>
 </li>
 <li><a href="#_ug_more-advanced">5. More Advanced Techniques</a>
