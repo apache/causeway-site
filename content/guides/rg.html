@@ -14502,15 +14502,16 @@ container.persist(cust);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@DomainServiceLayout</span>( menuOrder=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)            <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MySubscribingDomainService</span> {
     <span class="annotation">@PostConstruct</span>
     <span class="directive">public</span> <span class="type">void</span> postConstruct() {
-        eventBusService.register(<span class="local-variable">this</span>);
+        eventBusService.register(<span class="local-variable">this</span>);         <i class="conum" data-value="3"></i><b>(3)</b>
     }
     <span class="annotation">@PreDestroy</span>
     <span class="directive">public</span> <span class="type">void</span> preDestroy() {
-        eventBusService.unregister(<span class="local-variable">this</span>);
+        eventBusService.unregister(<span class="local-variable">this</span>);       <i class="conum" data-value="4"></i><b>(4)</b>
     }
     ...
     <span class="annotation">@javax</span>.inject.Inject
@@ -14518,8 +14519,49 @@ container.persist(cust);</code></pre>
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>subscribers are typically not visible in the UI, so specify a <code>DOMAIN</code> nature</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>It&#8217;s important that subscribers register before any domain services that might emit events on the event bus service.
+For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module provides a
+domain service that automatically seeds certain domain entities; these will generate
+<a href="#_rg_classes_lifecycleevent">lifecycle events</a> and so any subscribers must be registered before such seed
+services.  The easiest way to do this is to use the <a href="#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>register with the event bus service during <a href="#_rg_annotations_manpage-PostConstruct"><code>@PostConstruct</code></a>
+initialization</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>corresponding deregister when shutting down</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>This works for both singleton (application-scoped) and also <a href="#_rg_annotations_manpage-RequestScoped"><code>@RequestScoped</code></a> domain services.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <a href="#_rg_classes_super_manpage-AbstractSubscriber"><code>AbstractSubscriber</code></a> class automatically performs this
+registration.  As a convenience, (as of <code>1.11.0-SNAPSHOT</code>) it is also annotated with the
+<a href="#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -19727,7 +19769,19 @@ in an implementation of <code>getId()</code> based upon the classes name.</p>
 <div class="sect3">
 <h4 id="_rg_classes_super_manpage-AbstractSubscriber">6.2.5. <code>AbstractSubscriber</code></h4>
 <div class="paragraph">
-<p>This is a convenience superclass for creating subscriber domain services on the <a href="#_rg_services-api_manpage-EventBusService"><code>EventBusService</code></a>.  It uses <a href="#_rg_annotations_manpage-PostConstruct"><code>@PostConstruct</code></a> and <a href="#_rg_annotations_manpage-PreDestroy"><code>@PreDestroy</code></a> callbacks to automatically register itself with the <code>EventBusService</code>.</p>
+<p>This is a convenience superclass for creating subscriber domain services on the <a href="#_rg_services-api_manpage-EventBusService"><code>EventBusService</code></a>.  It uses <a href="#_rg_annotations_manpage-PostConstruct"><code>@PostConstruct</code></a> and
+<a href="#_rg_annotations_manpage-PreDestroy"><code>@PreDestroy</code></a> callbacks to automatically register/unregister itself
+with the <code>EventBusService</code>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s important that subscribers register before any domain services that might emit events on the
+<a href="#_rg_services-api_manpage-EventBusService"><code>EventBusService</code></a>.  For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module provides a domain service that automatically
+seeds certain domain entities; these will generate <a href="#_rg_classes_lifecycleevent">lifecycle events</a> and so
+any subscribers must be registered before such seed services.  The easiest way to do this is to use the
+<a href="#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute.</p>
+</div>
+<div class="paragraph">
+<p>As a convenience, (as of <code>1.11.0-SNAPSHOT</code>) the <code>AbstractSubscriber</code> specifies this attribute.</p>
 </div>
 </div>
 <div class="sect3">
