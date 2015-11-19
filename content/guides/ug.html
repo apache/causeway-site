@@ -46,6 +46,20 @@
     <![endif]-->
 
 
+
+    <style type="text/css">
+        pre code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre code > span:first-child {
+            margin-left: -5px;
+        }
+
+    <style>
+
+    <!--
     <style type="text/css">
         /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -164,6 +178,7 @@ table.CodeRay td.code>pre{padding:0}
          }
 
     <style>
+    -->
 
     <style>
     .github-fork-ribbon-wrapper.right {
@@ -240,6 +255,22 @@ table.CodeRay td.code>pre{padding:0}
 
         div#doc-content {
             margin-top: 30px;
+        }
+
+        div#doc-content a.header-link {
+            margin-left: -75px;
+        }
+
+        div#doc-content div.sect1 h2 {
+            margin-left: -60px;
+        }
+
+        div#doc-content div.sect3 h4 {
+            margin-left: -60px;
+        }
+
+        div#doc-content div.sect2 h3 {
+            margin-left: -60px;
         }
 
         div.documentation-page table.frame-all {
@@ -500,7 +531,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Later chapters discuss essential topics such as <a href="#_ug_testing">testing</a> and how to <a href="#_ug_deployment">deploy</a> your app, and discuss other ways in which you can <a href="#_ug_extending">extend</a> or adapt the framework itself to your particular needs.</p>
 </div>
 <div class="paragraph">
-<p>The users' guide is <em>not</em> intended as a reference manual; for that see the <strong><a href="rg.html#_rg">Reference Guide</a></strong>.  The users' guide also doesn&#8217;t explain how to setup your development environment; for that see the <strong><a href="cg.html#_cg">Contributors' Guide</a></strong>.</p>
+<p>This users' guide is <em>not</em> intended as a reference manual; for that see the <strong><a href="rg.html#_rg">Reference Guide</a></strong>.  This guide also doesn&#8217;t explain how to setup your development environment; for that see the <strong><a href="cg.html#_cg">Contributors' Guide</a></strong>.</p>
 </div>
 </div>
 </div>
@@ -554,7 +585,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Let&#8217;s look at each in turn.</p>
 </div>
 <div class="sect4">
-<h5 id="_ubiquitous_language">Ubiquitous Language</h5>
+<h5 id="_ug_core-concepts_philosophy_domain-driven-design_ubiquitous-language">Ubiquitous Language</h5>
 <div class="paragraph">
 <p>It&#8217;s no secret that the IT industry is plagued by project failures. Too often systems take longer than intended to implement, and when finally implemented, they don&#8217;t address the real requirements anyway.</p>
 </div>
@@ -1470,21 +1501,33 @@ in Apache Isis, and do <em>not</em> correspond to actions even though they have 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_domain_entities_vs_view_models">2.3.4. Domain Entities vs View Models</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<h4 id="_entities_vs_view_models">2.3.4. Entities vs View Models</h4>
+<div class="paragraph">
+<p>When developing an Apache Isis application you will most likely start off with the persistent domain entities:
+<code>Customer</code>, <code>Order</code>, <code>Product</code>, and so on.  For some applications this may well suffice.  However, if the application
+needs to integrate with other systems, or if the application needs to support reasonably complex business processes,
+then you may need to look beyond just domain entities.</p>
 </div>
 <div class="paragraph">
-<p><code>@DomainObject(nature=&#8230;&#8203;)</code></p>
+<p>To support these use cases we support view models.  In the same way that an (RDBMS) database view can aggregate and
+abstract from multiple underlying database tables, so a view model sits on top of one or many underlying entities.</p>
+</div>
+<div class="paragraph">
+<p>View models are not persisted, but nevertheless they can have behaviour (and titles, and icons) just like domain
+entities.  Indeed, to a user of the system there is no particular distinction (again, in the same way that when using
+an RDBMS one can use database views and database tables pretty much interchangeably).</p>
+</div>
+<div class="paragraph">
+<p>View models generally tend to be associated with supporting a particular use case; logically they are part of the
+application layer, not part of the domain layer (where entities live).</p>
+</div>
+<div class="paragraph">
+<p>We introduce view models here because they do get mentioned quite often within the users and reference guide.  However,
+we do consider them a more advanced topic; we generally recommend that you build your applications from the domain
+layer up, rather than from the view model down.</p>
+</div>
+<div class="paragraph">
+<p>For further discussion on view models, see <a href="#_ug_more-advanced_view-models">this topic</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1529,7 +1572,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ug_core-concepts_building-blocks_value-objects">2.3.6. Value Objects (Primitives)</h4>
+<h4 id="_ug_core-concepts_building-blocks_mixins-and-contributions">2.3.6. Mixins &amp; Contributions</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1542,9 +1585,13 @@ TODO
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>For more information, see <a href="#_ug_more-advanced_decoupling_contributions">this topic on contribution</a>s, and
+<a href="#_ug_more-advanced_decoupling_mixins">this topic on mixin</a>s.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_ug_core-concepts_building-blocks_mixins-and-contributions">2.3.7. Mixins &amp; Contributions</h4>
+<h4 id="_ug_core-concepts_building-blocks_domain-events">2.3.7. Domain Events</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1552,14 +1599,83 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO
+TODO; see <a href="rg.html#_rg_classes_domainevent">domain event</a> classes.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_ui_events_code_1_11_0_snapshot_code">UI Events (<code>1.11.0-SNAPSHOT</code>)</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO; see <a href="rg.html#_rg_classes_uievent">UI event</a> classes.
 </td>
 </tr>
 </table>
 </div>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_ug_core-concepts_building-blocks_domain-events">2.3.8. Domain Events</h4>
+<h4 id="_ug_core-concepts_building-blocks_oid">2.3.8. OIDs</h4>
+<div class="paragraph">
+<p>As well as defining a <a href="#_ug_core-concepts_building-blocks_metamodel">metamodel</a> of the structure (domain
+classes) of its domain objects, Apache Isis also manages the runtime instances of said domain objects.</p>
+</div>
+<div class="paragraph">
+<p>When a domain entity is recreated from the database, the framework keeps track of its identity through an "OID": an
+object identifier.  Fundamentally this is a combination of its type (domain class), along with an identifier.  You can think
+of it as its "primary key", except across all domain entity types.</p>
+</div>
+<div class="paragraph">
+<p>For portability and resilience, though, the object type is generally an alias for the actual domain class: thus
+"customers.CUS", say, rather than "com.mycompany.myapp.customers.Customer".  This is derived from an annotation.  The
+identifier meanwhile is always converted to a string.</p>
+</div>
+<div class="paragraph">
+<p>Although simple, the OID is an enormously powerful concept: it represents a URI to any domain object managed by
+a given Apache Isis application.  With it, we have the ability to lookup any arbitrary domain objects.</p>
+</div>
+<div class="paragraph">
+<p>Some examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an OID allows sharing of information between users, eg as a deep link to be pasted into an email.</p>
+</li>
+<li>
+<p>the information within an OID could be converted into a barcode, and stamped onto a PDF form.  When the PDF is
+scanned by the mail room, the barcode could be read to attach the correspondence to the relevant domain object.</p>
+</li>
+<li>
+<p>as a handle to any object in an audit record (as used by the
+<a href="rg.html#_rg_services-spi_manpage-AuditingService"><code>AuditingService</code></a>, in fact).</p>
+</li>
+<li>
+<p>and of course both the <a href="#_ug_restfulobjects-viewer">RestfulObjects viewer</a> and
+<a href="#_ug_wicket-viewer">Wicket viewer</a>
+use the oid tuple to look up, render and allow the user to interact with domain objects.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Although the exact content of an OID should be considered opaque by domain objects, it is possible for domain objects
+to obtain OIDs.  These are represented as <code>Bookmark`s, obtained from the
+<a href="rg.html#_rg_services-api_manpage-BookmarkService">`BookmarkService</code></a>.  Deep links meanwhile can be obtained from
+the <a href="rg.html#_rg_annotations_manpage-DeepLinkService"><code>@DeepLinkService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>OIDs can also be converted into XML format, useful for integration scenarios.  The
+<a href="rg.html#_rg_schema-common">common schema</a> XSD defines the <code>oidDto</code> complex type for precisely this purpose.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_core-concepts_building-blocks_value-objects">2.3.9. Value Objects (Primitives)</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2468,7 +2584,7 @@ script to be run.</p>
 <div class="sect2">
 <h3 id="_ug_how-tos_class-structure">4.1. Class Structure</h3>
 <div class="paragraph">
-<p>Apache Isis works by building a metamodel of the domain objects: entities, view models and services.  The class members of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
+<p>Apache Isis works by building a metamodel of the domain objects: entities, <a href="#_ug_more-advanced_view-models">view model</a>s and services.  The class members of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
 </div>
 <div class="paragraph">
 <p>In the automatically generated UI a property is rendered as a field.  This can be either of a value type (a string, number, date, boolean etc) or can be a reference to another entity.  A collection is generally rendered as a table.</p>
@@ -4233,10 +4349,11 @@ TODO
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If you don&#8217;t do this then you may (as of Apache Isis 1.4.1) hit an NullPointerException. This may be a bug in DataNucleus, we are not completely sure, but the above idiom seems to fix the issue.</p>
+<p>If you don&#8217;t do this then you may hit a <code>NullPointerException</code>. The above idiom fixes the issue.</p>
 </div>
 <div class="paragraph">
-<p>For more information, see <a href="http://isis.markmail.org/thread/ipu2lzqqikqdglox">this thread</a> on the Apache Isis users mailing list, including this <a href="http://markmail.org/message/hblptpw675mlw723">message</a> with the above recommendation.</p>
+<p>For more information, see <a href="http://isis.markmail.org/thread/ipu2lzqqikqdglox">this thread</a> on the Apache Isis users
+mailing list, including this <a href="http://markmail.org/message/hblptpw675mlw723">message</a> with the above recommendation.</p>
 </div>
 </td>
 </tr>
@@ -4865,89 +4982,16 @@ TODO - <a href="rg.html#_rg_annotations_manpage-DomainObject_bounded"><code>@Dom
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_how-tos_replacing-default-service-implementations">4.11. Replacing Service Implns</h3>
-<div class="paragraph">
-<p>The framework provides default implementations for many of the <a href="rg.html#_rg_services-api">API Services</a>.  This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p>
-</div>
-<div class="paragraph">
-<p>The trick is to use the <a href="rg.html#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p>
-</div>
-<div class="paragraph">
-<p>For example, suppose you wanted to provide your own implementation of <a href="rg.html#_rg_services-api_manpage-LocaleProvider"><code>LocaleProvider</code></a>.  Here&#8217;s how:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
-        nature = NatureOfService.DOMAIN
-)
-<span class="annotation">@DomainServiceLayout</span>(
-        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                             <i class="conum" data-value="1"></i><b>(1)</b>
-)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
-        <span class="keyword">return</span> ...
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
+<h3 id="_ug_how-tos_bulk-actions">4.11. Bulk Actions</h3>
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>takes precedence over the default implementation.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>It&#8217;s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy if using <code>1.10.0</code> or later:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
-        nature = NatureOfService.DOMAIN
-)
-<span class="annotation">@DomainServiceLayout</span>(
-        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                                                                             <i class="conum" data-value="1"></i><b>(1)</b>
-)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
-        <span class="keyword">return</span> getDelegateLocaleProvider().getLocale();                                             <i class="conum" data-value="2"></i><b>(2)</b>
-    }
-    Optional&lt;LocaleProvider&gt; delegateLocaleProvider;                                                <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="directive">private</span> LocaleProvider getDelegateLocaleProvider() {
-        <span class="keyword">if</span>(delegateLocaleProvider == <span class="predefined-constant">null</span>) {
-            delegateLocaleProvider = Iterables.tryFind(localeProviders, input -&gt; input != <span class="local-variable">this</span>);    <i class="conum" data-value="4"></i><b>(4)</b>
-        }
-        <span class="keyword">return</span> delegateLocaleProvider.orNull();
-    }
-    <span class="annotation">@Inject</span>
-    <span class="predefined-type">List</span>&lt;LocaleProvider&gt; localeProviders;                                                           <i class="conum" data-value="5"></i><b>(5)</b>
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>takes precedence over the default implementation when injected elsewhere.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>this implementation merely delegates to the default implementation</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>lazily populated</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>delegate to the first implementation that isn&#8217;t <em>this</em> implementation (else infinite loop!)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Injects all implementations, including this implemenation</td>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO - <a href="rg.html#_rg_annotations_manpage-Action_invokeOn"><code>@Action#invokeOn()</code></a>
+</td>
 </tr>
 </table>
 </div>
@@ -5700,7 +5744,40 @@ methods for properties (see ?).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_bulk-actions">5.3. Bulk Actions</h3>
+<h3 id="_ug_more-advanced_view-models">5.3. View Models</h3>
+<div class="paragraph">
+<p>View models are a type of domain object (with state, behaviour etc) but where the state is <em>not</em> persisted into the
+ JDO/DataNucleus-managed database, but is instead converted to/from a string memento, and held by the calling client.
+This opens up a number of more advanced use cases.</p>
+</div>
+<div class="paragraph">
+<p>In this topic we&#8217;ll explore those use cases, and learn the programming model and conventions to use view models in your application.</p>
+</div>
+<div class="sect3">
+<h4 id="_ug_more-advanced_view-models_use-cases">5.3.1. Use Cases</h4>
+<div class="paragraph">
+<p>When developing an Apache Isis application you will most likely start off with the persistent domain entities:
+<code>Customer</code>, <code>Order</code>, <code>Product</code>, and so on.  For some applications this may well suffice.  However, if the application
+needs to integrate with other systems, or if the application needs to support reasonably complex business processes, then you may need to look beyond just domain entities.  This section explores these use cases.</p>
+</div>
+<div class="sect4">
+<h5 id="_externally_managed_entities">Externally-managed entities</h5>
+<div class="paragraph">
+<p>Sometimes the entities that make up your application are persisted not in the local JDO/DataNucleus database
+but reside in some other system, for example accessible only through a SOAP web service.  Logically that data
+might still be considered a domain entity and we might want to associate behaviour with it, however it cannot be
+modelled as a domain entity if only because JDO/DataNucleus doesn&#8217;t know about the entity nor how to retrieve or
+update it.</p>
+</div>
+<div class="paragraph">
+<p>There are a couple of ways around this: we could either replicate the data somehow from the external system into the
+ Isis-managed database (in which case it is once again just another domain entity), or we could set up a stub/proxy for
+ the externally managed entity.  This proxy would hold the reference to the externally-managed domain entity (eg an
+ external id), as well as the "smarts" to know how to interact with that entity (by making SOAP web service calls etc).</p>
+</div>
+<div class="paragraph">
+<p>The stub/proxy is a type of view model: a view - if you like - onto the domain entity managed by the external system.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5708,61 +5785,566 @@ methods for properties (see ?).</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - <a href="rg.html#_rg_annotations_manpage-Action_invokeOn"><code>@Action#invokeOn()</code></a>
+<div class="paragraph">
+<p>DataNucleus does in fact define its own <a href="http://www.datanucleus.org/documentation/extensions/store_manager.html">Store Manager</a> extension point, so an alternative architecture would be to implement this interface such that DataNucleus
+could make the calls to the external system; these externally-persisted domain entities would therefore be modelled as regular <code>@PersistenceCapable</code> entities after all.  For entities not persisted externally the implementation would delegate down to the default RDBMS-specific <code>StoreManager</code> provided by DataNucleus itself.</p>
+</div>
+<div class="paragraph">
+<p>An implementation that supported only reading from an external entity ought to be comparatively straight-forward, but
+implementing one that also supported updating external entities would need to carefully consider error conditions if the
+external system is unavailable; distributed transactions are most likely difficult/impossible to implement (and not
+desirable in any case).</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ug_more-advanced_view-models">5.4. View Models</h3>
-<div class="admonitionblock note">
+<div class="sect4">
+<h5 id="_in_memory_entities">In-memory entities</h5>
+<div class="paragraph">
+<p>As a variation on the above, sometimes there are domain objects that are, conceptually at least entities, but whose
+state is not actually persisted anywhere, merely held in-memory (eg in a hash).</p>
+</div>
+<div class="paragraph">
+<p>A simple example might be read-only configuration data that is read from a config file (eg log4j appender
+definitions) but thereafter is presented in the UI just like any other entity.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_application_layer_view_models">Application-layer view models</h5>
+<div class="paragraph">
+<p>Domain entities (whether locally persisted using JDO/DataNucleus or managed externally) are the bread-and-butter of Apache Isis applications: the focus after all, should be on the business domain concepts and ensuring that they are
+solid.  Generally those domain entities will make sense to the business domain experts: they form the <em>ubiquitous language</em> of the domain.  These domain entities are part of the domain layer.</p>
+</div>
+<div class="paragraph">
+<p>That said, it may not always be practical to expect end-users of the application to interact solely with those domain
+entities.  For example, it may be useful to show a dashboard of the most significant data in the system to a user,
+often pulling in and aggregating information from multiple points of the app.  Obtaining this information by hand (by
+ querying the respective services/repositories) would be tedious and slow; far better to have a dashboard do the job for
+ the end user.</p>
+</div>
+<div class="paragraph">
+<p>A dashboard object is a model of the most relevant state to the end-user, in other words it is (quite literally) a view
+ model.  It is not a persisted entity, instead it belongs to the application layer.</p>
+</div>
+<div class="paragraph">
+<p>A view model need not merely aggregate data; it could also provide actions of its own.  Most likely these actions will
+be queries and will always ultimately just delegate down to the appropriate domain-layer service/repository.  But in
+some cases such view model actions might also modify state of underlying domain entities.</p>
+</div>
+<div class="paragraph">
+<p>Another common use for view models is to help co-ordinate complex business processes; for example to perform a
+quarterly invoicing run, or to upload annual interest rates from an Excel spreadsheet.  In these cases the view model
+might have some state of its own, but in most cases that state does not need to be persisted per se.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Desire Lines</div>
+<div class="paragraph">
+<p>One way to think of application view models is as modelling the "desire line": the commonly-trod path
+that end-users must follow to get from point A to point B as quickly as possible.</p>
+</div>
+<div class="paragraph">
+<p>To explain: there are <a href="http://ask.metafilter.com/62599/Where-the-sidewalk-ends">documented</a>
+<a href="https://sivers.org/walkways">examples</a>
+<a href="http://www.softpanorama.org/People/Wall/larry_wall_articles_and_interviews.shtml">that</a> architects of university
+campus will only add in paths some while after the campus buildings are complete: let the pedestrians figure out the
+routes they want to take.  The name we like best for this idea is "desire lines", though it has also been called
+a "desire path", "paving the path" or "paving the sidewalk".</p>
+</div>
+<div class="paragraph">
+<p>What that means is you should add view models <em>after</em> having built up the domain layer, rather than before.  These view
+models pave that commonly-trod path, automating the steps that the end-user would otherwise have to do by hand.</p>
+</div>
+<div class="paragraph">
+<p>It takes a little practice though, because even when building the domain layer "first", you should still bear in mind
+what the use cases are that those domain entities are trying to support.  You certainly <em>shouldn&#8217;t</em> try to build out a
+domain layer that could support every conceivable use case before starting to think about view models.</p>
+</div>
+<div class="paragraph">
+<p>Instead, you should iterate.  Identify the use case/story/end-user objective that you will deliver value to the
+business.  Then build out the minimum domain entities to support that use case (refining the <a href="#_ug_core-concepts_philosophy_domain-driven-design_ubiquitous-language">ubiquitous language</a> as you
+go).  Then, identify if there any view models that could be introduced which would simplify the end-user interactions
+with the system (perhaps automating several related use cases together).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dtos_code_1_11_0_snapshot_code">DTOs (<code>1.11.0-SNAPSHOT</code>)</h5>
+<div class="paragraph">
+<p>DTOs (data transfer objects) are simple classes that (according to <a href="https://en.wikipedia.org/wiki/Data_transfer_object">wikipedia</a>) "carries data between processes".</p>
+</div>
+<div class="paragraph">
+<p>If those two processes are parts of the same overall application (the same team builds and deploys both server and
+client) then there&#8217;s generally no need to define a DTO; just access the entities using Apache Isis'
+<a href="#_ug_restfulobjects-viewer">RestfulObjects viewer</a>.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the client consuming the DTO is a different application&#8201;&#8212;&#8201;by which we mean developed/deployed by
+a different (possible third-party) team&#8201;&#8212;&#8201;then the DTOs act as a formal contract between the provider and the consumer.
+In such cases, exposing domain entities over <a href="#_ug_restfulobjects-viewer">RestfulObjects</a> would be
+"A Bad Thing"&#8482; because the consumer would in effect have access to implementation details that could then not be
+easily changed by the producer.</p>
+</div>
+<div class="paragraph">
+<p>Instead, a view model can be defined to act as a DTO.  To put this formal contract onto a solid footing, this view
+model can (as of <code>1.11.0-SNAPSHOT</code>) simply be defined as a JAXB-annotated entity; this allows the consumer to obtain
+the DTO in XML format along with a corresponding XSD schema describing the structure of that XML.  These XML
+representations can be surfaced by the <a href="#_ug_restfulobjects-viewer">RestfulObjects viewer</a> (by implementing
+the <a href="rg.html#_rg_services-spi_manpage-ContentMappingService"><code>ContentMappingService</code></a>); the XSD can be obtained
+using the <a href="rg.html#_rg_services-api_manpage-JaxbService"><code>JaxbService</code></a>.  Using the formalism of XML also allows
+DTOs to be carefully and properly versioned using XML namespaces.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-TODO - <a href="rg.html#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a>, <a href="rg.html#_rg_classes_super_manpage-AbstractViewModel"><code>AbstractViewModel</code></a>, <a href="rg.html#_rg_annotations_manpage-DomainObject_nature"><code>@DomainObject#nature()</code></a>
+<div class="paragraph">
+<p>If the view model DTO implements the <a href="rg.html#_rg_classes_mixins_Dto"><code>Dto</code></a> marker interface, then the framework
+will also provide the ability to download the XML or its XSD directly from the UI.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Nature of view models</p>
+<p>In case it&#8217;s not clear, these DTOs are still usable as "regular" view models; they will render in the <a href="#_ug_wicket-viewer">Wicket viewer</a> just like any other.  Indeed (as the <a href="#_ug_more-advanced_view-models_programming-model">programming model</a> section below makes clear), these
+JAXB-annotated view models are in many regards the most powerful of all the view model alternatives.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_esb_subscribers">ESB Subscribers</h5>
+<div class="paragraph">
+<p>One important variation of the DTO use case concerns subscribers on an enterprise event bus such as
+<a href="http://camel.apache.org">Apache Camel&#8482;</a> and similar.</p>
+</div>
+<div class="paragraph">
+<p>A <a href="rg.html#_rg_services-spi_manpage-PublishingService"><code>PublishingService</code></a> implementation (eg that provided by
+(non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module) can publish XML events
+onto a message queue, typically representing action invocations within the originating Isis application.  The ESB
+(Apache Camel) then dispatches this event to all interested subscribers.  These subscribers represent external systems
+in the enterprise, managed by other teams, and so act as the third-party consumers of the data.</p>
+</div>
+<div class="paragraph">
+<p>Rather than try to anticipate their requirements and push the data that these subscribers might need into the original
+XML event (a hopeless task), DTO objects can be defined to allow these consumers to call back to the publishing Isis
+application to obtain the data they need.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_more-advanced_view-models_programming-model">5.3.2. Programming Model</h4>
+<div class="paragraph">
+<p>So much for the theory; how should view models be implemented?  Fundamentally all view models' state is serialized into
+a string memento; this memento is then held by the client (browser) in the form of a URL.  As you might imagine, this
+URL can become quite long, but Apache Isis offers a mechanism (the <a href="rg.html#_rg_services-spi_manpage-UrlEncodingService"><code>UrlEncodingService</code></a>) if it exceeds the maximum length for a URL
+(2083 characters).  Also, of course, this string memento must only contain characters that it is valid for use within
+a URL.</p>
+</div>
+<div class="paragraph">
+<p>While the underlying technique is the same irrespective of use case, the programming model provides various ways of
+defining a view model so that the original intent is not lost.  They are:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. View model programming model</caption>
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 57%;">
+<col style="width: 28%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Use case</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>External entity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(nature=Nature.EXTERNAL_ENTITY)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerRecordOnSAP</span> { ... }</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Annotated with <a href="rg.html#_rg_annotations_manpage-DomainObject_nature"><code>@DomainObject#nature()</code></a> and a nature of <code>EXTERNAL_ENTITY</code>, with memento derived automatically from the properties of the domain object.  Collections are ignored, as are any properties annotated as <a href="rg.html#_rg_annotations_manpage-Property_notPersisted">not persisted</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>In-memory entity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(nature=Nature.INMEMORY_ENTITY)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Log4JAppender</span> { ... }</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>As preceding, but using a nature of <code>INMEMORY_ENTITY</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Application view model</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(nature=Nature.VIEW_MODEL)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Dashboard</span> { ... }</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>As preceding, but using a nature of <code>VIEW_MODEL</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Application view model</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ViewModel</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Dashboard</span> { ... }</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Annotated with <a href="rg.html#_rg_annotations_manpage-ViewModel"><code>@ViewModel</code></a> annotation (effectively just an alias)' memento is as preceding: from "persisted" properties, collections ignored</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Application view model</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ExcelUploadManager</span> <span class="directive">implements</span> ViewModel {
+  <span class="directive">public</span> <span class="predefined-type">String</span> viewModelMemento() { ... }
+  <span class="directive">public</span> <span class="type">void</span> viewModelInit(<span class="predefined-type">String</span> memento) { ... }
+}</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Implement <a href="rg.html#_rg_classes_super_manpage-ViewModel"><code>ViewModel</code></a> interface.  The memento is as defined by the
+interface&#8217;s methods: the programmer has full control (but also full responsibility) for the string memento.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>DTO (<code>1.11.0-SNAPSHOT</code>)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">customer</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerDto</span> { ... }</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Annotate using JAXB <a href="rg.html#<em>rg_annotations_manpage-XmlRootElement"><code>@XmlRootElement</code></a> annotation.  Memento
+derived automatically by serializing the XML graph as implied by the JAXB annotations.  Note that (unlike <code>@ViewModel</code>
+et al) this state _can</em> include collections.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>JAXB-annotated DTOs are discussed in more detail immediately <a href="rg.html#_ug_more-advanced_view-models_jaxb">below</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ug_more-advanced_view-models_jaxb">5.3.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</h4>
+<div class="paragraph">
+<p>This section provides some recommended practices if using JAXB and <code>@XmlRootElement</code> to define domain models.  The
+examples are taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>.</p>
+</div>
+<div class="sect4">
+<h5 id="_use_packages_to_version_dtos">Use packages to version DTOs</h5>
+<div class="paragraph">
+<p>The whole point of using DTOs (in Apache Isis, at least) is to define a formal contact between two interoperating but
+independent applications.  Since the only thing we can predicate about the future with any certainty is that it one or
+both of these applications will change, we should version DTOs from the get-go.</p>
+</div>
+<div class="paragraph">
+<p>With XML every element may be defined as belonging to a particular namespace; in JAXB this translates to Java packages.
+We therefore should place each DTO within its own package, and that package should include a version identifier.</p>
+</div>
+<div class="paragraph">
+<p>For example, the <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> defines this DTO (as a versioned
+representation of its underlying <code>ToDoItem</code> entity):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItemDto</span><span class="delimiter">&quot;</span></span>)                               <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@XmlType</span>(
+        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1/todoitem</span><span class="delimiter">&quot;</span></span>,    <i class="conum" data-value="2"></i><b>(2)</b>
+        propOrder = {                                               <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">category</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">subcategory</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">cost</span><span class="delimiter">&quot;</span></span>
+        }
+)
+<span class="annotation">@DomainObjectLayout</span>(
+        titleUiEvent = TitleUiEvent.Doop.class                      <i class="conum" data-value="4"></i><b>(4)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">implements</span> Dto {
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>)
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>                                                 <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">protected</span> <span class="predefined-type">String</span> description;
+
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>)
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> <span class="predefined-type">String</span> category;
+
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> <span class="predefined-type">String</span> subcategory;
+
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> <span class="predefined-type">BigDecimal</span> cost;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>identifies this class as a view model and defines the root element for JAXB serialization</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specify the XML schema namespace to which this element type belongs</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>all properties in the class must be listed; (they can be ignored using <code>@XmlTransient</code>)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>demonstrating use of UI events for a subscriber to provide the DTO&#8217;s title; see <a href="rg.html#_rg_annotations_manpage-DomainObjectLayout_titleUiEvent"><code>@DomainObjectLayout#titleUiEvent()</code></a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>optional; JAXB metadata can specify such attributes as required/optional</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For the package in which the DTO class resides, we define a corresponding namespace.  This goes in <code>package-info.java</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.xml.bind.annotation.XmlSchema(
+        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1/todoitem</span><span class="delimiter">&quot;</span></span>,                <i class="conum" data-value="1"></i><b>(1)</b>
+        xmlns = {
+                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
+                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>,  <i class="conum" data-value="2"></i><b>(2)</b>
+                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">common</span><span class="delimiter">&quot;</span></span>
+                )
+        },
+        elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+)
+<span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_0</span>;                                     <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the namespace URI.  There is no requirement for this to correspond to a physical URL, but it should be unique (this
+usually implies the usage of a company domain name)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>define an alias for all of other Java types used within the DTO class.  It&#8217;s recommended that the Apache Isis <a href="rg.html#_rg_schema-common">common schema</a> is always be defined; any references to persistent entities will resultin usage
+of this schema.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the package in which the DTO resides.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note how both the XML namespace and package are broadly equivalent to each other; in particular note that they both
+also include a version "v1".</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_versioning">Versioning</h5>
+<div class="paragraph">
+<p>Versioning DTOs enables us to make changes without breaking existing consumers of the data.  We can distinguish two
+types of changes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>inmemory-entity</p>
+<p>backwardly compatible changes</p>
 </li>
 <li>
-<p>external_entity</p>
-</li>
-<li>
-<p>application layer</p>
+<p>breaking changes.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Consumers of view models</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>within the Wicket viewer</p>
-</li>
-<li>
-<p>within the REST viewer, as an external client consuming a stable API</p>
-</li>
-</ul>
+<p>Following <a href="http://semver.org">semantic versioning</a> approach, we suggest using <code>v1_0</code>, <code>v1_1</code>, <code>v1_2</code> etc as the
+package version for a sequence of backwardly compatible changes, then bump up to <code>v2_0</code> for a breaking change.</p>
 </div>
 <div class="paragraph">
-<p>An alternative to using view models is to map the domain object using the <a href="rg.html#_rg_services-spi_manpage-ContentMappingService"><code>ContentMappingService</code></a>.</p>
+<p>Backwardly compatible changes can generally (always?) be modelled using class inheritance.  Thus, <code>v1_1.ToDoItemDto</code>
+is a subclass of <code>v1_0.ToDoItemDto</code>.  This makes sense too: OO inheritance means "is-substitutable-for", so what is
+true in an OO context is true when processing XML documents.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, breaking changes probably (always?) imply that the next version of the DTO does not use inheritance.
+Thus <code>v2_0.ToDoItemDto</code> might share many of the same properties as the <code>v1_1.ToDoItemDto</code>, but any reuse would be
+copy-n-paste rather than through inheritance.</p>
+</div>
+<div class="paragraph">
+<p>To see this in practice, here&#8217;s (the outline of) v1.1 of <code>ToDoItemDto</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
+...
+<span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItemDto</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@XmlType</span>(
+        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1_1/todoitem</span><span class="delimiter">&quot;</span></span>,
+        propOrder = {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItem</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">similarItems</span><span class="delimiter">&quot;</span></span>
+        }
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The corresponding <code>package-info.java</code> is similar to that for <code>v1_0</code>, though note how it also defines a namespace prefix
+for <code>v1_0</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.xml.bind.annotation.XmlSchema(
+        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1_1/todoitem</span><span class="delimiter">&quot;</span></span>,
+        xmlns = {
+                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
+                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>,
+                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">common</span><span class="delimiter">&quot;</span></span>
+                ),
+                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
+                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1_0/todoitem</span><span class="delimiter">&quot;</span></span>,
+                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoitem-v1_0</span><span class="delimiter">&quot;</span></span>
+                ),
+                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
+                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/v1_1/todoitem</span><span class="delimiter">&quot;</span></span>,
+                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoitem-v1_1</span><span class="delimiter">&quot;</span></span>
+                )
+        },
+        elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+)
+<span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_referencing_domain_entities">Referencing Domain Entities</h5>
+<div class="paragraph">
+<p>It&#8217;s quite common for view models to be "backed by" (be projections of) some underlying domain entity.  The
+<code>ToDoItemDto</code> we&#8217;ve been using as the example in this section is an example: there is an underlying <code>ToDoItem</code> entity.</p>
+</div>
+<div class="paragraph">
+<p>It wouldn&#8217;t make sense to serialize out the state of a persistent entity: the point of a DTO is to act as a facade
+on top of the entity so that the implementation details (of the entity&#8217;s structure) don&#8217;t leak out to the consumer.
+However, the identity of the underlying entity can be well defined; Apache Isis defines the
+<a href="rg.html#_rg_schema-common">Common schema</a> which defines the <code>&lt;oid-dto&gt;</code> element (and corresponding <code>OidDto</code> class):
+the object&#8217;s type and its identifier.  This is basically a formal XML equivalent to the <code>Bookmark</code> object obtained
+from the <a href="rg.html#_rg_services-api_manpage-BookmarkService"><code>BookmarkService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>There is only one requirement to make this work: every referenced domain entity must be annotated with
+<a href="rg.html#_rg_annotations_manpage-XmlJavaTypeAdapter"><code>@XmlJavaTypeAdapter</code></a>, specifying the framework-provided
+<code>PersistentEntityAdapter.class</code>.  This class is similar to the <code>BookmarkService</code>: it knows how to create an <code>OidDto</code>
+from an object reference.</p>
+</div>
+<div class="paragraph">
+<p>Thus, in our view model we can legitimately write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
+...
+public <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+    ...
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> ToDoItem toDoItem;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All we need to do is remember to add that <code>@XmlJavaTypeAdapter</code> annotation to the referenced entity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlJavaTypeAdapter</span>(PersistentEntityAdapter.class)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> ...  {
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_collections_3">Collections</h5>
+<div class="paragraph">
+<p>It&#8217;s also possible for a DTO to hold collections of objects.  These can be of any type, either simple properties, or
+references to other objects.</p>
+</div>
+<div class="paragraph">
+<p>The only bit of boilerplate that is required is the <code>@XmlElementWrapper</code> annotation.  This instructs JAXB to create
+an XML element (based on the field name) to contain each of the elements.  (If this is omitted then the contents of
+the collection are at the same level as the properties; almost certainly not what is required).</p>
+</div>
+<div class="paragraph">
+<p>For example, the v1.1 of the <code>ToDoItemDto</code> could also contain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
+...
+public <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+    ...
+    <span class="annotation">@XmlElementWrapper</span>
+    <span class="annotation">@XmlElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoItem</span><span class="delimiter">&quot;</span></span>)
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; similarItems = Lists.newArrayList();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s nothing to prevent a JAXB DTO from containing rich graphs of data, parent containing children containing
+children.  Be aware though that all of this state will become the DTO&#8217;s memento, ultimately converted into a URL-safe
+form, by way of the <a href="rg.html#_rg_services-spi_manpage-UrlEncodingService"><code>UrlEncodingService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>There are limits to the lengths of URLs, however.  Therefore the DTO should not include state that can easily be
+derived from other information.  If the URL does exceed limits, then provide a custom implementation of <code>UrlEncodingService</code>
+to handle the memento string in some other fashion (eg substituting it with a GUID, with the memento cached somehow
+on the server).</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_mapping-rdbms-views">5.5. Mapping RDBMS Views</h3>
+<h3 id="_ug_more-advanced_mapping-rdbms-views">5.4. Mapping RDBMS Views</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5777,7 +6359,7 @@ TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_transactions-and-errors">5.6. Transactions and Errors</h3>
+<h3 id="_ug_more-advanced_transactions-and-errors">5.5. Transactions and Errors</h3>
 <div class="paragraph">
 <p>In Apache Isis, every action invocation (in fact, every interaction) is automatically wrapped in a transaction, and any repository query automatically does a flush.</p>
 </div>
@@ -5785,7 +6367,7 @@ TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
 <p>What that means is that there&#8217;s no need to explicitly start or commit transactions in Apache Isis; this will be done for you. Indeed, if you do try to manage transactions (eg by reaching into the JDO <code>PersistenceManager</code> exposed by the <a href="rg.html#_rg_services-api_manpage-IsisJdoSupport">IsisJdoSupport</a> domain service, then you are likely to confuse Isis and get a stack trace for your trouble.</p>
 </div>
 <div class="sect3">
-<h4 id="_aborting_transactions">5.6.1. Aborting Transactions</h4>
+<h4 id="_aborting_transactions">5.5.1. Aborting Transactions</h4>
 <div class="paragraph">
 <p>If you want to abort Apache Isis' transaction, this can be done by throwing <code>RecoverableException</code> (or any subclass, eg <code>ApplicationException</code>). The transaction will be aborted, and the exception message will be displayed to the user.</p>
 </div>
@@ -5794,7 +6376,7 @@ TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_raise_message_errors_to_users">5.6.2. Raise message/errors to users</h4>
+<h4 id="_raise_message_errors_to_users">5.5.2. Raise message/errors to users</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5809,7 +6391,7 @@ TODO - <a href="rg.html#_rg_services-api_manpage-DomainObjectContainer_messages-
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exception_recognizers">5.6.3. Exception Recognizers</h4>
+<h4 id="_exception_recognizers">5.5.3. Exception Recognizers</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5825,7 +6407,7 @@ TODO - <a href="rg.html#_rg_services-spi_manpage-ExceptionRecognizer"><code>Exce
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_i18n">5.7. i18n</h3>
+<h3 id="_ug_more-advanced_i18n">5.6. i18n</h3>
 <div class="paragraph">
 <p>Apache Isis' support for i18n allows every element of the domain model (the class names, property names, action names, parameter names and so forth) to be translated.</p>
 </div>
@@ -5836,7 +6418,7 @@ TODO - <a href="rg.html#_rg_services-spi_manpage-ExceptionRecognizer"><code>Exce
 <p>Isis does not translate the values of your domain objects, though.  So, if you have a domain concept such as <code>Country</code> whose name is intended to be localized according to the current user, you will need to model</p>
 </div>
 <div class="sect3">
-<h4 id="_implementation_approach">5.7.1. Implementation Approach</h4>
+<h4 id="_implementation_approach">5.6.1. Implementation Approach</h4>
 <div class="paragraph">
 <p>Most Java frameworks tackle i18n by using Java&#8217;s own <code>ResourceBundle</code> API.  However, there are some serious drawbacks in this approach, such as:</p>
 </div>
@@ -5910,7 +6492,7 @@ TODO - <a href="rg.html#_rg_services-spi_manpage-ExceptionRecognizer"><code>Exce
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_translationservice_code">5.7.2. <code>TranslationService</code></h4>
+<h4 id="__code_translationservice_code">5.6.2. <code>TranslationService</code></h4>
 <div class="paragraph">
 <p>The cornerstone of Apache Isis' support for i18n is the <code>TranslationService</code> service. This is defined in the applib with the following API:</p>
 </div>
@@ -5985,7 +6567,7 @@ TODO - <a href="rg.html#_rg_services-spi_manpage-ExceptionRecognizer"><code>Exce
 </div>
 </div>
 <div class="sect3">
-<h4 id="_imperative_messages">5.7.3. Imperative messages</h4>
+<h4 id="_imperative_messages">5.6.3. Imperative messages</h4>
 <div class="paragraph">
 <p>The <code>TranslationService</code> is used internally by Apache Isis when building up the metamodel; the name and description of every class, property, collection, action and action parameter is automatically translated.  Thus the simple act of bootstrapping Apache Isis will cause most of the messages requiring translation (that is: those for the Apache Isis metamodel) to be captured by the <code>TranslationService</code>.</p>
 </div>
@@ -6139,7 +6721,7 @@ msgstr &quot;Iche heisse {firstName} {lastName}.&quot;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_integration_testing">5.7.4. Integration Testing</h4>
+<h4 id="_integration_testing">5.6.4. Integration Testing</h4>
 <div class="paragraph">
 <p>So much for the API; but as noted, it is also necessary to ensure that the required translations are recorded (by the <code>TranslationService</code>) into the <code>.pot</code> file.</p>
 </div>
@@ -6211,7 +6793,7 @@ FixtureScripts fixtureScripts;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration">5.7.5. Configuration</h4>
+<h4 id="_configuration">5.6.5. Configuration</h4>
 <div class="paragraph">
 <p>There are several different aspects of the translation service that can be configured.</p>
 </div>
@@ -6308,7 +6890,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_supporting_services">5.7.6. Supporting services</h4>
+<h4 id="_supporting_services">5.6.6. Supporting services</h4>
 <div class="paragraph">
 <p>The <code>TranslationServicePo</code> has a number of supporting/related services.</p>
 </div>
@@ -6377,7 +6959,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_multi-tenancy">5.8. Multi-tenancy</h3>
+<h3 id="_ug_more-advanced_multi-tenancy">5.7. Multi-tenancy</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6392,7 +6974,7 @@ TODO - as supported by (non-ASF) <a href="http://github.com/isisaddons/isis-modu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_persistence-lifecycle">5.9. Persistence Lifecycle</h3>
+<h3 id="_ug_more-advanced_persistence-lifecycle">5.8. Persistence Lifecycle</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6407,102 +6989,29 @@ TODO
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ug_more-advanced_tips-n-tricks">5.10. Tips n Tricks</h3>
+<h3 id="_ug_more-advanced_replacing-default-service-implementations">5.9. Replacing Service Implns</h3>
 <div class="paragraph">
-<p>This section catalogues a miscellaneous collection of hints-and-tips.</p>
+<p>The framework provides default implementations for many of the <a href="rg.html#_rg_services-api">API Services</a>.  This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p>
 </div>
-<div class="sect3">
-<h4 id="_ug_more-advanced_tips-n-tricks_are-you-sure">5.10.1. 'Are you sure?' idiom</h4>
 <div class="paragraph">
-<p>Sometimes an action might perform irreversible changes.  In such a case it&#8217;s probably a good idea for the UI to require that the
-end-user explicitly confirms that they intended to invoke the action.</p>
+<p>The trick is to use the <a href="rg.html#_rg_annotations_manpage-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p>
 </div>
-<div class="sect4">
-<h5 id="_using_action_semantics">Using action semantics</h5>
 <div class="paragraph">
-<p>One way to meet this requirement is using the framework&#8217;s built-in <a href="rg.html#_rg_annotations_manpage-Action_semantics"><code>@Action#semantics()</code></a> attribute:</p>
+<p>For example, suppose you wanted to provide your own implementation of <a href="rg.html#_rg_services-api_manpage-LocaleProvider"><code>LocaleProvider</code></a>.  Here&#8217;s how:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Action</span>(
-        semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+        nature = NatureOfService.DOMAIN
 )
-<span class="directive">public</span> SimpleObject updateName(
-        <span class="annotation">@Parameter</span>(maxLength = NAME_LENGTH)
-        <span class="annotation">@ParameterLayout</span>(named = <span class="string"><span class="delimiter">&quot;</span><span class="content">New name</span><span class="delimiter">&quot;</span></span>)
-        <span class="directive">final</span> <span class="predefined-type">String</span> name) {
-    setName(name);
-    <span class="keyword">return</span> <span class="local-variable">this</span>;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will render as:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images//how-tos/tips-n-tricks/action-semantics-are-you-sure.png" alt="action semantics are you sure">
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_using_a_checkbox">Using a checkbox</h5>
-<div class="paragraph">
-<p>An alternative approach (for all versions of the framework) is to require the end-user to check a dummy checkbox parameter (and prevent the action from being invoked if the user hasn&#8217;t checked that parameter).</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images//how-tos/tips-n-tricks/are-you-sure.png" alt="are you sure">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Note that these screenshots shows an earlier version of the <a href="#_ug_wicket-viewer">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If the user checks the box:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images//how-tos/tips-n-tricks/are-you-sure-happy-case.png" alt="are you sure happy case">
-</div>
-</div>
-<div class="paragraph">
-<p>then the action will complete.</p>
-</div>
-<div class="paragraph">
-<p>However, if the user fails to check the box, then a validation message is shown:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images//how-tos/tips-n-tricks/are-you-sure-sad-case.png" alt="are you sure sad case">
-</div>
-</div>
-<div class="paragraph">
-<p>The code for this is pretty simple:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@Named</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Are you sure?</span><span class="delimiter">&quot;</span></span>) <span class="type">boolean</span> areYouSure) {
-    container.removeIfNotAlready(<span class="local-variable">this</span>);
-    container.informUser(<span class="string"><span class="delimiter">&quot;</span><span class="content">Deleted </span><span class="delimiter">&quot;</span></span> + container.titleOf(<span class="local-variable">this</span>));
-    <span class="keyword">return</span> toDoItems.notYetComplete();          <i class="conum" data-value="1"></i><b>(1)</b>
-}
-<span class="directive">public</span> <span class="predefined-type">String</span> validateDelete(<span class="type">boolean</span> areYouSure) {
-    <span class="keyword">return</span> areYouSure? <span class="predefined-constant">null</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Please confirm you are sure</span><span class="delimiter">&quot;</span></span>;
+<span class="annotation">@DomainServiceLayout</span>(
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                             <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
+        <span class="keyword">return</span> ...
+    }
 }</code></pre>
 </div>
 </div>
@@ -6510,238 +7019,61 @@ end-user explicitly confirms that they intended to invoke the action.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>invalid to return <code>this</code> (cannot render a deleted object)</td>
+<td>takes precedence over the default implementation.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Note that the action itself does not use the boolean parameter, it is only
-used by the supporting <a href="rg.html#_rg_methods_prefixes_manpage-validate"><code>validate&#8230;&#8203;()</code></a> method.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ug_more-advanced_tips-n-tricks_simulating-collections-of-values">5.10.2. Collections of values</h4>
-<div class="paragraph">
-<p>Although in Apache Isis you can have properties of either values (string, number, date etc) or of (references to other) entities, with collections the framework (currently) only supports collections of (references to) entities.  That is, collections of values (a bag of numbers, say) are not supported.</p>
-</div>
-<div class="paragraph">
-<p>However, it is possible to simulate a bag of numbers using view models.</p>
-</div>
-<div class="sect4">
-<h5 id="_view_model">View Model</h5>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_persistence_concerns">Persistence Concerns</h5>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO -  easiest to simply store using DataNucleus' support for collections, marked as <a href="rg.html#_rg_annotations_manpage-Programmatic"><code>@Programmatic</code></a> so that it is ignored by Apache Isis.  Alternatively can store as json/xml in a varchar(4000) or clob and manually unpack.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ug_more-advanced_tips-n-tricks_render-all-properties-in-tables">5.10.3. Subclass properties in tables</h4>
-<div class="paragraph">
-<p>Suppose you have a hierarchy of classes where a property is derived and abstract in the superclass, concrete implementations in the subclasses. For example:</p>
+<p>It&#8217;s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy if using <code>1.10.0</code> or later:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">LeaseTerm</span> {
-    <span class="directive">public</span> <span class="directive">abstract</span> <span class="predefined-type">BigDecimal</span> getEffectiveValue();
-    ...
-}
-
-<span class="directive">public</span> <span class="type">class</span> <span class="class">LeaseTermForIndexableTerm</span> <span class="directive">extends</span> LeaseTerm {
-    <span class="directive">public</span> <span class="predefined-type">BigDecimal</span> getEffectveValue() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Currently the Wicket viewer will not render the property in tables (though the property is correctly rendered in views).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For more background on this workaround, see <a href="https://issues.apache.org/jira/browse/ISIS-582">ISIS-582</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The work-around is simple enough; make the method concrete in the superclass and return a dummy implementation, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">LeaseTerm</span> {
-    <span class="directive">public</span> <span class="predefined-type">BigDecimal</span> getEffectiveValue() {
-        <span class="keyword">return</span> <span class="predefined-constant">null</span>;        <span class="comment">// workaround for ISIS-582</span>
-    }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alternatively the implementation could throw a <code>RuntimeException</code>, eg</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">RuntimeException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">never called; workaround for ISIS-582</span><span class="delimiter">&quot;</span></span>);</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ug_more-advanced_tips-n-tricks_per-user-themes">5.10.4. Per-user Themes</h4>
-<div class="paragraph">
-<p>From the Apache Isis mailing list is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Is it possible to have each of our resellers (using our Isis application) use there own theme/branding with their own logo and colors? Would this also be possible for the login page, possibly depending on the used host name?</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Yes, you can do this, by installing a custom implementation of the Wicket Bootstrap&#8217;s <code>ActiveThemeProvider</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> (non-ASF) actually <a href="https://github.com/isisaddons/isis-app-todoapp/tree/61b8114a8e01dbb3c380b31cf09eaed456407570">does this</a>, storing the info via the <a href="http://github.com/isisaddons/isis-module-settings">Isis addons' settings module</a> settings modules:</p>
-</div>
-<div class="listingblock">
-<div class="title">IActiveThemeProvider implementation</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">UserSettingsThemeProvider</span> <span class="directive">implements</span> ActiveThemeProvider {
-    ...
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+        nature = NatureOfService.DOMAIN
+)
+<span class="annotation">@DomainServiceLayout</span>(
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>                                                                             <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> ITheme getActiveTheme() {
-        <span class="keyword">if</span>(IsisContext.getSpecificationLoader().isInitialized()) {
-            <span class="directive">final</span> <span class="predefined-type">String</span> themeName = IsisContext.doInSession(<span class="keyword">new</span> <span class="predefined-type">Callable</span>&lt;<span class="predefined-type">String</span>&gt;() {
-                <span class="annotation">@Override</span>
-                <span class="directive">public</span> <span class="predefined-type">String</span> call() <span class="directive">throws</span> <span class="exception">Exception</span> {
-                    <span class="directive">final</span> <span class="predefined-type">Class</span>&lt;UserSettingsService&gt; serviceClass = UserSettingsService.class;
-                    <span class="directive">final</span> UserSettingsService userSettingsService = lookupService(serviceClass);
-                    <span class="directive">final</span> UserSetting activeTheme = userSettingsService.find(
-                            IsisContext.getAuthenticationSession().getUserName(), ACTIVE_THEME);
-                    <span class="keyword">return</span> activeTheme != <span class="predefined-constant">null</span> ? activeTheme.valueAsString() : <span class="predefined-constant">null</span>;
-                }
-            });
-            <span class="keyword">return</span> themeFor(themeName);
+    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
+        <span class="keyword">return</span> getDelegateLocaleProvider().getLocale();                                             <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+    Optional&lt;LocaleProvider&gt; delegateLocaleProvider;                                                <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">private</span> LocaleProvider getDelegateLocaleProvider() {
+        <span class="keyword">if</span>(delegateLocaleProvider == <span class="predefined-constant">null</span>) {
+            delegateLocaleProvider = Iterables.tryFind(localeProviders, input -&gt; input != <span class="local-variable">this</span>);    <i class="conum" data-value="4"></i><b>(4)</b>
         }
-        <span class="keyword">return</span> <span class="keyword">new</span> SessionThemeProvider().getActiveTheme();
+        <span class="keyword">return</span> delegateLocaleProvider.orNull();
     }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> setActiveTheme(<span class="directive">final</span> <span class="predefined-type">String</span> themeName) {
-        IsisContext.doInSession(<span class="keyword">new</span> <span class="predefined-type">Runnable</span>() {
-            <span class="annotation">@Override</span>
-            <span class="directive">public</span> <span class="type">void</span> run() {
-                <span class="directive">final</span> <span class="predefined-type">String</span> currentUsrName = IsisContext.getAuthenticationSession().getUserName();
-                <span class="directive">final</span> UserSettingsServiceRW userSettingsService =
-                        lookupService(UserSettingsServiceRW.class);
-                <span class="directive">final</span> UserSettingJdo activeTheme =
-                        (UserSettingJdo) userSettingsService.find(currentUsrName, ACTIVE_THEME);
-                <span class="keyword">if</span>(activeTheme != <span class="predefined-constant">null</span>) {
-                    activeTheme.updateAsString(themeName);
-                } <span class="keyword">else</span> {
-                    userSettingsService.newString(
-                        currentUsrName, ACTIVE_THEME, <span class="string"><span class="delimiter">&quot;</span><span class="content">Active Bootstrap theme for user</span><span class="delimiter">&quot;</span></span>, themeName);
-                }
-            }
-        });
-    }
-    <span class="directive">private</span> ITheme themeFor(<span class="directive">final</span> <span class="predefined-type">String</span> themeName) {
-        <span class="directive">final</span> ThemeProvider themeProvider = settings.getThemeProvider();
-        <span class="keyword">if</span>(themeName != <span class="predefined-constant">null</span>) {
-            <span class="keyword">for</span> (<span class="directive">final</span> ITheme theme : themeProvider.available()) {
-                <span class="keyword">if</span> (themeName.equals(theme.name()))
-                    <span class="keyword">return</span> theme;
-            }
-        }
-        <span class="keyword">return</span> themeProvider.defaultTheme();
-    }
-    ...
+    <span class="annotation">@Inject</span>
+    <span class="predefined-type">List</span>&lt;LocaleProvider&gt; localeProviders;                                                           <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>and</p>
-</div>
-<div class="listingblock">
-<div class="title">Using the ActiveThemeProvider</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
-<span class="directive">protected</span> <span class="type">void</span> init() {
-    <span class="local-variable">super</span>.init();
-
-    <span class="directive">final</span> IBootstrapSettings settings = Bootstrap.getSettings();
-    settings.setThemeProvider(<span class="keyword">new</span> BootswatchThemeProvider(BootswatchTheme.Flatly));
-
-    settings.setActiveThemeProvider(<span class="keyword">new</span> UserSettingsThemeProvider(settings));
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ug_more-advanced_tips-n-tricks_enhance-only">5.10.5. Enhance only (IntelliJ)</h4>
-<div class="paragraph">
-<p>From the Apache Isis mailing list is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><em>Is there a simple way to make a run configuration in IntelliJ for running the datanucleus enhancer before running integration test?</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Yes, you can; here&#8217;s one way:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Duplicate your run configuration for running the webapp</p>
-<div class="ulist">
-<ul>
-<li>
-<p>the one where the main class is <code>org.apache.isis.WebServer</code></p>
-</li>
-<li>
-<p>there&#8217;s a button for this on the run configurations dialog.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>then, on your copy change the main class to <code>org.apache.isis.Dummy</code></p>
-</li>
-</ul>
-</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>takes precedence over the default implementation when injected elsewhere.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>this implementation merely delegates to the default implementation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>lazily populated</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>delegate to the first implementation that isn&#8217;t <em>this</em> implementation (else infinite loop!)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Injects all implementations, including this implemenation</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -7476,7 +7808,7 @@ value type (character large object), each of which also includes metadata about 
 <p>If you prefer you can place all configuration properties into <code>WEB-INF/isis.properties</code> (the configuration properties from all config files are merged together).</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Wicket Viewer Configuration Properties</caption>
+<caption class="title">Table 3. Wicket Viewer Configuration Properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 16%;">
@@ -8747,7 +9079,7 @@ TODO - a brief summary here
 </table>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. Restful Objects Viewer Configuration Properties</caption>
+<caption class="title">Table 4. Restful Objects Viewer Configuration Properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 16%;">
@@ -11486,7 +11818,7 @@ CustomerRepository customers;</code></pre>
 <p>To remove a little bit of boilerplate, the <code>IsisConfigurationForJdoIntegTests</code> class (in the <code>org.apache.isis.objectstore.jdo.datanucleus</code> package) can be used to bootstrap the application.  If necessary, this class can be subclassed to override these defaults.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. Default Configuration Properties for Integration Tests</caption>
+<caption class="title">Table 5. Default Configuration Properties for Integration Tests</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 16%;">
@@ -13053,7 +13385,7 @@ toDoItem = sudoService.sudo(username,
 <p>The class also supports a number of command line arguments:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Command line args for <code>org.apache.isis.Webserver</code></caption>
+<caption class="title">Table 6. Command line args for <code>org.apache.isis.Webserver</code></caption>
 <colgroup>
 <col style="width: 11%;">
 <col style="width: 22%;">
@@ -13712,7 +14044,7 @@ TODO
 <p>The default JVM configuration will most likely not be appropriate for running Isis as a webapp.  The table below suggests some JVM args that you will probably want to modify:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. JVM args</caption>
+<caption class="title">Table 7. JVM args</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -14564,7 +14896,7 @@ Your new <code>Component</code> uses the information in the provided model (eg <
 <p>Isis defines eight page types (see the <code>org.apache.isis.viewer.wicket.model.models.PageType</code> enum):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. PageType enum</caption>
+<caption class="title">Table 8. PageType enum</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -14920,7 +15252,7 @@ TODO
 <ul class="sectlevel3">
 <li><a href="#_ug_core-concepts_philosophy_domain-driven-design">2.1.1. Domain-Driven Design</a>
 <ul class="sectlevel4">
-<li><a href="#_ubiquitous_language">Ubiquitous Language</a></li>
+<li><a href="#_ug_core-concepts_philosophy_domain-driven-design_ubiquitous-language">Ubiquitous Language</a></li>
 <li><a href="#_model_driven_design">Model-Driven Design</a></li>
 </ul>
 </li>
@@ -14978,15 +15310,20 @@ TODO
 <li><a href="#_actions">Actions</a></li>
 </ul>
 </li>
-<li><a href="#_domain_entities_vs_view_models">2.3.4. Domain Entities vs View Models</a></li>
+<li><a href="#_entities_vs_view_models">2.3.4. Entities vs View Models</a></li>
 <li><a href="#_ug_core-concepts_building-blocks_domain-services">2.3.5. Domain Services</a>
 <ul class="sectlevel4">
 <li><a href="#_domain_services_vs_view_services">Domain Services vs View Services</a></li>
 </ul>
 </li>
-<li><a href="#_ug_core-concepts_building-blocks_value-objects">2.3.6. Value Objects (Primitives)</a></li>
-<li><a href="#_ug_core-concepts_building-blocks_mixins-and-contributions">2.3.7. Mixins &amp; Contributions</a></li>
-<li><a href="#_ug_core-concepts_building-blocks_domain-events">2.3.8. Domain Events</a></li>
+<li><a href="#_ug_core-concepts_building-blocks_mixins-and-contributions">2.3.6. Mixins &amp; Contributions</a></li>
+<li><a href="#_ug_core-concepts_building-blocks_domain-events">2.3.7. Domain Events</a>
+<ul class="sectlevel4">
+<li><a href="#_ui_events_code_1_11_0_snapshot_code">UI Events (<code>1.11.0-SNAPSHOT</code>)</a></li>
+</ul>
+</li>
+<li><a href="#_ug_core-concepts_building-blocks_oid">2.3.8. OIDs</a></li>
+<li><a href="#_ug_core-concepts_building-blocks_value-objects">2.3.9. Value Objects (Primitives)</a></li>
 </ul>
 </li>
 <li><a href="#_ug_core-concepts_framework-provided-services">2.4. Framework-provided Services</a></li>
@@ -15199,7 +15536,7 @@ TODO
 </ul>
 </li>
 <li><a href="#_ug_how-tos_persisted-title">4.10. Persisted Title</a></li>
-<li><a href="#_ug_how-tos_replacing-default-service-implementations">4.11. Replacing Service Implns</a></li>
+<li><a href="#_ug_how-tos_bulk-actions">4.11. Bulk Actions</a></li>
 </ul>
 </li>
 <li><a href="#_ug_more-advanced">5. More Advanced Techniques</a>
@@ -15233,32 +15570,52 @@ TODO
 </ul>
 </li>
 <li><a href="#_ug_more-advanced_overriding-jdo-annotations">5.2. Overriding JDO Annotations</a></li>
-<li><a href="#_ug_more-advanced_bulk-actions">5.3. Bulk Actions</a></li>
-<li><a href="#_ug_more-advanced_view-models">5.4. View Models</a></li>
-<li><a href="#_ug_more-advanced_mapping-rdbms-views">5.5. Mapping RDBMS Views</a></li>
-<li><a href="#_ug_more-advanced_transactions-and-errors">5.6. Transactions and Errors</a>
+<li><a href="#_ug_more-advanced_view-models">5.3. View Models</a>
 <ul class="sectlevel3">
-<li><a href="#_aborting_transactions">5.6.1. Aborting Transactions</a></li>
-<li><a href="#_raise_message_errors_to_users">5.6.2. Raise message/errors to users</a></li>
-<li><a href="#_exception_recognizers">5.6.3. Exception Recognizers</a></li>
+<li><a href="#_ug_more-advanced_view-models_use-cases">5.3.1. Use Cases</a>
+<ul class="sectlevel4">
+<li><a href="#_externally_managed_entities">Externally-managed entities</a></li>
+<li><a href="#_in_memory_entities">In-memory entities</a></li>
+<li><a href="#_application_layer_view_models">Application-layer view models</a></li>
+<li><a href="#_dtos_code_1_11_0_snapshot_code">DTOs (<code>1.11.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_esb_subscribers">ESB Subscribers</a></li>
 </ul>
 </li>
-<li><a href="#_ug_more-advanced_i18n">5.7. i18n</a>
+<li><a href="#_ug_more-advanced_view-models_programming-model">5.3.2. Programming Model</a></li>
+<li><a href="#_ug_more-advanced_view-models_jaxb">5.3.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel4">
+<li><a href="#_use_packages_to_version_dtos">Use packages to version DTOs</a></li>
+<li><a href="#_versioning">Versioning</a></li>
+<li><a href="#_referencing_domain_entities">Referencing Domain Entities</a></li>
+<li><a href="#_collections_3">Collections</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ug_more-advanced_mapping-rdbms-views">5.4. Mapping RDBMS Views</a></li>
+<li><a href="#_ug_more-advanced_transactions-and-errors">5.5. Transactions and Errors</a>
 <ul class="sectlevel3">
-<li><a href="#_implementation_approach">5.7.1. Implementation Approach</a></li>
-<li><a href="#__code_translationservice_code">5.7.2. <code>TranslationService</code></a>
+<li><a href="#_aborting_transactions">5.5.1. Aborting Transactions</a></li>
+<li><a href="#_raise_message_errors_to_users">5.5.2. Raise message/errors to users</a></li>
+<li><a href="#_exception_recognizers">5.5.3. Exception Recognizers</a></li>
+</ul>
+</li>
+<li><a href="#_ug_more-advanced_i18n">5.6. i18n</a>
+<ul class="sectlevel3">
+<li><a href="#_implementation_approach">5.6.1. Implementation Approach</a></li>
+<li><a href="#__code_translationservice_code">5.6.2. <code>TranslationService</code></a>
 <ul class="sectlevel4">
 <li><a href="#__code_translationservicepo_code"><code>TranslationServicePo</code></a></li>
 </ul>
 </li>
-<li><a href="#_imperative_messages">5.7.3. Imperative messages</a>
+<li><a href="#_imperative_messages">5.6.3. Imperative messages</a>
 <ul class="sectlevel4">
 <li><a href="#__code_translatablestring_code"><code>TranslatableString</code></a></li>
 <li><a href="#__code_translatableexception_code"><code>TranslatableException</code></a></li>
 </ul>
 </li>
-<li><a href="#_integration_testing">5.7.4. Integration Testing</a></li>
-<li><a href="#_configuration">5.7.5. Configuration</a>
+<li><a href="#_integration_testing">5.6.4. Integration Testing</a></li>
+<li><a href="#_configuration">5.6.5. Configuration</a>
 <ul class="sectlevel4">
 <li><a href="#_logging">Logging</a></li>
 <li><a href="#_location_of_the_code_po_code_files">Location of the <code>.po</code> files</a></li>
@@ -15266,7 +15623,7 @@ TODO
 <li><a href="#_force_read_mode">Force read mode</a></li>
 </ul>
 </li>
-<li><a href="#_supporting_services">5.7.6. Supporting services</a>
+<li><a href="#_supporting_services">5.6.6. Supporting services</a>
 <ul class="sectlevel4">
 <li><a href="#__code_localeprovider_code"><code>LocaleProvider</code></a></li>
 <li><a href="#__code_translationsresolver_code"><code>TranslationsResolver</code></a></li>
@@ -15275,27 +15632,9 @@ TODO
 </li>
 </ul>
 </li>
-<li><a href="#_ug_more-advanced_multi-tenancy">5.8. Multi-tenancy</a></li>
-<li><a href="#_ug_more-advanced_persistence-lifecycle">5.9. Persistence Lifecycle</a></li>
-<li><a href="#_ug_more-advanced_tips-n-tricks">5.10. Tips n Tricks</a>
-<ul class="sectlevel3">
-<li><a href="#_ug_more-advanced_tips-n-tricks_are-you-sure">5.10.1. 'Are you sure?' idiom</a>
-<ul class="sectlevel4">
-<li><a href="#_using_action_semantics">Using action semantics</a></li>
-<li><a href="#_using_a_checkbox">Using a checkbox</a></li>
-</ul>
-</li>
-<li><a href="#_ug_more-advanced_tips-n-tricks_simulating-collections-of-values">5.10.2. Collections of values</a>
-<ul class="sectlevel4">
-<li><a href="#_view_model">View Model</a></li>
-<li><a href="#_persistence_concerns">Persistence Concerns</a></li>
-</ul>
-</li>
-<li><a href="#_ug_more-advanced_tips-n-tricks_render-all-properties-in-tables">5.10.3. Subclass properties in tables</a></li>
-<li><a href="#_ug_more-advanced_tips-n-tricks_per-user-themes">5.10.4. Per-user Themes</a></li>
-<li><a href="#_ug_more-advanced_tips-n-tricks_enhance-only">5.10.5. Enhance only (IntelliJ)</a></li>
-</ul>
-</li>
+<li><a href="#_ug_more-advanced_multi-tenancy">5.7. Multi-tenancy</a></li>
+<li><a href="#_ug_more-advanced_persistence-lifecycle">5.8. Persistence Lifecycle</a></li>
+<li><a href="#_ug_more-advanced_replacing-default-service-implementations">5.9. Replacing Service Implns</a></li>
 </ul>
 </li>
 <li><a href="#_ug_wicket-viewer">6. Wicket Viewer</a>
