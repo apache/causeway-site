@@ -23329,6 +23329,51 @@ referenced by the DTO).</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_rg_classes_mixins_Persistable">6.11.5. <code>Persistable</code> (<code>1.11.0-SNAPSHOT</code>)</h4>
+<div class="paragraph">
+<p>All domain entities automatically implement the DataNucleus <code>Persistable</code> role interface as a result of the enhancer
+process (the fully qualified class name is <code>org.datanucleus.enhancement.Persistable</code>).  So as a developer you do not
+need to write any code for this role interface.</p>
+</div>
+<div class="paragraph">
+<p>Nevertheless, the <code>Persistable_downloadJdoMetadata</code> mixin (<code>1.11.0-SNAPSHOT</code>) provides the ability to download the
+JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.html">class metadata in XML</a> form.  The mixin
+defines the following action:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Persistable_downloadJdoMetadata</span> {
+    <span class="directive">public</span> Persistable_downloadJdoMetadata(<span class="directive">final</span> Persistable persistable) { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> downloadJdoMetadata(<span class="directive">final</span> <span class="predefined-type">String</span> fileName) { ... }                <i class="conum" data-value="2"></i><b>(2)</b>
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>provided as an action to any domain entity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>actually this is '$$' in the code, a "special case" that means to use the derive the action name from the class name.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This will return the XML text wrapped up in a <a href="#_rg_classes_value-types_manpage-Clob"><code>Clob</code></a>.</p>
+</div>
+<div class="sect4">
+<h5 id="_related_services_24">Related Services</h5>
+<div class="paragraph">
+<p>The mixin delegates to the <a href="#_rg_services-api_manpage-IsisJdoSupport"><code>IsisJdoSupport</code></a> service to obtain
+a reference to the JDO <code>PersistenceManagerFactory</code>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -27244,6 +27289,11 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_rg_classes_mixins_Dto">6.11.4. <code>Dto</code> (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel4">
 <li><a href="#_related_services_23">Related Services</a></li>
+</ul>
+</li>
+<li><a href="#_rg_classes_mixins_Persistable">6.11.5. <code>Persistable</code> (<code>1.11.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel4">
+<li><a href="#_related_services_24">Related Services</a></li>
 </ul>
 </li>
 </ul>
