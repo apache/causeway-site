@@ -15176,76 +15176,176 @@ public WebRequest newWebRequest(HttpServletRequest servletRequest, String filter
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ug_troubleshooting">13. Troubleshooting</h2>
+<h2 id="_ug_faqs">13. FAQs</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>This chapter has FAQs (with solutions) for problems we&#8217;ve encountered ourselves or have been raised on the
+Apache Isis mailing lists.</p>
+</div>
+<div class="sect2">
+<h3 id="_ug_faqs_enabling-logging">13.1. Enabling Logging</h3>
+<div class="paragraph">
+<p>Sometimes you just need to see what is going on. There are various ways in which logging can be enabled, here are the ones we tend to use.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In Apache Isis<br></p>
+<div class="paragraph">
+<p>Modify <code>WEB-INF/logging.properties</code> (a log4j config file)</p>
+</div>
+</li>
+<li>
+<p>In DataNucleus<br></p>
+<div class="paragraph">
+<p>As per the <a href="http://www.datanucleus.org/products/accessplatform/logging.html">DN logging page</a></p>
+</div>
+</li>
+<li>
+<p>In the JDBC Driver<br></p>
+<div class="paragraph">
+<p>Configure <code>log4jdbc</code> JDBC rather than the vanilla driver (see <code>WEB-INF/persistor_datanucleus.properties</code>) and configure log4j logging (see <code>WEB-INF/logging.properties</code>).  There are examples of both in the <a href="#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p>
+</div>
+</li>
+<li>
+<p>In the database<br></p>
+<div class="paragraph">
+<p>Details below.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Database logging can be configured:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>for HSQLDB<br></p>
+<div class="paragraph">
+<p>by adding`;sqllog=3` to the end of the JDBC URL.</p>
+</div>
+</li>
+<li>
+<p>for PostgreSQL:<br></p>
+<div class="paragraph">
+<p>Can change <code>postgresql\9.2\data\postgresql.conf</code>; see <a href="http://www.postgresql.org/docs/9.2/static/runtime-config-logging.html">this article</a> for details.</p>
+</div>
+</li>
+<li>
+<p>for MS SQL Server Logging:<br></p>
+<div class="paragraph">
+<p>We like to use the excellent SQL Profiler tool.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ug_troubleshooting_faqs">13.2. (Subtype) entity not fully populated</h3>
+<div class="paragraph">
+<p>ref: <a href="http://markmail.org/message/ovgai56uqgfgnrx7">mailing list thread</a></p>
+</div>
+<div class="paragraph">
+<p>If it seems that Apache Isis (or rather DataNucleus) isn&#8217;t fully populating domain entities (ie leaving some properties
+as <code>null</code>), then check that your actions are not accessing the fields directly.  Use getters instead.  that is:</p>
+</div>
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>Properties of domain entities should always be accessed using getters.  The only code that should access to fields
+should be the getters themselves.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Why so? Because DataNucleus will potentially lazy load some properties, but to do this it needs to know that the
+field is being requested.  This is the purpose of the enhancement phase: the bytecode of the original getter method is
+actually wrapped in code that does the lazy loading checking.  But hitting the field directly means that the lazy
+loading code does not run.</p>
+</div>
+<div class="paragraph">
+<p>This error can be subtle: sometimes "incorrect" code that accesses the fields will seem to work.  But that will be
+because the field has been populated already, for whatever reason.</p>
+</div>
+<div class="paragraph">
+<p>One case where you will find the issue highlighted is for subtype tables that have been mapped using an inheritance
+strategy of <code>NEW_TABLE</code>, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable
+<span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SupertypeEntity</span> {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and then:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable
+<span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SubtypeEntity</span> <span class="directive">extends</span> SupertypeEntity {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate two tables in the database, with the primary key of the supertype table propagated as a foreign key
+(also primary key) of the subtype table (sometimes called "table per type" strategy).  This means that DataNucleus
+might retrieve data from only the supertype table, and the lazily load the subtype fields only as required.  This is
+preferable to doing a left outer join from the super- to the subtype tables to retrieve data that might not be needed.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the <code>SUPERCLASS_TABLE</code> strategy (aka "table per hierarchy" or roll-up) or the <code>SUBCLASS_TABLE</code>
+strategy (roll-down) was used, then the problem is less likely to occur because DataNucleus would obtain all the data
+for any given instance from a single table.</p>
+</div>
+<div class="paragraph">
+<p>Final note: references to other objects (either scalar references or in collections) in particular require that getters
+rather than fields to be used to obtain them: it&#8217;s hopefully obvious that DataNucleus (like all ORMs) should not and
+will not resolve such references (otherwise, where to stop&#8230;&#8203; and the whole database would be loaded into memory).</p>
+</div>
+<div class="paragraph">
+<p>In summary, there&#8217;s just one rule: <strong>always use the getters, never the fields</strong>.</p>
+</div>
+</div>
 <div class="sect2">
-<h3 id="_logging_2">13.1. Logging</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_ug_troubleshooting_enabling-logging">13.2. Enabling Logging</h3>
+<h3 id="_ug_faqs_restful-image-property">13.3. How parse image properties from Restful Objects?</h3>
 <div class="paragraph">
-<p>Sometimes you just need to see what is going on. There are various ways in which logging can be enabled, here are the ones we tend to use.</p>
-</div>
-<div class="sect3">
-<h4 id="_in_apache_isis">13.2.1. In Apache Isis</h4>
-<div class="paragraph">
-<p>Modify <code>WEB-INF/logging.properties</code> (a log4j config file)</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_in_datanucleus">13.2.2. In DataNucleus</h4>
-<div class="paragraph">
-<p>As per the <a href="http://www.datanucleus.org/products/accessplatform/logging.html">DN logging page</a></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_in_the_jdbc_driver">13.2.3. In the JDBC Driver</h4>
-<div class="paragraph">
-<p>Configure log4jdbc JDBC rather than the vanilla driver (see <code>WEB-INF/persistor_datanucleus.properties</code>) and configure log4j logging (see <code>WEB-INF/logging.properties</code>).</p>
+<p>ref: <a href="http://markmail.org/message/4kcu7sml4ufdsah3">mailing list thread</a></p>
 </div>
 <div class="paragraph">
-<p>There are examples of both in the <a href="#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p>
+<p>The RO viewer returns the image as a string, in the form:</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>"Tacos.jpg:image/jpeg:/9j//4AAQSkZJRgABAQEAlgCWAAD/  ...."</pre>
 </div>
-<div class="sect3">
-<h4 id="_in_the_database">13.2.4. In the Database</h4>
-<div class="sect4">
-<h5 id="_hsqldb_logging">HSQLDB Logging</h5>
-<div class="paragraph">
-<p>Add <code>;sqllog=3</code> to the end of the JDBC URL.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_postgresql_logging">PostgreSQL Logging</h5>
-<div class="paragraph">
-<p>In <code>postgresql\9.2\data\postgresql.conf</code>:</p>
 </div>
 <div class="paragraph">
-<p>Will then log to <code>postgresql\9.2\data\pg_log</code> directory.</p>
+<p>This is in the form:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(filename):(mime type):(binary data in base64)</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Note that you must restart the service for this to be picked up.</p>
+<p>This is basically the <a href="rg.html#_rg_classes_value-types_manpage-Blob"><code>Blob</code></a> value type, in string form.</p>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_ms_sql_server_logging">MS SQL Server Logging</h5>
 <div class="paragraph">
-<p>Use the excellent SQL Profiler tool.</p>
-</div>
-</div>
+<p>To use, split the parts then format the mime type and base64 data correctly before using as source in an <code>&lt;img&gt;</code> tag.</p>
 </div>
 </div>
 </div>
@@ -16046,23 +16146,11 @@ TODO
 <li><a href="#_ug_extending_restfulobjects-viewer">12.3. Restful Objects viewer</a></li>
 </ul>
 </li>
-<li><a href="#_ug_troubleshooting">13. Troubleshooting</a>
+<li><a href="#_ug_faqs">13. FAQs</a>
 <ul class="sectlevel2">
-<li><a href="#_logging_2">13.1. Logging</a></li>
-<li><a href="#_ug_troubleshooting_enabling-logging">13.2. Enabling Logging</a>
-<ul class="sectlevel3">
-<li><a href="#_in_apache_isis">13.2.1. In Apache Isis</a></li>
-<li><a href="#_in_datanucleus">13.2.2. In DataNucleus</a></li>
-<li><a href="#_in_the_jdbc_driver">13.2.3. In the JDBC Driver</a></li>
-<li><a href="#_in_the_database">13.2.4. In the Database</a>
-<ul class="sectlevel4">
-<li><a href="#_hsqldb_logging">HSQLDB Logging</a></li>
-<li><a href="#_postgresql_logging">PostgreSQL Logging</a></li>
-<li><a href="#_ms_sql_server_logging">MS SQL Server Logging</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#_ug_faqs_enabling-logging">13.1. Enabling Logging</a></li>
+<li><a href="#_ug_troubleshooting_faqs">13.2. (Subtype) entity not fully populated</a></li>
+<li><a href="#_ug_faqs_restful-image-property">13.3. How parse image properties from Restful Objects?</a></li>
 </ul>
 </li>
 </ul>
