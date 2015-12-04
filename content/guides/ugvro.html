@@ -992,95 +992,350 @@ representations for the most frequently accessed resources.  This is done by spe
 </div>
 </div>
 <div class="paragraph">
-<p>And the table below explains in a little more detail what is returned when this profile is activated.</p>
+<p>The sections below explain in a little more detail what is returned when this profile is activated.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Resource</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Domain object<br>
-(section 14)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>The representation of a domain object is simple key/value pairs for each property.  The contents of any collections are
-also eagerly returned, consisting of an array of elements of each referenced object.  Each such element contains
-key/value pairs of each property (in other words, a grid of data is returned), along with special <code>href` and
-`title</code> properties.<br></p>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_domain-object">4.2. Domain Object</h3>
+<div class="paragraph">
+<p>If a domain object resource (section 14) is accessed with the Apache Isis profile, the resultant representation is a
+JSON object with simple key/value pairs for each property.</p>
 </div>
 <div class="paragraph">
-<p>In addition, the representation defined by the RO spec is also included, under a special <code>$$ro</code> property.<br></p>
+<p>The contents of any collections are also eagerly returned, consisting of an array of elements of each referenced
+object.  Each such element contains key/value pairs of each property (in other words, a grid of data is returned).
+Each element also has a special <code>href` property (so that the client can easily navigate to a resource for that
+object) and a `title</code> property (to use as a label, eg the hyperlink text).</p>
+</div>
+<div class="paragraph">
+<p>In addition, the representation defined by the RO spec is also included, under a special <code>$$ro</code> property.</p>
+</div>
+<div class="paragraph">
+<p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing
+this resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>http://localhost:8080/restful/objects/TODO/45</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with an <code>Accept</code> request header of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.apache.isis/v1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>returns the following representation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>{
+  "$$href" : "http://localhost:8080/restful/objects/TODO/45",       <i class="conum" data-value="1"></i><b>(1)</b>
+  "$$title" : "Buy bread due by 2015-12-04",                        <i class="conum" data-value="2"></i><b>(2)</b>
+  "description" : "Buy bread",                                      <i class="conum" data-value="3"></i><b>(3)</b>
+  "category" : "Domestic",
+  "subcategory" : "Shopping",
+  "complete" : false,
+  "atPath" : "/users/sven",
+  ...
+  "similarTo" : [ {                                                 <i class="conum" data-value="4"></i><b>(4)</b>
+    "$$href" : "http://localhost:8080/restful/objects/TODO/46",
+    "$$title" : "Buy milk due by 2015-12-04",
+    "description" : "Buy milk",
+    "category" : "Domestic",
+    ...
+  }, {
+    "$$href" : "http://localhost:8080/restful/objects/TODO/47",
+    "$$title" : "Buy stamps due by 2015-12-04",
+    "description" : "Buy stamps",
+    "category" : "Domestic",
+    ...
+  },
+     ...
+  } ],
+  "dependencies" : [ ],
+  "$$ro" : {                                                        <i class="conum" data-value="5"></i><b>(5)</b>
+    "links" : [ ... ],
+    "extensions" : { ... },
+    "title" : "Buy bread due by 2015-12-04",
+    "domainType" : "TODO",
+    "instanceId" : "45",
+    "members" : { ... }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>hyperlink to the representation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>title of the domain object</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>all the properties of the domain object (to which the caller has access), as key/value pairs</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>contents of each collection</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>special <code>$$ro</code> json-prop, being the normal RO Spec representation for this object</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>with a <code>Content-Type</code> header:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code>Content-Type: application/json;
               profile="urn:org.apache.isis/v1";repr-type="object"</code></pre>
 </div>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Object Collection<br>
-(section 17)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Collections are represented as an array of elements of key/value for each referenced object, and again each element
-the containing the key/value pairs of the properties of that object (a grid, again).<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</h3>
+<div class="paragraph">
+<p>If a domain object collection (section 17) is accessed with this profile, then the resultant representation is as
+an array of elements of key/value for each referenced object, and again each element the containing the key/value
+pairs of the properties of that object (a grid, again).<br></p>
 </div>
 <div class="paragraph">
 <p>In addition, the representation defined by the RO spec is also included, as a special object with a single <code>$$ro</code>
-property.<br></p>
+property.</p>
+</div>
+<div class="paragraph">
+<p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing
+this resource:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>Content-Type: application/json;
-              profile="urn:org.apache.isis/v1";repr-type="object-collection"</code></pre>
+<pre class="CodeRay highlight"><code>http://localhost:8080/restful/objects/TODO/45/collections/similarTo</code></pre>
 </div>
-</div></div></td>
+</div>
+<div class="paragraph">
+<p>with an <code>Accept</code> request header of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.apache.isis/v1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>returns the following representation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[                                                                   <i class="conum" data-value="1"></i><b>(1)</b>
+{
+  "$$href" : "http://localhost:8080/restful/objects/TODO/46",       <i class="conum" data-value="2"></i><b>(2)</b>
+  "$$title" : "Buy milk due by 2015-12-04",                         <i class="conum" data-value="3"></i><b>(3)</b>
+  "description" : "Buy milk",                                       <i class="conum" data-value="4"></i><b>(4)</b>
+  "category" : "Domestic",
+  ...
+}, {
+  "$$href" : "http://localhost:8080/restful/objects/TODO/47",
+  "$$title" : "Buy stamps due by 2015-12-04",
+  "description" : "Buy stamps",
+  "category" : "Domestic",
+  ...
+}, {
+  "$$href" : "http://localhost:8080/restful/objects/TODO/48",
+  "$$title" : "Mow lawn due by 2015-12-10",
+  "description" : "Mow lawn",
+  "category" : "Domestic",
+  ...
+},
+...
+, {
+  "$$ro" : {                                                        <i class="conum" data-value="5"></i><b>(5)</b>
+    "id" : "similarTo",
+    "memberType" : "collection",
+    "links" : [ ... ],
+    "extensions" : { ... },
+    "value" : [ ... ]
+  }
+}
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>returns a JSON array, not a JSON object</td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Action invocation<br>
-(section 19)</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>If the action returned an object, then the domain object representation described above is returned.<br></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>Content-Type: application/json;
-              profile="urn:org.apache.isis/v1";repr-type="object"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If the action returned a list, then the same array representation as (parented) object collections is returned, though
-with a slightly different <code>Content-Type</code> to distinguish:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>Content-Type: application/json;
-              profile="urn:org.apache.isis/v1";repr-type="list"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that actions returning scalar values or void are not supported; for these the regular RO spec representation will
-be returned.</p>
-</div></div></td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>hyperlink to the representation</td>
 </tr>
-</tbody>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>title of the domain object</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>all the properties of the domain object (to which the caller has access), as key/value pairs</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>last element is a special object with a single <code>$$ro</code> json-prop, being the normal RO Spec representation for this object</td>
+</tr>
 </table>
 </div>
+<div class="paragraph">
+<p>with a <code>Content-Type</code> header:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;profile="urn:org.apache.isis/v1";repr-type="object-collection"</code></pre>
+</div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="_ugvro_simplified-representations_other-representations">4.2. Supporting other Representations</h3>
+<h3 id="_ugvro_simplified-representations_action-invocation">4.4. Action Invocation</h3>
+<div class="paragraph">
+<p>When an action is invoked, it can return a domain object, a list, a scalar, or return nothing.</p>
+</div>
+<div class="sect3">
+<h4 id="_returning_an_object">4.4.1. Returning an Object</h4>
+<div class="paragraph">
+<p>If the action returned an object, then the domain object representation described
+<a href="#_ugvro_simplified-representations_domain-object">above</a> is returned.</p>
+</div>
+<div class="paragraph">
+<p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing
+this resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>http://localhost:8080/restful/objects/TODO/45/actions/updateCost/invoke</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with an <code>Accept</code> request header of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.apache.isis/v1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>returns the following representation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>{
+  "$$href" : "http://localhost:8080/restful/objects/TODO/45",
+  "$$title" : "Buy bread due by 2015-12-04",
+  "description" : "Buy bread",
+  "category" : "Domestic",
+  "subcategory" : "Shopping",
+  "complete" : false,
+  ...
+  "similarTo" : [ ... ]
+  ...
+  "$$ro" : { ... }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with a <code>Content-Type</code> of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;profile="urn:org.apache.isis/v1";repr-type="object"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>... in other words no different to a representation obtained of the returned domain object directly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_returning_a_list">4.4.2. Returning a List</h4>
+<div class="paragraph">
+<p>On the other hand if the action returned a list (a "standalone" collection, then an array representation is returned.
+This is very similar to that returned by a
+<a href="#_ugvro_simplified-representations_object-collection">(parented) object collection</a>, though with a
+slightly different <code>Content-Type</code> to distinguish.</p>
+</div>
+<div class="paragraph">
+<p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing
+this resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>http://localhost:8080/restful/services/ToDoItems/actions/notYetComplete/invoke</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with an <code>Accept</code> request header of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.apache.isis/v1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>returns the following representation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[ {
+  "$$href" : "http://localhost:8080/restful/objects/TODO/45",
+  "$$title" : "Buy bread due by 2015-12-04",
+  "description" : "Buy bread",
+  "category" : "Domestic",
+  ...
+}, {
+  "$$href" : "http://localhost:8080/restful/objects/TODO/46",
+  "$$title" : "Buy milk due by 2015-12-04",
+  "description" : "Buy milk",
+  "category" : "Domestic",
+  ...
+},
+...
+, {
+  "$$ro" : {
+    "links" : [ ... ]
+    "resulttype" : "list",
+    "result" : { ... }
+      "value" : [ ... ],
+      "links" : [ ... ],
+      "extensions" : { }
+    }
+  }
+} ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with a <code>Content-Type</code> header:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;profile="urn:org.apache.isis/v1";repr-type="list"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_returning_scalar_nothing">4.4.3. Returning Scalar/Nothing</h4>
+<div class="paragraph">
+<p>Note that actions returning scalar values or nothing (which includes <code>void</code> actions) are not supported; for these the
+regular RO spec representation will be returned.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_other-representations">4.5. Supporting other Representations</h3>
 <div class="paragraph">
 <p>Sometimes though you may want to extend or change the representations generated.  This might be because you want to
 write a RESTful client that uses a particular library (say a Javascript library or web components) that can only handle representations in a certain form.</p>
@@ -1143,7 +1398,7 @@ significantly over the last few years.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugvro_simplified-representations_configuration-properties">4.3. Global Config Props (Deprecated)</h3>
+<h3 id="_ugvro_simplified-representations_configuration-properties">4.6. Global Config Props (Deprecated)</h3>
 <div class="paragraph">
 <p>If all that is required is a very simple representations (of objects), you can configure the Restful Objects viewer
 to provide a simplified output, then this can be done with a number of (global) configuration properties.</p>
@@ -1540,8 +1795,17 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
 <li><a href="#_ugvro_simplified-representations">4. Simplified Representations</a>
 <ul class="sectlevel2">
 <li><a href="#_ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</a></li>
-<li><a href="#_ugvro_simplified-representations_other-representations">4.2. Supporting other Representations</a></li>
-<li><a href="#_ugvro_simplified-representations_configuration-properties">4.3. Global Config Props (Deprecated)</a></li>
+<li><a href="#_ugvro_simplified-representations_domain-object">4.2. Domain Object</a></li>
+<li><a href="#_ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</a></li>
+<li><a href="#_ugvro_simplified-representations_action-invocation">4.4. Action Invocation</a>
+<ul class="sectlevel3">
+<li><a href="#_returning_an_object">4.4.1. Returning an Object</a></li>
+<li><a href="#_returning_a_list">4.4.2. Returning a List</a></li>
+<li><a href="#_returning_scalar_nothing">4.4.3. Returning Scalar/Nothing</a></li>
+</ul>
+</li>
+<li><a href="#_ugvro_simplified-representations_other-representations">4.5. Supporting other Representations</a></li>
+<li><a href="#_ugvro_simplified-representations_configuration-properties">4.6. Global Config Props (Deprecated)</a></li>
 </ul>
 </li>
 <li><a href="#_ugvro_configuration-properties">5. Configuration Properties</a></li>
