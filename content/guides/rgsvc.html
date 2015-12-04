@@ -519,7 +519,7 @@ table.CodeRay td.code>pre{padding:0}
 
         <div id="doc-content">
           <div class="sect1">
-<h2 id="_rgsvc">Domain Services</h2>
+<h2 id="_rgsvc">1. Domain Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide documents Apache Isis' domain services, both those that act as an <a href="#_rgsvc-api">API</a>
@@ -527,7 +527,7 @@ table.CodeRay td.code>pre{padding:0}
 <a href="#_rgsvc-spi">SPI</a> (implemented by your domain application and which are called by the framework).</p>
 </div>
 <div class="sect2">
-<h3 id="_other_guides">Other Guides</h3>
+<h3 id="_other_guides">1.1. Other Guides</h3>
 <div class="paragraph">
 <p>Apache Isis documentation is broken out into a number of user and reference guides.</p>
 </div>
@@ -571,7 +571,7 @@ table.CodeRay td.code>pre{padding:0}
 <p><a href="rgcfg.html">Configuration Properties</a></p>
 </li>
 <li>
-<p><a href="rg.html">Classes, Methods and Schema</a></p>
+<p><a href="rgcms.html">Classes, Methods and Schema</a></p>
 </li>
 </ul>
 </div>
@@ -582,7 +582,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgsvc-api">Domain Services API</h2>
+<h2 id="_rgsvc-api">2. Domain Services API</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis includes an extensive number of domain services for your domain objects to use; simply define the service as an annotated field and Apache Isis will inject the service into your object.  These services' API are all defined in Apache Isis' applib (<code>o.a.i.core:isis-core-applib</code> module); this minimizes the coupling between your code and Apache Isis.  It also allows you to easily mock out these services in your unit tests.</p>
@@ -1015,7 +1015,7 @@ SpecificationProvider</code></a>.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_ActionInvocationContext"><code>ActionInvocationContext</code></h3>
+<h3 id="_rgsvc-api_ActionInvocationContext">2.1. <code>ActionInvocationContext</code></h3>
 <div class="paragraph">
 <p>The <code>ActionInvocationContext</code> domain service is a <a href="rgant.html#_rgant-RequestScoped"><code>@RequestScoped</code></a> service intended to support the implementation of "bulk" actions annotated with <a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a>.  This allows the user to select multiple objects in a table and then invoke the same action against all of them.</p>
 </div>
@@ -1023,7 +1023,7 @@ SpecificationProvider</code></a>.</p>
 <p>When an action is invoked in this way, this service allows each object instance to "know where it is" in the collection; it acts a little like an iterator.  In particular, an object can determine if it is the last object to be called, and so can perform special processing, eg to return a summary calculated result.</p>
 </div>
 <div class="sect3">
-<h4 id="_api">API</h4>
+<h4 id="_api">2.1.1. API</h4>
 <div class="paragraph">
 <p>The API defined by the service is:</p>
 </div>
@@ -1063,7 +1063,7 @@ SpecificationProvider</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage">Usage</h4>
+<h4 id="_usage">2.1.2. Usage</h4>
 <div class="paragraph">
 <p>For actions that are void or that return null, Apache Isis will return to the list once executed. But for bulk actions that are non-void, Apache Isis will render the returned object/value from the last object invoked (and simply discards the object/value of all actions except the last).</p>
 </div>
@@ -1103,7 +1103,7 @@ SpecificationProvider</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service">Registering the Service</h4>
+<h4 id="_registering_the_service">2.1.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default
@@ -1113,11 +1113,11 @@ so no further configuration is required.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_unit_testing_support">Unit testing support</h4>
+<h4 id="_unit_testing_support">2.1.4. Unit testing support</h4>
 <div class="paragraph">
 <p>The <code>ActionInvocationContext</code> class also has a couple of static factory methods intended to support unit testing:</p>
 </div>
@@ -1142,7 +1142,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_BackgroundService"><code>BackgroundService</code></h3>
+<h3 id="_rgsvc-api_BackgroundService">2.2. <code>BackgroundService</code></h3>
 <div class="paragraph">
 <p>The <code>BackgroundService</code>, and the companion <a href="#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> SPI service (used by Apache Isis itself), enable action invocations to be persisted such that they may be invoked in the background.</p>
 </div>
@@ -1157,7 +1157,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 implementation of this class depends on the configured <code>BackgroundCommandService</code> (in order to query for the persisted (background) <code>Command</code>s.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation">API &amp; Implementation</h4>
+<h4 id="_api_implementation">2.2.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>Returns a proxy around the object which is then used to obtain the signature of the action to be invoked in the background.</p>
 </div>
@@ -1174,7 +1174,7 @@ implementation of this class depends on the configured <code>BackgroundCommandSe
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_2">Usage</h4>
+<h4 id="_usage_2">2.2.2. Usage</h4>
 <div class="paragraph">
 <p>Using the service is very straight-forward; wrap the target domain object using <code>BackgroundService#execute(&#8230;&#8203;)</code> and invoke the method on the object returned by that method.</p>
 </div>
@@ -1216,7 +1216,7 @@ implementation of this class depends on the configured <code>BackgroundCommandSe
 </div>
 </div>
 <div class="sect3">
-<h4 id="_end_user_experience">End-user experience</h4>
+<h4 id="_end_user_experience">2.2.3. End-user experience</h4>
 <div class="paragraph">
 <p>For the end-user, executing an action that delegates work off to the <code>BackgroundService</code> raises the problem of how does the user know the work is complete?</p>
 </div>
@@ -1257,7 +1257,7 @@ CommandContext commandContext;  <i class="conum" data-value="1"></i><b>(1)</b></
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services">Registering the Services</h4>
+<h4 id="_registering_the_services">2.2.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -1267,11 +1267,11 @@ further configuration is required.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services">Related Services</h4>
+<h4 id="_related_services">2.2.5. Related Services</h4>
 <div class="paragraph">
 <p>This service is closely related to the <a href="#_rgsvc-api_CommandContext"><code>CommandContext</code></a> and also that service&#8217;s supporting <a href="#_rgsvc-spi_CommandService"><code>CommandService</code></a> service.</p>
 </div>
@@ -1283,7 +1283,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_BackgroundService_BackgroundCommandExecution"><code>BackgroundCommandExecution</code> abstract class</h4>
+<h4 id="_rgsvc-api_BackgroundService_BackgroundCommandExecution">2.2.6. <code>BackgroundCommandExecution</code> abstract class</h4>
 <div class="paragraph">
 <p>The <code>BackgroundCommandExecution</code> (in isis-core) is an abstract template class provided by isis-core that defines an abstract hook method to obtain background `Command`s to be executed:</p>
 </div>
@@ -1302,7 +1302,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_BackgroundService_Quartz">Quartz Scheduler Configuration</h4>
+<h4 id="_rgsvc-api_BackgroundService_Quartz">2.2.7. Quartz Scheduler Configuration</h4>
 <div class="paragraph">
 <p>The last part of the puzzle is to actually run the (appropriate implementation of) `BackgroundCommandExecution).  This could be run in a batch job overnight, or run continually by, say, the <a href="http://quartz-scheduler.org">Quartz</a> scheduler or by <a href="http://camel.apache.org" class="bare">http://camel.apache.org</a>]Apache Camel].  This section looks at configuring Quartz.</p>
 </div>
@@ -1465,7 +1465,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_BookmarkService"><code>BookmarkService</code></h3>
+<h3 id="_rgsvc-api_BookmarkService">2.3. <code>BookmarkService</code></h3>
 <div class="paragraph">
 <p>The <code>BookmarkService</code> provides the ability to obtain a serializable <code>o.a.i.applib.bookmarks.Bookmark</code> for any (persisted) domain object, and to lookup domain objects given a <code>Bookmark</code>.  This can then in turn be converted to and from a string.</p>
 </div>
@@ -1520,7 +1520,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_2">API &amp; Implementation</h4>
+<h4 id="_api_implementation_2">2.3.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>BookmarkService</code> is:</p>
 </div>
@@ -1553,7 +1553,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_bookmarkholder_code"><code>BookmarkHolder</code></h4>
+<h4 id="__code_bookmarkholder_code">2.3.2. <code>BookmarkHolder</code></h4>
 <div class="paragraph">
 <p>The <code>BookmarkHolder</code> interface is intended to be implemented by domain objects that use a <code>Bookmark</code> to reference a (single) domain object; an example might be a class such as the audit entry, mentioned above.  The interface is simply:</p>
 </div>
@@ -1597,7 +1597,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_by_other_services">Usage by other services</h4>
+<h4 id="_usage_by_other_services">2.3.3. Usage by other services</h4>
 <div class="paragraph">
 <p>Bookmarks are used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module&#8217;s implementation of  <a href="#_rgsvc-api_BackgroundCommandService"><code>BackgroundCommandService</code></a>, which uses a bookmark to capture the target object on which an action will be invoked subsequently.</p>
 </div>
@@ -1606,7 +1606,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_2">Registering the Service</h4>
+<h4 id="_registering_the_service_2">2.3.4. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -1616,12 +1616,12 @@ configuration is required.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_ClockService"><code>ClockService</code></h3>
+<h3 id="_rgsvc-api_ClockService">2.4. <code>ClockService</code></h3>
 <div class="paragraph">
 <p>Most applications deal with dates and times in one way or another. For example, if an <code>Order</code> is placed, then the <code>Customer</code> may have 30 days to pay the <code>Invoice</code>, otherwise a penalty may be levied.</p>
 </div>
@@ -1635,7 +1635,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>Therefore it&#8217;s common to provide a domain service whose responsibility is to provide the current time.  This service can be injected into any domain object (and can be mocked out for unit testing). Apache Isis provides such a facade through the <code>ClockService</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_3">API &amp; Implementation</h4>
+<h4 id="_api_implementation_3">2.4.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>ClockService</code> is:</p>
 </div>
@@ -1661,7 +1661,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_testing_support">Testing Support</h4>
+<h4 id="_testing_support">2.4.2. Testing Support</h4>
 <div class="paragraph">
 <p>The default <code>ClockService</code> implementation in fact simply delegates to another class defined in the API, namely the <code>o.a.i.applib.clock.Clock</code>, an abstract singleton class.  It is not recommended that your code use the <code>Clock</code> directly, but you should understand how this all works:</p>
 </div>
@@ -1735,7 +1735,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_3">Registering the Service</h4>
+<h4 id="_registering_the_service_3">2.4.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -1749,7 +1749,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_CommandContext"><code>CommandContext</code></h3>
+<h3 id="_rgsvc-api_CommandContext">2.5. <code>CommandContext</code></h3>
 <div class="paragraph">
 <p>The <code>CommandContext</code> service is a <a href="rgant.html#_rgant-RequestScoped">request-scoped</a> service that reifies the invocation of an action on a domain object into an object itself. This reified information is encapsulated within the <code>Command</code> object.</p>
 </div>
@@ -1780,7 +1780,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 <p>Assuming that the <code>CommandService</code> supports persistent <code>Command`s, the associated <a href="rgant.html#_rgant-Action_command"></code>@Action#command()<code></a> annotation also allows action invocations to be performed in the background. In this case the act of invoking the action on an object instead returns the `Command</code> to the user.</p>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_CommandContext_screencast">Screencast</h4>
+<h4 id="_rgsvc-api_CommandContext_screencast">2.5.1. Screencast</h4>
 <div class="paragraph">
 <p>The screencast provides a run-through of the command (profiling) service, auditing service, publishing service. It also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.</p>
 </div>
@@ -1805,7 +1805,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </div>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_4">API &amp; Implementation</h4>
+<h4 id="_api_implementation_4">2.5.2. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The <code>CommandContext</code> request-scoped service defines the following very simple API:</p>
 </div>
@@ -1926,7 +1926,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_3">Usage</h4>
+<h4 id="_usage_3">2.5.3. Usage</h4>
 <div class="paragraph">
 <p>The typical way to indicate that an action should be treated as a command is to annotate it with the <a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p>
 </div>
@@ -1980,7 +1980,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </div>
 </div>
 <div class="sect3">
-<h4 id="_interacting_with_the_services">Interacting with the services</h4>
+<h4 id="_interacting_with_the_services">2.5.4. Interacting with the services</h4>
 <div class="paragraph">
 <p>Typically the domain objects have little need to interact with the <code>CommandContext</code> and <code>Command</code> directly; what is more useful is that these are persisted in support of the various use cases identified above.</p>
 </div>
@@ -2031,7 +2031,7 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_2">Registering the Services</h4>
+<h4 id="_registering_the_services_2">2.5.5. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -2041,11 +2041,11 @@ implementation of <code>CommandContext</code> service is automatically registere
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_2">Related Services</h4>
+<h4 id="_related_services_2">2.5.6. Related Services</h4>
 <div class="paragraph">
 <p>As discussed above, the supporting <a href="#_rgsvc-spi_CommandService"><code>CommandService</code></a> enables <code>Command</code> objects to be persisted. Other related services are the <a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a> and <a href="#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>). For <code>BackgroundService</code> captures commands for execution in the background, while the [BackgroundCommandService] persists such commands for execution.</p>
 </div>
@@ -2055,7 +2055,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_DeepLinkService"><code>DeepLinkService</code></h3>
+<h3 id="_rgsvc-api_DeepLinkService">2.6. <code>DeepLinkService</code></h3>
 <div class="paragraph">
 <p>The <code>DeepLinkService</code> provides the ability to obtain a <code>java.net.URI</code> that links to a representation of any (persisted) domain entity or
 view model.</p>
@@ -2064,7 +2064,7 @@ view model.</p>
 <p>A typical use case is to generate a clickable link for rendering in an email, PDF, tweet or other communication.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_5">API &amp; Implementation</h4>
+<h4 id="_api_implementation_5">2.6.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>DeepLinkService</code> is:</p>
 </div>
@@ -2088,13 +2088,13 @@ view model.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_within_the_framework">Usage within the framework</h4>
+<h4 id="_usage_within_the_framework">2.6.2. Usage within the framework</h4>
 <div class="paragraph">
 <p>The <a href="#_rgsvc-spi_EmailNotificationService"><code>EmailNotificationService</code></a> uses this service in order to generate emails as part of <a href="ugvw.html#_ugvw_features_user-registration">user registration</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementations">Implementations</h4>
+<h4 id="_implementations">2.6.3. Implementations</h4>
 <div class="paragraph">
 <p>The Wicket viewer core framework provides a default implementation of this API:</p>
 </div>
@@ -2107,7 +2107,7 @@ view model.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_3">Registering the Services</h4>
+<h4 id="_registering_the_services_3">2.6.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#<em>rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), _and</em> that the
@@ -2117,12 +2117,12 @@ automatically registered and injected (it is annotated with <code>@DomainService
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_DomainObjectContainer"><code>DomainObjectContainer</code></h3>
+<h3 id="_rgsvc-api_DomainObjectContainer">2.7. <code>DomainObjectContainer</code></h3>
 <div class="paragraph">
 <p>The <code>DomainObjectContainer</code> service provides a set of general purpose functionality for domain objects to call.  Principal amongst these are a generic APIs for querying objects and creating and persisting objects.  In addition, the service provides access to security context (the "current user"), allows information and warning messages to be raised, and various other miscellaneous functions.</p>
 </div>
@@ -2147,7 +2147,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>The sections below discuss the functions provided by the service, broken out into categories.</p>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_object-creation-api">Object Creation API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_object-creation-api">2.7.1. Object Creation API</h4>
 <div class="paragraph">
 <p>The object creation APIs are used to instantiate new domain objects or view models.</p>
 </div>
@@ -2216,7 +2216,7 @@ that has less coupling to Isis and is arguably easier to understand (has "less m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_generic-repository-api">Generic Repository API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_generic-repository-api">2.7.2. Generic Repository API</h4>
 <div class="paragraph">
 <p>The repository API acts as an abstraction over the JDO/DataNucleus objectstore.  You can use it during prototyping to write naive queries (find all rows, then filter using the Guava <code>Predicate</code> API, or you can use it to call JDO <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/query.html#named">named queries</a> using JDOQL.</p>
 </div>
@@ -2361,7 +2361,7 @@ that has less coupling to Isis and is arguably easier to understand (has "less m
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_object-persistence-api">Object Persistence API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_object-persistence-api">2.7.3. Object Persistence API</h4>
 <div class="paragraph">
 <p>The persistence API is used to persist newly created objects (as per <a href="#_rgsvc-api_DomainObjectContainer_object-creation-api"><code>#newTransientInstance(&#8230;&#8203;)</code></a>, above and to delete (remove) objects that are persistent.</p>
 </div>
@@ -2443,7 +2443,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_messages-api">Messages API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_messages-api">2.7.4. Messages API</h4>
 <div class="paragraph">
 <p>The <code>DomainObjectContainer</code> allows domain objects to raise information, warning or error messages.  These messages can either be simple strings, or can be translated.</p>
 </div>
@@ -2512,7 +2512,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_security-api">Security API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_security-api">2.7.5. Security API</h4>
 <div class="paragraph">
 <p>The security API allows the domain object to obtain the identity of the user interacting with said object.</p>
 </div>
@@ -2561,7 +2561,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_presentation-api">Presentation API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_presentation-api">2.7.6. Presentation API</h4>
 <div class="paragraph">
 <p>A responsibility of every domain object is to return a title.  This can be done declaratively using the <a href="rgant.html#_rgant-Title"><code>@Title</code></a> annotation on property/ies, or it can be done imperatively by writing a <a href="rgcms.html#_rgcms_methods_reserved_title"><code>title()</code></a> method.</p>
 </div>
@@ -2622,7 +2622,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_validation-api">Validation API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_validation-api">2.7.7. Validation API</h4>
 <div class="paragraph">
 <p>The validation API allows a domain object to programmatically validate itself or any other domain object.  Specifically, this means the validating the current state of all properties, as well as any object-level validation defined by <a href="rgcms.html#_rgcms_methods_reserved_validate"><code>validate()</code></a>.</p>
 </div>
@@ -2648,7 +2648,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_properties-api">Properties API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_properties-api">2.7.8. Properties API</h4>
 <div class="paragraph">
 <p>The properties API allows domain objects to read the configuration properties aggregated from the various <a href="rgcfg.html#_rgcfg_configuration-files">configuration files</a>.</p>
 </div>
@@ -2717,7 +2717,7 @@ container.persistIfNotAlready(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_DomainObjectContainer_services-api">Services API</h4>
+<h4 id="_rgsvc-api_DomainObjectContainer_services-api">2.7.9. Services API</h4>
 <div class="paragraph">
 <p>The services API allows your domain objects to programmatically inject services into arbitrary objects, as well as to look up services by type:</p>
 </div>
@@ -2766,7 +2766,7 @@ container.persist(cust);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_4">Registering the Service</h4>
+<h4 id="_registering_the_service_4">2.7.10. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -2776,7 +2776,7 @@ implementation of <code>DomainObjectContainer</code> service is automatically re
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_EmailService"><code>EmailService</code></h3>
+<h3 id="_rgsvc-api_EmailService">2.8. <code>EmailService</code></h3>
 <div class="paragraph">
 <p>The <code>EmailService</code> provides the ability to send HTML emails, with attachments, to one or more recipients.</p>
 </div>
@@ -2784,7 +2784,7 @@ implementation of <code>DomainObjectContainer</code> service is automatically re
 <p>Apache Isis provides a default implementation to send emails using an external SMTP provider.  Note that this must be configured (using a number of configuration properties) before it can be used.  The that sends email as an HTML message, using an external SMTP provider.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_6">API &amp; Implementation</h4>
+<h4 id="_api_implementation_6">2.8.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API for the service is:</p>
 </div>
@@ -2827,7 +2827,7 @@ implementation of <code>DomainObjectContainer</code> service is automatically re
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration">Configuration</h4>
+<h4 id="_configuration">2.8.2. Configuration</h4>
 <div class="paragraph">
 <p>To use this service the following properties must be configured:</p>
 </div>
@@ -2873,7 +2873,7 @@ implementation of <code>DomainObjectContainer</code> service is automatically re
 </div>
 </div>
 <div class="sect3">
-<h4 id="_alternative_implementations_2">Alternative Implementations</h4>
+<h4 id="_alternative_implementations_2">2.8.3. Alternative Implementations</h4>
 <div class="paragraph">
 <p>If you wish to write an alternative implementation, be aware that it should process the message body as HTML (as opposed to plain text or any other format).</p>
 </div>
@@ -2895,7 +2895,7 @@ implementation of <code>DomainObjectContainer</code> service is automatically re
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_4">Registering the Services</h4>
+<h4 id="_registering_the_services_4">2.8.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -2905,18 +2905,18 @@ implementation of <code>EmailService</code> service is automatically registered 
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_3">Related Services</h4>
+<h4 id="_related_services_3">2.8.5. Related Services</h4>
 <div class="paragraph">
 <p>The email service is used by the <a href="#_rgsvc-spi_EmailNotificationService"><code>EmailNotificationService</code></a> which is, in turn, used by <a href="#_rgsvc-spi_UserRegistrationService"><code>UserRegistrationService</code></a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_EventBusService"><code>EventBusService</code></h3>
+<h3 id="_rgsvc-api_EventBusService">2.9. <code>EventBusService</code></h3>
 <div class="paragraph">
 <p>The <code>EventBusService</code> allows domain objects to emit events to subscribing domain services using an in-memory event bus.</p>
 </div>
@@ -2952,7 +2952,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>Two implementations are available, using either <a href="https://code.google.com/p/guava-libraries/">Guava</a>'s <a href="https://code.google.com/p/guava-libraries/wiki/EventBusExplained"><code>EventBus</code></a>, or alternatively using the <a href="http://www.axonframework.org/">AxonFramework</a>'s <a href="http://www.axonframework.org/docs/2.4/single.html#d5e1489">SimpleEventBus</a>.  It is also possible to plug in a custom implementation.</p>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_EventBusService_api-and-implementation">API &amp; Implementation</h4>
+<h4 id="_rgsvc-api_EventBusService_api-and-implementation">2.9.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>EventBusService</code> is:</p>
 </div>
@@ -2989,7 +2989,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_subscribers">Registering Subscribers</h4>
+<h4 id="_registering_subscribers">2.9.2. Registering Subscribers</h4>
 <div class="paragraph">
 <p>The <code>register()</code> method should be called in the <a href="rgant.html#_rgant-PostConstruct"><code>@PostConstruct</code></a> lifecycle method.  It is valid and probably the least confusing to readers to also "unregister" in the <a href="rgant.html#_rgant-PreDestroy"><code>@PreDestroy</code></a> lifecycle method (though as noted <a href="#_rgsvc-api_EventBusService_api-and-implementation">above</a>, unregistering is actually a no-op).</p>
 </div>
@@ -3061,7 +3061,7 @@ registration.  As a convenience, (as of <code>1.11.0-SNAPSHOT</code>) it is also
 </div>
 </div>
 <div class="sect3">
-<h4 id="_annotating_members">Annotating Members</h4>
+<h4 id="_annotating_members">2.9.3. Annotating Members</h4>
 <div class="paragraph">
 <p>As discussed in the introduction, the framework will automatically emit domain events for all of the object members (actions, properties or collections) of an object whenever that object is rendered or (more generally) interacted with.</p>
 </div>
@@ -3152,7 +3152,7 @@ registration.  As a convenience, (as of <code>1.11.0-SNAPSHOT</code>) it is also
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_EventBusService_event-hierarchy">Event hierarchy</h4>
+<h4 id="_rgsvc-api_EventBusService_event-hierarchy">2.9.4. Event hierarchy</h4>
 <div class="paragraph">
 <p>By creating domain event subtypes we can be more semantically precise and in turn providesmore flexibility for subscribers: they can choose whether to be broadly applicable (by subscribing to a superclass) or to be tightly focussed (by subscribing to a subclass).</p>
 </div>
@@ -3273,7 +3273,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_programmatic_posting">Programmatic posting</h4>
+<h4 id="_programmatic_posting">2.9.5. Programmatic posting</h4>
 <div class="paragraph">
 <p>To programmatically post an event, simply call <code>#post()</code>.</p>
 </div>
@@ -3305,7 +3305,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_code_wrapperfactory_code">Using <code>WrapperFactory</code></h4>
+<h4 id="_using_code_wrapperfactory_code">2.9.6. Using <code>WrapperFactory</code></h4>
 <div class="paragraph">
 <p>An alternative way to cause events to be posted is through the <a href="#_rgsvc-api_WrapperFactory"><code>WrapperFactory</code></a>.  This is useful when you wish to enforce a (lack-of-) trust boundary between the caller and the callee.</p>
 </div>
@@ -3335,7 +3335,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_spi">Implementation SPI</h4>
+<h4 id="_implementation_spi">2.9.7. Implementation SPI</h4>
 <div class="paragraph">
 <p>The implementation of <code>EventBusService</code> provided by Apache Isis will by default use <a href="https://code.google.com/p/guava-libraries/">Guava</a>'s <a href="https://code.google.com/p/guava-libraries/wiki/EventBusExplained"><code>EventBus</code></a> as the underlying in-memory event bus.  Alternatively the <a href="http://www.axonframework.org/">AxonFramework</a>'s <a href="http://www.axonframework.org/docs/2.4/single.html#d5e1489">SimpleEventBus</a> can be used.  Which is used is specified through configuration property (described <a href="#_rgsvc-api_EventBusService_Configuration">below</a>).</p>
 </div>
@@ -3377,7 +3377,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_EventBusService_Configuration">Configuration</h4>
+<h4 id="_rgsvc-api_EventBusService_Configuration">2.9.8. Configuration</h4>
 <div class="paragraph">
 <p>The implementation of <code>EventBusService</code> provided by Apache Isis will by default use <a href="https://code.google.com/p/guava-libraries/">Guava</a>'s <a href="https://code.google.com/p/guava-libraries/wiki/EventBusExplained"><code>EventBus</code></a> as the underlying in-memory event bus.  Alternatively the <a href="http://www.axonframework.org/">AxonFramework</a>'s <a href="http://www.axonframework.org/docs/2.4/single.html#d5e1489">SimpleEventBus</a> can be used.</p>
 </div>
@@ -3418,7 +3418,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_5">Registering the Services</h4>
+<h4 id="_registering_the_services_5">2.9.9. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -3428,11 +3428,11 @@ implementation of <code>EventBusService</code> service is automatically register
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_4">Related Services</h4>
+<h4 id="_related_services_4">2.9.10. Related Services</h4>
 <div class="paragraph">
 <p>The <code>EventBusService</code> is intended for fine-grained publish/subscribe for object-to-object interactions within an Apache Isis domain object model. The event propagation is strictly in-memory, and there are no restrictions on the object acting as the event (it need not be serializable, for example).</p>
 </div>
@@ -3442,7 +3442,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></h3>
+<h3 id="_rgsvc-api_FixtureScriptsDefault">2.10. <code>FixtureScriptsDefault</code></h3>
 <div class="paragraph">
 <p>The <code>FixtureScriptsDefault</code> service provides the ability to execute <a href="ugtst.html#_ugtst_fixture-scripts_api-and-usage">fixture scripts</a> .</p>
 </div>
@@ -3467,7 +3467,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_7">API &amp; Implementation</h4>
+<h4 id="_api_implementation_7">2.10.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API for the service is:</p>
 </div>
@@ -3490,7 +3490,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_2">Configuration</h4>
+<h4 id="_configuration_2">2.10.2. Configuration</h4>
 <div class="paragraph">
 <p>As noted in the introduction, this service is only instantiated if there is no other implementation of <code>FixtureScripts</code> available on the classpath.</p>
 </div>
@@ -3499,14 +3499,14 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_5">Related Services</h4>
+<h4 id="_related_services_5">2.10.3. Related Services</h4>
 <div class="paragraph">
 <p>The service interacts with <a href="#_rgsvc-spi_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_GuiceBeanProvider"><code>GuiceBeanProvider</code></h3>
+<h3 id="_rgsvc-api_GuiceBeanProvider">2.11. <code>GuiceBeanProvider</code></h3>
 <div class="paragraph">
 <p>The <code>GuiceBeanProvider</code> domain service acts as a bridge between Apache Isis' <a href="ugvw.html">Wicket viewer</a> internal bootstrapping using <a href="https://github.com/google/guice">Google Guice</a>.</p>
 </div>
@@ -3528,7 +3528,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_8">API &amp; Implementation</h4>
+<h4 id="_api_implementation_8">2.11.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by this service is:</p>
 </div>
@@ -3547,7 +3547,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_4">Usage</h4>
+<h4 id="_usage_4">2.11.2. Usage</h4>
 <div class="paragraph">
 <p>Using the <a href="ugvw.html">Wicket viewer</a> requires subclassing of <code>IsisWicketApplication</code>.  In the subclass it is commonplace to override <code>newIsisWicketModule()</code>, for example:</p>
 </div>
@@ -3594,7 +3594,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_6">Registering the Services</h4>
+<h4 id="_registering_the_services_6">2.11.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#<em>rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), _and</em> that the
@@ -3604,12 +3604,12 @@ automatically registered and injected (it is annotated with <code>@DomainService
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_IsisJdoSupport"><code>IsisJdoSupport</code></h3>
+<h3 id="_rgsvc-api_IsisJdoSupport">2.12. <code>IsisJdoSupport</code></h3>
 <div class="paragraph">
 <p>The <code>IsisJdoSupport</code> service provides a number of general purpose methods for working with the JDO/DataNucleus objectstore.  In general these act at a lower-level of abstraction than the APIs normally used (specifically, those of <a href="#_rgsvc-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>), but nevertheless deal with some of the most common use cases.  For service also provides access to the underlying JDO <code>PersistenceManager</code> for full control.</p>
 </div>
@@ -3617,7 +3617,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>The following sections discuss the functionality provided by the service, broken out into categories.</p>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_IsisJdoSupport_executing-sql">Executing SQL</h4>
+<h4 id="_rgsvc-api_IsisJdoSupport_executing-sql">2.12.1. Executing SQL</h4>
 <div class="paragraph">
 <p>You can use the <code>IsisJdoSupportService</code> to perform arbitrary SQL SELECTs or UPDATEs:</p>
 </div>
@@ -3670,7 +3670,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_IsisJdoSupport_type-safe-jdoql-queries">Type-safe JDOQL Queries</h4>
+<h4 id="_rgsvc-api_IsisJdoSupport_type-safe-jdoql-queries">2.12.2. Type-safe JDOQL Queries</h4>
 <div class="paragraph">
 <p>DataNucleus provides an <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">extension to JDO</a>,  so that JDOQL queries can be built up and executed using a set of type-safe classes.</p>
 </div>
@@ -3765,7 +3765,7 @@ DataNucleus <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_IsisJdoSupport_fixture-support">Fixture support</h4>
+<h4 id="_rgsvc-api_IsisJdoSupport_fixture-support">2.12.3. Fixture support</h4>
 <div class="paragraph">
 <p>When writing <a href="ugtst.html#_ugtst_integ-test-support">integration tests</a> you&#8217;ll usually need to tear down some/all mutable transactional data before each test.  One way to do that is to use the <code>executeUpdate(&#8230;&#8203;)</code> method described <a href="#_rgsvc-api_IsisJdoSupport_executing-sql">above</a>.</p>
 </div>
@@ -3818,7 +3818,7 @@ is temporarily disabled while this method is performed.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_IsisJdoSupport_reloading-entities">Reloading entities</h4>
+<h4 id="_rgsvc-api_IsisJdoSupport_reloading-entities">2.12.4. Reloading entities</h4>
 <div class="paragraph">
 <p>An <a href="http://www.datanucleus.org/products/datanucleus/jdo/orm/relationships.html">(intentional) limitation</a> of JDO/DataNucleus is that persisting a child entity (in a 1:n bidirectional relationship) does not cause the parent&#8217;s collection to be updated.</p>
 </div>
@@ -3893,7 +3893,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_IsisJdoSupport_jdo-persistencemanager">JDO <code>PersistenceManager</code></h4>
+<h4 id="_rgsvc-api_IsisJdoSupport_jdo-persistencemanager">2.12.5. JDO <code>PersistenceManager</code></h4>
 <div class="paragraph">
 <p>The functionality provided by <code>IsisJdoSupport</code> focus only on the most common use cases.  If you require more flexibility than this, eg for dynamically constructed queries, then you can use the service to access the underlying JDO <code>PersistenceManager</code> API:</p>
 </div>
@@ -3922,7 +3922,7 @@ refresh the parent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_7">Registering the Services</h4>
+<h4 id="_registering_the_services_7">2.12.6. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -3932,18 +3932,18 @@ implementation of <code>IsisJdoSupport</code> service is automatically registere
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_JaxbService"><code>JaxbService</code> (<code>1.11.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc-api_JaxbService">2.13. <code>JaxbService</code> (<code>1.11.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
 <p>The <code>JaxbService</code> (<code>1.11.0-SNAPSHOT</code>) allows instances of JAXB-annotated classes to be marshalled to XML and
 unmarshalled from XML back into domain objects.</p>
 </div>
 <div class="sect3">
-<h4 id="_rgsvc-api_JaxbService_api-and-implementation">API &amp; Implementation</h4>
+<h4 id="_rgsvc-api_JaxbService_api-and-implementation">2.13.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>JaxbService</code> is:</p>
 </div>
@@ -3992,7 +3992,7 @@ a persistent entity).  The enum indicates whether these schemas should be includ
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_within_the_framework_2">Usage within the framework</h4>
+<h4 id="_usage_within_the_framework_2">2.13.2. Usage within the framework</h4>
 <div class="paragraph">
 <p>This service is provided as a convenience for applications, but is also used internally by the framework to
 <a href="rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>-annotated
@@ -4001,7 +4001,7 @@ exposed in the UI through mixins to <a href="rgcms.html#_rgcms_classes_roles_Dto
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_5">Registering the Service</h4>
+<h4 id="_registering_the_service_5">2.13.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4011,12 +4011,12 @@ so no further configuration is required.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_MementoService"><code>MementoService</code></h3>
+<h3 id="_rgsvc-api_MementoService">2.14. <code>MementoService</code></h3>
 <div class="paragraph">
 <p>The <code>MementoService</code> was originally introduced to simplify the implementation of <a href="ugbtb.html#_ugbtb_more-advanced_view-models">ViewModel</a>s which are required by the framework to return string representation of all of their backing state, moreover which is safe for use within a URL.</p>
 </div>
@@ -4024,7 +4024,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>However, it can also be used to create a memento of arbitrary objects. Indeed, it is used internally by the core implementation of <a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a> to capture the state of action invocations so that they can be executed by a background process.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_9">API &amp; Implementation</h4>
+<h4 id="_api_implementation_9">2.14.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>MementoService</code> is:</p>
 </div>
@@ -4123,7 +4123,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_5">Usage</h4>
+<h4 id="_usage_5">2.14.2. Usage</h4>
 <div class="paragraph">
 <p>As noted in the introduction, a common use case for this service is in the implementation of the <a href="rgcms.html#_rgcms_classes_super_AbstractViewModel"><code>ViewModel</code></a> interface.</p>
 </div>
@@ -4185,13 +4185,13 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_6">Related Services</h4>
+<h4 id="_related_services_6">2.14.3. Related Services</h4>
 <div class="paragraph">
 <p>The memento service is used by the <a href="#_rgsvc-api_CommandContext"><code>CommandContext</code></a> service and also <a href="#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>. These both use a memento to capture a representation of an action invocation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_6">Registering the Service</h4>
+<h4 id="_registering_the_service_6">2.14.4. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4201,12 +4201,12 @@ implementation of <code>MementoService</code> service is automatically registere
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_MetamodelService"><code>MetamodelService</code></h3>
+<h3 id="_rgsvc-api_MetamodelService">2.15. <code>MetamodelService</code></h3>
 <div class="paragraph">
 <p>The <code>MetaModelService</code> provides access (albeit currently extremely limited) to aspects of Apache Isis' internal metamodel.</p>
 </div>
@@ -4214,7 +4214,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>Currently this is limited to looking up the object type (as specified in <a href="rgant.html#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> and equivalent mechanisms, and as used in  <a href="#_rgsvc-api_BookmarkService"><code>Bookmark</code></a>s and elsewhere) from an object&#8217;s class, and vice versa.  In the future we expect other aspects of the metamodel to also be formally surfaced through this API.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_10">API &amp; Implementation</h4>
+<h4 id="_api_implementation_10">2.15.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by the service is:</p>
 </div>
@@ -4242,7 +4242,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_7">Registering the Service</h4>
+<h4 id="_registering_the_service_7">2.15.2. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4252,12 +4252,12 @@ implementation of <code>MetamodelService</code> service is automatically registe
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_QueryResultsCache"><code>QueryResultsCache</code></h3>
+<h3 id="_rgsvc-api_QueryResultsCache">2.16. <code>QueryResultsCache</code></h3>
 <div class="paragraph">
 <p>The purpose of the <code>QueryResultsCache</code> is to improve response times to the user, by providing a short-term (<a href="../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html">request-scoped</a>) cache of the value of some (safe or idempotent) method call. This will typically be as the result of running a query, but could be any expensive operation.</p>
 </div>
@@ -4279,7 +4279,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_11">API &amp; Implementation</h4>
+<h4 id="_api_implementation_11">2.16.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>QueryResultsCache</code> is:</p>
 </div>
@@ -4321,7 +4321,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_6">Usage</h4>
+<h4 id="_usage_6">2.16.2. Usage</h4>
 <div class="paragraph">
 <p>Suppose that there&#8217;s a <code>TaxService</code> that calculates tax on <code>Taxable</code> items, with respect to some <code>TaxType</code>, and for a given <code>LocalDate</code>. To calculate tax it must run a database query and then perform some additional calculations.</p>
 </div>
@@ -4382,7 +4382,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_8">Registering the Service</h4>
+<h4 id="_registering_the_service_8">2.16.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4392,23 +4392,23 @@ implementation of <code>QueryResultsCache</code> service is automatically regist
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_7">Related Services</h4>
+<h4 id="_related_services_7">2.16.4. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rgsvc-api_Scratchpad"><code>Scratchpad</code></a> service is also intended for actions that are called many times, allowing arbitrary information to be shared between them. Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the <a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a> annotation attribute set to <code>OBJECT_AND_COLLECTION</code> or <code>COLLECTION_ONLY</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_Scratchpad"><code>Scratchpad</code></h3>
+<h3 id="_rgsvc-api_Scratchpad">2.17. <code>Scratchpad</code></h3>
 <div class="paragraph">
 <p>The <code>Scratchpad</code> service is a <a href="../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html">request-scoped</a> service to allow objects to exchange information even if they do not directly call each other.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_12">API &amp; Implementation</h4>
+<h4 id="_api_implementation_12">2.17.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API of <code>Scratchpad</code> service is:</p>
 </div>
@@ -4430,7 +4430,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_7">Usage</h4>
+<h4 id="_usage_7">2.17.2. Usage</h4>
 <div class="paragraph">
 <p>The most common use-case is for <a href="rgant.html#_rgant-Action_invokeOn">bulk</a> actions that act upon multiple objects in a list.  The (same) <code>Scratchpad</code> service is injected into each of these objects, and so they can use pass information.</p>
 </div>
@@ -4520,7 +4520,7 @@ Scratchpad scratchpad;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_9">Registering the Service</h4>
+<h4 id="_registering_the_service_9">2.17.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4530,11 +4530,11 @@ so no further configuration is required.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_8">Related Services</h4>
+<h4 id="_related_services_8">2.17.4. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rgsvc-api_ActionInteractionContext"><code>ActionInteractionContext</code></a> service allows <a href="rgant.html#_rgant-Action_invokeOn">bulk actions</a> to co-ordinate with each other.</p>
 </div>
@@ -4544,13 +4544,13 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_SudoService"><code>SudoService</code></h3>
+<h3 id="_rgsvc-api_SudoService">2.18. <code>SudoService</code></h3>
 <div class="paragraph">
 <p>The <code>SudoService</code> allows the current user reported by the <code>DomainObjectContainer</code> to be temporarily changed to some
 other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="ugtst.html#_ugtst_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_13">API &amp; Implementation</h4>
+<h4 id="_api_implementation_13">2.18.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -4577,7 +4577,7 @@ other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-suppor
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_8">Usage</h4>
+<h4 id="_usage_8">2.18.2. Usage</h4>
 <div class="paragraph">
 <p>A good example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> which uses the <code>SudoService</code> in a fixture script to set up <code>ToDoItem</code> objects:</p>
 </div>
@@ -4598,7 +4598,7 @@ other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-suppor
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_10">Registering the Service</h4>
+<h4 id="_registering_the_service_10">2.18.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4608,12 +4608,12 @@ implementation of <code>SudoService</code> service is automatically registered a
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_WrapperFactory"><code>WrapperFactory</code></h3>
+<h3 id="_rgsvc-api_WrapperFactory">2.19. <code>WrapperFactory</code></h3>
 <div class="paragraph">
 <p>The <code>WrapperFactory</code> provides the ability to enforce business rules for programmatic interactions between domain objects.  If there is a (lack-of-) trust boundary between the caller and callee&#8201;&#8212;&#8201;eg if they reside in different modules&#8201;&#8212;&#8201;then the wrapper factory is a useful mechanism to ensure that any business constraints defined by te callee are honoured.</p>
 </div>
@@ -4641,7 +4641,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>This capability is frequently used within <a href="ugtst.html#_ugtst_integ-test-support">integration tests</a>, but can also be used in production code. (There are analogies that can be drawn here with the way that JEE beans can interact through an EJB local interface).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_2">API</h4>
+<h4 id="_api_2">2.19.1. API</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -4750,7 +4750,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_9">Usage</h4>
+<h4 id="_usage_9">2.19.2. Usage</h4>
 <div class="paragraph">
 <p>The caller will typically obtain the target object (eg from some repository) and then use the injected <code>WrapperFactory</code> to wrap it before interacting with it.</p>
 </div>
@@ -4809,7 +4809,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_listener_api">Listener API</h4>
+<h4 id="_listener_api">2.19.3. Listener API</h4>
 <div class="paragraph">
 <p>The <code>WrapperFactory</code> also provides a listener API to allow other services to listen in on interactions.</p>
 </div>
@@ -4853,7 +4853,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_11">Registering the Service</h4>
+<h4 id="_registering_the_service_11">2.19.4. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -4863,12 +4863,12 @@ implementation of <code>WrapperFactory</code> service is automatically registere
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-api_XmlSnapshotService"><code>XmlSnapshotService</code></h3>
+<h3 id="_rgsvc-api_XmlSnapshotService">2.20. <code>XmlSnapshotService</code></h3>
 <div class="paragraph">
 <p>The <code>XmlSnapshotService</code> provides the capability to generate XML snapshots (and if required corresponding XSD schemas) based on graphs of domain objects.</p>
 </div>
@@ -4885,7 +4885,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>The core framework provides an implementation of this service (<code>o.a.i.core.runtime.services.xmlsnapshot.XmlSnapshotServiceDefault</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_standard_api">Standard API</h4>
+<h4 id="_standard_api">2.20.1. Standard API</h4>
 <div class="paragraph">
 <p>The (basic) API of <code>XmlSnapshotService</code> is:</p>
 </div>
@@ -4931,7 +4931,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_builder_api">Builder API</h4>
+<h4 id="_builder_api">2.20.2. Builder API</h4>
 <div class="paragraph">
 <p>The contents of the snapshot can be adjusted by including "paths" to other references or collections. To do this, the
 builder is used.  The API for this is:</p>
@@ -5015,7 +5015,7 @@ product of every order:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_automatic_inclusions">Automatic inclusions</h4>
+<h4 id="_automatic_inclusions">2.20.3. Automatic inclusions</h4>
 <div class="paragraph">
 <p>If the domain object being snapshotted implements the <code>SnapshottableWithInclusions</code> interace, then this moves the
 responsibility for determining what is included within the snapshot from the caller to the snapshottable object itself:</p>
@@ -5049,7 +5049,7 @@ responsibility for determining what is included within the snapshot from the cal
 </div>
 </div>
 <div class="sect3">
-<h4 id="_convenience_api">Convenience API</h4>
+<h4 id="_convenience_api">2.20.4. Convenience API</h4>
 <div class="paragraph">
 <p>The <code>XmlSnapshotService</code> also provides some API for simply manipulating XML:</p>
 </div>
@@ -5092,7 +5092,7 @@ responsibility for determining what is included within the snapshot from the cal
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_12">Registering the Service</h4>
+<h4 id="_registering_the_service_12">2.20.5. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -5102,11 +5102,11 @@ implementation of <code>XmlSnapshotService</code> service is automatically regis
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_9">Related Services</h4>
+<h4 id="_related_services_9">2.20.6. Related Services</h4>
 <div class="paragraph">
 <p>The <a href="#_rgsvc-api_BookmarkService"><code>BookmarkService</code></a> provides a mechanism for obtaining a string representations of a single domain object.</p>
 </div>
@@ -5124,7 +5124,7 @@ standard JAXB functionality for generating both XMLs and XSDs from JAXB-annotate
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgsvc-spi">Domain Services SPI</h2>
+<h2 id="_rgsvc-spi">3. Domain Services SPI</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis includes an extensive number of domain services for your domain objects to use; these are listed in <a href="#_rgsvc-api">Reference: Domain Services (API)</a> chapter.</p>
@@ -5474,7 +5474,7 @@ Impl&#8217;n (g: a:)</th>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_AuditingService"><code>AuditingService3</code></h3>
+<h3 id="_rgsvc-spi_AuditingService">3.1. <code>AuditingService3</code></h3>
 <div class="paragraph">
 <p>The <code>AuditingService3</code> auditing service provides a simple mechanism to capture changes to data. It is called for each property that has changed on any domain object, as a set of pre- and post-values.</p>
 </div>
@@ -5493,7 +5493,7 @@ Impl&#8217;n (g: a:)</th>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi">SPI</h4>
+<h4 id="_spi">3.1.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI for the service is:</p>
 </div>
@@ -5515,7 +5515,7 @@ Impl&#8217;n (g: a:)</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation">Implementation</h4>
+<h4 id="_implementation">3.1.2. Implementation</h4>
 <div class="paragraph">
 <p>The most full-featured available implementation is the (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' Audit module</a>.  This creates an audit records for each changed property (ie every time that <code>AuditingService3#audit(&#8230;&#8203;)</code> is called.  The implementation is <code>org.isisaddons.module.audit.dom.AuditingService</code>.</p>
 </div>
@@ -5540,13 +5540,13 @@ Impl&#8217;n (g: a:)</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_10">Usage</h4>
+<h4 id="_usage_10">3.1.3. Usage</h4>
 <div class="paragraph">
 <p>The typical way to indicate that an object should be audited is to annotate it with the <a href="rgant.html#_rgant-DomainObject_auditing"><code>@DomainObject#auditing()</code></a> annotation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_8">Registering the Services</h4>
+<h4 id="_registering_the_services_8">3.1.4. Registering the Services</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module provides an implementation of
 this service (<code>AuditingService</code>), and also provides a number of related domain services (<code>AuditingServiceMenu</code>,
@@ -5562,7 +5562,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_10">Related Services</h4>
+<h4 id="_related_services_10">3.1.5. Related Services</h4>
 <div class="paragraph">
 <p>The auditing service works very well with the <a href="#<em>rgsvc-spi_CommandService"><code>CommandService</code></a>.  The <code>CommandService</code> captures the _cause</em> of an interaction (an action was invoked, a property was edited), while the <code>AuditingService3</code> captures the <em>effect</em> of that interaction in terms of changed state.</p>
 </div>
@@ -5575,7 +5575,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></h3>
+<h3 id="_rgsvc-spi_BackgroundCommandService">3.2. <code>BackgroundCommandService</code></h3>
 <div class="paragraph">
 <p>The <code>BackgroundCommandService</code> (SPI) service supports the <a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a> (API) service, persisting action invocations as commands such that they can subsequently be invoked in the background.</p>
 </div>
@@ -5586,7 +5586,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 <p>The persisting of commands is only half the story; there needs to be a separate process to read the commands and execute them.  The abstract <a href="#_rgsvc-api_BackgroundService_BackgroundCommandExecution"><code>BackgroundCommandExecution</code></a> provides a mechanism to execute such commands.  This can be considered an API, albeit "internal" because the implementation relies on internals of the framework.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_2">SPI</h4>
+<h4 id="_spi_2">3.2.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI of the <code>BackgroundCommandService</code> is:</p>
 </div>
@@ -5643,7 +5643,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect3">
-<h4 id="__internal_spi">"Internal" SPI</h4>
+<h4 id="__internal_spi">3.2.2. "Internal" SPI</h4>
 <div class="paragraph">
 <p>The <code>BackgroundCommandExecution</code> (in isis-core) is an abstract template class for  <a href="ugbtb.html#_ugbtb_more-advanced_headless-access_AbstractIsisSessionTemplate">headless access</a>, that defines an abstract hook method to obtain background `Command`s to be executed:</p>
 </div>
@@ -5662,7 +5662,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_2">Implementation</h4>
+<h4 id="_implementation_2">3.2.3. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module provides an implementation (<code>org.isisaddons.module.command.dom.BackgroundCommandServiceJdo</code>) that persists <code>Command</code>s using the JDO/DataNucleus object store.  It further provides a number of supporting services:</p>
 </div>
@@ -5695,7 +5695,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_11">Usage</h4>
+<h4 id="_usage_11">3.2.4. Usage</h4>
 <div class="paragraph">
 <p>Background commands can be created either declaratively or imperatively.</p>
 </div>
@@ -5707,7 +5707,7 @@ implementing a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visib
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_9">Registering the Services</h4>
+<h4 id="_registering_the_services_9">3.2.5. Registering the Services</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module provides an implementation
 of this service (<code>BackgroundCommandService</code>), and also provides a number of related domain services
@@ -5725,7 +5725,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_11">Related Services</h4>
+<h4 id="_related_services_11">3.2.6. Related Services</h4>
 <div class="paragraph">
 <p>As discussed above, this service supports the <a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a> , persisting `Command`s such that they can be executed in the background.</p>
 </div>
@@ -5738,7 +5738,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_ClassDiscoveryService"><code>ClassDiscoveryService</code></h3>
+<h3 id="_rgsvc-spi_ClassDiscoveryService">3.3. <code>ClassDiscoveryService</code></h3>
 <div class="paragraph">
 <p>The <code>ClassDiscovery</code> service is used to automatically discover subclasses of any given type on the classpath.  The primary use case is to support "convention-over-configuration" designs that work with a minimum of configuration.</p>
 </div>
@@ -5746,7 +5746,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 <p>This service is used by the <a href="rgcms.html#_rgcms_classes_super_FixtureScripts"><code>FixtureScripts</code></a> service to automatically locate any <a href="rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a> implementations.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_3">SPI</h4>
+<h4 id="_spi_3">3.3.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -5771,7 +5771,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_3">Implementation</h4>
+<h4 id="_implementation_3">3.3.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p>
 </div>
@@ -5791,13 +5791,13 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_12">Usage</h4>
+<h4 id="_usage_12">3.3.3. Usage</h4>
 <div class="paragraph">
 <p>The usage will vary depending upon the conventions of the design.  As of 1.9.0, the usage of the service has been
 centralized such that the packages to be scanned are located from the <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>'s <code>#getModules()</code> method.</p>
 </div>
 <div class="paragraph">
-<p>For example, the <a href="ug.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s app manifest includes:</p>
+<p>For example, the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s app manifest includes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5822,7 +5822,7 @@ centralized such that the packages to be scanned are located from the <a href="r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_10">Registering the Services</h4>
+<h4 id="_registering_the_services_10">3.3.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -5832,12 +5832,12 @@ implementation of <code>ClassDiscoveryService2</code> service is automatically r
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_CommandService"><code>CommandService</code></h3>
+<h3 id="_rgsvc-spi_CommandService">3.4. <code>CommandService</code></h3>
 <div class="paragraph">
 <p>The <code>CommandService</code> service supports the <a href="#_rgsvc-api_CommandContext"><code>CommandContext</code></a> service such that <code>Command</code> objects (that reify the invocation of an action on a domain object into an object) can be persisted.</p>
 </div>
@@ -5886,7 +5886,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_4">SPI</h4>
+<h4 id="_spi_4">3.4.1. SPI</h4>
 <div class="paragraph">
 <p>The <code>CommandService</code> service defines the following very simple API:</p>
 </div>
@@ -5909,7 +5909,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_4">Implementation</h4>
+<h4 id="_implementation_4">3.4.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module provides an implementation (<code>org.isisaddons.module.command.dom.CommandServiceJdo</code>) that persists <code>Command</code>s using the JDO/DataNucleus object store.  It further provides a number of supporting services:</p>
 </div>
@@ -5925,13 +5925,13 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_13">Usage</h4>
+<h4 id="_usage_13">3.4.3. Usage</h4>
 <div class="paragraph">
 <p>The typical way to indicate that an action should be reified into a <code>Command</code> is by annotating the action using <a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_11">Registering the Services</h4>
+<h4 id="_registering_the_services_11">3.4.4. Registering the Services</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module provides an implementation
 of this service (<code>CommandService</code>), and also provides a number of related domain services
@@ -5949,7 +5949,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_12">Related Services</h4>
+<h4 id="_related_services_12">3.4.5. Related Services</h4>
 <div class="paragraph">
 <p>As discussed above, this service supports the <a href="#_rgsvc-api_CommandContext"><code>CommandContext</code></a>, providing the ability for <code>Command</code> objects to be
 persisted. This is closely related to the <a href="#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>that allows the <a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a> to schedule commands for background/asynchronous execution.</p>
@@ -5969,7 +5969,7 @@ persisted. This is closely related to the <a href="#_rgsvc-spi_BackgroundCommand
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></h3>
+<h3 id="_rgsvc-spi_ContentMappingService">3.5. <code>ContentMappingService</code></h3>
 <div class="paragraph">
 <p>The <code>ContentMappingService</code> supports the (default implementation of the) <a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a> allowing the <a href="ugvro.html">RestfulObjects viewer</a> to allow domain objects to be transformed into some other format as specified by the HTTP <code>Accept</code> header.</p>
 </div>
@@ -5977,7 +5977,7 @@ persisted. This is closely related to the <a href="#_rgsvc-spi_BackgroundCommand
 <p>See <a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a> for further discussion.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_5">SPI</h4>
+<h4 id="_spi_5">3.5.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6024,7 +6024,7 @@ persisted. This is closely related to the <a href="#_rgsvc-spi_BackgroundCommand
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementations_2">Implementations</h4>
+<h4 id="_implementations_2">3.5.2. Implementations</h4>
 <div class="paragraph">
 <p>No default implementations are provided by Apache Isis framework itself.  However, the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> includes a sample implementation to convert its <code>ToDoItem</code>
 entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annotated).  This uses the
@@ -6123,14 +6123,14 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_13">Related Services</h4>
+<h4 id="_related_services_13">3.5.3. Related Services</h4>
 <div class="paragraph">
 <p>This service is a companion to the default implementation of the <a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></h3>
+<h3 id="_rgsvc-spi_ContentNegotiationService">3.6. <code>ContentNegotiationService</code></h3>
 <div class="paragraph">
 <p>The <code>ContentNegotiationService</code> is a plug-in point for the <a href="ugvro.html">RestfulObjects viewer</a> so that it can generate representations according to HTTP <code>Accept</code> header of the request.  This idea is discussed in section 34.1 of the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0.</p>
 </div>
@@ -6183,7 +6183,7 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_spi_6">SPI</h4>
+<h4 id="_spi_6">3.6.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6272,7 +6272,7 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_5">Implementation</h4>
+<h4 id="_implementation_5">3.6.2. Implementation</h4>
 <div class="paragraph">
 <p><code>ContentNegotiationServiceAbstract</code> (in <code>o.a.i.v.ro.rendering.service.conneg</code>) provides a no-op implementation of the SPI, along with supporting methods:</p>
 </div>
@@ -6332,7 +6332,7 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_14">Usage</h4>
+<h4 id="_usage_14">3.6.3. Usage</h4>
 <div class="paragraph">
 <p>You can find an example of all these services in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>.  This defines a <code>ToDoItemDto</code> class that is JAXB annotated (it is in fact generated from an XSD).</p>
 </div>
@@ -6381,7 +6381,7 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_3">Configuration</h4>
+<h4 id="_configuration_3">3.6.4. Configuration</h4>
 <div class="paragraph">
 <p>The default <code>ContentNegotiationServiceXRoDomainType</code> implementation provides a <a href="rgcfg.html#_rgcfg_configuring-core">configuration property</a> which controls whether a mapped domain object is pretty-printed (formatted, indented) or not:</p>
 </div>
@@ -6395,7 +6395,7 @@ entity into (two different versions of) a <code>ToDoItemDto</code>  (JAXB annota
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_12">Registering the Services</h4>
+<h4 id="_registering_the_services_12">3.6.5. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default
@@ -6405,11 +6405,11 @@ implementation of <code>ContentNegotiationService</code> service is automaticall
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_14">Related Services</h4>
+<h4 id="_related_services_14">3.6.6. Related Services</h4>
 <div class="paragraph">
 <p>The default implementation of <code>ContentNegotiationService</code> delegates to <a href="#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a> (if present) to convert domain entities into a stable form (eg DTO).</p>
 </div>
@@ -6419,7 +6419,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_EmailNotificationService"><code>EmailNotificationService</code></h3>
+<h3 id="_rgsvc-spi_EmailNotificationService">3.7. <code>EmailNotificationService</code></h3>
 <div class="paragraph">
 <p>The <code>EmailNotificationService</code> supports the <a href="ugvw.html#_ugvw_features_user-registration">user registration</a> (self sign-up) features of the <a href="ugvw.html">Wicket viewer</a> whereby a user can sign-up to access an application by providing a valid email address.</p>
 </div>
@@ -6433,7 +6433,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>The default implementation of this service uses the <a href="#_rgsvc-api_EmailService"><code>EmailService</code></a>, which must be configured in order for user registration to be enabled.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_7">SPI</h4>
+<h4 id="_spi_7">3.7.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6470,7 +6470,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_6">Implementation</h4>
+<h4 id="_implementation_6">3.7.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework provides a default implementation, <code>o.a.i.core.runtime.services.userreg.EmailNotificationServiceDefault</code>
 that constructs the emails to send.</p>
@@ -6505,7 +6505,7 @@ that constructs the emails to send.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_13">Registering the Service</h4>
+<h4 id="_registering_the_service_13">3.7.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default
@@ -6515,11 +6515,11 @@ implementation of <code>EmailNotificationService</code> service is automatically
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_15">Related Services</h4>
+<h4 id="_related_services_15">3.7.4. Related Services</h4>
 <div class="paragraph">
 <p>As noted elsewhere, the default implementation of this service uses <a href="#_rgsvc-api_EmailService"><code>EmailService</code></a>.  This service has no specific configuration properties but does require that the <code>EmailService</code> has been configured.</p>
 </div>
@@ -6529,7 +6529,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_ErrorReportingService"><code>ErrorReportingService</code></h3>
+<h3 id="_rgsvc-spi_ErrorReportingService">3.8. <code>ErrorReportingService</code></h3>
 <div class="paragraph">
 <p>The <code>ErrorReportingService</code> service is an optional SPI that providies the ability to record any errors/exceptions that
  might occur in the application into an external incident recording system (such as JIRA).  The service also allows
@@ -6537,7 +6537,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
  incident reference (eg a JIRA issue <code>XXX-1234</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_8">SPI</h4>
+<h4 id="_spi_8">3.8.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6616,7 +6616,7 @@ attention.</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_7">Implementation</h4>
+<h4 id="_implementation_7">3.8.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-app-kitchensink">Isis addons' kitchensink</a> app provides an example
 implementation:</p>
@@ -6654,7 +6654,7 @@ implementation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_13">Registering the Services</h4>
+<h4 id="_registering_the_services_13">3.8.3. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service.  To register your own implementation (and assuming that an
 <code>AppManifest</code> is being used to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), then just
@@ -6664,7 +6664,7 @@ ensure that the implementation is on the classpath and the module containing the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_EventSerializer"><code>EventSerializer</code></h3>
+<h3 id="_rgsvc-spi_EventSerializer">3.9. <code>EventSerializer</code></h3>
 <div class="paragraph">
 <p>The <code>EmailSerializer</code> service is a supporting service intended for use by (any implementation of) <a href="#_rgsvc-spi_PublishingService"><code>PublishingService</code></a>.  Its responsibility is to combine the <code>EventMetadata</code> and the <code>EventPayload</code> into some serialized form (such as JSON, XML or a string) that can then be published.</p>
 </div>
@@ -6672,7 +6672,7 @@ ensure that the implementation is on the classpath and the module containing the
 <p>See <a href="#_rgsvc-spi_PublishingService"><code>PublishingService</code></a> for further discussion.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_9">SPI</h4>
+<h4 id="_spi_9">3.9.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6706,7 +6706,7 @@ ensure that the implementation is on the classpath and the module containing the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_8">Implementation</h4>
+<h4 id="_implementation_8">3.9.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an implementation (<code>org.isisaddons.module.publishing.dom.eventserializer.RestfulObjectsSpecEventSerializer</code>) that represents the event payload using the representation defined by the <a href="http://restfulobjects.org">Restful Objects spec</a> of (transient) objects, grafting on the metadata as additional JSON nodes.</p>
 </div>
@@ -6733,7 +6733,7 @@ ensure that the implementation is on the classpath and the module containing the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_14">Registering the Services</h4>
+<h4 id="_registering_the_services_14">3.9.3. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -6749,7 +6749,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_16">Related Services</h4>
+<h4 id="_related_services_16">3.9.4. Related Services</h4>
 <div class="paragraph">
 <p>This service is intended (though not mandated) to be used by implementations of <a href="#_rgsvc-spi_PublishingService"><code>PublishingService</code></a>.  The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module does use it (though the (non-ASF)
 <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module does not).</p>
@@ -6757,7 +6757,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></h3>
+<h3 id="_rgsvc-spi_ExceptionRecognizer">3.10. <code>ExceptionRecognizer</code></h3>
 <div class="paragraph">
 <p>The <code>ExceptionRecognizer</code> service provides the mechanism for both the domain programmer and also for components to be able to recognize and handle certain exceptions that may be thrown by the system.  Rather than display an obscure error to the end-user, the application can instead display a user-friendly message.</p>
 </div>
@@ -6768,7 +6768,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 <p>It is also possible to provide additional implementations, registered in <code>isis.properties</code>.  Unlike other services, where any service registered in <code>isis.properties</code> replaces any default implementations, in the case of this service all implementations registered are "consulted" to see if they recognize an exception (the chain-of-responsibility pattern).</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_10">SPI</h4>
+<h4 id="_spi_10">3.10.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -6867,7 +6867,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_9">Implementation</h4>
+<h4 id="_implementation_9">3.10.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework provides two default implementations:</p>
 </div>
@@ -6899,7 +6899,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_15">Registering the Services</h4>
+<h4 id="_registering_the_services_15">3.10.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then the default
@@ -6936,7 +6936,7 @@ implementations provided by the framework (<code>DomainObjectContainerDefault</c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></h3>
+<h3 id="_rgsvc-spi_FixtureScriptsSpecificationProvider">3.11. <code>FixtureScriptsSpecificationProvider</code></h3>
 <div class="paragraph">
 <p>The <code>FixtureScriptsSpecificationProvider</code> configures the
 <a href="#_rgsvc-api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> domain service, providing the
@@ -6964,7 +6964,7 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_11">SPI</h4>
+<h4 id="_spi_11">3.11.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -6997,9 +6997,9 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_10">Implementation</h4>
+<h4 id="_implementation_10">3.11.2. Implementation</h4>
 <div class="paragraph">
-<p>The <a href="ug.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has a simple implementation of this service:</p>
+<p>The <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has a simple implementation of this service:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7021,7 +7021,7 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_LocaleProvider"><code>LocaleProvider</code></h3>
+<h3 id="_rgsvc-spi_LocaleProvider">3.12. <code>LocaleProvider</code></h3>
 <div class="paragraph">
 <p>The <code>LocaleProvider</code> service is one of the services that work together to implement Apache Isis' support for i18n, being used by Isis' default implementation of <a href="#_rgsvc-spi_TranslationService"><code>TranslationService</code></a>.</p>
 </div>
@@ -7043,7 +7043,7 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_12">SPI</h4>
+<h4 id="_spi_12">3.12.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -7060,7 +7060,7 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_11">Implementation</h4>
+<h4 id="_implementation_11">3.12.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis' <a href="ugvw.html">Wicket viewer</a> provides an implementation of this service (<code>LocaleProviderWicket</code>) which leverages Apache Wicket APIs.</p>
 </div>
@@ -7080,7 +7080,7 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_16">Registering the Services</h4>
+<h4 id="_registering_the_services_16">3.12.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#<em>rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), _and</em> that the
@@ -7090,23 +7090,23 @@ automatically registered and injected (it is annotated with <code>@DomainService
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_17">Related Services</h4>
+<h4 id="_related_services_17">3.12.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rgsvc-spi_TranslationService"><code>TranslationService</code></a> and <a href="#_rgsvc-spi_TranslationsResolver"><code>TranslationsResolver</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_PublishingService"><code>PublishingService</code></h3>
+<h3 id="_rgsvc-spi_PublishingService">3.13. <code>PublishingService</code></h3>
 <div class="paragraph">
 <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Here the only events published are those that action invocations and of changed objects.  A typical use case is to publish onto a pub/sub bus such as <a href="http://activemq.apache.org/">ActiveMQ</a> with <a href="http://camel.apache.org">Camel</a> to keep other systems up to date.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_13">SPI</h4>
+<h4 id="_spi_13">3.13.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -7153,7 +7153,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_12">Implementation</h4>
+<h4 id="_implementation_12">3.13.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework provides no default implementations of this service.  There are however two implementations available in
 the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a>.</p>
@@ -7202,7 +7202,7 @@ the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_15">Usage</h4>
+<h4 id="_usage_15">3.13.3. Usage</h4>
 <div class="paragraph">
 <p>To indicate that an action invocation should be published, annotate it with the <a href="rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p>
 </div>
@@ -7296,7 +7296,7 @@ the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_17">Registering the Services</h4>
+<h4 id="_registering_the_services_17">3.13.4. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -7313,7 +7313,7 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_18">Related Services</h4>
+<h4 id="_related_services_18">3.13.5. Related Services</h4>
 <div class="paragraph">
 <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system. Here the only events published are those that action invocations (for actions annotated with <a href="rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a>) and of changed objects (for objects annotated with <a href="rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a>.</p>
 </div>
@@ -7325,7 +7325,7 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_design_notes">Design Notes</h4>
+<h4 id="_design_notes">3.13.6. Design Notes</h4>
 <div class="paragraph">
 <p>The following class diagram shows how the above components fit together:</p>
 </div>
@@ -7340,7 +7340,7 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_RepresentationService"><code>RepresentationService</code></h3>
+<h3 id="_rgsvc-spi_RepresentationService">3.14. <code>RepresentationService</code></h3>
 <div class="paragraph">
 <p>The <code>RepresentationService</code> is the main plug-in point for the <a href="ugvro.html">RestfulObjects viewer</a> to generate representations.</p>
 </div>
@@ -7362,7 +7362,7 @@ suppressed either using security or by implementing a
 <p>The <code>RepresentationServiceForRestfulObjects</code> is the default implementation of this service; likewise <code>ContentNegotiationServiceXRoDomainType</code> is the default implementation of the <code>ContentNegotiationService</code>.  If you inspect the source code you&#8217;ll see that the default implementation of this service&#8217;s primary responsibility is to generate the default Restful Objects representations.  Therefore, if you what you want to do is to generate a <em>different _representation then in many cases replacing either this service _or</em> the <code>ContentNegotiationService</code> will be equivalent (you&#8217;ll notice that their SPIs are very similar).</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_14">SPI</h4>
+<h4 id="_spi_14">3.14.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -7460,32 +7460,32 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_13">Implementation</h4>
+<h4 id="_implementation_13">3.14.2. Implementation</h4>
 <div class="paragraph">
 <p>As discussed in the introduction, the framework provides a default implementation, <code>o.a.i.v.ro.rendering.service.RepresentationServiceForRestfulObjects</code>.   This delegates to <a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a> to generate an alternative representation; but if none is provided then it falls back on generating the representations as defined in the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0.</p>
 </div>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_18">Registering the Services</h4>
+<h4 id="_registering_the_services_18">3.14.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>RepresentationService</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_19">Related Services</h4>
+<h4 id="_related_services_19">3.14.4. Related Services</h4>
 <div class="paragraph">
 <p>The default implementation delegates to <a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>, whose default implementation may delegate in turn to <a href="#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a> (if present).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_TranslationService"><code>TranslationService</code></h3>
+<h3 id="_rgsvc-spi_TranslationService">3.15. <code>TranslationService</code></h3>
 <div class="paragraph">
 <p>The <code>TranslationService</code> is the cornerstone of Apache Isis' i18n support.  Its role is to be able to provide translated versions of the various elements within the Apache Isis metamodel (service and object classes, properties, collections, actions, action parameters) and also to translate business rule (disable/valid) messages, and exceptions.  These translations provide for both singular and plural forms.</p>
 </div>
@@ -7504,7 +7504,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_15">SPI</h4>
+<h4 id="_spi_15">3.15.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -7548,7 +7548,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_14">Implementation</h4>
+<h4 id="_implementation_14">3.15.2. Implementation</h4>
 <div class="paragraph">
 <p>The Apache Isis framework provides a default implementation (<code>TranslationServicePo</code>) that uses the GNU <code>.pot</code> and <code>.po</code> files for translations.  It relies on the <code>LocaleProvider</code> service (to return the <code>Locale</code> of the current user) and also the <code>TranslationsResolver</code> service (to read existing translations).</p>
 </div>
@@ -7560,7 +7560,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_19">Registering the Services</h4>
+<h4 id="_registering_the_services_19">3.15.3. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -7572,18 +7572,18 @@ implementation of <code>TranslationService</code> service (along with the suppor
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_20">Related Services</h4>
+<h4 id="_related_services_20">3.15.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rgsvc-spi_LocaleProvider"><code>LocaleProvider</code></a> and <a href="#_rgsvc-spi_TranslationsResolver"><code>TranslationsResolver</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_TranslationsResolver"><code>TranslationsResolver</code></h3>
+<h3 id="_rgsvc-spi_TranslationsResolver">3.16. <code>TranslationsResolver</code></h3>
 <div class="paragraph">
 <p>The <code>TranslationsResolver</code> service is one of the services that work together to implement Apache Isis' support for i18n, being used by Isis' default implementation of <a href="#_rgsvc-spi_TranslationService"><code>TranslationService</code></a>.</p>
 </div>
@@ -7605,7 +7605,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_16">SPI</h4>
+<h4 id="_spi_16">3.16.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -7619,7 +7619,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_15">Implementation</h4>
+<h4 id="_implementation_15">3.16.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis' <a href="ugvw.html">Wicket viewer</a> provides an implementation of this service (<code>TranslationsResolverWicket</code>) which leverages Apache Wicket APIs.  This searches for translation files in the standard <code>WEB-INF/</code> directory.</p>
 </div>
@@ -7639,7 +7639,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_14">Registering the Service</h4>
+<h4 id="_registering_the_service_14">3.16.3. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#<em>rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), _and</em> that the <a href="ugvw.html">Wicket viewer</a> is being used, then an implementation of <code>TranslationsResolver</code> is
@@ -7648,18 +7648,18 @@ automatically registered and injected (it is annotated with <code>@DomainService
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_21">Related Services</h4>
+<h4 id="_related_services_21">3.16.4. Related Services</h4>
 <div class="paragraph">
 <p>This service works in conjunction with <a href="#_rgsvc-spi_LocaleProvider"><code>LocaleProvider</code></a> and <a href="#_rgsvc-spi_TranslationService"><code>TranslationService</code></a> in order to provide i18n support.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_UrlEncodingService"><code>UrlEncodingService</code> (<code>1.11.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc-spi_UrlEncodingService">3.17. <code>UrlEncodingService</code> (<code>1.11.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
 <p>The <code>UrlEncodingService</code> (<code>1.11.0-SNAPSHOT</code>) defines a consistent way to convert strings to/from a form safe for use
 within a URL.  The service is used by the framework to map <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view model</a>
@@ -7692,7 +7692,7 @@ state within the URL.</p>
 applib) that uses <code>base-64</code> encoding to <code>UTF-8</code> charset.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_17">SPI</h4>
+<h4 id="_spi_17">3.17.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -7720,7 +7720,7 @@ applib) that uses <code>base-64</code> encoding to <code>UTF-8</code> charset.</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_16">Implementation</h4>
+<h4 id="_implementation_16">3.17.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework provides a default implementation (<code>UrlEncodingServiceUsingBaseEncoding</code>) that simply converts the string
 using base-64 encoding and UTF-8 character set.  As already noted, be aware that the maximum length of a URL should not
@@ -7730,12 +7730,12 @@ cases register an alternative implementation of this service.</p>
 <div class="paragraph">
 <p>To use an alternative implementation, use
 <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
+further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-implementations">"how to"</a> tip).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_UserProfileService"><code>UserProfileService</code></h3>
+<h3 id="_rgsvc-spi_UserProfileService">3.18. <code>UserProfileService</code></h3>
 <div class="paragraph">
 <p>The <code>UserProfileService</code> provides the ability for the domain application to return supplementary metadata about the current user. This information is used (by the <a href="ugvw.html">Wicket viewer</a>) to customize the appearance of the tertiary "Me" menu bar (top right). For example, rather than display the username, instead the user&#8217;s first and last name could be displayed.</p>
 </div>
@@ -7743,7 +7743,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 <p>Another use case is to allow the user to switch context in some fashion or other. This might be to emulate a sort of "sudo"-like function, or perhaps to focus on some particular set of data.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_18">SPI</h4>
+<h4 id="_spi_18">3.18.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -7771,7 +7771,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_17">Implementation</h4>
+<h4 id="_implementation_17">3.18.2. Implementation</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -7801,7 +7801,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc-spi_UserRegistrationService"><code>UserRegistrationService</code></h3>
+<h3 id="_rgsvc-spi_UserRegistrationService">3.19. <code>UserRegistrationService</code></h3>
 <div class="paragraph">
 <p>The <code>UserRegistrationService</code> provides the ability for users to sign-up to access an application by providing a valid email address, and also provides the capability for users to reset their password if forgotten.</p>
 </div>
@@ -7829,7 +7829,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_19">SPI</h4>
+<h4 id="_spi_19">3.19.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -7869,7 +7869,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_18">Implementation</h4>
+<h4 id="_implementation_18">3.19.2. Implementation</h4>
 <div class="paragraph">
 <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p>
 </div>
@@ -7881,7 +7881,7 @@ further in this <a href="ug.html#_ugfun_how-tos_replacing-default-service-implem
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_20">Registering the Services</h4>
+<h4 id="_registering_the_services_20">3.19.3. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -7914,7 +7914,7 @@ to implement a subclass and register.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_22">Related Services</h4>
+<h4 id="_related_services_22">3.19.4. Related Services</h4>
 <div class="paragraph">
 <p>The most common use case is to allow users to sign-up through Apache Isis' Wicket viewer. Because the process requires email to be sent, the following services must be configured:</p>
 </div>
@@ -7955,358 +7955,358 @@ to implement a subclass and register.</p>
         <div id="toc" class="toc2">
             <div class="fallback-toc">
                 <ul class="sectlevel1">
-<li><a href="#_rgsvc">Domain Services</a>
+<li><a href="#_rgsvc">1. Domain Services</a>
 <ul class="sectlevel2">
-<li><a href="#_other_guides">Other Guides</a></li>
+<li><a href="#_other_guides">1.1. Other Guides</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api">Domain Services API</a>
+<li><a href="#_rgsvc-api">2. Domain Services API</a>
 <ul class="sectlevel2">
-<li><a href="#_rgsvc-api_ActionInvocationContext"><code>ActionInvocationContext</code></a>
+<li><a href="#_rgsvc-api_ActionInvocationContext">2.1. <code>ActionInvocationContext</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api">API</a></li>
-<li><a href="#_usage">Usage</a></li>
-<li><a href="#_registering_the_service">Registering the Service</a></li>
-<li><a href="#_unit_testing_support">Unit testing support</a></li>
+<li><a href="#_api">2.1.1. API</a></li>
+<li><a href="#_usage">2.1.2. Usage</a></li>
+<li><a href="#_registering_the_service">2.1.3. Registering the Service</a></li>
+<li><a href="#_unit_testing_support">2.1.4. Unit testing support</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a>
+<li><a href="#_rgsvc-api_BackgroundService">2.2. <code>BackgroundService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation">API &amp; Implementation</a></li>
-<li><a href="#_usage_2">Usage</a></li>
-<li><a href="#_end_user_experience">End-user experience</a></li>
-<li><a href="#_registering_the_services">Registering the Services</a></li>
-<li><a href="#_related_services">Related Services</a></li>
-<li><a href="#_rgsvc-api_BackgroundService_BackgroundCommandExecution"><code>BackgroundCommandExecution</code> abstract class</a></li>
-<li><a href="#_rgsvc-api_BackgroundService_Quartz">Quartz Scheduler Configuration</a></li>
+<li><a href="#_api_implementation">2.2.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_2">2.2.2. Usage</a></li>
+<li><a href="#_end_user_experience">2.2.3. End-user experience</a></li>
+<li><a href="#_registering_the_services">2.2.4. Registering the Services</a></li>
+<li><a href="#_related_services">2.2.5. Related Services</a></li>
+<li><a href="#_rgsvc-api_BackgroundService_BackgroundCommandExecution">2.2.6. <code>BackgroundCommandExecution</code> abstract class</a></li>
+<li><a href="#_rgsvc-api_BackgroundService_Quartz">2.2.7. Quartz Scheduler Configuration</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_BookmarkService"><code>BookmarkService</code></a>
+<li><a href="#_rgsvc-api_BookmarkService">2.3. <code>BookmarkService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_2">API &amp; Implementation</a></li>
-<li><a href="#__code_bookmarkholder_code"><code>BookmarkHolder</code></a></li>
-<li><a href="#_usage_by_other_services">Usage by other services</a></li>
-<li><a href="#_registering_the_service_2">Registering the Service</a></li>
+<li><a href="#_api_implementation_2">2.3.1. API &amp; Implementation</a></li>
+<li><a href="#__code_bookmarkholder_code">2.3.2. <code>BookmarkHolder</code></a></li>
+<li><a href="#_usage_by_other_services">2.3.3. Usage by other services</a></li>
+<li><a href="#_registering_the_service_2">2.3.4. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_ClockService"><code>ClockService</code></a>
+<li><a href="#_rgsvc-api_ClockService">2.4. <code>ClockService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_3">API &amp; Implementation</a></li>
-<li><a href="#_testing_support">Testing Support</a>
+<li><a href="#_api_implementation_3">2.4.1. API &amp; Implementation</a></li>
+<li><a href="#_testing_support">2.4.2. Testing Support</a>
 <ul class="sectlevel4">
 <li><a href="#_alternative_implementations">Alternative Implementations</a></li>
 </ul>
 </li>
-<li><a href="#_registering_the_service_3">Registering the Service</a></li>
+<li><a href="#_registering_the_service_3">2.4.3. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_CommandContext"><code>CommandContext</code></a>
+<li><a href="#_rgsvc-api_CommandContext">2.5. <code>CommandContext</code></a>
 <ul class="sectlevel3">
-<li><a href="#_rgsvc-api_CommandContext_screencast">Screencast</a></li>
-<li><a href="#_api_implementation_4">API &amp; Implementation</a></li>
-<li><a href="#_usage_3">Usage</a></li>
-<li><a href="#_interacting_with_the_services">Interacting with the services</a></li>
-<li><a href="#_registering_the_services_2">Registering the Services</a></li>
-<li><a href="#_related_services_2">Related Services</a></li>
+<li><a href="#_rgsvc-api_CommandContext_screencast">2.5.1. Screencast</a></li>
+<li><a href="#_api_implementation_4">2.5.2. API &amp; Implementation</a></li>
+<li><a href="#_usage_3">2.5.3. Usage</a></li>
+<li><a href="#_interacting_with_the_services">2.5.4. Interacting with the services</a></li>
+<li><a href="#_registering_the_services_2">2.5.5. Registering the Services</a></li>
+<li><a href="#_related_services_2">2.5.6. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_DeepLinkService"><code>DeepLinkService</code></a>
+<li><a href="#_rgsvc-api_DeepLinkService">2.6. <code>DeepLinkService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_5">API &amp; Implementation</a></li>
-<li><a href="#_usage_within_the_framework">Usage within the framework</a></li>
-<li><a href="#_implementations">Implementations</a></li>
-<li><a href="#_registering_the_services_3">Registering the Services</a></li>
+<li><a href="#_api_implementation_5">2.6.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_within_the_framework">2.6.2. Usage within the framework</a></li>
+<li><a href="#_implementations">2.6.3. Implementations</a></li>
+<li><a href="#_registering_the_services_3">2.6.4. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>
+<li><a href="#_rgsvc-api_DomainObjectContainer">2.7. <code>DomainObjectContainer</code></a>
 <ul class="sectlevel3">
-<li><a href="#_rgsvc-api_DomainObjectContainer_object-creation-api">Object Creation API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_generic-repository-api">Generic Repository API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_object-persistence-api">Object Persistence API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_messages-api">Messages API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_security-api">Security API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_presentation-api">Presentation API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_validation-api">Validation API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_properties-api">Properties API</a></li>
-<li><a href="#_rgsvc-api_DomainObjectContainer_services-api">Services API</a></li>
-<li><a href="#_registering_the_service_4">Registering the Service</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_object-creation-api">2.7.1. Object Creation API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_generic-repository-api">2.7.2. Generic Repository API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_object-persistence-api">2.7.3. Object Persistence API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_messages-api">2.7.4. Messages API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_security-api">2.7.5. Security API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_presentation-api">2.7.6. Presentation API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_validation-api">2.7.7. Validation API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_properties-api">2.7.8. Properties API</a></li>
+<li><a href="#_rgsvc-api_DomainObjectContainer_services-api">2.7.9. Services API</a></li>
+<li><a href="#_registering_the_service_4">2.7.10. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_EmailService"><code>EmailService</code></a>
+<li><a href="#_rgsvc-api_EmailService">2.8. <code>EmailService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_6">API &amp; Implementation</a></li>
-<li><a href="#_configuration">Configuration</a></li>
-<li><a href="#_alternative_implementations_2">Alternative Implementations</a></li>
-<li><a href="#_registering_the_services_4">Registering the Services</a></li>
-<li><a href="#_related_services_3">Related Services</a></li>
+<li><a href="#_api_implementation_6">2.8.1. API &amp; Implementation</a></li>
+<li><a href="#_configuration">2.8.2. Configuration</a></li>
+<li><a href="#_alternative_implementations_2">2.8.3. Alternative Implementations</a></li>
+<li><a href="#_registering_the_services_4">2.8.4. Registering the Services</a></li>
+<li><a href="#_related_services_3">2.8.5. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_EventBusService"><code>EventBusService</code></a>
+<li><a href="#_rgsvc-api_EventBusService">2.9. <code>EventBusService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_rgsvc-api_EventBusService_api-and-implementation">API &amp; Implementation</a></li>
-<li><a href="#_registering_subscribers">Registering Subscribers</a></li>
-<li><a href="#_annotating_members">Annotating Members</a></li>
-<li><a href="#_rgsvc-api_EventBusService_event-hierarchy">Event hierarchy</a>
+<li><a href="#_rgsvc-api_EventBusService_api-and-implementation">2.9.1. API &amp; Implementation</a></li>
+<li><a href="#_registering_subscribers">2.9.2. Registering Subscribers</a></li>
+<li><a href="#_annotating_members">2.9.3. Annotating Members</a></li>
+<li><a href="#_rgsvc-api_EventBusService_event-hierarchy">2.9.4. Event hierarchy</a>
 <ul class="sectlevel4">
 <li><a href="#_variation_for_contributing_services">Variation (for contributing services)</a></li>
 </ul>
 </li>
-<li><a href="#_programmatic_posting">Programmatic posting</a></li>
-<li><a href="#_using_code_wrapperfactory_code">Using <code>WrapperFactory</code></a></li>
-<li><a href="#_implementation_spi">Implementation SPI</a></li>
-<li><a href="#_rgsvc-api_EventBusService_Configuration">Configuration</a></li>
-<li><a href="#_registering_the_services_5">Registering the Services</a></li>
-<li><a href="#_related_services_4">Related Services</a></li>
+<li><a href="#_programmatic_posting">2.9.5. Programmatic posting</a></li>
+<li><a href="#_using_code_wrapperfactory_code">2.9.6. Using <code>WrapperFactory</code></a></li>
+<li><a href="#_implementation_spi">2.9.7. Implementation SPI</a></li>
+<li><a href="#_rgsvc-api_EventBusService_Configuration">2.9.8. Configuration</a></li>
+<li><a href="#_registering_the_services_5">2.9.9. Registering the Services</a></li>
+<li><a href="#_related_services_4">2.9.10. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a>
+<li><a href="#_rgsvc-api_FixtureScriptsDefault">2.10. <code>FixtureScriptsDefault</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_7">API &amp; Implementation</a></li>
-<li><a href="#_configuration_2">Configuration</a></li>
-<li><a href="#_related_services_5">Related Services</a></li>
+<li><a href="#_api_implementation_7">2.10.1. API &amp; Implementation</a></li>
+<li><a href="#_configuration_2">2.10.2. Configuration</a></li>
+<li><a href="#_related_services_5">2.10.3. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_GuiceBeanProvider"><code>GuiceBeanProvider</code></a>
+<li><a href="#_rgsvc-api_GuiceBeanProvider">2.11. <code>GuiceBeanProvider</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_8">API &amp; Implementation</a></li>
-<li><a href="#_usage_4">Usage</a></li>
-<li><a href="#_registering_the_services_6">Registering the Services</a></li>
+<li><a href="#_api_implementation_8">2.11.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_4">2.11.2. Usage</a></li>
+<li><a href="#_registering_the_services_6">2.11.3. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_IsisJdoSupport"><code>IsisJdoSupport</code></a>
+<li><a href="#_rgsvc-api_IsisJdoSupport">2.12. <code>IsisJdoSupport</code></a>
 <ul class="sectlevel3">
-<li><a href="#_rgsvc-api_IsisJdoSupport_executing-sql">Executing SQL</a></li>
-<li><a href="#_rgsvc-api_IsisJdoSupport_type-safe-jdoql-queries">Type-safe JDOQL Queries</a></li>
-<li><a href="#_rgsvc-api_IsisJdoSupport_fixture-support">Fixture support</a></li>
-<li><a href="#_rgsvc-api_IsisJdoSupport_reloading-entities">Reloading entities</a></li>
-<li><a href="#_rgsvc-api_IsisJdoSupport_jdo-persistencemanager">JDO <code>PersistenceManager</code></a></li>
-<li><a href="#_registering_the_services_7">Registering the Services</a></li>
+<li><a href="#_rgsvc-api_IsisJdoSupport_executing-sql">2.12.1. Executing SQL</a></li>
+<li><a href="#_rgsvc-api_IsisJdoSupport_type-safe-jdoql-queries">2.12.2. Type-safe JDOQL Queries</a></li>
+<li><a href="#_rgsvc-api_IsisJdoSupport_fixture-support">2.12.3. Fixture support</a></li>
+<li><a href="#_rgsvc-api_IsisJdoSupport_reloading-entities">2.12.4. Reloading entities</a></li>
+<li><a href="#_rgsvc-api_IsisJdoSupport_jdo-persistencemanager">2.12.5. JDO <code>PersistenceManager</code></a></li>
+<li><a href="#_registering_the_services_7">2.12.6. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_JaxbService"><code>JaxbService</code> (<code>1.11.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc-api_JaxbService">2.13. <code>JaxbService</code> (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_rgsvc-api_JaxbService_api-and-implementation">API &amp; Implementation</a></li>
-<li><a href="#_usage_within_the_framework_2">Usage within the framework</a></li>
-<li><a href="#_registering_the_service_5">Registering the Service</a></li>
+<li><a href="#_rgsvc-api_JaxbService_api-and-implementation">2.13.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_within_the_framework_2">2.13.2. Usage within the framework</a></li>
+<li><a href="#_registering_the_service_5">2.13.3. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_MementoService"><code>MementoService</code></a>
+<li><a href="#_rgsvc-api_MementoService">2.14. <code>MementoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_9">API &amp; Implementation</a></li>
-<li><a href="#_usage_5">Usage</a></li>
-<li><a href="#_related_services_6">Related Services</a></li>
-<li><a href="#_registering_the_service_6">Registering the Service</a></li>
+<li><a href="#_api_implementation_9">2.14.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_5">2.14.2. Usage</a></li>
+<li><a href="#_related_services_6">2.14.3. Related Services</a></li>
+<li><a href="#_registering_the_service_6">2.14.4. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_MetamodelService"><code>MetamodelService</code></a>
+<li><a href="#_rgsvc-api_MetamodelService">2.15. <code>MetamodelService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_10">API &amp; Implementation</a></li>
-<li><a href="#_registering_the_service_7">Registering the Service</a></li>
+<li><a href="#_api_implementation_10">2.15.1. API &amp; Implementation</a></li>
+<li><a href="#_registering_the_service_7">2.15.2. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_QueryResultsCache"><code>QueryResultsCache</code></a>
+<li><a href="#_rgsvc-api_QueryResultsCache">2.16. <code>QueryResultsCache</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_11">API &amp; Implementation</a></li>
-<li><a href="#_usage_6">Usage</a></li>
-<li><a href="#_registering_the_service_8">Registering the Service</a></li>
-<li><a href="#_related_services_7">Related Services</a></li>
+<li><a href="#_api_implementation_11">2.16.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_6">2.16.2. Usage</a></li>
+<li><a href="#_registering_the_service_8">2.16.3. Registering the Service</a></li>
+<li><a href="#_related_services_7">2.16.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_Scratchpad"><code>Scratchpad</code></a>
+<li><a href="#_rgsvc-api_Scratchpad">2.17. <code>Scratchpad</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_12">API &amp; Implementation</a></li>
-<li><a href="#_usage_7">Usage</a></li>
-<li><a href="#_registering_the_service_9">Registering the Service</a></li>
-<li><a href="#_related_services_8">Related Services</a></li>
+<li><a href="#_api_implementation_12">2.17.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_7">2.17.2. Usage</a></li>
+<li><a href="#_registering_the_service_9">2.17.3. Registering the Service</a></li>
+<li><a href="#_related_services_8">2.17.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_SudoService"><code>SudoService</code></a>
+<li><a href="#_rgsvc-api_SudoService">2.18. <code>SudoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_13">API &amp; Implementation</a></li>
-<li><a href="#_usage_8">Usage</a></li>
-<li><a href="#_registering_the_service_10">Registering the Service</a></li>
+<li><a href="#_api_implementation_13">2.18.1. API &amp; Implementation</a></li>
+<li><a href="#_usage_8">2.18.2. Usage</a></li>
+<li><a href="#_registering_the_service_10">2.18.3. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_WrapperFactory"><code>WrapperFactory</code></a>
+<li><a href="#_rgsvc-api_WrapperFactory">2.19. <code>WrapperFactory</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_2">API</a></li>
-<li><a href="#_usage_9">Usage</a></li>
-<li><a href="#_listener_api">Listener API</a></li>
-<li><a href="#_registering_the_service_11">Registering the Service</a></li>
+<li><a href="#_api_2">2.19.1. API</a></li>
+<li><a href="#_usage_9">2.19.2. Usage</a></li>
+<li><a href="#_listener_api">2.19.3. Listener API</a></li>
+<li><a href="#_registering_the_service_11">2.19.4. Registering the Service</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-api_XmlSnapshotService"><code>XmlSnapshotService</code></a>
+<li><a href="#_rgsvc-api_XmlSnapshotService">2.20. <code>XmlSnapshotService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_standard_api">Standard API</a></li>
-<li><a href="#_builder_api">Builder API</a></li>
-<li><a href="#_automatic_inclusions">Automatic inclusions</a></li>
-<li><a href="#_convenience_api">Convenience API</a></li>
-<li><a href="#_registering_the_service_12">Registering the Service</a></li>
-<li><a href="#_related_services_9">Related Services</a></li>
+<li><a href="#_standard_api">2.20.1. Standard API</a></li>
+<li><a href="#_builder_api">2.20.2. Builder API</a></li>
+<li><a href="#_automatic_inclusions">2.20.3. Automatic inclusions</a></li>
+<li><a href="#_convenience_api">2.20.4. Convenience API</a></li>
+<li><a href="#_registering_the_service_12">2.20.5. Registering the Service</a></li>
+<li><a href="#_related_services_9">2.20.6. Related Services</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi">Domain Services SPI</a>
+<li><a href="#_rgsvc-spi">3. Domain Services SPI</a>
 <ul class="sectlevel2">
-<li><a href="#_rgsvc-spi_AuditingService"><code>AuditingService3</code></a>
+<li><a href="#_rgsvc-spi_AuditingService">3.1. <code>AuditingService3</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi">SPI</a></li>
-<li><a href="#_implementation">Implementation</a></li>
-<li><a href="#_usage_10">Usage</a></li>
-<li><a href="#_registering_the_services_8">Registering the Services</a></li>
-<li><a href="#_related_services_10">Related Services</a></li>
+<li><a href="#_spi">3.1.1. SPI</a></li>
+<li><a href="#_implementation">3.1.2. Implementation</a></li>
+<li><a href="#_usage_10">3.1.3. Usage</a></li>
+<li><a href="#_registering_the_services_8">3.1.4. Registering the Services</a></li>
+<li><a href="#_related_services_10">3.1.5. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>
+<li><a href="#_rgsvc-spi_BackgroundCommandService">3.2. <code>BackgroundCommandService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_2">SPI</a></li>
-<li><a href="#__internal_spi">"Internal" SPI</a></li>
-<li><a href="#_implementation_2">Implementation</a></li>
-<li><a href="#_usage_11">Usage</a></li>
-<li><a href="#_registering_the_services_9">Registering the Services</a></li>
-<li><a href="#_related_services_11">Related Services</a></li>
+<li><a href="#_spi_2">3.2.1. SPI</a></li>
+<li><a href="#__internal_spi">3.2.2. "Internal" SPI</a></li>
+<li><a href="#_implementation_2">3.2.3. Implementation</a></li>
+<li><a href="#_usage_11">3.2.4. Usage</a></li>
+<li><a href="#_registering_the_services_9">3.2.5. Registering the Services</a></li>
+<li><a href="#_related_services_11">3.2.6. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_ClassDiscoveryService"><code>ClassDiscoveryService</code></a>
+<li><a href="#_rgsvc-spi_ClassDiscoveryService">3.3. <code>ClassDiscoveryService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_3">SPI</a></li>
-<li><a href="#_implementation_3">Implementation</a></li>
-<li><a href="#_usage_12">Usage</a></li>
-<li><a href="#_registering_the_services_10">Registering the Services</a></li>
+<li><a href="#_spi_3">3.3.1. SPI</a></li>
+<li><a href="#_implementation_3">3.3.2. Implementation</a></li>
+<li><a href="#_usage_12">3.3.3. Usage</a></li>
+<li><a href="#_registering_the_services_10">3.3.4. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_CommandService"><code>CommandService</code></a>
+<li><a href="#_rgsvc-spi_CommandService">3.4. <code>CommandService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_4">SPI</a></li>
-<li><a href="#_implementation_4">Implementation</a></li>
-<li><a href="#_usage_13">Usage</a></li>
-<li><a href="#_registering_the_services_11">Registering the Services</a></li>
-<li><a href="#_related_services_12">Related Services</a></li>
+<li><a href="#_spi_4">3.4.1. SPI</a></li>
+<li><a href="#_implementation_4">3.4.2. Implementation</a></li>
+<li><a href="#_usage_13">3.4.3. Usage</a></li>
+<li><a href="#_registering_the_services_11">3.4.4. Registering the Services</a></li>
+<li><a href="#_related_services_12">3.4.5. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a>
+<li><a href="#_rgsvc-spi_ContentMappingService">3.5. <code>ContentMappingService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_5">SPI</a></li>
-<li><a href="#_implementations_2">Implementations</a></li>
-<li><a href="#_related_services_13">Related Services</a></li>
+<li><a href="#_spi_5">3.5.1. SPI</a></li>
+<li><a href="#_implementations_2">3.5.2. Implementations</a></li>
+<li><a href="#_related_services_13">3.5.3. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>
+<li><a href="#_rgsvc-spi_ContentNegotiationService">3.6. <code>ContentNegotiationService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_6">SPI</a></li>
-<li><a href="#_implementation_5">Implementation</a></li>
-<li><a href="#_usage_14">Usage</a></li>
-<li><a href="#_configuration_3">Configuration</a></li>
-<li><a href="#_registering_the_services_12">Registering the Services</a></li>
-<li><a href="#_related_services_14">Related Services</a></li>
+<li><a href="#_spi_6">3.6.1. SPI</a></li>
+<li><a href="#_implementation_5">3.6.2. Implementation</a></li>
+<li><a href="#_usage_14">3.6.3. Usage</a></li>
+<li><a href="#_configuration_3">3.6.4. Configuration</a></li>
+<li><a href="#_registering_the_services_12">3.6.5. Registering the Services</a></li>
+<li><a href="#_related_services_14">3.6.6. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_EmailNotificationService"><code>EmailNotificationService</code></a>
+<li><a href="#_rgsvc-spi_EmailNotificationService">3.7. <code>EmailNotificationService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_7">SPI</a></li>
-<li><a href="#_implementation_6">Implementation</a>
+<li><a href="#_spi_7">3.7.1. SPI</a></li>
+<li><a href="#_implementation_6">3.7.2. Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#_alternative_implementations_3">Alternative Implementations</a></li>
 </ul>
 </li>
-<li><a href="#_registering_the_service_13">Registering the Service</a></li>
-<li><a href="#_related_services_15">Related Services</a></li>
+<li><a href="#_registering_the_service_13">3.7.3. Registering the Service</a></li>
+<li><a href="#_related_services_15">3.7.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_ErrorReportingService"><code>ErrorReportingService</code></a>
+<li><a href="#_rgsvc-spi_ErrorReportingService">3.8. <code>ErrorReportingService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_8">SPI</a></li>
-<li><a href="#_implementation_7">Implementation</a></li>
-<li><a href="#_registering_the_services_13">Registering the Services</a></li>
+<li><a href="#_spi_8">3.8.1. SPI</a></li>
+<li><a href="#_implementation_7">3.8.2. Implementation</a></li>
+<li><a href="#_registering_the_services_13">3.8.3. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_EventSerializer"><code>EventSerializer</code></a>
+<li><a href="#_rgsvc-spi_EventSerializer">3.9. <code>EventSerializer</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_9">SPI</a></li>
-<li><a href="#_implementation_8">Implementation</a></li>
-<li><a href="#_registering_the_services_14">Registering the Services</a></li>
-<li><a href="#_related_services_16">Related Services</a></li>
+<li><a href="#_spi_9">3.9.1. SPI</a></li>
+<li><a href="#_implementation_8">3.9.2. Implementation</a></li>
+<li><a href="#_registering_the_services_14">3.9.3. Registering the Services</a></li>
+<li><a href="#_related_services_16">3.9.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a>
+<li><a href="#_rgsvc-spi_ExceptionRecognizer">3.10. <code>ExceptionRecognizer</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_10">SPI</a></li>
-<li><a href="#_implementation_9">Implementation</a></li>
-<li><a href="#_registering_the_services_15">Registering the Services</a></li>
+<li><a href="#_spi_10">3.10.1. SPI</a></li>
+<li><a href="#_implementation_9">3.10.2. Implementation</a></li>
+<li><a href="#_registering_the_services_15">3.10.3. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>
+<li><a href="#_rgsvc-spi_FixtureScriptsSpecificationProvider">3.11. <code>FixtureScriptsSpecificationProvider</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_11">SPI</a></li>
-<li><a href="#_implementation_10">Implementation</a></li>
+<li><a href="#_spi_11">3.11.1. SPI</a></li>
+<li><a href="#_implementation_10">3.11.2. Implementation</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_LocaleProvider"><code>LocaleProvider</code></a>
+<li><a href="#_rgsvc-spi_LocaleProvider">3.12. <code>LocaleProvider</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_12">SPI</a></li>
-<li><a href="#_implementation_11">Implementation</a></li>
-<li><a href="#_registering_the_services_16">Registering the Services</a></li>
-<li><a href="#_related_services_17">Related Services</a></li>
+<li><a href="#_spi_12">3.12.1. SPI</a></li>
+<li><a href="#_implementation_11">3.12.2. Implementation</a></li>
+<li><a href="#_registering_the_services_16">3.12.3. Registering the Services</a></li>
+<li><a href="#_related_services_17">3.12.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_PublishingService"><code>PublishingService</code></a>
+<li><a href="#_rgsvc-spi_PublishingService">3.13. <code>PublishingService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_13">SPI</a></li>
-<li><a href="#_implementation_12">Implementation</a>
+<li><a href="#_spi_13">3.13.1. SPI</a></li>
+<li><a href="#_implementation_12">3.13.2. Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#_isis_module_publishing">isis-module-publishing</a></li>
 <li><a href="#_isis_module_publishmq">isis-module-publishmq</a></li>
 </ul>
 </li>
-<li><a href="#_usage_15">Usage</a></li>
-<li><a href="#_registering_the_services_17">Registering the Services</a></li>
-<li><a href="#_related_services_18">Related Services</a></li>
-<li><a href="#_design_notes">Design Notes</a></li>
+<li><a href="#_usage_15">3.13.3. Usage</a></li>
+<li><a href="#_registering_the_services_17">3.13.4. Registering the Services</a></li>
+<li><a href="#_related_services_18">3.13.5. Related Services</a></li>
+<li><a href="#_design_notes">3.13.6. Design Notes</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_RepresentationService"><code>RepresentationService</code></a>
+<li><a href="#_rgsvc-spi_RepresentationService">3.14. <code>RepresentationService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_14">SPI</a></li>
-<li><a href="#_implementation_13">Implementation</a></li>
-<li><a href="#_registering_the_services_18">Registering the Services</a></li>
-<li><a href="#_related_services_19">Related Services</a></li>
+<li><a href="#_spi_14">3.14.1. SPI</a></li>
+<li><a href="#_implementation_13">3.14.2. Implementation</a></li>
+<li><a href="#_registering_the_services_18">3.14.3. Registering the Services</a></li>
+<li><a href="#_related_services_19">3.14.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_TranslationService"><code>TranslationService</code></a>
+<li><a href="#_rgsvc-spi_TranslationService">3.15. <code>TranslationService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_15">SPI</a></li>
-<li><a href="#_implementation_14">Implementation</a></li>
-<li><a href="#_registering_the_services_19">Registering the Services</a></li>
-<li><a href="#_related_services_20">Related Services</a></li>
+<li><a href="#_spi_15">3.15.1. SPI</a></li>
+<li><a href="#_implementation_14">3.15.2. Implementation</a></li>
+<li><a href="#_registering_the_services_19">3.15.3. Registering the Services</a></li>
+<li><a href="#_related_services_20">3.15.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_TranslationsResolver"><code>TranslationsResolver</code></a>
+<li><a href="#_rgsvc-spi_TranslationsResolver">3.16. <code>TranslationsResolver</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_16">SPI</a></li>
-<li><a href="#_implementation_15">Implementation</a></li>
-<li><a href="#_registering_the_service_14">Registering the Service</a></li>
-<li><a href="#_related_services_21">Related Services</a></li>
+<li><a href="#_spi_16">3.16.1. SPI</a></li>
+<li><a href="#_implementation_15">3.16.2. Implementation</a></li>
+<li><a href="#_registering_the_service_14">3.16.3. Registering the Service</a></li>
+<li><a href="#_related_services_21">3.16.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_UrlEncodingService"><code>UrlEncodingService</code> (<code>1.11.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc-spi_UrlEncodingService">3.17. <code>UrlEncodingService</code> (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_spi_17">SPI</a></li>
-<li><a href="#_implementation_16">Implementation</a></li>
+<li><a href="#_spi_17">3.17.1. SPI</a></li>
+<li><a href="#_implementation_16">3.17.2. Implementation</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_UserProfileService"><code>UserProfileService</code></a>
+<li><a href="#_rgsvc-spi_UserProfileService">3.18. <code>UserProfileService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_18">SPI</a></li>
-<li><a href="#_implementation_17">Implementation</a></li>
+<li><a href="#_spi_18">3.18.1. SPI</a></li>
+<li><a href="#_implementation_17">3.18.2. Implementation</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc-spi_UserRegistrationService"><code>UserRegistrationService</code></a>
+<li><a href="#_rgsvc-spi_UserRegistrationService">3.19. <code>UserRegistrationService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_19">SPI</a></li>
-<li><a href="#_implementation_18">Implementation</a></li>
-<li><a href="#_registering_the_services_20">Registering the Services</a></li>
-<li><a href="#_related_services_22">Related Services</a></li>
+<li><a href="#_spi_19">3.19.1. SPI</a></li>
+<li><a href="#_implementation_18">3.19.2. Implementation</a></li>
+<li><a href="#_registering_the_services_20">3.19.3. Registering the Services</a></li>
+<li><a href="#_related_services_22">3.19.4. Related Services</a></li>
 </ul>
 </li>
 </ul>
