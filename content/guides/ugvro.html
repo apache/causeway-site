@@ -523,11 +523,17 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis' Restful Objects viewer is an implementation of the <a href="http://restfulobjects.org">Restful Objects spec</a>,
-which defines a generic way to expose a domain model through a REST (or more precisely, hypermedia) API.</p>
+which defines a generic way to expose a domain model through a REST (or more precisely, hypermedia) API.  Having a REST
+API opens up an Apache Isis domain model to a huge variety of applications, from bespoke single-page apps,
+through integration scenarious, through providing an API for bulk-upload/migration from an existing system.</p>
 </div>
 <div class="paragraph">
-<p>It also provides a number of extensions specific to Apache Isis.  Most significant of these is
-This user guide discuss features, configuration and how to extend the Restful Objects viewer.</p>
+<p>The Restful Objects viewer also provides a number of extensions specific to Apache Isis.  Most significant of these is
+enhanced content negotiation support, making it easier to use the returned representations within bespoke clients using
+standard third-party configurations.</p>
+</div>
+<div class="paragraph">
+<p>This user guide discuss features, configuration and also how to extend the Restful Objects viewer.</p>
 </div>
 <div class="sect2">
 <h3 id="_other_guides">1.1. Other Guides</h3>
@@ -585,10 +591,75 @@ This user guide discuss features, configuration and how to extend the Restful Ob
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugvro_features">2. Features</h2>
+<h2 id="_ugvro_ro-spec">2. RO Specification</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The REST API opens up an Apache Isis domain model to a huge variety of applications, from bespoke single-page apps, through integration scenarious, through providing an API for bulk-upload/migration from an existing system.</p>
+<p>The Restful Objects v1.0 specification defines a comprehensive hypermedia API, consisting of HTTP resources and
+corresponding JSON representations, for accessing and manipulating a domain object model.</p>
+</div>
+<div class="paragraph">
+<p>The Restful Objects spec can be downloaded from <a href="http://restfulobjects.org">here</a> as either a PDF or Word doc.</p>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_ro-spec_goals">2.1. Goals of the Spec</h3>
+<div class="paragraph">
+<p>The goal of Restful Objects is to allow domain models to be accessed through HTTP resources, returning a set of JSON
+representations. These representations can then be consumed by any client (e.g. Javascript, Java, .NET, Ruby, Python).</p>
+</div>
+<div class="paragraph">
+<p>Both the resources and representations are generalized so that they can be applied to any domain model, and by default
+all representations have media types designed to allow a completely generic client to be written, capable of working,
+unmodified, with any domain model that has a Restful Objects interface.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, the developer may write a custom client that has some shared knowledge of the domain being exposed, and
+render the information in a more specific fashion.</p>
+</div>
+<div class="paragraph">
+<p>Restful Objects also defines that representations are served up with parameterized media types. This allows clients to
+use content negotiation to ensure that representations do not change in a breaking fashion, enabling server and client
+to evolve independently.</p>
+</div>
+<div class="paragraph">
+<p>The Restful Objects specification is at a higher-level of abstraction than, say, the JAX-RS specifications for Java
+platform, or the WCF specifications on .NET. Specifically, the domain classes that it exposes are represented in a very
+general form. They consist of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>properties (fields), each holding either a scalar value or reference to another object;</p>
+</li>
+<li>
+<p>collections, each holding a vector reference to other entities;</p>
+</li>
+<li>
+<p>actions (operations/methods), whereby the object can execute business logic.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Beyond this, though, Restful Objects makes very few assumptions. In particular, Restful Objects does not prescribe the
+nature of the domain model.</p>
+</div>
+<div class="paragraph">
+<p>The Restful Objects spec may be downloaded directly from github as either a PDF or as a Word doc.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_resources_and_representations">2.2. Resources and Representations</h3>
+<div class="paragraph">
+<p>The diagram below - taken from the Restful Objects spec - shows the various resources (URLs) and representations (JSON)
+that are defined:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/restfulobjects/ro-spec-resources-and-representations.png"><img src="images/restfulobjects/ro-spec-resources-and-representations.png" alt="ro spec resources and representations" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>The resource URLs are always well-defined, but Apache Isis' implementation allows for different representations to
+be returned, using content negotiation.  This is discussed further below.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -597,61 +668,486 @@ This user guide discuss features, configuration and how to extend the Restful Ob
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - further discussion required
+<div class="paragraph">
+<p>In fact, there&#8217;s nothing in Apache Isis to prevent you from defining your own REST controllers to provide custom
+resource URLs.  One use case might be to support user registration/authentication, a topic out-of-scope of the RO spec
+itself.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_ugvro_ro-spec">3. RO Specification</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ugvro_ro-spec_apache-isis-implementation">2.3. Apache Isis' implementation</h3>
 <div class="paragraph">
-<p>The Restful Objects spec can be downloaded <a href="http://restfulobjects.org">here</a>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - a brief summary here
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_ugvro_configuration-properties">4. Configuration Properties</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Restful Objects viewer provides a number of configuration option that extend/simplify/alter the representations generated from the Restful Objects specification.</p>
-</div>
-<div class="paragraph">
-<p>These configuration properties are typically stored in <code>WEB-INF/viewer_restfulobjects.properties</code>.  However, you can place all configuration properties into <code>WEB-INF/isis.properties</code> if you wish (the configuration properties from all config files are merged together).</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>These configuration settings should be considered beta, and may change in the future in response to emerging requirements.</p>
-</div>
-<div class="paragraph">
-<p>Also, be aware enabling these settings makes the representations with respect to the <a href="http://restfulobjects.org">Restful Object spec</a>.  (Based on experience in Apache Isis, in the future the spec may be updated to allow such extensions).</p>
-</div>
-</td>
-</tr>
-</table>
+<p>The Restful Objects viewer is Apache Isis' implementation of the Restful Objects spec.  It implements all the mandatory
+features of the specification.  It also implements some of the optional capabilities (as defined in section 3 of the
+RO spec, and as represented in the version resource, section 8.1):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Restful Objects Viewer Configuration Properties</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Capability</th>
+<th class="tableblock halign-left valign-top">Support</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>blobsClobs</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>deleteObjects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>domainModel</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>formal</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The 'simple' scheme is <em>not</em> supported</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>validateOnly</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>protoPersistentObjects</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_ro-spec_extensions">2.4. Extensions</h3>
+<div class="paragraph">
+<p>The Restful Objects viewer also implements some of the "future ideas" that are out of scope for the RO spec v1.0, but
+described in section 34, "ideas for future extensions".</p>
+</div>
+<div class="sect3">
+<h4 id="_ugvro_ro-spec_extensions_content-negotiation">2.4.1. Content Negotiation (34.1)</h4>
+<div class="paragraph">
+<p>Apache Isis provides two levels of support for content negotiation.</p>
+</div>
+<div class="sect4">
+<h5 id="_ugvro_ro-spec_extensions_content-negotiation_x-ro-domain-type"><code>x-ro-domain-type</code></h5>
+<div class="paragraph">
+<p>The first level is very similar to the "Domain Model Agnostic" approach sketched out in the RO spec.  The client
+can send an <code>x-ro-domain-type</code> parameter for either domain object representations (section 14 of the spec) or
+action invocation results (section 19 of the spec).  This can be combined with either <code>application/json</code> or
+<code>application/xml</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, the client could use an <code>Accept</code> header such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/xml;x-ro-domain-type="com.mycompany.viewmodels.v2.CustomerViewModel"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The server will use the <a href="rgsvc.html#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a> to attempt to
+transform the domain object into the requested <code>x-ro-domain-type</code>.  The whole process is discussed in more detail in
+the <a href="#_ugvro_architecture">architecture</a> chapter.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ugvro_ro-spec_extensions_content-negotiation_apache-isis-profile">Apache Isis profile</h5>
+<div class="paragraph">
+<p>The representations defined by the RO spec are very rich and enable complex client-side applications to be built.
+However, their sophistication can be an impediment to their use if one wishes to write a simple app using third-party
+components that expect to consume much simpler representations.  Examples of such tools are
+<a href="http://angular-ui.github.io/bootstrap/">Angular Bootstrap</a>,
+<a href="http://vitalets.github.io/angular-xeditable/">Angular XEditable</a>,
+<a href="https://github.com/mgcrea/angular-strap">Angular Strap</a>.</p>
+</div>
+<div class="paragraph">
+<p>This support is discussed further in the <a href="#_ugvro_simplified-representations">simplified representations</a>
+chapter.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugvro_ro-spec_extensions_minimizing-round-trips">2.4.2. Minimizing Round-trips (34.4)</h4>
+<div class="paragraph">
+<p>The Restful Objects viewer supports the <code>x-ro-follow-links</code> query parameter in a way very similar to that suggested
+in the RO spec, the main point being to avoid the "N+1" problem of too many (slow) network calls.  For example, using
+this feature one can load a grid of data in a single call.  (That said, the <a href="#_ugvro_simplified-representations">simplified representations</a>
+supported by Restful Objects viewer also support this use case, albeit in way that deviates from the RO spec).</p>
+</div>
+<div class="paragraph">
+<p>The video below demonstrates the Restful Object viewer&#8217;s support for <code>x-ro-follow-links</code> parameter, using the
+(non-ASF) <a href="http://github.com/isisaddons/isis-app-kitchensink">Isis addons' kitchensink</a> app as the example,
+This app contains three entities, <code>Grandparent</code>, <code>Parent</code> and <code>Child</code> that define a hierarchy of 1:m relationships.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe width="840px" height="472px" src="//www.youtube.com/embed/hSKnqqBQ7Zo?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="paragraph">
+<p>The queries that are shown in the video include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>show parent and its children (titles)<br></p>
+<div class="paragraph">
+<p><pre>http://localhost:8080/restful/objects/PARENT/0?x-ro-follow-links=members[children].value</p>
+</div>
+</li>
+<li>
+<p>show parent and its children (full details)<br></p>
+<div class="paragraph">
+<p><pre>http://localhost:8080/restful/objects/PARENT/0?x-ro-follow-links=members[children].value.href</p>
+</div>
+</li>
+<li>
+<p>child&#8217;s parent (title)<br></p>
+<div class="paragraph">
+<p><pre>http://localhost:8080/restful/objects/CHILD/0?x-ro-follow-links=members[parent].value</p>
+</div>
+</li>
+<li>
+<p>child&#8217;s siblings (up to its parent, down to children)<br></p>
+<div class="paragraph">
+<p><pre>http://localhost:8080/restful/objects/CHILD/0?x-ro-follow-links=members[parent].value.members[children].value</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_ugvro_ro-spec_extensions_minimizing-round-trips_honor-ui-hints">Honor UI hints</h5>
+<div class="paragraph">
+<p>By default the representations generated by Restful Objects ignore any Apache Isis metamodel hints referring to the UI.
+In particular, if a collection is annotated then <code>Render(EAGERLY)</code> then the contents of the collection are <em>not</em>
+eagerly embedded in the object representation.</p>
+</div>
+<div class="paragraph">
+<p>However, this behaviour can be overridden globally using following property (typically added to <code>WEB-INF/viewer_restfulobjects.properties</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.restfulobjects.honorUiHints=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means that standard Apache Isis annotations can be used as a simple way to obtain follow-links (driven from the
+server model, though, rather than the requesting client).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvro_architecture">3. Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="#">RestfulObjects viewer</a> implements the <a href="http://restfulobjects.org">Restful Object spec</a>, meaning
+that it defines a well-defined set of endpoint URLs as resources, and generates a well-defined set of (JSON)
+representations when these resources are accessed.</p>
+</div>
+<div class="paragraph">
+<p>By default, the Restful Objects viewer will automatically handle requests and return representations according to the
+RO spec.  However, its internal architecture provides several hooks for content negotiation, thereby allowing the
+generated representation to be influenced using the standard HTTP <code>Accept</code> header.  In response, the server uses
+the <code>Content-Type</code> header which the client can use to know how to process the returned representation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>RepresentationService</code><br></p>
+<div class="paragraph">
+<p>The <a href="rgsvc.html#_rgsvc-spi_RepresentationService"><code>RepresentationService</code></a> is an SPI domain service (plugin-point)
+that allows an arbitrary representation to be generated for any of the resources defined in the RO spec.<br></p>
+</div>
+<div class="paragraph">
+<p>Normally this SPI service need not be replaced, because the default implementation
+(<code>RepresentationServiceContentNegotiator</code>) simply uses the HTTP <code>Accept</code> header and delegates onto another service, the
+(slightly misnamed) <code>ContentNegotiationService</code>, to actually generate the representation.  There can be multiple
+implementations of the <code>ContentNegotiationService</code> and the content negotiator will delegate to each in turn until one
+is able to handle the request (per the chain of responsibliity pattern).</p>
+</div>
+</li>
+<li>
+<p><code>ContentNegotiationService</code><br></p>
+<div class="paragraph">
+<p>As noted above, there can be multiple implementations of the
+<a href="rgsvc.html#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>, each one handling a particular
+HTTP <code>Accept</code> header.  If the implementation does not recognize the value of the header, if can simply return <code>null</code>.<br></p>
+</div>
+<div class="paragraph">
+<p>The framework provides a number of implementations; an implementation that handles the
+<a href="#_ugvro_simplified-representations">simplified representation</a> of the Apache Isis profile
+(<code>1.11.0-SNAPSHOT</code>); an implementation that provides support for the <code>x-ro-domain-type</code> parameter, and a
+default/fallback implementation that returns the representations defined by the RO spec.</p>
+</div>
+</li>
+<li>
+<p><code>ContentMappingService</code><br></p>
+<div class="paragraph">
+<p>The <a href="rgsvc.html#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a> is used by the implementation of
+<code>ContentNegotationService</code> that recognizes the <code>x-ro-domain-type</code>, its role being to transform a domain object
+(usually an entity) into some other form (usually a DTO), as specified by the <code>x-ro-domain-type</code> parameter.  There
+can be many such implementations, each handling a different target domain type.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This diagram shows how these services collaborate:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/reference-services-spi/RepresentationService/service-collaborations.png"><img src="images/reference-services-spi/RepresentationService/service-collaborations.png" alt="service collaborations" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Taken together these domain services offer a lot of flexibility in terms of the representations that can be generated
+from the RestfulObjects viewer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvro_simplified-representations">4. Simplified Representations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The representations defined by the RO spec are very rich and enable complex client-side applications to be built.
+However, their sophistication can be an impediment to their use if one wishes to write a simple app using third-party
+components that expect to consume much simpler representations.  Examples of such tools are
+<a href="http://angular-ui.github.io/bootstrap/">Angular Bootstrap</a>,
+<a href="http://vitalets.github.io/angular-xeditable/">Angular XEditable</a>,
+<a href="https://github.com/mgcrea/angular-strap">Angular Strap</a>.</p>
+</div>
+<div class="paragraph">
+<p>As of <code>1.11.0-SNAPSHOT</code>, Apache Isis provides support for its own simplified representation for the most commonly-used
+representations.  This is implemented using the <code>ContentNegotiationService</code> described in the
+<a href="#_ugvro_architecture">architecture</a> chapter.</p>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</h3>
+<div class="paragraph">
+<p>The RO spec uses the standard <code>Accept</code> header for content negotiation, and defines its own "profile" for the standard
+representations; these take the form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.restfulobjects:repr-types/xxx"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where "xxx" varies by resource.  The detail can be found in section 2.4.1 of the RO spec.</p>
+</div>
+<div class="paragraph">
+<p>The Apache Isis viewer also defines its own "Isis" profile which enables the client to request simplified
+representations for the most frequently accessed resources.  This is done by specifying an <code>Accept</code> header of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Accept: application/json;profile="urn:org.apache.isis/v1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Not every resource supports this header, but the most commonly accessed ones do.  In each case the server will set the
+<code>Content-Type</code> header so that the client knows how to process the representation.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Resource</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Domain object<br>
+(section 14)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The representation of a domain object is simple key/value pairs for each property.  The contents of any collections are
+also eagerly returned, consisting of an array of elements of each referenced object.  Each such element contains
+key/value pairs of each property (in other words, a grid of data is returned), along with special <code>href` and
+`title</code> properties.<br></p>
+</div>
+<div class="paragraph">
+<p>In addition, the representation defined by the RO spec is also included, under a special <code>$$ro</code> property.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;
+              profile="urn:org.apache.isis/v1";repr-type="object"</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Object Collection<br>
+(section 17)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Collections are represented as an array of elements of key/value for each referenced object, and again each element
+the containing the key/value pairs of the properties of that object (a grid, again).<br></p>
+</div>
+<div class="paragraph">
+<p>In addition, the representation defined by the RO spec is also included, as a special object with a single <code>$$ro</code>
+property.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;
+              profile="urn:org.apache.isis/v1";repr-type="object-collection"</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Action invocation<br>
+(section 19)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>If the action returned an object, then the domain object representation described above is returned.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;
+              profile="urn:org.apache.isis/v1";repr-type="object"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the action returned a list, then the same array representation as (parented) object collections is returned, though
+with a slightly different <code>Content-Type</code> to distinguish:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Content-Type: application/json;
+              profile="urn:org.apache.isis/v1";repr-type="list"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that actions returning scalar values or void are not supported; for these the regular RO spec representation will
+be returned.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_other-representations">4.2. Supporting other Representations</h3>
+<div class="paragraph">
+<p>Sometimes though you may want to extend or change the representations generated.  This might be because you want to
+write a RESTful client that uses a particular library (say a Javascript library or web components) that can only handle representations in a certain form.</p>
+</div>
+<div class="paragraph">
+<p>Or, you might want to have Apache Isis generate representations according to some other "standard", of which there are
+many:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mike Kelly&#8217;s <a href="http://stateless.co/hal_specification.html">HAL</a> specification</p>
+</li>
+<li>
+<p>Mike Amundsen&#8217;s <a href="http://amundsen.com/media-types/collection/">Collection+JSON</a> specification</p>
+</li>
+<li>
+<p>Kevin Swiber&#8217;s <a href="https://github.com/kevinswiber/siren">Siren</a> specification</p>
+</li>
+<li>
+<p>Steve Klabnik&#8217;s <a href="http://jsonapi.org/">JSON API</a> specification</p>
+</li>
+<li>
+<p>Gregg Cainus' <a href="https://github.com/cainus/hyper-json-spec">Hyper+JSON</a> specification</p>
+</li>
+<li>
+<p>the W3C&#8217;s <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a> specification</p>
+</li>
+<li>
+<p>Markus Lanthaler&#8217;s <a href="http://www.markus-lanthaler.com/hydra/">Hydra</a> specification.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A good discussion about the relative merits of several of these different hypermedia formats can be found <a href="https://groups.google.com/forum/#!msg/api-craft/NgjzQYVOE4s/EAB2jxtU_TMJ">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Or, of course, you may have your own internal specification that you wish to use.</p>
+</div>
+<div class="paragraph">
+<p>Supporting any of these alternative representations can be achieved by providing a suitable implementation of
+<code>ContentNegotiationService</code>.  The existing implementations (eg <code>ContentNegotiationServiceSimplified</code>) can be used as a
+starting point.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>These will, admittedly, need to access the internal APIs for the Apache Isis metamodel, and you should be aware that
+these are not formal API; they may change over time.  That said, they are very stable and have not changed
+significantly over the last few years.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvro_simplified-representations_configuration-properties">4.3. Global Config Props (Deprecated)</h3>
+<div class="paragraph">
+<p>If all that is required is a very simple representations (of objects), you can configure the Restful Objects viewer
+to provide a simplified output, then this can be done with a number of (global) configuration properties.</p>
+</div>
+<div class="paragraph">
+<p>These configuration properties pre-date the support, introduced in <code>1.11.0-SNAPSHOT</code>, for the Apache Isis profile, and
+are limited by the fact that they are global configuration settings, so cannot be influenced on a request-by-request
+basis (as is the case with the <code>Accept</code> header used for the Apache Isis profile). They have therefore been
+deprecated, and may be removed in the future.</p>
+</div>
+<div class="paragraph">
+<p>Nevertheless, those configuration properties are:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Deprecated Configuration Properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 16%;">
@@ -669,18 +1165,10 @@ TODO - a brief summary here
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p><code>isis.viewer.restfulobjects.</code><br>
-<code>honorUiHints</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See <a href="#_ugvro_configuration-properties_honor-ui-hints">discussion</a>, below.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p><code>isis.viewer.restfulobjects.</code><br>
 <code>suppressDescribedByLinks</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
-<td class="tableblock halign-left valign-top" rowspan="6"><p class="tableblock">See <a href="#_ugvro_configuration-properties_suppressing-elements">discussion</a>, below.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suppresses the "describedby" links (on all representations)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -688,6 +1176,7 @@ TODO - a brief summary here
 <code>suppressUpdateLink</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suppresses the  "update" link (on object representation)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -695,6 +1184,7 @@ TODO - a brief summary here
 <code>suppressMemberId</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suppresses the  "id" json-prop for object members (on object representation and member detail representations)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -702,6 +1192,7 @@ TODO - a brief summary here
 <code>suppressMemberLinks</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suppresses the  "links" json-prop for object members (on the object representation and member detail representations)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -709,6 +1200,7 @@ TODO - a brief summary here
 <code>suppressMemberExtensions</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suppresses the  "extensions" json-prop for object members (on the object representation and member detail representations)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -716,6 +1208,7 @@ TODO - a brief summary here
 <code>suppressMemberDisabledReason</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">suppresses the  "disabledReason" json-prop for object members (on the object representation and member detail representations)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -723,23 +1216,21 @@ TODO - a brief summary here
 <code>objectPropertyValuesOnly</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See <a href="#_ugvro_configuration-properties_simplified-object-representation">discussion</a>, below.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See <a href="#_ugvro_simplified-representations_configuration-properties_object-property-values-only">discussion</a> below.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="_ugvro_configuration-properties_honor-ui-hints">4.1. Honor UI hints</h3>
 <div class="paragraph">
-<p>By default the representations generated by Restful Objects ignore any Apache Isis metamodel hints referring to the UI.
-In particular, if a collection is annotated then <code>Render(EAGERLY)</code> then the contents of the collection are <em>not</em>
-eagerly embedded in the object representation.</p>
-</div>
-<div class="paragraph">
-<p>However, this behaviour can be overridden globally using following property (typically added to <code>WEB-INF/viewer_restfulobjects.properties</code>):</p>
+<p>For example, these configuration properties could all be added in the <code>WEB-INF/viewer_restfulobjects.properties</code>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.restfulobjects.honorUiHints=true</code></pre>
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.restfulobjects.suppressDescribedByLinks=true
+isis.viewer.restfulobjects.suppressUpdateLink=true
+isis.viewer.restfulobjects.suppressMemberId=true
+isis.viewer.restfulobjects.suppressMemberLinks=true
+isis.viewer.restfulobjects.suppressMemberExtensions=true
+isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -750,91 +1241,16 @@ eagerly embedded in the object representation.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In the future we might extend this per-request.  Raise/vote on a JIRA ticket if you require this feature.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugvro_configuration-properties_suppressing-elements">4.2. Suppressing elements of the representation</h3>
-<div class="paragraph">
-<p>The representations specified by the <a href="http://restfulobjects.org">Restful Object spec</a> are very rich in hypermedia controls and metadata, intended to support a wide variety of possible REST clients. However, if an application is providing its REST API only for a small well-defined set of REST clients, then it is possible to suppress (remove) various elements of these representations.</p>
-</div>
-<div class="paragraph">
-<p>This is done by globally using the following properties (typically added to <code>WEB-INF/viewer_restfulobjects.properties</code>):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.restfulobjects.suppressDescribedByLinks=true      <i class="conum" data-value="1"></i><b>(1)</b>
-isis.viewer.restfulobjects.suppressUpdateLink=true            <i class="conum" data-value="2"></i><b>(2)</b>
-isis.viewer.restfulobjects.suppressMemberId=true              <i class="conum" data-value="3"></i><b>(3)</b>
-isis.viewer.restfulobjects.suppressMemberLinks=true           <i class="conum" data-value="4"></i><b>(4)</b>
-isis.viewer.restfulobjects.suppressMemberExtensions=true      <i class="conum" data-value="5"></i><b>(5)</b>
-isis.viewer.restfulobjects.suppressMemberDisabledReason=true  <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>suppresses the "describedby" links (on all representations)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>suppresses the  "update" link (on object representation)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>suppresses the  "id" json-prop for object members (on object representation and member detail representations)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>suppresses the  "links" json-prop for object members (on the object representation and member detail representations)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>suppresses the  "extensions" json-prop for object members (on the object representation and member detail representations)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>suppresses the  "disabledReason" json-prop for object members (on the object representation and member detail representations)</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The defaults for all of these is false, meaning that the hypermedia/metadata is NOT suppressed.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>In the future we might extend this per-request.  Raise/vote on a JIRA ticket if you require this feature.</p>
+<p>If these configuration settings are set in conjunction with using the
+<a href="#_ugvro_simplified-representations_apache-isis-profile">Apache Isis profile</a>, then the special <code>$$ro</code>
+property in the representations with reflect these settings.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If an even simpler representations (of objects) are required, see <a href="#_ugvro_configuration-properties_simplified-object-representation">simplified object representation</a>, immediately below.  And if the above isn&#8217;t flexible and you need complete control over all representations see the section on <a href="#_ugvro_extending">Extending the Restful Objects viewer</a> in the <a href="ugbtb.html">Extending</a> chapter.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugvro_configuration-properties_simplified-object-representation">4.3. Simplified object representation</h3>
-<div class="paragraph">
-<p>The representations specified by the <a href="http://restfulobjects.org">Restful Object spec</a> are very rich in hypermedia
-controls and metadata, intended to support a wide variety of possible REST clients.</p>
-</div>
-<div class="paragraph">
-<p>As described <a href="#_ugvro_configuration-properties_suppressing-elements">above</a>, it is possible to suppress various elements of these representations. Even then, though, the representations may be too complex for some bespoke REST clients that require a very "flat" object representation.</p>
-</div>
-<div class="paragraph">
-<p>The Restful Objects viewer therefore supports generating a much simpler representation of objects using the following configuration property (typically added to <code>WEB-INF/viewer_restfulobjects.properties</code>):</p>
+<p>If the <code>objectPropertyValuesOnly</code> configuration property is set:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -842,7 +1258,7 @@ controls and metadata, intended to support a wide variety of possible REST clien
 </div>
 </div>
 <div class="paragraph">
-<p>This generates a representation such as:</p>
+<p>then this generates a representation such as:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -884,6 +1300,21 @@ controls and metadata, intended to support a wide variety of possible REST clien
 }</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvro_configuration-properties">5. Configuration Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Restful Objects viewer provides a couple of configuration option that extend/simplify/alter the representations
+generated from the Restful Objects specification.</p>
+</div>
+<div class="paragraph">
+<p>These configuration properties are typically stored in <code>WEB-INF/viewer_restfulobjects.properties</code>.  However, you can
+place all configuration properties into <code>WEB-INF/isis.properties</code> if you wish (the configuration properties from all
+config files are merged together).</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -892,20 +1323,52 @@ controls and metadata, intended to support a wide variety of possible REST clien
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In the future we might extend this per-request.  Raise/vote on a JIRA ticket if you require this feature.</p>
+<p>As of <code>1.11.0-SNAPSHOT</code> these configuration settings should be considered deprecated, because the
+<a href="#_ugvro_simplified-representations">simplified representation</a> support provided by the Apache Isis profile is a more flexible solution.</p>
+</div>
+<div class="paragraph">
+<p>Also, be aware enabling these settings makes the representations non-standard with respect to
+<a href="http://restfulobjects.org">Restful Object spec</a>.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Restful Objects Viewer Configuration Properties</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 16%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Value<br>
+(<em>default value</em>)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.restfulobjects.</code><br>
+<code>honorUiHints</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A mechanism for reducing the number of round-trips by eagerly rendering collections; discussed <a href="#_ugvro_ro-spec_extensions_minimizing-round-trips_honor-ui-hints">here</a>.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>If the above isn&#8217;t flexible and you need complete control over all representations see the section on <a href="#_ugvro_extending">Extending the Restful Objects viewer</a>.</p>
-</div>
+<p>There are also a number of configuration properties that can be used to suppress or simplify the default RO-spec
+representations.  These pre-date the Apache Isis profile <code>1.11.0-SNAPSHOT</code> support, so are considered deprecated.
+Discussion of them can nevertheless be found <a href="#_ugvro_simplified-representations_configuration-properties">here</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugvro_hints-and-tips">5. Hints and Tips</h2>
+<h2 id="_ugvro_hints-and-tips">6. Hints and Tips</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Since the Restful Objects viewer is designed for computer programs to interact with (rather than human beings), it can be a little difficult to explore and generally "grok" how it works.</p>
@@ -914,7 +1377,7 @@ controls and metadata, intended to support a wide variety of possible REST clien
 <p>This section provides a few hints-and-tips to help you on your way.</p>
 </div>
 <div class="sect2">
-<h3 id="_using_chrome_tools">5.1. Using Chrome Tools</h3>
+<h3 id="_using_chrome_tools">6.1. Using Chrome Tools</h3>
 <div class="paragraph">
 <p>The screencast below shows how to explore the Restful API using Chrome plugins/extensions, and how we use them to write end-2-end (TCK) tests for the Restful Objects viewer.</p>
 </div>
@@ -925,7 +1388,7 @@ controls and metadata, intended to support a wide variety of possible REST clien
 </div>
 </div>
 <div class="sect2">
-<h3 id="_angularjs_tips">5.2. AngularJS Tips</h3>
+<h3 id="_angularjs_tips">6.2. AngularJS Tips</h3>
 <div class="paragraph">
 <p>The hypermedia API exposed by Apache Isis' Restful Objects viewer is intended be support both bespoke custom-written viewers as well as generic viewers. Indeed, we expect most clients consuming the API will be bespoke, not generic.</p>
 </div>
@@ -933,7 +1396,7 @@ controls and metadata, intended to support a wide variety of possible REST clien
 <p>This page captures one or two tips on using AngularJS to write such a bespoke client.</p>
 </div>
 <div class="sect3">
-<h4 id="_invoking_a_get_link_eg_invoking_a_query_action">5.2.1. Invoking a GET link (eg invoking a query action)</h4>
+<h4 id="_invoking_a_get_link_eg_invoking_a_query_action">6.2.1. Invoking a GET link (eg invoking a query action)</h4>
 <div class="paragraph">
 <p>Suppose you have a <code>CustomerService</code> providing a <code>findCustomer</code> action:</p>
 </div>
@@ -987,7 +1450,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
 </div>
 </div>
 <div class="sect3">
-<h4 id="_invoking_a_put_or_post_link">5.2.2. Invoking a PUT or POST link</h4>
+<h4 id="_invoking_a_put_or_post_link">6.2.2. Invoking a PUT or POST link</h4>
 <div class="paragraph">
 <p>If the method is a PUT or a POST, then no <code>:queryString</code> placeholder is required in the URL, and the args are instead part of the body.</p>
 </div>
@@ -997,92 +1460,10 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pretty_printing">5.3. Pretty printing</h3>
+<h3 id="_pretty_printing">6.3. Pretty printing</h3>
 <div class="paragraph">
 <p>The JSON representations generated by the Restful Objects viewer are in compact form if the <a href="rgcfg.html#_rgcfg_deployment-types">deployment type</a> is SERVER (ie production), but will automatically be "pretty printed" (in other words indented) if the deployment type is PROTOTYPE.</p>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_ugvro_extending">6. Extending the Viewer</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <a href="#">RestfulObjects viewer</a> implements the <a href="http://restfulobjects.org">Restful Object spec</a>, meaning that it defines a well-defined set of endpoint URLs as resources, and generates a well-defined set of (JSON) representations when these resources are accessed.</p>
-</div>
-<div class="paragraph">
-<p>Sometimes though you may want to extend or change the representations generated.  This might be because you want to write a RESTful client that uses a particular library (say a Javascript library or web components) that can only handle representations in a certain form.</p>
-</div>
-<div class="paragraph">
-<p>Or, you might want to have Apache Isis generate representations according to some other "standard", of which there are many (see note).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Other "standards" for defining representations that we are aware of include: <a href="http://stateless.co/hal_specification.html">HAL</a> (Mike Kelly), <a href="http://amundsen.com/media-types/collection/">Collection+JSON</a> (Mike Amundsen), <a href="https://github.com/kevinswiber/siren">Siren</a> (Kevin Swiber), <a href="http://jsonapi.org/">JSON API</a> (Steve Klabnik), <a href="https://github.com/cainus/hyper-json-spec">Hyper+JSON</a> (Gregg Cainus), <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a> (W3C) and <a href="http://www.markus-lanthaler.com/hydra/">Hydra</a> (Markus Lanthaler).</p>
-</div>
-<div class="paragraph">
-<p>A good discussion about the relative merits of several of these different hypermedia formats can be found <a href="https://groups.google.com/forum/#!msg/api-craft/NgjzQYVOE4s/EAB2jxtU_TMJ">here</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Whatever your reasons, Apache Isis provides several mechanisms by which you can change the generated representation.  This section lists these, from the simplest (most limited) to the most flexible (more work).</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Configuration Properties<br></p>
-<div class="paragraph">
-<p>If all that is required is a very simple representations (of objects), you can reconfigure the <a href="#">RestfulObjects viewer</a> to provide a simplified output, as described <a href="#_ugvro_configuration-properties_simplified-object-representation">here</a>.<br></p>
-</div>
-<div class="paragraph">
-<p>If you simply want to suppress certain elements, as described  <a href="#_ugvro_configuration-properties_suppressing-elements">here</a>.</p>
-</div>
-</li>
-<li>
-<p><code>RepresentationService</code><br></p>
-<div class="paragraph">
-<p>The <a href="rgsvc.html#_rgsvc-spi_RepresentationService"><code>RepresentationService</code></a> is an SPI domain service (plugin-point) that allows an arbitrary representation to be generated for any of the resources defined in the RO spec.<br></p>
-</div>
-<div class="paragraph">
-<p>The default implementation does, of course, generate the representations as defined in the RO spec.</p>
-</div>
-</li>
-<li>
-<p><code>ContentNegotiationService</code><br></p>
-<div class="paragraph">
-<p>The <a href="rgsvc.html#_rgsvc-spi_ContentNegotiationService"><code>ContentNegotiationService</code></a> is very similar to <code>RepresentationService</code>, in that it allows for a different representation to be generated.  It isn&#8217;t responsible for generating the default RO representations, however; if can simply return <code>null</code> (and leave it to the <code>RepresentationService</code> to generate the correct representations.<br></p>
-</div>
-<div class="paragraph">
-<p>The default implementation provides support for the <code>x-ro-domain-type</code> parameter for HTTP <code>Accept</code> headers, providing the capability sketched out in section 34.1 of the RO spec v1.0.  As such, it delegates to <code>ContentMappingService</code>, described below.</p>
-</div>
-</li>
-<li>
-<p><code>ContentMappingService</code><br></p>
-<div class="paragraph">
-<p>The <a href="rgsvc.html#_rgsvc-spi_ContentMappingService"><code>ContentMappingService</code></a> is used by the default implementation of <code>ContentNegotationService</code> to transform a domain object (usually an entity) into some other form (usually a DTO), as specified by the <code>x-ro-domain-type</code> parameter.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This diagram shows how these services collaborate:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<a class="image" href="images/reference-services-spi/RepresentationService/service-collaborations.png"><img src="images/reference-services-spi/RepresentationService/service-collaborations.png" alt="service collaborations" width="700px"></a>
-</div>
-</div>
-<div class="paragraph">
-<p>Taken together these configuration properties and domain services offer a lot of flexibility in terms of the representations that can be generated from the <a href="#">RestfulObjects viewer</a>.  Please be aware though that these using these SPIs means that the representations generated by the viewer are no longer conformant with those of the RO spec.</p>
 </div>
 </div>
 </div>
@@ -1108,28 +1489,49 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
 <li><a href="#_other_guides">1.1. Other Guides</a></li>
 </ul>
 </li>
-<li><a href="#_ugvro_features">2. Features</a></li>
-<li><a href="#_ugvro_ro-spec">3. RO Specification</a></li>
-<li><a href="#_ugvro_configuration-properties">4. Configuration Properties</a>
+<li><a href="#_ugvro_ro-spec">2. RO Specification</a>
 <ul class="sectlevel2">
-<li><a href="#_ugvro_configuration-properties_honor-ui-hints">4.1. Honor UI hints</a></li>
-<li><a href="#_ugvro_configuration-properties_suppressing-elements">4.2. Suppressing elements of the representation</a></li>
-<li><a href="#_ugvro_configuration-properties_simplified-object-representation">4.3. Simplified object representation</a></li>
-</ul>
-</li>
-<li><a href="#_ugvro_hints-and-tips">5. Hints and Tips</a>
-<ul class="sectlevel2">
-<li><a href="#_using_chrome_tools">5.1. Using Chrome Tools</a></li>
-<li><a href="#_angularjs_tips">5.2. AngularJS Tips</a>
+<li><a href="#_ugvro_ro-spec_goals">2.1. Goals of the Spec</a></li>
+<li><a href="#_resources_and_representations">2.2. Resources and Representations</a></li>
+<li><a href="#_ugvro_ro-spec_apache-isis-implementation">2.3. Apache Isis' implementation</a></li>
+<li><a href="#_ugvro_ro-spec_extensions">2.4. Extensions</a>
 <ul class="sectlevel3">
-<li><a href="#_invoking_a_get_link_eg_invoking_a_query_action">5.2.1. Invoking a GET link (eg invoking a query action)</a></li>
-<li><a href="#_invoking_a_put_or_post_link">5.2.2. Invoking a PUT or POST link</a></li>
+<li><a href="#_ugvro_ro-spec_extensions_content-negotiation">2.4.1. Content Negotiation (34.1)</a>
+<ul class="sectlevel4">
+<li><a href="#_ugvro_ro-spec_extensions_content-negotiation_x-ro-domain-type"><code>x-ro-domain-type</code></a></li>
+<li><a href="#_ugvro_ro-spec_extensions_content-negotiation_apache-isis-profile">Apache Isis profile</a></li>
 </ul>
 </li>
-<li><a href="#_pretty_printing">5.3. Pretty printing</a></li>
+<li><a href="#_ugvro_ro-spec_extensions_minimizing-round-trips">2.4.2. Minimizing Round-trips (34.4)</a>
+<ul class="sectlevel4">
+<li><a href="#_ugvro_ro-spec_extensions_minimizing-round-trips_honor-ui-hints">Honor UI hints</a></li>
 </ul>
 </li>
-<li><a href="#_ugvro_extending">6. Extending the Viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugvro_architecture">3. Architecture</a></li>
+<li><a href="#_ugvro_simplified-representations">4. Simplified Representations</a>
+<ul class="sectlevel2">
+<li><a href="#_ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</a></li>
+<li><a href="#_ugvro_simplified-representations_other-representations">4.2. Supporting other Representations</a></li>
+<li><a href="#_ugvro_simplified-representations_configuration-properties">4.3. Global Config Props (Deprecated)</a></li>
+</ul>
+</li>
+<li><a href="#_ugvro_configuration-properties">5. Configuration Properties</a></li>
+<li><a href="#_ugvro_hints-and-tips">6. Hints and Tips</a>
+<ul class="sectlevel2">
+<li><a href="#_using_chrome_tools">6.1. Using Chrome Tools</a></li>
+<li><a href="#_angularjs_tips">6.2. AngularJS Tips</a>
+<ul class="sectlevel3">
+<li><a href="#_invoking_a_get_link_eg_invoking_a_query_action">6.2.1. Invoking a GET link (eg invoking a query action)</a></li>
+<li><a href="#_invoking_a_put_or_post_link">6.2.2. Invoking a PUT or POST link</a></li>
+</ul>
+</li>
+<li><a href="#_pretty_printing">6.3. Pretty printing</a></li>
+</ul>
+</li>
 </ul>
             </div>
         </div>
