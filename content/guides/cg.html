@@ -1962,7 +1962,7 @@ TODO
 <h2 id="_cg_isis-maven-plugin">5. Apache Isis Maven Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Apache Isis Maven plugin defines two goals:</p>
+<p>The Apache Isis Maven plugin defines three goals:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1973,9 +1973,15 @@ TODO
 </div>
 </li>
 <li>
+<p><code>swagger</code><br></p>
+<div class="paragraph">
+<p>(<code>1.11.0-SNAPSHOT</code>) Uses the <a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> to generate <a href="http://swagger.io">Swagger</a> spec files that describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
+</div>
+</li>
+<li>
 <p><code>xsd</code><br></p>
 <div class="paragraph">
-<p>Uses the <a href="rgsvc.html#_rgsvc-api_JaxbService"><code>JaxbService</code></a> to generate XSD schemas from any JAXB-annotated view models/DTOs.<br></p>
+<p>(<code>1.11.0-SNAPSHOT</code>) Uses the <a href="rgsvc.html#_rgsvc-api_JaxbService"><code>JaxbService</code></a> to generate XSD schemas from any JAXB-annotated view models/DTOs.<br></p>
 </div>
 <div class="paragraph">
 <p>This is instead of and preferable to using the JAXB <a href="https://jaxb.java.net/2.2.4/docs/schemagen.html">schemagen</a> tool, because it uses the framework&#8217;s support (via <a href="rgant.html#_rgant-XmlJavaValueType"><code>@XmlJavaValueType</code></a>) to translate any references to domain objects into <code>OidDto</code>s (as defined by the Apache Isis <a href="rgcms.html#_rgcms_schema-common">common schema</a>).</p>
@@ -1984,16 +1990,16 @@ TODO
 </ul>
 </div>
 <div class="paragraph">
-<p>The <code>validate</code> goal is by default bound to the <code>test</code> phase of your application&#8217;s <code>dom</code> sub-module, whereas the <code>xsd</code> goal defaults to the <code>generate-resources</code> phase of a completely separate <code>canonical</code> submodule.  An example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app.</p>
+<p>The <code>validate</code> goal is by default bound to the <code>test</code> phase, and the <code>swagger</code> goal is by default bound to the <code>package</code> phase; both are typically of your application&#8217;s <code>dom</code> sub-module.  The <code>xsd</code> goal meanwhile defaults to the <code>generate-resources</code> phase, and this is generally used in a completely separate sub-module.  An example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app; the separate submodule that uses the <code>xsd</code> goal is (also) called <code>todoapp-xsd</code>.</p>
 </div>
 <div class="paragraph">
-<p>Both goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to point the plugin at, so that
+<p>All of these goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to point the plugin at, so that
 it knows how to bootstrap an Isis runtime.  This is discussed below, followed by sections on configuring the two goals.</p>
 </div>
 <div class="sect2">
 <h3 id="__code_appmanifest_code">5.1. <code>AppManifest</code></h3>
 <div class="paragraph">
-<p>As noted in the introduction, both goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>
+<p>As noted in the introduction, all the goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>
 to point the plugin at, so that it knows how to bootstrap an Isis runtime.</p>
 </div>
 <div class="paragraph">
@@ -2034,7 +2040,7 @@ public <span class="type">class</span> <span class="class">DomainAppDomManifest<
 </div>
 </div>
 <div class="paragraph">
-<p>As you&#8217;ll see below, the configuration for the two goals both refer to this app manifest.</p>
+<p>As you&#8217;ll see below, the configuration for each of the goals both refer to this app manifest.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2336,7 +2342,150 @@ different configuration; see the final section for differences.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cg_isis-maven-plugin_xsd">5.3. <code>xsd</code> goal (<code>1.11.0-SNAPSHOT</code>)</h3>
+<h3 id="_cg_isis-maven-plugin_swagger">5.3. <code>swagger</code> goal (<code>1.11.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>swagger</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc-api_SwaggerService"><code>SwaggerService</code></a> to
+generate <a href="http://swagger.io">Swagger</a> spec files to describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
+</div>
+<div class="paragraph">
+<p>These spec files, once generated, can then be used in the build pipeline to generate client-side stubs, typically using Swagger&#8217;s own <a href="https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin">swagger-codegen-maven</a> plugin.</p>
+</div>
+<div class="paragraph">
+<p>The <code>swagger</code> goal defines the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
+</li>
+<li>
+<p><code>fileNamePrefix</code> - (optional) a prefix to the generated file names (is suffixed by the requested visibilities, see below).<br></p>
+<div class="paragraph">
+<p>Defaults to <code>swagger</code>.</p>
+</div>
+</li>
+<li>
+<p><code>visibilities</code> - (optional) list of required visibilities.<br></p>
+<div class="paragraph">
+<p>Defaults to [<code>PUBLIC</code>, <code>PRIVATE</code>] (meaning that two spec files will be created).</p>
+</div>
+</li>
+<li>
+<p><code>format</code> - (optional) which format to generate, either <code>JSON</code> or <code>YAML</code>.<br></p>
+<div class="paragraph">
+<p>Defaults to <code>JSON</code>.</p>
+</div>
+</li>
+<li>
+<p><code>output</code> - (optional) subdirectory under the <code>target</code> directory to generate the swagger spec files<br></p>
+<div class="paragraph">
+<p>Defaults to <code>generated-resources/isis-swagger</code></p>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="__code_dom_code_submodule_2">5.3.1. <code>dom</code> submodule</h4>
+<div class="paragraph">
+<p>Update the <code>pom.xml</code> (in your project&#8217;s <code>dom</code> module):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-swagger<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>!skip.isis-swagger<span class="tag">&lt;/name&gt;</span>                                         <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                  <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;appManifest&gt;</span>domainapp.dom.DomainAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>   <i class="conum" data-value="3"></i><b>(3)</b>
+                    <span class="tag">&lt;visibilities&gt;</span>                                                  <i class="conum" data-value="4"></i><b>(4)</b>
+                        <span class="tag">&lt;visibility&gt;</span>PUBLIC<span class="tag">&lt;/visibility&gt;</span>
+                        <span class="tag">&lt;visibility&gt;</span>PRIVATE<span class="tag">&lt;/visibility&gt;</span>
+                    <span class="tag">&lt;/visibilities&gt;</span>
+                    <span class="tag">&lt;format&gt;</span>JSON<span class="tag">&lt;/format&gt;</span>                                           <i class="conum" data-value="5"></i><b>(5)</b>
+                    <span class="tag">&lt;fileNamePrefix&gt;</span>swagger<span class="tag">&lt;/fileNamePrefix&gt;</span>                        <i class="conum" data-value="5"></i><b>(5)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>                      <i class="conum" data-value="6"></i><b>(6)</b>
+                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>swagger<span class="tag">&lt;/goal&gt;</span>                                    <i class="conum" data-value="7"></i><b>(7)</b>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the profile is active by default, though can be disabled using <code>-Dskip.isis-swagger</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to <code>1.11.0-SNAPSHOT</code> (or any later version)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the manifest discussed previously; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the visibilities to create (one swagger spec file per visibility listed)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>which file format to generate the spec files as.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>the <code>dom</code> module for the project; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>binds the plugin&#8217;s <code>swagger</code> goal to the Maven <code>package</code> lifecycle phase (ie the goal will be called when <code>mvn package</code> is run).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_to_run_2">5.3.2. To run</h4>
+<div class="paragraph">
+<p>The plugin is activated by default, so is run simply using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cg_isis-maven-plugin_xsd">5.4. <code>xsd</code> goal (<code>1.11.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
 <p>The <code>xsd</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc-api_JaxbService"><code>JaxbService</code></a> to
 generate XSD schemas from any JAXB-annotated <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view model/DTOs</a>.</p>
@@ -2384,7 +2533,7 @@ other standard plugins in order to generate both XSDs and DTOs.  The <code>pom.x
 to separate out these two responsibilities.</p>
 </div>
 <div class="sect3">
-<h4 id="_cg_isis-maven-plugin_xsd">5.3.1. <code>xsd</code> submodule</h4>
+<h4 id="_cg_isis-maven-plugin_xsd">5.4.1. <code>xsd</code> submodule</h4>
 <div class="paragraph">
 <p>We recommend creating a new submodule that will perform the following build steps:</p>
 </div>
@@ -2731,7 +2880,7 @@ reference for the Apache Isis <a href="_rgcms_schema-common">common schema</a> i
 </div>
 </div>
 <div class="sect3">
-<h4 id="_to_run_2">5.3.2. To run</h4>
+<h4 id="_to_run_3">5.4.2. To run</h4>
 <div class="paragraph">
 <p>The plugin is activated by default, so is run simply using:</p>
 </div>
@@ -8332,15 +8481,21 @@ xxx<br>
 <li><a href="#_1_9_0_version">5.2.5. 1.9.0 version</a></li>
 </ul>
 </li>
-<li><a href="#_cg_isis-maven-plugin_xsd">5.3. <code>xsd</code> goal (<code>1.11.0-SNAPSHOT</code>)</a>
+<li><a href="#_cg_isis-maven-plugin_swagger">5.3. <code>swagger</code> goal (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_cg_isis-maven-plugin_xsd">5.3.1. <code>xsd</code> submodule</a>
+<li><a href="#__code_dom_code_submodule_2">5.3.1. <code>dom</code> submodule</a></li>
+<li><a href="#_to_run_2">5.3.2. To run</a></li>
+</ul>
+</li>
+<li><a href="#_cg_isis-maven-plugin_xsd">5.4. <code>xsd</code> goal (<code>1.11.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_cg_isis-maven-plugin_xsd">5.4.1. <code>xsd</code> submodule</a>
 <ul class="sectlevel4">
 <li><a href="#_xsd_profile">XSD profile</a></li>
 <li><a href="#_xjc_profile">XJC profile</a></li>
 </ul>
 </li>
-<li><a href="#_to_run_2">5.3.2. To run</a></li>
+<li><a href="#_to_run_3">5.4.2. To run</a></li>
 </ul>
 </li>
 </ul>

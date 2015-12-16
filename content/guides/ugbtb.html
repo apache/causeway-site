@@ -4465,13 +4465,17 @@ re-propagates the exception. The use case is simply to ensure that all exception
         <span class="tag">&lt;param-name&gt;</span>whenNoSession<span class="tag">&lt;/param-name&gt;</span>                  <i class="conum" data-value="2"></i><b>(2)</b>
         <span class="tag">&lt;param-value&gt;</span>basicAuthChallenge<span class="tag">&lt;/param-value&gt;</span>
     <span class="tag">&lt;/init-param&gt;</span>
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>passThru<span class="tag">&lt;/param-name&gt;</span>                       <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tag">&lt;param-value&gt;</span>/restful/swagger<span class="tag">&lt;/param-value&gt;</span>
+    <span class="tag">&lt;/init-param&gt;</span>
     <span class="comment">&lt;!--
     &lt;init-param&gt;
-        &lt;param-name&gt;restricted&lt;/param-name&gt;                     <i class="conum" data-value="3"></i><b>(3)</b>
+        &lt;param-name&gt;restricted&lt;/param-name&gt;                     <i class="conum" data-value="4"></i><b>(4)</b>
         &lt;param-value&gt;...&lt;/param-value&gt;
     &lt;/init-param&gt;
     &lt;init-param&gt;
-        &lt;param-name&gt;redirectToOnException&lt;/param-name&gt;          <i class="conum" data-value="4"></i><b>(4)</b>
+        &lt;param-name&gt;redirectToOnException&lt;/param-name&gt;          <i class="conum" data-value="5"></i><b>(5)</b>
         &lt;param-value&gt;...&lt;/param-value&gt;
     &lt;/init-param&gt;
     --&gt;</span>
@@ -4486,17 +4490,43 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>what the servlet should do if no existing session was found; typically a 401, or can issue a Basic Auth challenge</td>
+<td>what the servlet should do if no existing session was found.  Usual values are either <code>unauthorized</code> or <code>basicAuthChallenge</code>.  Discussed in more detail below.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>List of paths that are allowed through even if not authenticated.  The servlets mapped to these paths are expected to be able to deal with there being no session. Typically they will be logon pages.</td>
+<td>(<code>1.11.0-SNAPSHOT</code>), specify which URIs to ignore and simply passthru.  Originally introduced to allow the SwaggerSpec resource (which does not require a session) to be invoked.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>List of paths that are allowed through even if not authenticated.  The servlets mapped to these paths are expected to be able to deal with there being no session. Typically they will be logon pages.  See below for further details.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>where to redirect to if an exception occurs.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>The <code>whenNoSession</code> parameter determines what the behaviour should be if no existing session can be found.  There are a number of predetermined values available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>unauthorized</code> will generates a 401 response</p>
+</li>
+<li>
+<p><code>basicAuthChallenge</code> will also generate a 401 response, and also issues a Basic Auth challenge using <code>WWW-Authenticate</code> response header</p>
+</li>
+<li>
+<p><code>continue</code>, in which case the request is allowed to continue but the destination expected to know that there will be no open session</p>
+</li>
+<li>
+<p><code>restricted</code>, which allows access to a restricted list of URLs, otherwise will redirect to the first of that list of URLs</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If accessing the REST API through a web browser, then normally <code>basicAuthChallenge</code> is appropriate; the browser will automatically display a simple prompt.  If accessing the REST API through a custom Javascript app, then <code>unauthorized</code> is usually the one to use.</p>
 </div>
 <div class="paragraph">
 <p>This filter should be mapped to the <code>servlet-name</code> for the RestEasy <code>HttpServletDispatcher</code>; for example:</p>
