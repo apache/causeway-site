@@ -4490,7 +4490,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>what the servlet should do if no existing session was found.  Usual values are either <code>unauthorized</code> or <code>basicAuthChallenge</code>.  Discussed in more detail below.</td>
+<td>what the servlet should do if no existing session was found.  Usual values are either <code>unauthorized</code>, <code>basicAuthChallenge</code> or <code>auto</code> (<code>1.11.0-SNAPSHOT</code>).  Discussed in more detail below.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -4516,6 +4516,9 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </li>
 <li>
 <p><code>basicAuthChallenge</code> will also generate a 401 response, and also issues a Basic Auth challenge using <code>WWW-Authenticate</code> response header</p>
+</li>
+<li>
+<p><code>auto</code> (<code>1.11.0-SNAPSHOT</code>) combines the <code>unauthorized</code> and <code>basicAuthChallenge</code> strategies: it will generate a 401 response, but only issues a Basic Auth challenge if it detects that the request originates from a web browser (ie that the HTTP <code>Accept</code> header is set to <code>text/html</code>).  This means that custom Javascript apps can perform their authentication correctly, while the REST API can still be explored using the web browser (relying upon the web browser&#8217;s in-built support for HTTP Basic Auth).</p>
 </li>
 <li>
 <p><code>continue</code>, in which case the request is allowed to continue but the destination expected to know that there will be no open session</p>

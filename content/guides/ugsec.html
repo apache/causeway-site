@@ -1737,7 +1737,11 @@ public <span class="type">interface</span> <span class="class">AuthenticationSes
     <span class="tag">&lt;/init-param&gt;</span>
     <span class="tag">&lt;init-param&gt;</span>
         <span class="tag">&lt;param-name&gt;</span>whenNoSession<span class="tag">&lt;/param-name&gt;</span>
-        <span class="tag">&lt;param-value&gt;</span>basicAuthChallenge<span class="tag">&lt;/param-value&gt;</span>           <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;param-value&gt;</span>auto<span class="tag">&lt;/param-value&gt;</span>                         <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tag">&lt;/init-param&gt;</span>
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>passThru<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>/restful/swagger<span class="tag">&lt;/param-value&gt;</span>             <i class="conum" data-value="3"></i><b>(3)</b>
     <span class="tag">&lt;/init-param&gt;</span>
 <span class="tag">&lt;/filter&gt;</span></code></pre>
 </div>
@@ -1750,12 +1754,13 @@ public <span class="type">interface</span> <span class="class">AuthenticationSes
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>what to do if no session was found; we indicate to issue a 401 basic authentication challenge</td>
+<td>what to do if no session was found; we use <code>auto</code> (<code>1.11.0-SNAPSHOT</code>) so as to issue a 401 status code with basic authentication challenge if the request originated from a web browser.  (Prior to <code>1.11.0-SNAPSHOT</code> this parameter was set either to <code>basicAuthChallenge</code> (which works when requested from web browser) or to <code>unauthorized</code> (which works when requested from a suitably coded custom Javascript app).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(<code>1.11.0-SNAPSHOT</code>) which paths are allowed to be accessed directly, without a session.  The <code>/restful/swagger</code> path provides access to the SwaggerResource that dynamically generates swagger spec files from the Apache Isis metamodel.</td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>The <code>IsisSessionFilter</code> has a further plugin point if no session was found (that is, if <code>AuthenticationSessionStrategy#lookupValid()</code> returns null), which is how to respond.  The value "basicAuthChallenge" means to return a 401, which is what triggers the web browser to pop-up the basic HTTP challenge dialog box.</p>
 </div>
 <div class="paragraph">
 <p>The above filter must then be chained before the servlet that actually handles the REST requests:</p>
