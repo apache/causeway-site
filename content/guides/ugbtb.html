@@ -2384,7 +2384,45 @@ FixtureScripts fixtureScripts;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration">2.6.5. Configuration</h4>
+<h4 id="_escaped_strings">2.6.5. Escaped strings</h4>
+<div class="paragraph">
+<p>Translated messages can be escaped if required, eg to include embedded markup.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">#: com.mycompany.myapp.OrderItem#quantity
+msgid &quot;&lt;i&gt;Quantity&lt;/i&gt;&quot;
+msgstr &quot;&lt;i&gt;Quantité&lt;/i&gt;&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For this to work, the <code>namedEscaped()</code> attribute must be specified using either the
+<a href="ugfun.html#_ugfun_object-layout_dynamic">dynamic layout</a> json file, or using an annotation such as
+<a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> or <a href="rgant.html#_rgant_ParameterLayout"><code>@ParameterLayout</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ParameterLayout</span>(
+    named=<span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;i&gt;Quantity&lt;/i&gt;</span><span class="delimiter">&quot;</span></span>,      <i class="conum" data-value="1"></i><b>(1)</b>
+    namedEscaped=<span class="predefined-constant">false</span>
+)
+<span class="directive">public</span> <span class="predefined-type">Integer</span> getQuantity() { ... }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>required (even though it won&#8217;t be used when a translation is read; otherwise the escaped flag is ignored)</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration">2.6.6. Configuration</h4>
 <div class="paragraph">
 <p>There are several different aspects of the translation service that can be configured.</p>
 </div>
@@ -2481,7 +2519,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_supporting_services">2.6.6. Supporting services</h4>
+<h4 id="_supporting_services">2.6.7. Supporting services</h4>
 <div class="paragraph">
 <p>The <code>TranslationServicePo</code> has a number of supporting/related services.</p>
 </div>
@@ -4691,7 +4729,8 @@ the default ones of <code>isis.properties</code> et al):</p>
 </ul>
 </li>
 <li><a href="#_integration_testing">2.6.4. Integration Testing</a></li>
-<li><a href="#_configuration">2.6.5. Configuration</a>
+<li><a href="#_escaped_strings">2.6.5. Escaped strings</a></li>
+<li><a href="#_configuration">2.6.6. Configuration</a>
 <ul class="sectlevel4">
 <li><a href="#_logging">Logging</a></li>
 <li><a href="#_location_of_the_code_po_code_files">Location of the <code>.po</code> files</a></li>
@@ -4699,7 +4738,7 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_force_read_mode">Force read mode</a></li>
 </ul>
 </li>
-<li><a href="#_supporting_services">2.6.6. Supporting services</a>
+<li><a href="#_supporting_services">2.6.7. Supporting services</a>
 <ul class="sectlevel4">
 <li><a href="#__code_localeprovider_code"><code>LocaleProvider</code></a></li>
 <li><a href="#__code_translationsresolver_code"><code>TranslationsResolver</code></a></li>
