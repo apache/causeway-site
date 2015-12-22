@@ -1227,10 +1227,10 @@ do they compare to Apache Isis?</p>
 <p>There are other reasons though why a separate read model might make sense, such as to precompute particular queries, or against denormalized data.  In these cases Apache Isis can often provide a reasonable alternative, namely to map domain entities against RDBMS views, either materialized views or dynamic.  In such cases there is still only a single physical datastore, and so transactional integrity is retained.</p>
 </div>
 <div class="paragraph">
-<p>Or, the CQRS architecture can be more fully implemented with Apache Isis by introducing a separate read model, synchronized using the <a href="rgsvc.html#_rgsvc-api_PublishingService"><code>PublishingService</code></a>, or using <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a>  on the <a href="rgsvc.html#_rgsvc-api_EventBusService"><code>EventBusService</code></a>.  One can then use <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view models</a> to surface the data in the external read datastore.</p>
+<p>Or, the CQRS architecture can be more fully implemented with Apache Isis by introducing a separate read model, synchronized using the <a href="rgsvc.html#_rgsvc_api_PublishingService"><code>PublishingService</code></a>, or using <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a>  on the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a>.  One can then use <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view models</a> to surface the data in the external read datastore.</p>
 </div>
 <div class="paragraph">
-<p>With respect to commands, Apache Isis does of course support the <a href="rgsvc.html#_rgsvc-spi_CommandService"><code>CommandService</code></a> which allows each business action to be reified into a <code>Command</code>.  However, names are misleading here: Apache Isis' commands are relatively passive, merely recording the intent of the user to invoke some operation.  In a CQRS architecture, though, commands take a more active role, locating and acting upon the domain objects.  More significantly, in CQRS each command has its own class, such as <code>PlaceOrderCommand</code>, instantiated by the client and then executed.  With Apache Isis, though, the end-user merely invokes the <code>placeOrder(&#8230;&#8203;)</code> action upon the domain object; the framework itself creates the <code>Command</code> as a side-effect of this.</p>
+<p>With respect to commands, Apache Isis does of course support the <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> which allows each business action to be reified into a <code>Command</code>.  However, names are misleading here: Apache Isis' commands are relatively passive, merely recording the intent of the user to invoke some operation.  In a CQRS architecture, though, commands take a more active role, locating and acting upon the domain objects.  More significantly, in CQRS each command has its own class, such as <code>PlaceOrderCommand</code>, instantiated by the client and then executed.  With Apache Isis, though, the end-user merely invokes the <code>placeOrder(&#8230;&#8203;)</code> action upon the domain object; the framework itself creates the <code>Command</code> as a side-effect of this.</p>
 </div>
 <div class="paragraph">
 <p>In CQRS the commands correspond to the business logic that mutates the system.  Whether this logic is part of the command class (<code>PlaceOrderCommand</code>) or whether that command delegates to methods on the domain object is an implementation detail; but it certainly is common for the business logic to be wholly within the command object and for the domain object to be merely a data holder of the data within the command/write datastore.</p>
@@ -1254,7 +1254,7 @@ do they compare to Apache Isis?</p>
 <p>When combined with CQRS we see a command that triggers a business operation, and an event that results from it.  So, a <code>PlaceOrderCommand</code> command can result in an <code>OrderPlacedEvent</code> event.  A subscriber to this event might then generate a further command to act upon some other system (eg to dispatch the system).  Note that the event might be dispatched and consumed in-process or alternatively this might occur out-of-process.  If the latter, then the subscriber will operate within a separate transaction, meaning the usual eventual consistency concerns and also compensating actions if a rollback is required.  CQRS/event sourcing advocates point out - correctly  that this is just how things are in the "real world" too.</p>
 </div>
 <div class="paragraph">
-<p>In Apache Isis every business action (and indeed, property and collection) emits domain events through the <a href="rgsvc.html#_rgsvc-api_EventBusService"><code>EventBusService</code></a> , and can optionally also be published through the <a href="rgsvc.html#_rgsvc-spi_PublishingService"><code>PublishingService</code></a>.  The former are dispatched and consumed in-process and within the same transaction, and for this reason the <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a> can also veto the events.  The latter are intended for out-of-process consumption; the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> and <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> modules provide implementations for dispatching either through a RDBMS database table, or directly through to an <a href="http://camel.apache.org">ActiveMQ</a> message queue (eg wired up to <a href="http://camel.apache.org">Apache Camel</a> event bus).</p>
+<p>In Apache Isis every business action (and indeed, property and collection) emits domain events through the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> , and can optionally also be published through the <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.  The former are dispatched and consumed in-process and within the same transaction, and for this reason the <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a> can also veto the events.  The latter are intended for out-of-process consumption; the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> and <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> modules provide implementations for dispatching either through a RDBMS database table, or directly through to an <a href="http://camel.apache.org">ActiveMQ</a> message queue (eg wired up to <a href="http://camel.apache.org">Apache Camel</a> event bus).</p>
 </div>
 </div>
 <div class="sect4">
@@ -1369,7 +1369,7 @@ google-maps API.</p>
 <div class="paragraph">
 <p>Also worth mentioning: domain services can also be either singletons (discussed above) or request-scoped; the latter
 being annotated with <code>@javax.enterprise.context.RequestScoped</code>.  An example of the request-scoped service is the
-<a href="rgsvc.html#_rgsvc-api_Scratchpad"><code>Scratchpad</code></a> service, for sharing arbitrary data between multiple objects.</p>
+<a href="rgsvc.html#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a> service, for sharing arbitrary data between multiple objects.</p>
 </div>
 <div class="paragraph">
 <p>The final type of domain object is the <strong>mixin</strong>.  These are similar to contributed services in that they also contribute (or rather,
@@ -1704,7 +1704,7 @@ scanned by the mail room, the barcode could be read to attach the correspondence
 </li>
 <li>
 <p>as a handle to any object in an audit record (as used by the
-<a href="rgsvc.html#_rgsvc-spi_AuditingService"><code>AuditingService</code></a>, in fact).</p>
+<a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>, in fact).</p>
 </li>
 <li>
 <p>and of course both the <a href="ugvro.html">RestfulObjects viewer</a> and
@@ -1716,7 +1716,7 @@ use the oid tuple to look up, render and allow the user to interact with domain 
 <div class="paragraph">
 <p>Although the exact content of an OID should be considered opaque by domain objects, it is possible for domain objects
 to obtain OIDs.  These are represented as <code>Bookmark`s, obtained from the
-<a href="rgsvc.html#_rgsvc-api_BookmarkService">`BookmarkService</code></a>.  Deep links meanwhile can be obtained from
+<a href="rgsvc.html#_rgsvc_api_BookmarkService">`BookmarkService</code></a>.  Deep links meanwhile can be obtained from
 the <a href="rgant.html#_rgant-DeepLinkService"><code>@DeepLinkService</code></a>.</p>
 </div>
 <div class="paragraph">
@@ -1754,22 +1754,22 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_DomainObjectContainer"><code>DomainObjectContainer</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_ClockService"><code>ClockService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_ClockService"><code>ClockService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_IsisJdoSupport"><code>IsisJdoSupport</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_IsisJdoSupport"><code>IsisJdoSupport</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_WrapperFactory"><code>WrapperFactory</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_EventBusService"><code>EventBusService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_EmailService"><code>EmailService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_EmailService"><code>EmailService</code></a></p>
 </li>
 </ul>
 </div>
@@ -1779,22 +1779,22 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_CommandContext"><code>CommandContext</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_api_CommandContext"><code>CommandContext</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_CommandService"><code>CommandService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_AuditingService"><code>AuditingService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_BackgroundService"><code>BackgroundService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_PublishingService"><code>PublishingService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> (SPI)</p>
 </li>
 </ul>
 </div>
@@ -1804,13 +1804,13 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_Scratchpad"><code>Scratchpad</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_ActionInvocationContext"><code>ActionInvocationContext</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_ActionInvocationContext"><code>ActionInvocationContext</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_QueryResultsCache"><code>QueryResultsCache</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_QueryResultsCache"><code>QueryResultsCache</code></a></p>
 </li>
 </ul>
 </div>
@@ -1820,13 +1820,13 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_UserProfileService"><code>UserProfileService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_UserProfileService"><code>UserProfileService</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_UserRegistrationService"><code>UserRegistrationService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_UserRegistrationService"><code>UserRegistrationService</code></a> (SPI)</p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-spi_EmailNotificationService"><code>EmailNotificationService</code></a> (SPI)</p>
+<p><a href="rgsvc.html#_rgsvc_spi_EmailNotificationService"><code>EmailNotificationService</code></a> (SPI)</p>
 </li>
 </ul>
 </div>
@@ -1836,21 +1836,21 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_BookmarkService"><code>BookmarkService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_MementoService"><code>MementoService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_MementoService"><code>MementoService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_DeepLinkService"><code>DeepLinkService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_DeepLinkService"><code>DeepLinkService</code></a></p>
 </li>
 <li>
-<p><a href="rgsvc.html#_rgsvc-api_XmlSnapshotService"><code>XmlSnapshotService</code></a></p>
+<p><a href="rgsvc.html#_rgsvc_api_XmlSnapshotService"><code>XmlSnapshotService</code></a></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>A full list of services can be found in the <a href="rgsvc.html#_rgsvc-api">Domain Services (API)</a>  and <a href="rgsvc.html#_rgsvc-spi">Domain Services (SPI)</a> chapters of the reference guide.</p>
+<p>A full list of services can be found in the <a href="rgsvc.html#_rgsvc_api">Domain Services (API)</a>  and <a href="rgsvc.html#_rgsvc_spi">Domain Services (SPI)</a> chapters of the reference guide.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1949,7 +1949,7 @@ TODO
 So, if you have used Apache Isis for prototyping (discussed above), then note that it&#8217;s quite feasible to take your domain model a the basis of your actual development effort; Apache Isis' annotations and programming conventions will help ensure that any subtle semantics you might have captured in your prototyping are not lost.</p>
 </div>
 <div class="paragraph">
-<p>If you go this route, your deployment platform will of course need to provide similar capabilities to Apache Isis.  In particular, you&#8217;ll need to figure out a way to inject domain services into domain entities (eg using a JPA listener), and you&#8217;ll also need to reimplement any domain services you have used that Apache Isis provides "out-of-the-box" (eg <a href="rgsvc.html#_rgsvc-api_QueryResultsCache"><code>QueryResultsCache</code></a> domain service).</p>
+<p>If you go this route, your deployment platform will of course need to provide similar capabilities to Apache Isis.  In particular, you&#8217;ll need to figure out a way to inject domain services into domain entities (eg using a JPA listener), and you&#8217;ll also need to reimplement any domain services you have used that Apache Isis provides "out-of-the-box" (eg <a href="rgsvc.html#_rgsvc_api_QueryResultsCache"><code>QueryResultsCache</code></a> domain service).</p>
 </div>
 </div>
 <div class="sect3">
@@ -3979,7 +3979,7 @@ used by the supporting <a href="rgcms.html#_rgcms_methods_prefixes_validate"><co
 <p>The (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> are a good source of domain services, providing SPI implementations of the common cross-cutting concerns, and also a number of APIs for domain objects to invoke (eg tags, excel, settings).  Of course, you can also write your own domain services as well, for example to interface with some external CMS system, say.</p>
 </div>
 <div class="paragraph">
-<p>The Apache Isis framework also provides numerous in-built domain services.  These are catalogued in the reference guide, see <a href="rgsvc.html#_rgsvc-api">here</a> and <a href="rgsvc.html#_rgsvc-spi">here</a>.</p>
+<p>The Apache Isis framework also provides numerous in-built domain services.  These are catalogued in the reference guide, see <a href="rgsvc.html#_rgsvc_api">here</a> and <a href="rgsvc.html#_rgsvc_spi">here</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="_ugfun_how-tos_domain-services_organizing-services">4.3.1. Organizing Services</h4>
@@ -4262,7 +4262,7 @@ appear in the UI both as menu items <em>and</em> as contributions (and the servi
 </div>
 </div>
 <div class="paragraph">
-<p>The framework provides a number of request-scoped services, include a scratchpad service, query results caching, and support for co-ordinating bulk actions.  See <a href="rgsvc.html#_rgsvc-api">here</a> and <a href="rgsvc.html#_rgsvc-spi">here</a> for further details.</p>
+<p>The framework provides a number of request-scoped services, include a scratchpad service, query results caching, and support for co-ordinating bulk actions.  See <a href="rgsvc.html#_rgsvc_api">here</a> and <a href="rgsvc.html#_rgsvc_spi">here</a> for further details.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4319,7 +4319,7 @@ isis.services = employee.Employees,\
 <p>This is quite rare, however; you will often want to use default implementations of domain services that are provided by the framework and so will not reside under this prefix.</p>
 </div>
 <div class="paragraph">
-<p>Examples of framework-provided services (as defined in the applib) include clock, auditing, publishing, exception handling, view model support, snapshots/mementos, and user/application settings management; see the <a href="rgsvc.html#_rgsvc-api">here</a> and _rgsvc-spi[here] for further details.</p>
+<p>Examples of framework-provided services (as defined in the applib) include clock, auditing, publishing, exception handling, view model support, snapshots/mementos, and user/application settings management; see the <a href="rgsvc.html#_rgsvc_api">here</a> and _rgsvc_spi[here] for further details.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4373,7 +4373,7 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.html#_rgsvc-api_DomainObjectContainer_object-creation-api">creation</a> and <a href="rgsvc.html#_rgsvc-api_DomainObjectContainer_object-persistence-api">persistence</a>
+TODO - using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_object-creation-api">creation</a> and <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_object-persistence-api">persistence</a>
 </td>
 </tr>
 </table>
@@ -4388,7 +4388,7 @@ TODO - using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.ht
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - using <a href="rgsvc.html#_rgsvc-api_DomainObjectContainer_generic-repository-api"><code>DomainObjectContainer</code></a>
+TODO - using <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_generic-repository-api"><code>DomainObjectContainer</code></a>
 </td>
 </tr>
 </table>
@@ -4402,7 +4402,7 @@ TODO - using <a href="rgsvc.html#_rgsvc-api_DomainObjectContainer_generic-reposi
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - as described <a href="rgsvc.html#_rgsvc-api_IsisJdoSupport_type-safe-jdoql-queries">here</a>
+TODO - as described <a href="rgsvc.html#_rgsvc_api_IsisJdoSupport_type-safe-jdoql-queries">here</a>
 </td>
 </tr>
 </table>
@@ -4418,7 +4418,7 @@ TODO - as described <a href="rgsvc.html#_rgsvc-api_IsisJdoSupport_type-safe-jdoq
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.html#_rgsvc-api_DomainObjectContainer_object-persistence-api">persistence</a>
+TODO using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_object-persistence-api">persistence</a>
 </td>
 </tr>
 </table>
