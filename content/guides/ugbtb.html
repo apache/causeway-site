@@ -506,7 +506,7 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_ugbtb">1. Beyond the Basics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This guide provides <a href="#_ugbtb_more-advanced">more advanced</a> guidance on writing maintainable larger
+<p>This guide provides <a href="#_ugbtb_other-techniques">more advanced</a> guidance on writing maintainable larger
 applications.</p>
 </div>
 <div class="paragraph">
@@ -568,770 +568,8 @@ applications.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_more-advanced">2. Techniques</h2>
+<h2 id="_ugbtb_view-models">2. View Models</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>This chapter pulls together a number of more advanced techniques that we&#8217;ve discovered and developed while building our own Isis applications.</p>
-</div>
-<div class="sect2">
-<h3 id="_ugbtb_more-advanced_decoupling">2.1. Decoupling</h3>
-<div class="paragraph">
-<p>We use Java packages as a way to group related domain objects together; the package name forms a namespace. We can then
-reason about all the classes in that package/namespace as a single unit, or module.</p>
-</div>
-<div class="paragraph">
-<p>This section describes how to use Apache Isis' features to ensure that your domain application remains decoupled.  The techniques described here are also the ones that have been adopted by the various <a href="http://github.com/isisaddons">Isis Addons</a> modules (not ASF) for security, commands, auditing etc.</p>
-</div>
-<div class="paragraph">
-<p>The following sections describe how to re-assemble an application, in particular where some modules are in-house but others are potentially third-party (eg the Isis Addons modules).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>There is some overlap with OSGi and Java 9&#8217;s Jigsaw concepts of "module"; in the future we expect to refactor Apache Isis to leverage these module systems.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_db-schemas">2.1.1. Database Schemas</h4>
-<div class="paragraph">
-<p>In the same way that Java packages act as a namespace for domain objects, it&#8217;s good practice to map domain entities to
-their own (database) schemas. As of 1.9.0, all the <a href="http://www.isisaddons.org">Isis Addons</a> (non-ASF) modules do this, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
-        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">isissecurity</span><span class="delimiter">&quot;</span></span>,
-        table = <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationUser</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ApplicationUser</span> ... { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>results in a <code>CREATE TABLE</code> statement of:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isissecurity.<span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationUser</span><span class="delimiter">&quot;</span></span> (
-    ...
-)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>while:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
-        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">isisaudit</span><span class="delimiter">&quot;</span></span>,
-        table=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> ... { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>similarly results in:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isisaudit.<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span> (
-    ...
-)</code></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If for some reason you don&#8217;t want to use schemas (though we strongly recommend that you do), then note that you can override the <code>@PersistenceCapable</code> annotation by providing XML metadata (the <code>mappings.jdo</code> file); see the section on <a href="rgcfg.html#_rgcfg_configuring-datanucleus">configuring DataNucleus Overriding Annotations</a> for more details.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_listener_to_create_schema">Listener to create schema</h5>
-<div class="paragraph">
-<p>JDO/DataNucleus does not automatically create these schema objects, but it <em>does</em> provide a listener callback API
-on the initialization of each class into the JDO metamodel.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Actually, the above statement isn&#8217;t quite true.  In DN 3.2.x (as used by Apache Isis up to v1.8.0) there was no support for schemas.  As of Apache Isis 1.9.0 and DN 4.0 there is now support.  But we implemented this feature initially against DN 3.2.x, and it still works, so for now we&#8217;ve decided to leave it in.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Therefore Apache Isis attaches a listener, <code>CreateSchemaObjectFromClassMetadata</code>, that checks for the schema&#8217;s existence, and creates the schema if required.</p>
-</div>
-<div class="paragraph">
-<p>The guts of its implementation is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CreateSchemaObjectFromClassMetadata</span>
-        <span class="directive">implements</span> MetaDataListener,
-                   DataNucleusPropertiesAware {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> loaded(<span class="directive">final</span> AbstractClassMetaData cmd) { ... }
-
-    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToCheck(<span class="directive">final</span> AbstractClassMetaData cmd) {
-        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
-        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT count(*) FROM INFORMATION_SCHEMA.SCHEMATA where SCHEMA_NAME = '%s'</span><span class="delimiter">&quot;</span></span>, schemaName);
-    }
-    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToExec(<span class="directive">final</span> AbstractClassMetaData cmd) {
-        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
-        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">CREATE SCHEMA </span><span class="char">\&quot;</span><span class="content">%s</span><span class="char">\&quot;</span><span class="delimiter">&quot;</span></span>, schemaName);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where <code>MetaDataListener</code> is the DataNucleus listener API:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaDataListener</span> {
-    <span class="type">void</span> loaded(AbstractClassMetaData cmd);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Although not formal API, the default <code>CreateSchemaObjectFromClassMetadata</code> has been designed to be easily overrideable if you
-need to tweak it to support other RDBMS'.  Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>:</p>
-</div>
-<div class="paragraph">
-<p>The implementation provided has has been tested for HSQLDB, PostgreSQL and MS SQL Server, and is used automatically unless an alternative implementation is specified (as described in the section below).</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_alternative_implementation">Alternative implementation</h5>
-<div class="paragraph">
-<p>An alternative implementation can be registered and used through the following configuration property:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">isis.persistor.datanucleus.classMetadataLoadedListener=\
-        org.apache.isis.objectstore.jdo.datanucleus.CreateSchemaObjectFromClassMetadata</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Because this pertains to the JDO Objectstore we suggest you put this configuration property in <code>WEB-INF/persistor_datanucleus.properties</code>; but putting it in <code>isis.properties</code> will also work.</p>
-</div>
-<div class="paragraph">
-<p>Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>.  In many cases simply subclassing from <code>CreateSchemaObjectFromClassMetadata</code> and overriding <code>buildSqlToCheck(&#8230;&#8203;)</code> and <code>buildSqlToExec(&#8230;&#8203;)</code> should suffice.</p>
-</div>
-<div class="paragraph">
-<p>If you <em>do</em> need more control, your implementation can also optionally implement  <code>org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPropertiesAware</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">DataNucleusPropertiesAware</span> {
-    <span class="directive">public</span> <span class="type">void</span> setDataNucleusProperties(<span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; properties);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This provides access to the properties passed through to JDO/DataNucleus.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If you do extend Apache Isis' <code>CreateSchemaObjectFromClassMetadata</code> class for some other database, please <a href="https://issues.apache.org/jira/browse/ISIS">contribute back</a> your improvements.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_mixins">2.1.2. Mixins</h4>
-<div class="paragraph">
-<p>A mixin object allows one class to contribute behaviour - actions, (derived) properties and
-(derived) collections - to another domain object, either a domain entity or view model.</p>
-</div>
-<div class="paragraph">
-<p>Some programming languages use the term "trait" instead of mixin, and some languages (such as AspectJ) define their own
-syntax for defining such constructs.  In Apache Isis a mixin is very similar to a domain service, however it also
-defines a single 1-arg constructor that defines the type of the domain objects that it contributes to.</p>
-</div>
-<div class="paragraph">
-<p>Why do this?  The main reason is to allow the app to be decoupled, so that it doesn&#8217;t degrade into the proverbial
-<a href="http://www.laputan.org/mud/mud.html#BigBallOfMud">"big ball of mud"</a>.  Mixins (and contributions) allow dependency
-to be inverted, so that the dependencies between modules can be kept acyclic and under control.</p>
-</div>
-<div class="sect4">
-<h5 id="_example">Example</h5>
-<div class="paragraph">
-<p>This is probably best explained by way of an example.  Suppose we have the <code>Customer</code> domain object which implements
-a <code>DocumentHolder</code> interface:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">implements</span> DocumentHolder {
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We could then imagine a mixin that would contribute behaviour to list, add and remove the <code>Document</code>s for this holder:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>                                                          <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
-    <span class="directive">public</span> DocumentHolder_documents(DocumentHolder holder) {    <i class="conum" data-value="2"></i><b>(2)</b>
-        <span class="local-variable">this</span>.holder = holder;
-    }
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
-    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)
-    <span class="annotation">@CollectionLayout</span>(render = RenderType.EAGERLY)
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() {
-        ...                                                     <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
-    <span class="directive">public</span> DocumentHolder add(<span class="predefined-type">Document</span> document) {
-        ...                                                     <i class="conum" data-value="4"></i><b>(4)</b>
-    }
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
-    <span class="directive">public</span> DocumentHolder remove(<span class="predefined-type">Document</span> document) {
-        ...                                                     <i class="conum" data-value="5"></i><b>(5)</b>
-    }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>alternatively can use <code>@DomainObject(nature=Nature.MIXIN)</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>constructor indicates the type that is contributed to</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>implementation could, for example, use the (non-ASF)
-<a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>implementation would probably delegate to an injected repository to (ultimately) insert data into some table</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>implementation would probably delegate to an injected repository to (ultimately) delete data from some table</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The above example also omits any supporting methods, eg <code>hideXxx()</code>, <code>disableXxx()</code>, <code>validateXxx()</code>, etc.</p>
-</div>
-<div class="paragraph">
-<p>In the user interface the "documents" collection, the "add" and the "delete" actions will appear to be part of
-<code>Customer</code>.  In essence the framework constructs a composite UI from the parts of multiple objects.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The (non-ASF) <a href="http://github.com/incodehq/incode-module-note">Incode note</a> and
-<a href="http://github.com/incodehq/incode-module-commchannel">Incode commchannel</a> modules are real-world examples that use this
-technique throughout.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_contributing_a_single_member">Contributing a single member</h5>
-<div class="paragraph">
-<p>The mixin can contribute as much or as little behaviour as makes sense.  For example, in the example above it might be
-that <code>Document</code>s are created through some other mechanism (eg scanned) and are never deleted.  In that case, the
-mixin might be simply:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For the case where there is only a single member being contributed, the special name "__" (that is, two underscores)
-can be used instead.  In this case, the contributee member&#8217;s name will be inferred from the mixin&#8217;s class name.  If the
-class name itself contains an underscore, then the last part of the class name will be used.</p>
-</div>
-<div class="paragraph">
-<p>Thus, for a mixin whose class name is <code>DocumentHolder_documents</code>, the effective member name is <code>documents</code>.  We could
-therefore rewrite the mixin as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The benefit of this is marginal unless there are supporting methods, in which case the removal of boilerplate is welcome:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
-    <span class="directive">public</span> <span class="type">boolean</span> hide__() { ... }
-    <span class="directive">public</span> <span class="predefined-type">String</span> disable__() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_programmatic_usage">Programmatic usage</h5>
-<div class="paragraph">
-<p>When a domain object is rendered, the framework will automatically instantiate all required mixins and delegate to them
-dynamically.  If writing integration tests or fixtures, or (sometimes) just regular domain logic, then you may need to
-instantiate mixins directly.</p>
-</div>
-<div class="paragraph">
-<p>For this you can use the
-xref:rgsvc.adoc#_rgsvc_api_DomainObjectContainer_object-creation-api[<code>DomainObjectContainer#mixin(&#8230;&#8203;)</code>
-method.  For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">DocumentHolder_documents mixin = container.mixin(DocumentHolder_documents.class, customer);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <a href="ugtst.html#_ugtst_integ-test-support_bootstrapping_IntegrationTestAbstract"><code>IntegrationTestAbstract</code></a> and
-<a href="rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a> classes both provide a <code>mixin(&#8230;&#8203;)</code> convenience
-method.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_other_reasons_to_use_mixins">Other reasons to use mixins</h5>
-<div class="paragraph">
-<p>In the introduction to this topic we mentioned that mixins are most useful for ensuring that the domain app remains
-decoupled.  This applies to the case where the contributee (eg <code>Customer</code>, being mixed into) is in one module, while
-the contributor mixin (<code>DocumentHolder_documents</code>) is in some other module.  The <code>customer</code> module knows about the
-<code>document</code> module, but not vice versa.</p>
-</div>
-<div class="paragraph">
-<p>However, you might also want to consider moving behaviour out of entities even within the same module, perhaps even
-within the same Java package.  And the reason for this is to support hot-reloading of Java classes, so that you can
-modify and recompile your application without having to restart it.  This can provide substantial productivity gains.</p>
-</div>
-<div class="paragraph">
-<p>The Hotspot JVM has limited support for hot reloading; generally you can change method implementations but you cannot
-introduce new methods.  However, the <a href="https://dcevm.github.io/">DCEVM</a> open source project will patch the JVM to
-support much more complete hot reloading support.  There are also, of course, commercial products such as JRebel.</p>
-</div>
-<div class="paragraph">
-<p>The main snag in all this is the DataNucleus enhancer&#8230;&#8203; any change to entities is going to require the entity to be
-re-enhanced, and the JDO metamodel recreated, which usually "stuffs things up".  So hot-reloading of an app whose
-fundamental structure is changing is likely to remain a no-no.</p>
-</div>
-<div class="paragraph">
-<p>However, chances are that the structure of your domain objects (the data) will change much less rapidly than
-the behaviour of those domain objects.  Thus, it&#8217;s the behaviour that you&#8217;re most likely wanting to change while the
-app is still running.  If you move that behaviour out into mixins (or
-<a href="#_ugbtb_more-advanced_decoupling_contributions">contributed services</a>), then these can be reloaded happily.
-(When running in prototype mode), Apache Isis will automatically recreate the portion of the metamodel for any domain
-object as it is rendered.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_related_reading">Related reading</h5>
-<div class="paragraph">
-<p>Mixins are an implementation of the <a href="http://www.artima.com/articles/dci_vision.html">DCI architecture</a> architecture, as formulated and described by <a href="https://en.wikipedia.org/wiki/Trygve_Reenskaug">Trygve Reenskaug</a> and <a href="https://en.wikipedia.org/wiki/Jim_Coplien">Jim Coplien</a>.  Reenskaug was the inventor of the MVC pattern (and also the external
-examiner for Richard Pawson&#8217;s PhD thesis), while Coplien has a long history in object-orientation, C++ and patterns.</p>
-</div>
-<div class="paragraph">
-<p>DCI stands for Data-Context-Interaction and is presented as an evolution of object-oriented programming, but one where
-behaviour is bound to objects dynamically rather than statically in some context or other.  The <code>@Mixin</code>
-pattern is Apache Isis' straightforward take on the same basic concept.</p>
-</div>
-<div class="paragraph">
-<p>You might also wish to check out <a href="http://zest.apache.org">Apache Zest</a> (formerly Qi4J), which implements a much more
-general purpose implementation of the same concepts.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_contributions">2.1.3. Contributions</h4>
-<div class="paragraph">
-<p>Contributed services provide many of the same benefits as <a href="#_ugbtb_more-advanced_decoupling_mixins">mixins</a>;
-indeed mixins are an evolution and refinement of the contributions concept.</p>
-</div>
-<div class="paragraph">
-<p>The main difference between contributed services and mixins is that the actions of a contributed service will
-contribute to <em>all</em> the parameters of its actions, whereas a mixin only contributes to the type accepted in its
-constructor.  Also, contributed services are long-lived
-singletons, whereas mixins are instantiated as required (by the framework) and then discarded almost immediately.</p>
-</div>
-<div class="paragraph">
-<p>For more on contributed services:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>the syntax of writing contributed actions/properties/collections is described in this <a href="ugfun.html#_ugfun_how-tos_contributed-members">how-to</a></p>
-</li>
-<li>
-<p>there&#8217;s also useful information in the reference guide, discussing the <a href="rgant.html#_rgant-DomainService_nature">@DomainService#nature()</a> attribute, for the <code>NatureOfService.VIEW_CONTRIBUTIONS_ONLY</code> nature.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_vetoing-visibility">2.1.4. Vetoing Visibility</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - a write-up of the "vetoing subscriber" design pattern, eg as described in the  <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>eg if included an addon such as auditing or security.</p>
-</div>
-<div class="paragraph">
-<p>solution is to write a domain event subscriber that vetoes the visibility</p>
-</div>
-<div class="paragraph">
-<p>All the addons actions inherit from common base classes so this can be as broad-brush or fine-grained as required</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_event-bus">2.1.5. Event Bus</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - see <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a>, <a href="rgant.html#_rgant-Action_domainEvent"><code>@Action#domainEvent()</code></a>, <a href="rgant.html#_rgant-Property_domainEvent"><code>@Property#domainEvent()</code></a>, <a href="rgant.html#_rgant-Collection_domainEvent"><code>@Collection#domainEvent()</code></a>, <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a>.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_decoupling_pushing-changes">2.1.6. Pushing Changes</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This technique is much less powerful than using <a href="#_ugbtb_more-advanced_decoupling_event-bus">the event bus</a> .  We present it mostly for completeness.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_when_a_property_is_changed">When a property is changed</h5>
-<div class="paragraph">
-<p>If you want to invoke functionality whenever a property is changed by the user, then you should create a supporting <code>modifyXxx()</code> method and include the functionality within that. The syntax is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> modifyPropertyName(PropertyType param) { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Why not just put this functionality in the setter? Well, the setter is used by the object store to recreate the state of an already persisted object. Putting additional behaviour in the setter would cause it to be triggered incorrectly.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span>() {
-    <span class="directive">public</span> <span class="predefined-type">Integer</span> getAmount() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setAmount(<span class="predefined-type">Integer</span> amount) { ... }
-    <span class="directive">public</span> <span class="type">void</span> modifyAmount(<span class="predefined-type">Integer</span> amount) { <i class="conum" data-value="1"></i><b>(1)</b>
-        setAmount(amount);  <i class="conum" data-value="3"></i><b>(3)</b>
-        addToTotal(amount); <i class="conum" data-value="2"></i><b>(2)</b>
-    }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>modifyAmount()</code> method calls &#8230;&#8203;</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>&#8230;&#8203; the <code>addToTotal()</code> (not shown) to maintain some running total.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>We don&#8217;t want this <code>addToCall()</code> method to be called when pulling the object back from the object store, so we put it into the modify, not the setter.</p>
-</div>
-<div class="paragraph">
-<p>You may optionally also specify a <code>clearXxx()</code> which works the same way as modify <code>modify Xxx()</code> but is called when the property is cleared by the user (i.e. the current value replaced by nothing). The syntax is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> clearPropertyName() { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To extend the above example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span>() {
-    <span class="directive">public</span> <span class="predefined-type">Integer</span> getAmount() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setAmount(<span class="predefined-type">Integer</span> amount) { ... }
-    <span class="directive">public</span> <span class="type">void</span> modifyAmount(<span class="predefined-type">Integer</span> amount) { ... }
-    <span class="directive">public</span> <span class="type">void</span> clearAmount() {
-        removeFromTotal(<span class="local-variable">this</span>.amount);
-        setAmount(<span class="predefined-constant">null</span>);
-    }
-    ...
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_when_a_collection_is_modified">When a collection is modified</h5>
-<div class="paragraph">
-<p>A collection may have a corresponding <code>addToXxx()</code> and/or
-<code>removeFromXxx()</code> method. If present, and direct manipulation of the
-contents of the connection has not been disabled (see ?), then they will
-be called (instead of adding/removing an object directly to the
-collection returned by the accessor).</p>
-</div>
-<div class="paragraph">
-<p>The reason for this behaviour is to allow other behaviour to be
-triggered when the contents of the collection is altered. That is, it is
-directly equivalent to the supporting <code>modifyXxx()</code> and <code>clearXxx()</code>
-methods for properties (see ?).</p>
-</div>
-<div class="paragraph">
-<p>The syntax is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> addTo&lt;CollectionName&gt;(EntityType param) { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> removeFromCollectionName(EntityType param) { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where <code>EntityType</code> is the same type as the generic collection type.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Employee</span> { ... }
-
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Department</span> {
-
-    <span class="directive">private</span> <span class="type">int</span> numMaleEmployees;                           <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">private</span> <span class="type">int</span> numFemaleEmployees;                         <i class="conum" data-value="2"></i><b>(2)</b>
-
-    <span class="directive">private</span> <span class="predefined-type">Set</span>&lt;Employee&gt; employees = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;Employee&gt;();
-    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Employee&gt; getEmployees() {
-        <span class="keyword">return</span> employees;
-    }
-    <span class="directive">private</span> <span class="type">void</span> setEmployees(<span class="predefined-type">Set</span>&lt;Employee&gt; employees) {
-        <span class="local-variable">this</span>.employees = employees;
-    }
-    <span class="directive">public</span> <span class="type">void</span> addToEmployees(Employee employee) {         <i class="conum" data-value="3"></i><b>(3)</b>
-        numMaleEmployees += countOneMale(employee);
-        numFemaleEmployees += countOneFemale(employee);
-        employees.add(employee);
-    }
-    <span class="directive">public</span> <span class="type">void</span> removeFromEmployees(Employee employee) {    <i class="conum" data-value="4"></i><b>(4)</b>
-        numMaleEmployees -= countOneMale(employee);
-        numFemaleEmployees -= countOneFemale(employee);
-        employees.remove(employee);
-    }
-    <span class="directive">private</span> <span class="type">int</span> countOneMale(Employee employee) { <span class="keyword">return</span> employee.isMale()?<span class="integer">1</span>:<span class="integer">0</span>; }
-    <span class="directive">private</span> <span class="type">int</span> countOneFemale(Employee employee) { <span class="keyword">return</span> employee.isFemale()?<span class="integer">1</span>:<span class="integer">0</span>; }
-
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>maintain a count of the number of male &#8230;&#8203;</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>&#8230;&#8203; and female employees (getters and setters omitted)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the <a href="rgcms.html#_rgcms_methods_prefixes_addTo"><code>addTo&#8230;&#8203;()</code></a> method increments the derived properties</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>the <a href="rgcms.html#_rgcms_methods_prefixes_removeFrom"><code>removeFrom&#8230;&#8203;()</code></a> method similarly decrements the derived properties</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugbtb_more-advanced_overriding-jdo-annotations">2.2. Overriding JDO Annotations</h3>
-<div class="paragraph">
-<p>The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by reading both annotations on the class and also by searching for metadata in XML files. The metadata in the XML files takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.</p>
-</div>
-<div class="paragraph">
-<p>For example, as of 1.9.0 the various <a href="http://www.isisaddons.org">Isis addons</a> modules (not ASF) use schemas for each entity. For example, the <code>AuditEntry</code> entity in the <a href="http://github.com/isisaddons/isis-module-audit">audit module</a> is annotated as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
-        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAudit</span><span class="delimiter">&quot;</span></span>,
-        table=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> {
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will map the <code>AuditEntry</code> class to a table <code>&quot;IsisAddonsAudit&quot;.&quot;AuditEntry&quot;</code>; that is using a custom schema to own the object.</p>
-</div>
-<div class="paragraph">
-<p>Suppose though that for whatever reason we didn&#8217;t want to use a custom schema but would rather use the default. We can override the above annotation using a <code>package.jdo</code> file, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
-<span class="tag">&lt;jdo</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span>
-        <span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo_3_0.xsd</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">3.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;package</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.isisaddons.module.audit.dom</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">schema</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">table</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAuditEntry</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;/class&gt;</span>
-    <span class="tag">&lt;/package&gt;</span>
-<span class="tag">&lt;/jdo&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This file should be placed can be placed in <code>src/main/java/META-INF</code> within your application&#8217;s <code>dom</code> module.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>(As of <code>1.11.0-SNAPSHOT</code>) you can use a mixin action on <a href="rgcms.html#_rgcms_classes_mixins_Persistable"><code>Persistable</code></a> mixin
-to download the JDO class metadata in XML form.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The same approach should work for any other JDO metadata, but some experimentation might be required.+</p>
-<div class="paragraph">
-<p>For example, in writing up the above example we found that writing <code>schema=&quot;&quot;</code> (in an attempt to say, "use the default schema for this table") actually caused the original annotation value to be used instead.</p>
-</div>
-</li>
-<li>
-<p>Forcing the schema to "PUBLIC" (as in the above example) works, but it isn&#8217;t ideal because the name "PUBLIC" is not vendor-neutral (it works for HSQLDB, but MS SQL Server uses "dbo" as its default).</p>
-</li>
-<li>
-<p>As of 1.9.0 Apache Isis will automatically (attempt) to create the owning schema for a given table if it does not exist. This behaviour can be customized, as described in the section on <a href="#_ugbtb_more-advanced_decoupling_db-schemas">using modules</a>.</p>
-</li>
-<li>
-<p>You may need to override the entire class metadata rather than individual elements; the mixin (<code>1.11.0-SNAPSHOT</code>) mentioned above can help here.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugbtb_more-advanced_view-models">2.3. View Models</h3>
 <div class="paragraph">
 <p>View models are a type of domain object (with state, behaviour etc) but where the state is <em>not</em> persisted into the
  JDO/DataNucleus-managed database, but is instead converted to/from a string memento, and held by the calling client.
@@ -1340,15 +578,15 @@ This opens up a number of more advanced use cases.</p>
 <div class="paragraph">
 <p>In this topic we&#8217;ll explore those use cases, and learn the programming model and conventions to use view models in your application.</p>
 </div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_view-models_use-cases">2.3.1. Use Cases</h4>
+<div class="sect2">
+<h3 id="_ugbtb_view-models_use-cases">2.1. Use Cases</h3>
 <div class="paragraph">
 <p>When developing an Apache Isis application you will most likely start off with the persistent domain entities:
 <code>Customer</code>, <code>Order</code>, <code>Product</code>, and so on.  For some applications this may well suffice.  However, if the application
 needs to integrate with other systems, or if the application needs to support reasonably complex business processes, then you may need to look beyond just domain entities.  This section explores these use cases.</p>
 </div>
-<div class="sect4">
-<h5 id="_externally_managed_entities">Externally-managed entities</h5>
+<div class="sect3">
+<h4 id="_externally_managed_entities">2.1.1. Externally-managed entities</h4>
 <div class="paragraph">
 <p>Sometimes the entities that make up your application are persisted not in the local JDO/DataNucleus database
 but reside in some other system, for example accessible only through a SOAP web service.  Logically that data
@@ -1387,8 +625,8 @@ desirable in any case).</p>
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_in_memory_entities">In-memory entities</h5>
+<div class="sect3">
+<h4 id="_in_memory_entities">2.1.2. In-memory entities</h4>
 <div class="paragraph">
 <p>As a variation on the above, sometimes there are domain objects that are, conceptually at least entities, but whose
 state is not actually persisted anywhere, merely held in-memory (eg in a hash).</p>
@@ -1398,8 +636,8 @@ state is not actually persisted anywhere, merely held in-memory (eg in a hash).<
 definitions) but thereafter is presented in the UI just like any other entity.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_application_layer_view_models">Application-layer view models</h5>
+<div class="sect3">
+<h4 id="_application_layer_view_models">2.1.3. Application-layer view models</h4>
 <div class="paragraph">
 <p>Domain entities (whether locally persisted using JDO/DataNucleus or managed externally) are the bread-and-butter of Apache Isis applications: the focus after all, should be on the business domain concepts and ensuring that they are
 solid.  Generally those domain entities will make sense to the business domain experts: they form the <em>ubiquitous language</em> of the domain.  These domain entities are part of the domain layer.</p>
@@ -1458,8 +696,8 @@ with the system (perhaps automating several related use cases together).</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_dtos_code_1_11_0_snapshot_code">DTOs (<code>1.11.0-SNAPSHOT</code>)</h5>
+<div class="sect3">
+<h4 id="_dtos_code_1_11_0_snapshot_code">2.1.4. DTOs (<code>1.11.0-SNAPSHOT</code>)</h4>
 <div class="paragraph">
 <p>DTOs (data transfer objects) are simple classes that (according to <a href="https://en.wikipedia.org/wiki/Data_transfer_object">wikipedia</a>) "carries data between processes".</p>
 </div>
@@ -1500,12 +738,12 @@ will also provide the ability to download the XML or its XSD directly from the U
 </table>
 </div>
 <div class="paragraph">
-<p>In case it&#8217;s not clear, these DTOs are still usable as "regular" view models; they will render in the <a href="ugvw.html">Wicket viewer</a> just like any other.  Indeed (as the <a href="#_ugbtb_more-advanced_view-models_programming-model">programming model</a> section below makes clear), these
+<p>In case it&#8217;s not clear, these DTOs are still usable as "regular" view models; they will render in the <a href="ugvw.html">Wicket viewer</a> just like any other.  Indeed (as the <a href="#_ugbtb_view-models_programming-model">programming model</a> section below makes clear), these
 JAXB-annotated view models are in many regards the most powerful of all the view model alternatives.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_esb_subscribers">ESB Subscribers</h5>
+<div class="sect3">
+<h4 id="_esb_subscribers">2.1.5. ESB Subscribers</h4>
 <div class="paragraph">
 <p>One important variation of the DTO use case concerns subscribers on an enterprise event bus such as
 <a href="http://camel.apache.org">Apache Camel&#8482;</a> and similar.</p>
@@ -1524,8 +762,8 @@ application to obtain the data they need.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_view-models_programming-model">2.3.2. Programming Model</h4>
+<div class="sect2">
+<h3 id="_ugbtb_view-models_programming-model">2.2. Programming Model</h3>
 <div class="paragraph">
 <p>So much for the theory; how should view models be implemented?  Fundamentally all view models' state is serialized into
 a string memento; this memento is then held by the client (browser) in the form of a URL.  As you might imagine, this
@@ -1644,17 +882,17 @@ et al) this state _can</em> include collections.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>JAXB-annotated DTOs are discussed in more detail immediately <a href="rg.html#_ugbtb_more-advanced_view-models_jaxb">below</a>.</p>
+<p>JAXB-annotated DTOs are discussed in more detail immediately <a href="rg.html#_ugbtb_view-models_jaxb">below</a>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_view-models_jaxb">2.3.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</h4>
+<div class="sect2">
+<h3 id="_ugbtb_view-models_jaxb">2.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
 <p>This section provides some recommended practices if using JAXB and <code>@XmlRootElement</code> to define domain models.  The
 examples are taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>.</p>
 </div>
-<div class="sect4">
-<h5 id="_ugbtb_more-advanced_view-models_jaxb_using-packages-to-version">Use packages to version DTOs</h5>
+<div class="sect3">
+<h4 id="_ugbtb_view-models_jaxb_using-packages-to-version">2.3.1. Use packages to version DTOs</h4>
 <div class="paragraph">
 <p>The whole point of using DTOs (in Apache Isis, at least) is to define a formal contact between two interoperating but
 independent applications.  Since the only thing we can predicate about the future with any certainty is that it one or
@@ -1749,8 +987,8 @@ usually implies the usage of a company domain name).</td>
 also include a version "v1_0".</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_ugbtb_more-advanced_view-models_jaxb_semantic-versioning">Semantic Versioning</h5>
+<div class="sect3">
+<h4 id="_ugbtb_view-models_jaxb_semantic-versioning">2.3.2. Semantic Versioning</h4>
 <div class="paragraph">
 <p>Versioning DTOs enables us to make changes without breaking existing consumers of the data.  We can distinguish two
 types of changes:</p>
@@ -1834,8 +1072,8 @@ for <code>v1_0</code>:</p>
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_ugbtb_more-advanced_view-models_jaxb_referencing-domain-entities">Referencing Domain Entities</h5>
+<div class="sect3">
+<h4 id="_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.3. Referencing Domain Entities</h4>
 <div class="paragraph">
 <p>It&#8217;s quite common for view models to be "backed by" (be projections of) some underlying domain entity.  The
 <code>ToDoItemDto</code> we&#8217;ve been using as the example in this section is an example: there is an underlying <code>ToDoItem</code> entity.</p>
@@ -1880,8 +1118,8 @@ public <span class="type">class</span> <span class="class">ToDoItemDto</span> <s
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_ugbtb_more-advanced_view-models_jaxb_collections">Collections</h5>
+<div class="sect3">
+<h4 id="_ugbtb_view-models_jaxb_collections">2.3.4. Collections</h4>
 <div class="paragraph">
 <p>It&#8217;s also possible for a DTO to hold collections of objects.  These can be of any type, either simple properties, or
 references to other objects.</p>
@@ -1919,8 +1157,8 @@ to handle the memento string in some other fashion (eg substituting it with a GU
 on the server).</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_generating_xsds_and_dtos">Generating XSDs and DTOs</h5>
+<div class="sect3">
+<h4 id="_generating_xsds_and_dtos">2.3.5. Generating XSDs and DTOs</h4>
 <div class="paragraph">
 <p>The <a href="cg.html#_cg_isis-maven-plugin">Apache Isis maven plugin</a> provides the <a href="cg.html#_cg_isis-maven-plugin_xsd">xsd</a> goal that allows the XSDs to be generated from any JAXB-annotated view models.
 These use the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to generate the schemas; using the
@@ -1934,8 +1172,20 @@ standalone subscriber running on an enterprise service bus such as Apache Camel.
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ugbtb_more-advanced_mapping-rdbms-views">2.4. Mapping RDBMS Views</h3>
+</div>
+<div class="sect1">
+<h2 id="_ugbtb_decoupling">3. Decoupling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use Java packages as a way to group related domain objects together; the package name forms a namespace. We can then
+reason about all the classes in that package/namespace as a single unit, or module.</p>
+</div>
+<div class="paragraph">
+<p>This section describes how to use Apache Isis' features to ensure that your domain application remains decoupled.  The techniques described here are also the ones that have been adopted by the various <a href="http://github.com/isisaddons">Isis Addons</a> modules (not ASF) for security, commands, auditing etc.</p>
+</div>
+<div class="paragraph">
+<p>The following sections describe how to re-assemble an application, in particular where some modules are in-house but others are potentially third-party (eg the Isis Addons modules).</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1943,31 +1193,440 @@ standalone subscriber running on an enterprise service bus such as Apache Camel.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
+<div class="paragraph">
+<p>There is some overlap with OSGi and Java 9&#8217;s Jigsaw concepts of "module"; in the future we expect to refactor Apache Isis to leverage these module systems.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_decoupling_db-schemas">3.1. Database Schemas</h3>
+<div class="paragraph">
+<p>In the same way that Java packages act as a namespace for domain objects, it&#8217;s good practice to map domain entities to
+their own (database) schemas. As of 1.9.0, all the <a href="http://www.isisaddons.org">Isis Addons</a> (non-ASF) modules do this, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
+        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">isissecurity</span><span class="delimiter">&quot;</span></span>,
+        table = <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationUser</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ApplicationUser</span> ... { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>results in a <code>CREATE TABLE</code> statement of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isissecurity.<span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationUser</span><span class="delimiter">&quot;</span></span> (
+    ...
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>while:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
+        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">isisaudit</span><span class="delimiter">&quot;</span></span>,
+        table=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> ... { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>similarly results in:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isisaudit.<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span> (
+    ...
+)</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If for some reason you don&#8217;t want to use schemas (though we strongly recommend that you do), then note that you can override the <code>@PersistenceCapable</code> annotation by providing XML metadata (the <code>mappings.jdo</code> file); see the section on <a href="rgcfg.html#_rgcfg_configuring-datanucleus">configuring DataNucleus Overriding Annotations</a> for more details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_listener_to_create_schema">3.1.1. Listener to create schema</h4>
+<div class="paragraph">
+<p>JDO/DataNucleus does not automatically create these schema objects, but it <em>does</em> provide a listener callback API
+on the initialization of each class into the JDO metamodel.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Actually, the above statement isn&#8217;t quite true.  In DN 3.2.x (as used by Apache Isis up to v1.8.0) there was no support for schemas.  As of Apache Isis 1.9.0 and DN 4.0 there is now support.  But we implemented this feature initially against DN 3.2.x, and it still works, so for now we&#8217;ve decided to leave it in.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Therefore Apache Isis attaches a listener, <code>CreateSchemaObjectFromClassMetadata</code>, that checks for the schema&#8217;s existence, and creates the schema if required.</p>
+</div>
+<div class="paragraph">
+<p>The guts of its implementation is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CreateSchemaObjectFromClassMetadata</span>
+        <span class="directive">implements</span> MetaDataListener,
+                   DataNucleusPropertiesAware {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> loaded(<span class="directive">final</span> AbstractClassMetaData cmd) { ... }
+
+    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToCheck(<span class="directive">final</span> AbstractClassMetaData cmd) {
+        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
+        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT count(*) FROM INFORMATION_SCHEMA.SCHEMATA where SCHEMA_NAME = '%s'</span><span class="delimiter">&quot;</span></span>, schemaName);
+    }
+    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToExec(<span class="directive">final</span> AbstractClassMetaData cmd) {
+        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
+        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">CREATE SCHEMA </span><span class="char">\&quot;</span><span class="content">%s</span><span class="char">\&quot;</span><span class="delimiter">&quot;</span></span>, schemaName);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>MetaDataListener</code> is the DataNucleus listener API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaDataListener</span> {
+    <span class="type">void</span> loaded(AbstractClassMetaData cmd);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Although not formal API, the default <code>CreateSchemaObjectFromClassMetadata</code> has been designed to be easily overrideable if you
+need to tweak it to support other RDBMS'.  Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>:</p>
+</div>
+<div class="paragraph">
+<p>The implementation provided has has been tested for HSQLDB, PostgreSQL and MS SQL Server, and is used automatically unless an alternative implementation is specified (as described in the section below).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_alternative_implementation">3.1.2. Alternative implementation</h4>
+<div class="paragraph">
+<p>An alternative implementation can be registered and used through the following configuration property:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.persistor.datanucleus.classMetadataLoadedListener=\
+        org.apache.isis.objectstore.jdo.datanucleus.CreateSchemaObjectFromClassMetadata</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because this pertains to the JDO Objectstore we suggest you put this configuration property in <code>WEB-INF/persistor_datanucleus.properties</code>; but putting it in <code>isis.properties</code> will also work.</p>
+</div>
+<div class="paragraph">
+<p>Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>.  In many cases simply subclassing from <code>CreateSchemaObjectFromClassMetadata</code> and overriding <code>buildSqlToCheck(&#8230;&#8203;)</code> and <code>buildSqlToExec(&#8230;&#8203;)</code> should suffice.</p>
+</div>
+<div class="paragraph">
+<p>If you <em>do</em> need more control, your implementation can also optionally implement  <code>org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPropertiesAware</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">DataNucleusPropertiesAware</span> {
+    <span class="directive">public</span> <span class="type">void</span> setDataNucleusProperties(<span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; properties);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This provides access to the properties passed through to JDO/DataNucleus.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you do extend Apache Isis' <code>CreateSchemaObjectFromClassMetadata</code> class for some other database, please <a href="https://issues.apache.org/jira/browse/ISIS">contribute back</a> your improvements.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_ugbtb_more-advanced_transactions-and-errors">2.5. Transactions and Errors</h3>
+<h3 id="_ugbtb_decoupling_mixins">3.2. Mixins</h3>
 <div class="paragraph">
-<p>In Apache Isis, every action invocation (in fact, every interaction) is automatically wrapped in a transaction, and any repository query automatically does a flush.</p>
+<p>A mixin object allows one class to contribute behaviour - actions, (derived) properties and
+(derived) collections - to another domain object, either a domain entity or view model.</p>
 </div>
 <div class="paragraph">
-<p>What that means is that there&#8217;s no need to explicitly start or commit transactions in Apache Isis; this will be done for you. Indeed, if you do try to manage transactions (eg by reaching into the JDO <code>PersistenceManager</code> exposed by the <a href="rgsvc.html#_rgsvc_api_IsisJdoSupport">IsisJdoSupport</a> domain service, then you are likely to confuse Isis and get a stack trace for your trouble.</p>
+<p>Some programming languages use the term "trait" instead of mixin, and some languages (such as AspectJ) define their own
+syntax for defining such constructs.  In Apache Isis a mixin is very similar to a domain service, however it also
+defines a single 1-arg constructor that defines the type of the domain objects that it contributes to.</p>
+</div>
+<div class="paragraph">
+<p>Why do this?  The main reason is to allow the app to be decoupled, so that it doesn&#8217;t degrade into the proverbial
+<a href="http://www.laputan.org/mud/mud.html#BigBallOfMud">"big ball of mud"</a>.  Mixins (and contributions) allow dependency
+to be inverted, so that the dependencies between modules can be kept acyclic and under control.</p>
 </div>
 <div class="sect3">
-<h4 id="_aborting_transactions">2.5.1. Aborting Transactions</h4>
+<h4 id="_example">3.2.1. Example</h4>
 <div class="paragraph">
-<p>If you want to abort Apache Isis' transaction, this can be done by throwing <code>RecoverableException</code> (or any subclass, eg <code>ApplicationException</code>). The transaction will be aborted, and the exception message will be displayed to the user.</p>
+<p>This is probably best explained by way of an example.  Suppose we have the <code>Customer</code> domain object which implements
+a <code>DocumentHolder</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">implements</span> DocumentHolder {
+    ...
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>If you throw any other exception (ie not a subclass of <code>RecoverableException</code>), then the users will see an error page (if Wicket viewer) or a 500 (if Restful Objects viewer).</p>
+<p>We could then imagine a mixin that would contribute behaviour to list, add and remove the <code>Document</code>s for this holder:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>                                                          <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
+    <span class="directive">public</span> DocumentHolder_documents(DocumentHolder holder) {    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="local-variable">this</span>.holder = holder;
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
+    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)
+    <span class="annotation">@CollectionLayout</span>(render = RenderType.EAGERLY)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() {
+        ...                                                     <i class="conum" data-value="3"></i><b>(3)</b>
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> DocumentHolder add(<span class="predefined-type">Document</span> document) {
+        ...                                                     <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> DocumentHolder remove(<span class="predefined-type">Document</span> document) {
+        ...                                                     <i class="conum" data-value="5"></i><b>(5)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>alternatively can use <code>@DomainObject(nature=Nature.MIXIN)</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>constructor indicates the type that is contributed to</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>implementation could, for example, use the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>implementation would probably delegate to an injected repository to (ultimately) insert data into some table</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>implementation would probably delegate to an injected repository to (ultimately) delete data from some table</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example also omits any supporting methods, eg <code>hideXxx()</code>, <code>disableXxx()</code>, <code>validateXxx()</code>, etc.</p>
+</div>
+<div class="paragraph">
+<p>In the user interface the "documents" collection, the "add" and the "delete" actions will appear to be part of
+<code>Customer</code>.  In essence the framework constructs a composite UI from the parts of multiple objects.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://github.com/incodehq/incode-module-note">Incode note</a> and
+<a href="http://github.com/incodehq/incode-module-commchannel">Incode commchannel</a> modules are real-world examples that use this
+technique throughout.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_raise_message_errors_to_users">2.5.2. Raise message/errors to users</h4>
+<h4 id="_contributing_a_single_member">3.2.2. Contributing a single member</h4>
+<div class="paragraph">
+<p>The mixin can contribute as much or as little behaviour as makes sense.  For example, in the example above it might be
+that <code>Document</code>s are created through some other mechanism (eg scanned) and are never deleted.  In that case, the
+mixin might be simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the case where there is only a single member being contributed, the special name "__" (that is, two underscores)
+can be used instead.  In this case, the contributee member&#8217;s name will be inferred from the mixin&#8217;s class name.  If the
+class name itself contains an underscore, then the last part of the class name will be used.</p>
+</div>
+<div class="paragraph">
+<p>Thus, for a mixin whose class name is <code>DocumentHolder_documents</code>, the effective member name is <code>documents</code>.  We could
+therefore rewrite the mixin as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The benefit of this is marginal unless there are supporting methods, in which case the removal of boilerplate is welcome:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+    ..
+    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
+    <span class="directive">public</span> <span class="type">boolean</span> hide__() { ... }
+    <span class="directive">public</span> <span class="predefined-type">String</span> disable__() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_programmatic_usage">3.2.3. Programmatic usage</h4>
+<div class="paragraph">
+<p>When a domain object is rendered, the framework will automatically instantiate all required mixins and delegate to them
+dynamically.  If writing integration tests or fixtures, or (sometimes) just regular domain logic, then you may need to
+instantiate mixins directly.</p>
+</div>
+<div class="paragraph">
+<p>For this you can use the
+xref:rgsvc.adoc#_rgsvc_api_DomainObjectContainer_object-creation-api[<code>DomainObjectContainer#mixin(&#8230;&#8203;)</code>
+method.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">DocumentHolder_documents mixin = container.mixin(DocumentHolder_documents.class, customer);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="ugtst.html#_ugtst_integ-test-support_bootstrapping_IntegrationTestAbstract"><code>IntegrationTestAbstract</code></a> and
+<a href="rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a> classes both provide a <code>mixin(&#8230;&#8203;)</code> convenience
+method.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_reasons_to_use_mixins">3.2.4. Other reasons to use mixins</h4>
+<div class="paragraph">
+<p>In the introduction to this topic we mentioned that mixins are most useful for ensuring that the domain app remains
+decoupled.  This applies to the case where the contributee (eg <code>Customer</code>, being mixed into) is in one module, while
+the contributor mixin (<code>DocumentHolder_documents</code>) is in some other module.  The <code>customer</code> module knows about the
+<code>document</code> module, but not vice versa.</p>
+</div>
+<div class="paragraph">
+<p>However, you might also want to consider moving behaviour out of entities even within the same module, perhaps even
+within the same Java package.  And the reason for this is to support hot-reloading of Java classes, so that you can
+modify and recompile your application without having to restart it.  This can provide substantial productivity gains.</p>
+</div>
+<div class="paragraph">
+<p>The Hotspot JVM has limited support for hot reloading; generally you can change method implementations but you cannot
+introduce new methods.  However, the <a href="https://dcevm.github.io/">DCEVM</a> open source project will patch the JVM to
+support much more complete hot reloading support.  There are also, of course, commercial products such as JRebel.</p>
+</div>
+<div class="paragraph">
+<p>The main snag in all this is the DataNucleus enhancer&#8230;&#8203; any change to entities is going to require the entity to be
+re-enhanced, and the JDO metamodel recreated, which usually "stuffs things up".  So hot-reloading of an app whose
+fundamental structure is changing is likely to remain a no-no.</p>
+</div>
+<div class="paragraph">
+<p>However, chances are that the structure of your domain objects (the data) will change much less rapidly than
+the behaviour of those domain objects.  Thus, it&#8217;s the behaviour that you&#8217;re most likely wanting to change while the
+app is still running.  If you move that behaviour out into mixins (or
+<a href="#_ugbtb_decoupling_contributions">contributed services</a>), then these can be reloaded happily.
+(When running in prototype mode), Apache Isis will automatically recreate the portion of the metamodel for any domain
+object as it is rendered.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_related_reading">3.2.5. Related reading</h4>
+<div class="paragraph">
+<p>Mixins are an implementation of the <a href="http://www.artima.com/articles/dci_vision.html">DCI architecture</a> architecture, as formulated and described by <a href="https://en.wikipedia.org/wiki/Trygve_Reenskaug">Trygve Reenskaug</a> and <a href="https://en.wikipedia.org/wiki/Jim_Coplien">Jim Coplien</a>.  Reenskaug was the inventor of the MVC pattern (and also the external
+examiner for Richard Pawson&#8217;s PhD thesis), while Coplien has a long history in object-orientation, C++ and patterns.</p>
+</div>
+<div class="paragraph">
+<p>DCI stands for Data-Context-Interaction and is presented as an evolution of object-oriented programming, but one where
+behaviour is bound to objects dynamically rather than statically in some context or other.  The <code>@Mixin</code>
+pattern is Apache Isis' straightforward take on the same basic concept.</p>
+</div>
+<div class="paragraph">
+<p>You might also wish to check out <a href="http://zest.apache.org">Apache Zest</a> (formerly Qi4J), which implements a much more
+general purpose implementation of the same concepts.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_decoupling_contributions">3.3. Contributions</h3>
+<div class="paragraph">
+<p>Contributed services provide many of the same benefits as <a href="#_ugbtb_decoupling_mixins">mixins</a>;
+indeed mixins are an evolution and refinement of the contributions concept.</p>
+</div>
+<div class="paragraph">
+<p>The main difference between contributed services and mixins is that the actions of a contributed service will
+contribute to <em>all</em> the parameters of its actions, whereas a mixin only contributes to the type accepted in its
+constructor.  Also, contributed services are long-lived
+singletons, whereas mixins are instantiated as required (by the framework) and then discarded almost immediately.</p>
+</div>
+<div class="paragraph">
+<p>For more on contributed services:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the syntax of writing contributed actions/properties/collections is described in this <a href="ugfun.html#_ugfun_how-tos_contributed-members">how-to</a></p>
+</li>
+<li>
+<p>there&#8217;s also useful information in the reference guide, discussing the <a href="rgant.html#_rgant-DomainService_nature">@DomainService#nature()</a> attribute, for the <code>NatureOfService.VIEW_CONTRIBUTIONS_ONLY</code> nature.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_decoupling_vetoing-visibility">3.4. Vetoing Visibility</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1975,14 +1634,23 @@ TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_messages-api"><code>DomainObjectContainer</code></a>
+TODO - a write-up of the "vetoing subscriber" design pattern, eg as described in the  <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>eg if included an addon such as auditing or security.</p>
 </div>
-<div class="sect3">
-<h4 id="_exception_recognizers">2.5.3. Exception Recognizers</h4>
+<div class="paragraph">
+<p>solution is to write a domain event subscriber that vetoes the visibility</p>
+</div>
+<div class="paragraph">
+<p>All the addons actions inherit from common base classes so this can be as broad-brush or fine-grained as required</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_decoupling_event-bus">3.5. Event Bus</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1990,15 +1658,195 @@ TODO - <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_messages-api"><code>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a> service
+TODO - see <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a>, <a href="rgant.html#_rgant-Action_domainEvent"><code>@Action#domainEvent()</code></a>, <a href="rgant.html#_rgant-Property_domainEvent"><code>@Property#domainEvent()</code></a>, <a href="rgant.html#_rgant-Collection_domainEvent"><code>@Collection#domainEvent()</code></a>, <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a>.
 </td>
 </tr>
 </table>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_ugbtb_more-advanced_i18n">2.6. i18n</h3>
+<h3 id="_ugbtb_decoupling_pushing-changes">3.6. Pushing Changes</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This technique is much less powerful than using <a href="#_ugbtb_decoupling_event-bus">the event bus</a> .  We present it mostly for completeness.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_when_a_property_is_changed">3.6.1. When a property is changed</h4>
+<div class="paragraph">
+<p>If you want to invoke functionality whenever a property is changed by the user, then you should create a supporting <code>modifyXxx()</code> method and include the functionality within that. The syntax is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> modifyPropertyName(PropertyType param) { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why not just put this functionality in the setter? Well, the setter is used by the object store to recreate the state of an already persisted object. Putting additional behaviour in the setter would cause it to be triggered incorrectly.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span>() {
+    <span class="directive">public</span> <span class="predefined-type">Integer</span> getAmount() { ... }
+    <span class="directive">public</span> <span class="type">void</span> setAmount(<span class="predefined-type">Integer</span> amount) { ... }
+    <span class="directive">public</span> <span class="type">void</span> modifyAmount(<span class="predefined-type">Integer</span> amount) { <i class="conum" data-value="1"></i><b>(1)</b>
+        setAmount(amount);  <i class="conum" data-value="3"></i><b>(3)</b>
+        addToTotal(amount); <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>modifyAmount()</code> method calls &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>&#8230;&#8203; the <code>addToTotal()</code> (not shown) to maintain some running total.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t want this <code>addToCall()</code> method to be called when pulling the object back from the object store, so we put it into the modify, not the setter.</p>
+</div>
+<div class="paragraph">
+<p>You may optionally also specify a <code>clearXxx()</code> which works the same way as modify <code>modify Xxx()</code> but is called when the property is cleared by the user (i.e. the current value replaced by nothing). The syntax is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> clearPropertyName() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To extend the above example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span>() {
+    <span class="directive">public</span> <span class="predefined-type">Integer</span> getAmount() { ... }
+    <span class="directive">public</span> <span class="type">void</span> setAmount(<span class="predefined-type">Integer</span> amount) { ... }
+    <span class="directive">public</span> <span class="type">void</span> modifyAmount(<span class="predefined-type">Integer</span> amount) { ... }
+    <span class="directive">public</span> <span class="type">void</span> clearAmount() {
+        removeFromTotal(<span class="local-variable">this</span>.amount);
+        setAmount(<span class="predefined-constant">null</span>);
+    }
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_when_a_collection_is_modified">3.6.2. When a collection is modified</h4>
+<div class="paragraph">
+<p>A collection may have a corresponding <code>addToXxx()</code> and/or
+<code>removeFromXxx()</code> method. If present, and direct manipulation of the
+contents of the connection has not been disabled (see ?), then they will
+be called (instead of adding/removing an object directly to the
+collection returned by the accessor).</p>
+</div>
+<div class="paragraph">
+<p>The reason for this behaviour is to allow other behaviour to be
+triggered when the contents of the collection is altered. That is, it is
+directly equivalent to the supporting <code>modifyXxx()</code> and <code>clearXxx()</code>
+methods for properties (see ?).</p>
+</div>
+<div class="paragraph">
+<p>The syntax is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> addTo&lt;CollectionName&gt;(EntityType param) { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> removeFromCollectionName(EntityType param) { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>EntityType</code> is the same type as the generic collection type.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Employee</span> { ... }
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Department</span> {
+
+    <span class="directive">private</span> <span class="type">int</span> numMaleEmployees;                           <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> <span class="type">int</span> numFemaleEmployees;                         <i class="conum" data-value="2"></i><b>(2)</b>
+
+    <span class="directive">private</span> <span class="predefined-type">Set</span>&lt;Employee&gt; employees = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;Employee&gt;();
+    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Employee&gt; getEmployees() {
+        <span class="keyword">return</span> employees;
+    }
+    <span class="directive">private</span> <span class="type">void</span> setEmployees(<span class="predefined-type">Set</span>&lt;Employee&gt; employees) {
+        <span class="local-variable">this</span>.employees = employees;
+    }
+    <span class="directive">public</span> <span class="type">void</span> addToEmployees(Employee employee) {         <i class="conum" data-value="3"></i><b>(3)</b>
+        numMaleEmployees += countOneMale(employee);
+        numFemaleEmployees += countOneFemale(employee);
+        employees.add(employee);
+    }
+    <span class="directive">public</span> <span class="type">void</span> removeFromEmployees(Employee employee) {    <i class="conum" data-value="4"></i><b>(4)</b>
+        numMaleEmployees -= countOneMale(employee);
+        numFemaleEmployees -= countOneFemale(employee);
+        employees.remove(employee);
+    }
+    <span class="directive">private</span> <span class="type">int</span> countOneMale(Employee employee) { <span class="keyword">return</span> employee.isMale()?<span class="integer">1</span>:<span class="integer">0</span>; }
+    <span class="directive">private</span> <span class="type">int</span> countOneFemale(Employee employee) { <span class="keyword">return</span> employee.isFemale()?<span class="integer">1</span>:<span class="integer">0</span>; }
+
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>maintain a count of the number of male &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>&#8230;&#8203; and female employees (getters and setters omitted)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the <a href="rgcms.html#_rgcms_methods_prefixes_addTo"><code>addTo&#8230;&#8203;()</code></a> method increments the derived properties</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the <a href="rgcms.html#_rgcms_methods_prefixes_removeFrom"><code>removeFrom&#8230;&#8203;()</code></a> method similarly decrements the derived properties</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugbtb_i18n">4. i18n</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis' support for i18n allows every element of the domain model (the class names, property names, action names, parameter names and so forth) to be translated.</p>
 </div>
@@ -2008,8 +1856,8 @@ TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecogn
 <div class="paragraph">
 <p>Isis does not translate the values of your domain objects, though.  So, if you have a domain concept such as <code>Country</code> whose name is intended to be localized according to the current user, you will need to model</p>
 </div>
-<div class="sect3">
-<h4 id="_implementation_approach">2.6.1. Implementation Approach</h4>
+<div class="sect2">
+<h3 id="_implementation_approach">4.1. Implementation Approach</h3>
 <div class="paragraph">
 <p>Most Java frameworks tackle i18n by using Java&#8217;s own <code>ResourceBundle</code> API.  However, there are some serious drawbacks in this approach, such as:</p>
 </div>
@@ -2082,8 +1930,8 @@ TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecogn
 <p>In Apache Isis' implementation, if the translation is missing from the <code>.po</code> file then the original message text from the <code>.pot</code> file will be returned.  In fact, it isn&#8217;t even necessary for there to be any <code>.po</code> files; <code>.po</code> translations can be added piecemeal as the need arises.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="__code_translationservice_code">2.6.2. <code>TranslationService</code></h4>
+<div class="sect2">
+<h3 id="__code_translationservice_code">4.2. <code>TranslationService</code></h3>
 <div class="paragraph">
 <p>The cornerstone of Apache Isis' support for i18n is the <code>TranslationService</code> service. This is defined in the applib with the following API:</p>
 </div>
@@ -2128,8 +1976,8 @@ TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecogn
 <div class="paragraph">
 <p>The mode meanwhile determines the behaviour of the service.  More on this below.</p>
 </div>
-<div class="sect4">
-<h5 id="__code_translationservicepo_code"><code>TranslationServicePo</code></h5>
+<div class="sect3">
+<h4 id="__code_translationservicepo_code">4.2.1. <code>TranslationServicePo</code></h4>
 <div class="paragraph">
 <p>Isis provides a default implementation of <code>TranslationService</code>, namely <code>TranslationServicePo</code>.</p>
 </div>
@@ -2157,16 +2005,16 @@ TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecogn
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_imperative_messages">2.6.3. Imperative messages</h4>
+<div class="sect2">
+<h3 id="_imperative_messages">4.3. Imperative messages</h3>
 <div class="paragraph">
 <p>The <code>TranslationService</code> is used internally by Apache Isis when building up the metamodel; the name and description of every class, property, collection, action and action parameter is automatically translated.  Thus the simple act of bootstrapping Apache Isis will cause most of the messages requiring translation (that is: those for the Apache Isis metamodel) to be captured by the <code>TranslationService</code>.</p>
 </div>
 <div class="paragraph">
 <p>However, for an application to be fully internationalized, any validation messages (from either <code>disableXxx()</code> or <code>validateXxx()</code> supporting methods) and also possibly an object&#8217;s title (from the <code>title()</code> method) will also require translation. Moreover, these messages must be captured in the <code>.pot</code> file such that they can be translated.</p>
 </div>
-<div class="sect4">
-<h5 id="__code_translatablestring_code"><code>TranslatableString</code></h5>
+<div class="sect3">
+<h4 id="__code_translatablestring_code">4.3.1. <code>TranslatableString</code></h4>
 <div class="paragraph">
 <p>The first part of the puzzle is tackled by an extension to Apache Isis' programming model.  Whereas previously the <code>disableXxx()</code> / <code>validateXxx()</code> / <code>title()</code> methods could only return a <code>java.lang.String</code>, they may now optionally return a <code>TranslatableString</code> (defined in Isis applib) instead.</p>
 </div>
@@ -2281,8 +2129,8 @@ msgstr &quot;Iche heisse {firstName} {lastName}.&quot;</code></pre>
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__code_translatableexception_code"><code>TranslatableException</code></h5>
+<div class="sect3">
+<h4 id="__code_translatableexception_code">4.3.2. <code>TranslatableException</code></h4>
 <div class="paragraph">
 <p>Another mechanism by which messages can be rendered to the user are as the result of exception messages thrown and recognized by an <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a>.</p>
 </div>
@@ -2311,8 +2159,8 @@ msgstr &quot;Iche heisse {firstName} {lastName}.&quot;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_integration_testing">2.6.4. Integration Testing</h4>
+<div class="sect2">
+<h3 id="_integration_testing">4.4. Integration Testing</h3>
 <div class="paragraph">
 <p>So much for the API; but as noted, it is also necessary to ensure that the required translations are recorded (by the <code>TranslationService</code>) into the <code>.pot</code> file.</p>
 </div>
@@ -2383,8 +2231,8 @@ FixtureScripts fixtureScripts;
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_escaped_strings">2.6.5. Escaped strings</h4>
+<div class="sect2">
+<h3 id="_escaped_strings">4.5. Escaped strings</h3>
 <div class="paragraph">
 <p>Translated messages can be escaped if required, eg to include embedded markup.</p>
 </div>
@@ -2421,13 +2269,13 @@ msgstr &quot;&lt;i&gt;Quantité&lt;/i&gt;&quot;</code></pre>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_configuration">2.6.6. Configuration</h4>
+<div class="sect2">
+<h3 id="_configuration">4.6. Configuration</h3>
 <div class="paragraph">
 <p>There are several different aspects of the translation service that can be configured.</p>
 </div>
-<div class="sect4">
-<h5 id="_logging">Logging</h5>
+<div class="sect3">
+<h4 id="_logging">4.6.1. Logging</h4>
 <div class="paragraph">
 <p>To configure the <code>TranslationServicePo</code> to write to out the <code>translations.pot</code> file, add the following to the <em>integtests</em> <code>logging.properties</code> file:</p>
 </div>
@@ -2447,8 +2295,8 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 <p>Just to repeat, this is <em>not</em> the <code>WEB-INF/logging.properties</code> file, it should instead be added to the <code>integtests/logging.properties</code> file.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_location_of_the_code_po_code_files">Location of the <code>.po</code> files</h5>
+<div class="sect3">
+<h4 id="_location_of_the_code_po_code_files">4.6.2. Location of the <code>.po</code> files</h4>
 <div class="paragraph">
 <p>The default location of the translated <code>.po</code> files is in the <code>WEB-INF</code> directory. These are named and searched for similarly to regular Java resource bundles.</p>
 </div>
@@ -2486,8 +2334,8 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 <p>The basename for translation files is always <code>translations</code>; this cannot be altered.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_externalized_translation_files">Externalized translation files</h5>
+<div class="sect3">
+<h4 id="_externalized_translation_files">4.6.3. Externalized translation files</h4>
 <div class="paragraph">
 <p>Normally Apache Isis configuration files are read from the <code>WEB-INF</code> file. However, Apache Isis can be configured to read config files from an <a href="#_ugbtb_deployment_externalized-configuration">external directory</a>; this is also supported for translations.</p>
 </div>
@@ -2506,8 +2354,8 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 <p>Then this directory will be used as the base for searching for translations (rather than the default 'WEB-INF/' directory).</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_force_read_mode">Force read mode</h5>
+<div class="sect3">
+<h4 id="_force_read_mode">4.6.4. Force read mode</h4>
 <div class="paragraph">
 <p>As noted above, if running in prototype mode then <code>TranslationServicePo</code> will be in write mode, if in production mode then will be in read mode. To force read mode (ie use translations) even if in prototype mode, add the following configuration property to <code>isis.properties</code>:</p>
 </div>
@@ -2518,13 +2366,13 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_supporting_services">2.6.7. Supporting services</h4>
+<div class="sect2">
+<h3 id="_supporting_services">4.7. Supporting services</h3>
 <div class="paragraph">
 <p>The <code>TranslationServicePo</code> has a number of supporting/related services.</p>
 </div>
-<div class="sect4">
-<h5 id="__code_localeprovider_code"><code>LocaleProvider</code></h5>
+<div class="sect3">
+<h4 id="__code_localeprovider_code">4.7.1. <code>LocaleProvider</code></h4>
 <div class="paragraph">
 <p>The <code>LocaleProvider</code> API is used by the <code>TranslationServicePo</code> implementation to obtain the locale of the "current user".</p>
 </div>
@@ -2546,14 +2394,14 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__code_translationsresolver_code"><code>TranslationsResolver</code></h5>
+<div class="sect3">
+<h4 id="__code_translationsresolver_code">4.7.2. <code>TranslationsResolver</code></h4>
 <div class="paragraph">
 <p>The <code>TranslationResolver</code> is used by the <code>TranslationService</code> implementation to lookup translations for a specified locale. It is this service that reads from the <code>WEB-INF/</code> (or externalized directory).</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__code_translationservicepomenu_code"><code>TranslationServicePoMenu</code></h5>
+<div class="sect3">
+<h4 id="__code_translationservicepomenu_code">4.7.3. <code>TranslationServicePoMenu</code></h4>
 <div class="paragraph">
 <p>The <code>TranslationServicePoMenu</code> provides a couple of menu actions in the UI (prototype mode only) that interacts with the underlying <code>TranslationServicePo</code>:</p>
 </div>
@@ -2587,8 +2435,306 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_ugbtb_headless-access">5. Headless access</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section tackles the topic of enabling access to an Isis application directly, or at least, not through either the <a href="ugvw.html">Wicket</a> or <a href="ugvro.html">Restful</a> viewers.</p>
+</div>
+<div class="paragraph">
+<p>There are several main use-cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>enabling background execution, eg of a thread managed by Quartz scheduler and running within the webapp</p>
+</li>
+<li>
+<p>integration from other systems, eg for a subscriber on a pub/sub mechanism such as Camel, pushing changes through an Apache Isis domain model.</p>
+</li>
+<li>
+<p>leveraging an Isis application within a batch process</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that the calling thread runs in the same process space as the Apache Isis domain object model (must be physically linked to the JAR files containing the domain classes).  For use cases where the calling thread runs in some other process space (eg migrating data from a legacy system), then the <a href="ugvro.html">Restful Objects viewer</a> is usually the way to go.</p>
+</div>
+<div class="paragraph">
+<p>The API described in this chapter is reasonably low-level, allowing code to interact very directly with the Apache Isis metamodel and runtime.  Such callers should be considered trusted: they do not (by default) honour any business rules eg implicit in the Isis annotations or hide/disable/validate methods.  However the <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> service could be used to enforce such business rules if required.</p>
+</div>
 <div class="sect2">
-<h3 id="_ugbtb_more-advanced_multi-tenancy">2.7. Multi-tenancy</h3>
+<h3 id="_ugbtb_headless-access_AbstractIsisSessionTemplate">5.1. AbstractIsisSessionTemplate</h3>
+<div class="paragraph">
+<p>The <code>AbstractIsisSessionTemplate</code> class (whose name is inspired by the Spring framework&#8217;s naming convention for similar classes that query <a href="http://docs.spring.io/spring/docs/2.5.x/reference/jdbc.html#jdbc-JdbcTemplate">JDBC</a>, <a href="http://docs.spring.io/spring/docs/2.5.x/reference/jms.html#jms-jmstemplate">JMS</a>, <a href="http://docs.spring.io/spring/docs/2.5.x/reference/orm.html#orm-jpa-template">JPA</a> etc.) provides the mechanism to open up a 'session' within the Apache Isis framework, in order to resolve and interact with entities.</p>
+</div>
+<div class="paragraph">
+<p>The class itself is intended to be subclassed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">AbstractIsisSessionTemplate</span> {
+
+    <span class="directive">public</span> <span class="type">void</span> execute(<span class="directive">final</span> AuthenticationSession authSession, <span class="directive">final</span> <span class="predefined-type">Object</span> context) { ... } <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">protected</span> <span class="directive">abstract</span> <span class="type">void</span> doExecute(<span class="predefined-type">Object</span> context); <i class="conum" data-value="2"></i><b>(2)</b>
+
+    <span class="directive">protected</span> ObjectAdapter adapterFor(<span class="directive">final</span> <span class="predefined-type">Object</span> targetObject) { ... }
+    <span class="directive">protected</span> ObjectAdapter adapterFor(<span class="directive">final</span> RootOid rootOid) { ... }
+
+    <span class="directive">protected</span> PersistenceSession getPersistenceSession() { ... }
+    <span class="directive">protected</span> IsisTransactionManager getTransactionManager() { ... }
+    <span class="directive">protected</span> AdapterManager getAdapterManager() { ... }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>execute(&#8230;&#8203;)</code> sets up the <code>IsisSession</code> and delegates to &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>doExecute(&#8230;&#8203;)</code>, the mandatory hook method for subclasses to implement.
+The passed object represents passes a context from the caller (eg the scheduler, cron job, JMS etc) that instantiated and executed the class.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>protected</code> methods expose key internal APIs within Apache Isis, for the subclass to use as necessary.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>One notable feature of <code>AbstractIsisSessionTemplate</code> is that it will automatically inject any domain services into itself. Thus, it is relatively easy for the subclass to "reach into" the domain, through injected repository services.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_headless-access_BackgroundCommandExecution">5.2. BackgroundCommandExecution</h3>
+<div class="paragraph">
+<p>The <code>BackgroundCommandExecution</code> class (a subclass of <a href="#_ugbtb_headless-access_AbstractIsisSessionTemplate">AbstractIsisSessionTemplate</a>) is intended to simplify the execution of background <code>Command</code>s persisted by way of the <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> and the <a href="rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Its signature is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">BackgroundCommandExecution</span> <span class="directive">extends</span> AbstractIsisSessionTemplate {
+    <span class="directive">protected</span> <span class="type">void</span> doExecute(<span class="predefined-type">Object</span> context) { ... }
+    <span class="directive">protected</span> <span class="directive">abstract</span> <span class="predefined-type">List</span>&lt;? <span class="directive">extends</span> Command&gt; findBackgroundCommandsToExecute(); <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>findBackgroundCommandsToExecute()</code> is a mandatory hook method for subclasses to implement.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This allows for different implementations of the <code>CommandService</code> and <code>BackgroundCommandService</code> to persist to wherever.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below (<a href="http://yuml.me/edit/363b335f">yuml.me/363b335f</a>) shows the dependencies between these various classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/headless-access/BackgroundCommandExecution.png" alt="BackgroundCommandExecution" width="400px">
+</div>
+<div class="title">Figure 1. Inheritance Hierarchy for <code>BackgroundCommandExecution</code></div>
+</div>
+<div class="sect3">
+<h4 id="_background_execution">5.2.1. Background Execution</h4>
+<div class="paragraph">
+<p>The <code>BackgroundCommandExecutionFromBackgroundCommandServiceJdo</code> is a concrete subclass of <code>BackgroundCommandExecution</code> (see the <a href="rgsvc.html#_rgsvc_api_BackgroundService"><code>BackgroundCommandService</code></a>), the intended use being for the class to be instantiated regularly (eg every 10 seconds) by a scheduler such as <a href="http://quartz-scheduler.org">Quartz</a>) to poll for <code>Command</code>s to be executed, and then execute them.</p>
+</div>
+<div class="paragraph">
+<p>This implementation queries for <code>Command</code>s persisted by the <a href="http://www.isisaddons.org/isis-module-command">Isis addons Command Module</a>'s  implementations of <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> and <a href="rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> using the <code>BackgroundCommandServiceJdoRepository</code>.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below (<a href="http://yuml.me/edit/25343da1">yuml.me/25343da1</a>) shows the inheritance hierarchy for this class:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/headless-access/BackgroundCommandExecutionFromBackgroundCommandServiceJdo.png" alt="BackgroundCommandExecutionFromBackgroundCommandServiceJdo" width="500px">
+</div>
+<div class="title">Figure 2. Inheritance Hierarchy for <code>BackgroundCommandExecutionFromBackgroundCommandServiceJdo</code></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugbtb_other-techniques">6. Other Techniques</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter pulls together a number of more advanced techniques that we&#8217;ve discovered and developed while building our own Isis applications.</p>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_other-techniques_overriding-jdo-annotations">6.1. Overriding JDO Annotations</h3>
+<div class="paragraph">
+<p>The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by reading both annotations on the class and also by searching for metadata in XML files. The metadata in the XML files takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.</p>
+</div>
+<div class="paragraph">
+<p>For example, as of 1.9.0 the various <a href="http://www.isisaddons.org">Isis addons</a> modules (not ASF) use schemas for each entity. For example, the <code>AuditEntry</code> entity in the <a href="http://github.com/isisaddons/isis-module-audit">audit module</a> is annotated as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(
+        identityType=IdentityType.DATASTORE,
+        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAudit</span><span class="delimiter">&quot;</span></span>,
+        table=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will map the <code>AuditEntry</code> class to a table <code>&quot;IsisAddonsAudit&quot;.&quot;AuditEntry&quot;</code>; that is using a custom schema to own the object.</p>
+</div>
+<div class="paragraph">
+<p>Suppose though that for whatever reason we didn&#8217;t want to use a custom schema but would rather use the default. We can override the above annotation using a <code>package.jdo</code> file, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="tag">&lt;jdo</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span>
+        <span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo_3_0.xsd</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">3.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;package</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.isisaddons.module.audit.dom</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">schema</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">table</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAuditEntry</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;/class&gt;</span>
+    <span class="tag">&lt;/package&gt;</span>
+<span class="tag">&lt;/jdo&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file should be placed can be placed in <code>src/main/java/META-INF</code> within your application&#8217;s <code>dom</code> module.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>(As of <code>1.11.0-SNAPSHOT</code>) you can use a mixin action on <a href="rgcms.html#_rgcms_classes_mixins_Persistable"><code>Persistable</code></a> mixin
+to download the JDO class metadata in XML form.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The same approach should work for any other JDO metadata, but some experimentation might be required.+</p>
+<div class="paragraph">
+<p>For example, in writing up the above example we found that writing <code>schema=&quot;&quot;</code> (in an attempt to say, "use the default schema for this table") actually caused the original annotation value to be used instead.</p>
+</div>
+</li>
+<li>
+<p>Forcing the schema to "PUBLIC" (as in the above example) works, but it isn&#8217;t ideal because the name "PUBLIC" is not vendor-neutral (it works for HSQLDB, but MS SQL Server uses "dbo" as its default).</p>
+</li>
+<li>
+<p>As of 1.9.0 Apache Isis will automatically (attempt) to create the owning schema for a given table if it does not exist. This behaviour can be customized, as described in the section on <a href="#_ugbtb_decoupling_db-schemas">using modules</a>.</p>
+</li>
+<li>
+<p>You may need to override the entire class metadata rather than individual elements; the mixin (<code>1.11.0-SNAPSHOT</code>) mentioned above can help here.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_other-techniques_mapping-rdbms-views">6.2. Mapping RDBMS Views</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_other-techniques_transactions-and-errors">6.3. Transactions and Errors</h3>
+<div class="paragraph">
+<p>In Apache Isis, every action invocation (in fact, every interaction) is automatically wrapped in a transaction, and any repository query automatically does a flush.</p>
+</div>
+<div class="paragraph">
+<p>What that means is that there&#8217;s no need to explicitly start or commit transactions in Apache Isis; this will be done for you. Indeed, if you do try to manage transactions (eg by reaching into the JDO <code>PersistenceManager</code> exposed by the <a href="rgsvc.html#_rgsvc_api_IsisJdoSupport">IsisJdoSupport</a> domain service, then you are likely to confuse Isis and get a stack trace for your trouble.</p>
+</div>
+<div class="sect3">
+<h4 id="_aborting_transactions">6.3.1. Aborting Transactions</h4>
+<div class="paragraph">
+<p>If you want to abort Apache Isis' transaction, this can be done by throwing <code>RecoverableException</code> (or any subclass, eg <code>ApplicationException</code>). The transaction will be aborted, and the exception message will be displayed to the user.</p>
+</div>
+<div class="paragraph">
+<p>If you throw any other exception (ie not a subclass of <code>RecoverableException</code>), then the users will see an error page (if Wicket viewer) or a 500 (if Restful Objects viewer).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_raise_message_errors_to_users">6.3.2. Raise message/errors to users</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO - <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer_messages-api"><code>DomainObjectContainer</code></a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exception_recognizers">6.3.3. Exception Recognizers</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO - <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a> service
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_other-techniques_multi-tenancy">6.4. Multi-tenancy</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2603,7 +2749,7 @@ TODO - as supported by (non-ASF) <a href="http://github.com/isisaddons/isis-modu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_more-advanced_persisted-title">2.8. Persisted Title</h3>
+<h3 id="_ugbtb_other-techniques_persisted-title">6.5. Persisted Title</h3>
 <div class="paragraph">
 <p>Normally the title of an object is not persisted to the database, rather it is recomputed automatically from underlying properties.  On occasion though you might want the title to also be persisted; either to make things easier for the DBA, or for an integration scenario, or some other purpose.</p>
 </div>
@@ -2692,7 +2838,7 @@ TODO - as supported by (non-ASF) <a href="http://github.com/isisaddons/isis-modu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_more-advanced_replacing-default-service-implementations">2.9. Replacing Service Implns</h3>
+<h3 id="_ugbtb_other-techniques_replacing-default-service-implementations">6.6. Replacing Service Implns</h3>
 <div class="paragraph">
 <p>The framework provides default implementations for many of the <a href="rgsvc.html#_rgsvc_api">API Services</a>.  This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p>
 </div>
@@ -2779,155 +2925,17 @@ TODO - as supported by (non-ASF) <a href="http://github.com/isisaddons/isis-modu
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ugbtb_more-advanced_headless-access">2.10. Headless access</h3>
-<div class="paragraph">
-<p>This section tackles the topic of enabling access to an Isis application directly, or at least, not through either the <a href="ugvw.html">Wicket</a> or <a href="ugvro.html">Restful</a> viewers.</p>
-</div>
-<div class="paragraph">
-<p>There are several main use-cases:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>enabling background execution, eg of a thread managed by Quartz scheduler and running within the webapp</p>
-</li>
-<li>
-<p>integration from other systems, eg for a subscriber on a pub/sub mechanism such as Camel, pushing changes through an Apache Isis domain model.</p>
-</li>
-<li>
-<p>leveraging an Isis application within a batch process</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Note that the calling thread runs in the same process space as the Apache Isis domain object model (must be physically linked to the JAR files containing the domain classes).  For use cases where the calling thread runs in some other process space (eg migrating data from a legacy system), then the <a href="ugvro.html">Restful Objects viewer</a> is usually the way to go.</p>
-</div>
-<div class="paragraph">
-<p>The API described in this chapter is reasonably low-level, allowing code to interact very directly with the Apache Isis metamodel and runtime.  Such callers should be considered trusted: they do not (by default) honour any business rules eg implicit in the Isis annotations or hide/disable/validate methods.  However the <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> service could be used to enforce such business rules if required.</p>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_headless-access_AbstractIsisSessionTemplate">2.10.1. AbstractIsisSessionTemplate</h4>
-<div class="paragraph">
-<p>The <code>AbstractIsisSessionTemplate</code> class (whose name is inspired by the Spring framework&#8217;s naming convention for similar classes that query <a href="http://docs.spring.io/spring/docs/2.5.x/reference/jdbc.html#jdbc-JdbcTemplate">JDBC</a>, <a href="http://docs.spring.io/spring/docs/2.5.x/reference/jms.html#jms-jmstemplate">JMS</a>, <a href="http://docs.spring.io/spring/docs/2.5.x/reference/orm.html#orm-jpa-template">JPA</a> etc.) provides the mechanism to open up a 'session' within the Apache Isis framework, in order to resolve and interact with entities.</p>
-</div>
-<div class="paragraph">
-<p>The class itself is intended to be subclassed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">AbstractIsisSessionTemplate</span> {
-
-    <span class="directive">public</span> <span class="type">void</span> execute(<span class="directive">final</span> AuthenticationSession authSession, <span class="directive">final</span> <span class="predefined-type">Object</span> context) { ... } <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">protected</span> <span class="directive">abstract</span> <span class="type">void</span> doExecute(<span class="predefined-type">Object</span> context); <i class="conum" data-value="2"></i><b>(2)</b>
-
-    <span class="directive">protected</span> ObjectAdapter adapterFor(<span class="directive">final</span> <span class="predefined-type">Object</span> targetObject) { ... }
-    <span class="directive">protected</span> ObjectAdapter adapterFor(<span class="directive">final</span> RootOid rootOid) { ... }
-
-    <span class="directive">protected</span> PersistenceSession getPersistenceSession() { ... }
-    <span class="directive">protected</span> IsisTransactionManager getTransactionManager() { ... }
-    <span class="directive">protected</span> AdapterManager getAdapterManager() { ... }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>execute(&#8230;&#8203;)</code> sets up the <code>IsisSession</code> and delegates to &#8230;&#8203;</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>doExecute(&#8230;&#8203;)</code>, the mandatory hook method for subclasses to implement.
-The passed object represents passes a context from the caller (eg the scheduler, cron job, JMS etc) that instantiated and executed the class.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The <code>protected</code> methods expose key internal APIs within Apache Isis, for the subclass to use as necessary.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>One notable feature of <code>AbstractIsisSessionTemplate</code> is that it will automatically inject any domain services into itself. Thus, it is relatively easy for the subclass to "reach into" the domain, through injected repository services.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_more-advanced_headless-access_BackgroundCommandExecution">2.10.2. BackgroundCommandExecution</h4>
-<div class="paragraph">
-<p>The <code>BackgroundCommandExecution</code> class (a subclass of <a href="#_ugbtb_more-advanced_headless-access_AbstractIsisSessionTemplate">AbstractIsisSessionTemplate</a>) is intended to simplify the execution of background <code>Command</code>s persisted by way of the <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> and the <a href="rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>.</p>
-</div>
-<div class="paragraph">
-<p>Its signature is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">BackgroundCommandExecution</span> <span class="directive">extends</span> AbstractIsisSessionTemplate {
-    <span class="directive">protected</span> <span class="type">void</span> doExecute(<span class="predefined-type">Object</span> context) { ... }
-    <span class="directive">protected</span> <span class="directive">abstract</span> <span class="predefined-type">List</span>&lt;? <span class="directive">extends</span> Command&gt; findBackgroundCommandsToExecute(); <i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>findBackgroundCommandsToExecute()</code> is a mandatory hook method for subclasses to implement.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This allows for different implementations of the <code>CommandService</code> and <code>BackgroundCommandService</code> to persist to wherever.</p>
-</div>
-<div class="paragraph">
-<p>The diagram below (<a href="http://yuml.me/edit/363b335f">yuml.me/363b335f</a>) shows the dependencies between these various classes:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/headless-access/BackgroundCommandExecution.png" alt="BackgroundCommandExecution" width="400px">
-</div>
-<div class="title">Figure 1. Inheritance Hierarchy for <code>BackgroundCommandExecution</code></div>
-</div>
-<div class="sect4">
-<h5 id="_background_execution">Background Execution</h5>
-<div class="paragraph">
-<p>The <code>BackgroundCommandExecutionFromBackgroundCommandServiceJdo</code> is a concrete subclass of <code>BackgroundCommandExecution</code> (see the <a href="rgsvc.html#_rgsvc_api_BackgroundService"><code>BackgroundCommandService</code></a>), the intended use being for the class to be instantiated regularly (eg every 10 seconds) by a scheduler such as <a href="http://quartz-scheduler.org">Quartz</a>) to poll for <code>Command</code>s to be executed, and then execute them.</p>
-</div>
-<div class="paragraph">
-<p>This implementation queries for <code>Command</code>s persisted by the <a href="http://www.isisaddons.org/isis-module-command">Isis addons Command Module</a>'s  implementations of <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> and <a href="rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> using the <code>BackgroundCommandServiceJdoRepository</code>.</p>
-</div>
-<div class="paragraph">
-<p>The diagram below (<a href="http://yuml.me/edit/25343da1">yuml.me/25343da1</a>) shows the inheritance hierarchy for this class:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/headless-access/BackgroundCommandExecutionFromBackgroundCommandServiceJdo.png" alt="BackgroundCommandExecutionFromBackgroundCommandServiceJdo" width="500px">
-</div>
-<div class="title">Figure 2. Inheritance Hierarchy for <code>BackgroundCommandExecutionFromBackgroundCommandServiceJdo</code></div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_programming-model">3. Programming Model</h2>
+<h2 id="_ugbtb_programming-model">7. Customizing the Prog Model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter explains the main APIs to extend or alter the programming conventions that Apache Isis understands to
 build up its metamodel.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_custom-validator">3.1. Custom validator</h3>
+<h3 id="_ugbtb_programming-model_custom-validator">7.1. Custom validator</h3>
 <div class="paragraph">
 <p>Apache Isis' programming model includes a validator component that detects and prevents (by failing fast) a number of situations where the domain model is logically inconsistent.</p>
 </div>
@@ -2959,14 +2967,14 @@ build up its metamodel.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Isis' <a href="ugfun.html#_ugfun_isis-maven-plugin">Maven plugin</a> will also validate the domain object model during build time.</p>
+<p>Isis' <a href="cg.html#_cg_isis-maven-plugin">Maven plugin</a> will also validate the domain object model during build time.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_and_implementation">3.1.1. API and Implementation</h4>
+<h4 id="_api_and_implementation">7.1.1. API and Implementation</h4>
 <div class="paragraph">
 <p>There are several ways to go about implementing a validator.</p>
 </div>
@@ -3067,7 +3075,7 @@ build up its metamodel.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_2">3.1.2. Configuration</h4>
+<h4 id="_configuration_2">7.1.2. Configuration</h4>
 <div class="paragraph">
 <p>Once you have implemented your validator, you must register it with the framework by defining the appropriate configuration property:</p>
 </div>
@@ -3079,7 +3087,7 @@ build up its metamodel.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_finetuning">3.2. Finetuning</h3>
+<h3 id="_ugbtb_programming-model_finetuning">7.2. Finetuning</h3>
 <div class="paragraph">
 <p>The core metamodel defines APIs and implementations for building the Apache Isis metamodel: a description of the set of entities, domain services and values that make up the domain model.</p>
 </div>
@@ -3114,7 +3122,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 <p>There are many many such <code>Facet</code>s, and are used to do such things get values from properties or collections, modify properties or collections, invoke action, hide or disable class members, provide UI hints for class members, and so on. In short, the <code>FacetFactory</code>s registered defines the Apache Isis programming conventions.</p>
 </div>
 <div class="sect3">
-<h4 id="_modifying_the_prog_model">3.2.1. Modifying the Prog. Model</h4>
+<h4 id="_modifying_the_prog_model">7.2.1. Modifying the Prog. Model</h4>
 <div class="paragraph">
 <p>The default implementation of <code>ProgrammingModel</code> is <a href="https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/progmodels/dflt/ProgrammingModelFacetsJava5.java">ProgrammingModelFacetsJava5</a>, which registers a large number of <code>FacetFactory</code>s.</p>
 </div>
@@ -3153,7 +3161,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This <a href="http://isis.markmail.org/thread/472c3mrvcgnripst">thread</a> from the users mailing list (in Apr 2014) shows a typical customization (to enable per-instance security) (though note that <a href="#_ugbtb_more-advanced_multi-tenancy">Multi-Tenancy</a> is now a better solution to that particular use-case.</p>
+<p>This <a href="http://isis.markmail.org/thread/472c3mrvcgnripst">thread</a> from the users mailing list (in Apr 2014) shows a typical customization (to enable per-instance security) (though note that <a href="#_ugbtb_other-techniques_multi-tenancy">Multi-Tenancy</a> is now a better solution to that particular use-case.</p>
 </div>
 </td>
 </tr>
@@ -3162,7 +3170,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect3">
-<h4 id="_replacing_the_prog_model">3.2.2. Replacing the Prog. Model</h4>
+<h4 id="_replacing_the_prog_model">7.2.2. Replacing the Prog. Model</h4>
 <div class="paragraph">
 <p>If you want to make many changes to the programming model, then (rather than include/exclude lots of facet factories) you can specify a completely new programming model.  For this you&#8217;ll first need an implementation of <code>ProgrammingModel</code>.</p>
 </div>
@@ -3183,7 +3191,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_layout-metadata-reader">3.3. Layout Metadata Reader</h3>
+<h3 id="_ugbtb_programming-model_layout-metadata-reader">7.3. Layout Metadata Reader</h3>
 <div class="paragraph">
 <p>The metadata for domain objects is obtained both <a href="ugfun.html#_ugfun_object-layout_static">statically</a> and <a href="ugfun.html#_ugfun_object-layout_dynamic">dynamically</a>.</p>
 </div>
@@ -3194,7 +3202,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 <p>You can also implement your own metadata readers and plug them into Apache Isis.  These could read from a different file format, or they could, even, read data dynamically from a URL or database.  (Indeed, one could imagine an implementation whereby users could share layouts, all stored in some central repository).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_and_implementation_2">3.3.1. API and Implementation</h4>
+<h4 id="_api_and_implementation_2">7.3.1. API and Implementation</h4>
 <div class="paragraph">
 <p>Any reader must implement Apache Isis' internal <code>LayoutMetadataReader</code> interface:</p>
 </div>
@@ -3280,7 +3288,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_3">3.3.2. Configuration</h4>
+<h4 id="_configuration_3">7.3.2. Configuration</h4>
 <div class="paragraph">
 <p>Once you have implemented your validator, you must register it with the framework by defining the appropriate configuration property:</p>
 </div>
@@ -3304,13 +3312,13 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_deployment">4. Deployment</h2>
+<h2 id="_ugbtb_deployment">8. Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter provides guidance on some common deployment scenarios.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_cmd-line">4.1. Command Line (<code>WebServer</code>)</h3>
+<h3 id="_ugbtb_deployment_cmd-line">8.1. Command Line (<code>WebServer</code>)</h3>
 <div class="paragraph">
 <p>As well as deploying an Apache Isis application into a servlet container, it is also possible to invoke from the command line using the <code>org.apache.isis.WebServer</code> utility class.  This is especially useful while developing and testing, but may also suit some deployment scenarios (eg running as a standalone EXE within a Docker container, for example).  Internally the <code>WebServer</code> spins up a Jetty servlet container.</p>
 </div>
@@ -3495,18 +3503,18 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_tomcat">4.2. Deploying to Tomcat</h3>
+<h3 id="_ugbtb_deployment_tomcat">8.2. Deploying to Tomcat</h3>
 <div class="paragraph">
 <p>Some pointers when deploying to Tomcat (or any other servlet container).</p>
 </div>
 <div class="sect3">
-<h4 id="_externalized_configuration">4.2.1. Externalized Configuration</h4>
+<h4 id="_externalized_configuration">8.2.1. Externalized Configuration</h4>
 <div class="paragraph">
 <p>See the guidance <a href="#_ugbtb_deployment_externalized-configuration">below</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_jvm_args">4.2.2. JVM Args</h4>
+<h4 id="_jvm_args">8.2.2. JVM Args</h4>
 <div class="paragraph">
 <p>The <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> uses <a href="http://www.javassist.org">Javassist</a> to create on-the-fly classes acting as a proxy.  The cost of these proxies can be mitigated using:</p>
 </div>
@@ -3517,14 +3525,14 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_a_jndi_datasource">4.2.3. Using a JNDI Datasource</h4>
+<h4 id="_using_a_jndi_datasource">8.2.3. Using a JNDI Datasource</h4>
 <div class="paragraph">
 <p>See the guidance in the <a href="rgcfg.html#_rgcfg_configuring-datanucleus_using-jndi-data-source">configuring datanucleus</a> section.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_externalized-configuration">4.3. Externalized Configuration</h3>
+<h3 id="_ugbtb_deployment_externalized-configuration">8.3. Externalized Configuration</h3>
 <div class="paragraph">
 <p>As described <a href="rgcfg.html#_rgcfg_configuration-files">here</a>, by default Apache Isis itself bootstraps from the <code>isis.properties</code> configuration file.  It will also read configuration from the (optional) component/implementation-specific configuration files (such as
 <code>persistor_datanucleus.properties</code> or <code>viewer_wicket.properties</code>), and also (optional) component-specific configuration
@@ -3558,7 +3566,7 @@ configuration should be read from an external location.</p>
 <p>Each of these frameworks has its own way of externalizing its configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Isis">4.3.1. Apache Isis' Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Isis">8.3.1. Apache Isis' Config</h4>
 <div class="paragraph">
 <p>To tell Apache Isis to load configuration from an external directory, specify the <code>isis.config.dir</code> context parameter.</p>
 </div>
@@ -3619,7 +3627,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Shiro">4.3.2. Shiro Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Shiro">8.3.2. Shiro Config</h4>
 <div class="paragraph">
 <p>If using Apache Isis' <a href="ugsec.html#_ugsec_configuring-isis-to-use-shiro">Shiro integration</a> for authentication and/or authorization, note that it reads from the <code>shiro.ini</code> configuration file. By default this also resides in <code>WEB-INF</code>.</p>
 </div>
@@ -3652,7 +3660,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Log4j">4.3.3. Log4j Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Log4j">8.3.3. Log4j Config</h4>
 <div class="paragraph">
 <p>By default Apache Isis configures log4j to read the <code>logging.properties</code> file in the <code>WEB-INF</code> directory. This can be overridden by setting the <code>log4j.properties</code> system property to the URL of the log4j properties file.</p>
 </div>
@@ -3683,7 +3691,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_spring_config">4.3.4. Spring Config</h4>
+<h4 id="_spring_config">8.3.4. Spring Config</h4>
 <div class="paragraph">
 <p>Although Apache Isis does not use Spring, it&#8217;s possible that your app may use other components that do use Spring.  For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module uses ActiveMQ and Camel to support publishing; both of these leverage Spring.</p>
 </div>
@@ -3805,14 +3813,14 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_see_also">4.3.5. See also</h4>
+<h4 id="_see_also">8.3.5. See also</h4>
 <div class="paragraph">
 <p>See <a href="ugbtb.adoc#_ugbtb_deployment_jvm-flags">JVM args</a> for other JVM args and system properties that you might want to consider setting.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_gae">4.4. Deploying to Google App Engine</h3>
+<h3 id="_ugbtb_deployment_gae">8.4. Deploying to Google App Engine</h3>
 <div class="paragraph">
 <p>The <a href="https://cloud.google.com/appengine/docs">Google App Engine</a> (GAE) provides a JDO API, meaning that you can deploy Apache Isis onto GAE using the JDO objectstore.</p>
 </div>
@@ -3820,7 +3828,7 @@ configuration should be read from an external location.</p>
 <p>However, GAE is not an RDBMS, and so there are some limitations that it imposes. This page gathers together various hints, tips and workarounds.</p>
 </div>
 <div class="sect3">
-<h4 id="_primary_keys_and_owned_unowned_relationships">4.4.1. Primary Keys and Owned/Unowned Relationships</h4>
+<h4 id="_primary_keys_and_owned_unowned_relationships">8.4.1. Primary Keys and Owned/Unowned Relationships</h4>
 <div class="paragraph">
 <p>All entities must have a <code>@PrimaryKey</code>. Within GAE, the type of this key matters.</p>
 </div>
@@ -3838,7 +3846,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_custom_types">4.4.2. Custom Types</h4>
+<h4 id="_custom_types">8.4.2. Custom Types</h4>
 <div class="paragraph">
 <p>Currently Apache Isis' <code>Blob</code> and <code>Clob</code> types and the JODA types (<code>LocalDate</code> et al) are <em>not</em> supported in GAE.</p>
 </div>
@@ -3868,7 +3876,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_neo4j">4.5. Neo4J</h3>
+<h3 id="_ugbtb_deployment_neo4j">8.5. Neo4J</h3>
 <div class="paragraph">
 <p>As of 1.8.0 Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' <a href="http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html">Neo4J Datastore</a> implementation.</p>
 </div>
@@ -3893,7 +3901,7 @@ configuration should be read from an external location.</p>
 <p>The steps below describe the configuration steps required to update an existing app.</p>
 </div>
 <div class="sect3">
-<h4 id="_connectionurl">4.5.1. ConnectionURL</h4>
+<h4 id="_connectionurl">8.5.1. ConnectionURL</h4>
 <div class="paragraph">
 <p>In <code>persistor.properties</code>, update the JDO <code>ConnectionURL</code> property, eg:</p>
 </div>
@@ -3907,7 +3915,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_pom_xml">4.5.2. Update pom.xml</h4>
+<h4 id="_update_pom_xml">8.5.2. Update pom.xml</h4>
 <div class="paragraph">
 <p>Add the following dependency to the <code>webapp</code> project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -3937,7 +3945,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_try_it_out">4.5.3. Try it out!</h4>
+<h4 id="_try_it_out">8.5.3. Try it out!</h4>
 <div class="paragraph">
 <p>If you want to quickly try out neo4j for yourself:</p>
 </div>
@@ -3960,7 +3968,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_jvm-flags">4.6. JVM Flags</h3>
+<h3 id="_ugbtb_deployment_jvm-flags">8.6. JVM Flags</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4016,7 +4024,7 @@ Minimum heap size</p></td>
 <p>There are also a whole bunch of GC-related flags, that you might want to explore; see this detailed <a href="http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html">Hotspot JVM</a> documentation and also this <a href="http://blog.ragozin.info/2011/09/hotspot-jvm-garbage-collection-options.html">blog post</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_configuring_in_tomcat">4.6.1. Configuring in Tomcat</h4>
+<h4 id="_configuring_in_tomcat">8.6.1. Configuring in Tomcat</h4>
 <div class="paragraph">
 <p>If using Tomcat, update the <code>CATALINA_OPTS</code> variable.  (This variable is also updated if <a href="#_ugbtb_deployment_externalized-configuration_Log4j">configuring logging to run externally</a>).</p>
 </div>
@@ -4025,7 +4033,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_web-xml">5. <code>web.xml</code></h2>
+<h2 id="_ugbtb_web-xml">9. <code>web.xml</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis provides two different viewers, the <a href="ugvw.html">Wicket viewer</a> and the <a href="ugvro.html">RestfulObjects viewer</a>.  You can deploy both of these concurrently, or deploy just the Wicket viewer, or deploy just the Restful Objects viewer.  The configuration in <code>web.xml</code> varies accordingly, both in terms of the servlet context listeners, filters and servlets.</p>
@@ -4091,12 +4099,12 @@ Minimum heap size</p></td>
 <p>The following sections detail these various listeners, filters and servlets in more detail.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_servlet-context-listeners">5.1. Servlet Context Listeners</h3>
+<h3 id="_ugbtb_web-xml_servlet-context-listeners">9.1. Servlet Context Listeners</h3>
 <div class="paragraph">
 <p>Servlet context listeners are used to perform initialization on application startup.  Both Shiro (if configured as the security mechanism) and RestEasy (for the Restful Objects viewer) require their own context listener.  In addition, if the Wicket viewer is <em>not</em> being used, then additional Apache Isis-specific listener is required for bootstrapping of the Apache Isis framework itself.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_environmentloaderlistener_code_shiro">5.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</h4>
+<h4 id="__code_environmentloaderlistener_code_shiro">9.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</h4>
 <div class="paragraph">
 <p>Bootstrap listener to startup and shutdown the web application&#8217;s Shiro <code>WebEnvironment</code> at startup and shutdown respectively.</p>
 </div>
@@ -4112,7 +4120,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isiswebappbootstrapper_code">5.1.2. <code>IsisWebAppBootstrapper</code></h4>
+<h4 id="__code_isiswebappbootstrapper_code">9.1.2. <code>IsisWebAppBootstrapper</code></h4>
 <div class="paragraph">
 <p>The <code>IsisWebAppBootstrapper</code> servlet context listener bootstraps the shared (global) metadata for the Apache Isis framework.  This listener is not required (indeed must not be configured) if the Wicket viewer is in use.</p>
 </div>
@@ -4143,7 +4151,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resteasybootstrap_code_resteasy">5.1.3. <code>ResteasyBootstrap</code> (RestEasy)</h4>
+<h4 id="__code_resteasybootstrap_code_resteasy">9.1.3. <code>ResteasyBootstrap</code> (RestEasy)</h4>
 <div class="paragraph">
 <p>The <code>ResteasyBootstrap</code> servlet context listener initializes the RestEasy runtime, specifying that classes (namely, those specified in Isis' <code>RestfulObjectsApplication</code>) to be exposed as REST resources.  It is required if the Restful Objects viewer is to be deployed.</p>
 </div>
@@ -4187,12 +4195,12 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_servlets">5.2. Servlets</h3>
+<h3 id="_ugbtb_web-xml_servlets">9.2. Servlets</h3>
 <div class="paragraph">
 <p>Servlets process HTTP requests and return corresponding responses.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_httpservletdispatcher_code_resteasy">5.2.1. <code>HttpServletDispatcher</code> (RestEasy)</h4>
+<h4 id="__code_httpservletdispatcher_code_resteasy">9.2.1. <code>HttpServletDispatcher</code> (RestEasy)</h4>
 <div class="paragraph">
 <p>This servlet is provided by the RestEasy framework, and does the dispatching to the resources defined by Apache Isis' <code>RestfulObjectsApplication</code> (see above).</p>
 </div>
@@ -4220,7 +4228,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resourceservlet_code">5.2.2. <code>ResourceServlet</code></h4>
+<h4 id="__code_resourceservlet_code">9.2.2. <code>ResourceServlet</code></h4>
 <div class="paragraph">
 <p>The <code>ResourceServlet</code> loads and services static content either from the filesystem or from the classpath, each with an appropriate mime type.</p>
 </div>
@@ -4276,13 +4284,13 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_filters">5.3. Filters</h3>
+<h3 id="_ugbtb_web-xml_filters">9.3. Filters</h3>
 <div class="paragraph">
 <p>The order in which filters appear in <code>web.xml</code> matters: first to last they define a pipeline.  This is shown in the
 above diagrams, and the subsections also list the in the same order that they should appear in your <code>web.xml</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_shirofilter_code_shiro">5.3.1. <code>ShiroFilter</code> (Shiro)</h4>
+<h4 id="__code_shirofilter_code_shiro">9.3.1. <code>ShiroFilter</code> (Shiro)</h4>
 <div class="paragraph">
 <p>Shiro filter that sets up a Shiro security manager for the request, obtained from the Shiro <code>WebEnvironment</code> set up
 by the Shiro <code>EnvironmentLoaderListener</code> (discussed above).</p>
@@ -4311,7 +4319,7 @@ by the Shiro <code>EnvironmentLoaderListener</code> (discussed above).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isislogonexceptionfilter_code">5.3.2. <code>IsisLogOnExceptionFilter</code></h4>
+<h4 id="__code_isislogonexceptionfilter_code">9.3.2. <code>IsisLogOnExceptionFilter</code></h4>
 <div class="paragraph">
 <p>The <code>IsisLogOnExceptionFilter</code> filter simply logs the URL of any request that causes an exception to be thrown, then
 re-propagates the exception. The use case is simply to ensure that all exceptions are logged (against the
@@ -4345,7 +4353,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resourcecachingfilter_code">5.3.3. <code>ResourceCachingFilter</code></h4>
+<h4 id="__code_resourcecachingfilter_code">9.3.3. <code>ResourceCachingFilter</code></h4>
 <div class="paragraph">
 <p>The <code>ResourceCachingFilter</code> adds HTTP cache headers to specified resources, based on their pattern.</p>
 </div>
@@ -4409,7 +4417,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_wicketfilter_code">5.3.4. <code>WicketFilter</code></h4>
+<h4 id="__code_wicketfilter_code">9.3.4. <code>WicketFilter</code></h4>
 <div class="paragraph">
 <p>The <code>WicketFilter</code> is responsible for initiating the handling of Wicket requests.</p>
 </div>
@@ -4468,7 +4476,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isissessionfilter_code">5.3.5. <code>IsisSessionFilter</code></h4>
+<h4 id="__code_isissessionfilter_code">9.3.5. <code>IsisSessionFilter</code></h4>
 <div class="paragraph">
 <p>The <code>IsisSessionFilter</code> is responsible for the (persistence) session management; in effect a wrapper around DataNucleus' <code>PersistenceManager</code> object.  It is only required for the Restful Objects viewer.</p>
 </div>
@@ -4566,7 +4574,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isistransactionfilterforrestfulobjects_code">5.3.6. <code>IsisTransactionFilterForRestfulObjects</code></h4>
+<h4 id="__code_isistransactionfilterforrestfulobjects_code">9.3.6. <code>IsisTransactionFilterForRestfulObjects</code></h4>
 <div class="paragraph">
 <p>The <code>IsisTransactionFilterForRestfulObjects</code> filter simply ensures that a transaction is in progress for all
 calls routed to the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
@@ -4596,7 +4604,7 @@ calls routed to the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_context-parameters">5.4. Configuration Files</h3>
+<h3 id="_ugbtb_web-xml_context-parameters">9.4. Configuration Files</h3>
 <div class="paragraph">
 <p>However Apache Isis is bootstrapped (using the <code>IsisWicketApplication</code> or using <code>IsisWebAppBootstrapper</code>), it will
 read a number of configuration files, such as <code>isis.properties</code>.</p>
@@ -4652,221 +4660,221 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_other_guides">1.1. Other Guides</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_more-advanced">2. Techniques</a>
+<li><a href="#_ugbtb_view-models">2. View Models</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_more-advanced_decoupling">2.1. Decoupling</a>
+<li><a href="#_ugbtb_view-models_use-cases">2.1. Use Cases</a>
 <ul class="sectlevel3">
-<li><a href="#_ugbtb_more-advanced_decoupling_db-schemas">2.1.1. Database Schemas</a>
-<ul class="sectlevel4">
-<li><a href="#_listener_to_create_schema">Listener to create schema</a></li>
-<li><a href="#_alternative_implementation">Alternative implementation</a></li>
+<li><a href="#_externally_managed_entities">2.1.1. Externally-managed entities</a></li>
+<li><a href="#_in_memory_entities">2.1.2. In-memory entities</a></li>
+<li><a href="#_application_layer_view_models">2.1.3. Application-layer view models</a></li>
+<li><a href="#_dtos_code_1_11_0_snapshot_code">2.1.4. DTOs (<code>1.11.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_esb_subscribers">2.1.5. ESB Subscribers</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_more-advanced_decoupling_mixins">2.1.2. Mixins</a>
-<ul class="sectlevel4">
-<li><a href="#_example">Example</a></li>
-<li><a href="#_contributing_a_single_member">Contributing a single member</a></li>
-<li><a href="#_programmatic_usage">Programmatic usage</a></li>
-<li><a href="#_other_reasons_to_use_mixins">Other reasons to use mixins</a></li>
-<li><a href="#_related_reading">Related reading</a></li>
-</ul>
-</li>
-<li><a href="#_ugbtb_more-advanced_decoupling_contributions">2.1.3. Contributions</a></li>
-<li><a href="#_ugbtb_more-advanced_decoupling_vetoing-visibility">2.1.4. Vetoing Visibility</a></li>
-<li><a href="#_ugbtb_more-advanced_decoupling_event-bus">2.1.5. Event Bus</a></li>
-<li><a href="#_ugbtb_more-advanced_decoupling_pushing-changes">2.1.6. Pushing Changes</a>
-<ul class="sectlevel4">
-<li><a href="#_when_a_property_is_changed">When a property is changed</a></li>
-<li><a href="#_when_a_collection_is_modified">When a collection is modified</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_ugbtb_more-advanced_overriding-jdo-annotations">2.2. Overriding JDO Annotations</a></li>
-<li><a href="#_ugbtb_more-advanced_view-models">2.3. View Models</a>
+<li><a href="#_ugbtb_view-models_programming-model">2.2. Programming Model</a></li>
+<li><a href="#_ugbtb_view-models_jaxb">2.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_ugbtb_more-advanced_view-models_use-cases">2.3.1. Use Cases</a>
-<ul class="sectlevel4">
-<li><a href="#_externally_managed_entities">Externally-managed entities</a></li>
-<li><a href="#_in_memory_entities">In-memory entities</a></li>
-<li><a href="#_application_layer_view_models">Application-layer view models</a></li>
-<li><a href="#_dtos_code_1_11_0_snapshot_code">DTOs (<code>1.11.0-SNAPSHOT</code>)</a></li>
-<li><a href="#_esb_subscribers">ESB Subscribers</a></li>
-</ul>
-</li>
-<li><a href="#_ugbtb_more-advanced_view-models_programming-model">2.3.2. Programming Model</a></li>
-<li><a href="#_ugbtb_more-advanced_view-models_jaxb">2.3.3. JAXB-annotated DTOs (<code>1.11.0-SNAPSHOT</code>)</a>
-<ul class="sectlevel4">
-<li><a href="#_ugbtb_more-advanced_view-models_jaxb_using-packages-to-version">Use packages to version DTOs</a></li>
-<li><a href="#_ugbtb_more-advanced_view-models_jaxb_semantic-versioning">Semantic Versioning</a></li>
-<li><a href="#_ugbtb_more-advanced_view-models_jaxb_referencing-domain-entities">Referencing Domain Entities</a></li>
-<li><a href="#_ugbtb_more-advanced_view-models_jaxb_collections">Collections</a></li>
-<li><a href="#_generating_xsds_and_dtos">Generating XSDs and DTOs</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_using-packages-to-version">2.3.1. Use packages to version DTOs</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_semantic-versioning">2.3.2. Semantic Versioning</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.3. Referencing Domain Entities</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_collections">2.3.4. Collections</a></li>
+<li><a href="#_generating_xsds_and_dtos">2.3.5. Generating XSDs and DTOs</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_more-advanced_mapping-rdbms-views">2.4. Mapping RDBMS Views</a></li>
-<li><a href="#_ugbtb_more-advanced_transactions-and-errors">2.5. Transactions and Errors</a>
-<ul class="sectlevel3">
-<li><a href="#_aborting_transactions">2.5.1. Aborting Transactions</a></li>
-<li><a href="#_raise_message_errors_to_users">2.5.2. Raise message/errors to users</a></li>
-<li><a href="#_exception_recognizers">2.5.3. Exception Recognizers</a></li>
-</ul>
-</li>
-<li><a href="#_ugbtb_more-advanced_i18n">2.6. i18n</a>
-<ul class="sectlevel3">
-<li><a href="#_implementation_approach">2.6.1. Implementation Approach</a></li>
-<li><a href="#__code_translationservice_code">2.6.2. <code>TranslationService</code></a>
-<ul class="sectlevel4">
-<li><a href="#__code_translationservicepo_code"><code>TranslationServicePo</code></a></li>
-</ul>
-</li>
-<li><a href="#_imperative_messages">2.6.3. Imperative messages</a>
-<ul class="sectlevel4">
-<li><a href="#__code_translatablestring_code"><code>TranslatableString</code></a></li>
-<li><a href="#__code_translatableexception_code"><code>TranslatableException</code></a></li>
-</ul>
-</li>
-<li><a href="#_integration_testing">2.6.4. Integration Testing</a></li>
-<li><a href="#_escaped_strings">2.6.5. Escaped strings</a></li>
-<li><a href="#_configuration">2.6.6. Configuration</a>
-<ul class="sectlevel4">
-<li><a href="#_logging">Logging</a></li>
-<li><a href="#_location_of_the_code_po_code_files">Location of the <code>.po</code> files</a></li>
-<li><a href="#_externalized_translation_files">Externalized translation files</a></li>
-<li><a href="#_force_read_mode">Force read mode</a></li>
-</ul>
-</li>
-<li><a href="#_supporting_services">2.6.7. Supporting services</a>
-<ul class="sectlevel4">
-<li><a href="#__code_localeprovider_code"><code>LocaleProvider</code></a></li>
-<li><a href="#__code_translationsresolver_code"><code>TranslationsResolver</code></a></li>
-<li><a href="#__code_translationservicepomenu_code"><code>TranslationServicePoMenu</code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_ugbtb_more-advanced_multi-tenancy">2.7. Multi-tenancy</a></li>
-<li><a href="#_ugbtb_more-advanced_persisted-title">2.8. Persisted Title</a></li>
-<li><a href="#_ugbtb_more-advanced_replacing-default-service-implementations">2.9. Replacing Service Implns</a></li>
-<li><a href="#_ugbtb_more-advanced_headless-access">2.10. Headless access</a>
-<ul class="sectlevel3">
-<li><a href="#_ugbtb_more-advanced_headless-access_AbstractIsisSessionTemplate">2.10.1. AbstractIsisSessionTemplate</a></li>
-<li><a href="#_ugbtb_more-advanced_headless-access_BackgroundCommandExecution">2.10.2. BackgroundCommandExecution</a>
-<ul class="sectlevel4">
-<li><a href="#_background_execution">Background Execution</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_ugbtb_programming-model">3. Programming Model</a>
+<li><a href="#_ugbtb_decoupling">3. Decoupling</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_programming-model_custom-validator">3.1. Custom validator</a>
+<li><a href="#_ugbtb_decoupling_db-schemas">3.1. Database Schemas</a>
 <ul class="sectlevel3">
-<li><a href="#_api_and_implementation">3.1.1. API and Implementation</a>
+<li><a href="#_listener_to_create_schema">3.1.1. Listener to create schema</a></li>
+<li><a href="#_alternative_implementation">3.1.2. Alternative implementation</a></li>
+</ul>
+</li>
+<li><a href="#_ugbtb_decoupling_mixins">3.2. Mixins</a>
+<ul class="sectlevel3">
+<li><a href="#_example">3.2.1. Example</a></li>
+<li><a href="#_contributing_a_single_member">3.2.2. Contributing a single member</a></li>
+<li><a href="#_programmatic_usage">3.2.3. Programmatic usage</a></li>
+<li><a href="#_other_reasons_to_use_mixins">3.2.4. Other reasons to use mixins</a></li>
+<li><a href="#_related_reading">3.2.5. Related reading</a></li>
+</ul>
+</li>
+<li><a href="#_ugbtb_decoupling_contributions">3.3. Contributions</a></li>
+<li><a href="#_ugbtb_decoupling_vetoing-visibility">3.4. Vetoing Visibility</a></li>
+<li><a href="#_ugbtb_decoupling_event-bus">3.5. Event Bus</a></li>
+<li><a href="#_ugbtb_decoupling_pushing-changes">3.6. Pushing Changes</a>
+<ul class="sectlevel3">
+<li><a href="#_when_a_property_is_changed">3.6.1. When a property is changed</a></li>
+<li><a href="#_when_a_collection_is_modified">3.6.2. When a collection is modified</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugbtb_i18n">4. i18n</a>
+<ul class="sectlevel2">
+<li><a href="#_implementation_approach">4.1. Implementation Approach</a></li>
+<li><a href="#__code_translationservice_code">4.2. <code>TranslationService</code></a>
+<ul class="sectlevel3">
+<li><a href="#__code_translationservicepo_code">4.2.1. <code>TranslationServicePo</code></a></li>
+</ul>
+</li>
+<li><a href="#_imperative_messages">4.3. Imperative messages</a>
+<ul class="sectlevel3">
+<li><a href="#__code_translatablestring_code">4.3.1. <code>TranslatableString</code></a></li>
+<li><a href="#__code_translatableexception_code">4.3.2. <code>TranslatableException</code></a></li>
+</ul>
+</li>
+<li><a href="#_integration_testing">4.4. Integration Testing</a></li>
+<li><a href="#_escaped_strings">4.5. Escaped strings</a></li>
+<li><a href="#_configuration">4.6. Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#_logging">4.6.1. Logging</a></li>
+<li><a href="#_location_of_the_code_po_code_files">4.6.2. Location of the <code>.po</code> files</a></li>
+<li><a href="#_externalized_translation_files">4.6.3. Externalized translation files</a></li>
+<li><a href="#_force_read_mode">4.6.4. Force read mode</a></li>
+</ul>
+</li>
+<li><a href="#_supporting_services">4.7. Supporting services</a>
+<ul class="sectlevel3">
+<li><a href="#__code_localeprovider_code">4.7.1. <code>LocaleProvider</code></a></li>
+<li><a href="#__code_translationsresolver_code">4.7.2. <code>TranslationsResolver</code></a></li>
+<li><a href="#__code_translationservicepomenu_code">4.7.3. <code>TranslationServicePoMenu</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugbtb_headless-access">5. Headless access</a>
+<ul class="sectlevel2">
+<li><a href="#_ugbtb_headless-access_AbstractIsisSessionTemplate">5.1. AbstractIsisSessionTemplate</a></li>
+<li><a href="#_ugbtb_headless-access_BackgroundCommandExecution">5.2. BackgroundCommandExecution</a>
+<ul class="sectlevel3">
+<li><a href="#_background_execution">5.2.1. Background Execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugbtb_other-techniques">6. Other Techniques</a>
+<ul class="sectlevel2">
+<li><a href="#_ugbtb_other-techniques_overriding-jdo-annotations">6.1. Overriding JDO Annotations</a></li>
+<li><a href="#_ugbtb_other-techniques_mapping-rdbms-views">6.2. Mapping RDBMS Views</a></li>
+<li><a href="#_ugbtb_other-techniques_transactions-and-errors">6.3. Transactions and Errors</a>
+<ul class="sectlevel3">
+<li><a href="#_aborting_transactions">6.3.1. Aborting Transactions</a></li>
+<li><a href="#_raise_message_errors_to_users">6.3.2. Raise message/errors to users</a></li>
+<li><a href="#_exception_recognizers">6.3.3. Exception Recognizers</a></li>
+</ul>
+</li>
+<li><a href="#_ugbtb_other-techniques_multi-tenancy">6.4. Multi-tenancy</a></li>
+<li><a href="#_ugbtb_other-techniques_persisted-title">6.5. Persisted Title</a></li>
+<li><a href="#_ugbtb_other-techniques_replacing-default-service-implementations">6.6. Replacing Service Implns</a></li>
+</ul>
+</li>
+<li><a href="#_ugbtb_programming-model">7. Customizing the Prog Model</a>
+<ul class="sectlevel2">
+<li><a href="#_ugbtb_programming-model_custom-validator">7.1. Custom validator</a>
+<ul class="sectlevel3">
+<li><a href="#_api_and_implementation">7.1.1. API and Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#__code_metamodelvalidator_code"><code>MetaModelValidator</code></a></li>
 <li><a href="#__code_visitor_code"><code>Visitor</code></a></li>
 <li><a href="#__code_summarizingvisitor_code"><code>SummarizingVisitor</code></a></li>
 </ul>
 </li>
-<li><a href="#_configuration_2">3.1.2. Configuration</a></li>
+<li><a href="#_configuration_2">7.1.2. Configuration</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_programming-model_finetuning">3.2. Finetuning</a>
+<li><a href="#_ugbtb_programming-model_finetuning">7.2. Finetuning</a>
 <ul class="sectlevel3">
-<li><a href="#_modifying_the_prog_model">3.2.1. Modifying the Prog. Model</a>
+<li><a href="#_modifying_the_prog_model">7.2.1. Modifying the Prog. Model</a>
 <ul class="sectlevel4">
 <li><a href="#_including_or_excluding_facets">Including or excluding facets</a></li>
 </ul>
 </li>
-<li><a href="#_replacing_the_prog_model">3.2.2. Replacing the Prog. Model</a></li>
+<li><a href="#_replacing_the_prog_model">7.2.2. Replacing the Prog. Model</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_programming-model_layout-metadata-reader">3.3. Layout Metadata Reader</a>
+<li><a href="#_ugbtb_programming-model_layout-metadata-reader">7.3. Layout Metadata Reader</a>
 <ul class="sectlevel3">
-<li><a href="#_api_and_implementation_2">3.3.1. API and Implementation</a>
+<li><a href="#_api_and_implementation_2">7.3.1. API and Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#_extended_api">Extended API</a></li>
 </ul>
 </li>
-<li><a href="#_configuration_3">3.3.2. Configuration</a></li>
+<li><a href="#_configuration_3">7.3.2. Configuration</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment">4. Deployment</a>
+<li><a href="#_ugbtb_deployment">8. Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_deployment_cmd-line">4.1. Command Line (<code>WebServer</code>)</a></li>
-<li><a href="#_ugbtb_deployment_tomcat">4.2. Deploying to Tomcat</a>
+<li><a href="#_ugbtb_deployment_cmd-line">8.1. Command Line (<code>WebServer</code>)</a></li>
+<li><a href="#_ugbtb_deployment_tomcat">8.2. Deploying to Tomcat</a>
 <ul class="sectlevel3">
-<li><a href="#_externalized_configuration">4.2.1. Externalized Configuration</a></li>
-<li><a href="#_jvm_args">4.2.2. JVM Args</a></li>
-<li><a href="#_using_a_jndi_datasource">4.2.3. Using a JNDI Datasource</a></li>
+<li><a href="#_externalized_configuration">8.2.1. Externalized Configuration</a></li>
+<li><a href="#_jvm_args">8.2.2. JVM Args</a></li>
+<li><a href="#_using_a_jndi_datasource">8.2.3. Using a JNDI Datasource</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_externalized-configuration">4.3. Externalized Configuration</a>
+<li><a href="#_ugbtb_deployment_externalized-configuration">8.3. Externalized Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#_ugbtb_deployment_externalized-configuration_Isis">4.3.1. Apache Isis' Config</a></li>
-<li><a href="#_ugbtb_deployment_externalized-configuration_Shiro">4.3.2. Shiro Config</a></li>
-<li><a href="#_ugbtb_deployment_externalized-configuration_Log4j">4.3.3. Log4j Config</a></li>
-<li><a href="#_spring_config">4.3.4. Spring Config</a>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Isis">8.3.1. Apache Isis' Config</a></li>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Shiro">8.3.2. Shiro Config</a></li>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Log4j">8.3.3. Log4j Config</a></li>
+<li><a href="#_spring_config">8.3.4. Spring Config</a>
 <ul class="sectlevel4">
 <li><a href="#_an_alternative_approach">An alternative approach</a></li>
 </ul>
 </li>
-<li><a href="#_see_also">4.3.5. See also</a></li>
+<li><a href="#_see_also">8.3.5. See also</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_gae">4.4. Deploying to Google App Engine</a>
+<li><a href="#_ugbtb_deployment_gae">8.4. Deploying to Google App Engine</a>
 <ul class="sectlevel3">
-<li><a href="#_primary_keys_and_owned_unowned_relationships">4.4.1. Primary Keys and Owned/Unowned Relationships</a></li>
-<li><a href="#_custom_types">4.4.2. Custom Types</a></li>
+<li><a href="#_primary_keys_and_owned_unowned_relationships">8.4.1. Primary Keys and Owned/Unowned Relationships</a></li>
+<li><a href="#_custom_types">8.4.2. Custom Types</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_neo4j">4.5. Neo4J</a>
+<li><a href="#_ugbtb_deployment_neo4j">8.5. Neo4J</a>
 <ul class="sectlevel3">
-<li><a href="#_connectionurl">4.5.1. ConnectionURL</a></li>
-<li><a href="#_update_pom_xml">4.5.2. Update pom.xml</a></li>
-<li><a href="#_try_it_out">4.5.3. Try it out!</a></li>
+<li><a href="#_connectionurl">8.5.1. ConnectionURL</a></li>
+<li><a href="#_update_pom_xml">8.5.2. Update pom.xml</a></li>
+<li><a href="#_try_it_out">8.5.3. Try it out!</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_jvm-flags">4.6. JVM Flags</a>
+<li><a href="#_ugbtb_deployment_jvm-flags">8.6. JVM Flags</a>
 <ul class="sectlevel3">
-<li><a href="#_configuring_in_tomcat">4.6.1. Configuring in Tomcat</a></li>
+<li><a href="#_configuring_in_tomcat">8.6.1. Configuring in Tomcat</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml">5. <code>web.xml</code></a>
+<li><a href="#_ugbtb_web-xml">9. <code>web.xml</code></a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_web-xml_servlet-context-listeners">5.1. Servlet Context Listeners</a>
+<li><a href="#_ugbtb_web-xml_servlet-context-listeners">9.1. Servlet Context Listeners</a>
 <ul class="sectlevel3">
-<li><a href="#__code_environmentloaderlistener_code_shiro">5.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</a></li>
-<li><a href="#__code_isiswebappbootstrapper_code">5.1.2. <code>IsisWebAppBootstrapper</code></a></li>
-<li><a href="#__code_resteasybootstrap_code_resteasy">5.1.3. <code>ResteasyBootstrap</code> (RestEasy)</a></li>
+<li><a href="#__code_environmentloaderlistener_code_shiro">9.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</a></li>
+<li><a href="#__code_isiswebappbootstrapper_code">9.1.2. <code>IsisWebAppBootstrapper</code></a></li>
+<li><a href="#__code_resteasybootstrap_code_resteasy">9.1.3. <code>ResteasyBootstrap</code> (RestEasy)</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_servlets">5.2. Servlets</a>
+<li><a href="#_ugbtb_web-xml_servlets">9.2. Servlets</a>
 <ul class="sectlevel3">
-<li><a href="#__code_httpservletdispatcher_code_resteasy">5.2.1. <code>HttpServletDispatcher</code> (RestEasy)</a></li>
-<li><a href="#__code_resourceservlet_code">5.2.2. <code>ResourceServlet</code></a></li>
+<li><a href="#__code_httpservletdispatcher_code_resteasy">9.2.1. <code>HttpServletDispatcher</code> (RestEasy)</a></li>
+<li><a href="#__code_resourceservlet_code">9.2.2. <code>ResourceServlet</code></a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_filters">5.3. Filters</a>
+<li><a href="#_ugbtb_web-xml_filters">9.3. Filters</a>
 <ul class="sectlevel3">
-<li><a href="#__code_shirofilter_code_shiro">5.3.1. <code>ShiroFilter</code> (Shiro)</a></li>
-<li><a href="#__code_isislogonexceptionfilter_code">5.3.2. <code>IsisLogOnExceptionFilter</code></a></li>
-<li><a href="#__code_resourcecachingfilter_code">5.3.3. <code>ResourceCachingFilter</code></a></li>
-<li><a href="#__code_wicketfilter_code">5.3.4. <code>WicketFilter</code></a></li>
-<li><a href="#__code_isissessionfilter_code">5.3.5. <code>IsisSessionFilter</code></a></li>
-<li><a href="#__code_isistransactionfilterforrestfulobjects_code">5.3.6. <code>IsisTransactionFilterForRestfulObjects</code></a></li>
+<li><a href="#__code_shirofilter_code_shiro">9.3.1. <code>ShiroFilter</code> (Shiro)</a></li>
+<li><a href="#__code_isislogonexceptionfilter_code">9.3.2. <code>IsisLogOnExceptionFilter</code></a></li>
+<li><a href="#__code_resourcecachingfilter_code">9.3.3. <code>ResourceCachingFilter</code></a></li>
+<li><a href="#__code_wicketfilter_code">9.3.4. <code>WicketFilter</code></a></li>
+<li><a href="#__code_isissessionfilter_code">9.3.5. <code>IsisSessionFilter</code></a></li>
+<li><a href="#__code_isistransactionfilterforrestfulobjects_code">9.3.6. <code>IsisTransactionFilterForRestfulObjects</code></a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_context-parameters">5.4. Configuration Files</a></li>
+<li><a href="#_ugbtb_web-xml_context-parameters">9.4. Configuration Files</a></li>
 </ul>
 </li>
 </ul>

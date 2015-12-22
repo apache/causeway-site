@@ -888,13 +888,13 @@ and tells you how to <a href="#_ugfun_getting-started">get started</a> with a Ma
 <p>Another example of interceptors are the <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> and <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> modules.  The command module captures every user interaction that modifies the state of the system (the "cause" of a change) while the audit module captures every change to every object (the "effect" of a change).  Again, this is all transparent to the user.</p>
 </div>
 <div class="paragraph">
-<p>Apache Isis also has an internal event bus (you can switch between an underlying implementation of Gauva or Axon).  A domain event is fired whenever an object is interacted with, and this allows any subscribers to influence the operation (or even veto it).  This is a key mechanism in ensuring that Isis applications are maintainable, and we discuss it in depth in the section on  <a href="ugbtb.html#_ugbtb_more-advanced_decoupling">Decoupling</a>.  But fundamentally its relying on this AOP concept of interceptors.</p>
+<p>Apache Isis also has an internal event bus (you can switch between an underlying implementation of Gauva or Axon).  A domain event is fired whenever an object is interacted with, and this allows any subscribers to influence the operation (or even veto it).  This is a key mechanism in ensuring that Isis applications are maintainable, and we discuss it in depth in the section on  <a href="ugbtb.html#_ugbtb_decoupling">Decoupling</a>.  But fundamentally its relying on this AOP concept of interceptors.</p>
 </div>
 <div class="paragraph">
 <p>Finally, Isis also a feature that is akin to AOP mix-ins.  A "contributed action" is one that is implemented on a domain service but that appears to be a behaviour of rendered domain object.  In other words, we can dissociate behaviour from data.  That&#8217;s not always the right thing to do of course.  In Richard Pawson&#8217;s description of the <a href="#_ugfun_core-concepts_philosophy_naked-objects-pattern">naked objects pattern</a> he talks about "behaviourally rich" objects, in other words where the business functionality encapsulated the data.   But on the other hand sometimes the behaviour and data structures change at different rates.  The <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a> says we should only lump code together that changes at the same rate.  Apache Isis' support for contributions (not only contributed actions, but also contributed properties and contributed collections) enables this.  And again, to loop back to the topic of this section, it&#8217;s an AOP concept that being implemented by the framework.</p>
 </div>
 <div class="paragraph">
-<p>The nice thing about aspect orientation is that for the most part you can ignore these cross-cutting concerns and - at least initially at least - just focus on implementing your domain object.  Later when your app starts to grow and you start to break it out into smaller modules, you can leverage Apache Isis' AOP support for (<a href="ugbtb.html#_ugbtb_more-advanced_decoupling_mixins">mixins</a>), (<a href="ugbtb.html#_ugbtb_more-advanced_decoupling_contributions">contributions</a>) and interceptors (the <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_event-bus">event bus</a>) to ensure that your codebase remains maintainable.</p>
+<p>The nice thing about aspect orientation is that for the most part you can ignore these cross-cutting concerns and - at least initially at least - just focus on implementing your domain object.  Later when your app starts to grow and you start to break it out into smaller modules, you can leverage Apache Isis' AOP support for (<a href="ugbtb.html#_ugbtb_decoupling_mixins">mixins</a>), (<a href="ugbtb.html#_ugbtb_decoupling_contributions">contributions</a>) and interceptors (the <a href="ugbtb.html#_ugbtb_decoupling_event-bus">event bus</a>) to ensure that your codebase remains maintainable.</p>
 </div>
 </div>
 </div>
@@ -1211,7 +1211,7 @@ do they compare to Apache Isis?</p>
 <p>There are other reasons though why a separate read model might make sense, such as to precompute particular queries, or against denormalized data.  In these cases Apache Isis can often provide a reasonable alternative, namely to map domain entities against RDBMS views, either materialized views or dynamic.  In such cases there is still only a single physical datastore, and so transactional integrity is retained.</p>
 </div>
 <div class="paragraph">
-<p>Or, the CQRS architecture can be more fully implemented with Apache Isis by introducing a separate read model, synchronized using the <a href="rgsvc.html#_rgsvc_api_PublishingService"><code>PublishingService</code></a>, or using <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a>  on the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a>.  One can then use <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view models</a> to surface the data in the external read datastore.</p>
+<p>Or, the CQRS architecture can be more fully implemented with Apache Isis by introducing a separate read model, synchronized using the <a href="rgsvc.html#_rgsvc_api_PublishingService"><code>PublishingService</code></a>, or using <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscribers</a>  on the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a>.  One can then use <a href="ugbtb.html#_ugbtb_view-models">view models</a> to surface the data in the external read datastore.</p>
 </div>
 <div class="paragraph">
 <p>With respect to commands, Apache Isis does of course support the <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> which allows each business action to be reified into a <code>Command</code>.  However, names are misleading here: Apache Isis' commands are relatively passive, merely recording the intent of the user to invoke some operation.  In a CQRS architecture, though, commands take a more active role, locating and acting upon the domain objects.  More significantly, in CQRS each command has its own class, such as <code>PlaceOrderCommand</code>, instantiated by the client and then executed.  With Apache Isis, though, the end-user merely invokes the <code>placeOrder(&#8230;&#8203;)</code> action upon the domain object; the framework itself creates the <code>Command</code> as a side-effect of this.</p>
@@ -1220,7 +1220,7 @@ do they compare to Apache Isis?</p>
 <p>In CQRS the commands correspond to the business logic that mutates the system.  Whether this logic is part of the command class (<code>PlaceOrderCommand</code>) or whether that command delegates to methods on the domain object is an implementation detail; but it certainly is common for the business logic to be wholly within the command object and for the domain object to be merely a data holder of the data within the command/write datastore.</p>
 </div>
 <div class="paragraph">
-<p>In Apache Isis this same separation of business logic from the underlying data can be accomplished most straightforwardly using <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_mixins">mixins</a> or <a href="#_ugfun_how-tos_contributed-members">contributions</a>.  In the UI (surfaced by the <a href="ugvw.html">Wicket viewer</a>) or in the REST API (surfaced by the <a href="ugvro.html">RestfulObjects viewer</a>) the behaviour appears to reside on the domain object; however the behaviour actually resides on separate classes and is mixed in (like a trait) only at runtime.</p>
+<p>In Apache Isis this same separation of business logic from the underlying data can be accomplished most straightforwardly using <a href="ugbtb.html#_ugbtb_decoupling_mixins">mixins</a> or <a href="#_ugfun_how-tos_contributed-members">contributions</a>.  In the UI (surfaced by the <a href="ugvw.html">Wicket viewer</a>) or in the REST API (surfaced by the <a href="ugvro.html">RestfulObjects viewer</a>) the behaviour appears to reside on the domain object; however the behaviour actually resides on separate classes and is mixed in (like a trait) only at runtime.</p>
 </div>
 </div>
 <div class="sect4">
@@ -1561,7 +1561,7 @@ we do consider them a more advanced topic; we generally recommend that you build
 layer up, rather than from the view model down.</p>
 </div>
 <div class="paragraph">
-<p>For further discussion on view models, see <a href="ugbtb.html#_ugbtb_more-advanced_view-models">this topic</a>.</p>
+<p>For further discussion on view models, see <a href="ugbtb.html#_ugbtb_view-models">this topic</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1620,8 +1620,8 @@ TODO
 </table>
 </div>
 <div class="paragraph">
-<p>For more information, see <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_contributions">this topic on contribution</a>s, and
-<a href="ugbtb.html#_ugbtb_more-advanced_decoupling_mixins">this topic on mixin</a>s.</p>
+<p>For more information, see <a href="ugbtb.html#_ugbtb_decoupling_contributions">this topic on contribution</a>s, and
+<a href="ugbtb.html#_ugbtb_decoupling_mixins">this topic on mixin</a>s.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2618,7 +2618,7 @@ script to be run.</p>
 <div class="sect2">
 <h3 id="_ugfun_how-tos_class-structure">4.1. Class Structure</h3>
 <div class="paragraph">
-<p>Apache Isis works by building a metamodel of the domain objects: entities, <a href="ugbtb.html#_ugbtb_more-advanced_view-models">view model</a>s and services.  The class members of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
+<p>Apache Isis works by building a metamodel of the domain objects: entities, <a href="ugbtb.html#_ugbtb_view-models">view model</a>s and services.  The class members of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
 </div>
 <div class="paragraph">
 <p>In the automatically generated UI a property is rendered as a field.  This can be either of a value type (a string, number, date, boolean etc) or can be a reference to another entity.  A collection is generally rendered as a table.</p>
@@ -2680,7 +2680,7 @@ TODO
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For more on this topic, see the topic discussing modules and <a href="ugbtb.html#_ugbtb_more-advanced_decoupling">decoupling</a>.</p>
+<p>For more on this topic, see the topic discussing modules and <a href="ugbtb.html#_ugbtb_decoupling">decoupling</a>.</p>
 </div>
 </td>
 </tr>
@@ -3545,7 +3545,7 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-see also <a href="ugbtb.html#_ugbtb_more-advanced_i18n">Internationalization</a>
+see also <a href="ugbtb.html#_ugbtb_i18n">Internationalization</a>
 </td>
 </tr>
 </table>
@@ -4172,7 +4172,7 @@ used by the supporting <a href="rgcms.html#_rgcms_methods_prefixes_validate"><co
 </div>
 <div class="paragraph">
 <p>More information about contributions can be found <a href="#_ugfun_how-tos_contributed-members">here</a>.  More information
-about using contributions and mixins to keep your domain application decoupled can be found <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_contributions">here</a> and <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_mixins">here</a>.</p>
+about using contributions and mixins to keep your domain application decoupled can be found <a href="ugbtb.html#_ugbtb_decoupling_contributions">here</a> and <a href="ugbtb.html#_ugbtb_decoupling_mixins">here</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -5755,7 +5755,7 @@ so forth - on a "Prototyping" top-level menu, on the SECONDARY menu bar.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no facility to alter the placement of these services. However, their UI can be suppressed
-using security or using a <a href="ugbtb.html#_ugbtb_more-advanced_decoupling_vetoing-visibility">vetoing subscriber</a>.</p>
+using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing subscriber</a>.</p>
 </div>
 </div>
 </div>
