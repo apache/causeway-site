@@ -1848,18 +1848,21 @@ methods for properties (see ?).</p>
 <h2 id="_ugbtb_i18n">4. i18n</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Isis' support for i18n allows every element of the domain model (the class names, property names, action names, parameter names and so forth) to be translated.</p>
+<p>Apache Isis' support for internationlization (i18n) allows every element of the domain model (the class names, property names, action names, parameter names and so forth) to be translated.</p>
 </div>
 <div class="paragraph">
 <p>It also supports translations of messages raised imperatively, by which we mean as the result of a call to <code>title()</code> to obtain an object&#8217;s title, or messages resulting from any business rule violations (eg <a href="rgcms.html#_rgcms_methods_prefixes_disable"><code>disable&#8230;&#8203;()</code></a> or <a href="rgcms.html#_rgcms_methods_prefixes_validate"><code>validate&#8230;&#8203;()</code></a>, and so on.</p>
 </div>
 <div class="paragraph">
-<p>Isis does not translate the values of your domain objects, though.  So, if you have a domain concept such as <code>Country</code> whose name is intended to be localized according to the current user, you will need to model</p>
+<p>(As of <code>1.11.0-SNAPSHOT</code>), the <a href="ugvw.html">Wicket viewer</a> (that is, its labels and messages) is also internationalized using the same mechanism.  If no translations are available, then the Wicket viewer falls back to using Wicket resource bundles.</p>
+</div>
+<div class="paragraph">
+<p>Isis does not translate the values of your domain objects, though.  So, if you have a domain concept such as <code>Country</code> whose name is intended to be localized according to the current user, you will need to model this yourself.</p>
 </div>
 <div class="sect2">
 <h3 id="_implementation_approach">4.1. Implementation Approach</h3>
 <div class="paragraph">
-<p>Most Java frameworks tackle i18n by using Java&#8217;s own <code>ResourceBundle</code> API.  However, there are some serious drawbacks in this approach, such as:</p>
+<p>Most Java frameworks tackle i18n by using Java&#8217;s own <code>ResourceBundle</code> API.  However, there are some serious drawbacks in this approach, including:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1901,7 +1904,7 @@ methods for properties (see ?).</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Although Apache Isis' implementation is modelled after GNU&#8217;s API, it does <em>not</em> use any GNU software.  This is for two reasons: (a) to simplify the toolchain/developer experience, and (b) because GNU software is usually GPL, which would be incompatible with the Apache license).</p>
+<p>Although Apache Isis' implementation is modelled after GNU&#8217;s API, it does <em>not</em> use any GNU software.  This is for two reasons: (a) to simplify the toolchain/developer experience, and (b) because GNU software is usually GPL, which would be incompatible with the Apache license.</p>
 </div>
 </td>
 </tr>
@@ -2160,7 +2163,276 @@ msgstr &quot;Iche heisse {firstName} {lastName}.&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_integration_testing">4.4. Integration Testing</h3>
+<h3 id="_wicket_viewer_code_1_11_0_snapshot_code">4.4. Wicket Viewer (<code>1.11.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>(As of <code>1.11.0-SNAPSHOT</code>), the <a href="ugvw.html">Wicket viewer</a> (its labels and messages) is also internationalized using
+the <code>TranslationService</code>.  This is done through an Isis-specific implementation of the Wicket framework&#8217;s <code>org.apache.wicket.Localizer</code> class, namely <code>LocalizerForIsis</code>.</p>
+</div>
+<div class="paragraph">
+<p>The Wicket <code>Localizer</code> defines the following API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> getString(
+        <span class="directive">final</span> <span class="predefined-type">String</span> key,               <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="directive">final</span> <span class="predefined-type">Component</span> component,      <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">final</span> IModel&lt;?&gt; model,
+        <span class="directive">final</span> <span class="predefined-type">Locale</span> locale,
+        <span class="directive">final</span> <span class="predefined-type">String</span> style,
+        <span class="directive">final</span> <span class="predefined-type">String</span> defaultValue)
+    <span class="directive">throws</span> <span class="exception">MissingResourceException</span> { ... }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The key to obtain the resource for</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The component to get the resource for (if any)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, <code>key</code> might be a value such as "okLabel", while <code>component</code> an internal class of the Wicket viewer, such as <code>EntityPropertiesForm</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>LocalizerForIsis</code> implementation uses the <code>key</code> as the <code>msgId</code>, while the fully qualified class name of the
+<code>component</code> is used as a context.  There is one exception to this: if the component is the third-party select2
+component (used for drop-downs), then that class name is used directly.</p>
+</div>
+<div class="paragraph">
+<p>In the main, using Isis' i18n support means simply adding the appropriate translations to the <code>translation.po</code> file,
+for each locale that you require.  If the translations are missing then the original translations from the Wicket
+resource bundles will be used instead.</p>
+</div>
+<div class="sect3">
+<h4 id="_commonly_used">4.4.1. Commonly used</h4>
+<div class="paragraph">
+<p>Most of the translation requirements can be covered by adding in the following <code>msgId</code>s:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="properties">#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;CollectionContentsAsAjaxTablePanelFactory.Table&quot;
+msgstr &quot;Table&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;CollectionContentsAsUnresolvedPanel.Hide&quot;
+msgstr &quot;Hide&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;aboutLabel&quot;
+msgstr &quot;About&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;cancelLabel&quot;
+msgstr &quot;Cancel&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;datatable.no-records-found&quot;
+msgstr &quot;No Records Found&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;editLabel&quot;
+msgstr &quot;Edit&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;inputTooShortPlural&quot;
+msgstr &quot;Please enter {number} more characters&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;inputTooShortSingular&quot;
+msgstr &quot;Please enter 1 more character&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;loadMore&quot;
+msgstr &quot;Load more&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;logoutLabel&quot;
+msgstr &quot;Logout&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;noMatches&quot;
+msgstr &quot;No matches&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage
+msgid &quot;okLabel&quot;
+msgstr &quot;OK&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;searching&quot;
+msgstr &quot;Searching...&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;selectionTooBigPlural&quot;
+msgstr &quot;You can only select {limit} items&quot;
+
+#: org.wicketstuff.select2.Select2Choice
+msgid &quot;selectionTooBigSingular&quot;
+msgstr &quot;You can only select 1 item&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_login_self_sign_up">4.4.2. Login/self-sign-up</h4>
+<div class="paragraph">
+<p>In addition, there are a reasonably large number of messages that are used for both login and the
+ <a href="ugvw.html#_ugvw_features_user-registration">user registration</a> (self sign-up) and password reset features.</p>
+</div>
+<div class="paragraph">
+<p>These are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="properties">#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;AutoLabel.CSS.required&quot;
+msgstr &quot;Required&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;confirmPasswordLabel&quot;
+msgstr &quot;Confirm password&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+msgid &quot;emailIsNotAvailable&quot;
+msgstr &quot;The given email is already in use&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;emailPlaceholder&quot;
+msgstr &quot;Enter your email&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+msgid &quot;emailPlaceholder&quot;
+msgstr &quot;Enter an email for the new account&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;emailLabel&quot;
+msgstr &quot;Email&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;emailSentMessage&quot;
+msgstr &quot;An email has been sent to '${email}' for verification.&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;forgotPasswordLinkLabel&quot;
+msgstr &quot;Forgot your password?&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;loginHeader&quot;
+msgstr &quot;Login&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;noSuchUserByEmail&quot;
+msgstr &quot;There is no account with this email&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;noUserForAnEmailValidToken&quot;
+msgstr &quot;The account seems to be either already deleted or has changed its email address. Please try again.&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordChangeSuccessful&quot;
+msgstr &quot;The password has been changed successfully. You can &lt;a class=\&quot;alert-success\&quot; style=\&quot;text-decoration:underline;\&quot; href=\&quot;${signInUrl}\&quot;&gt;login&lt;/a&gt; now.&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordChangeUnsuccessful&quot;
+msgstr &quot;There was a problem while updating the password. Please try again.&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordLabel&quot;
+msgstr &quot;Password&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordPlaceholder&quot;
+msgstr &quot;Enter password&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordResetExpiredOrInvalidToken&quot;
+msgstr &quot;You are trying to reset the password for an expired or invalid token&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordResetHeader&quot;
+msgstr &quot;Forgot password&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;passwordResetSubmitLabel&quot;
+msgstr &quot;Submit&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;registerButtonLabel&quot;
+msgstr &quot;Register&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+msgid &quot;registerHeader&quot;
+msgstr &quot;Register&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;rememberMeLabel&quot;
+msgstr &quot;Remember Me&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;resetButtonLabel&quot;
+msgstr &quot;Reset&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;signInButtonLabel&quot;
+msgstr &quot;Sign in&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+msgid &quot;signUpButtonLabel&quot;
+msgstr &quot;Don't have an account? Sign up now.&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;signUpButtonLabel&quot;
+msgstr &quot;Verify email&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+msgid &quot;signUpHeader&quot;
+msgstr &quot;Sign Up&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;usernameIsNotAvailable&quot;
+msgstr &quot;The provided username is already in use&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;usernameLabel&quot;
+msgstr &quot;Username&quot;
+
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.signup.RegistrationFormPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.register.RegisterPage
+#: org.apache.isis.viewer.wicket.ui.pages.login.WicketSignInPage
+#: org.apache.isis.viewer.wicket.ui.pages.accmngt.password_reset.PasswordResetPage
+msgid &quot;usernamePlaceholder&quot;
+msgstr &quot;Username&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_testing">4.5. Integration Testing</h3>
 <div class="paragraph">
 <p>So much for the API; but as noted, it is also necessary to ensure that the required translations are recorded (by the <code>TranslationService</code>) into the <code>.pot</code> file.</p>
 </div>
@@ -2232,7 +2504,7 @@ FixtureScripts fixtureScripts;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_escaped_strings">4.5. Escaped strings</h3>
+<h3 id="_escaped_strings">4.6. Escaped strings</h3>
 <div class="paragraph">
 <p>Translated messages can be escaped if required, eg to include embedded markup.</p>
 </div>
@@ -2270,12 +2542,12 @@ msgstr &quot;&lt;i&gt;Quantité&lt;/i&gt;&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration">4.6. Configuration</h3>
+<h3 id="_configuration">4.7. Configuration</h3>
 <div class="paragraph">
 <p>There are several different aspects of the translation service that can be configured.</p>
 </div>
 <div class="sect3">
-<h4 id="_logging">4.6.1. Logging</h4>
+<h4 id="_logging">4.7.1. Logging</h4>
 <div class="paragraph">
 <p>To configure the <code>TranslationServicePo</code> to write to out the <code>translations.pot</code> file, add the following to the <em>integtests</em> <code>logging.properties</code> file:</p>
 </div>
@@ -2296,7 +2568,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_location_of_the_code_po_code_files">4.6.2. Location of the <code>.po</code> files</h4>
+<h4 id="_location_of_the_code_po_code_files">4.7.2. Location of the <code>.po</code> files</h4>
 <div class="paragraph">
 <p>The default location of the translated <code>.po</code> files is in the <code>WEB-INF</code> directory. These are named and searched for similarly to regular Java resource bundles.</p>
 </div>
@@ -2335,7 +2607,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_externalized_translation_files">4.6.3. Externalized translation files</h4>
+<h4 id="_externalized_translation_files">4.7.3. Externalized translation files</h4>
 <div class="paragraph">
 <p>Normally Apache Isis configuration files are read from the <code>WEB-INF</code> file. However, Apache Isis can be configured to read config files from an <a href="#_ugbtb_deployment_externalized-configuration">external directory</a>; this is also supported for translations.</p>
 </div>
@@ -2355,7 +2627,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_force_read_mode">4.6.4. Force read mode</h4>
+<h4 id="_force_read_mode">4.7.4. Force read mode</h4>
 <div class="paragraph">
 <p>As noted above, if running in prototype mode then <code>TranslationServicePo</code> will be in write mode, if in production mode then will be in read mode. To force read mode (ie use translations) even if in prototype mode, add the following configuration property to <code>isis.properties</code>:</p>
 </div>
@@ -2367,12 +2639,12 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supporting_services">4.7. Supporting services</h3>
+<h3 id="_supporting_services">4.8. Supporting services</h3>
 <div class="paragraph">
 <p>The <code>TranslationServicePo</code> has a number of supporting/related services.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_localeprovider_code">4.7.1. <code>LocaleProvider</code></h4>
+<h4 id="__code_localeprovider_code">4.8.1. <code>LocaleProvider</code></h4>
 <div class="paragraph">
 <p>The <code>LocaleProvider</code> API is used by the <code>TranslationServicePo</code> implementation to obtain the locale of the "current user".</p>
 </div>
@@ -2395,13 +2667,13 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_translationsresolver_code">4.7.2. <code>TranslationsResolver</code></h4>
+<h4 id="__code_translationsresolver_code">4.8.2. <code>TranslationsResolver</code></h4>
 <div class="paragraph">
 <p>The <code>TranslationResolver</code> is used by the <code>TranslationService</code> implementation to lookup translations for a specified locale. It is this service that reads from the <code>WEB-INF/</code> (or externalized directory).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_translationservicepomenu_code">4.7.3. <code>TranslationServicePoMenu</code></h4>
+<h4 id="__code_translationservicepomenu_code">4.8.3. <code>TranslationServicePoMenu</code></h4>
 <div class="paragraph">
 <p>The <code>TranslationServicePoMenu</code> provides a couple of menu actions in the UI (prototype mode only) that interacts with the underlying <code>TranslationServicePo</code>:</p>
 </div>
@@ -4725,21 +4997,27 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#__code_translatableexception_code">4.3.2. <code>TranslatableException</code></a></li>
 </ul>
 </li>
-<li><a href="#_integration_testing">4.4. Integration Testing</a></li>
-<li><a href="#_escaped_strings">4.5. Escaped strings</a></li>
-<li><a href="#_configuration">4.6. Configuration</a>
+<li><a href="#_wicket_viewer_code_1_11_0_snapshot_code">4.4. Wicket Viewer (<code>1.11.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_logging">4.6.1. Logging</a></li>
-<li><a href="#_location_of_the_code_po_code_files">4.6.2. Location of the <code>.po</code> files</a></li>
-<li><a href="#_externalized_translation_files">4.6.3. Externalized translation files</a></li>
-<li><a href="#_force_read_mode">4.6.4. Force read mode</a></li>
+<li><a href="#_commonly_used">4.4.1. Commonly used</a></li>
+<li><a href="#_login_self_sign_up">4.4.2. Login/self-sign-up</a></li>
 </ul>
 </li>
-<li><a href="#_supporting_services">4.7. Supporting services</a>
+<li><a href="#_integration_testing">4.5. Integration Testing</a></li>
+<li><a href="#_escaped_strings">4.6. Escaped strings</a></li>
+<li><a href="#_configuration">4.7. Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#__code_localeprovider_code">4.7.1. <code>LocaleProvider</code></a></li>
-<li><a href="#__code_translationsresolver_code">4.7.2. <code>TranslationsResolver</code></a></li>
-<li><a href="#__code_translationservicepomenu_code">4.7.3. <code>TranslationServicePoMenu</code></a></li>
+<li><a href="#_logging">4.7.1. Logging</a></li>
+<li><a href="#_location_of_the_code_po_code_files">4.7.2. Location of the <code>.po</code> files</a></li>
+<li><a href="#_externalized_translation_files">4.7.3. Externalized translation files</a></li>
+<li><a href="#_force_read_mode">4.7.4. Force read mode</a></li>
+</ul>
+</li>
+<li><a href="#_supporting_services">4.8. Supporting services</a>
+<ul class="sectlevel3">
+<li><a href="#__code_localeprovider_code">4.8.1. <code>LocaleProvider</code></a></li>
+<li><a href="#__code_translationsresolver_code">4.8.2. <code>TranslationsResolver</code></a></li>
+<li><a href="#__code_translationservicepomenu_code">4.8.3. <code>TranslationServicePoMenu</code></a></li>
 </ul>
 </li>
 </ul>
