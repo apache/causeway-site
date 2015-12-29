@@ -525,24 +525,6 @@ issues here.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_jaxb_view_models">JAXB view models</h3>
-<div class="paragraph">
-<p>Classes annotated with <a href="guides/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a> are now recognized
-as view models.  These are serialized out into XML and converted into URL.</p>
-</div>
-<div class="paragraph">
-<p>The <a href="guides/rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> is responsible for performing the XML conversion.
-The default implementation is located in the <code>org.apache.isis.core:isis-core-schema</code> module, specifically under the
-<code>org.apache.isis.core.schema.services</code> package.</p>
-</div>
-<div class="paragraph">
-<p>If your application is bootstrapped using an <code>AppManifest</code> (recommended;
-<a href="guides/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">here</a>) then the <code>JaxbService</code> will automatically be discovered and
- registered.  However, if you are still using the older <code>isis.properties</code> configuration file to explicitly register
- services then you will need to add in this service.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_swagger_ui">Swagger UI</h3>
 <div class="paragraph">
 <p>The new <a href="guides/rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> allows <a href="http://swagger.io">Swagger</a> spec files
@@ -609,6 +591,36 @@ to be generated from the Apache Isis metamodel.  These can be downloaded directl
 </div>
 <div class="paragraph">
 <p>The text of the simple app&#8217;s <code>about/index.html</code> has also changed (the <code>&lt;li</code>&gt; for the <code>/restful</code> URL has been replaced with a <code>/swagger-ui</code> URL).  If you use <a href="https://github.com/apache/isis/blob/master/example/application/simpleapp/webapp/src/main/webapp/about/index.html">this file</a>, then update it.</p>
+</div>
+<div class="paragraph">
+<p>If your application is bootstrapped using an <code>AppManifest</code> (recommended;
+<a href="guides/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">here</a>) then the default implementation of the
+<code>SwaggerService</code> will automatically be discovered and registered.  However, if you are still using the older
+<code>isis.properties</code> configuration file to explicitly register services then you will need to add in this service.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_routingservice_code"><code>RoutingService</code></h3>
+<div class="paragraph">
+<p>The new <a href="guides/rgsvc.html#_rgsvc_spi_RoutingService"><code>RoutingService</code></a> SPI service provides a plugin point to the
+<a href="guides/ugvw.html">Wicket viewer</a> so that a different object than that returned from an action invocation can be
+rendered.</p>
+</div>
+<div class="paragraph">
+<p>The framework provides a default implementation of this service that will - instead of a void or a <code>null</code> result -
+render the home page (as per the <a href="guides/rgant.html#_rgant_HomePage"><code>@HomePage</code></a> annotation) if there is one.  This
+is therefore a subtle change in the UI.  If you wish to retain the original behaviour (to return the "no results" page
+instead), then you should implement your own no-op implementation of this service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>
+<span class="annotation">@DomainServiceLayout</span>(menuOrder=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">IdentityRoutingService</span> <span class="directive">implements</span> RoutingService {
+    <span class="directive">public</span> <span class="type">boolean</span> canRoute(<span class="predefined-type">Object</span> original) { <span class="keyword">return</span> <span class="predefined-constant">true</span>; }
+    <span class="directive">public</span> <span class="predefined-type">Object</span> route(<span class="predefined-type">Object</span> original) { <span class="keyword">return</span> original; }
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1986,8 +1998,8 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
                 <ul class="sectlevel1">
 <li><a href="#_migration-notes_1.10.0-to-1.11.0">From v1.10.0 to 1.11.0</a>
 <ul class="sectlevel2">
-<li><a href="#_jaxb_view_models">JAXB view models</a></li>
 <li><a href="#_swagger_ui">Swagger UI</a></li>
+<li><a href="#__code_routingservice_code"><code>RoutingService</code></a></li>
 <li><a href="#_wicket_viewer_i18n">Wicket Viewer i18n</a></li>
 </ul>
 </li>
