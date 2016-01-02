@@ -533,6 +533,23 @@ table.CodeRay td.code>pre{padding:0}
 <td class="tableblock halign-right valign-top"><p class="tableblock">Bugs</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#r1.11.0">1.11.0</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">02-jan-2016</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=12311171&amp;version=12333974">1.11.0</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Combined release notes for core and simpleapp-archetype.</p>
+</div></div></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">12</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#r1.10.0">1.10.0</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10-nov-2015</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="ulist">
@@ -939,6 +956,188 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
+<h2 id="r1.11.0">1.11.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The main focus for Apache Isis 1.11.0 is on the REST API and on view models using JAXB:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <a href="guides/ugvro.html">Restful Objects viewer</a> now supports simplified
+representations intended to make it easier to write custom Javascript (and other) clients that consume the REST API;
+these are obtained using the HTTP Accept header.  There is also support for <a href="http://swagger.io">Swagger</a> spec files
+so that the REST API can be more easily explored and tested.<br></p>
+<div class="paragraph">
+<p>In addition, the <code>x-ro-follow-links</code> capability for RO spec representations is now supported.</p>
+</div>
+</li>
+<li>
+<p>JAXB-annotated classes are now recognised as view models; these also enable the contents
+collections to be part of the view model&#8217;s state (previously only view model properties were recognised).  The new
+UrlEncodingService allows long URLs (for view models) to be converted into shorter URLs; this also allows the URL
+to optionally be encrypted.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The release also includes improved control for domain events (these can now be suppressed if required) , and a new
+category of UI events (so that titles, icons and CSS classes can be provided by event bus subscribers).</p>
+</div>
+<div class="sect2">
+<h3 id="_new_feature">New Feature</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1279">ISIS-1279</a> - AcceptHeaderService for application-defined content negotiation.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1274">ISIS-1274</a> - ContentNegotiationService for simplified representations for custom RO clients</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1262">ISIS-1262</a> - Provide mixin to allow the JDO metadata to be downloaded for any Persistable.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1258">ISIS-1258</a> - Extend the Isis maven plugin to be able to generate XSD schemas using the JaxbService</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1252">ISIS-1252</a> - New TitleUiEvent, IconUiEvent and CssClassUiEvent as a means to allow subscribers to provide a title for domain objects.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1251">ISIS-1251</a> - UrlEncodingService as a plugin point for serializing mementos into a URL-friendly string.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1250">ISIS-1250</a> - JaxbService to marshall DTOs to XML.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1217">ISIS-1217</a> - Formatting text inside a text field</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-666">ISIS-666</a> - Provide the ablity to return (and render) a different object when an action is invoked.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_improvement">Improvement</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1275">ISIS-1275</a> - Configuration property for RO viewer to relax Accept header checking.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1273">ISIS-1273</a> - Enhance RO viewer so that the default RO v1 representations are implemented as a ContentNegotiationService</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1269">ISIS-1269</a> - Deleting an object from a list can cause NPE when that list is re-rendered.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1259">ISIS-1259</a> - For derived parameter names from nested inner classes, ignore the parent out class</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1257">ISIS-1257</a> - Allow @Title to be added as an annotation to fields.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1255">ISIS-1255</a> - Provide configuration property so that domain events set to Xxx.Default are either ignored (like the Noop) or are posted anyway.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1254">ISIS-1254</a> - Disable action/property/collection events if set to Noop domain events</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1249">ISIS-1249</a> - Annotate AbstractSubscriber with @DomainServiceLayout(menuOrder=&#8230;&#8203;) so that this is picked up by default by all implementations.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1246">ISIS-1246</a> - Better diagnostics on NPE</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1245">ISIS-1245</a> - During bootstrap, ensure that any @PersistenceCapable entities found on classpath also implement PersistenceCapable interface (ie that the DN enhancer has run).</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1241">ISIS-1241</a> - Providing better feedback when RegEx validation does not match pattern</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1237">ISIS-1237</a> - Integrate with swagger for REST APIs</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1232">ISIS-1232</a> - Enhance RO viewer to support section 34.4 of RO v1.0 spec (x-ro-follow-links)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1220">ISIS-1220</a> - Methods annotated with @Subscribe should automatically be ignored (as per @Programmatic).</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1117">ISIS-1117</a> - Allow using "marker" view models</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1093">ISIS-1093</a> - Integrate Wicket&#8217;s i18n requirements with Isis' TranslationPoService.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1084">ISIS-1084</a> - Reduce PoReader messages in the log</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1070">ISIS-1070</a> - Add header and handle double quotes in translations.pot file</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-803">ISIS-803</a> - Replace lifecycle methods with additional EventBus events.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bug">Bug</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1283">ISIS-1283</a> - SAFE_AND_CACHEABLE semantics caches incorrectly, works for domain services (stateless) but not for domain entities (where stateful target determines result)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1278">ISIS-1278</a> - Title of choices lnks in RO failing, called incorrectly.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1253">ISIS-1253</a> - Default title for enums is not friendly name</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1244">ISIS-1244</a> - RO POST to "objects of type" resource should return a 201, not a 200.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1242">ISIS-1242</a> - Breadcrumbs broken if change the title&#8230;&#8203;. the drop-down never displays elements</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1227">ISIS-1227</a> - in edit mode, when there are validation errors, these are not showing up for the individual properties, instead for the object-level validation.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1221">ISIS-1221</a> - JSON Format Layouts not recognized with i18n translations in Wicket Viewer</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1202">ISIS-1202</a> - Mandatory dropdown field doesn&#8217;t show asterisk</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1193">ISIS-1193</a> - void actions return 404 Not Found when called through restful viewer</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1185">ISIS-1185</a> - [CAN&#8217;T REPRODUCE] 'Ok' and 'Cancel' buttons in edit mode are both appearing as 'Submit Query'</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1128">ISIS-1128</a> - 'namedEscaped' is broken when 'named' comes from a translation.po</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-915">ISIS-915</a> - Framework should transparently allow view models to reference other view models.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_task">Task</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1243">ISIS-1243</a> - Release activities for v1.11.0</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="r1.10.0">1.10.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -948,7 +1147,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Internally there have been substantial simplifications to the codebase.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature">New Feature</h3>
+<h3 id="_new_feature_2">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -976,7 +1175,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement">Improvement</h3>
+<h3 id="_improvement_2">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1037,7 +1236,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug">Bug</h3>
+<h3 id="_bug_2">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1080,7 +1279,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task">Task</h3>
+<h3 id="_task_2">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1167,7 +1366,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>This release was also the first to include the updated Asciidoc website.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature_2">New Feature</h3>
+<h3 id="_new_feature_3">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1228,7 +1427,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement_2">Improvement</h3>
+<h3 id="_improvement_3">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1385,7 +1584,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_2">Bug</h3>
+<h3 id="_bug_3">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1480,7 +1679,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task_2">Task</h3>
+<h3 id="_task_3">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1517,7 +1716,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Apache Isis 1.8.0 incorporates the Wicket viewer, which was previously a separately released component.  Other components that are included in core (that were previously released separately are: the Restful Objects viewer, Shiro Security and the JDO/DataNucleus ObjectStore.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature_3">New Feature</h3>
+<h3 id="_new_feature_4">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1605,7 +1804,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement_3">Improvement</h3>
+<h3 id="_improvement_4">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1735,7 +1934,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_3">Bug</h3>
+<h3 id="_bug_4">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1802,7 +2001,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task_3">Task</h3>
+<h3 id="_task_4">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1838,7 +2037,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_4">New Feature</h4>
+<h4 id="_new_feature_5">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1867,7 +2066,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_4">Improvement</h4>
+<h4 id="_improvement_5">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1901,7 +2100,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_4">Bug</h4>
+<h4 id="_bug_5">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1977,7 +2176,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_4">Task</h4>
+<h4 id="_task_5">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1990,7 +2189,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer">Wicket viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_5">New Feature</h4>
+<h4 id="_new_feature_6">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2025,7 +2224,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_5">Bug</h4>
+<h4 id="_bug_6">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2051,7 +2250,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_5">Task</h4>
+<h4 id="_task_6">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2072,7 +2271,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>Isis core 1.6.0 also incorporates the Restful Objects viewer, Shiro Security and JDO Objectstore.</p>
 </div>
 <div class="sect3">
-<h4 id="_new_feature_6">New Feature</h4>
+<h4 id="_new_feature_7">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2088,7 +2287,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_5">Improvement</h4>
+<h4 id="_improvement_6">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2122,7 +2321,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_6">Bug</h4>
+<h4 id="_bug_7">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2185,7 +2384,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_2">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_7">New Feature</h4>
+<h4 id="_new_feature_8">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2201,7 +2400,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_6">Improvement</h4>
+<h4 id="_improvement_7">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2217,7 +2416,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_7">Bug</h4>
+<h4 id="_bug_8">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2239,7 +2438,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_6">Task</h4>
+<h4 id="_task_7">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2257,7 +2456,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_3">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_8">New Feature</h4>
+<h4 id="_new_feature_9">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2273,7 +2472,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_7">Improvement</h4>
+<h4 id="_improvement_8">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2310,7 +2509,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_8">Bug</h4>
+<h4 id="_bug_9">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2332,7 +2531,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_7">Task</h4>
+<h4 id="_task_8">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2348,7 +2547,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_3">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_8">Improvement</h4>
+<h4 id="_improvement_9">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2373,7 +2572,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_9">Bug</h4>
+<h4 id="_bug_10">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2405,7 +2604,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_8">Task</h4>
+<h4 id="_task_9">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2418,7 +2617,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_task_9">Task</h4>
+<h4 id="_task_10">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2428,7 +2627,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_10">Bug</h4>
+<h4 id="_bug_11">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2438,7 +2637,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_10">Task</h4>
+<h4 id="_task_11">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2454,7 +2653,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_improvement_9">Improvement</h4>
+<h4 id="_improvement_10">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2470,7 +2669,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_11">Bug</h4>
+<h4 id="_bug_12">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2483,7 +2682,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_11">Task</h4>
+<h4 id="_task_12">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2504,7 +2703,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_4">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_10">Improvement</h4>
+<h4 id="_improvement_11">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2517,7 +2716,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_12">Bug</h4>
+<h4 id="_bug_13">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2530,7 +2729,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore_2">JDO Objectstore</h3>
 <div class="sect3">
-<h4 id="_bug_13">Bug</h4>
+<h4 id="_bug_14">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2548,7 +2747,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_4">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_9">New Feature</h4>
+<h4 id="_new_feature_10">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2651,7 +2850,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_11">Improvement</h4>
+<h4 id="_improvement_12">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2733,7 +2932,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_14">Bug</h4>
+<h4 id="_bug_15">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2770,7 +2969,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_12">Task</h4>
+<h4 id="_task_13">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2783,7 +2982,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_5">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_10">New Feature</h4>
+<h4 id="_new_feature_11">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2826,7 +3025,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_12">Improvement</h4>
+<h4 id="_improvement_13">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2893,7 +3092,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_15">Bug</h4>
+<h4 id="_bug_16">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2942,7 +3141,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_13">Task</h4>
+<h4 id="_task_14">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2955,7 +3154,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_2">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_task_14">Task</h4>
+<h4 id="_task_15">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2968,7 +3167,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_shiro_security">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_new_feature_11">New Feature</h4>
+<h4 id="_new_feature_12">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2981,7 +3180,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_15">Task</h4>
+<h4 id="_task_16">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2994,7 +3193,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore_3">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_12">New Feature</h4>
+<h4 id="_new_feature_13">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3028,7 +3227,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_13">Improvement</h4>
+<h4 id="_improvement_14">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3086,7 +3285,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_16">Bug</h4>
+<h4 id="_bug_17">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3109,7 +3308,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_16">Task</h4>
+<h4 id="_task_17">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3127,7 +3326,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_6">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_13">New Feature</h4>
+<h4 id="_new_feature_14">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3137,7 +3336,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_17">Bug</h4>
+<h4 id="_bug_18">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3153,7 +3352,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_17">Task</h4>
+<h4 id="_task_18">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3171,7 +3370,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_5">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_14">New Feature</h4>
+<h4 id="_new_feature_15">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3256,7 +3455,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_14">Improvement</h4>
+<h4 id="_improvement_15">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3350,7 +3549,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_18">Bug</h4>
+<h4 id="_bug_19">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3396,7 +3595,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_18">Task</h4>
+<h4 id="_task_19">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3409,7 +3608,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_7">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_15">New Feature</h4>
+<h4 id="_new_feature_16">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3470,7 +3669,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_15">Improvement</h4>
+<h4 id="_improvement_16">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3531,7 +3730,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_19">Bug</h4>
+<h4 id="_bug_20">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3562,7 +3761,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_3">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_16">New Feature</h4>
+<h4 id="_new_feature_17">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3572,7 +3771,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_16">Improvement</h4>
+<h4 id="_improvement_17">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3585,7 +3784,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_20">Bug</h4>
+<h4 id="_bug_21">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3616,7 +3815,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_shiro_security_2">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_improvement_17">Improvement</h4>
+<h4 id="_improvement_18">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3632,7 +3831,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore_4">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_17">New Feature</h4>
+<h4 id="_new_feature_18">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3660,7 +3859,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_18">Improvement</h4>
+<h4 id="_improvement_19">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3694,7 +3893,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_21">Bug</h4>
+<h4 id="_bug_22">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3723,7 +3922,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_19">Task</h4>
+<h4 id="_task_20">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3741,7 +3940,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_6">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_18">New Feature</h4>
+<h4 id="_new_feature_19">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3784,7 +3983,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_19">Improvement</h4>
+<h4 id="_improvement_20">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3842,7 +4041,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_22">Bug</h4>
+<h4 id="_bug_23">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3858,7 +4057,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_8">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_19">New Feature</h4>
+<h4 id="_new_feature_20">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3889,7 +4088,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_20">Improvement</h4>
+<h4 id="_improvement_21">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3959,7 +4158,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_23">Bug</h4>
+<h4 id="_bug_24">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4008,7 +4207,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_4">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_20">New Feature</h4>
+<h4 id="_new_feature_21">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4021,7 +4220,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_21">Improvement</h4>
+<h4 id="_improvement_22">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4045,45 +4244,6 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_7">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_21">New Feature</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-282">ISIS-282</a> - Add support for file uploads and downloads to Wicket viewer and JDO objectstore</p>
-</li>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-304">ISIS-304</a> - arg, no business rules) do not appear.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improvement_22">Improvement</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-305">ISIS-305</a> - compareTo methods (when implement Comparable) should be automatically hidden</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_bug_24">Bug</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-207">ISIS-207</a> - Improve the message given when a field is too long (exceeds its @MaxLength value)</p>
-</li>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-312">ISIS-312</a> - Guard in BaseFixture to allow fixtures to load in production mode was faulty</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_wicket_viewer_9">Wicket Viewer</h3>
-<div class="sect3">
 <h4 id="_new_feature_22">New Feature</h4>
 <div class="ulist">
 <ul>
@@ -4101,6 +4261,45 @@ table.CodeRay td.code>pre{padding:0}
 <div class="ulist">
 <ul>
 <li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-305">ISIS-305</a> - compareTo methods (when implement Comparable) should be automatically hidden</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bug_25">Bug</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-207">ISIS-207</a> - Improve the message given when a field is too long (exceeds its @MaxLength value)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-312">ISIS-312</a> - Guard in BaseFixture to allow fixtures to load in production mode was faulty</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wicket_viewer_9">Wicket Viewer</h3>
+<div class="sect3">
+<h4 id="_new_feature_23">New Feature</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-282">ISIS-282</a> - Add support for file uploads and downloads to Wicket viewer and JDO objectstore</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-304">ISIS-304</a> - arg, no business rules) do not appear.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvement_24">Improvement</h4>
+<div class="ulist">
+<ul>
+<li>
 <p><a href="https://issues.apache.org/jira/browse/ISIS-308">ISIS-308</a> - Don&#39;t show (null) for a property or a parameter that has no reference (instead show an empty string)</p>
 </li>
 <li>
@@ -4113,7 +4312,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_25">Bug</h4>
+<h4 id="_bug_26">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4126,7 +4325,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_5">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_23">New Feature</h4>
+<h4 id="_new_feature_24">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4139,7 +4338,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_24">Improvement</h4>
+<h4 id="_improvement_25">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4158,7 +4357,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_shiro_security_3">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_new_feature_24">New Feature</h4>
+<h4 id="_new_feature_25">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4168,7 +4367,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_25">Improvement</h4>
+<h4 id="_improvement_26">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4178,7 +4377,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_26">Bug</h4>
+<h4 id="_bug_27">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4191,7 +4390,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore_5">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_25">New Feature</h4>
+<h4 id="_new_feature_26">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4207,7 +4406,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_26">Improvement</h4>
+<h4 id="_improvement_27">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4244,7 +4443,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_27">Bug</h4>
+<h4 id="_bug_28">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4271,7 +4470,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_core_8">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_26">New Feature</h4>
+<h4 id="_new_feature_27">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4293,7 +4492,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_27">Improvement</h4>
+<h4 id="_improvement_28">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4384,7 +4583,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_28">Bug</h4>
+<h4 id="_bug_29">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4406,7 +4605,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_wicket_viewer_10">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_27">New Feature</h4>
+<h4 id="_new_feature_28">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4422,7 +4621,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_28">Improvement</h4>
+<h4 id="_improvement_29">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4438,7 +4637,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_29">Bug</h4>
+<h4 id="_bug_30">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4461,7 +4660,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_6">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_29">Improvement</h4>
+<h4 id="_improvement_30">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4471,7 +4670,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_30">Bug</h4>
+<h4 id="_bug_31">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4484,7 +4683,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_jdo_objectstore_6">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_28">New Feature</h4>
+<h4 id="_new_feature_29">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4494,7 +4693,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_30">Improvement</h4>
+<h4 id="_improvement_31">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4524,12 +4723,20 @@ table.CodeRay td.code>pre{padding:0}
             <div class="fallback-toc">
                 <ul class="sectlevel1">
 <li><a href="#_summary">Summary</a></li>
-<li><a href="#r1.10.0">1.10.0</a>
+<li><a href="#r1.11.0">1.11.0</a>
 <ul class="sectlevel2">
 <li><a href="#_new_feature">New Feature</a></li>
 <li><a href="#_improvement">Improvement</a></li>
 <li><a href="#_bug">Bug</a></li>
 <li><a href="#_task">Task</a></li>
+</ul>
+</li>
+<li><a href="#r1.10.0">1.10.0</a>
+<ul class="sectlevel2">
+<li><a href="#_new_feature_2">New Feature</a></li>
+<li><a href="#_improvement_2">Improvement</a></li>
+<li><a href="#_bug_2">Bug</a></li>
+<li><a href="#_task_2">Task</a></li>
 <li><a href="#_dependency_upgrade">Dependency upgrade</a></li>
 <li><a href="#_superceded">Superceded</a></li>
 <li><a href="#_not_implemented_tidying_up_backlog">Not implemented (tidying up backlog)</a></li>
@@ -4537,20 +4744,20 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#r1.9.0">1.9.0</a>
 <ul class="sectlevel2">
-<li><a href="#_new_feature_2">New Feature</a></li>
-<li><a href="#_improvement_2">Improvement</a></li>
-<li><a href="#_bug_2">Bug</a></li>
+<li><a href="#_new_feature_3">New Feature</a></li>
+<li><a href="#_improvement_3">Improvement</a></li>
+<li><a href="#_bug_3">Bug</a></li>
 <li><a href="#_dependency_upgrade_2">Dependency upgrade</a></li>
-<li><a href="#_task_2">Task</a></li>
+<li><a href="#_task_3">Task</a></li>
 <li><a href="#_wish">Wish</a></li>
 </ul>
 </li>
 <li><a href="#r1.8.0">1.8.0</a>
 <ul class="sectlevel2">
-<li><a href="#_new_feature_3">New Feature</a></li>
-<li><a href="#_improvement_3">Improvement</a></li>
-<li><a href="#_bug_3">Bug</a></li>
-<li><a href="#_task_3">Task</a></li>
+<li><a href="#_new_feature_4">New Feature</a></li>
+<li><a href="#_improvement_4">Improvement</a></li>
+<li><a href="#_bug_4">Bug</a></li>
+<li><a href="#_task_4">Task</a></li>
 <li><a href="#_sub_task">Sub-task</a></li>
 </ul>
 </li>
@@ -4558,23 +4765,23 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_4">New Feature</a></li>
+<li><a href="#_new_feature_5">New Feature</a></li>
 <li><a href="#_security_fixes">Security fixes</a></li>
-<li><a href="#_improvement_4">Improvement</a></li>
-<li><a href="#_bug_4">Bug</a></li>
+<li><a href="#_improvement_5">Improvement</a></li>
+<li><a href="#_bug_5">Bug</a></li>
 <li><a href="#_removed_features">Removed features</a></li>
 <li><a href="#_removed_features_obsolete">Removed features (obsolete)</a></li>
 <li><a href="#_unreleased_features_backed_out">Unreleased features (backed out)</a></li>
-<li><a href="#_task_4">Task</a></li>
+<li><a href="#_task_5">Task</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer">Wicket viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_5">New Feature</a></li>
+<li><a href="#_new_feature_6">New Feature</a></li>
 <li><a href="#_security_fixes_2">Security fixes</a></li>
-<li><a href="#_bug_5">Bug</a></li>
+<li><a href="#_bug_6">Bug</a></li>
 <li><a href="#_dependency_upgrade_3">Dependency upgrade</a></li>
-<li><a href="#_task_5">Task</a></li>
+<li><a href="#_task_6">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4583,19 +4790,19 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_2">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_6">New Feature</a></li>
-<li><a href="#_improvement_5">Improvement</a></li>
-<li><a href="#_bug_6">Bug</a></li>
+<li><a href="#_new_feature_7">New Feature</a></li>
+<li><a href="#_improvement_6">Improvement</a></li>
+<li><a href="#_bug_7">Bug</a></li>
 <li><a href="#_dependency_upgrade_4">Dependency upgrade</a></li>
 <li><a href="#_task_core">Task (Core)</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_2">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_7">New Feature</a></li>
-<li><a href="#_improvement_6">Improvement</a></li>
-<li><a href="#_bug_7">Bug</a></li>
-<li><a href="#_task_6">Task</a></li>
+<li><a href="#_new_feature_8">New Feature</a></li>
+<li><a href="#_improvement_7">Improvement</a></li>
+<li><a href="#_bug_8">Bug</a></li>
+<li><a href="#_task_7">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4604,32 +4811,32 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_3">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_8">New Feature</a></li>
-<li><a href="#_improvement_7">Improvement</a></li>
-<li><a href="#_bug_8">Bug</a></li>
-<li><a href="#_task_7">Task</a></li>
+<li><a href="#_new_feature_9">New Feature</a></li>
+<li><a href="#_improvement_8">Improvement</a></li>
+<li><a href="#_bug_9">Bug</a></li>
+<li><a href="#_task_8">Task</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_3">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_8">Improvement</a></li>
-<li><a href="#_bug_9">Bug</a></li>
+<li><a href="#_improvement_9">Improvement</a></li>
+<li><a href="#_bug_10">Bug</a></li>
 <li><a href="#_dependency_upgrade_5">Dependency upgrade</a></li>
-<li><a href="#_task_8">Task</a></li>
+<li><a href="#_task_9">Task</a></li>
 </ul>
 </li>
 <li><a href="#_restfulobjects_viewer">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_task_9">Task</a></li>
-<li><a href="#_bug_10">Bug</a></li>
 <li><a href="#_task_10">Task</a></li>
+<li><a href="#_bug_11">Bug</a></li>
+<li><a href="#_task_11">Task</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_9">Improvement</a></li>
-<li><a href="#_bug_11">Bug</a></li>
-<li><a href="#_task_11">Task</a></li>
+<li><a href="#_improvement_10">Improvement</a></li>
+<li><a href="#_bug_12">Bug</a></li>
+<li><a href="#_task_12">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4638,13 +4845,13 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_wicket_viewer_4">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_10">Improvement</a></li>
-<li><a href="#_bug_12">Bug</a></li>
+<li><a href="#_improvement_11">Improvement</a></li>
+<li><a href="#_bug_13">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_2">JDO Objectstore</a>
 <ul class="sectlevel3">
-<li><a href="#_bug_13">Bug</a></li>
+<li><a href="#_bug_14">Bug</a></li>
 </ul>
 </li>
 </ul>
@@ -4653,38 +4860,38 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_4">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_9">New Feature</a></li>
-<li><a href="#_improvement_11">Improvement</a></li>
-<li><a href="#_bug_14">Bug</a></li>
-<li><a href="#_task_12">Task</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_5">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_10">New Feature</a></li>
 <li><a href="#_improvement_12">Improvement</a></li>
 <li><a href="#_bug_15">Bug</a></li>
 <li><a href="#_task_13">Task</a></li>
 </ul>
 </li>
+<li><a href="#_wicket_viewer_5">Wicket Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_11">New Feature</a></li>
+<li><a href="#_improvement_13">Improvement</a></li>
+<li><a href="#_bug_16">Bug</a></li>
+<li><a href="#_task_14">Task</a></li>
+</ul>
+</li>
 <li><a href="#_restfulobjects_viewer_2">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_task_14">Task</a></li>
+<li><a href="#_task_15">Task</a></li>
 </ul>
 </li>
 <li><a href="#_shiro_security">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_11">New Feature</a></li>
-<li><a href="#_task_15">Task</a></li>
+<li><a href="#_new_feature_12">New Feature</a></li>
+<li><a href="#_task_16">Task</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_3">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_12">New Feature</a></li>
-<li><a href="#_improvement_13">Improvement</a></li>
-<li><a href="#_bug_16">Bug</a></li>
+<li><a href="#_new_feature_13">New Feature</a></li>
+<li><a href="#_improvement_14">Improvement</a></li>
+<li><a href="#_bug_17">Bug</a></li>
 <li><a href="#_dependency_upgrade_6">Dependency upgrade</a></li>
-<li><a href="#_task_16">Task</a></li>
+<li><a href="#_task_17">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4693,9 +4900,9 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_wicket_viewer_6">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_13">New Feature</a></li>
-<li><a href="#_bug_17">Bug</a></li>
-<li><a href="#_task_17">Task</a></li>
+<li><a href="#_new_feature_14">New Feature</a></li>
+<li><a href="#_bug_18">Bug</a></li>
+<li><a href="#_task_18">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4704,38 +4911,38 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_5">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_14">New Feature</a></li>
-<li><a href="#_improvement_14">Improvement</a></li>
-<li><a href="#_bug_18">Bug</a></li>
-<li><a href="#_task_18">Task</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_7">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_15">New Feature</a></li>
 <li><a href="#_improvement_15">Improvement</a></li>
 <li><a href="#_bug_19">Bug</a></li>
+<li><a href="#_task_19">Task</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_3">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_7">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_16">New Feature</a></li>
 <li><a href="#_improvement_16">Improvement</a></li>
 <li><a href="#_bug_20">Bug</a></li>
 </ul>
 </li>
+<li><a href="#_restfulobjects_viewer_3">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_17">New Feature</a></li>
+<li><a href="#_improvement_17">Improvement</a></li>
+<li><a href="#_bug_21">Bug</a></li>
+</ul>
+</li>
 <li><a href="#_shiro_security_2">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_17">Improvement</a></li>
+<li><a href="#_improvement_18">Improvement</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_4">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_17">New Feature</a></li>
-<li><a href="#_improvement_18">Improvement</a></li>
-<li><a href="#_bug_21">Bug</a></li>
+<li><a href="#_new_feature_18">New Feature</a></li>
+<li><a href="#_improvement_19">Improvement</a></li>
+<li><a href="#_bug_22">Bug</a></li>
 <li><a href="#_dependency_upgrade_7">Dependency upgrade</a></li>
-<li><a href="#_task_19">Task</a></li>
+<li><a href="#_task_20">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4744,22 +4951,22 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_6">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_18">New Feature</a></li>
-<li><a href="#_improvement_19">Improvement</a></li>
-<li><a href="#_bug_22">Bug</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_8">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_19">New Feature</a></li>
 <li><a href="#_improvement_20">Improvement</a></li>
 <li><a href="#_bug_23">Bug</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_4">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_8">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_20">New Feature</a></li>
 <li><a href="#_improvement_21">Improvement</a></li>
+<li><a href="#_bug_24">Bug</a></li>
+</ul>
+</li>
+<li><a href="#_restfulobjects_viewer_4">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_21">New Feature</a></li>
+<li><a href="#_improvement_22">Improvement</a></li>
 </ul>
 </li>
 </ul>
@@ -4768,36 +4975,36 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_7">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_21">New Feature</a></li>
-<li><a href="#_improvement_22">Improvement</a></li>
-<li><a href="#_bug_24">Bug</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_9">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_22">New Feature</a></li>
 <li><a href="#_improvement_23">Improvement</a></li>
 <li><a href="#_bug_25">Bug</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_5">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_9">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_23">New Feature</a></li>
 <li><a href="#_improvement_24">Improvement</a></li>
+<li><a href="#_bug_26">Bug</a></li>
+</ul>
+</li>
+<li><a href="#_restfulobjects_viewer_5">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_24">New Feature</a></li>
+<li><a href="#_improvement_25">Improvement</a></li>
 </ul>
 </li>
 <li><a href="#_shiro_security_3">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_24">New Feature</a></li>
-<li><a href="#_improvement_25">Improvement</a></li>
-<li><a href="#_bug_26">Bug</a></li>
+<li><a href="#_new_feature_25">New Feature</a></li>
+<li><a href="#_improvement_26">Improvement</a></li>
+<li><a href="#_bug_27">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_5">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_25">New Feature</a></li>
-<li><a href="#_improvement_26">Improvement</a></li>
-<li><a href="#_bug_27">Bug</a></li>
+<li><a href="#_new_feature_26">New Feature</a></li>
+<li><a href="#_improvement_27">Improvement</a></li>
+<li><a href="#_bug_28">Bug</a></li>
 </ul>
 </li>
 </ul>
@@ -4806,29 +5013,29 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#_core_8">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_26">New Feature</a></li>
-<li><a href="#_improvement_27">Improvement</a></li>
-<li><a href="#_bug_28">Bug</a></li>
+<li><a href="#_new_feature_27">New Feature</a></li>
+<li><a href="#_improvement_28">Improvement</a></li>
+<li><a href="#_bug_29">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_10">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_27">New Feature</a></li>
-<li><a href="#_improvement_28">Improvement</a></li>
-<li><a href="#_bug_29">Bug</a></li>
+<li><a href="#_new_feature_28">New Feature</a></li>
+<li><a href="#_improvement_29">Improvement</a></li>
+<li><a href="#_bug_30">Bug</a></li>
 <li><a href="#_wish_2">Wish</a></li>
 </ul>
 </li>
 <li><a href="#_restfulobjects_viewer_6">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_29">Improvement</a></li>
-<li><a href="#_bug_30">Bug</a></li>
+<li><a href="#_improvement_30">Improvement</a></li>
+<li><a href="#_bug_31">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_6">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_28">New Feature</a></li>
-<li><a href="#_improvement_30">Improvement</a></li>
+<li><a href="#_new_feature_29">New Feature</a></li>
+<li><a href="#_improvement_31">Improvement</a></li>
 </ul>
 </li>
 </ul>
