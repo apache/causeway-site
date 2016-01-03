@@ -5521,7 +5521,10 @@ popd</code></pre>
 <div class="sect4">
 <h5 id="_mark_the_version_as_released">Mark the version as released</h5>
 <div class="paragraph">
-<p>In JIRA, go to the <a href="https://issues.apache.org/jira/plugins/servlet/project-config/ISIS/versions">administration section</a> for the Apache Isis project and update the versions as released.</p>
+<p>In JIRA, go to the <a href="https://issues.apache.org/jira/plugins/servlet/project-config/ISIS/versions">administration section</a> for the Apache Isis project and update the version as being released.</p>
+</div>
+<div class="paragraph">
+<p>In the <a href="https://issues.apache.org/jira/secure/RapidBoard.jspa?rapidView=87">Kanban view</a> this will have the effect of marking all tickets as released (clearing the "done" column).</p>
 </div>
 </div>
 <div class="sect4">
@@ -5549,6 +5552,9 @@ popd</code></pre>
 </li>
 <li>
 <p>Search for any <code>-SNAPSHOT</code> suffices, and remove</p>
+</li>
+<li>
+<p>Search these release procedures, and update any hard-coded reference to the release to the next release (so when they are followed next time the text will be correct).</p>
 </li>
 <li>
 <p>Update the <a href="../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p>
@@ -5616,7 +5622,7 @@ Enjoy!
 <div class="sect3">
 <h4 id="_blog_post">10.4.8. Blog post</h4>
 <div class="paragraph">
-<p>Finally, <a href="https://blogs.apache.org/roller-ui/login.rol">log onto</a> the <a href="http://blogs.apache.org/isis/">Apache blog</a> and create a new post. Copy-n-paste the above mailing list announcement should suffice.</p>
+<p><a href="https://blogs.apache.org/roller-ui/login.rol">Log onto</a> the <a href="http://blogs.apache.org/isis/">Apache blog</a> and create a new post. Copy-n-paste the above mailing list announcement should suffice.</p>
 </div>
 </div>
 <div class="sect3">
@@ -5633,9 +5639,12 @@ git branch -d release-1.12.0-RC1              # branch no longer needed
 git push origin --delete release-1.12.0-RC1   # remote branch no longer needed</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Finally, update the simpleapp&#8217;s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>1.12.0-SNAPSHOT</code>)</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_tidy_up_code">10.4.10. Tidy up code</h4>
+<h4 id="_update_dependencies">10.4.10. Update dependencies</h4>
 <div class="paragraph">
 <p>With the release complete, now is a good time to bump versions of dependencies (so that there is a full release cycle to identify any possible issues).</p>
 </div>
@@ -5714,14 +5723,15 @@ grep &quot;\-&gt;&quot; /tmp/foo | /bin/sort -u</code></pre>
 <p>For these artifacts you will need to search <a href="http://search.maven.org">Maven central repo</a> directly yourself to confirm there are no newer dependencies not shown in this list.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_code_cleanup_formatting">Code cleanup / formatting</h5>
+</div>
+<div class="sect3">
+<h4 id="_code_formatting">10.4.11. Code formatting</h4>
 <div class="paragraph">
-<p>While we&#8217;re at it, this is also a good time to make source code has been cleaned up and formatted according to the Apache Isis and ASF conventions. Use <a href="resources/Apache-code-style-formatting.xml">this</a> Eclipse template and <a href="resources/isis.importorder">this</a> import order.</p>
+<p>This is also a good time to make source code has been cleaned up and formatted according to the Apache Isis and ASF conventions. Use <a href="resources/Apache-code-style-formatting.xml">this</a> Eclipse template and <a href="resources/isis.importorder">this</a> import order.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_push_changes">Push changes</h5>
+<div class="sect3">
+<h4 id="_push_changes">10.4.12. Push changes</h4>
 <div class="paragraph">
 <p>Finally, push the changes up to origin:</p>
 </div>
@@ -5732,9 +5742,8 @@ git push</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect3">
-<h4 id="_update_isis_addons">10.4.11. Update Isis Addons</h4>
+<h4 id="_release_isis_addons">10.4.13. Release Isis Addons</h4>
 <div class="paragraph">
 <p>Once the Apache Isis release is available, all of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> should also be released.</p>
 </div>
@@ -5755,7 +5764,7 @@ git push</code></pre>
 <p>release to mvn central (contains a sanity check before hand that everything compiles):<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">sh forsub.sh sh release.sh &quot;1.12.0&quot; &quot;1.13.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; &quot;this is not really my password&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sh forsub.sh sh release.sh &quot;1.12.0&quot; &quot;1.13.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
 </div>
 </div>
 </li>
@@ -8642,16 +8651,16 @@ xxx<br>
 <li><a href="#_announce_the_release">10.4.7. Announce the release</a></li>
 <li><a href="#_blog_post">10.4.8. Blog post</a></li>
 <li><a href="#_merge_in_release_branch">10.4.9. Merge in release branch</a></li>
-<li><a href="#_tidy_up_code">10.4.10. Tidy up code</a>
+<li><a href="#_update_dependencies">10.4.10. Update dependencies</a>
 <ul class="sectlevel4">
 <li><a href="#_update_parent_of_core">Update parent of Core</a></li>
 <li><a href="#_update_plugin_versions">Update plugin versions</a></li>
 <li><a href="#_update_dependency_versions">Update dependency versions</a></li>
-<li><a href="#_code_cleanup_formatting">Code cleanup / formatting</a></li>
-<li><a href="#_push_changes">Push changes</a></li>
 </ul>
 </li>
-<li><a href="#_update_isis_addons">10.4.11. Update Isis Addons</a></li>
+<li><a href="#_code_formatting">10.4.11. Code formatting</a></li>
+<li><a href="#_push_changes">10.4.12. Push changes</a></li>
+<li><a href="#_release_isis_addons">10.4.13. Release Isis Addons</a></li>
 </ul>
 </li>
 <li><a href="#_cg_committers_post-release-unsuccessful">10.5. Post Release (Unsuccessful)</a>
