@@ -5869,9 +5869,9 @@ Apache Isis mailing lists.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_troubleshooting_faqs">6.2. (Subtype) entity not fully populated</h3>
+<h3 id="_ugfun_faqs_subtype-entity-not-fully-populated">6.2. Subtype not fully populated</h3>
 <div class="paragraph">
-<p>ref: <a href="http://markmail.org/message/ovgai56uqgfgnrx7">mailing list thread</a></p>
+<p>Taken from <a href="http://markmail.org/message/ovgai56uqgfgnrx7">this thread</a> on the Apache Isis users mailing list&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p>If it seems that Apache Isis (or rather DataNucleus) isn&#8217;t fully populating domain entities (ie leaving some properties
@@ -5948,9 +5948,17 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_restful-image-property">6.3. How parse image properties from Restful Objects?</h3>
+<h3 id="_ugfun_faqs_restful-image-property">6.3. How parse images in RO viewer?</h3>
 <div class="paragraph">
-<p>ref: <a href="http://markmail.org/message/4kcu7sml4ufdsah3">mailing list thread</a></p>
+<p>From this <a href="http://markmail.org/message/4kcu7sml4ufdsah3">thread</a> on the Apache Isis users mailing list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>I am trying to display an image in a JavaScript client app, the image comes from
+an Isis RO web service as a string, but it won&#8217;t show.  Is there something I should do to change the message?</em></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The RO viewer returns the image as a string, in the form:</p>
@@ -6014,7 +6022,7 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 <div class="sect2">
 <h3 id="_ugfun_faqs_per-user-themes">6.5. Per-user Themes</h3>
 <div class="paragraph">
-<p>From the Apache Isis mailing list is:</p>
+<p>From <a href="http://isis.markmail.org/thread/kb4442niwwbnghey">this thread</a> on the Apache Isis users mailing list:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -6103,9 +6111,9 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n Labels in Wicket Viewer?</h3>
+<h3 id="_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n the Wicket viewer?</h3>
 <div class="paragraph">
-<p>From the Apache Isis mailing list is:</p>
+<p>From <a href="http://isis.markmail.org/thread/ctppmtcbsf4iskzi">this thread</a> on the Apache Isis users mailing list:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -6115,13 +6123,213 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 </ul>
 </div>
 <div class="paragraph">
-<p>At the moment (<code>1.10.0</code>) we have a bit of a hybrid story when it comes to i18n.  Most of the i18n does indeed come from the .po files, however certain bits of the UI are "hard-coded", which is to say they rely upon <a href="https://ci.apache.org/projects/wicket/guide/6.x/guide/i18n.html#i18n_3"> Wicket&#8217;s internationalization support</a>, namely resource bundles.</p>
+<p>The above FAQ was raised against <code>1.10.0</code>.  As of <code>1.11.0</code> (due to <a href="https://issues.apache.org/jira/browse/ISIS-1093">ISIS-1093</a>) it <em>is</em> now possible to internationalize both the Wicket viewer&#8217;s labels as well as the regular translations of the domain object metadata using the <code>.po</code> translation files as
+supported by the <a href="rgsvc.html#_rgsvc_spi_TranslationService"><code>TranslationService</code></a>.</p>
 </div>
 <div class="paragraph">
-<p>So, you can internationalize the labels from this class using the regular resource bundle approach; this is just "vanilla" Wicket: create a directory structure inside the webapp resource folder following that pattern <code>org.apache.isis.viewer.wicket.ui.components.actions</code>.  Inside there create an equivalent <code>ActionParametersFormPanel_xx_XX.properties</code> or <code>ActionParametersFormPanel_xx.properties</code> file for the various locales that you want to support (eg <code>ActionParametersFormPanel_en_UK.properties</code>, <code>ActionParametersFormPanel_en_US.properties</code>, <code>ActionParametersFormPanel_de.properties</code> and so on).</p>
+<p>Full details of the <code>msgId</code>s that must be added to the <code>translations.po</code> file can be found in <a href="guides/ugbtb.html#_ugbtb_i18n_wicket-viewer">i18n</a> section of the <a href="ugbtb.html">beyond the basics</a> guide.</p>
 </div>
 <div class="paragraph">
-<p>We do have a ticket <a href="https://issues.apache.org/jira/browse/ISIS-1093">ISIS-1093</a> to simplify this so that all i18n labels are read from the .po files.</p>
+<p>In prior releases (<code>1.10.0</code> and earlier) it was necessary to use <a href="https://ci.apache.org/projects/wicket/guide/6.x/guide/i18n.html#i18n_3"> Wicket&#8217;s internationalization support</a>, namely resource bundles.  This is still supported (as a fallback):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>create a directory structure inside the webapp resource folder following that pattern <code>org.apache.isis.viewer.wicket.ui.components.actions</code></p>
+</li>
+<li>
+<p>Inside there create an equivalent <code>ActionParametersFormPanel_xx_XX.properties</code> or <code>ActionParametersFormPanel_xx.properties</code> file for the various locales that you want to support (eg <code>ActionParametersFormPanel_en_UK.properties</code>, <code>ActionParametersFormPanel_en_US.properties</code>, <code>ActionParametersFormPanel_de.properties</code> and so on).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugfun_faqs_how-to-handle-void-and-null-results">6.7. How to handle void/null results</h3>
+<div class="paragraph">
+<p>From this <a href="http://isis.markmail.org/thread/yf7qdeiu3vrvk2ei">thread</a> on the Apache Isis users mailing list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>When using a void action, let’s say a remove action, the user is redirected to a
+page "no results". When clicking the back button in the browser the user sees
+"Object not found" (since you’ve just deleted this object).</em></p>
+</li>
+<li>
+<p><em>You can return a list for example to prevent the user from being redirect to a
+"No results" page, but I think it’s not the responsibility of the controllers in
+the domain model.</em></p>
+</li>
+<li>
+<p><em>A solution could be that wicket viewer goes back one page when
+encountering a deleted object. And refresh the current page when receiving a
+null response or invoking a void action.  But how to implement this?</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>One way to implement this idea is to provide a custom implementation of the <a href="rgsvc.html#_rgsvc_spi_RoutingService"><code>RoutingService</code></a> SPI domain service.  The default implementation will either return
+the current object (if not null), else the home page (as defined by <a href="rgant.html#_rgant_HomePage"><code>@HomePage</code></a>) if
+one exists.</p>
+</div>
+<div class="paragraph">
+<p>The following custom implementation refines this to use the breadcrumbs (available in the Wicket viewer) to return the
+first non-deleted domain object found in the list of breadcrumbs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
+<span class="annotation">@DomainServiceLayout</span>(menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)                                           <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RoutingServiceUsingBreadcrumbs</span> <span class="directive">extends</span> RoutingServiceDefault {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> route(<span class="directive">final</span> <span class="predefined-type">Object</span> original) {
+        <span class="keyword">if</span>(original != <span class="predefined-constant">null</span>) {                                                  <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="keyword">return</span> original;
+        }
+        container.flush();                                                      <i class="conum" data-value="3"></i><b>(3)</b>
+
+        <span class="directive">final</span> BreadcrumbModelProvider wicketSession =                           <i class="conum" data-value="4"></i><b>(4)</b>
+            (BreadcrumbModelProvider) AuthenticatedWebSession.get();
+        <span class="directive">final</span> BreadcrumbModel breadcrumbModel =
+            wicketSession.getBreadcrumbModel();
+        <span class="directive">final</span> <span class="predefined-type">List</span>&lt;EntityModel&gt; breadcrumbs = breadcrumbModel.getList();
+
+        <span class="directive">final</span> Optional&lt;<span class="predefined-type">Object</span>&gt; firstViewModelOrNonDeletedPojoIfAny =
+                breadcrumbs.stream()                                            <i class="conum" data-value="5"></i><b>(5)</b>
+                .filter(entityModel -&gt; entityModel != <span class="predefined-constant">null</span>)
+                .map(EntityModel::getObject)                                    <i class="conum" data-value="6"></i><b>(6)</b>
+                .filter(objectAdapter -&gt; objectAdapter != <span class="predefined-constant">null</span>)
+                .map(ObjectAdapter::getObject)                                  <i class="conum" data-value="7"></i><b>(7)</b>
+                .filter(pojo -&gt; !(pojo <span class="keyword">instanceof</span> Persistable) ||
+                                !((Persistable)pojo).dnIsDeleted())             <i class="conum" data-value="8"></i><b>(8)</b>
+                .findFirst();
+
+        <span class="keyword">return</span> firstViewModelOrNonDeletedPojoIfAny.orElse(homePage());          <i class="conum" data-value="9"></i><b>(9)</b>
+    }
+    <span class="directive">private</span> <span class="predefined-type">Object</span> homePage() {
+        <span class="keyword">return</span> homePageProviderService.homePage();
+    }
+    <span class="annotation">@Inject</span>
+    HomePageProviderService homePageProviderService;
+    <span class="annotation">@Inject</span>
+    DomainObjectContainer container;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>override the default imlpementation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>if a non-null object was returned, then return this</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>ensure that any persisted objects have been deleted.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>reach inside the Wicket viewer&#8217;s internals to obtain the list of breadcrumbs.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>loop over all breadcrumbs</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>unwrap the Wicket viewer&#8217;s serializable representation of each domain object (<code>EntityModel</code>) to the Isis runtime&#8217;s
+representation (<code>ObjectAdapter</code>)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>unwrap the Isis runtime&#8217;s representation of each domain object (<code>ObjectAdapter</code>) to the domain object pojo itself</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>if object is persistable (not a view model) then make sure it is not deleted</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>return the first object if any, otherwise the home page object (if any).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that the above implementation uses Java 8, so if you are using Java 7 then you&#8217;ll need to backport accordingly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugfun_faqs_how-to-implement-a-spellchecker">6.8. How to implement a spellchecker?</h3>
+<div class="paragraph">
+<p>From this <a href="http://isis.markmail.org/thread/dduarjscrbnodfsi">thread</a> on the Apache Isis users mailing list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>What is the easiest way to add a spell checker to the text written in a field in
+a domain object, for instance to check English syntax?</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>One way to implement is to use the <a href="rgsvc.html#_rgsvc_api_EventBusService">event bus</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set up a <a href="rgcsm.html#_rgcsm_classes_domainevent">domain event</a> <a href="rgcsm.html#_rgcsm_classes_super_AbstractSubscriber">subscriber</a> that can veto the changes.</p>
+</li>
+<li>
+<p>if the change is made through an action, you can use <a href="rgant.html#_rgant_Action_domainEvent"><code>@Action#domainEvent()</code></a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>if if the change is made through an edit, you can use <a href="rgant.html#_rgant_Property_domainEvent"><code>@Property#domainEvent()</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll need some way to know which fields should be spell checked.  Two ways spring to mind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>either look at the domain event&#8217;s identifier</p>
+</li>
+<li>
+<p>or subclass the domain event (recommended anyway) and have those subclass events implement some sort of marker
+interface, eg a <code>SpellCheckEvent</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>And you&#8217;ll (obviously) also need some sort of spell checker implementation to call.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugfun_faqs_how-run-fixtures-on-app-startup">6.9. How run fixtures on startup?</h3>
+<div class="paragraph">
+<p>From this <a href="http://isis.markmail.org/thread/g6amfj2eyf2xfjbr">thread</a> on the Apache Isis users mailing list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>my fixtures have grown into a couple of files the application needs to read in when it starts the first time
+(and possibly later on when the files content change).  What is the right way to do this?  Hook up into the webapp start? Use events?</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The standard approach is to use <a href="ugtst.html#_ugtst_fixture-scripts">fixture scripts</a>.  These can be run in on start-up typically by being specified in the <a href="rgcsm.html#_rgcsm_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>, see for
+example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively just set "isis.fixtures" and "isis.persistor.datanucleus.install-fixtures" properties.</p>
+</div>
+<div class="paragraph">
+<p>In terms of implementations, you might also want to check out the (non-ASF) <a href="http://github.com/isisaddons/isis-module-excel">Isis addons' excel</a> module, by using <a href="https://github.com/isisaddons/isis-module-excel/blob/master/dom/src/main/java/org/isisaddons/module/excel/dom/ExcelFixture.java"><code>ExcelFixture</code></a> and overriding <code>ExcelFixtureRowHandler</code> (same package).  An example can be found in this (non ASF) <a href="https://github.com/incodehq/contactapp">contactapp</a>, see <a href="https://github.com/incodehq/contactapp/blob/master/backend/fixture/src/main/java/domainapp/fixture/scenarios/demo/ContactRowHandler.java"><code>ContactRowHandler</code></a>.</p>
 </div>
 </div>
 </div>
@@ -6487,11 +6695,14 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 <li><a href="#_ugfun_faqs">6. FAQs</a>
 <ul class="sectlevel2">
 <li><a href="#_ugfun_faqs_enabling-logging">6.1. Enabling Logging</a></li>
-<li><a href="#_ugfun_troubleshooting_faqs">6.2. (Subtype) entity not fully populated</a></li>
-<li><a href="#_ugfun_faqs_restful-image-property">6.3. How parse image properties from Restful Objects?</a></li>
+<li><a href="#_ugfun_faqs_subtype-entity-not-fully-populated">6.2. Subtype not fully populated</a></li>
+<li><a href="#_ugfun_faqs_restful-image-property">6.3. How parse images in RO viewer?</a></li>
 <li><a href="#_ugfun_faqs_enhance-only">6.4. Enhance only (IntelliJ)</a></li>
 <li><a href="#_ugfun_faqs_per-user-themes">6.5. Per-user Themes</a></li>
-<li><a href="#_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n Labels in Wicket Viewer?</a></li>
+<li><a href="#_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n the Wicket viewer?</a></li>
+<li><a href="#_ugfun_faqs_how-to-handle-void-and-null-results">6.7. How to handle void/null results</a></li>
+<li><a href="#_ugfun_faqs_how-to-implement-a-spellchecker">6.8. How to implement a spellchecker?</a></li>
+<li><a href="#_ugfun_faqs_how-run-fixtures-on-app-startup">6.9. How run fixtures on startup?</a></li>
 </ul>
 </li>
 </ul>
