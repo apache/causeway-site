@@ -905,7 +905,7 @@ git checkout -b $ISISBRANCH</code></pre>
 <div class="sect3">
 <h4 id="_cgcom_cutting-a-release_releasing-core_set-environment-variables">Set environment variables</h4>
 <div class="paragraph">
-<p>Set additional environment variables for the core "artefact":</p>
+<p>Set additional environment variables for the core "artifact":</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1202,7 +1202,7 @@ re
 <div class="sect3">
 <h4 id="_cgcom_cutting-a-release_releasing-the-archetype_setup-environment-variables">Setup environment variables</h4>
 <div class="paragraph">
-<p>Set additional environment variables for the <code>simpleapp-archetype</code> artefact:</p>
+<p>Set additional environment variables for the <code>simpleapp-archetype</code> artifact:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2097,24 +2097,32 @@ svn delete $fullname-$old_ver-$zip
 popd</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">sh upd.sh 1.11.0 1.12.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The script downloads the artefacts from the Nexus release repository, adds the artefacts to subsversion and deletes the previous version.</p>
+<p>The script downloads the artifacts from the Nexus release repository, adds the artifacts to subversion and deletes the previous version.</p>
 </div>
 <div class="paragraph">
-<p>At the end, commit the changes:</p>
+<p>Double check that the files are correct; there is sometimes a small delay in the files becoming available in the release repository.  It should be sufficient to check just the <code>md5</code> or <code>.asc</code> files that these look valid (aren&#8217;t HTML 404 error pages):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">vi `find . -name *.md5`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming all is good, commit the changes:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code>svn commit -m "publishing isis source releases to dist.apache.org"</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>If the files are invalid, then revert using <code>svn revert . --recursive</code> and try again in a little while.</p>
 </div>
 </div>
 <div class="sect2">
