@@ -5198,22 +5198,39 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <div class="sect2">
 <h3 id="_ugfun_object-layout_static">5.1. Static Object Layout</h3>
 <div class="paragraph">
-<p>Metadata providing UI hints can be specified either statically, using annotations, or dynamically, using a <code>.layout.json</code> file.  This section describes the static approach, using annotations.</p>
+<p>Metadata providing UI hints can be specified either statically, using annotations, or dynamically, using either a <a href="#_ugfun_object-layout_dynamic_xml"><code>layout.xml</code></a> file (<code>1.12.0-SNAPSHOT</code>) or a <a href="#_ugfun_object-layout_dynamic"><code>.layout.json</code></a> file.</p>
+</div>
+<div class="paragraph">
+<p>This section describes the static approach, using annotations.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Tabs and tabgroups are only supported using <a href="#_ugfun_object-layout_dynamic_xml"><code>layout.xml</code></a> files (<code>1.12.0-SNAPSHOT</code>); they are not supported by annotations.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="__code_memberorder_code">5.1.1. <code>@MemberOrder</code></h4>
 <div class="paragraph">
-<p>The <code>@MemberOrder</code> annotation is used to specify the relative order of domain class properties, collections and actions.</p>
+<p>The <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a>  annotation is used to specify the relative order of domain class properties, collections and actions.</p>
 </div>
 <div class="paragraph">
-<p>The annotation defines two attributes, <code>name()</code> and <code>sequence()</code>.  Their usage depends on the member type:</p>
+<p>The annotation defines two attributes, <a href="rgant.html#_rgant_MemberOrder_name"><code>name()</code></a> and <a href="rgant.html#_rgant_MemberOrder_sequence"><code>sequence()</code></a>.  Their usage depends on the member type:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>for properties, the <code>name()</code> is used to group properties together.  The <code>sequence()</code> then orders properties within these groups. If no <code>name()</code> is specified then the property is placed in a fallback "General" group, called "General".<br></p>
+<p>for properties, the <code>name()</code> is used to group properties together into a member group (also called a property group or (in <code>1.12.0-SNAPSHOT</code>) a fieldset.  The <code>sequence()</code> then orders properties within these groups. If no <code>name()</code> is specified then the property is placed in a fallback "General" group, called "General".<br></p>
 <div class="paragraph">
-<p>The name of these "member groups" are then referenced by <a href="rgant.html#_rgant-MemberGroupLayout"><code>@MemberGroupLayout</code></a>.</p>
+<p>The name of these member groups/fieldsets are then referenced by <a href="rgant.html#_rgant-MemberGroupLayout"><code>@MemberGroupLayout</code></a>.</p>
 </div>
 </li>
 <li>
@@ -5221,20 +5238,24 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 </li>
 <li>
 <p>for actions, the <code>name()</code> attribute associates an action with either a property or with a collection.<br></p>
-<div class="paragraph">
+<div class="ulist">
+<ul>
+<li>
 <p>If the <code>name()</code> attribute matches a property name, then the action&#8217;s button is rendered close to the property, according to <a href="rgant.html#_rgant-ActionLayout_position"><code>@ActionLayout#position()</code></a> attribute.<br></p>
-</div>
-<div class="paragraph">
-<p>On the other hand if the `name() attribute matches a collection name, then the action&#8217;s button is rendered on the collection&#8217;s header.<br></p>
-</div>
-<div class="paragraph">
+</li>
+<li>
+<p>On the other hand if the `name() attribute matches a collection name, then the action&#8217;s button is rendered on the collection&#8217;s header.</p>
+</li>
+<li>
 <p>If there is no <code>name()</code> value, then the action is considered to pertain to the object as a whole, and its button is rendered close to the object&#8217;s icon and title.</p>
-</div>
-<div class="paragraph">
-<p>Within any of these, the <code>sequence()</code> then determines the relative ordering of the action with respect to other actions that have been similarly associated with properties/collections or left as "free-standing".</p>
+</li>
+</ul>
 </div>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Within any of these, the <code>sequence()</code> then determines the relative ordering of the action with respect to other actions that have been similarly associated with properties/collections or left as "free-standing".</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -5264,7 +5285,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>This defines three property (or member) groups, "General", "Detail" and "Misc"; "General" is the default if no <code>name</code> attribute is specified. Properties in the same member group are rendered together, as a fieldset.</p>
 </div>
 <div class="paragraph">
-<p>In addition, actions can optionally be associated (rendered close to) either properties or actions. This is done by overloading the <code>@MemberOrder&#8217;s `name</code> attribute, holding the value of the property or collection.</p>
+<p>In addition, actions can optionally be associated (rendered close to) either properties or actions. This is done by overloading the <code>@MemberOrder</code>'s <a href="rgant.html#_rgant_MemberOrder_name"><code>name()</code></a> attribute, holding the value of the property or collection.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -5293,16 +5314,36 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>will associate the <code>completed()</code> and <code>notYetCompleted()</code> actions with the <code>complete</code> property, and will associate the <code>add()</code> and <code>remove()</code> actions with the <code>dependencies</code> collection.</p>
 </div>
 <div class="paragraph">
-<p>The value of <code>sequence()</code> is a string.  The simplest convention (as shown in the example above) is to use numbers&#8201;&#8212;&#8201;1, 2, 3&#8201;&#8212;&#8201;though it is a better idea to leave gaps in the numbers&#8201;&#8212;&#8201;10, 20, 30 perhaps&#8201;&#8212;&#8201;such that a new member may be added without having to edit existing numbers.  A useful alternative is to adopt the 'dewey-decimal' notation&#8201;&#8212;&#8201;1, 1.1, 1.2, 2, 3, 5.1.1, 5.2.2, 5.2, 5.3&#8201;&#8212;&#8201;which allows for an indefinite amount of future insertion.  It also allows subclasses to insert their class members as required.</p>
+<p>The value of <a href="rgant.html#_rgant_MemberOrder_sequence"><code>sequence()</code></a> is a string.  The simplest convention (as shown in the example above) is to use numbers&#8201;&#8212;&#8201;1, 2, 3&#8201;&#8212;&#8201;though it is a better idea to leave gaps in the numbers&#8201;&#8212;&#8201;10, 20, 30 perhaps&#8201;&#8212;&#8201;such that a new member may be added without having to edit existing numbers.</p>
+</div>
+<div class="paragraph">
+<p>Even better is to adopt the 'dewey-decimal' notation&#8201;&#8212;&#8201;1, 1.1, 1.2, 2, 3, 5.1.1, 5.2.2, 5.2, 5.3&#8201;&#8212;&#8201;which allows for an indefinite amount of future insertion.  It also allows subclasses to insert their class members as required.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="__code_membergrouplayout_code">5.1.2. <code>@MemberGroupLayout</code></h4>
 <div class="paragraph">
-<p>The <code>@MemberGroupLayout</code> annotation specifies the relative positioning of property groups as being either in a left column, a middle column or in a right column.  The annotation also specifies the relative width of the columns.</p>
+<p>The <a href="rgant.html#_rgant_MemberGroupLayout"><code>@MemberGroupLayout</code></a> annotation specifies the relative positioning of property groups/fieldsets as being either in a left column, a middle column or in a right column.  The annotation also specifies the relative width of the columns.</p>
 </div>
 <div class="paragraph">
-<p>The property groups in this case are those that are inferred from the <code>@MemberOrder#name()</code> attribute.</p>
+<p>The property groups/fieldsets in this case are those that are inferred from the <code>@MemberOrder#name()</code> attribute.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to combine <code>@MemberOrder</code> with dynamic layouts, either using <a href="#_ugfun_object-layout_xml">XML</a> (<code>1.12.0-SNAPSHOT</code>) or <a href="#_ugfun_object-layout_dynamic">JSON</a>.  The layout file defines only the regions of a grid structure (fieldsets/columns etc), but does <em>not</em> specify the properties/collections/actions within those grid regions.  The <code>@MemberOrder</code> annotation in effect "binds" the properties or collections to those regions of the grid.</p>
+</div>
+<div class="paragraph">
+<p>When dynamic layouts are used this way, the <a href="rgant.html#_rgant_MemberGroupLayout"><code>@MemberGroupLayout</code></a> annotation is essentially ignored, but the metadata from the <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a> annotation (and the other layout annotations, <a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> and <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>) are all still honoured.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -5448,15 +5489,419 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_dynamic">5.2. Dynamic Object Layout</h3>
+<h3 id="_ugfun_object-layout_dynamic_xml">5.2. Dynamic (XML) Layout (<code>1.12.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
-<p>Metadata providing UI hints can be specified either statically, using annotations, or dynamically, using a <code>.layout.json</code> file.  This section describes the dynamic approach, using the file.</p>
+<p>Metadata providing UI hints can be specified either <a href="#_ugfun_object-layout_static">statically</a>, using annotations, or dynamically using an <code>Xxx.layout.xml</code> file (where <code>Xxx</code> is the entity or view model object to be rendered).</p>
+</div>
+<div class="paragraph">
+<p>The <code>Xxx.layout.xml</code> file is just the serialized form of a <a href="rgcms.html#_rgcms_classes_layout"><code>Grid</code></a> layout class defined within Apache Isis' applib.  These are JAXB-annotated classes with corresponding XSD schemas; the upshot of that
+is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making iteasy to author such layout files.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to download an initial <code>.layout.xml</code> - capturing any existing layout metadata - using the <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (exposed on the prototyping menu) or using a <a href="rgcms.html#_rgcms_classes_mixins_Object">mixin action</a> contributed to every domain object.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to describe dynamic layouts using a <code>.layout.json</code> file, as discussed <a href="#_ugfun_object-layout_dynamic">here</a>.  As of <code>1.12.0-SNAPSHOT</code> the <code>.layout.json</code> file should be considered as deprecated: the <code>.layout.xml</code> file also allows enables much more sophisticated custom layouts than those afforded by <code>.layout.json</code>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
-<h4 id="_json_layout_file">5.2.1. JSON layout file</h4>
+<h4 id="_grids_vs_components">5.2.1. Grids vs Components</h4>
 <div class="paragraph">
-<p>The JSON layout file for class <code>Xxx</code> takes the name <code>Xxx.layout.json</code>, and resides in the same package as the class.
-The format of the file is:</p>
+<p>The XML file distinguishes between two types of element:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>those that define a grid structure, of: rows, columns, tab groups and tabs.<br></p>
+<div class="paragraph">
+<p>The rows and columns are closely modelled on <a href="getbootstrap.com">Bootstrap 3</a> (used in the implementation of the <a href="#ugvw.adoc">Wicket viewer</a>).</p>
+</div>
+</li>
+<li>
+<p>those that defines common components, of: fieldsets (previously called member groups or property groups), properties, collections, actions and also the title/icon of the domain object itself.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>More information about these classes can be found in <a href="rgcms.html#_rgcms_classes_layout">the reference guide</a>.  More information on Bootstrap 3&#8217;s grid system can be found <a href="http://getbootstrap.com/css/#grid">here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_screencast">5.2.2. Screencast</h4>
+<div class="paragraph">
+<p>The following screencast describes the feature:</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe width="800px" height="534px" src="//www.youtube.com/embed/MxewC5Pve5k?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_examples">5.2.3. Examples</h4>
+<div class="paragraph">
+<p>Probably the easiest way to understand dynamic XML layouts is by example.  For this we&#8217;ll use the <code>ToDoItem</code> from the
+(non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/ugfun/_ugfun_object-layout_dynamic_xml/ToDoItem.png"><img src="images/ugfun/_ugfun_object-layout_dynamic_xml/ToDoItem.png" alt="ToDoItem" width="940px"></a>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_namespaces">Namespaces</h5>
+<div class="paragraph">
+<p>First things first; every <code>.layout.xml</code> file must properly declare the XSD namespaces and schemas.  There are two: one for the grid classes, and one for the common component classes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="tag">&lt;bs3:grid</span>
+  <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/applib/layout/component</span>
+                      <span class="content">http://isis.apache.org/applib/layout/component/component.xsd</span>
+                      <span class="content">http://isis.apache.org/applib/layout/grid/bootstrap3</span>
+                      <span class="content">http://isis.apache.org/applib/layout/grid/bootstrap3/bootstrap3.xsd</span><span class="delimiter">&quot;</span></span>
+  <span class="attribute-name">xmlns:bs3</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/applib/layout/grid/bootstrap3</span><span class="delimiter">&quot;</span></span>
+  <span class="attribute-name">xmlns:c</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/applib/layout/component</span><span class="delimiter">&quot;</span></span>
+  <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    ...
+<span class="tag">&lt;/bs3:grid&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Most IDEs will automatically download the XSD schemas from the specified schema locations, thereby providing
+"intellisense" help as you edit the file.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rows_full_width_cols_and_tabs">Rows, full-width cols, and tabs</h5>
+<div class="paragraph">
+<p>The example layout consists of three rows: a row for the object/icon, a row containing a properties, and a row containing collections.   In all three cases the row contains a single column spanning the full width of the page.  For the property and collection rows, the column contains a tab group.</p>
+</div>
+<div class="paragraph">
+<p>This corresponds to the following XML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;bs3:row&gt;</span>
+        <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedActions</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;c:domainObject</span> <span class="attribute-name">bookmarking</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AS_ROOT</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/bs3:col&gt;</span>
+    <span class="tag">&lt;/bs3:row&gt;</span>
+    <span class="tag">&lt;bs3:row&gt;</span>
+        <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;bs3:tabGroup&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Properties</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/bs3:tab&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Other</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/bs3:tab&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Metadata</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/bs3:tab&gt;</span>
+            <span class="tag">&lt;/bs3:tabGroup&gt;</span>
+        <span class="tag">&lt;/bs3:col&gt;</span>
+    <span class="tag">&lt;/bs3:row&gt;</span>
+    <span class="tag">&lt;bs3:row&gt;</span>
+        <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;bs3:tabGroup</span> <span class="attribute-name">unreferencedCollections</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Similar to</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/bs3:tab&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Dependencies</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/bs3:tab&gt;</span>
+            <span class="tag">&lt;/bs3:tabGroup&gt;</span>
+        <span class="tag">&lt;/bs3:col&gt;</span>
+    <span class="tag">&lt;/bs3:row&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will notice that one of the <code>col</code>umns has an <code>unreferencedActions</code> attribute, while one of the <code>tabGroup</code>s has a similar <code>unreferencedCollections</code> attribute.  This topic is discussed in more detail <a href="rgcms.html#_ugfun_object-layout_dynamic_xml-unreferenced">below</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_fieldsets">Fieldsets</h5>
+<div class="paragraph">
+<p>The first tab containing properties is divided into two columns, each of which holds a single fieldset of multiple properties.  Those properties in turn can have associated actions.</p>
+</div>
+<div class="paragraph">
+<p>This corresponds to the following XML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">            <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Properties</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;bs3:row&gt;</span>
+                    <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">6</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                        <span class="tag">&lt;c:fieldSet</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">General</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">general</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedProperties</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                            <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">duplicate</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">position</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PANEL_DROPDOWN</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">delete</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;c:property</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;c:property</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">category</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;c:property</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">subcategory</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">updateCategory</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">analyseCategory</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">position</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">RIGHT</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;/c:property&gt;</span>
+                            <span class="tag">&lt;c:property</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">complete</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">completed</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClassFa</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fa-thumbs-up</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">notYetCompleted</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClassFa</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fa-thumbs-down</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;/c:property&gt;</span>
+                        <span class="tag">&lt;/c:fieldSet&gt;</span>
+                    <span class="tag">&lt;/bs3:col&gt;</span>
+                    <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">6</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                        ...
+                    <span class="tag">&lt;/bs3:col&gt;</span>
+                <span class="tag">&lt;/bs3:row&gt;</span>
+            <span class="tag">&lt;/bs3:tab&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The tab defines two columns, each span of 6 (meaning half the width of the page).</p>
+</div>
+<div class="paragraph">
+<p>In the first column there is a single fieldset.  Notice how actions - such as <code>duplicate</code> and <code>delete</code> - can be associated with this fieldset directly, meaning that they should be rendered on the fieldset&#8217;s top panel.</p>
+</div>
+<div class="paragraph">
+<p>Thereafter the fieldset lists the properties in order.  Actions can be associated with properties too; here they are rendered underneath or to the right of the field.</p>
+</div>
+<div class="paragraph">
+<p>Note also the <code>unreferencedProperties</code> attribute for the fieldset; this topic is discussed in more detail <a href="rgcms.html#_ugfun_object-layout_dynamic_xml-unreferenced">below</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_collections_3">Collections</h5>
+<div class="paragraph">
+<p>In the final row the collections are placed in tabs, simply one collection per tab.  This corresponds to the following XML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Similar to</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    <span class="tag">&lt;bs3:row&gt;</span>
+                        <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                            <span class="tag">&lt;c:collection</span> <span class="attribute-name">defaultView</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">table</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">similarTo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                        <span class="tag">&lt;/bs3:col&gt;</span>
+                    <span class="tag">&lt;/bs3:row&gt;</span>
+                <span class="tag">&lt;/bs3:tab&gt;</span>
+                <span class="tag">&lt;bs3:tab</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Dependencies</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    <span class="tag">&lt;bs3:row&gt;</span>
+                        <span class="tag">&lt;bs3:col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                            <span class="tag">&lt;c:collection</span> <span class="attribute-name">defaultView</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">table</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">dependencies</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;c:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remove</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;/c:collection&gt;</span>
+                        <span class="tag">&lt;/bs3:col&gt;</span>
+                    <span class="tag">&lt;/bs3:row&gt;</span>
+                <span class="tag">&lt;/bs3:tab&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As with properties, actions can be associated with collections; this indicates that they should be rendered in the collection&#8217;s header.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugfun_object-layout_dynamic_xml-unreferenced">5.2.4. Unreferenced Members</h4>
+<div class="paragraph">
+<p>As noted in the preceding discussion, several of the grid&#8217;s regions have either an <code>unreferencedActions</code>, <code>unreferencedCollections</code> or <code>unreferencedProperties</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>The rules are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>unreferencedActions</code> attribute can be specified either on a column or on a fieldset. <br></p>
+<div class="paragraph">
+<p>It would normally be typical to use the column holding the <code>&lt;domainObject/&gt;</code> icon/title, that is as shown in the example.  The unreferenced actions then appear as top-level actions for the domain object.</p>
+</div>
+</li>
+<li>
+<p><code>unreferencedCollections</code> attribute can be specified either on a column or on a tabgroup.<br></p>
+<div class="paragraph">
+<p>If specified on a column, then that column will contain each of the unreferenced collections, stacked one on top of the other.  If specified on a tab group, then a separate tab will be created for each collection, with that tab containing only that single collection.</p>
+</div>
+</li>
+<li>
+<p><code>unreferencedProperties</code> attribute can be specified only on a fieldset.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The purpose of these attributes is to indicate where in the layout any unreferenced members should be rendered.  Every grid <em>must</em> nominate one region for each of these three member types, the reason being that to ensure that the layout can be used even if it is incomplete with respect to the object members inferred from the Java source code.  This might be because the developer forgot to update the layout, or it might be because of a new mixin (property, collection or action) contributed to many objects.</p>
+</div>
+<div class="paragraph">
+<p>The framework ensures that in any given grid exactly one region is specified for each of the three <code>unreferenced&#8230;&#8203;</code> attributes.  If the grid fails this validation, then a warning message will be displayed, and the invalid XML logged.  The layout XML will then be ignored.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_migrating_from_earlier_versions">5.2.5. Migrating from earlier versions</h4>
+<div class="paragraph">
+<p>As noted earlier on, it is possible to download layout XML files using the <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (exposed on the prototyping menu); this will download a ZIP file of layout XML files for all domain entities and view models.  Alternatively the layout XML for a single domain object can be downloaded using the <a href="rgcms.html#_rgcms_classes_mixins_Object">mixin action</a> (contributed to every domain object).</p>
+</div>
+<div class="paragraph">
+<p>There are four "styles":</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>current</p>
+</li>
+<li>
+<p>complete</p>
+</li>
+<li>
+<p>normalized</p>
+</li>
+<li>
+<p>minimal</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ignorig the "current" style (which merely downloads the currently cached layout), the other three styles allow the
+developer to choose how much metadata is to be specified in the XML, and how much (if any) will be obtained
+elsewhere, either from annotations in the metamodel or from an earlier <code>.layout.json</code> file if present.  The table
+below summarises the choices:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Table caption</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-bottom">Style</th>
+<th class="tableblock halign-center valign-bottom"><a href="rgant.html#_rgant_MemberGroupLayout"><code>@MemberGroupLayout</code></a></th>
+<th class="tableblock halign-center valign-bottom"><a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a></th>
+<th class="tableblock halign-center valign-bottom"><a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-bottom"><p class="tableblock"><code>COMPLETE</code></p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-bottom"><p class="tableblock"><code>NORMALIZED</code></p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">not in the XML</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-bottom"><p class="tableblock"><code>MINIMAL</code></p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">serialized as XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">not in the XML</p></td>
+<td class="tableblock halign-center valign-bottom"><p class="tableblock">not in the XML</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>As a developer, you therefore have a choice as to how you provide the metadata required for customised layouts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if you want all layout metadata to be read from the <code>.layout.xml</code> file, then download the "complete" version, and copy the file alongside the domain class.  You can then remove all <code>@MemberGroupLayout</code>, <code>@MemberOrder</code>, <code>@ActionLayout</code>, <code>@PropertyLayout</code> and <code>@CollectionLayout</code> annotations from the source code of the domain class.</p>
+</li>
+<li>
+<p>if you want to use layout XML file to describe the grid (columns, tabs etc) and specify which object members are associated with those regions of the grid, then download the "normalized" version.  You can then remove the <code>@MemberGroupLayout</code> and <code>@MemberOrder</code> annotations from the source code of the domain class, but retain the <code>@ActionLayout</code>, <code>@PropertyLayout</code> and <code>@CollectionLayout</code> annotations.</p>
+</li>
+<li>
+<p>if you want to use layout XML file ONLY to describe the grid, then download the "minimal" version.  The grid regions will be empty in this version, and the framework will use the <code>@MemberOrder</code> annotation to bind object members to those regions.  The only annotation that can be safely removed from the source code with this style is the <code>@MemberGroupLayout</code> annotation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Download either for a single domain object, or download all domain objects (entities and view models).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_domain_services">5.2.6. Domain Services</h4>
+<div class="paragraph">
+<p>For more information about layouts, see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (whose functionality is exposed on the prototyping menu as an action) and lso the a <a href="rgcms .html#_rgcms_classes_mixins_Object">mixin action</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_GridService"><code>GridService</code></a> and its supporting services, <a href="rgsvc.html#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a> and <a href="rgsvc.html#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a></p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_layout">grid layout classes</a>, defined in the Apache Isis applib</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_required_updates_to_the_dom_project_s_pom_xml">5.2.7. Required updates to the dom project&#8217;s pom.xml</h4>
+<div class="paragraph">
+<p>Any <code>.layout.xml</code> files must be compiled and available in the classpath.  Ensure the following is defined in the dom project&#8217;s <code>pom.xml</code>:</p>
+</div>
+<div class="listingblock xml">
+<div class="content">
+<pre class="CodeRay highlight"><code>&lt;resources&gt;
+    &lt;resource&gt;
+        &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+    &lt;/resource&gt;
+    &lt;resource&gt;
+        &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;directory&gt;src/main/java&lt;/directory&gt;
+        &lt;includes&gt;
+            &lt;include&gt;**&lt;/include&gt;
+        &lt;/includes&gt;
+        &lt;excludes&gt;
+            &lt;exclude&gt;**/*.java&lt;/exclude&gt;
+        &lt;/excludes&gt;
+    &lt;/resource&gt;
+&lt;/resources&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If using an Apache Isis <a href="#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>, then the POM is already correctly configured.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugfun_object-layout_dynamic">5.3. Dynamic (JSON) Layout</h3>
+<div class="paragraph">
+<p>Metadata providing UI hints can be specified either <a href="#_ugfun_object-layout_static">statically</a>, using annotations, or dynamically, using either a <a href="#_ugfun_object-layout_dynamic_xml"><code>layout.xml</code></a> file or (as described here) a <code>.layout.json</code> file.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>(As of <code>1.12.0-SNAPSHOT</code>), the use of dynamic layouts through the <code>.layout.json</code> is DEPRECATED.</p>
+</div>
+<div class="paragraph">
+<p>The <code>.layout.json</code> file will be ignored if a <code>.layout.xml</code> file is present.  It is possible to download initial <code>.layout.xml</code> files - which will capture all the metadata originally in the <code>.layout.json</code> file - using the <a href="rgsvc.html#_rgsvc_api_MetamodelService"><code>MetamodelService</code></a> (exposed on the prototyping menu).</p>
+</div>
+<div class="paragraph">
+<p>The <code>.layout.xml</code> file also allows enables much more sophisticated custom layouts than those afforded by <code>.layout.json</code>, and the layout files are easier to write due to the presence of an XSD schema file which ensures that the file is syntactically correct.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_json_layout_file">5.3.1. JSON layout file</h4>
+<div class="paragraph">
+<p>The JSON layout file for class <code>Xxx</code> takes the name <code>Xxx.layout.json</code>, and resides in the same package as the class.</p>
+</div>
+<div class="paragraph">
+<p>The format of the file is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5551,14 +5996,43 @@ ordered according either to annotations (if present) or fallback/default values.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_downloading_an_initial_layout">5.2.2. Downloading an initial layout</h4>
+<h4 id="_downloading_an_initial_layout">5.3.2. Downloading an initial layout</h4>
 <div class="paragraph">
 <p>The fastest way to get started is to use the (non-ASF) <a href="http://github.com/isisaddons/isis-module-devutils">Isis addons' devutils</a> module to download the layout file (derived from any existing static metadata defined by annotations).</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_required_updates_to_the_dom_project_s_pom_xml_2">5.3.3. Required updates to the dom project&#8217;s pom.xml</h4>
+<div class="paragraph">
+<p>Any <code>.layout.json</code> files must be compiled and available in the classpath.  Ensure the following is defined in the dom project&#8217;s <code>pom.xml</code>:</p>
+</div>
+<div class="listingblock xml">
+<div class="content">
+<pre class="CodeRay highlight"><code>&lt;resources&gt;
+    &lt;resource&gt;
+        &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+    &lt;/resource&gt;
+    &lt;resource&gt;
+        &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;directory&gt;src/main/java&lt;/directory&gt;
+        &lt;includes&gt;
+            &lt;include&gt;**&lt;/include&gt;
+        &lt;/includes&gt;
+        &lt;excludes&gt;
+            &lt;exclude&gt;**/*.java&lt;/exclude&gt;
+        &lt;/excludes&gt;
+    &lt;/resource&gt;
+&lt;/resources&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If using an Apache Isis <a href="#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>, then the POM is already correctly configured.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_application-menu">5.3. Application Menu Layout</h3>
+<h3 id="_ugfun_object-layout_application-menu">5.4. Application Menu Layout</h3>
 <div class="paragraph">
 <p>The actions of domain services are made available as an application menu bar. By default each domain service
 corresponds to a single menu on this menu bar, with its actions as the drop-down menu items. This is rarely exactly
@@ -5570,7 +6044,7 @@ placement of menu items.</p>
 application built using Apache Isis.</p>
 </div>
 <div class="sect3">
-<h4 id="__domainservicelayout">5.3.1. @DomainServiceLayout</h4>
+<h4 id="__domainservicelayout">5.4.1. @DomainServiceLayout</h4>
 <div class="paragraph">
 <p>Menus for domain services can be placed either on a primary, secondary or tertiary menu bar.</p>
 </div>
@@ -5666,7 +6140,7 @@ thereafter the purpose of the <code>menuOrder</code> is to order the menu servic
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ordering_menu_actions">5.3.2. Ordering menu actions</h4>
+<h4 id="_ordering_menu_actions">5.4.2. Ordering menu actions</h4>
 <div class="paragraph">
 <p>For a given service, the actions within a section on a menu is determined by the <code>@MemberOrder</code> annotation. Thus, for
 the <code>Units</code> domain service, its actions are annotated:</p>
@@ -5699,7 +6173,7 @@ is not recommended).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_tertiary_menubar">5.3.3. Tertiary menubar</h4>
+<h4 id="_tertiary_menubar">5.4.3. Tertiary menubar</h4>
 <div class="paragraph">
 <p>The tertiary menu bar consists of a single unnamed menu, rendered underneath the user&#8217;s login, top right. This is
 intended primarily for actions pertaining to the user themselves, eg their account, profile or settings:</p>
@@ -5736,7 +6210,7 @@ viewer does <em>not</em> place dividers between actions from different services 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_isis_add_on_modules">5.3.4. Isis Add-on modules</h4>
+<h4 id="_isis_add_on_modules">5.4.4. Isis Add-on modules</h4>
 <div class="paragraph">
 <p>Some of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> modules also provide services whose actions appear in top-level menus.</p>
 </div>
@@ -5771,7 +6245,7 @@ using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibili
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_static-vs-dynamic">5.4. Static vs Dynamic Layouts</h3>
+<h3 id="_ugfun_object-layout_static-vs-dynamic">5.5. Static vs Dynamic Layouts</h3>
 <div class="paragraph">
 <p>Using <a href="#_ugfun_object-layout_dynamic">dynamic object layout</a>s using JSON has the huge benefit that the layout can be updated without requiring a recompile of the code and redeploy of the app.  Many developers also find it easier to rationalize about layout when all the hints are collated together in a single place (rather than scattered across the class members as annotations).</p>
 </div>
@@ -5785,7 +6259,7 @@ using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibili
 <p>Also, dynamic layouts have no notion of inheritance, whereas the dewey-decimal format <code>@MemberOrder</code> annotation allows the metadata of the subclass its superclasses to fit together relatively seamlessly.</p>
 </div>
 <div class="sect3">
-<h4 id="_best_of_both_worlds">5.4.1. Best of both worlds?</h4>
+<h4 id="_best_of_both_worlds">5.5.1. Best of both worlds?</h4>
 <div class="paragraph">
 <p>Using the (non-ASF) <a href="http://github.com/isisaddons/isis-jrebel-plugin">Isis addons' jrebel</a> plugin comes close to getting the best of both words: metadata is specified in a type-safe way using annotations, but can be reloaded automatically.</p>
 </div>
@@ -6671,23 +7145,42 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_other_annotations">5.1.4. Other Annotations</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_dynamic">5.2. Dynamic Object Layout</a>
+<li><a href="#_ugfun_object-layout_dynamic_xml">5.2. Dynamic (XML) Layout (<code>1.12.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_json_layout_file">5.2.1. JSON layout file</a></li>
-<li><a href="#_downloading_an_initial_layout">5.2.2. Downloading an initial layout</a></li>
+<li><a href="#_grids_vs_components">5.2.1. Grids vs Components</a></li>
+<li><a href="#_screencast">5.2.2. Screencast</a></li>
+<li><a href="#_examples">5.2.3. Examples</a>
+<ul class="sectlevel4">
+<li><a href="#_namespaces">Namespaces</a></li>
+<li><a href="#_rows_full_width_cols_and_tabs">Rows, full-width cols, and tabs</a></li>
+<li><a href="#_fieldsets">Fieldsets</a></li>
+<li><a href="#_collections_3">Collections</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_application-menu">5.3. Application Menu Layout</a>
-<ul class="sectlevel3">
-<li><a href="#__domainservicelayout">5.3.1. @DomainServiceLayout</a></li>
-<li><a href="#_ordering_menu_actions">5.3.2. Ordering menu actions</a></li>
-<li><a href="#_tertiary_menubar">5.3.3. Tertiary menubar</a></li>
-<li><a href="#_isis_add_on_modules">5.3.4. Isis Add-on modules</a></li>
+<li><a href="#_ugfun_object-layout_dynamic_xml-unreferenced">5.2.4. Unreferenced Members</a></li>
+<li><a href="#_migrating_from_earlier_versions">5.2.5. Migrating from earlier versions</a></li>
+<li><a href="#_domain_services">5.2.6. Domain Services</a></li>
+<li><a href="#_required_updates_to_the_dom_project_s_pom_xml">5.2.7. Required updates to the dom project&#8217;s pom.xml</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_static-vs-dynamic">5.4. Static vs Dynamic Layouts</a>
+<li><a href="#_ugfun_object-layout_dynamic">5.3. Dynamic (JSON) Layout</a>
 <ul class="sectlevel3">
-<li><a href="#_best_of_both_worlds">5.4.1. Best of both worlds?</a></li>
+<li><a href="#_json_layout_file">5.3.1. JSON layout file</a></li>
+<li><a href="#_downloading_an_initial_layout">5.3.2. Downloading an initial layout</a></li>
+<li><a href="#_required_updates_to_the_dom_project_s_pom_xml_2">5.3.3. Required updates to the dom project&#8217;s pom.xml</a></li>
+</ul>
+</li>
+<li><a href="#_ugfun_object-layout_application-menu">5.4. Application Menu Layout</a>
+<ul class="sectlevel3">
+<li><a href="#__domainservicelayout">5.4.1. @DomainServiceLayout</a></li>
+<li><a href="#_ordering_menu_actions">5.4.2. Ordering menu actions</a></li>
+<li><a href="#_tertiary_menubar">5.4.3. Tertiary menubar</a></li>
+<li><a href="#_isis_add_on_modules">5.4.4. Isis Add-on modules</a></li>
+</ul>
+</li>
+<li><a href="#_ugfun_object-layout_static-vs-dynamic">5.5. Static vs Dynamic Layouts</a>
+<ul class="sectlevel3">
+<li><a href="#_best_of_both_worlds">5.5.1. Best of both worlds?</a></li>
 </ul>
 </li>
 </ul>

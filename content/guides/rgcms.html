@@ -4925,8 +4925,62 @@ the current timestamp whenever it is modified in a transaction.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_rgcms_classes_mixins">3.12. Mixins</h3>
+<div class="paragraph">
+<p>The interfaces listed in this chapter are role interfaces; they define a contract for the framework
+ to interact with those domain objects that implement these interfaces.</p>
+</div>
 <div class="sect3">
-<h4 id="_rgcms_classes_mixins_Dto">3.11.4. <code>Dto</code></h4>
+<h4 id="_rgcms_classes_mixins_Object">3.12.1. <code>Object</code> (<code>1.12.0-SNAPSHOT</code>)</h4>
+<div class="paragraph">
+<p>(As of <code>1.12.0-SNAPSHOT</code>) the framework provides a single mixin that contributes to simply <code>java.lang.Object</code>.  It provides the ability to download the layout XML for any domain object (in practical terms: entities and view models).</p>
+</div>
+<div class="paragraph">
+<p>The <code>Object_downloadLayoutXml</code> mixin defines the following action:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Object_downloadLayoutXml</span> {
+    <span class="directive">public</span> Object_downloadLayoutXml(<span class="directive">final</span> <span class="predefined-type">Object</span> object) { ... }     <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> downloadLayoutXml(<span class="directive">final</span> <span class="predefined-type">String</span> fileName) { ... }   <i class="conum" data-value="2"></i><b>(2)</b>
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>provided as an action to all objects</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>actually this method is called '$$' in the code, a "special case" that means to use the derive the action name
+from the class name.</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_appearance_in_the_ui">Appearance in the UI</h5>
+<div class="paragraph">
+<p>This mixin property are all associated with the "Metadata" fieldset.</p>
+</div>
+<div class="paragraph">
+<p>A number of other <a href="#_rgcms_classes_mixins_Persistable">mixins</a> also contribute properties and actions to the "Metadata" fieldset.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_related_services">Related Services</h5>
+<div class="paragraph">
+<p>This mixin calls <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> to obtain the layout XML.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rgcms_classes_mixins_Dto">3.12.2. <code>Dto</code></h4>
 <div class="paragraph">
 <p>The <code>Dto</code> role interface is intended to be implemented by JAXB-annotated view models, that is, annotated using
 <a href="rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>.  It enables the ability to download the XML and
@@ -4962,7 +5016,8 @@ XSD schema of those objects using two <a href="ugbtb.html#_ugbtb_decoupling_mixi
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>actually this is '$$' in the code, a "special case" that means to use the derive the action name from the class name.</td>
+<td>actually this method is called '$$' in the code, a "special case" that means to use the derive the action name
+from the class name.</td>
 </tr>
 </table>
 </div>
@@ -5002,7 +5057,7 @@ optionally ignore the common <a href="#_rgcms_schema">Apache Isis schemas</a> (u
 referenced by the DTO).</p>
 </div>
 <div class="sect4">
-<h5 id="_related_services">Related Services</h5>
+<h5 id="_related_services_2">Related Services</h5>
 <div class="paragraph">
 <p>The <code>Dto_downloadXml</code> and <code>Dto_downloadXsd</code> delegate to the
 <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to actually generate the XML/XSD.</p>
@@ -5010,48 +5065,195 @@ referenced by the DTO).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rgcms_classes_mixins_Persistable">3.11.5. <code>Persistable</code></h4>
+<h4 id="_rgcms_classes_mixins_Persistable">3.12.3. <code>Persistable</code></h4>
 <div class="paragraph">
 <p>All domain entities automatically implement the DataNucleus <code>Persistable</code> role interface as a result of the enhancer
 process (the fully qualified class name is <code>org.datanucleus.enhancement.Persistable</code>).  So as a developer you do not
-need to write any code for this role interface.</p>
-</div>
-<div class="paragraph">
-<p>Nevertheless, the <code>Persistable_downloadJdoMetadata</code> mixin provides the ability to download the
-JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.html">class metadata in XML</a> form.  The mixin
-defines the following action:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Persistable_downloadJdoMetadata</span> {
-    <span class="directive">public</span> Persistable_downloadJdoMetadata(<span class="directive">final</span> Persistable persistable) { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> <span class="predefined-type">Object</span> downloadJdoMetadata(<span class="directive">final</span> <span class="predefined-type">String</span> fileName) { ... }                <i class="conum" data-value="2"></i><b>(2)</b>
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>provided as an action to any domain entity</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>actually this is '$$' in the code, a "special case" that means to use the derive the action name from the class name.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This will return the XML text wrapped up in a <a href="#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</p>
+need to write any code to obtain the mixins that contribute to this interface.</p>
 </div>
 <div class="sect4">
-<h5 id="_related_services_2">Related Services</h5>
+<h5 id="_rgcms_classes_mixins_Persistable_downloadJdoMetadata"><code>downloadJdoMetadata()</code></h5>
+<div class="paragraph">
+<p>The <code>Persistable_downloadJdoMetadata</code> mixin provides an action which allows the
+JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.html">class metadata</a> to be downloaded as XML.  The mixin&#8217;s action returns the XML text wrapped up in a <a href="#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</p>
+</div>
+<div class="sect5">
+<h6 id="_appearance_in_the_ui_2">Appearance in the UI</h6>
+<div class="paragraph">
+<p>(As of <code>1.12.0-SNAPSHOT</code>), this mixin action is associated with the "Metadata" fieldset, and will appear as a panel drop-down action.</p>
+</div>
+<div class="paragraph">
+<p>These mixin properties are all associated with the "Metadata" fieldset.  The <a href="#_rgcms_classes_mixins_Object">Object mixin</a> also contribute an action to the "Metadata" fieldset.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_related_services_3">Related Services</h6>
 <div class="paragraph">
 <p>The mixin delegates to the <a href="rgsvc.html#_rgsvc_api_IsisJdoSupport"><code>IsisJdoSupport</code></a> service to obtain
 a reference to the JDO <code>PersistenceManagerFactory</code>.</p>
 </div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rgcms_classes_mixins_Persistable_datanucleusXxx"><code>datanucleusXxx</code> (<code>1.12.0-SNAPSHOT</code>)</h5>
+<div class="paragraph">
+<p>The framework provides a number of mixins that expose the datanucleus Id and version of a persistable domain entity.  Several implementations are provided to support different datatypes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Persistable_datanucleusIdLong</code> will expose the entity&#8217;s id, assuming that the id is or can be cast to <code>java.lang.Long</code>.  Otherwise the property will be hidden.</p>
+</li>
+<li>
+<p><code>Persistable_datanucleusVersionTimestamp</code> will expose the entity&#8217;s version, assuming that the version is or can be cast to <code>java.sql.Timestamp</code>.  Otherwise the property will be hidden.</p>
+</li>
+<li>
+<p><code>Persistable_datanucleusVersionLong</code> will expose the entity&#8217;s version, assuming that the version is or can be cast to <code>java.lang.Long</code>.  Otherwise the property will be hidden.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="_appearance_in_the_ui_3">Appearance in the UI</h6>
+<div class="paragraph">
+<p>These mixin properties are all associated with the "Metadata" fieldset.  The <a href="#_rgcms_classes_mixins_Object">Object mixin</a> also contribute an action to the "Metadata" fieldset.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgcms_classes_layout">3.13. Layout (<code>1.12.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>org.apache.isis.applib.layout</code> package defines a number of classes that allow the layout of domain objects
+(entities and view models) to be customized.  These classes fall into two main categories:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>grid classes, that define a grid structure of rows, columns, tab groups and tabs, and;</p>
+</li>
+<li>
+<p>common component classes, that capture the layout metadata for an object&#8217;s properties, collections and actions.  These are bound (or associated) to the regions of the grid</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The framework provides an implementation of the grid classes modelled closely on <a href="http://getbootstrap.com">Bootstrap 3</a>, along with <a href="#ugvw.adoc">Wicket viewer</a> components capable of rendering that grid system.  In principle it is
+also possible to extend the layout architecture for other grid systems.  The component classes, though, are intended to be reusable across all grid systems.</p>
+</div>
+<div class="paragraph">
+<p>The component classes, meanwhile, are broadly equivalent to the "layout" annotations (<a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>, <a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a> and <a href="rgant.html#_rgant_DomainObjectLayout"><code>@DomainObjectLayout</code></a></p>
+</div>
+<div class="paragraph">
+<p>All of the classes in this package are JAXB-annotated, meaning that they can be serialized to/from XML (the <code>component</code> classes in the <code><a href="http://isis.apache.org/applib/layout/component" class="bare">http://isis.apache.org/applib/layout/component</a></code> XSD namespace, the bootstrap 3 grid classes in the <code><a href="http://isis.apache.org/applib/layout/grid/bootstrap3" class="bare">http://isis.apache.org/applib/layout/grid/bootstrap3</a></code> XSD namespace).  This ability to serialize to/from XML is used by the <a href="rgsvc.html#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a>, the default implementation of which reads the grid layout for a domain class from a <code>.layout.xml</code> file on the classpath.</p>
+</div>
+<div class="sect3">
+<h4 id="_rgcms_classes_layout_component">3.13.1. Component</h4>
+<div class="paragraph">
+<p>The component classes reside in the <code>org.apache.isis.applib.layout.component</code> package, and consist of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>FieldSet</code><br></p>
+<div class="paragraph">
+<p>A fieldset (previously also called a property group or member group) of a number of the domain object&#8217;s properties
+(along with any associationed actions of those properties).</p>
+</div>
+</li>
+<li>
+<p>layout data classes, which correspond to the similarly named annotations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PropertyLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> annotation;</p>
+</li>
+<li>
+<p><code>CollectionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a> annotation;</p>
+</li>
+<li>
+<p><code>ActionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a> annotation;</p>
+</li>
+<li>
+<p><code>DomainObjectLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_DomainObjectLayout"><code>@DomainObjectLayout</code></a> annotation.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In addition, the component package includes <code>Grid</code>, representing the top level container for a custom layout for a domain object.  <code>Grid</code> itself is merely an interface, but it also defines the visitor pattern to make it easy for validate and normalize the grid layouts.  The <code>GridAbstract</code> convenience superclass provides a partial implementation of this visitor pattern.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rgcms_classes_layout_grid-bootstrap3">3.13.2. Bootstrap3 Grid</h4>
+<div class="paragraph">
+<p>As noted above, the default bootstrap3 grid classes are modelled closely on <a href="http://getbootstrap.com">Bootstrap 3</a>.
+Bootstrap&#8217;s <a href="http://getbootstrap.com/css/#grid">grid system</a> divides the page width equally into 12 columns, and so
+each column spans 1 or more of these widths.  Thus, a column with a span of 12 is the full width, one with a span of 6 is half the width, one with a span of 4 is a third of the width, and so on.</p>
+</div>
+<div class="paragraph">
+<p>When specifying the span of a column, Bootstrap also allows a size to be specified (<code>XS</code>, <code>SM</code>, <code>MD</code>, <code>LG</code>).  The size determines the rules for responsive design.  Apache Isis defaults to <code>MD</code> but this can be overridden.  It is also possible to specify multiple size/spans for a given column.</p>
+</div>
+<div class="paragraph">
+<p>The grid classes provided by Apache Isis reside in the <code>org.apache.isis.applib.layout.grid.bootstrap3</code> package, and consist of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BS3Grid</code><br></p>
+<div class="paragraph">
+<p>Consists of a number of <code>BS3Row</code>s. <br></p>
+</div>
+<div class="paragraph">
+<p>This class is the concrete implementation of <code>Grid</code> interface, discussed previously.  As such, it extends the <code>Grid.Visitor</code> to iterate over all of the <code>Row</code>s of the grid.</p>
+</div>
+</li>
+<li>
+<p><code>BS3Row</code><br></p>
+<div class="paragraph">
+<p>A container of <code>BS3Col</code>s.  This element is rendered as <code>&lt;div class="row"&gt;</code>.</p>
+</div>
+</li>
+<li>
+<p><code>BS3Col</code><br></p>
+<div class="paragraph">
+<p>A container of almost everything else.  A column most commonly contains properties (grouped into <code>FieldSet</code>s, described above) or collections (specified by <code>CollectionLayoutData</code>, also above).  However, a <code>Col</code> might instead contain a <code>BS3TabGroup</code> (described below) in order that the object members is arranged into tabs. <br></p>
+</div>
+<div class="paragraph">
+<p>It is also possible for a <code>Col</code> to contain the object&#8217;s title/icon (using <code>DomainObjectLayoutData</code>) or indeed arbitrary actions (using <code>`ActionLayoutData</code>).<br></p>
+</div>
+<div class="paragraph">
+<p>Finally, a <code>BS3Col</code> can also contain other <code>BS3Row</code>s, allowing arbitrarily deep hierarchies of containers as required.</p>
+</div>
+<div class="paragraph">
+<p>This element is rendered as, for example, <code>&lt;div class="col-md-4"&gt;</code> (for a size <code>MD</code>, span of 4).</p>
+</div>
+</li>
+<li>
+<p><code>BS3TabGroup</code><br></p>
+<div class="paragraph">
+<p>A container of <code>BS3Tab</code>s.</p>
+</div>
+</li>
+<li>
+<p><code>BS3Tab</code><br></p>
+<div class="paragraph">
+<p>A container of <code>BS3Row</code>s, which will in turn contain <code>BS3Col</code>s and thence ultimately the object&#8217;s members.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are also two close cousins of <code>Col</code>, namely <code>ClearFixVisible</code> and <code>ClearFixHidden</code>.  These map to Bootstrap&#8217;s <a href="http://getbootstrap.com/css/#responsive-utilities">responsive utility class</a>es, and provide greater control for
+responsive designs.</p>
+</div>
+<div class="paragraph">
+<p>As you can probably guess, the <code>BS3Grid</code> is the top-level object (that is, it is JAXB <code>@XmlRootElement</code>); this is the object that is serialized to/from XML.</p>
+</div>
+<div class="paragraph">
+<p>All of these classes also allow custom CSS to be specified; these are added to the CSS classes for the corresponding <code>&lt;div</code>&gt; in the rendered page.  The <a href="ugvw.html#_ugvw_customisation_tweaking-css-classes"><code>application.css</code></a> file can then be used for application-specific CSS, allowing arbitrary fine-tuning of the layout of the page.</p>
 </div>
 </div>
 </div>
@@ -5599,16 +5801,33 @@ but less formal XML structure.  This may change in the future.</p>
 <li><a href="#_alternatives_4">Alternatives</a></li>
 </ul>
 </li>
-<li><a href="#_rgcms_classes_mixins_Dto">3.11.4. <code>Dto</code></a>
+</ul>
+</li>
+<li><a href="#_rgcms_classes_mixins">3.12. Mixins</a>
+<ul class="sectlevel3">
+<li><a href="#_rgcms_classes_mixins_Object">3.12.1. <code>Object</code> (<code>1.12.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel4">
+<li><a href="#_appearance_in_the_ui">Appearance in the UI</a></li>
 <li><a href="#_related_services">Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgcms_classes_mixins_Persistable">3.11.5. <code>Persistable</code></a>
+<li><a href="#_rgcms_classes_mixins_Dto">3.12.2. <code>Dto</code></a>
 <ul class="sectlevel4">
 <li><a href="#_related_services_2">Related Services</a></li>
 </ul>
 </li>
+<li><a href="#_rgcms_classes_mixins_Persistable">3.12.3. <code>Persistable</code></a>
+<ul class="sectlevel4">
+<li><a href="#_rgcms_classes_mixins_Persistable_downloadJdoMetadata"><code>downloadJdoMetadata()</code></a></li>
+<li><a href="#_rgcms_classes_mixins_Persistable_datanucleusXxx"><code>datanucleusXxx</code> (<code>1.12.0-SNAPSHOT</code>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_rgcms_classes_layout">3.13. Layout (<code>1.12.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_rgcms_classes_layout_component">3.13.1. Component</a></li>
+<li><a href="#_rgcms_classes_layout_grid-bootstrap3">3.13.2. Bootstrap3 Grid</a></li>
 </ul>
 </li>
 </ul>
