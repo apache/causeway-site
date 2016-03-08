@@ -597,7 +597,7 @@ This opens up a number of more advanced use cases.</p>
 needs to integrate with other systems, or if the application needs to support reasonably complex business processes, then you may need to look beyond just domain entities.  This section explores these use cases.</p>
 </div>
 <div class="sect3">
-<h4 id="_externally_managed_entities">2.1.1. Externally-managed entities</h4>
+<h4 id="_ugbtb_view-models_use-cases_externally-managed-entities">2.1.1. Externally-managed entities</h4>
 <div class="paragraph">
 <p>Sometimes the entities that make up your application are persisted not in the local JDO/DataNucleus database
 but reside in some other system, for example accessible only through a SOAP web service.  Logically that data
@@ -637,7 +637,7 @@ desirable in any case).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_in_memory_entities">2.1.2. In-memory entities</h4>
+<h4 id="_ugbtb_view-models_use-cases_in-memory-entities">2.1.2. In-memory entities</h4>
 <div class="paragraph">
 <p>As a variation on the above, sometimes there are domain objects that are, conceptually at least entities, but whose
 state is not actually persisted anywhere, merely held in-memory (eg in a hash).</p>
@@ -648,7 +648,7 @@ definitions) but thereafter is presented in the UI just like any other entity.</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_application_layer_view_models">2.1.3. Application-layer view models</h4>
+<h4 id="_ugbtb_view-models_use-cases_application-layer-view-models">2.1.3. Application-layer view models</h4>
 <div class="paragraph">
 <p>Domain entities (whether locally persisted using JDO/DataNucleus or managed externally) are the bread-and-butter of Apache Isis applications: the focus after all, should be on the business domain concepts and ensuring that they are
 solid.  Generally those domain entities will make sense to the business domain experts: they form the <em>ubiquitous language</em> of the domain.  These domain entities are part of the domain layer.</p>
@@ -708,9 +708,9 @@ with the system (perhaps automating several related use cases together).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dtos">2.1.4. DTOs</h4>
+<h4 id="_ugbtb_view-models_use-cases_dtos">2.1.4. DTOs</h4>
 <div class="paragraph">
-<p>DTOs (data transfer objects) are simple classes that (according to <a href="https://en.wikipedia.org/wiki/Data_transfer_object">wikipedia</a>) "carries data between processes".</p>
+<p>DTOs (data transfer objects) are simple classes that (according to <a href="https://en.wikipedia.org/wiki/Data_transfer_object">wikipedia</a>) "carry data between processes".</p>
 </div>
 <div class="paragraph">
 <p>If those two processes are parts of the same overall application (the same team builds and deploys both server and
@@ -725,13 +725,41 @@ In such cases, exposing domain entities over <a href="ugvro.html">RestfulObjects
 easily changed by the producer.</p>
 </div>
 <div class="paragraph">
-<p>Instead, a view model can be defined to act as a DTO.  To put this formal contract onto a solid footing, this view
-model can simply be defined as a JAXB-annotated entity; this allows the consumer to obtain
-the DTO in XML format along with a corresponding XSD schema describing the structure of that XML.  These XML
-representations can be surfaced by the <a href="ugvro.html">RestfulObjects viewer</a> (by implementing
-the <a href="rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a>); the XSD can be obtained
-using the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a>.  Using the formalism of XML also allows
-DTOs to be carefully and properly versioned using XML namespaces.</p>
+<p>To support this use case, a view model can be defined such that it can act as a DTO.  This is done by annotating the
+class using JAXB annotations; this allows the consumer to obtain the DTO in XML format along with a corresponding
+XSD schema describing the structure of that XML.  A discussion of how that might be done using an ESB such as
+<a href="http://camel.apache.org">Apache Camel&#8482;</a> follows <a href="#_ugbtb_view-models_use-cases_dtos_consumers">below</a>.</p>
+</div>
+<div class="paragraph">
+<p>In case it&#8217;s not obvious, these DTOs are still usable as "regular" view models; they will render in the <a href="ugvw.html">Wicket viewer</a> just like any other.  In fact (as the <a href="#_ugbtb_view-models_programming-model">programming model</a> section below makes clear), these JAXB-annotated view models are in many regards the most powerful of all the alternative ways of writing view models.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also worth noting that it is also possible to download the XML (or XSD) straight from the UI, useful during development.
+The view model simply needs to implement the <a href="rgcms.html#_rgcms_classes_mixins_Dto"><code>Dto</code></a> marker interface; the
+framework has <a href="rgcms.html#_rgcms_classes_mixins_Dto">mixins</a> that contribute the download actions to the view model.</p>
+</div>
+<div class="sect4">
+<h5 id="_ugbtb_view-models_use-cases_dtos_consumers">DTO Consumers</h5>
+<div class="paragraph">
+<p>The actual consumers of DTOs will generally obtain the XML of the view models either by requesting the XML directly,
+eg using the <a href="ugvro.html">RestfulObjects viewer</a>, or may have the XML sent to them asynchronously using an ESB
+such as Apache Camel.</p>
+</div>
+<div class="paragraph">
+<p>In the former case, the consumer requests the DTO by calling the REST API with the appropriate HTTP <code>Accept</code> header.
+An appropriate implementation of <a href="rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> can then be
+used to return the appropriate DTO (as XML).</p>
+</div>
+<div class="paragraph">
+<p>For the latter case, one design is simply for the application to instantiate the view model, then call the
+<a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to obtain its corresponding XML.  This can then be published onto
+the ESB, for example using an <a href="http://activemq.apache.org">Apache ActiveMQ &#8482;</a> queue.</p>
+</div>
+<div class="paragraph">
+<p>However, rather than try to push all the data that might be needed by any of these external systems in a single XML event
+ (which would require anticipating all the requirements, likely a hopeless task), a better design is to publish only
+ the fact that something of note has changed - ie, that an action on a domain object has been invoked - and then let the consumers call back to obtain other information if required.  This can once again be done by calling the REST API with
+ an appropriate HTTP <code>Accept</code> header.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -741,35 +769,21 @@ DTOs to be carefully and properly versioned using XML namespaces.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the view model DTO implements the <a href="rgcms.html#_rgcms_classes_mixins_Dto"><code>Dto</code></a> marker interface, then the framework
-will also provide the ability to download the XML or its XSD directly from the UI.</p>
+<p>This is an example of the <a href="https://leanpub.com/camel-design-patterns">VETRO pattern</a> (validate, enrich, transform, route, operate).  In our case we focus on the validation (to determine the nature of the inbound message, ie which action was
+invoked), and the enrich (callback to obtain a DTO with additional information required by the consumer).</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>In case it&#8217;s not clear, these DTOs are still usable as "regular" view models; they will render in the <a href="ugvw.html">Wicket viewer</a> just like any other.  Indeed (as the <a href="#_ugbtb_view-models_programming-model">programming model</a> section below makes clear), these
-JAXB-annotated view models are in many regards the most powerful of all the view model alternatives.</p>
+<p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module provides an out-of-the-box solution of this design.  It provides an implementation of the <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>,
+but which simply publishes instances of <a href="rgcms.html#_rgcms_schema-aim"><code>ActionInvocationMemento</code></a> to an ActiveMQ
+queue.  Camel (or similar) can then be hooked up to consume these events from this queue, and use a processor to
+parse the action memento to determine what has changed on the source system.  Thereafter, a subsequent Camel processor
+can then call back to the source - via the <a href="#ugvro.adoc">Restful Objects viewer</a> - to enrich the message with
+additional details using a DTO.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_esb_subscribers">2.1.5. ESB Subscribers</h4>
-<div class="paragraph">
-<p>One important variation of the DTO use case concerns subscribers on an enterprise event bus such as
-<a href="http://camel.apache.org">Apache Camel&#8482;</a> and similar.</p>
-</div>
-<div class="paragraph">
-<p>A <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> implementation (eg that provided by
-(non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module) can publish XML events
-onto a message queue, typically representing action invocations within the originating Isis application.  The ESB
-(Apache Camel) then dispatches this event to all interested subscribers.  These subscribers represent external systems
-in the enterprise, managed by other teams, and so act as the third-party consumers of the data.</p>
-</div>
-<div class="paragraph">
-<p>Rather than try to anticipate their requirements and push the data that these subscribers might need into the original
-XML event (a hopeless task), DTO objects can be defined to allow these consumers to call back to the publishing Isis
-application to obtain the data they need.</p>
 </div>
 </div>
 </div>
@@ -899,52 +913,47 @@ et al) this state _can</em> include collections.</p>
 <div class="sect2">
 <h3 id="_ugbtb_view-models_jaxb">2.3. JAXB-annotated DTOs</h3>
 <div class="paragraph">
-<p>This section provides some recommended practices if using JAXB and <code>@XmlRootElement</code> to define domain models.  The
-examples are taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_view-models_jaxb_using-packages-to-version">2.3.1. Use packages to version DTOs</h4>
-<div class="paragraph">
-<p>The whole point of using DTOs (in Apache Isis, at least) is to define a formal contact between two interoperating but
-independent applications.  Since the only thing we can predicate about the future with any certainty is that it one or
-both of these applications will change, we should version DTOs from the get-go.</p>
+<p>As noted in the <a href="#_ugbtb_view-models_use-cases">introduction</a>, view models can also be defined using
+JAXB annotations.  The serialized form of these view models is therefore XML, which also enables these view models
+to act as DTOs.</p>
 </div>
 <div class="paragraph">
-<p>With XML every element may be defined as belonging to a particular namespace; in JAXB this translates to Java packages.
-We therefore should place each DTO within its own package, and that package should include a version identifier.</p>
-</div>
-<div class="paragraph">
-<p>For example, the <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> defines this DTO (as a versioned
-representation of its underlying <code>ToDoItem</code> entity):</p>
+<p>The examples in this section uses the DTO for <code>ToDoItem</code>, taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>.  This DTO is defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItemDto</span><span class="delimiter">&quot;</span></span>)                               <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1</span>;                         <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItemDto</span><span class="delimiter">&quot;</span></span>)                               <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="annotation">@XmlType</span>(
-        propOrder = {                                               <i class="conum" data-value="2"></i><b>(2)</b>
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span>,
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">category</span><span class="delimiter">&quot;</span></span>,
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">subcategory</span><span class="delimiter">&quot;</span></span>,
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">cost</span><span class="delimiter">&quot;</span></span>
+        propOrder = {                                               <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">majorVersion</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">minorVersion</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">category</span><span class="delimiter">&quot;</span></span>, ...
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItem</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">similarItems</span><span class="delimiter">&quot;</span></span>
         }
 )
 <span class="annotation">@DomainObjectLayout</span>(
-        titleUiEvent = TitleUiEvent.Doop.class                      <i class="conum" data-value="3"></i><b>(3)</b>
+        titleUiEvent = TitleUiEvent.Doop.class                      <i class="conum" data-value="4"></i><b>(4)</b>
 )
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">implements</span> Dto {
-    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>)
-    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>                                                 <i class="conum" data-value="4"></i><b>(4)</b>
-    <span class="directive">protected</span> <span class="predefined-type">String</span> description;
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <span class="directive">implements</span> Dto {                          <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)                <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">String</span> getMajorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>; }
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)                <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getMinorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>; }
 
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>)                                    <i class="conum" data-value="8"></i><b>(8)</b>
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">protected</span> <span class="predefined-type">String</span> description;
     <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>)
     <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
     <span class="directive">protected</span> <span class="predefined-type">String</span> category;
+    ...
 
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>                                                 <i class="conum" data-value="9"></i><b>(9)</b>
+    <span class="directive">protected</span> ToDoItem toDoItem;
+    <span class="annotation">@XmlElementWrapper</span>                                              <i class="conum" data-value="10"></i><b>(10)</b>
+    <span class="annotation">@XmlElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoItem</span><span class="delimiter">&quot;</span></span>)
     <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
-    <span class="directive">protected</span> <span class="predefined-type">String</span> subcategory;
-
-    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
-    <span class="directive">protected</span> <span class="predefined-type">BigDecimal</span> cost;
+    <span class="directive">protected</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; similarItems = Lists.newArrayList();
 }</code></pre>
 </div>
 </div>
@@ -952,139 +961,48 @@ representation of its underlying <code>ToDoItem</code> entity):</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>package name encodes major version; see discussion on <a href="#_ugbtb_view-models_jaxb_versioning">versioning</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>identifies this class as a view model and defines the root element for JAXB serialization</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>all properties in the class must be listed; (they can be ignored using <code>@XmlTransient</code>)</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>demonstrating use of UI events for a subscriber to provide the DTO&#8217;s title; see <a href="rgant.html#_rgant-DomainObjectLayout_titleUiEvent"><code>@DomainObjectLayout#titleUiEvent()</code></a>.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>optional; JAXB metadata can specify such attributes as required/optional</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For the package in which the DTO class resides, we define a corresponding namespace.  This goes in <code>package-info.java</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.xml.bind.annotation.XmlSchema(
-        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/todoitem/v1_0/todoitem.xsd</span><span class="delimiter">&quot;</span></span>, <i class="conum" data-value="1"></i><b>(1)</b>
-        elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
-)
-<span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_0</span>;                                   <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the namespace URI, used by the DTO residing in this package.  There is no requirement for this to correspond to a physical URL, but it should be unique (this
-usually implies the usage of a company domain name).</td>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>class name encodes (major and) minor version; see discussion on <a href="#_ugbtb_view-models_jaxb_versioning">versioning</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>the package in which the DTO resides.</td>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>again, see discussion on <a href="#_ugbtb_view-models_jaxb_versioning">versioning</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>again, see discussion on <a href="#_ugbtb_view-models_jaxb_versioning">versioning</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>simple scalar properties</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>reference to a persistent entity; discussed <a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">below</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>reference to a collection of persistent entities; again discussed <a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">below</a></td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>Note how both the XML namespace and package are broadly equivalent to each other; in particular note that they both
-also include a version "v1_0".</p>
-</div>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_view-models_jaxb_semantic-versioning">2.3.2. Semantic Versioning</h4>
-<div class="paragraph">
-<p>Versioning DTOs enables us to make changes without breaking existing consumers of the data.  We can distinguish two
-types of changes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>backwardly compatible changes</p>
-</li>
-<li>
-<p>breaking changes.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Following <a href="http://semver.org">semantic versioning</a> approach, we suggest using <code>v1_0</code>, <code>v1_1</code>, <code>v1_2</code> etc as the
-package version for a sequence of backwardly compatible changes, then bump up to <code>v2_0</code> for a breaking change.</p>
-</div>
-<div class="paragraph">
-<p>Backwardly compatible changes can generally (always?) be modelled using class inheritance.  Thus, <code>v1_1.ToDoItemDto</code>
-is a subclass of <code>v1_0.ToDoItemDto</code>.  This makes sense too: OO inheritance means "is-substitutable-for", so what is
-true in an OO context is true when processing XML documents.</p>
-</div>
-<div class="paragraph">
-<p>On the other hand, breaking changes probably (always?) imply that the next version of the DTO does not use inheritance.
-Thus <code>v2_0.ToDoItemDto</code> might share many of the same properties as the <code>v1_1.ToDoItemDto</code>, but any reuse would be
-copy-n-paste rather than through inheritance.</p>
-</div>
-<div class="paragraph">
-<p>To see this in practice, here&#8217;s (the outline of) v1.1 of <code>ToDoItemDto</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
-...
-<span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItemDto</span><span class="delimiter">&quot;</span></span>)
-<span class="annotation">@XmlType</span>(
-        propOrder = {
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">toDoItem</span><span class="delimiter">&quot;</span></span>,
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">similarItems</span><span class="delimiter">&quot;</span></span>
-        }
-)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The corresponding <code>package-info.java</code> is similar to that for <code>v1_0</code>, though note how it also defines a namespace prefix
-for <code>v1_0</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.xml.bind.annotation.XmlSchema(
-        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/todoitem/v1_1/todoitem.xsd</span><span class="delimiter">&quot;</span></span>,         <i class="conum" data-value="1"></i><b>(1)</b>
-        xmlns = {
-                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(                                       <i class="conum" data-value="2"></i><b>(2)</b>
-                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>,
-                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">common</span><span class="delimiter">&quot;</span></span>
-                ),
-                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
-                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/todoitem/v1_0/todoitem.xsd</span><span class="delimiter">&quot;</span></span>,
-                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoitem-v1_0</span><span class="delimiter">&quot;</span></span>
-                )
-        },
-        elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
-)
-<span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>namespace URI for DTO in this class.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>aliases for any other namespaces referenced.</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.3. Referencing Domain Entities</h4>
+<h4 id="_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.1. Referencing Domain Entities</h4>
 <div class="paragraph">
 <p>It&#8217;s quite common for view models to be "backed by" (be projections of) some underlying domain entity.  The
 <code>ToDoItemDto</code> we&#8217;ve been using as the example in this section is an example: there is an underlying <code>ToDoItem</code> entity.</p>
@@ -1108,9 +1026,9 @@ from an object reference.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1</span>;
 ...
-public <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+public <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <span class="directive">implements</span> Dto {
     ...
     <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
     <span class="directive">protected</span> ToDoItem toDoItem;
@@ -1128,26 +1046,18 @@ public <span class="type">class</span> <span class="class">ToDoItemDto</span> <s
 }</code></pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_ugbtb_view-models_jaxb_collections">2.3.4. Collections</h4>
 <div class="paragraph">
 <p>It&#8217;s also possible for a DTO to hold collections of objects.  These can be of any type, either simple properties, or
-references to other objects.</p>
+references to other objects.  The only bit of boilerplate that is required is the <code>@XmlElementWrapper</code> annotation.  This instructs JAXB to create an XML element (based on the field name) to contain each of the elements.  (If this is omitted then the contents of the collection are at the same level as the properties; almost certainly not what is required).</p>
 </div>
 <div class="paragraph">
-<p>The only bit of boilerplate that is required is the <code>@XmlElementWrapper</code> annotation.  This instructs JAXB to create
-an XML element (based on the field name) to contain each of the elements.  (If this is omitted then the contents of
-the collection are at the same level as the properties; almost certainly not what is required).</p>
-</div>
-<div class="paragraph">
-<p>For example, the v1.1 of the <code>ToDoItemDto</code> could also contain:</p>
+<p>For example, the DTO also contains:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1_1</span>;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1</span>;
 ...
-public <span class="type">class</span> <span class="class">ToDoItemDto</span> <span class="directive">extends</span> todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+public <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <span class="directive">implements</span> Dto {
     ...
     <span class="annotation">@XmlElementWrapper</span>
     <span class="annotation">@XmlElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">todoItem</span><span class="delimiter">&quot;</span></span>)
@@ -1163,22 +1073,360 @@ form, by way of the <a href="rgsvc.html#_rgsvc_spi_UrlEncodingService"><code>Url
 </div>
 <div class="paragraph">
 <p>There are limits to the lengths of URLs, however.  Therefore the DTO should not include state that can easily be
-derived from other information.  If the URL does exceed limits, then provide a custom implementation of <code>UrlEncodingService</code>
-to handle the memento string in some other fashion (eg substituting it with a GUID, with the memento cached somehow
+derived from other information.  If the URL does exceed limits, then provide a custom implementation of <a href="rgsvc.html#_rgsvc_spi_UrlEncodingService"><code>UrlEncodingService</code></a> to handle the memento string in some other fashion (eg substituting it with a GUID, with the memento cached somehow
 on the server).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_generating_xsds_and_dtos">2.3.5. Generating XSDs and DTOs</h4>
+<h4 id="_ugbtb_view-models_jaxb_versioning">2.3.2. Versioning</h4>
 <div class="paragraph">
-<p>The <a href="cgcon.html#_cgcon_isis-maven-plugin">Apache Isis maven plugin</a> provides the <a href="cgcon.html#_cgcon_isis-maven-plugin_xsd">xsd</a> goal that allows the XSDs to be generated from any JAXB-annotated view models.
-These use the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to generate the schemas; using the
-standard <code>schemagen</code> command line will not correctly interpret any references to domain entities as OIDs.</p>
+<p>The whole point of using DTOs (in Apache Isis, at least) is to define a formal contact between two inter-operating but
+independent applications.  Since the only thing we can predicate about the future with any certainty is that it one or
+both of these applications will change, we should version DTOs from the get-go.  This allows us to make changes going forward without unnecessarily breaking existing consumers of the data.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There are several ways that versioning might be accomplished; we base our guidelines on this <a href="http://www.xfront.com/Versioning.pdf">article</a> taken from Roger Costello&#8217;s blog, well worth a read.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The documentation for the <code>xsd</code> goal also explains how to generate DTO classes from the generated XSDs.  Note that these
-DTOs are not the same as the JAXB view models; they can be used outside of an Isis application, for example in a
-standalone subscriber running on an enterprise service bus such as Apache Camel.</p>
+<p>We can distinguish two types of changes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>backwardly compatible changes</p>
+</li>
+<li>
+<p>breaking changes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We can immediately say that the XSD namespace should change only when there is a major/breaking change, if following <a href="http://semver.org">semantic versioning</a> that means when we bump the major version number v1, v2, etc.</p>
+</div>
+<div class="paragraph">
+<p>XML namespaces correspond (when using JAXB) to Java packages.  We should therefore place our DTOs in a package that
+contains only the major number; this package will eventually contain a range of DTOs that are intended to be backwardly compatible with one another.  The package should also have a <code>package-info.java</code>; it is this that declares the XSD
+namespace:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.xml.bind.annotation.XmlSchema(
+        namespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://viewmodels.app.todoapp/todoitem/v1/Dto.xsd</span><span class="delimiter">&quot;</span></span>,        <i class="conum" data-value="1"></i><b>(1)</b>
+        xmlns = {
+                <span class="annotation">@javax</span>.xml.bind.annotation.XmlNs(
+                        namespaceURI = <span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>,
+                        prefix = <span class="string"><span class="delimiter">&quot;</span><span class="content">common</span><span class="delimiter">&quot;</span></span>
+                )
+        },
+        elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+)
+<span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1</span>;                                     <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the namespace URI, used by the DTO residing in this package.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the package in which the DTO resides.  Note that this contains only the major version.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Although there is no requirement for the namespace URI to correspond to a physical URL, it should be unique.  This usually means including a company domain name within the string.</p>
+</div>
+<div class="paragraph">
+<p>As noted above, this package will contain multiple DTO classes all with the same namespace; these represent a set of
+minor versions of the DTO, each subsequent one intended to be backwardly compatible with the previous.  Since these DTO
+classes will all be in the same package (as per the <a href="#_ugbtb_view-models_jaxb_using-packages-to-version">advice above</a>), the class should therefore include the minor version name:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">todoapp.app.viewmodels.todoitem.v1</span>;     <i class="conum" data-value="1"></i><b>(1)</b>
+...
+public <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <span class="directive">implements</span> Dto {      <i class="conum" data-value="2"></i><b>(2)</b>
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>package contains the major version only</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>DTO class contains the (major and) minor version</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We also recommend that each DTO instance should also specify the version of the XSD schema that it is logically compatible
+with.  Probably most consumers will not persist the DTOs; they will be processed and then discarded.  However, it would
+be wrong to assume that is the case in all cases; some consumers might choose to persist the DTO (eg for replay at
+some later state).</p>
+</div>
+<div class="paragraph">
+<p>Thus:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <span class="directive">implements</span> Dto {
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">String</span> getMajorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>; }   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">String</span> getMinorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>; }         <i class="conum" data-value="2"></i><b>(2)</b>
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>returns the major version (in sync with the package)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>returns the minor version (in sync with the class name)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>These methods always return a hard-coded literal.  Any instances serialized from these classes will implicitly "declare"
+the (major and) minor version of the schema that they are compatible with.   If a consumer has a minimum version that
+it requires, it can therefore inspect the XML instance itself to determine if it is able to consume said XML.</p>
+</div>
+<div class="paragraph">
+<p>If a new (minor) version of a DTO is required, then we recommend copying-and-pasting the previous version, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemV1_2</span> <span class="directive">implements</span> Dto {
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">String</span> getMajorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>; }
+    <span class="annotation">@XmlElement</span>(required = <span class="predefined-constant">true</span>, defaultValue = <span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">String</span> getMinorVersion() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span>; }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously, only changes made must be backward compatible, eg new members must be optional.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you might also consider simply editing the source file, ie renaming the class and bumping up the value
+returned by <code>getMinorVersion()</code>.</p>
+</div>
+<div class="paragraph">
+<p>We also <em>don&#8217;t</em> recommend using inheritance (ie <code>ToDoItemV1_2</code> should not inherit from <code>ToDoItemV1_1</code>; this creates unnecessary complexity downstream if generating XSDs and DTOs for the downstream consumer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugbtb_view-models_jaxb_generating-xsds-and-dtos">2.3.3. Generating XSDs and DTOs</h4>
+<div class="paragraph">
+<p>In the section <a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">above</a> it was explained how a
+view model DTO can transparent reference any "backing" entities; these references are converted to internal object
+identifiers.</p>
+</div>
+<div class="paragraph">
+<p>However, if the consumer of the XML is another Java process (eg running within an Apache Camel route), then you might
+be tempted/expect to be able to use the same DTO within that Java process.  After a little thought though you&#8217;ll realize
+ that (duh!) of course you cannot; the consumer runs in a different process space, and will not have references to
+ those containing entities.</p>
+</div>
+<div class="paragraph">
+<p>There are therefore two options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>either choose not to have the view model DTO reference any persistent entities, and simply limit the DTO to simple
+scalars.<br></p>
+<div class="paragraph">
+<p>Such a DTO will then be usable in both the Apache Isis app (to generate the original XML) and in the consumer.  The
+<a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a> can be used to obtain the object identifiers</p>
+</div>
+</li>
+<li>
+<p>alternatively, generate a different DTO for the consumer from the XSD of the view model DTO.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> uses the second approach; generating
+the XSD and consumer&#8217;s DTO is mostly just boilerplate <code>pom.xml</code> file.  In the todoapp this can be found in the <code>todoapp-xsd</code> Maven module, whose <code>pom.xml</code> is structured as two profiles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;project</span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>todoapp-xsd<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;dependencies&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>todoapp-app<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+    <span class="tag">&lt;/dependencies&gt;</span>
+    <span class="tag">&lt;profiles&gt;</span>
+        <span class="tag">&lt;profile&gt;</span>
+            <span class="tag">&lt;id&gt;</span>isis-xsd<span class="tag">&lt;/id&gt;</span>
+            <span class="tag">&lt;activation&gt;</span>
+                <span class="tag">&lt;property&gt;</span>
+                    <span class="tag">&lt;name&gt;</span>!skip.isis-xsd<span class="tag">&lt;/name&gt;</span>
+                <span class="tag">&lt;/property&gt;</span>
+            <span class="tag">&lt;/activation&gt;</span>
+            ...
+        <span class="tag">&lt;/profile&gt;</span>
+        <span class="tag">&lt;profile&gt;</span>
+            <span class="tag">&lt;id&gt;</span>xjc<span class="tag">&lt;/id&gt;</span>
+            <span class="tag">&lt;activation&gt;</span>
+                <span class="tag">&lt;property&gt;</span>
+                    <span class="tag">&lt;name&gt;</span>!skip.xjc<span class="tag">&lt;/name&gt;</span>
+                <span class="tag">&lt;/property&gt;</span>
+            <span class="tag">&lt;/activation&gt;</span>
+            ...
+        <span class="tag">&lt;/profile&gt;</span>
+    <span class="tag">&lt;/profiles&gt;</span>
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>isis-xsd</code> profile generates the XSD using the <a href="cgcon.html#_cgcon_isis-maven-plugin_xsd"><code>xsd</code> goal</a> of Isis' maven plugin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;build&gt;</span>
+    <span class="tag">&lt;plugins&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;appManifest&gt;</span>todoapp.dom.ToDoAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>
+                <span class="tag">&lt;jaxbClasses&gt;</span>
+                    <span class="tag">&lt;jaxbClass&gt;</span>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1<span class="tag">&lt;/jaxbClass&gt;</span>
+                <span class="tag">&lt;/jaxbClasses&gt;</span>
+                <span class="tag">&lt;separate&gt;</span>false<span class="tag">&lt;/separate&gt;</span>
+                <span class="tag">&lt;commonSchemas&gt;</span>false<span class="tag">&lt;/commonSchemas&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+            <span class="tag">&lt;dependencies&gt;</span>
+                <span class="tag">&lt;dependency&gt;</span>
+                    <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+                    <span class="tag">&lt;artifactId&gt;</span>todoapp-dom<span class="tag">&lt;/artifactId&gt;</span>
+                    <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;dependency&gt;</span>
+                    <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                    <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                    <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;/dependency&gt;</span>
+            <span class="tag">&lt;/dependencies&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                        <span class="tag">&lt;goal&gt;</span>xsd<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>2.5.3<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;descriptor&gt;</span>src/assembly/dep.xml<span class="tag">&lt;/descriptor&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;id&gt;</span>create-archive<span class="tag">&lt;/id&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                        <span class="tag">&lt;goal&gt;</span>single<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+    <span class="tag">&lt;/plugins&gt;</span>
+<span class="tag">&lt;/build&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>todoapp.dom.ToDoAppDomManifest</code> is a cut-down version of the app manifest that identifies only the <code>dom</code> domain
+services.</p>
+</div>
+<div class="paragraph">
+<p>The <code>xjc</code> profile, meanwhile, uses the <code>maven-jaxb2-plugin</code> (a wrapper around the <code>schemagen</code> JDK tool) to generate a
+DTO from the XSD generated by the preceding profile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;build&gt;</span>
+    <span class="tag">&lt;plugins&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.jvnet.jaxb2.maven2<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>maven-jaxb2-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>0.12.3<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;id&gt;</span>xjc-generate<span class="tag">&lt;/id&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                    <span class="tag">&lt;goal&gt;</span>generate<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;removeOldOutput&gt;</span>true<span class="tag">&lt;/removeOldOutput&gt;</span>
+                <span class="tag">&lt;schemaDirectory&gt;</span>
+                    target/generated-resources/isis-xsd/viewmodels.app.todoapp
+                <span class="tag">&lt;/schemaDirectory&gt;</span>
+                <span class="tag">&lt;schemaIncludes&gt;</span>
+                    <span class="tag">&lt;schemaInclude&gt;</span>todoitem/v1/Dto.xsd<span class="tag">&lt;/schemaInclude&gt;</span>
+                <span class="tag">&lt;/schemaIncludes&gt;</span>
+                <span class="tag">&lt;bindingDirectory&gt;</span>src/main/resources<span class="tag">&lt;/bindingDirectory&gt;</span>
+                <span class="tag">&lt;bindingIncludes&gt;</span>
+                    <span class="tag">&lt;bindingInclude&gt;</span>binding.xml<span class="tag">&lt;/bindingInclude&gt;</span>
+                <span class="tag">&lt;/bindingIncludes&gt;</span>
+                <span class="tag">&lt;catalog&gt;</span>src/main/resources/catalog.xml<span class="tag">&lt;/catalog&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.codehaus.mojo<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>build-helper-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>1.9.1<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;id&gt;</span>add-source<span class="tag">&lt;/id&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                        <span class="tag">&lt;goal&gt;</span>add-source<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;sources&gt;</span>
+                        <span class="tag">&lt;source&gt;</span>target/generated-sources/xjc<span class="tag">&lt;/source&gt;</span>
+                    <span class="tag">&lt;/sources&gt;</span>
+                    <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+    <span class="tag">&lt;/plugins&gt;</span>
+<span class="tag">&lt;/build&gt;</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -4965,21 +5213,22 @@ the default ones of <code>isis.properties</code> et al):</p>
 <ul class="sectlevel2">
 <li><a href="#_ugbtb_view-models_use-cases">2.1. Use Cases</a>
 <ul class="sectlevel3">
-<li><a href="#_externally_managed_entities">2.1.1. Externally-managed entities</a></li>
-<li><a href="#_in_memory_entities">2.1.2. In-memory entities</a></li>
-<li><a href="#_application_layer_view_models">2.1.3. Application-layer view models</a></li>
-<li><a href="#_dtos">2.1.4. DTOs</a></li>
-<li><a href="#_esb_subscribers">2.1.5. ESB Subscribers</a></li>
+<li><a href="#_ugbtb_view-models_use-cases_externally-managed-entities">2.1.1. Externally-managed entities</a></li>
+<li><a href="#_ugbtb_view-models_use-cases_in-memory-entities">2.1.2. In-memory entities</a></li>
+<li><a href="#_ugbtb_view-models_use-cases_application-layer-view-models">2.1.3. Application-layer view models</a></li>
+<li><a href="#_ugbtb_view-models_use-cases_dtos">2.1.4. DTOs</a>
+<ul class="sectlevel4">
+<li><a href="#_ugbtb_view-models_use-cases_dtos_consumers">DTO Consumers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_ugbtb_view-models_programming-model">2.2. Programming Model</a></li>
 <li><a href="#_ugbtb_view-models_jaxb">2.3. JAXB-annotated DTOs</a>
 <ul class="sectlevel3">
-<li><a href="#_ugbtb_view-models_jaxb_using-packages-to-version">2.3.1. Use packages to version DTOs</a></li>
-<li><a href="#_ugbtb_view-models_jaxb_semantic-versioning">2.3.2. Semantic Versioning</a></li>
-<li><a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.3. Referencing Domain Entities</a></li>
-<li><a href="#_ugbtb_view-models_jaxb_collections">2.3.4. Collections</a></li>
-<li><a href="#_generating_xsds_and_dtos">2.3.5. Generating XSDs and DTOs</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_referencing-domain-entities">2.3.1. Referencing Domain Entities</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_versioning">2.3.2. Versioning</a></li>
+<li><a href="#_ugbtb_view-models_jaxb_generating-xsds-and-dtos">2.3.3. Generating XSDs and DTOs</a></li>
 </ul>
 </li>
 </ul>
