@@ -4937,15 +4937,17 @@ the current timestamp whenever it is modified in a transaction.</p>
 <div class="paragraph">
 <p>(As of <code>1.12.0-SNAPSHOT</code>) the framework provides a single mixin that contributes to simply <code>java.lang.Object</code>.  It provides the ability to download the layout XML for any domain object (in practical terms: entities and view models).</p>
 </div>
+<div class="sect4">
+<h5 id="_rgcms_classes_mixins_Object_downloadLayoutXml"><code>downloadLayoutXml()</code></h5>
 <div class="paragraph">
-<p>The <code>Object_downloadLayoutXml</code> mixin defines the following action:</p>
+<p>The <code>Object_downloadLayoutXml</code> mixin provides an action to download the <a href="ugfun.html#_ugfun_object-layout_dynamic_xml">layout XML</a> for the current domain object.  It has the following signature:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Object_downloadLayoutXml</span> {
-    <span class="directive">public</span> Object_downloadLayoutXml(<span class="directive">final</span> <span class="predefined-type">Object</span> object) { ... }     <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> <span class="predefined-type">String</span> downloadLayoutXml(<span class="directive">final</span> <span class="predefined-type">String</span> fileName) { ... }   <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">Object</span> downloadLayoutXml(
+    <span class="annotation">@ParameterLayout</span>(named = <span class="string"><span class="delimiter">&quot;</span><span class="content">File name</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">final</span> <span class="predefined-type">String</span> fileName,
+    <span class="directive">final</span> LayoutService.Style style) {          <i class="conum" data-value="1"></i><b>(1)</b>
     ...
 }</code></pre>
 </div>
@@ -4954,28 +4956,60 @@ the current timestamp whenever it is modified in a transaction.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>provided as an action to all objects</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>actually this method is called '$$' in the code, a "special case" that means to use the derive the action name
-from the class name.</td>
+<td>either current, complete, normalized or minimal.</td>
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_appearance_in_the_ui">Appearance in the UI</h5>
 <div class="paragraph">
-<p>This mixin property are all associated with the "Metadata" fieldset.</p>
+<p>See the documentation on <a href="ugfun.html#_ugfun_object-layout_dynamic_xml">layout XML</a> and also
+the <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> for more information on these styles</p>
+</div>
+<div class="sect5">
+<h6 id="_appearance_in_the_ui">Appearance in the UI</h6>
+<div class="paragraph">
+<p>This mixin actions are all associated with the "Metadata" fieldset.</p>
 </div>
 <div class="paragraph">
 <p>A number of other <a href="#_rgcms_classes_mixins_Persistable">mixins</a> also contribute properties and actions to the "Metadata" fieldset.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_related_services">Related Services</h5>
+<div class="sect5">
+<h6 id="_related_services">Related Services</h6>
 <div class="paragraph">
 <p>This mixin calls <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> to obtain the layout XML.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rgcms_classes_mixins_Object_rebuildMetamodel"><code>rebuildMetamodel()</code></h5>
+<div class="paragraph">
+<p>The <code>Object_rebuildMetamodel</code> mixin provides the ability to discard the current internal metamodel data (an instance
+of <code>ObjectSpecification</code>) for the domain class of the rendered object, and recreate from code and other sources (most
+notably, layout XML data).  It has the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> rebuildMetamodel() {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_appearance_in_the_ui_2">Appearance in the UI</h6>
+<div class="paragraph">
+<p>This mixin actions are all associated with the "Metadata" fieldset.</p>
+</div>
+<div class="paragraph">
+<p>A number of other <a href="#_rgcms_classes_mixins_Persistable">mixins</a> also contribute properties and actions to
+the "Metadata" fieldset.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_related_services_2">Related Services</h6>
+<div class="paragraph">
+<p>This mixin calls <a href="rgsvc.html#_rgsvc_api_MetaModelService"><code>MetaModelService</code></a> and the
+<a href="rgsvc.html#_rgsvc_spi_GridService"><code>GridService</code></a> to invalidate their caches.</p>
+</div>
 </div>
 </div>
 </div>
@@ -5057,7 +5091,7 @@ optionally ignore the common <a href="#_rgcms_schema">Apache Isis schemas</a> (u
 referenced by the DTO).</p>
 </div>
 <div class="sect4">
-<h5 id="_related_services_2">Related Services</h5>
+<h5 id="_related_services_3">Related Services</h5>
 <div class="paragraph">
 <p>The <code>Dto_downloadXml</code> and <code>Dto_downloadXsd</code> delegate to the
 <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to actually generate the XML/XSD.</p>
@@ -5075,10 +5109,27 @@ need to write any code to obtain the mixins that contribute to this interface.</
 <h5 id="_rgcms_classes_mixins_Persistable_downloadJdoMetadata"><code>downloadJdoMetadata()</code></h5>
 <div class="paragraph">
 <p>The <code>Persistable_downloadJdoMetadata</code> mixin provides an action which allows the
-JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.html">class metadata</a> to be downloaded as XML.  The mixin&#8217;s action returns the XML text wrapped up in a <a href="#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</p>
+JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.html">class metadata</a> to be downloaded as XML.  It has the following signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">Clob</span> downloadJdoMetadata(                    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="annotation">@ParameterLayout</span>(named = <span class="string"><span class="delimiter">&quot;</span><span class="content">.jdo file name</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">final</span> <span class="predefined-type">String</span> fileName) {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>returns the XML text wrapped up in a <a href="#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</td>
+</tr>
+</table>
 </div>
 <div class="sect5">
-<h6 id="_appearance_in_the_ui_2">Appearance in the UI</h6>
+<h6 id="_appearance_in_the_ui_3">Appearance in the UI</h6>
 <div class="paragraph">
 <p>(As of <code>1.12.0-SNAPSHOT</code>), this mixin action is associated with the "Metadata" fieldset, and will appear as a panel drop-down action.</p>
 </div>
@@ -5087,7 +5138,7 @@ JDO <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata_xml.ht
 </div>
 </div>
 <div class="sect5">
-<h6 id="_related_services_3">Related Services</h6>
+<h6 id="_related_services_4">Related Services</h6>
 <div class="paragraph">
 <p>The mixin delegates to the <a href="rgsvc.html#_rgsvc_api_IsisJdoSupport"><code>IsisJdoSupport</code></a> service to obtain
 a reference to the JDO <code>PersistenceManagerFactory</code>.</p>
@@ -5113,7 +5164,7 @@ a reference to the JDO <code>PersistenceManagerFactory</code>.</p>
 </ul>
 </div>
 <div class="sect5">
-<h6 id="_appearance_in_the_ui_3">Appearance in the UI</h6>
+<h6 id="_appearance_in_the_ui_4">Appearance in the UI</h6>
 <div class="paragraph">
 <p>These mixin properties are all associated with the "Metadata" fieldset.  The <a href="#_rgcms_classes_mixins_Object">Object mixin</a> also contribute an action to the "Metadata" fieldset.</p>
 </div>
@@ -5807,13 +5858,13 @@ but less formal XML structure.  This may change in the future.</p>
 <ul class="sectlevel3">
 <li><a href="#_rgcms_classes_mixins_Object">3.12.1. <code>Object</code> (<code>1.12.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel4">
-<li><a href="#_appearance_in_the_ui">Appearance in the UI</a></li>
-<li><a href="#_related_services">Related Services</a></li>
+<li><a href="#_rgcms_classes_mixins_Object_downloadLayoutXml"><code>downloadLayoutXml()</code></a></li>
+<li><a href="#_rgcms_classes_mixins_Object_rebuildMetamodel"><code>rebuildMetamodel()</code></a></li>
 </ul>
 </li>
 <li><a href="#_rgcms_classes_mixins_Dto">3.12.2. <code>Dto</code></a>
 <ul class="sectlevel4">
-<li><a href="#_related_services_2">Related Services</a></li>
+<li><a href="#_related_services_3">Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rgcms_classes_mixins_Persistable">3.12.3. <code>Persistable</code></a>

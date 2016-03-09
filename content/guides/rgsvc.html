@@ -4581,6 +4581,8 @@ further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-imp
     <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="directive">final</span> <span class="predefined-type">String</span> objectType);   <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="annotation">@Programmatic</span>
     <span class="predefined-type">String</span> toObjectType(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@Programmatic</span>
+    <span class="type">void</span> rebuild(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);            <i class="conum" data-value="3"></i><b>(3)</b>
 }</code></pre>
 </div>
 </div>
@@ -4593,6 +4595,11 @@ further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-imp
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>lookup of a domain class' object type</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(<code>1.12.0-SNAPSHOT</code>) invalidate and rebuild the internal metadata (an <code>ObjectSpecification</code>) for the specified
+domain type.</td>
 </tr>
 </table>
 </div>
@@ -7628,8 +7635,10 @@ further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-imp
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">GridLoaderService</span> {
-    <span class="type">boolean</span> existsFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);    <i class="conum" data-value="1"></i><b>(1)</b>
-    Grid load(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainClass);      <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">boolean</span> supportsReloading();                <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">void</span> remove(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);          <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">boolean</span> existsFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);    <i class="conum" data-value="3"></i><b>(3)</b>
+    Grid load(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainClass);      <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre>
 </div>
 </div>
@@ -7637,10 +7646,18 @@ further in this <a href="ugfun.html#_ugfun_how-tos_replacing-default-service-imp
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>whether any persisted layout metadata (eg a <code>.layout.xml</code> file) exists for this domain class.</td>
+<td>whether dynamic reloading of layouts is enabled.  The default implementation enables reloading for prototyping, disables in production</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>support metamodel invalidation/rebuilding of spec, eg as called by this <a href="rgcms.html#_rgcms_classes_mixins_Object_rebuildMetamodel">Object mixin</a> action.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>whether any persisted layout metadata (eg a <code>.layout.xml</code> file) exists for this domain class.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>returns a new instance of a <a href="rgcms.html#_rgcms_classes_layout_component"><code>Grid</code></a> for the specified domain class, eg as loaded from a <code>layout.xml</code> file.  If none exists, will return null (and the calling <a href="#_rgsvc_spi_GridService"><code>GridService</code></a> will use <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a> to obtain a default grid for the domain class).</td>
 </tr>
 </table>
@@ -7705,12 +7722,14 @@ Isis' internal metamodel, in other words to ensure that all of the domain object
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">GridService</span> {
-    <span class="type">boolean</span> existsFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);    <i class="conum" data-value="1"></i><b>(1)</b>
-    Grid load(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainClass);      <i class="conum" data-value="2"></i><b>(2)</b>
-    Grid defaultGridFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);  <i class="conum" data-value="3"></i><b>(3)</b>
-    Grid normalize(<span class="directive">final</span> Grid grid);            <i class="conum" data-value="4"></i><b>(4)</b>
-    Grid complete(Grid grid);                   <i class="conum" data-value="5"></i><b>(5)</b>
-    Grid minimal(Grid grid);                    <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="type">boolean</span> supportsReloading();                <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">void</span> remove(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);          <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">boolean</span> existsFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);    <i class="conum" data-value="3"></i><b>(3)</b>
+    Grid load(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainClass);      <i class="conum" data-value="4"></i><b>(4)</b>
+    Grid defaultGridFor(<span class="predefined-type">Class</span>&lt;?&gt; domainClass);  <i class="conum" data-value="5"></i><b>(5)</b>
+    Grid normalize(<span class="directive">final</span> Grid grid);            <i class="conum" data-value="6"></i><b>(6)</b>
+    Grid complete(Grid grid);                   <i class="conum" data-value="7"></i><b>(7)</b>
+    Grid minimal(Grid grid);                    <i class="conum" data-value="8"></i><b>(8)</b>
 }</code></pre>
 </div>
 </div>
@@ -7718,32 +7737,40 @@ Isis' internal metamodel, in other words to ensure that all of the domain object
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>whether any persisted layout metadata (eg a <code>.layout.xml</code> file) exists for this domain class.  Just delegates to corresponding method in <a href="#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a>.</td>
+<td>whether dynamic reloading of layouts is enabled.  The default implementation enables reloading for prototyping, disables in production</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>returns a new instance of a <a href="rgcms.html#_rgcms_classes_layout_component"><code>Grid</code></a> for the specified domain class, eg as loaded from a <code>layout.xml</code> file.  If none exists, will return null (and the calling <a href="#_rgsvc_spi_GridService"><code>GridService</code></a> will use <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a> to obtain a default grid for the domain class).</td>
+<td>support metamodel invalidation/rebuilding of spec, eg as called by this <a href="rgcms.html#_rgcms_classes_mixins_Object_rebuildMetamodel">Object mixin</a> action.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>returns a default grid, eg two columns in ratio 4:8.  Used when no existing grid layout exists for a domain class.</td>
+<td>whether any persisted layout metadata (eg a <code>.layout.xml</code> file) exists for this domain class.  Just delegates to corresponding method in <a href="#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>validates and normalizes a grid, modifying the grid so that all of the domain object&#8217;s members (properties, collections, actions) are bound to regions of the grid.  This is done using existing metadata, most notably that of the <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a> annotation.  Such a grid, if persisted as the layout XML file for the domain class, allows the <code>@MemberOrder</code> annotation to be removed from the source code of the domain class (but other annotations must be retained).</td>
+<td>returns a new instance of a <a href="rgcms.html#_rgcms_classes_layout_component"><code>Grid</code></a> for the specified domain class, eg as loaded from a <code>layout.xml</code> file.  If none exists, will return null (and the calling <a href="#_rgsvc_spi_GridService"><code>GridService</code></a> will use <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a> to obtain a default grid for the domain class).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Takes a normalized grid and enriches it with additional metadata (taken from Apache Isis' internal metadata) that can be represented in the layout XML.  Such a grid, if persisted as the layout XML file for the domain class, allows all layout annotations (<a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> and <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>) to be removed from the source code of the domain class.</td>
+<td>returns a default grid, eg two columns in ratio 4:8.  Used when no existing grid layout exists for a domain class.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>validates and normalizes a grid, modifying the grid so that all of the domain object&#8217;s members (properties, collections, actions) are bound to regions of the grid.  This is done using existing metadata, most notably that of the <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a> annotation.  Such a grid, if persisted as the layout XML file for the domain class, allows the <code>@MemberOrder</code> annotation to be removed from the source code of the domain class (but other annotations must be retained).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Takes a normalized grid and enriches it with additional metadata (taken from Apache Isis' internal metadata) that can be represented in the layout XML.  Such a grid, if persisted as the layout XML file for the domain class, allows all layout annotations (<a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> and <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>) to be removed from the source code of the domain class.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
 <td>Takes a normalized grid and strips out removes all members, leaving only the grid structure.  Such a grid, if persisted as the layout XML file for the domain class, requires that the <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a> annotation is retained in the source code of said class in order to bind members to the regions of the grid.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The first two methods just delegate to the corresponding methods in <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a>, while the last four delegate to the  corresponding method in <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a>.  The service inspects the <code>Grid</code>'s concrete class to determine which actual <code>GridSystemService</code> instance to delegate to.</p>
+<p>The first four methods just delegate to the corresponding methods in <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a>, while the last four delegate to the  corresponding method in <a href="#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a>.  The service inspects the <code>Grid</code>'s concrete class to determine which actual <code>GridSystemService</code> instance to delegate to.</p>
 </div>
 </div>
 <div class="sect3">
