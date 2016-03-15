@@ -9277,20 +9277,22 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">RepositoryService</span> {
 
-    <span class="type">boolean</span> isPersistent(<span class="predefined-type">Object</span> domainObject);                                              <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="type">void</span> persist(<span class="predefined-type">Object</span> domainObject);                                                      <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> remove(<span class="predefined-type">Object</span> persistentDomainObject);                                             <i class="conum" data-value="3"></i><b>(3)</b>
+    &lt;T&gt; T instantiate(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType);                                               <i class="conum" data-value="1"></i><b>(1)</b>
 
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allInstances(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="type">long</span>... range);                               <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="type">boolean</span> isPersistent(<span class="predefined-type">Object</span> domainObject);                                              <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> persist(<span class="predefined-type">Object</span> domainObject);                                                      <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="type">void</span> remove(<span class="predefined-type">Object</span> persistentDomainObject);                                             <i class="conum" data-value="4"></i><b>(4)</b>
 
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                 <i class="conum" data-value="5"></i><b>(5)</b>
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="predefined-type">Predicate</span>&lt;? <span class="local-variable">super</span> T&gt; predicate, <span class="type">long</span>... range); <i class="conum" data-value="6"></i><b>(6)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allInstances(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="type">long</span>... range);                               <i class="conum" data-value="5"></i><b>(5)</b>
 
-    &lt;T&gt; T uniqueMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                      <i class="conum" data-value="7"></i><b>(7)</b>
-    &lt;T&gt; T uniqueMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                 <i class="conum" data-value="8"></i><b>(8)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                 <i class="conum" data-value="6"></i><b>(6)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="predefined-type">Predicate</span>&lt;? <span class="local-variable">super</span> T&gt; predicate, <span class="type">long</span>... range); <i class="conum" data-value="7"></i><b>(7)</b>
 
-    &lt;T&gt; T firstMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                       <i class="conum" data-value="9"></i><b>(9)</b>
-    &lt;T&gt; T firstMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                  <i class="conum" data-value="10"></i><b>(10)</b>
+    &lt;T&gt; T uniqueMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                      <i class="conum" data-value="8"></i><b>(8)</b>
+    &lt;T&gt; T uniqueMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                 <i class="conum" data-value="9"></i><b>(9)</b>
+
+    &lt;T&gt; T firstMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                       <i class="conum" data-value="10"></i><b>(10)</b>
+    &lt;T&gt; T firstMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                  <i class="conum" data-value="11"></i><b>(11)</b>
 
 }</code></pre>
 </div>
@@ -9299,42 +9301,48 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>test whether a particular domain object is persistent or not</td>
+<td>create a new non-persisted domain entity.  This is identical to
+<a href="#_rgsvc_api_FactoryService"><code>FactoryService</code></a>'s <code>instantiate(&#8230;&#8203;)</code> method, but is provided in the
+<code>RepositoryService</code>'s API too because instantiating and persisting objects are often done together.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>persist (ie save) an object to the persistent object store (or do nothing if it is already persistent).</td>
+<td>test whether a particular domain object is persistent or not</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>remove (ie delete) an object from the persistent object store (or do nothing if it has already been deleted).</td>
+<td>persist (ie save) an object to the persistent object store (or do nothing if it is already persistent).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>return all persisted instances of specified type.  Mostly for prototyping, though can be useful to obtain all instances of domain entities if the number is known to be small.  The optional varargs parameters are for paging control; more on this below.</td>
+<td>remove (ie delete) an object from the persistent object store (or do nothing if it has already been deleted).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>all persistence instances matching the specified <code>Query</code>.  Query itself is an Isis abstraction on top of JDO/DataNucleus' Query API.  <strong>This is the primary API used for querying</strong></td>
+<td>return all persisted instances of specified type.  Mostly for prototyping, though can be useful to obtain all instances of domain entities if the number is known to be small.  The optional varargs parameters are for paging control; more on this below.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
+<td>all persistence instances matching the specified <code>Query</code>.  Query itself is an Isis abstraction on top of JDO/DataNucleus' Query API.  <strong>This is the primary API used for querying</strong></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>Returns the first instance that matches the supplied query.  If no instance is found then `null `will be returned, while if there is more that one instances a run-time exception will be thrown.  Generally this method is preferred for looking up an object by its (primary or alternate) key.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
 <td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
 </tr>
 <tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Returns the first instance that matches the supplied query.  If no instance is found then `null `will be returned, while if there is more that one instances a run-time exception will be thrown.  Generally this method is preferred for looking up an object by its (primary or alternate) key.</td>
+</tr>
+<tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>Returns the first instance that matches the supplied query.  If no instance is found then <code>null `will be returned.  No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(&#8230;&#8203;)</code>.</td>
+<td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Returns the first instance that matches the supplied query.  If no instance is found then <code>null `will be returned.  No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(&#8230;&#8203;)</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
 <td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
 </tr>
 </table>
