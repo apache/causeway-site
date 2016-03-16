@@ -5508,7 +5508,7 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is also possible to describe dynamic layouts using a <code>.layout.json</code> file, as discussed <a href="#_ugfun_object-layout_dynamic">here</a>.  As of <code>1.12.0-SNAPSHOT</code> the <code>.layout.json</code> file should be considered as deprecated: the <code>.layout.xml</code> file also allows enables much more sophisticated custom layouts than those afforded by <code>.layout.json</code>.</p>
+<p>It is also possible to describe dynamic layouts using a <code>.layout.json</code> file, as discussed <a href="#_ugfun_object-layout_dynamic">here</a>.  As of <code>1.12.0-SNAPSHOT</code> the <code>.layout.json</code> file should be considered as deprecated: the <code>.layout.xml</code> file also enables much more sophisticated layouts than those afforded by <code>.layout.json</code>.</p>
 </div>
 </td>
 </tr>
@@ -5735,7 +5735,142 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </div>
 </div>
 <div class="sect3">
-<h4 id="_migrating_from_earlier_versions">5.2.5. Migrating from earlier versions</h4>
+<h4 id="_more_advanced_features">5.2.5. More advanced features</h4>
+<div class="paragraph">
+<p>This section decribes a number of more features useful in more complex layouts.</p>
+</div>
+<div class="sect4">
+<h5 id="_multiple_references_to_a_feature">Multiple references to a feature</h5>
+<div class="paragraph">
+<p>One feature worth being aware of is that it is possible to render a single feature more than once.</p>
+</div>
+<div class="paragraph">
+<p>For example, the dashboard home page for the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> shows
+the "not yet complete" collection of todo items twice, once as a table and also as a calendar:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/ugfun/_ugfun_object-layout_dynamic_xml/ToDoAppDashboard.png"><img src="images/ugfun/_ugfun_object-layout_dynamic_xml/ToDoAppDashboard.png" alt="ToDoAppDashboard" width="940px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>This is accomplished using the following (slightly abbreviated) layout:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;grid</span> <span class="attribute-name">...</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;row&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedActions</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            ...
+        <span class="tag">&lt;/col&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedCollections</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-padding-top-20</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;ns2:collection</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">notYetComplete</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">defaultView</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">calendar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/col&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-padding-top-20</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;ns2:collection</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">notYetComplete</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">defaultView</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">table</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">paged</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>         <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tag">&lt;ns2:collection</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">complete</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">defaultView</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">table</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/col&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;ns2:fieldSet</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">General</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">general</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedProperties</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/col&gt;</span>
+    <span class="tag">&lt;/row&gt;</span>
+<span class="tag">&lt;/grid&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>render the collection in "calendar" view</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>also render the collection in "table" view</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the middle column the <code>notYetComplete</code> collection is rendered in "calendar" view, while in the right-most column
+it is rendered in "table" view.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to reference object properties and actions more than once.  This might be useful for a complex
+domain object with multiple tabs; certain properties or actions might appear on a summary tab (that shows the
+most commonly used info), but also on detail tabs.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_custom_css">Custom CSS</h5>
+<div class="paragraph">
+<p>The ToDoApp&#8217;s dashboard (above) also shows how custom CSS styles can be associated with specific regions of the layout:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;grid</span> <span class="attribute-name">...</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;row&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedActions</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;ns2:domainObject</span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;row&gt;</span>
+                <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-width-100</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                             <i class="conum" data-value="1"></i><b>(1)</b>
+                    <span class="tag">&lt;ns2:action</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">exportToWordDoc</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/col&gt;</span>
+            <span class="tag">&lt;/row&gt;</span>
+            ...
+        <span class="tag">&lt;/col&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unreferencedCollections</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-padding-top-20</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+            ...
+        <span class="tag">&lt;/col&gt;</span>
+        <span class="tag">&lt;col</span> <span class="attribute-name">span</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cssClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">custom-padding-top-20</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                 <i class="conum" data-value="3"></i><b>(3)</b>
+            ...
+        <span class="tag">&lt;/col&gt;</span>
+    <span class="tag">&lt;/row&gt;</span>
+<span class="tag">&lt;/grid&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Render the column with the <code>custom-width-100</code> CSS class.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Render the column with the <code>custom-padding-top-20</code> CSS class.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Ditto</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example the <code>custom-width-100</code> style is used to "stretch" the button for the <code>exportToWordDoc</code> action in the
+left-most column.  This is accomplished with the following CSS in <code>application.css</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.custom-width-100</span> <span class="tag">ul</span>,
+<span class="class">.custom-width-100</span> <span class="tag">ul</span> <span class="tag">li</span>,
+<span class="class">.custom-width-100</span> <span class="tag">ul</span> <span class="tag">li</span> <span class="tag">a</span><span class="class">.btn</span> {
+    <span class="key">width</span>: <span class="float">100%</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, the middle and right columns are rendered using the <code>custom-padding-top-20</code> CSS class.  This shifts them down
+from the top of the page slightly, using the following CSS:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.custom-padding-top-20</span> {
+    <span class="key">padding-top</span>: <span class="float">20px</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_migrating_from_earlier_versions">5.2.6. Migrating from earlier versions</h4>
 <div class="paragraph">
 <p>As noted earlier on, it is possible to download layout XML files using the <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (exposed on the prototyping menu); this will download a ZIP file of layout XML files for all domain entities and view models.  Alternatively the layout XML for a single domain object can be downloaded using the <a href="rgcms.html#_rgcms_classes_mixins_Object">mixin action</a> (contributed to every domain object).</p>
 </div>
@@ -5822,7 +5957,7 @@ below summarises the choices:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_domain_services">5.2.6. Domain Services</h4>
+<h4 id="_domain_services">5.2.7. Domain Services</h4>
 <div class="paragraph">
 <p>For more information about layouts, see:</p>
 </div>
@@ -5841,7 +5976,7 @@ below summarises the choices:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_required_updates_to_the_dom_project_s_pom_xml">5.2.7. Required updates to the dom project&#8217;s pom.xml</h4>
+<h4 id="_required_updates_to_the_dom_project_s_pom_xml">5.2.8. Required updates to the dom project&#8217;s pom.xml</h4>
 <div class="paragraph">
 <p>Any <code>.layout.xml</code> files must be compiled and available in the classpath.  Ensure the following is defined in the dom project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -7157,9 +7292,15 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 </ul>
 </li>
 <li><a href="#_ugfun_object-layout_dynamic_xml-unreferenced">5.2.4. Unreferenced Members</a></li>
-<li><a href="#_migrating_from_earlier_versions">5.2.5. Migrating from earlier versions</a></li>
-<li><a href="#_domain_services">5.2.6. Domain Services</a></li>
-<li><a href="#_required_updates_to_the_dom_project_s_pom_xml">5.2.7. Required updates to the dom project&#8217;s pom.xml</a></li>
+<li><a href="#_more_advanced_features">5.2.5. More advanced features</a>
+<ul class="sectlevel4">
+<li><a href="#_multiple_references_to_a_feature">Multiple references to a feature</a></li>
+<li><a href="#_custom_css">Custom CSS</a></li>
+</ul>
+</li>
+<li><a href="#_migrating_from_earlier_versions">5.2.6. Migrating from earlier versions</a></li>
+<li><a href="#_domain_services">5.2.7. Domain Services</a></li>
+<li><a href="#_required_updates_to_the_dom_project_s_pom_xml">5.2.8. Required updates to the dom project&#8217;s pom.xml</a></li>
 </ul>
 </li>
 <li><a href="#_ugfun_object-layout_dynamic">5.3. Dynamic (JSON) Layout</a>
