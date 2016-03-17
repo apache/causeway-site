@@ -2091,7 +2091,7 @@ URL to be absolute.</p>
 <p>These customizations should generally be added to <a href="rgcfg.html#_rgcfg_application-specific_application-css"><code>application.css</a></code>; this file is included by default in every webpage served up by the Wicket viewer.</p>
 </div>
 <div class="sect3">
-<h4 id="_targeting_individual_members">6.5.1. Targeting individual members</h4>
+<h4 id="_individual_members">6.5.1. Individual members</h4>
 <div class="paragraph">
 <p>For example, the <code>ToDoItem</code> object of the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF) has a <code>notes</code> property. The HTML for this will be something like:</p>
 </div>
@@ -2131,7 +2131,7 @@ URL to be absolute.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_targeting_members_through_a_custom_css_style">6.5.2. Targeting members through a custom CSS style</h4>
+<h4 id="_custom_css_styles">6.5.2. Custom CSS styles</h4>
 <div class="paragraph">
 <p>The above technique works well if you know the class member to target, but you might instead want to apply a custom style to a set of members. For this, you can use the <code>@CssClass</code>.</p>
 </div>
@@ -2178,6 +2178,180 @@ URL to be absolute.</p>
         <span class="key"><span class="delimiter">&quot;</span><span class="content">cssClass</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">x-myapp-important</span><span class="delimiter">&quot;</span></span>
     }
 },</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugvw_customisation_tweaking-css-classes_columns-in-tables">6.5.3. Table columns (<code>1.12.0-SNAPSHOT</code>)</h4>
+<div class="paragraph">
+<p>Sometimes you may want to apply styling to specific columns of tables.  For example, you might want to adjust width so that
+for certain properties have more (or less) room than they otherwise would; or you might want to hide the column
+completely.  This also applies to the initial icon/title column.</p>
+</div>
+<div class="paragraph">
+<p>There is also the issue of scoping:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You may wish the style to apply globally: that is, dependent on the type of entity being rendered in the table,
+irrespective of the page on which it is shown.</p>
+</li>
+<li>
+<p>Alternativel, you may wish to target the CSS for a table as rendered either as a parented collection (owned by some
+other entity) or rendered as a standarlone collection (the result of invoking an action).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In each of these cases the Wicket viewer adds CSS classes either to containing <code>div</code>s or to the <code>&lt;th&gt;</code> and <code>&lt;td&gt;</code>
+ elements of the table itself so that it can custom styles can be appropriately targetted.</p>
+</div>
+<div class="sect4">
+<h5 id="_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">Applying styles globally</h5>
+<div class="paragraph">
+<p>Every rendered collection containing a domain class will be wrapped in a <code>&lt;div&gt;</code> that lists that domain class (in CSS safe
+form).  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entityCollection com-mycompany-myapp-Customer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;table&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">firstName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">lastName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            ...
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">firstName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">lastName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            ...
+        <span class="tag">&lt;/tr&gt;</span>
+        ...
+    <span class="tag">&lt;/table&gt;</span>
+    ...
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>lastName</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer</span> <span class="tag">th</span><span class="class">.lastName</span> {
+    <span class="key">width</span>: <span class="float">30%</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_parented_collections">Parented collections</h5>
+<div class="paragraph">
+<p>Parented collections will be wrapped in <code>&lt;div&gt;</code>s that identify both the entity type and also the collection Id.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entityPage com-mycompany-myapp-Customer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>       <i class="conum" data-value="1"></i><b>(1)</b>
+    ...
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;table&gt;</span>
+            <span class="tag">&lt;tr&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                ...
+            <span class="tag">&lt;/tr&gt;</span>
+            <span class="tag">&lt;tr&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                ...
+            <span class="tag">&lt;/tr&gt;</span>
+            ...
+        <span class="tag">&lt;/table&gt;</span>
+        ...
+    <span class="tag">&lt;/div&gt;</span>
+    ...
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the parent class identifier</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the collection identifier. This element&#8217;s class also has the entity type within the collection (as <a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">discussed above</a>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>productRef</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer</span> <span class="tag">orders</span> <span class="tag">td</span><span class="class">.productRef</span> {
+    <span class="key">font-style</span>: <span class="value">italic</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_standalone_collections">Standalone collections</h5>
+<div class="paragraph">
+<p>Standalone collections will be wrapped in a <code>&lt;div&gt;</code> that identifies the action invoked.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standaloneCollectionPage</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com-mycompany-myapp-Customer_mostRecentOrders ...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>     <i class="conum" data-value="1"></i><b>(1)</b>
+        ...
+        <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;table&gt;</span>
+                <span class="tag">&lt;tr&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    ...
+                <span class="tag">&lt;/tr&gt;</span>
+                <span class="tag">&lt;tr&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    ...
+                <span class="tag">&lt;/tr&gt;</span>
+                ...
+            <span class="tag">&lt;/table&gt;</span>
+            ...
+        <span class="tag">&lt;/div&gt;</span>
+        ...
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>action identifier.  This element&#8217;s class also identifies the entity type within the collection (as <a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">discussed above</a>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>quantity</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer_mostRecentOrders</span> <span class="tag">td</span><span class="class">.quantity</span> {
+    <span class="key">font-weight</span>: <span class="value">bold</span>;
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -3021,8 +3195,15 @@ TODO
 </li>
 <li><a href="#_ugvw_customisation_tweaking-css-classes">6.5. Tweaking CSS classes</a>
 <ul class="sectlevel3">
-<li><a href="#_targeting_individual_members">6.5.1. Targeting individual members</a></li>
-<li><a href="#_targeting_members_through_a_custom_css_style">6.5.2. Targeting members through a custom CSS style</a></li>
+<li><a href="#_individual_members">6.5.1. Individual members</a></li>
+<li><a href="#_custom_css_styles">6.5.2. Custom CSS styles</a></li>
+<li><a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables">6.5.3. Table columns (<code>1.12.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel4">
+<li><a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">Applying styles globally</a></li>
+<li><a href="#_parented_collections">Parented collections</a></li>
+<li><a href="#_standalone_collections">Standalone collections</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_ugvw_customisation_cheap-n-cheerful-theme">6.6. Cheap-n-cheerful theme</a></li>
