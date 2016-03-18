@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Contributors Guide</title>
+    <title>Developers' Guide</title>
 
     <!--
         Licensed to the Apache Software Foundation (ASF) under one
@@ -503,7 +503,7 @@ table.CodeRay td.code>pre{padding:0}
 
         <div id="doc-content">
           <div class="sect1">
-<h2 id="_cgcon">1. Contributors' Guide</h2>
+<h2 id="_cgcon">1. Developers' Guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This contributors' guide is for:</p>
@@ -570,15 +570,18 @@ as Jenkins)</p>
 <li>
 <p><a href="rgcms.html">Classes, Methods and Schema</a></p>
 </li>
+<li>
+<p><a href="rgmvn.html">Apache Isis Maven plugin</a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The "supporting procedures" guides are:</p>
+<p>The remaining guides are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#">Contributors' Guide</a> (this guide)</p>
+<p><a href="#">Developers' Guide</a> (this guide)</p>
 </li>
 <li>
 <p><a href="cgcom.html">Committers' Guide</a> (release procedures and related practices)</p>
@@ -1936,993 +1939,15 @@ in that category.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_cmd-line">4. Command Line and CI</h2>
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cgcon_isis-maven-plugin">5. Apache Isis Maven Plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Apache Isis Maven plugin defines three goals:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>validate</code><br></p>
-<div class="paragraph">
-<p>Use to verify at build time that the metamodel of an application is valid.  This runs the <code>MetaModelValidator</code> that is also run when the application is started up.</p>
-</div>
-</li>
-<li>
-<p><code>swagger</code><br></p>
-<div class="paragraph">
-<p>Uses the <a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> to generate <a href="http://swagger.io">Swagger</a> spec files that describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
-</div>
-</li>
-<li>
-<p><code>xsd</code><br></p>
-<div class="paragraph">
-<p>Uses the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to generate XSD schemas from any JAXB-annotated view models/DTOs.<br></p>
-</div>
-<div class="paragraph">
-<p>This is instead of and preferable to using the JAXB <a href="https://jaxb.java.net/2.2.4/docs/schemagen.html">schemagen</a> tool, because it uses the framework&#8217;s support (via <a href="rgant.html#_rgant-XmlJavaValueType"><code>@XmlJavaValueType</code></a>) to translate any references to domain objects into <code>OidDto</code>s (as defined by the Apache Isis <a href="rgcms.html#_rgcms_schema-common">common schema</a>).</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The <code>validate</code> goal is by default bound to the <code>test</code> phase, and the <code>swagger</code> goal is by default bound to the <code>package</code> phase; both are typically of your application&#8217;s <code>dom</code> sub-module.  The <code>xsd</code> goal meanwhile defaults to the <code>generate-resources</code> phase, and this is generally used in a completely separate sub-module.  An example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app; the separate submodule that uses the <code>xsd</code> goal is (also) called <code>todoapp-xsd</code>.</p>
-</div>
-<div class="paragraph">
-<p>All of these goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to point the plugin at, so that
-it knows how to bootstrap an Isis runtime.  This is discussed below, followed by sections on configuring the two goals.</p>
-</div>
-<div class="sect2">
-<h3 id="__code_appmanifest_code">5.1. <code>AppManifest</code></h3>
-<div class="paragraph">
-<p>As noted in the introduction, all the goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>
-to point the plugin at, so that it knows how to bootstrap an Isis runtime.</p>
-</div>
-<div class="paragraph">
-<p>This can be extremely minimal.  For example, the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a>'s
-manifest is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
-...
-public <span class="type">class</span> <span class="class">DomainAppDomManifest</span> <span class="directive">implements</span> AppManifest {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
-        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
-                DomainAppDomainModule.class  <span class="comment">// domain (entities and repositories)</span>
-        );
-    }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getAdditionalServices() { <span class="keyword">return</span> <span class="predefined-type">Collections</span>.emptyList(); }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthenticationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthorizationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt;&gt; getFixtures() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where <code>DomainAppDomainModule</code> simply identifies the package for the manifest to search under:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
-<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">DomainAppDomainModule</span> { }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As you&#8217;ll see below, the configuration for each of the goals both refer to this app manifest.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cgcon_isis-maven-plugin_validate">5.2. <code>validate</code> goal</h3>
-<div class="paragraph">
-<p>The Apache Isis programming model requires that a number of naming conventions are followed.</p>
-</div>
-<div class="paragraph">
-<p>For example, the validator will detect any orphaned supporting methods (eg <code>hideXxx()</code>) if the corresponding property
-or action has been renamed or deleted but the supporting method was not also updated.  Another example is that a class
-cannot have a title specified both using <code>title()</code> method and also using <code>@Title</code> annotation.</p>
-</div>
-<div class="paragraph">
-<p>When running the application these are enforced by the <code>MetaModelValidator</code> component that detects these errors, failing fast.</p>
-</div>
-<div class="paragraph">
-<p>The purpose of the <code>validate</code> goal of the <code>isis-maven-plugin</code> is to enforce these naming conventions at build time,
-typically enforced by way of a continuous integration server.</p>
-</div>
-<div class="paragraph">
-<p>The <code>validate</code> goal defines a single property:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The sections below explain how to configure the plugin within an app.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The instructions given here relate to <code>1.10.0</code>.   This goal was also released for <code>1.9.0</code>, but with a slightly
-different configuration; see the final section for differences.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="__code_dom_code_submodule">5.2.1. <code>dom</code> submodule</h4>
-<div class="paragraph">
-<p>Update the <code>pom.xml</code> (in your project&#8217;s <code>dom</code> module):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
-    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;property&gt;</span>
-            <span class="tag">&lt;name&gt;</span>!skip.isis-validate<span class="tag">&lt;/name&gt;</span>                                            <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;/property&gt;</span>
-    <span class="tag">&lt;/activation&gt;</span>
-    <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                      <i class="conum" data-value="2"></i><b>(2)</b>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;appManifest&gt;</span>domainapp.dom.DomainAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>       <i class="conum" data-value="3"></i><b>(3)</b>
-                <span class="tag">&lt;/configuration&gt;</span>
-                <span class="tag">&lt;dependencies&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>                          <i class="conum" data-value="4"></i><b>(4)</b>
-                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                <span class="tag">&lt;/dependencies&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>                                       <i class="conum" data-value="5"></i><b>(5)</b>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-    <span class="tag">&lt;/build&gt;</span>
-<span class="tag">&lt;/profile&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the profile is active by default, though can be disabled using <code>-Dskip.isis-validate</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>set to <code>1.10.0</code> (or any later version)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the manifest discussed previously; adjust as required</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>the <code>dom</code> module for the project; adjust as required</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>binds the plugin&#8217;s <code>validate</code> goal to the Maven <code>test</code> lifecycle phase (ie the goal will be called when <code>mvn test</code> is run).</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_to_run">5.2.2. To run</h4>
-<div class="paragraph">
-<p>The plugin is activated by default, so is run simply using:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn test</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will run any tests, and then also - because the plugin is activated by the <code>isis-validate</code> property and bound to the <code>test</code> phase, will run the plugin&#8217;s <code>validate</code> goal.</p>
-</div>
-<div class="paragraph">
-<p>If for any reason you want to disable the validation, use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn test -Dskip.isis-validate</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_of_failure">5.2.3. Example of failure</h4>
-<div class="paragraph">
-<p>In the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a> application the <code>SimpleObject</code> defines an <code>updateName</code> action.  This has a supporting method:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SimpleObject updateName( ... ) { ... }
-<span class="directive">public</span> <span class="predefined-type">String</span> default0UpdateName() { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We can introduce an error by misspelling the supporting method, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> default0XUpdateName() { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Running <code>mvn test</code> then generates this output:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">[error]
-[error]
-[error]
-[error] domainapp.dom.simple.SimpleObject#default0XUpdateName: has prefix default, is probably a supporting method for a property, collection or action.  If the method is intended to be an action, then rename and use @ActionLayout(named=&quot;...&quot;) or ignore completely using @Programmatic
-[error]
-[error]
-[error]
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary:
-[INFO]
-[INFO] Simple App ......................................... SUCCESS [  0.087 s]
-[INFO] Simple App DOM ..................................... FAILURE [  4.182 s]
-[INFO] Simple App Fixtures ................................ SKIPPED
-[INFO] Simple App Application ............................. SKIPPED
-[INFO] Simple App Integration Tests ....................... SKIPPED
-[INFO] Simple App Webapp .................................. SKIPPED
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] ...
-[ERROR] Failed to execute goal org.apache.isis.tool:isis-maven-plugin:1.12.0-SNAPSHOT:validate (default) on project simpleapp-dom: 1 problems found. -&gt; [Help 1]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If one were to attempt to run the application, the same error would appear in the log files on startup (and the application would not boot).</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_custom_validation_rules">5.2.4. Custom validation rules</h4>
-<div class="paragraph">
-<p>It is also possible to customize the validation, explained <a href="ugbtb.html#_ugbtb_programming-model_custom-validator">here</a>.  For example, you could enforce project-specific conventions by implementing a custom <code>MetaModelValidator</code>, and registering using a configuration property.</p>
-</div>
-<div class="paragraph">
-<p>To support this using <code>AppManifest`s, override its `getConfigurationProperties()</code> method:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">public class DomainAppDomManifest implements AppManifest {
-    ...
-    public Map&lt;String, String&gt; getConfigurationProperties() {
-        final Map&lt;String, String&gt; map = Maps.newTreeMap();
-        map.put(&quot;isis.reflector.validator&quot;,&quot;com.mycompany.myapp.MyMetaModelValidator&quot;);
-        return map;
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_1_9_0_version">5.2.5. 1.9.0 version</h4>
-<div class="paragraph">
-<p>The <code>1.9.0</code> version of the plugin requires slightly different configuratoin.  Rather than using an <code>AppManifest</code>, instead the configuration directory containing <code>isis.properties</code> is specified:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
-    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;activeByDefault&gt;</span>false<span class="tag">&lt;/activeByDefault&gt;</span>                                        <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="tag">&lt;/activation&gt;</span>
-    <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>1.9.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;isisConfigDir&gt;</span>../webapp/src/main/webapp/WEB-INF<span class="tag">&lt;/isisConfigDir&gt;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
-                <span class="tag">&lt;/configuration&gt;</span>
-                <span class="tag">&lt;dependencies&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>org.apache.isis.example.application<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>1.9.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                <span class="tag">&lt;/dependencies&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-    <span class="tag">&lt;/build&gt;</span>
-<span class="tag">&lt;/profile&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>activated using the <code>-P</code> profile flag rather than a <code>-D</code> system property</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>specify the <code>isisConfigDir</code> directory (containing the <code>isis.properties</code> file).</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To use the <code>1.9.0</code> version, use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn -P isis-validate test</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Note that the <code>isisConfigDir</code> property was removed in <code>1.10.0</code>; only the <code>AppManifest</code> approach is supported.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cgcon_isis-maven-plugin_swagger">5.3. <code>swagger</code> goal</h3>
-<div class="paragraph">
-<p>The <code>swagger</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> to
-generate <a href="http://swagger.io">Swagger</a> spec files to describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
-</div>
-<div class="paragraph">
-<p>These spec files, once generated, can then be used in the build pipeline to generate client-side stubs, typically using Swagger&#8217;s own <a href="https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin">swagger-codegen-maven</a> plugin.</p>
-</div>
-<div class="paragraph">
-<p>The <code>swagger</code> goal defines the following properties:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
-</li>
-<li>
-<p><code>fileNamePrefix</code> - (optional) a prefix to the generated file names (is suffixed by the requested visibilities, see below).<br></p>
-<div class="paragraph">
-<p>Defaults to <code>swagger</code>.</p>
-</div>
-</li>
-<li>
-<p><code>visibilities</code> - (optional) list of required visibilities.<br></p>
-<div class="paragraph">
-<p>Defaults to [<code>PUBLIC</code>, <code>PRIVATE</code>] (meaning that two spec files will be created).</p>
-</div>
-</li>
-<li>
-<p><code>format</code> - (optional) which format to generate, either <code>JSON</code> or <code>YAML</code>.<br></p>
-<div class="paragraph">
-<p>Defaults to <code>JSON</code>.</p>
-</div>
-</li>
-<li>
-<p><code>output</code> - (optional) subdirectory under the <code>target</code> directory to generate the swagger spec files<br></p>
-<div class="paragraph">
-<p>Defaults to <code>generated-resources/isis-swagger</code></p>
-</div>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="__code_dom_code_submodule_2">5.3.1. <code>dom</code> submodule</h4>
-<div class="paragraph">
-<p>Update the <code>pom.xml</code> (in your project&#8217;s <code>dom</code> module):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
-    <span class="tag">&lt;id&gt;</span>isis-swagger<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;property&gt;</span>
-            <span class="tag">&lt;name&gt;</span>!skip.isis-swagger<span class="tag">&lt;/name&gt;</span>                                         <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;/property&gt;</span>
-    <span class="tag">&lt;/activation&gt;</span>
-    <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                  <i class="conum" data-value="2"></i><b>(2)</b>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;appManifest&gt;</span>domainapp.dom.DomainAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>   <i class="conum" data-value="3"></i><b>(3)</b>
-                    <span class="tag">&lt;visibilities&gt;</span>                                                  <i class="conum" data-value="4"></i><b>(4)</b>
-                        <span class="tag">&lt;visibility&gt;</span>PUBLIC<span class="tag">&lt;/visibility&gt;</span>
-                        <span class="tag">&lt;visibility&gt;</span>PRIVATE<span class="tag">&lt;/visibility&gt;</span>
-                    <span class="tag">&lt;/visibilities&gt;</span>
-                    <span class="tag">&lt;format&gt;</span>JSON<span class="tag">&lt;/format&gt;</span>                                           <i class="conum" data-value="5"></i><b>(5)</b>
-                    <span class="tag">&lt;fileNamePrefix&gt;</span>swagger<span class="tag">&lt;/fileNamePrefix&gt;</span>                        <i class="conum" data-value="5"></i><b>(5)</b>
-                <span class="tag">&lt;/configuration&gt;</span>
-                <span class="tag">&lt;dependencies&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>                      <i class="conum" data-value="6"></i><b>(6)</b>
-                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                <span class="tag">&lt;/dependencies&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>swagger<span class="tag">&lt;/goal&gt;</span>                                    <i class="conum" data-value="7"></i><b>(7)</b>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-    <span class="tag">&lt;/build&gt;</span>
-<span class="tag">&lt;/profile&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the profile is active by default, though can be disabled using <code>-Dskip.isis-swagger</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>set to <code>1.11.0</code> (or any later version)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the manifest discussed previously; adjust as required</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>the visibilities to create (one swagger spec file per visibility listed)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>which file format to generate the spec files as.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>the <code>dom</code> module for the project; adjust as required</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>binds the plugin&#8217;s <code>swagger</code> goal to the Maven <code>package</code> lifecycle phase (ie the goal will be called when <code>mvn package</code> is run).</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_to_run_2">5.3.2. To run</h4>
-<div class="paragraph">
-<p>The plugin is activated by default, so is run simply using:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn package</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cgcon_isis-maven-plugin_xsd">5.4. <code>xsd</code> goal</h3>
-<div class="paragraph">
-<p>The <code>xsd</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to
-generate XSD schemas from any JAXB-annotated <a href="ugbtb.html#_ugbtb_view-models">view model/DTOs</a>.</p>
-</div>
-<div class="paragraph">
-<p>This is instead of and preferable to using the JAXB <a href="https://jaxb.java.net/2.2.4/docs/schemagen.html">schemagen</a>
-tool, because it uses the framework&#8217;s support (via
-<a href="rgant.html#_rgant-XmlJavaValueType"><code>@XmlJavaValueType</code></a>) to translate any references to domain
-objects into <code>OidDto</code>s (as defined by the Apache Isis <a href="rgcms.html#_rgcms_schema-common">common schema</a>).</p>
-</div>
-<div class="paragraph">
-<p>The <code>xsd</code> goal defines the following properties:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
-</li>
-<li>
-<p><code>jaxbClasses</code> - a list of <a href="rg.html#_ugbtb_view-models_jaxb">JAXB-annotated view model</a> classes;</p>
-</li>
-<li>
-<p><code>output</code> - (optional) subdirectory under the <code>target</code> directory to generate the XSDs<br></p>
-<div class="paragraph">
-<p>Defaults to <code>generated-resources/isis-xsd</code></p>
-</div>
-</li>
-<li>
-<p><code>separate</code> - (optional) whether to create separate directories for each JAXB-class.<br></p>
-<div class="paragraph">
-<p>Defaults to <code>false</code>.  Most DTO classes will reference one another or the <a href="rgcms.html#_rgcms_schema-common">common schema</a>.  Normally it&#8217;s fine to merge all these XSDs together.  This property, if set, results in each a separate directory for each generation of its XSD or XSDs.</p>
-</div>
-</li>
-<li>
-<p><code>commonSchemas</code> - (optional) whether to also generate the isis common schema(s).<br></p>
-<div class="paragraph">
-<p>Defaults to <code>false</code>; if set then the call to <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> will set <code>IsisSchemas.INCLUDE</code> flag.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>As a convenience to any (Java) consumers, the XSDs generated from the view models can then in turn be generated
-into DTOs.  The original view models and these DTOs are similar but not identical: while the view models can only be used
-within the Isis application (they may reference underlying domain entities) whereas the DTO classes generated from the
-XSDs can be used standalone, eg by a Java subscriber running on an ESB such as Apache Camel.</p>
-</div>
-<div class="paragraph">
-<p>The rest of this section explains how to configure a new <code>xsd</code> submodule that uses the <code>isis-maven-plugin</code> along with
-other standard plugins in order to generate both XSDs and DTOs.  The <code>pom.xml</code> described below uses Maven profiles
-to separate out these two responsibilities.</p>
-</div>
-<div class="sect3">
-<h4 id="_cgcon_isis-maven-plugin_xsd">5.4.1. <code>xsd</code> submodule</h4>
-<div class="paragraph">
-<p>We recommend creating a new submodule that will perform the following build steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>run the <code>xsd</code> goal (in the <code>generate-resources</code> phase) to generate the XSDs from the specified view model/DTOs</p>
-</li>
-<li>
-<p>use the <a href="http://maven.apache.org/plugins/maven-assembly-plugin/">maven-assembly-plugin</a> to bundle the
-generated XSD files into a zip file.</p>
-</li>
-<li>
-<p>use the <code>xjc-gen</code> to generate corresponding DTO classes from the XSDs.<br></p>
-<div class="paragraph">
-<p>These are <em>not</em> the same as the original view models; they are provided as a convenience for subscribers to marshall XML documents into Java classes, but running as a standalone process (not part of the Isis app)</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>These two main responsibilities can then be placed into separate Maven profiles, for better modularity.  The diagram
-below shows the overall design:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<a class="image" href="images/maven-plugin/xsd-goal.png"><img src="images/maven-plugin/xsd-goal.png" alt="xsd goal" width="800px"></a>
-</div>
-</div>
-<div class="paragraph">
-<p>For example, here is the <code>pom.xml</code> file for the (non-ASF)
-<a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app&#8217;s <code>todoapp-xsd</code> submodule.</p>
-</div>
-<div class="paragraph">
-<p>First, the usual boilerplate:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;project</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;modelVersion&gt;</span>4.0.0<span class="tag">&lt;/modelVersion&gt;</span>
-
-    <span class="tag">&lt;parent&gt;</span>
-        <span class="tag">&lt;groupId&gt;</span>org.isisaddons.app<span class="tag">&lt;/groupId&gt;</span>
-        <span class="tag">&lt;artifactId&gt;</span>todoapp<span class="tag">&lt;/artifactId&gt;</span>
-        <span class="tag">&lt;version&gt;</span>1.12.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
-    <span class="tag">&lt;/parent&gt;</span>
-
-    <span class="tag">&lt;artifactId&gt;</span>todoapp-xsd<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;name&gt;</span>Isis Addons ToDoApp XSD<span class="tag">&lt;/name&gt;</span>
-
-    <span class="tag">&lt;dependencies&gt;</span>
-        <span class="tag">&lt;dependency&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>todoapp-app<span class="tag">&lt;/artifactId&gt;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;/dependency&gt;</span>
-    <span class="tag">&lt;/dependencies&gt;</span>
-
-        <span class="tag">&lt;profiles&gt;</span>
-                <span class="tag">&lt;profile&gt;</span>
-                        <span class="tag">&lt;id&gt;</span>isis-xsd<span class="tag">&lt;/id&gt;</span>                       <i class="conum" data-value="2"></i><b>(2)</b>
-                        ...
-                <span class="tag">&lt;/profile&gt;</span>
-        <span class="tag">&lt;profile&gt;</span>
-            <span class="tag">&lt;id&gt;</span>xjc<span class="tag">&lt;/id&gt;</span>                            <i class="conum" data-value="3"></i><b>(3)</b>
-            ...
-        <span class="tag">&lt;/profile&gt;</span>
-        <span class="tag">&lt;/profiles&gt;</span>
-<span class="tag">&lt;/project&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>depends on the rest of the application&#8217;s modules</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>XSD generation, to run the <code>xsd</code> goal and then assemble into a zip file; within a profile for modularity</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>XJC generation, to run the <code>xjc</code> to generate Java DTO classes from XSDs; within a profile for modularity</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_xsd_profile">XSD profile</h5>
-<div class="paragraph">
-<p>The <code>isis-xsd</code> profile runs the <code>xsd</code> goal of the <code>isis-maven-plugin</code>; these are then zipped up by the assembly plugin:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
-    <span class="tag">&lt;id&gt;</span>isis-xsd<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;property&gt;</span>
-            <span class="tag">&lt;name&gt;</span>!skip.isis-xsd<span class="tag">&lt;/name&gt;</span>                                                             <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;/property&gt;</span>
-    <span class="tag">&lt;/activation&gt;</span>
-    <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;appManifest&gt;</span>todoapp.dom.ToDoAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>                       <i class="conum" data-value="2"></i><b>(2)</b>
-                    <span class="tag">&lt;jaxbClasses&gt;</span>                                                                   <i class="conum" data-value="3"></i><b>(3)</b>
-                        <span class="tag">&lt;jaxbClass&gt;</span>todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto<span class="tag">&lt;/jaxbClass&gt;</span>
-                        <span class="tag">&lt;jaxbClass&gt;</span>todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto<span class="tag">&lt;/jaxbClass&gt;</span>
-                    <span class="tag">&lt;/jaxbClasses&gt;</span>
-                <span class="tag">&lt;/configuration&gt;</span>
-                <span class="tag">&lt;dependencies&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>
-                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>todoapp-dom<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                    <span class="tag">&lt;dependency&gt;</span>                                                                    <i class="conum" data-value="4"></i><b>(4)</b>
-                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
-                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
-                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
-                    <span class="tag">&lt;/dependency&gt;</span>
-                <span class="tag">&lt;/dependencies&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>                                             <i class="conum" data-value="5"></i><b>(5)</b>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>xsd<span class="tag">&lt;/goal&gt;</span>                                                        <i class="conum" data-value="6"></i><b>(6)</b>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="tag">&lt;/artifactId&gt;</span>                                      <i class="conum" data-value="7"></i><b>(7)</b>
-                <span class="tag">&lt;version&gt;</span>2.5.3<span class="tag">&lt;/version&gt;</span>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;descriptor&gt;</span>src/assembly/dep.xml<span class="tag">&lt;/descriptor&gt;</span>                                   <i class="conum" data-value="8"></i><b>(8)</b>
-                <span class="tag">&lt;/configuration&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;id&gt;</span>create-archive<span class="tag">&lt;/id&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>single<span class="tag">&lt;/goal&gt;</span>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-    <span class="tag">&lt;/build&gt;</span>
-<span class="tag">&lt;/profile&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>enabled <em>unless</em> <code>skip.isis-xsd</code> property specified</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>specify the app manifest to bootstrap the Isis runtime within the maven plugin</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>enumerate all JAXB-annotated view models</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>workaround to avoid conflict with plexus-default</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>by default is bound to <code>generate-resources</code>, but bind instead to <code>generate-sources</code> if also running the <code>xjc</code> profile: the XSD are an input to <code>xjc</code>, but it is bound by default to <code>generate-sources</code> and the <code>generate-sources</code> phase runs before the <code>generate-resources</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>run the <code>xsd</code> goal</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>define the assembly plugin</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>assembles the XSD schemas into a zip file, as defined by the <code>dep.xml</code> file (see below).</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;assembly</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2</span><span class="delimiter">&quot;</span></span>
-          <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
-          <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2</span>
-                              <span class="content">http://maven.apache.org/xsd/assembly-1.1.2.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;id&gt;</span>xsd<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;formats&gt;</span>
-        <span class="tag">&lt;format&gt;</span>zip<span class="tag">&lt;/format&gt;</span>
-    <span class="tag">&lt;/formats&gt;</span>
-    <span class="tag">&lt;fileSets&gt;</span>
-        <span class="tag">&lt;fileSet&gt;</span>
-            <span class="tag">&lt;directory&gt;</span>${project.build.directory}/generated-resources/isis-xsd<span class="tag">&lt;/directory&gt;</span>      <i class="conum" data-value="1"></i><b>(1)</b>
-            <span class="tag">&lt;outputDirectory&gt;</span>/<span class="tag">&lt;/outputDirectory&gt;</span>
-        <span class="tag">&lt;/fileSet&gt;</span>
-    <span class="tag">&lt;/fileSets&gt;</span>
-<span class="tag">&lt;/assembly&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the location that the <code>xsd</code> goal writes to.</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_xjc_profile">XJC profile</h5>
-<div class="paragraph">
-<p>The <code>xjc</code> profile reads the XSD generated by the <code>xsd</code> goal, and from it generates Java DTOs.  Note that this isn&#8217;t
-round-tripping: the original view model is only for use within the Isis app, whereas the DTO generated from the XSDs
-is for use in a standalone context, eg in a Java subscriber on an event bus.</p>
-</div>
-<div class="paragraph">
-<p>The <code>xjc</code> profile is defined as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
-    <span class="tag">&lt;id&gt;</span>xjc<span class="tag">&lt;/id&gt;</span>
-    <span class="tag">&lt;activation&gt;</span>
-        <span class="tag">&lt;property&gt;</span>
-            <span class="tag">&lt;name&gt;</span>!skip.xjc<span class="tag">&lt;/name&gt;</span>                                                              <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;/property&gt;</span>
-    <span class="tag">&lt;/activation&gt;</span>
-    <span class="tag">&lt;build&gt;</span>
-        <span class="tag">&lt;plugins&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.jvnet.jaxb2.maven2<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>maven-jaxb2-plugin<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>0.12.3<span class="tag">&lt;/version&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;id&gt;</span>xjc-generate<span class="tag">&lt;/id&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>generate<span class="tag">&lt;/goal&gt;</span>
-                        <span class="tag">&lt;/goals&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-                <span class="tag">&lt;configuration&gt;</span>
-                    <span class="tag">&lt;removeOldOutput&gt;</span>true<span class="tag">&lt;/removeOldOutput&gt;</span>
-                    <span class="tag">&lt;schemaDirectory&gt;</span>                                                           <i class="conum" data-value="2"></i><b>(2)</b>
-                        target/generated-resources/isis-xsd/viewmodels.app.todoapp/todoitem
-                    <span class="tag">&lt;/schemaDirectory&gt;</span>
-                    <span class="tag">&lt;schemaIncludes&gt;</span>                                                            <i class="conum" data-value="3"></i><b>(3)</b>
-                        <span class="tag">&lt;schemaInclude&gt;</span>v1_0/todoitem.xsd<span class="tag">&lt;/schemaInclude&gt;</span>
-                        <span class="tag">&lt;schemaInclude&gt;</span>v1_1/todoitem.xsd<span class="tag">&lt;/schemaInclude&gt;</span>
-                    <span class="tag">&lt;/schemaIncludes&gt;</span>
-                    <span class="tag">&lt;catalog&gt;</span>src/main/resources/catalog.xml<span class="tag">&lt;/catalog&gt;</span>                           <i class="conum" data-value="4"></i><b>(4)</b>
-                <span class="tag">&lt;/configuration&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-            <span class="tag">&lt;plugin&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.codehaus.mojo<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>build-helper-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>                              <i class="conum" data-value="5"></i><b>(5)</b>
-                <span class="tag">&lt;version&gt;</span>1.9.1<span class="tag">&lt;/version&gt;</span>
-                <span class="tag">&lt;executions&gt;</span>
-                    <span class="tag">&lt;execution&gt;</span>
-                        <span class="tag">&lt;id&gt;</span>add-source<span class="tag">&lt;/id&gt;</span>
-                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
-                        <span class="tag">&lt;goals&gt;</span>
-                            <span class="tag">&lt;goal&gt;</span>add-source<span class="tag">&lt;/goal&gt;</span>
-                        <span class="tag">&lt;/goals&gt;</span>
-                        <span class="tag">&lt;configuration&gt;</span>
-                            <span class="tag">&lt;sources&gt;</span>
-                                <span class="tag">&lt;source&gt;</span>target/generated-sources/xjc<span class="tag">&lt;/source&gt;</span>                   <i class="conum" data-value="6"></i><b>(6)</b>
-                            <span class="tag">&lt;/sources&gt;</span>
-                        <span class="tag">&lt;/configuration&gt;</span>
-                    <span class="tag">&lt;/execution&gt;</span>
-                <span class="tag">&lt;/executions&gt;</span>
-            <span class="tag">&lt;/plugin&gt;</span>
-        <span class="tag">&lt;/plugins&gt;</span>
-    <span class="tag">&lt;/build&gt;</span>
-<span class="tag">&lt;/profile&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>enabled <em>unless</em> <code>skip.xjc</code> property specified</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>specifies the directory that the XSD schemas were generated to by the <code>isis-maven-plugin</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>specify each of the XSDs to be processed</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>catalog file indicates the location of the referenced <a href="_rgcms_schema-common">common schema</a> XSDs.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>the <code>build-helper-maven-plugin</code> adds the Java source generated by the <code>xjc</code> plugin so that it can be compiled and
-packaged as any other code</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>the location that the <code>xjc</code> plugin generates its source code.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The referenced <code>catalog.xml</code> file instructs the <code>xjc</code> plugin how to resolve referenced schema locations.  Only a
-reference for the Apache Isis <a href="_rgcms_schema-common">common schema</a> is likely to be needed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="doctype">&lt;!DOCTYPE catalog
-            PUBLIC &quot;-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN&quot;
-            &quot;http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd&quot;&gt;</span>
-<span class="tag">&lt;catalog</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:oasis:names:tc:entity:xmlns:xml:catalog</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;public</span> <span class="attribute-name">publicId</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">uri</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common/common.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                             <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tag">&lt;/catalog&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>resolve the common schema from the Apache Isis website</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_to_run_3">5.4.2. To run</h4>
-<div class="paragraph">
-<p>The plugin is activated by default, so is run simply using:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn package</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will generate the XSDs, the DTOs from the XSDs, and package up the XSDs into a ZIP file and the generated DTO
-class files into a regular JAR package.</p>
-</div>
-<div class="paragraph">
-<p>If for any reason you want to disable the generation of the DTOs, use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn package -Dskip.xjc</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you want to disable the generation of both the XSDs and the DTOs, use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn package -Dskip.xjc -Dskip.isis-xsd</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cgcon_building-isis">6. Building Apache Isis</h2>
+<h2 id="_cgcon_building-isis">4. Building Apache Isis</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_cgcon_building-isis_git">6.1. Git</h3>
+<h3 id="_cgcon_building-isis_git">4.1. Git</h3>
 <div class="paragraph">
 <p>The Apache Isis source code lives in a git repo.</p>
 </div>
 <div class="sect3">
-<h4 id="_cgcon_building-isis_git_installation">6.1.1. Installation</h4>
+<h4 id="_cgcon_building-isis_git_installation">4.1.1. Installation</h4>
 <div class="paragraph">
 <p>The easiest place to get hold of command-line git is probably the <a href="http://git-scm.com/downloads">github download page</a>.</p>
 </div>
@@ -3038,7 +2063,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cgcon_building-isis_git_getting-help">6.1.2. Getting help</h4>
+<h4 id="_cgcon_building-isis_git_getting-help">4.1.2. Getting help</h4>
 <div class="paragraph">
 <p>Three commands of git that in particular worth knowing:</p>
 </div>
@@ -3086,7 +2111,7 @@ git config user.email &lt;i&gt;myusername@apache.org&lt;/i&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_building-isis_installing-java">6.2. Installing Java</h3>
+<h3 id="_cgcon_building-isis_installing-java">4.2. Installing Java</h3>
 <div class="paragraph">
 <p>Apache Isis is compatible with Java 7 and Java 8.  For every-day use, the framework is usually compiled against Java 8.</p>
 </div>
@@ -3113,7 +2138,7 @@ be sure not to use any Java 8 APIs.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_cgcon_building-isis_configure-maven-toolchains-plugin">6.2.1. Configure Maven toolchains plugin</h4>
+<h4 id="_cgcon_building-isis_configure-maven-toolchains-plugin">4.2.1. Configure Maven toolchains plugin</h4>
 <div class="paragraph">
 <p>If you are a committer that will be performing releases of Apache Isis, then you <em>must</em> configure the
 <a href="http://maven.apache.org/plugins/maven-toolchains-plugin/">toolchains</a> plugin so that releases can be built using
@@ -3170,7 +2195,7 @@ adjusting paths for your platform:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_building-isis_installing-maven">6.3. Installing Maven</h3>
+<h3 id="_cgcon_building-isis_installing-maven">4.3. Installing Maven</h3>
 <div class="paragraph">
 <p>Install Maven 3.0.x, downloadable <a href="http://maven.apache.org/download.html">here</a>.</p>
 </div>
@@ -3198,7 +2223,7 @@ adjusting paths for your platform:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_building-isis_building-all-of-apache-isis">6.4. Building all of Apache Isis</h3>
+<h3 id="_cgcon_building-isis_building-all-of-apache-isis">4.4. Building all of Apache Isis</h3>
 <div class="paragraph">
 <p>To build the source code from the command line, simply go to the root directory and type:</p>
 </div>
@@ -3227,7 +2252,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_building-isis_checking-for-vulnerabilities">6.5. Checking for Vulnerabilities</h3>
+<h3 id="_cgcon_building-isis_checking-for-vulnerabilities">4.5. Checking for Vulnerabilities</h3>
 <div class="paragraph">
 <p>Apache Isis configures the <a href="https://www.owasp.org/index.php/Main_Page">OWASP</a> <a href="https://www.owasp.org/index.php/OWASP_Dependency_Check">dependency check</a> <a href="http://jeremylong.github.io/DependencyCheck/dependency-check-maven/index.html">Maven plugin</a> to determine whether the framework uses libraries that are known to have security vulnerabilities.</p>
 </div>
@@ -3261,7 +2286,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_building-isis_checking-for-use-of-internal-jdk-apis">6.6. Checking for use of internal JDK APIs</h3>
+<h3 id="_cgcon_building-isis_checking-for-use-of-internal-jdk-apis">4.6. Checking for use of internal JDK APIs</h3>
 <div class="paragraph">
 <p>Apache Isis configures the <a href="https://maven.apache.org/plugins-archives/maven-jdeps-plugin-3.0.0/">jdeps maven plugin</a> to check for any usage of internal JDK APIs.  This is in preparation for Java 9 module system (Jigsaw) which will prevent such usage of APIs.</p>
 </div>
@@ -3294,7 +2319,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_contributing">7. Contributing</h2>
+<h2 id="_cgcon_contributing">5. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page explains how you can contribute to Apache Isis. You&#8217;ll probably also want <a href="#_cgcon_ide">set up your IDE</a> and learn <a href="#_cgcon_building-isis">how to build Apache Isis</a>.</p>
@@ -3303,7 +2328,7 @@ mvn clean install -o -T1C</code></pre>
 <p>Thanks for considering to help out, your contributions are appreciated!</p>
 </div>
 <div class="sect2">
-<h3 id="_recommended_workflow_github">7.1. Recommended Workflow (github)</h3>
+<h3 id="_recommended_workflow_github">5.1. Recommended Workflow (github)</h3>
 <div class="paragraph">
 <p>Apache Isis' source code is hosted in an Apache git repo (<a href="https://git-wip-us.apache.org/repos/asf/isis.git">https</a>, <a href="http://git-wip-us.apache.org/repos/asf/isis.git">http</a>), with a clone on github (<a href="https://github.com/apache/isis.git">https</a>, or ssh: <code>git@github.com:apache/isis.git</code>.</p>
 </div>
@@ -3355,7 +2380,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_alternative_workflow_jira_patches">7.2. Alternative Workflow (JIRA patches)</h3>
+<h3 id="_alternative_workflow_jira_patches">5.2. Alternative Workflow (JIRA patches)</h3>
 <div class="paragraph">
 <p>As an alternative, you may decide to clone directly from <a href="https://github.com/apache/isis.git">github.com/apache/isis</a> rather than create your own fork:</p>
 </div>
@@ -3372,7 +2397,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_up_your_fork_clone">7.3. Setting up your fork/clone</h3>
+<h3 id="_setting_up_your_fork_clone">5.3. Setting up your fork/clone</h3>
 <div class="paragraph">
 <p>If you choose to create your own fork then you&#8217;ll need an account on <a href="https://github.com">github.com</a>. You then fork simply by pressing the "Fork" button:</p>
 </div>
@@ -3421,7 +2446,7 @@ mvn clean install -o -T1C</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_commit_messages">7.4. Commit messages</h3>
+<h3 id="_commit_messages">5.4. Commit messages</h3>
 <div class="paragraph">
 <p>Although with git your commits are always performed on your local repo, those commit messages become public when the patch is applied by an Apache Isis committer. You should take time to write a meaningful commit message that helps explain what the patch refers to; if you don&#8217;t then there&#8217;s a chance that your patch may be rejected and not applied. No-one likes hard work to go to waste!</p>
 </div>
@@ -3448,7 +2473,7 @@ why this is a problem, and how the patch fixes the problem when applied.</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_the_patch_file">7.5. Creating the patch file</h3>
+<h3 id="_creating_the_patch_file">5.5. Creating the patch file</h3>
 <div class="paragraph">
 <p>If you are working without a github fork of Apache Isis, then you can create the patches from your own local git repository.</p>
 </div>
@@ -3465,12 +2490,12 @@ why this is a problem, and how the patch fixes the problem when applied.</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sample_contribution_workflow">7.6. Sample Contribution Workflow</h3>
+<h3 id="_sample_contribution_workflow">5.6. Sample Contribution Workflow</h3>
 <div class="paragraph">
 <p>Assuming you&#8217;re development environment is all setup, let&#8217;s walk through how you might make contribute a patch. In this example, suppose that you&#8217;ve decided to work on JIRA ticket #123, an enhancement to support Blob/Clob datatypes.</p>
 </div>
 <div class="sect3">
-<h4 id="_update_your_master_branch">7.6.1. Update your master branch</h4>
+<h4 id="_update_your_master_branch">5.6.1. Update your master branch</h4>
 <div class="paragraph">
 <p>The first thing to do is to make sure your local clone is up-to-date. We do this by retrieving new commits from upstream repo and then merging them as a fast-forward into your local branch.</p>
 </div>
@@ -3489,7 +2514,7 @@ git pull –ff-only
 </div>
 </div>
 <div class="sect3">
-<h4 id="_create_a_topic_branch">7.6.2. Create a topic branch</h4>
+<h4 id="_create_a_topic_branch">5.6.2. Create a topic branch</h4>
 <div class="paragraph">
 <p>We recommend you name topic branches by the JIRA ticket, ie &lt;tt&gt;ISIS-nnn-description&lt;/tt&gt;. So let&#8217;s create a new branch based off <code>master</code> and call it "ISIS-123-blobs"</p>
 </div>
@@ -3506,7 +2531,7 @@ git pull –ff-only
 </div>
 </div>
 <div class="sect3">
-<h4 id="_make_file_changes_and_commit">7.6.3. Make File Changes and Commit</h4>
+<h4 id="_make_file_changes_and_commit">5.6.3. Make File Changes and Commit</h4>
 <div class="paragraph">
 <p>Next, make changes to your files using the usual commands (see also our <a href="#_cgcon_git-cookbook">git cookbook</a> section):</p>
 </div>
@@ -3537,7 +2562,7 @@ git pull –ff-only
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rebasing_with_code_master_code">7.6.4. Rebasing with <code>master</code></h4>
+<h4 id="_rebasing_with_code_master_code">5.6.4. Rebasing with <code>master</code></h4>
 <div class="paragraph">
 <p>Before you can share your change, you should rebase (in other words replay) your changes on top of the <code>master</code> branch.</p>
 </div>
@@ -3565,7 +2590,7 @@ git rebase master
 </div>
 </div>
 <div class="sect3">
-<h4 id="_raising_a_pull_request">7.6.5. Raising a pull request</h4>
+<h4 id="_raising_a_pull_request">5.6.5. Raising a pull request</h4>
 <div class="paragraph">
 <p>If you have your own fork, you can now simply push the changes you&#8217;ve made locally to your fork:</p>
 </div>
@@ -3597,7 +2622,7 @@ git rebase master
 </div>
 </div>
 <div class="sect2">
-<h3 id="_if_your_pull_request_is_accepted">7.7. If your pull request is accepted</h3>
+<h3 id="_if_your_pull_request_is_accepted">5.7. If your pull request is accepted</h3>
 <div class="paragraph">
 <p>To double check that your pull request is accepted, update your <code>master</code> branch from the <code>upstream</code> remote:</p>
 </div>
@@ -3611,7 +2636,7 @@ git rebase master
 <p>Finally, you might want to push the latest changes in master back up to your github fork. If so, use:</p>
 </div>
 <div class="sect3">
-<h4 id="_if_your_pull_request_is_rejected">7.7.1. If your pull request is rejected</h4>
+<h4 id="_if_your_pull_request_is_rejected">5.7.1. If your pull request is rejected</h4>
 <div class="paragraph">
 <p>If your pull request is rejected, then you&#8217;ll need to update your branch from the main repository and then address the rejection reason.</p>
 </div>
@@ -3634,15 +2659,15 @@ git rebase master
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_policies">8. Policies</h2>
+<h2 id="_cgcon_policies">6. Policies</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter pulls together various policy documents relating to the development of Apache Isis'.</p>
 </div>
 <div class="sect2">
-<h3 id="_cgcom_versioning-policy">8.1. Versioning Policy</h3>
+<h3 id="_cgcom_versioning-policy">6.1. Versioning Policy</h3>
 <div class="sect3">
-<h4 id="_semantic_versioning">8.1.1. Semantic Versioning</h4>
+<h4 id="_semantic_versioning">6.1.1. Semantic Versioning</h4>
 <div class="paragraph">
 <p>Starting from v1.0.0, Apache Isis has adopted <a href="http://semver.org">semantic versioning</a> for its versioning policy.</p>
 </div>
@@ -3667,7 +2692,7 @@ git rebase master
 </div>
 </div>
 <div class="sect3">
-<h4 id="_version_ranges">8.1.2. Version ranges</h4>
+<h4 id="_version_ranges">6.1.2. Version ranges</h4>
 <div class="paragraph">
 <p>Version ranges may not be used.  If necessary, end-users can use <code>&lt;dependencyManagement</code> elements to have combine components built against different versions of core.</p>
 </div>
@@ -3680,7 +2705,7 @@ git rebase master
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcon_policies_git-policy">8.2. Git Policy</h3>
+<h3 id="_cgcon_policies_git-policy">6.2. Git Policy</h3>
 <div class="paragraph">
 <p>These notes recommend how contributors should work with git. To understand these notes, the only real concepts that you need to grok are:</p>
 </div>
@@ -3717,7 +2742,7 @@ git rebase master
 <p>And, of course, there is loads of good advice on <a href="http://stackoverflow.com/questions/tagged/git">stackoverflow.com</a></p>
 </div>
 <div class="sect3">
-<h4 id="_workflow">8.2.1. Workflow</h4>
+<h4 id="_workflow">6.2.1. Workflow</h4>
 <div class="paragraph">
 <p>There are many ways of using Git, but the Apache Isis committers have adopted the following workflow:</p>
 </div>
@@ -3779,7 +2804,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_commit_message">8.2.2. Commit message</h4>
+<h4 id="_commit_message">6.2.2. Commit message</h4>
 <div class="paragraph">
 <p>The minimum we expect in a commit messages is:</p>
 </div>
@@ -3803,7 +2828,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_asciidoc">9. AsciiDoc Documentation</h2>
+<h2 id="_cgcon_asciidoc">7. AsciiDoc Documentation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis' documentation (meaning the website and the users' guide, the reference guide and this contributors' guide) is written using <a href="http://www.methods.co.nz/asciidoc/">Asciidoc</a>, specifically the <a href="asciidoctor.org/">Asciidoctor</a> implementation.</p>
@@ -3818,13 +2843,13 @@ git push origin --delete ISIS-999</code></pre>
 <p>And to help write the Asciidoc text itself, we provide some <a href="#_cgcon__cg_ide-templates">templates</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_where_to_find_the_docs">9.1. Where to find the Docs</h3>
+<h3 id="_where_to_find_the_docs">7.1. Where to find the Docs</h3>
 <div class="paragraph">
 <p>The (Asciidoc) source code can be found at <code>adocs/documentation</code> (relative to root).  Online you&#8217;ll find it <a href="https://github.com/apache/isis/tree/master/adocs/documentation">cloned to github here</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_naming_conventions">9.2. Naming Conventions</h3>
+<h3 id="_naming_conventions">7.2. Naming Conventions</h3>
 <div class="paragraph">
 <p>For documents with inclusions, use '_' to separate out the logical hierarchy:</p>
 </div>
@@ -3863,7 +2888,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_writing_the_docs">9.3. Writing the docs</h3>
+<h3 id="_writing_the_docs">7.3. Writing the docs</h3>
 <div class="paragraph">
 <p>We highly recommend that you install the (IntelliJ) live templates for Asciidoctor, as described in <a href="#_cgcon_ide-templates">IDE templates</a>.  These provide a large number of helper templates.</p>
 </div>
@@ -3872,7 +2897,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_build_and_review_using_maven">9.4. Build and Review (using Maven)</h3>
+<h3 id="_build_and_review_using_maven">7.4. Build and Review (using Maven)</h3>
 <div class="paragraph">
 <p>To (re)build the documentation locally prior to release, change into the <code>adocs/documentation</code> directory and use:</p>
 </div>
@@ -3889,12 +2914,12 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_instant_rebuild_using_ruby">9.5. Instant Rebuild (using Ruby)</h3>
+<h3 id="_instant_rebuild_using_ruby">7.5. Instant Rebuild (using Ruby)</h3>
 <div class="paragraph">
 <p>The ruby script, <code>monitor.rb</code> emulates the <code>mvn compile</code> command, regenerating any changed Asciidoctor files to the relevant <code>target/site</code> directory.  Moreover if any included files are changed then it rebuilds the parent (per the above naming convention).</p>
 </div>
 <div class="sect3">
-<h4 id="_one_time_setup">9.5.1. One-time setup</h4>
+<h4 id="_one_time_setup">7.5.1. One-time setup</h4>
 <div class="paragraph">
 <p>To setup:</p>
 </div>
@@ -3933,7 +2958,7 @@ bundle install</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_instant_rebuild">9.5.2. Instant Rebuild</h4>
+<h4 id="_instant_rebuild">7.5.2. Instant Rebuild</h4>
 <div class="paragraph">
 <p>To run, we typically just use:</p>
 </div>
@@ -3970,12 +2995,12 @@ bundle install</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_publish_procedure">9.6. Publish procedure</h3>
+<h3 id="_publish_procedure">7.6. Publish procedure</h3>
 <div class="paragraph">
 <p>Only Apache Isis committers can publish to <a href="http://isis.apache.org">isis.apache.org</a>.  We&#8217;ve decided to include these procedures here here (rather than put them in the <a href="cgcom.html">Committers' Guide</a>), just to keep things together.</p>
 </div>
 <div class="sect3">
-<h4 id="_one_time_setup_2">9.6.1. One-time setup</h4>
+<h4 id="_one_time_setup_2">7.6.1. One-time setup</h4>
 <div class="paragraph">
 <p>The generated site is published by copying into the <code>content/</code> directory of the <a href="https://git-wip-us.apache.org/repos/asf/isis-site.git">isis-site git repo</a>. You therefore need to check this out this repo.</p>
 </div>
@@ -4007,7 +3032,7 @@ bundle install</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publishing">9.6.2. Publishing</h4>
+<h4 id="_publishing">7.6.2. Publishing</h4>
 <div class="paragraph">
 <p>Back in the <code>adocs/documentation</code> directory of the main <code>isis-git.repo</code>, to copy the generated documents to the <code>isis-site.git</code> repo, run:</p>
 </div>
@@ -4060,7 +3085,7 @@ bundle install</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_git-cookbook">10. Appendix: Git Cookbook</h2>
+<h2 id="_cgcon_git-cookbook">8. Appendix: Git Cookbook</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This appendix describes the commands often used while working with git.  In addition to these basic commands, please make sure you have read:</p>
@@ -4079,7 +3104,7 @@ bundle install</code></pre>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_modifying_existing_files">10.1. Modifying existing files</h3>
+<h3 id="_modifying_existing_files">8.1. Modifying existing files</h3>
 <div class="paragraph">
 <p>To modify existing files:</p>
 </div>
@@ -4105,7 +3130,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_adding_new_files">10.2. Adding new files</h3>
+<h3 id="_adding_new_files">8.2. Adding new files</h3>
 <div class="paragraph">
 <p>To add a new file:</p>
 </div>
@@ -4120,7 +3145,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deleting_files">10.3. Deleting files</h3>
+<h3 id="_deleting_files">8.3. Deleting files</h3>
 <div class="paragraph">
 <p>To delete a file:</p>
 </div>
@@ -4132,7 +3157,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_renaming_or_moving_files">10.4. Renaming or moving files</h3>
+<h3 id="_renaming_or_moving_files">8.4. Renaming or moving files</h3>
 <div class="paragraph">
 <p>To rename or move a file:</p>
 </div>
@@ -4144,13 +3169,13 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_common_workflows">10.5. Common Workflows</h3>
+<h3 id="_common_workflows">8.5. Common Workflows</h3>
 <div class="paragraph">
 <p>The <a href="#_cgcon_contributing">contributing</a> page describes the workflow for non-committers.  The <a href="#_cgcon_policies_git-policy">Git policy</a> page describes a workflow for Apache Isis <strong>committers</strong>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_backing_up_a_local_branch">10.6. Backing up a local branch</h3>
+<h3 id="_backing_up_a_local_branch">8.6. Backing up a local branch</h3>
 <div class="paragraph">
 <p>If committing to a local branch, the changes are still just that: local, and run risk of a disk failure or other disaster.</p>
 </div>
@@ -4189,7 +3214,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quick_change_stashing_changes">10.7. Quick change: stashing changes</h3>
+<h3 id="_quick_change_stashing_changes">8.7. Quick change: stashing changes</h3>
 <div class="paragraph">
 <p>If you are working on something but are not ready to commit, then use:</p>
 </div>
@@ -4217,7 +3242,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ignoring_files">10.8. Ignoring files</h3>
+<h3 id="_ignoring_files">8.8. Ignoring files</h3>
 <div class="paragraph">
 <p>Put file patterns into <code>.gitignore</code>.  There is one at the root of the git repo, but they can additionally appear in subdirectories (the results are cumulative).</p>
 </div>
@@ -4236,9 +3261,9 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_more_advanced_use_cases">10.9. More advanced use cases</h3>
+<h3 id="_more_advanced_use_cases">8.9. More advanced use cases</h3>
 <div class="sect3">
-<h4 id="_if_accidentally_push_to_remote">10.9.1. If accidentally push to remote</h4>
+<h4 id="_if_accidentally_push_to_remote">8.9.1. If accidentally push to remote</h4>
 <div class="paragraph">
 <p>Suppose you committed to <code>master</code>, and then pushed the change, and then decided that you didn&#8217;t intend to do that:</p>
 </div>
@@ -4288,7 +3313,7 @@ git commit -m &quot;ISIS-nnn: yada yada&quot;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_if_you_ve_accidentally_worked_on_code_master_code_branch">10.10. If you&#8217;ve accidentally worked on <code>master</code> branch</h3>
+<h3 id="_if_you_ve_accidentally_worked_on_code_master_code_branch">8.10. If you&#8217;ve accidentally worked on <code>master</code> branch</h3>
 <div class="paragraph">
 <p>If at any time the <code>git pull</code> from your upstream fails, it most likely means that you must have made commits on the <code>master</code> branch.  You can use <code>gitk --all</code> to confirm; at some point in time both <code>master</code> and <code>origin\master</code> will have a common ancestor.</p>
 </div>
@@ -4322,7 +3347,7 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 </div>
 </div>
 <div class="sect2">
-<h3 id="_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">10.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</h3>
+<h3 id="_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">8.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</h3>
 <div class="paragraph">
 <p>One of our committers, Alexander Krasnukhin, has put together some git scripts to help his workflow.  Using one of these, <code>git prefix</code>, you can just commit with proper message without bothering about prefix and add prefix only in the end <strong>before</strong> the final push.</p>
 </div>
@@ -4341,7 +3366,7 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcon_asciidoc-templates">11. Appendix: Asciidoc Templates</h2>
+<h2 id="_cgcon_asciidoc-templates">9. Appendix: Asciidoc Templates</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This appendix lists the (IntelliJ) live templates available for <a href="#_cgcon_asciidoc">writing documentation</a> using Asciidoc.  Instructions for installing the templates can be found <a href="#_cgcon_ide-templates">here</a>.</p>
@@ -4350,7 +3375,7 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 <p>In the examples below the text <code>xxx</code>, <code>yyy</code>, <code>zzz</code> are correspond to template variables (ie placeholders).</p>
 </div>
 <div class="sect2">
-<h3 id="_callouts">11.1. Callouts</h3>
+<h3 id="_callouts">9.1. Callouts</h3>
 <div class="paragraph">
 <p>The Asciidoctor terminology is an "admonition".</p>
 </div>
@@ -4456,7 +3481,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_todo_notes">11.2. TODO notes</h3>
+<h3 id="_todo_notes">9.2. TODO notes</h3>
 <div class="paragraph">
 <p>Add as a placeholder for documentation still to be written or which is work-in-progress.</p>
 </div>
@@ -4524,7 +3549,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_xref_to_guides">11.3. Xref to Guides</h3>
+<h3 id="_xref_to_guides">9.3. Xref to Guides</h3>
 <div class="paragraph">
 <p>Cross-references (links) to the various guides</p>
 </div>
@@ -4804,7 +3829,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_link_to_isis_addons">11.4. Link to Isis Addons</h3>
+<h3 id="_link_to_isis_addons">9.4. Link to Isis Addons</h3>
 <div class="paragraph">
 <p>Links to (non-ASF) <a href="http://isisaddons.org">Isis Addons</a></p>
 </div>
@@ -4913,7 +3938,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_source_code">11.5. Source code</h3>
+<h3 id="_source_code">9.5. Source code</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14%;">
@@ -5063,7 +4088,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_images">11.6. Images</h3>
+<h3 id="_images">9.6. Images</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14%;">
@@ -5149,7 +4174,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_youtube_screencasts">11.7. YouTube (screencasts)</h3>
+<h3 id="_youtube_screencasts">9.7. YouTube (screencasts)</h3>
 <div class="paragraph">
 <p>Embedded youtube screencasts</p>
 </div>
@@ -5211,7 +4236,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_tables">11.8. Tables</h3>
+<h3 id="_tables">9.8. Tables</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14%;">
@@ -5237,7 +4262,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_misc">11.9. Misc.</h3>
+<h3 id="_misc">9.9. Misc.</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14%;">
@@ -5371,7 +4396,7 @@ xxx<br>
         <div id="toc" class="toc2">
             <div class="fallback-toc">
                 <ul class="sectlevel1">
-<li><a href="#_cgcon">1. Contributors' Guide</a>
+<li><a href="#_cgcon">1. Developers' Guide</a>
 <ul class="sectlevel2">
 <li><a href="#_other_guides">1.1. Other Guides</a></li>
 </ul>
@@ -5459,151 +4484,119 @@ xxx<br>
 <li><a href="#_usage">3.3. Usage</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_cmd-line">4. Command Line and CI</a></li>
-<li><a href="#_cgcon_isis-maven-plugin">5. Apache Isis Maven Plugin</a>
+<li><a href="#_cgcon_building-isis">4. Building Apache Isis</a>
 <ul class="sectlevel2">
-<li><a href="#__code_appmanifest_code">5.1. <code>AppManifest</code></a></li>
-<li><a href="#_cgcon_isis-maven-plugin_validate">5.2. <code>validate</code> goal</a>
+<li><a href="#_cgcon_building-isis_git">4.1. Git</a>
 <ul class="sectlevel3">
-<li><a href="#__code_dom_code_submodule">5.2.1. <code>dom</code> submodule</a></li>
-<li><a href="#_to_run">5.2.2. To run</a></li>
-<li><a href="#_example_of_failure">5.2.3. Example of failure</a></li>
-<li><a href="#_custom_validation_rules">5.2.4. Custom validation rules</a></li>
-<li><a href="#_1_9_0_version">5.2.5. 1.9.0 version</a></li>
-</ul>
-</li>
-<li><a href="#_cgcon_isis-maven-plugin_swagger">5.3. <code>swagger</code> goal</a>
-<ul class="sectlevel3">
-<li><a href="#__code_dom_code_submodule_2">5.3.1. <code>dom</code> submodule</a></li>
-<li><a href="#_to_run_2">5.3.2. To run</a></li>
-</ul>
-</li>
-<li><a href="#_cgcon_isis-maven-plugin_xsd">5.4. <code>xsd</code> goal</a>
-<ul class="sectlevel3">
-<li><a href="#_cgcon_isis-maven-plugin_xsd">5.4.1. <code>xsd</code> submodule</a>
-<ul class="sectlevel4">
-<li><a href="#_xsd_profile">XSD profile</a></li>
-<li><a href="#_xjc_profile">XJC profile</a></li>
-</ul>
-</li>
-<li><a href="#_to_run_3">5.4.2. To run</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_cgcon_building-isis">6. Building Apache Isis</a>
-<ul class="sectlevel2">
-<li><a href="#_cgcon_building-isis_git">6.1. Git</a>
-<ul class="sectlevel3">
-<li><a href="#_cgcon_building-isis_git_installation">6.1.1. Installation</a>
+<li><a href="#_cgcon_building-isis_git_installation">4.1.1. Installation</a>
 <ul class="sectlevel4">
 <li><a href="#_cgcon_building-isis_git_installation_cloning-the-apache-isis-repo">Cloning the Apache Isis repo</a></li>
 <li><a href="#_cgcon_building-isis_git_installation_configuring-git">Configuring Git</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_building-isis_git_getting-help">6.1.2. Getting help</a></li>
+<li><a href="#_cgcon_building-isis_git_getting-help">4.1.2. Getting help</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_building-isis_installing-java">6.2. Installing Java</a>
+<li><a href="#_cgcon_building-isis_installing-java">4.2. Installing Java</a>
 <ul class="sectlevel3">
-<li><a href="#_cgcon_building-isis_configure-maven-toolchains-plugin">6.2.1. Configure Maven toolchains plugin</a></li>
+<li><a href="#_cgcon_building-isis_configure-maven-toolchains-plugin">4.2.1. Configure Maven toolchains plugin</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_building-isis_installing-maven">6.3. Installing Maven</a></li>
-<li><a href="#_cgcon_building-isis_building-all-of-apache-isis">6.4. Building all of Apache Isis</a></li>
-<li><a href="#_cgcon_building-isis_checking-for-vulnerabilities">6.5. Checking for Vulnerabilities</a></li>
-<li><a href="#_cgcon_building-isis_checking-for-use-of-internal-jdk-apis">6.6. Checking for use of internal JDK APIs</a></li>
+<li><a href="#_cgcon_building-isis_installing-maven">4.3. Installing Maven</a></li>
+<li><a href="#_cgcon_building-isis_building-all-of-apache-isis">4.4. Building all of Apache Isis</a></li>
+<li><a href="#_cgcon_building-isis_checking-for-vulnerabilities">4.5. Checking for Vulnerabilities</a></li>
+<li><a href="#_cgcon_building-isis_checking-for-use-of-internal-jdk-apis">4.6. Checking for use of internal JDK APIs</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_contributing">7. Contributing</a>
+<li><a href="#_cgcon_contributing">5. Contributing</a>
 <ul class="sectlevel2">
-<li><a href="#_recommended_workflow_github">7.1. Recommended Workflow (github)</a></li>
-<li><a href="#_alternative_workflow_jira_patches">7.2. Alternative Workflow (JIRA patches)</a></li>
-<li><a href="#_setting_up_your_fork_clone">7.3. Setting up your fork/clone</a></li>
-<li><a href="#_commit_messages">7.4. Commit messages</a></li>
-<li><a href="#_creating_the_patch_file">7.5. Creating the patch file</a></li>
-<li><a href="#_sample_contribution_workflow">7.6. Sample Contribution Workflow</a>
+<li><a href="#_recommended_workflow_github">5.1. Recommended Workflow (github)</a></li>
+<li><a href="#_alternative_workflow_jira_patches">5.2. Alternative Workflow (JIRA patches)</a></li>
+<li><a href="#_setting_up_your_fork_clone">5.3. Setting up your fork/clone</a></li>
+<li><a href="#_commit_messages">5.4. Commit messages</a></li>
+<li><a href="#_creating_the_patch_file">5.5. Creating the patch file</a></li>
+<li><a href="#_sample_contribution_workflow">5.6. Sample Contribution Workflow</a>
 <ul class="sectlevel3">
-<li><a href="#_update_your_master_branch">7.6.1. Update your master branch</a></li>
-<li><a href="#_create_a_topic_branch">7.6.2. Create a topic branch</a></li>
-<li><a href="#_make_file_changes_and_commit">7.6.3. Make File Changes and Commit</a></li>
-<li><a href="#_rebasing_with_code_master_code">7.6.4. Rebasing with <code>master</code></a></li>
-<li><a href="#_raising_a_pull_request">7.6.5. Raising a pull request</a></li>
+<li><a href="#_update_your_master_branch">5.6.1. Update your master branch</a></li>
+<li><a href="#_create_a_topic_branch">5.6.2. Create a topic branch</a></li>
+<li><a href="#_make_file_changes_and_commit">5.6.3. Make File Changes and Commit</a></li>
+<li><a href="#_rebasing_with_code_master_code">5.6.4. Rebasing with <code>master</code></a></li>
+<li><a href="#_raising_a_pull_request">5.6.5. Raising a pull request</a></li>
 </ul>
 </li>
-<li><a href="#_if_your_pull_request_is_accepted">7.7. If your pull request is accepted</a>
+<li><a href="#_if_your_pull_request_is_accepted">5.7. If your pull request is accepted</a>
 <ul class="sectlevel3">
-<li><a href="#_if_your_pull_request_is_rejected">7.7.1. If your pull request is rejected</a></li>
+<li><a href="#_if_your_pull_request_is_rejected">5.7.1. If your pull request is rejected</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_cgcon_policies">8. Policies</a>
+<li><a href="#_cgcon_policies">6. Policies</a>
 <ul class="sectlevel2">
-<li><a href="#_cgcom_versioning-policy">8.1. Versioning Policy</a>
+<li><a href="#_cgcom_versioning-policy">6.1. Versioning Policy</a>
 <ul class="sectlevel3">
-<li><a href="#_semantic_versioning">8.1.1. Semantic Versioning</a></li>
-<li><a href="#_version_ranges">8.1.2. Version ranges</a></li>
+<li><a href="#_semantic_versioning">6.1.1. Semantic Versioning</a></li>
+<li><a href="#_version_ranges">6.1.2. Version ranges</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_policies_git-policy">8.2. Git Policy</a>
+<li><a href="#_cgcon_policies_git-policy">6.2. Git Policy</a>
 <ul class="sectlevel3">
-<li><a href="#_workflow">8.2.1. Workflow</a></li>
-<li><a href="#_commit_message">8.2.2. Commit message</a></li>
+<li><a href="#_workflow">6.2.1. Workflow</a></li>
+<li><a href="#_commit_message">6.2.2. Commit message</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_cgcon_asciidoc">9. AsciiDoc Documentation</a>
+<li><a href="#_cgcon_asciidoc">7. AsciiDoc Documentation</a>
 <ul class="sectlevel2">
-<li><a href="#_where_to_find_the_docs">9.1. Where to find the Docs</a></li>
-<li><a href="#_naming_conventions">9.2. Naming Conventions</a></li>
-<li><a href="#_writing_the_docs">9.3. Writing the docs</a></li>
-<li><a href="#_build_and_review_using_maven">9.4. Build and Review (using Maven)</a></li>
-<li><a href="#_instant_rebuild_using_ruby">9.5. Instant Rebuild (using Ruby)</a>
+<li><a href="#_where_to_find_the_docs">7.1. Where to find the Docs</a></li>
+<li><a href="#_naming_conventions">7.2. Naming Conventions</a></li>
+<li><a href="#_writing_the_docs">7.3. Writing the docs</a></li>
+<li><a href="#_build_and_review_using_maven">7.4. Build and Review (using Maven)</a></li>
+<li><a href="#_instant_rebuild_using_ruby">7.5. Instant Rebuild (using Ruby)</a>
 <ul class="sectlevel3">
-<li><a href="#_one_time_setup">9.5.1. One-time setup</a></li>
-<li><a href="#_instant_rebuild">9.5.2. Instant Rebuild</a></li>
+<li><a href="#_one_time_setup">7.5.1. One-time setup</a></li>
+<li><a href="#_instant_rebuild">7.5.2. Instant Rebuild</a></li>
 </ul>
 </li>
-<li><a href="#_publish_procedure">9.6. Publish procedure</a>
+<li><a href="#_publish_procedure">7.6. Publish procedure</a>
 <ul class="sectlevel3">
-<li><a href="#_one_time_setup_2">9.6.1. One-time setup</a></li>
-<li><a href="#_publishing">9.6.2. Publishing</a></li>
+<li><a href="#_one_time_setup_2">7.6.1. One-time setup</a></li>
+<li><a href="#_publishing">7.6.2. Publishing</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_cgcon_git-cookbook">10. Appendix: Git Cookbook</a>
+<li><a href="#_cgcon_git-cookbook">8. Appendix: Git Cookbook</a>
 <ul class="sectlevel2">
-<li><a href="#_modifying_existing_files">10.1. Modifying existing files</a></li>
-<li><a href="#_adding_new_files">10.2. Adding new files</a></li>
-<li><a href="#_deleting_files">10.3. Deleting files</a></li>
-<li><a href="#_renaming_or_moving_files">10.4. Renaming or moving files</a></li>
-<li><a href="#_common_workflows">10.5. Common Workflows</a></li>
-<li><a href="#_backing_up_a_local_branch">10.6. Backing up a local branch</a></li>
-<li><a href="#_quick_change_stashing_changes">10.7. Quick change: stashing changes</a></li>
-<li><a href="#_ignoring_files">10.8. Ignoring files</a></li>
-<li><a href="#_more_advanced_use_cases">10.9. More advanced use cases</a>
+<li><a href="#_modifying_existing_files">8.1. Modifying existing files</a></li>
+<li><a href="#_adding_new_files">8.2. Adding new files</a></li>
+<li><a href="#_deleting_files">8.3. Deleting files</a></li>
+<li><a href="#_renaming_or_moving_files">8.4. Renaming or moving files</a></li>
+<li><a href="#_common_workflows">8.5. Common Workflows</a></li>
+<li><a href="#_backing_up_a_local_branch">8.6. Backing up a local branch</a></li>
+<li><a href="#_quick_change_stashing_changes">8.7. Quick change: stashing changes</a></li>
+<li><a href="#_ignoring_files">8.8. Ignoring files</a></li>
+<li><a href="#_more_advanced_use_cases">8.9. More advanced use cases</a>
 <ul class="sectlevel3">
-<li><a href="#_if_accidentally_push_to_remote">10.9.1. If accidentally push to remote</a></li>
+<li><a href="#_if_accidentally_push_to_remote">8.9.1. If accidentally push to remote</a></li>
 </ul>
 </li>
-<li><a href="#_if_you_ve_accidentally_worked_on_code_master_code_branch">10.10. If you&#8217;ve accidentally worked on <code>master</code> branch</a></li>
-<li><a href="#_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">10.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</a></li>
+<li><a href="#_if_you_ve_accidentally_worked_on_code_master_code_branch">8.10. If you&#8217;ve accidentally worked on <code>master</code> branch</a></li>
+<li><a href="#_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">8.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</a></li>
 </ul>
 </li>
-<li><a href="#_cgcon_asciidoc-templates">11. Appendix: Asciidoc Templates</a>
+<li><a href="#_cgcon_asciidoc-templates">9. Appendix: Asciidoc Templates</a>
 <ul class="sectlevel2">
-<li><a href="#_callouts">11.1. Callouts</a></li>
-<li><a href="#_todo_notes">11.2. TODO notes</a></li>
-<li><a href="#_xref_to_guides">11.3. Xref to Guides</a></li>
-<li><a href="#_link_to_isis_addons">11.4. Link to Isis Addons</a></li>
-<li><a href="#_source_code">11.5. Source code</a></li>
-<li><a href="#_images">11.6. Images</a></li>
-<li><a href="#_youtube_screencasts">11.7. YouTube (screencasts)</a></li>
-<li><a href="#_tables">11.8. Tables</a></li>
-<li><a href="#_misc">11.9. Misc.</a></li>
+<li><a href="#_callouts">9.1. Callouts</a></li>
+<li><a href="#_todo_notes">9.2. TODO notes</a></li>
+<li><a href="#_xref_to_guides">9.3. Xref to Guides</a></li>
+<li><a href="#_link_to_isis_addons">9.4. Link to Isis Addons</a></li>
+<li><a href="#_source_code">9.5. Source code</a></li>
+<li><a href="#_images">9.6. Images</a></li>
+<li><a href="#_youtube_screencasts">9.7. YouTube (screencasts)</a></li>
+<li><a href="#_tables">9.8. Tables</a></li>
+<li><a href="#_misc">9.9. Misc.</a></li>
 </ul>
 </li>
 </ul>
@@ -5754,7 +4747,7 @@ xxx<br>
 <script type="text/javascript">
 
 $(document).ready(function(){
-    if("Documentation" === "Contributors Guide") {
+    if("Documentation" === "Developers' Guide") {
         console.log( "processing 'Documentation'" );
 
         $("#doc-content-left").removeClass("large-9").removeClass("medium-9").addClass("large-12").addClass("medium-12");
