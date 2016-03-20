@@ -3196,7 +3196,7 @@ map domain objects to view models/DTOs.</p>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default
-implementation of <code>ActionInvocationContext</code> class is automatically registered (it is annotated with <code>@DomainService</code>)
+implementation of <code>AcceptHeaderService</code> class is automatically registered (it is annotated with <code>@DomainService</code>)
 so no further configuration is required.</p>
 </div>
 <div class="paragraph">
@@ -3263,7 +3263,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>One idiom is for the domain objects to also use the <a href="#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a> service to share information, for example to aggregate values. The <code>ActionInvocationContext#isLast()</code> method can then be used to determine if all the information has been gathered, and then do something with it (eg derive variance across a range of values, render a graph etc).</p>
 </div>
 <div class="paragraph">
-<p>More prosaically, the <code>ActoinInvocationContext</code> can be used to ensure that the action behaves appropriately depending on how it has been invoked (on a single object and/or a collection) whether it is called in bulk mode or regular mode. Here&#8217;s a snippet of code from the bulk action in the Isis addon example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF):</p>
+<p>More prosaically, the <code>ActionInvocationContext</code> can be used to ensure that the action behaves appropriately depending on how it has been invoked (on a single object and/or a collection) whether it is called in bulk mode or regular mode. Here&#8217;s a snippet of code from the bulk action in the Isis addon example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3272,12 +3272,12 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
     <span class="directive">public</span> ToDoItem completed() {
         setComplete(<span class="predefined-constant">true</span>);
         ...
-        return actionInteractionContext.getInvokedOn() == InvokedOn.OBJECT
+        return actionInvocationContext.getInvokedOn() == InvokedOn.OBJECT
                 ? <span class="local-variable">this</span>  <i class="conum" data-value="1"></i><b>(1)</b>
                 : <span class="predefined-constant">null</span>; <i class="conum" data-value="2"></i><b>(2)</b>
     }
     <span class="annotation">@Inject</span>
-    ActionInteractionContext actionInteractionContext;
+    ActionInvocationContext actionInvocationContext;
 }</code></pre>
 </div>
 </div>
@@ -10553,7 +10553,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
         <footer>
           <hr>
           <p class="small">
-          Copyright &copy; 2010~2015 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          Copyright &copy; 2010~2016 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
           <br/>
           Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
           </p>

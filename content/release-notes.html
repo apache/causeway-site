@@ -986,18 +986,214 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect1">
 <h2 id="r1.12.0">1.12.0-SNAPSHOT</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="r1.12.0">1.12.0</h3>
 <div class="paragraph">
-<p>Apache Isis 1.12.0-SNAPSHOT is still in development.</p>
+<p>The main feature in 1.12.0 is much enhanced support for custom layouts, using an optional separate XML layout file <code>Xxx.layout.xml</code> (where <code>Xxx</code> is the class of the object being rendered).  This is similar in concept to the earlier support we have had for custom layouts through a <code>.layout.json</code> file, but introduces the ability to position object members anywhere using bootstrap columns and rows.  It also brings in
+support for tabgroups, and allows object members to be included in the page more than once (eg a table view and also a (non-ASF) <a href="http://github.com/isisaddons/isis-wicket-fullcalendar2">calendar</a> view).</p>
 </div>
+<div class="paragraph">
+<p>As a result of this change, the support for editing objects has been modified; rather than an 'edit' button which toggles the entire
+page into edit mode, instead each property is edited individually.  The current implementation of this is using a prompt dialog (very
+similar to the action prompt dialogs; in a future release we hope to support "in-place" edits instead.</p>
+</div>
+<div class="paragraph">
+<p>Another notable change in this release include various new domain services.  Some of these are in supoprt of the dynamic layouts
+functionality, others including new access into Apache Isis' metamodel.  (Some of these new services were originally part of the (non-ASF)
+<a href="http://isisaddons.org">Isis Addons</a>). In addition, the <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>
+service has been deprecated, replaced by a number of fine-grained services
+(such as <a href="rgsvc.html#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a> and <a href="rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a>).</p>
+</div>
+<div class="paragraph">
+<p>The release also includes a number of new mixins, to automatically surface in the UI an entity&#8217;s id, version (if any), and to download the
+layout XML and rebuild the metamodel for a given domain entity.  There is also a mixin to clear any UI hints (part of the dynamic layouts
+functionality).  In all cases these mixins can be hidden using either security or by writing a <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a> to veto the visibility of the
+corresponding domain event.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Apache Isis 1.12.0-SNAPSHOT is currently being voted on for release; expectation is that it will be released by end of March 2016.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_new_feature">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>ISIS-993: layout XMLs.  Also possible to associate actions with fieldsets (previously called member groups or property groups) rather than simply properties <em>within</em> those fieldsets; such actions will be rendered on the panel.</p>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1326">ISIS-1326</a> - Add a link to a "quotes" page on the main website.</p>
 </li>
 <li>
-<p>ISIS-1311: Mixins for Persistable_datanucleusIdXxx, Persistable_datanucleusVersionXxx.</p>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1325">ISIS-1325</a> - New SessionManagementService</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1317">ISIS-1317</a> - Allow single domain object class to be invalidated through a mixin.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1313">ISIS-1313</a> - Enhancement to xsd goal of the isis-maven-plugin to ignore/include the Isis common schemas.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1292">ISIS-1292</a> - Extend MetaModel service to surface packages, classes etc (as used by the security module).</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-993">ISIS-993</a> - Show different object members on multiple tabs</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-784">ISIS-784</a> - Change Wicket viewer to get rid of edit mode, instead allow individual fields to be edited by clicking on them (similar to the way that JIRA works).</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvement">Improvement</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1333">ISIS-1333</a> - Remove self-host profile from the archetype</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1332">ISIS-1332</a> - Factor out a HintStore service, so that this is pluggable.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1330">ISIS-1330</a> - Add CSS classes for table cells and for collections to make it easier to fine tune pages using CSS.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1329">ISIS-1329</a> - Extend hint support for "show all"</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1327">ISIS-1327</a> - Change the view mode of the select2 (value drop down) to be a simple text field.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1324">ISIS-1324</a> - Allow multiple different views of same collection in a layout</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1323">ISIS-1323</a> - Deprecate @CollectionLayout#renderType, since is duplicated by &#8230;&#8203;</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1322">ISIS-1322</a> - Mixins not exposing the mixedin object in events (for subscribers to veto).</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1321">ISIS-1321</a> - Extend MetaModel service to allow CSV of metamodel to be downloaded.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1320">ISIS-1320</a> - Move ContentMappingService to applib (and simplify)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1312">ISIS-1312</a> - Improve JaxbServiceDefault#xsd(&#8230;&#8203;) to correctly reference the Isis common schema imports.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1300">ISIS-1300</a> - Allow the enablement of the WicketSource plugin to be configurable, and disabled by default</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1299">ISIS-1299</a> - @ViewModel and @XmlRootElement view models should automatically support isCloneable.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1298">ISIS-1298</a> - Fix deprecated annotation use for ViewModel.Cloneable#clone</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1295">ISIS-1295</a> - Run integration tests using thread-local, to allow "complete" tests that also exercise, eg Quartz jobs.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1240">ISIS-1240</a> - Derive icon from service when not provided</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1239">ISIS-1239</a> - For wicket ui, use a cookie or similar to remember the hint from last time.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1228">ISIS-1228</a> - Reorganizing/splitting out DomainObjectContainer service.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1048">ISIS-1048</a> - Make view model URLs more secure, eg through a private key.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1037">ISIS-1037</a> - Support layout.xml as well as layout.json</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-806">ISIS-806</a> - In Wicket viewer, shouldn&#8217;t be possible to invoke an action if editing a form.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bug">Bug</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1328">ISIS-1328</a> - Bookmark hints are not being honoured</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1319">ISIS-1319</a> - Input dialog for action label for mandatory parameter not shown when the parameter is an view model</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1318">ISIS-1318</a> - contributed actions/mixins breaks publishing; also flush any pending actions to be published as the result of doing a wrapped action via the WrapperFactory</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1315">ISIS-1315</a> - Can&#8217;t generate swagger specs, where actions are contributed.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1314">ISIS-1314</a> - Filename parameter label missing for DTO mixins</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1311">ISIS-1311</a> - Mixins for Persistable metadata causes exception when rendering.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1310">ISIS-1310</a> - DomainObjectContainter#titleOf(..) does not resolve @Title annotated on private field</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1309">ISIS-1309</a> - Disabled no-arg "are you sure" actions still show the prompt to be shown..</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1305">ISIS-1305</a> - For collections contributed from mixins, the name is empty (presumably null or "")</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1304">ISIS-1304</a> - Table column with icon and title is not left aligned</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1125">ISIS-1125</a> - Spurious WARN messages for translation messages of contributed actions</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1075">ISIS-1075</a> - RO viewer&#8217;s version resource always returns a 420 (method failure)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1063">ISIS-1063</a> - View models with mandatory enum properties are not initialized correctly.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-906">ISIS-906</a> - incorrectly attempts to render a veto exception (from a subscriber) to a non-existent action dialog panel when invoked for a no-arg action.</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-687">ISIS-687</a> - @AutoComplete annotation on repository does not seem to honour @MinLength</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependency_upgrade">Dependency upgrade</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1288">ISIS-1288</a> - Update (minor) dependencies</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_task">Task</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-1287">ISIS-1287</a> - Release activities for v1.12.0</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1012,7 +1208,7 @@ table.CodeRay td.code>pre{padding:0}
 of Java 8 APIs.  This release fixes this issue.</p>
 </div>
 <div class="sect2">
-<h3 id="_bug">Bug</h3>
+<h3 id="_bug_2">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1053,7 +1249,7 @@ to optionally be encrypted.</p>
 category of UI events (so that titles, icons and CSS classes can be provided by event bus subscribers).</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature">New Feature</h3>
+<h3 id="_new_feature_2">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1087,7 +1283,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement">Improvement</h3>
+<h3 id="_improvement_2">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1151,7 +1347,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_2">Bug</h3>
+<h3 id="_bug_3">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1194,7 +1390,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task">Task</h3>
+<h3 id="_task_2">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1215,7 +1411,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <p>Internally there have been substantial simplifications to the codebase.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature_2">New Feature</h3>
+<h3 id="_new_feature_3">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1243,7 +1439,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement_2">Improvement</h3>
+<h3 id="_improvement_3">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1304,7 +1500,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_3">Bug</h3>
+<h3 id="_bug_4">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1347,7 +1543,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task_2">Task</h3>
+<h3 id="_task_3">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1357,7 +1553,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dependency_upgrade">Dependency upgrade</h3>
+<h3 id="_dependency_upgrade_2">Dependency upgrade</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1434,7 +1630,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <p>This release was also the first to include the updated Asciidoc website.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature_3">New Feature</h3>
+<h3 id="_new_feature_4">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1495,7 +1691,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement_3">Improvement</h3>
+<h3 id="_improvement_4">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1652,7 +1848,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_4">Bug</h3>
+<h3 id="_bug_5">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1734,7 +1930,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dependency_upgrade_2">Dependency upgrade</h3>
+<h3 id="_dependency_upgrade_3">Dependency upgrade</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1747,7 +1943,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task_3">Task</h3>
+<h3 id="_task_4">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1784,7 +1980,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <p>Apache Isis 1.8.0 incorporates the Wicket viewer, which was previously a separately released component.  Other components that are included in core (that were previously released separately are: the Restful Objects viewer, Shiro Security and the JDO/DataNucleus ObjectStore.</p>
 </div>
 <div class="sect2">
-<h3 id="_new_feature_4">New Feature</h3>
+<h3 id="_new_feature_5">New Feature</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1872,7 +2068,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvement_4">Improvement</h3>
+<h3 id="_improvement_5">Improvement</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -2002,7 +2198,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bug_5">Bug</h3>
+<h3 id="_bug_6">Bug</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -2069,7 +2265,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_task_4">Task</h3>
+<h3 id="_task_5">Task</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -2105,7 +2301,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_5">New Feature</h4>
+<h4 id="_new_feature_6">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2134,7 +2330,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_5">Improvement</h4>
+<h4 id="_improvement_6">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2168,7 +2364,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_6">Bug</h4>
+<h4 id="_bug_7">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2244,7 +2440,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_5">Task</h4>
+<h4 id="_task_6">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2257,7 +2453,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer">Wicket viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_6">New Feature</h4>
+<h4 id="_new_feature_7">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2292,7 +2488,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_7">Bug</h4>
+<h4 id="_bug_8">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2308,7 +2504,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependency_upgrade_3">Dependency upgrade</h4>
+<h4 id="_dependency_upgrade_4">Dependency upgrade</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2318,7 +2514,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_6">Task</h4>
+<h4 id="_task_7">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2339,7 +2535,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <p>Isis core 1.6.0 also incorporates the Restful Objects viewer, Shiro Security and JDO Objectstore.</p>
 </div>
 <div class="sect3">
-<h4 id="_new_feature_7">New Feature</h4>
+<h4 id="_new_feature_8">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2355,7 +2551,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_6">Improvement</h4>
+<h4 id="_improvement_7">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2389,7 +2585,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_8">Bug</h4>
+<h4 id="_bug_9">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2426,7 +2622,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependency_upgrade_4">Dependency upgrade</h4>
+<h4 id="_dependency_upgrade_5">Dependency upgrade</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2452,7 +2648,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_2">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_8">New Feature</h4>
+<h4 id="_new_feature_9">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2468,7 +2664,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_7">Improvement</h4>
+<h4 id="_improvement_8">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2484,7 +2680,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_9">Bug</h4>
+<h4 id="_bug_10">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2506,7 +2702,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_7">Task</h4>
+<h4 id="_task_8">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2524,7 +2720,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_3">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_9">New Feature</h4>
+<h4 id="_new_feature_10">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2540,7 +2736,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_8">Improvement</h4>
+<h4 id="_improvement_9">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2577,7 +2773,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_10">Bug</h4>
+<h4 id="_bug_11">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2599,7 +2795,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_8">Task</h4>
+<h4 id="_task_9">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2615,7 +2811,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_3">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_9">Improvement</h4>
+<h4 id="_improvement_10">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2640,7 +2836,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_11">Bug</h4>
+<h4 id="_bug_12">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2662,7 +2858,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependency_upgrade_5">Dependency upgrade</h4>
+<h4 id="_dependency_upgrade_6">Dependency upgrade</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2672,7 +2868,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_9">Task</h4>
+<h4 id="_task_10">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2685,7 +2881,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_task_10">Task</h4>
+<h4 id="_task_11">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2695,7 +2891,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_12">Bug</h4>
+<h4 id="_bug_13">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2705,7 +2901,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_11">Task</h4>
+<h4 id="_task_12">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2721,7 +2917,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_improvement_10">Improvement</h4>
+<h4 id="_improvement_11">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2737,7 +2933,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_13">Bug</h4>
+<h4 id="_bug_14">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2750,7 +2946,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_12">Task</h4>
+<h4 id="_task_13">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2771,7 +2967,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_4">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_11">Improvement</h4>
+<h4 id="_improvement_12">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2784,7 +2980,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_14">Bug</h4>
+<h4 id="_bug_15">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2797,7 +2993,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore_2">JDO Objectstore</h3>
 <div class="sect3">
-<h4 id="_bug_15">Bug</h4>
+<h4 id="_bug_16">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2815,7 +3011,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_4">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_10">New Feature</h4>
+<h4 id="_new_feature_11">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2918,7 +3114,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_12">Improvement</h4>
+<h4 id="_improvement_13">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3000,7 +3196,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_16">Bug</h4>
+<h4 id="_bug_17">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3037,7 +3233,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_13">Task</h4>
+<h4 id="_task_14">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3050,7 +3246,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_5">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_11">New Feature</h4>
+<h4 id="_new_feature_12">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3093,7 +3289,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_13">Improvement</h4>
+<h4 id="_improvement_14">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3160,7 +3356,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_17">Bug</h4>
+<h4 id="_bug_18">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3209,7 +3405,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_14">Task</h4>
+<h4 id="_task_15">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3222,7 +3418,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_2">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_task_15">Task</h4>
+<h4 id="_task_16">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3235,7 +3431,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_shiro_security">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_new_feature_12">New Feature</h4>
+<h4 id="_new_feature_13">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3248,7 +3444,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_16">Task</h4>
+<h4 id="_task_17">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3261,7 +3457,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore_3">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_13">New Feature</h4>
+<h4 id="_new_feature_14">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3295,7 +3491,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_14">Improvement</h4>
+<h4 id="_improvement_15">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3353,7 +3549,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_18">Bug</h4>
+<h4 id="_bug_19">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3366,7 +3562,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependency_upgrade_6">Dependency upgrade</h4>
+<h4 id="_dependency_upgrade_7">Dependency upgrade</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3376,7 +3572,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_17">Task</h4>
+<h4 id="_task_18">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3394,7 +3590,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_6">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_14">New Feature</h4>
+<h4 id="_new_feature_15">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3404,7 +3600,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_19">Bug</h4>
+<h4 id="_bug_20">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3420,7 +3616,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_18">Task</h4>
+<h4 id="_task_19">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3438,7 +3634,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_5">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_15">New Feature</h4>
+<h4 id="_new_feature_16">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3523,7 +3719,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_15">Improvement</h4>
+<h4 id="_improvement_16">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3617,7 +3813,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_20">Bug</h4>
+<h4 id="_bug_21">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3663,7 +3859,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_19">Task</h4>
+<h4 id="_task_20">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3676,7 +3872,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_7">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_16">New Feature</h4>
+<h4 id="_new_feature_17">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3737,7 +3933,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_16">Improvement</h4>
+<h4 id="_improvement_17">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3798,7 +3994,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_21">Bug</h4>
+<h4 id="_bug_22">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3829,7 +4025,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_3">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_17">New Feature</h4>
+<h4 id="_new_feature_18">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3839,7 +4035,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_17">Improvement</h4>
+<h4 id="_improvement_18">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3852,7 +4048,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_22">Bug</h4>
+<h4 id="_bug_23">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3883,7 +4079,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_shiro_security_2">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_improvement_18">Improvement</h4>
+<h4 id="_improvement_19">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3899,7 +4095,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore_4">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_18">New Feature</h4>
+<h4 id="_new_feature_19">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3927,7 +4123,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_19">Improvement</h4>
+<h4 id="_improvement_20">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3961,7 +4157,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_23">Bug</h4>
+<h4 id="_bug_24">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3977,7 +4173,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependency_upgrade_7">Dependency upgrade</h4>
+<h4 id="_dependency_upgrade_8">Dependency upgrade</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3990,7 +4186,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_task_20">Task</h4>
+<h4 id="_task_21">Task</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4008,7 +4204,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_6">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_19">New Feature</h4>
+<h4 id="_new_feature_20">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4051,7 +4247,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_20">Improvement</h4>
+<h4 id="_improvement_21">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4109,7 +4305,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_24">Bug</h4>
+<h4 id="_bug_25">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4125,7 +4321,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_8">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_20">New Feature</h4>
+<h4 id="_new_feature_21">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4156,7 +4352,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_21">Improvement</h4>
+<h4 id="_improvement_22">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4226,7 +4422,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_25">Bug</h4>
+<h4 id="_bug_26">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4275,7 +4471,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_4">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_21">New Feature</h4>
+<h4 id="_new_feature_22">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4288,7 +4484,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_22">Improvement</h4>
+<h4 id="_improvement_23">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4312,45 +4508,6 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_7">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_22">New Feature</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-282">ISIS-282</a> - Add support for file uploads and downloads to Wicket viewer and JDO objectstore</p>
-</li>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-304">ISIS-304</a> - arg, no business rules) do not appear.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_improvement_23">Improvement</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-305">ISIS-305</a> - compareTo methods (when implement Comparable) should be automatically hidden</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_bug_26">Bug</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-207">ISIS-207</a> - Improve the message given when a field is too long (exceeds its @MaxLength value)</p>
-</li>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/ISIS-312">ISIS-312</a> - Guard in BaseFixture to allow fixtures to load in production mode was faulty</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_wicket_viewer_9">Wicket Viewer</h3>
-<div class="sect3">
 <h4 id="_new_feature_23">New Feature</h4>
 <div class="ulist">
 <ul>
@@ -4368,6 +4525,45 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="ulist">
 <ul>
 <li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-305">ISIS-305</a> - compareTo methods (when implement Comparable) should be automatically hidden</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bug_27">Bug</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-207">ISIS-207</a> - Improve the message given when a field is too long (exceeds its @MaxLength value)</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-312">ISIS-312</a> - Guard in BaseFixture to allow fixtures to load in production mode was faulty</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wicket_viewer_9">Wicket Viewer</h3>
+<div class="sect3">
+<h4 id="_new_feature_24">New Feature</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-282">ISIS-282</a> - Add support for file uploads and downloads to Wicket viewer and JDO objectstore</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/ISIS-304">ISIS-304</a> - arg, no business rules) do not appear.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvement_25">Improvement</h4>
+<div class="ulist">
+<ul>
+<li>
 <p><a href="https://issues.apache.org/jira/browse/ISIS-308">ISIS-308</a> - Don&#39;t show (null) for a property or a parameter that has no reference (instead show an empty string)</p>
 </li>
 <li>
@@ -4380,7 +4576,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_27">Bug</h4>
+<h4 id="_bug_28">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4393,7 +4589,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_5">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_24">New Feature</h4>
+<h4 id="_new_feature_25">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4406,7 +4602,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_25">Improvement</h4>
+<h4 id="_improvement_26">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4425,7 +4621,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_shiro_security_3">Shiro Security</h3>
 <div class="sect3">
-<h4 id="_new_feature_25">New Feature</h4>
+<h4 id="_new_feature_26">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4435,7 +4631,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_26">Improvement</h4>
+<h4 id="_improvement_27">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4445,7 +4641,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_28">Bug</h4>
+<h4 id="_bug_29">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4458,7 +4654,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore_5">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_26">New Feature</h4>
+<h4 id="_new_feature_27">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4474,7 +4670,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_27">Improvement</h4>
+<h4 id="_improvement_28">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4511,7 +4707,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_29">Bug</h4>
+<h4 id="_bug_30">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4538,7 +4734,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_core_8">Core</h3>
 <div class="sect3">
-<h4 id="_new_feature_27">New Feature</h4>
+<h4 id="_new_feature_28">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4560,7 +4756,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_28">Improvement</h4>
+<h4 id="_improvement_29">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4651,7 +4847,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_30">Bug</h4>
+<h4 id="_bug_31">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4673,7 +4869,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_wicket_viewer_10">Wicket Viewer</h3>
 <div class="sect3">
-<h4 id="_new_feature_28">New Feature</h4>
+<h4 id="_new_feature_29">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4689,7 +4885,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_29">Improvement</h4>
+<h4 id="_improvement_30">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4705,7 +4901,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_31">Bug</h4>
+<h4 id="_bug_32">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4728,7 +4924,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_restfulobjects_viewer_6">RestfulObjects Viewer</h3>
 <div class="sect3">
-<h4 id="_improvement_30">Improvement</h4>
+<h4 id="_improvement_31">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4738,7 +4934,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bug_32">Bug</h4>
+<h4 id="_bug_33">Bug</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4751,7 +4947,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <div class="sect2">
 <h3 id="_jdo_objectstore_6">JDO ObjectStore</h3>
 <div class="sect3">
-<h4 id="_new_feature_29">New Feature</h4>
+<h4 id="_new_feature_30">New Feature</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4761,7 +4957,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_improvement_31">Improvement</h4>
+<h4 id="_improvement_32">Improvement</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4778,7 +4974,7 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
         <footer>
           <hr>
           <p class="small">
-          Copyright &copy; 2010~2015 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          Copyright &copy; 2010~2016 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
           <br/>
           Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
           </p>
@@ -4791,47 +4987,59 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
             <div class="fallback-toc">
                 <ul class="sectlevel1">
 <li><a href="#_summary">Summary</a></li>
-<li><a href="#r1.12.0">1.12.0-SNAPSHOT</a></li>
-<li><a href="#r1.11.1">1.11.1</a>
+<li><a href="#r1.12.0">1.12.0-SNAPSHOT</a>
 <ul class="sectlevel2">
-<li><a href="#_bug">Bug</a></li>
-</ul>
-</li>
-<li><a href="#r1.11.0">1.11.0</a>
-<ul class="sectlevel2">
+<li><a href="#r1.12.0">1.12.0</a>
+<ul class="sectlevel3">
 <li><a href="#_new_feature">New Feature</a></li>
 <li><a href="#_improvement">Improvement</a></li>
-<li><a href="#_bug_2">Bug</a></li>
+<li><a href="#_bug">Bug</a></li>
+<li><a href="#_dependency_upgrade">Dependency upgrade</a></li>
 <li><a href="#_task">Task</a></li>
 </ul>
 </li>
-<li><a href="#r1.10.0">1.10.0</a>
+</ul>
+</li>
+<li><a href="#r1.11.1">1.11.1</a>
+<ul class="sectlevel2">
+<li><a href="#_bug_2">Bug</a></li>
+</ul>
+</li>
+<li><a href="#r1.11.0">1.11.0</a>
 <ul class="sectlevel2">
 <li><a href="#_new_feature_2">New Feature</a></li>
 <li><a href="#_improvement_2">Improvement</a></li>
 <li><a href="#_bug_3">Bug</a></li>
 <li><a href="#_task_2">Task</a></li>
-<li><a href="#_dependency_upgrade">Dependency upgrade</a></li>
+</ul>
+</li>
+<li><a href="#r1.10.0">1.10.0</a>
+<ul class="sectlevel2">
+<li><a href="#_new_feature_3">New Feature</a></li>
+<li><a href="#_improvement_3">Improvement</a></li>
+<li><a href="#_bug_4">Bug</a></li>
+<li><a href="#_task_3">Task</a></li>
+<li><a href="#_dependency_upgrade_2">Dependency upgrade</a></li>
 <li><a href="#_superceded">Superceded</a></li>
 <li><a href="#_not_implemented_tidying_up_backlog">Not implemented (tidying up backlog)</a></li>
 </ul>
 </li>
 <li><a href="#r1.9.0">1.9.0</a>
 <ul class="sectlevel2">
-<li><a href="#_new_feature_3">New Feature</a></li>
-<li><a href="#_improvement_3">Improvement</a></li>
-<li><a href="#_bug_4">Bug</a></li>
-<li><a href="#_dependency_upgrade_2">Dependency upgrade</a></li>
-<li><a href="#_task_3">Task</a></li>
+<li><a href="#_new_feature_4">New Feature</a></li>
+<li><a href="#_improvement_4">Improvement</a></li>
+<li><a href="#_bug_5">Bug</a></li>
+<li><a href="#_dependency_upgrade_3">Dependency upgrade</a></li>
+<li><a href="#_task_4">Task</a></li>
 <li><a href="#_wish">Wish</a></li>
 </ul>
 </li>
 <li><a href="#r1.8.0">1.8.0</a>
 <ul class="sectlevel2">
-<li><a href="#_new_feature_4">New Feature</a></li>
-<li><a href="#_improvement_4">Improvement</a></li>
-<li><a href="#_bug_5">Bug</a></li>
-<li><a href="#_task_4">Task</a></li>
+<li><a href="#_new_feature_5">New Feature</a></li>
+<li><a href="#_improvement_5">Improvement</a></li>
+<li><a href="#_bug_6">Bug</a></li>
+<li><a href="#_task_5">Task</a></li>
 <li><a href="#_sub_task">Sub-task</a></li>
 </ul>
 </li>
@@ -4839,23 +5047,23 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_5">New Feature</a></li>
+<li><a href="#_new_feature_6">New Feature</a></li>
 <li><a href="#_security_fixes">Security fixes</a></li>
-<li><a href="#_improvement_5">Improvement</a></li>
-<li><a href="#_bug_6">Bug</a></li>
+<li><a href="#_improvement_6">Improvement</a></li>
+<li><a href="#_bug_7">Bug</a></li>
 <li><a href="#_removed_features">Removed features</a></li>
 <li><a href="#_removed_features_obsolete">Removed features (obsolete)</a></li>
 <li><a href="#_unreleased_features_backed_out">Unreleased features (backed out)</a></li>
-<li><a href="#_task_5">Task</a></li>
+<li><a href="#_task_6">Task</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer">Wicket viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_6">New Feature</a></li>
+<li><a href="#_new_feature_7">New Feature</a></li>
 <li><a href="#_security_fixes_2">Security fixes</a></li>
-<li><a href="#_bug_7">Bug</a></li>
-<li><a href="#_dependency_upgrade_3">Dependency upgrade</a></li>
-<li><a href="#_task_6">Task</a></li>
+<li><a href="#_bug_8">Bug</a></li>
+<li><a href="#_dependency_upgrade_4">Dependency upgrade</a></li>
+<li><a href="#_task_7">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4864,19 +5072,19 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_2">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_7">New Feature</a></li>
-<li><a href="#_improvement_6">Improvement</a></li>
-<li><a href="#_bug_8">Bug</a></li>
-<li><a href="#_dependency_upgrade_4">Dependency upgrade</a></li>
+<li><a href="#_new_feature_8">New Feature</a></li>
+<li><a href="#_improvement_7">Improvement</a></li>
+<li><a href="#_bug_9">Bug</a></li>
+<li><a href="#_dependency_upgrade_5">Dependency upgrade</a></li>
 <li><a href="#_task_core">Task (Core)</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_2">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_8">New Feature</a></li>
-<li><a href="#_improvement_7">Improvement</a></li>
-<li><a href="#_bug_9">Bug</a></li>
-<li><a href="#_task_7">Task</a></li>
+<li><a href="#_new_feature_9">New Feature</a></li>
+<li><a href="#_improvement_8">Improvement</a></li>
+<li><a href="#_bug_10">Bug</a></li>
+<li><a href="#_task_8">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4885,32 +5093,32 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_3">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_9">New Feature</a></li>
-<li><a href="#_improvement_8">Improvement</a></li>
-<li><a href="#_bug_10">Bug</a></li>
-<li><a href="#_task_8">Task</a></li>
+<li><a href="#_new_feature_10">New Feature</a></li>
+<li><a href="#_improvement_9">Improvement</a></li>
+<li><a href="#_bug_11">Bug</a></li>
+<li><a href="#_task_9">Task</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_3">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_9">Improvement</a></li>
-<li><a href="#_bug_11">Bug</a></li>
-<li><a href="#_dependency_upgrade_5">Dependency upgrade</a></li>
-<li><a href="#_task_9">Task</a></li>
+<li><a href="#_improvement_10">Improvement</a></li>
+<li><a href="#_bug_12">Bug</a></li>
+<li><a href="#_dependency_upgrade_6">Dependency upgrade</a></li>
+<li><a href="#_task_10">Task</a></li>
 </ul>
 </li>
 <li><a href="#_restfulobjects_viewer">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_task_10">Task</a></li>
-<li><a href="#_bug_12">Bug</a></li>
 <li><a href="#_task_11">Task</a></li>
+<li><a href="#_bug_13">Bug</a></li>
+<li><a href="#_task_12">Task</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_10">Improvement</a></li>
-<li><a href="#_bug_13">Bug</a></li>
-<li><a href="#_task_12">Task</a></li>
+<li><a href="#_improvement_11">Improvement</a></li>
+<li><a href="#_bug_14">Bug</a></li>
+<li><a href="#_task_13">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4919,13 +5127,13 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_wicket_viewer_4">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_11">Improvement</a></li>
-<li><a href="#_bug_14">Bug</a></li>
+<li><a href="#_improvement_12">Improvement</a></li>
+<li><a href="#_bug_15">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_2">JDO Objectstore</a>
 <ul class="sectlevel3">
-<li><a href="#_bug_15">Bug</a></li>
+<li><a href="#_bug_16">Bug</a></li>
 </ul>
 </li>
 </ul>
@@ -4934,38 +5142,38 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_4">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_10">New Feature</a></li>
-<li><a href="#_improvement_12">Improvement</a></li>
-<li><a href="#_bug_16">Bug</a></li>
-<li><a href="#_task_13">Task</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_5">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_11">New Feature</a></li>
 <li><a href="#_improvement_13">Improvement</a></li>
 <li><a href="#_bug_17">Bug</a></li>
 <li><a href="#_task_14">Task</a></li>
 </ul>
 </li>
+<li><a href="#_wicket_viewer_5">Wicket Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_12">New Feature</a></li>
+<li><a href="#_improvement_14">Improvement</a></li>
+<li><a href="#_bug_18">Bug</a></li>
+<li><a href="#_task_15">Task</a></li>
+</ul>
+</li>
 <li><a href="#_restfulobjects_viewer_2">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_task_15">Task</a></li>
+<li><a href="#_task_16">Task</a></li>
 </ul>
 </li>
 <li><a href="#_shiro_security">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_12">New Feature</a></li>
-<li><a href="#_task_16">Task</a></li>
+<li><a href="#_new_feature_13">New Feature</a></li>
+<li><a href="#_task_17">Task</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_3">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_13">New Feature</a></li>
-<li><a href="#_improvement_14">Improvement</a></li>
-<li><a href="#_bug_18">Bug</a></li>
-<li><a href="#_dependency_upgrade_6">Dependency upgrade</a></li>
-<li><a href="#_task_17">Task</a></li>
+<li><a href="#_new_feature_14">New Feature</a></li>
+<li><a href="#_improvement_15">Improvement</a></li>
+<li><a href="#_bug_19">Bug</a></li>
+<li><a href="#_dependency_upgrade_7">Dependency upgrade</a></li>
+<li><a href="#_task_18">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4974,9 +5182,9 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_wicket_viewer_6">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_14">New Feature</a></li>
-<li><a href="#_bug_19">Bug</a></li>
-<li><a href="#_task_18">Task</a></li>
+<li><a href="#_new_feature_15">New Feature</a></li>
+<li><a href="#_bug_20">Bug</a></li>
+<li><a href="#_task_19">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -4985,38 +5193,38 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_5">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_15">New Feature</a></li>
-<li><a href="#_improvement_15">Improvement</a></li>
-<li><a href="#_bug_20">Bug</a></li>
-<li><a href="#_task_19">Task</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_7">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_16">New Feature</a></li>
 <li><a href="#_improvement_16">Improvement</a></li>
 <li><a href="#_bug_21">Bug</a></li>
+<li><a href="#_task_20">Task</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_3">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_7">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_17">New Feature</a></li>
 <li><a href="#_improvement_17">Improvement</a></li>
 <li><a href="#_bug_22">Bug</a></li>
 </ul>
 </li>
+<li><a href="#_restfulobjects_viewer_3">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_18">New Feature</a></li>
+<li><a href="#_improvement_18">Improvement</a></li>
+<li><a href="#_bug_23">Bug</a></li>
+</ul>
+</li>
 <li><a href="#_shiro_security_2">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_18">Improvement</a></li>
+<li><a href="#_improvement_19">Improvement</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_4">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_18">New Feature</a></li>
-<li><a href="#_improvement_19">Improvement</a></li>
-<li><a href="#_bug_23">Bug</a></li>
-<li><a href="#_dependency_upgrade_7">Dependency upgrade</a></li>
-<li><a href="#_task_20">Task</a></li>
+<li><a href="#_new_feature_19">New Feature</a></li>
+<li><a href="#_improvement_20">Improvement</a></li>
+<li><a href="#_bug_24">Bug</a></li>
+<li><a href="#_dependency_upgrade_8">Dependency upgrade</a></li>
+<li><a href="#_task_21">Task</a></li>
 </ul>
 </li>
 </ul>
@@ -5025,22 +5233,22 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_6">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_19">New Feature</a></li>
-<li><a href="#_improvement_20">Improvement</a></li>
-<li><a href="#_bug_24">Bug</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_8">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_20">New Feature</a></li>
 <li><a href="#_improvement_21">Improvement</a></li>
 <li><a href="#_bug_25">Bug</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_4">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_8">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_21">New Feature</a></li>
 <li><a href="#_improvement_22">Improvement</a></li>
+<li><a href="#_bug_26">Bug</a></li>
+</ul>
+</li>
+<li><a href="#_restfulobjects_viewer_4">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_22">New Feature</a></li>
+<li><a href="#_improvement_23">Improvement</a></li>
 </ul>
 </li>
 </ul>
@@ -5049,36 +5257,36 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_7">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_22">New Feature</a></li>
-<li><a href="#_improvement_23">Improvement</a></li>
-<li><a href="#_bug_26">Bug</a></li>
-</ul>
-</li>
-<li><a href="#_wicket_viewer_9">Wicket Viewer</a>
-<ul class="sectlevel3">
 <li><a href="#_new_feature_23">New Feature</a></li>
 <li><a href="#_improvement_24">Improvement</a></li>
 <li><a href="#_bug_27">Bug</a></li>
 </ul>
 </li>
-<li><a href="#_restfulobjects_viewer_5">RestfulObjects Viewer</a>
+<li><a href="#_wicket_viewer_9">Wicket Viewer</a>
 <ul class="sectlevel3">
 <li><a href="#_new_feature_24">New Feature</a></li>
 <li><a href="#_improvement_25">Improvement</a></li>
+<li><a href="#_bug_28">Bug</a></li>
+</ul>
+</li>
+<li><a href="#_restfulobjects_viewer_5">RestfulObjects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_new_feature_25">New Feature</a></li>
+<li><a href="#_improvement_26">Improvement</a></li>
 </ul>
 </li>
 <li><a href="#_shiro_security_3">Shiro Security</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_25">New Feature</a></li>
-<li><a href="#_improvement_26">Improvement</a></li>
-<li><a href="#_bug_28">Bug</a></li>
+<li><a href="#_new_feature_26">New Feature</a></li>
+<li><a href="#_improvement_27">Improvement</a></li>
+<li><a href="#_bug_29">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_5">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_26">New Feature</a></li>
-<li><a href="#_improvement_27">Improvement</a></li>
-<li><a href="#_bug_29">Bug</a></li>
+<li><a href="#_new_feature_27">New Feature</a></li>
+<li><a href="#_improvement_28">Improvement</a></li>
+<li><a href="#_bug_30">Bug</a></li>
 </ul>
 </li>
 </ul>
@@ -5087,29 +5295,29 @@ category of UI events (so that titles, icons and CSS classes can be provided by 
 <ul class="sectlevel2">
 <li><a href="#_core_8">Core</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_27">New Feature</a></li>
-<li><a href="#_improvement_28">Improvement</a></li>
-<li><a href="#_bug_30">Bug</a></li>
+<li><a href="#_new_feature_28">New Feature</a></li>
+<li><a href="#_improvement_29">Improvement</a></li>
+<li><a href="#_bug_31">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_wicket_viewer_10">Wicket Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_28">New Feature</a></li>
-<li><a href="#_improvement_29">Improvement</a></li>
-<li><a href="#_bug_31">Bug</a></li>
+<li><a href="#_new_feature_29">New Feature</a></li>
+<li><a href="#_improvement_30">Improvement</a></li>
+<li><a href="#_bug_32">Bug</a></li>
 <li><a href="#_wish_2">Wish</a></li>
 </ul>
 </li>
 <li><a href="#_restfulobjects_viewer_6">RestfulObjects Viewer</a>
 <ul class="sectlevel3">
-<li><a href="#_improvement_30">Improvement</a></li>
-<li><a href="#_bug_32">Bug</a></li>
+<li><a href="#_improvement_31">Improvement</a></li>
+<li><a href="#_bug_33">Bug</a></li>
 </ul>
 </li>
 <li><a href="#_jdo_objectstore_6">JDO ObjectStore</a>
 <ul class="sectlevel3">
-<li><a href="#_new_feature_29">New Feature</a></li>
-<li><a href="#_improvement_31">Improvement</a></li>
+<li><a href="#_new_feature_30">New Feature</a></li>
+<li><a href="#_improvement_32">Improvement</a></li>
 </ul>
 </li>
 </ul>
