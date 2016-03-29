@@ -506,7 +506,98 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_migration-notes_1.11.0-to-1.12.0">From v1.11.0 to 1.12.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Isis 1.12.0-SNAPSHOT is still in development.</p>
+<p>Existing projects written against v1.11.x should run against v1.12.0 with few if any changes.  If you <strong>do</strong> encounter
+any difficulties then let us know via the <a href="support.html">users mailing list</a>, so we can support you and document
+issues here.</p>
+</div>
+<div class="sect2">
+<h3 id="_dynamic_xml_layouts">Dynamic XML Layouts</h3>
+<div class="paragraph">
+<p>The major new feature in 1.12.0 is <a href="ugfun.html#_ugfun_object-layout_dynamic_xml">dynamic XML layouts</a>, providing
+much enhanced support for custom layouts.</p>
+</div>
+<div class="paragraph">
+<p>The new <code>Xxx.layout.xml</code> file is optional; without it domain objects will
+continue to be rendered as before, using metadata from annotations (<a href="rgant.html#_rgant_DomainObjectLayout"><code>@DomainObjectLayout</code></a>,
+<a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>,
+<a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant_MemberOrder"><code>@MemberOrder</code></a> and
+<a href="rgant.html#_rgant_MemberGroupLayout"><code>@MemberGroupLayout</code></a>), and also from any <a href="ugfun.html#_ugfun_object-layout_dynamic"><code>Xxx.layout.json</code></a>
+file that might already exist.  There is therefore no requirement to move to the new more flexible XML-based layout.</p>
+</div>
+<div class="paragraph">
+<p>If you do want to start using the new format, then you will find that 1.12.0 provides a mixin action (available in
+prototype mode only) called "download XML layout".  This will allow you to download the current layout file for the
+object being rendered.  This can then be saved alongside the class' Java source file.  Once a <code>Xxx.layout.xml</code> file
+is present, any existing <code>Xxx.layout.json</code> file will be ignored; any annotations though will continue to be honoured.</p>
+</div>
+<div class="paragraph">
+<p>If you wish to migrate all your domain objects to use XML layouts, this can be done using the "download layouts (XML)"
+(on the "Prototyping" menu), as a single zip file.  This can then be unzipped into the <code>src/main/java</code> directory.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mixins">Mixins</h3>
+<div class="paragraph">
+<p>(As mentioned above), 1.12.0 provides a number of new mixin actions and properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_mixins_Object_clearHints">clear hints</a> action</p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_mixins_Object_downloadLayoutXml">download Layout XML</a> action (prototype mode)</p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_mixins_Object_rebuildMetamodel">rebuild metamodel</a> action (prototype mode)</p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_mixins_Persistable_datanucleusXxx">id and version</a> properties (for domain entities only)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These are in addition to the <a href="rgcms.html#_rgcms_classes_mixins_Persistable_downloadJdoMetadata">download JDO metadata</a> mixin action (prototype mode) provided in earlier versions of the framework.</p>
+</div>
+<div class="paragraph">
+<p>The properties are grouped in a "metadata" fieldset, and the mixin actions associated with that fieldset.  If the
+domain object is a view model rather than an entity (that is, has no id or version) then the actions will instead be rendered
+as top-level actions.</p>
+</div>
+<div class="paragraph">
+<p>Most of these mixin object members are visible only in prototype mode, though some are visible in production mode and
+so potentially visible to end-users.  If you wish to suppress these members from the view, you can either use <a href="#ugsec.adoc">security</a>,
+or alternatively you can write <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a>s to veto the visibility
+of these members by subscribing to their respective domain events.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jaxb_view_models_are_editable">JAXB view models are editable</h3>
+<div class="paragraph">
+<p>All <a href="rgant.html#_rgant_XmlRootElement"><code>@XmlRootElement</code></a> view models are now implicitly editable.  Therefore any
+view models that should be read-only should have editing attribute disabled using <a href="rgant.html#_rgant_DomainObject_editing"><code>@DomainObject#editing()</code></a> (or use a <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a> to veto editability).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_domainobjectcontainer_code_domain_service"><code>DomainObjectContainer</code> domain service</h3>
+<div class="paragraph">
+<p>The <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>domain service has been deprecated, with
+its methods moved to a new set of more fine-grained domain services, such as
+<a href="rgsvc.html#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a> and
+<a href="rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>DomainObjectContainer</code> service will continue to be supported until Apache Isis v2.0.0, but in the meantime, consider
+changing existing application code to use these new domain services.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_removal_of_the_code_self_host_code_profile">Removal of the <code>self-host</code> profile</h3>
+<div class="paragraph">
+<p>The <code>self-host</code> profile has been removed from the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.
+Instead, run the application using either the <code>org.apache.isis.WebServer</code> main class, or <code>mvn jetty:run</code>, or build the
+WAR and deploy to a servlet container such as Tomcat.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="__code_isis_viewer_wicket_disablemodaldialogs_code_removed"><code>isis.viewer.wicket.disableModalDialogs</code> removed</h3>
@@ -2004,6 +2095,11 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
                 <ul class="sectlevel1">
 <li><a href="#_migration-notes_1.11.0-to-1.12.0">From v1.11.0 to 1.12.0</a>
 <ul class="sectlevel2">
+<li><a href="#_dynamic_xml_layouts">Dynamic XML Layouts</a></li>
+<li><a href="#_mixins">Mixins</a></li>
+<li><a href="#_jaxb_view_models_are_editable">JAXB view models are editable</a></li>
+<li><a href="#__code_domainobjectcontainer_code_domain_service"><code>DomainObjectContainer</code> domain service</a></li>
+<li><a href="#_removal_of_the_code_self_host_code_profile">Removal of the <code>self-host</code> profile</a></li>
 <li><a href="#__code_isis_viewer_wicket_disablemodaldialogs_code_removed"><code>isis.viewer.wicket.disableModalDialogs</code> removed</a></li>
 </ul>
 </li>
