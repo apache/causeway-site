@@ -8334,10 +8334,8 @@ services.</p>
 <div class="sect2">
 <h3 id="_rgsvc_api_MetaModelService">9.3. <code>MetaModelService</code></h3>
 <div class="paragraph">
-<p>The <code>MetaModelService</code> provides access (albeit currently extremely limited) to aspects of Apache Isis' internal metamodel.</p>
-</div>
-<div class="paragraph">
-<p>Currently this is limited to looking up the object type (as specified in <a href="rgant.html#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> and equivalent mechanisms, and as used in  <a href="#_rgsvc_api_BookmarkService"><code>Bookmark</code></a>s and elsewhere) from an object&#8217;s class, and vice versa.  In the future we expect other aspects of the metamodel to also be formally surfaced through this API.</p>
+<p>The <code>MetaModelService2</code> (<code>MetaModelService2</code> sub-interface introduced in <code>1.13.0-SNAPSHOT</code>) provides access to
+a number of aspects of Apache Isis' internal metamodel.</p>
 </div>
 <div class="sect3">
 <h4 id="_api_6">9.3.1. API</h4>
@@ -8346,11 +8344,18 @@ services.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService</span> {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService2</span> {
     <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="directive">final</span> <span class="predefined-type">String</span> objectType);   <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="predefined-type">String</span> toObjectType(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);     <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="type">void</span> rebuild(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);            <i class="conum" data-value="3"></i><b>(3)</b>
     <span class="predefined-type">List</span>&lt;DomainMember&gt; <span class="keyword">export</span>();                        <i class="conum" data-value="4"></i><b>(4)</b>
+
+    <span class="type">enum</span> Sort {                                         <i class="conum" data-value="5"></i><b>(5)</b>
+        VIEW_MODEL, JDO_ENTITY, DOMAIN_SERVICE,
+        MIXIN, VALUE, COLLECTION;
+    }
+    Sort sortOf(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);
+    Sort sortOf(<span class="directive">final</span> Bookmark bookmark);
 }</code></pre>
 </div>
 </div>
@@ -8371,6 +8376,10 @@ services.</p>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>returns a list of representations of each of member of each domain class.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(<code>1.13.0-SNAPSHOT</code>) what sort of object a domain type is (or bookmark represents)</td>
 </tr>
 </table>
 </div>
@@ -8399,7 +8408,8 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <h4 id="_related_services_24">9.3.4. Related Services</h4>
 <div class="paragraph">
 <p>The <code>MetaModelServiceMenu</code> provides a method to download all domain members as a CSV.  Internally
-this calls <code>MetaModelService#export()</code>.</p>
+this calls <code>MetaModelService#export()</code>.  Under the covers this uses the API provided by the
+<a href="#_rgsvc_api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a> domain service.</p>
 </div>
 </div>
 </div>
