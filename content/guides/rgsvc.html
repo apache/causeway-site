@@ -9495,24 +9495,25 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">RepositoryService</span> {
-
     &lt;T&gt; T instantiate(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType);                                               <i class="conum" data-value="1"></i><b>(1)</b>
 
     <span class="type">boolean</span> isPersistent(<span class="predefined-type">Object</span> domainObject);                                              <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="type">void</span> persist(<span class="predefined-type">Object</span> domainObject);                                                      <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="type">void</span> remove(<span class="predefined-type">Object</span> persistentDomainObject);                                             <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="type">void</span> persistAndFlush(<span class="predefined-type">Object</span> domainObject);                                              <i class="conum" data-value="4"></i><b>(4)</b>
 
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allInstances(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="type">long</span>... range);                               <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="type">void</span> remove(<span class="predefined-type">Object</span> persistentDomainObject);                                             <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="type">void</span> removeAndFlush(<span class="predefined-type">Object</span> persistentDomainObject);                                     <i class="conum" data-value="6"></i><b>(6)</b>
 
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                 <i class="conum" data-value="6"></i><b>(6)</b>
-    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="predefined-type">Predicate</span>&lt;? <span class="local-variable">super</span> T&gt; predicate, <span class="type">long</span>... range); <i class="conum" data-value="7"></i><b>(7)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allInstances(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="type">long</span>... range);                               <i class="conum" data-value="7"></i><b>(7)</b>
 
-    &lt;T&gt; T uniqueMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                      <i class="conum" data-value="8"></i><b>(8)</b>
-    &lt;T&gt; T uniqueMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                 <i class="conum" data-value="9"></i><b>(9)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                 <i class="conum" data-value="8"></i><b>(8)</b>
+    &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; allMatches(<span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="predefined-type">Predicate</span>&lt;? <span class="local-variable">super</span> T&gt; predicate, <span class="type">long</span>... range); <i class="conum" data-value="9"></i><b>(9)</b>
 
-    &lt;T&gt; T firstMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                       <i class="conum" data-value="10"></i><b>(10)</b>
-    &lt;T&gt; T firstMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                  <i class="conum" data-value="11"></i><b>(11)</b>
+    &lt;T&gt; T uniqueMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                      <i class="conum" data-value="10"></i><b>(10)</b>
+    &lt;T&gt; T uniqueMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                 <i class="conum" data-value="11"></i><b>(11)</b>
 
+    &lt;T&gt; T firstMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                       <i class="conum" data-value="12"></i><b>(12)</b>
+    &lt;T&gt; T firstMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                  <i class="conum" data-value="13"></i><b>(13)</b>
 }</code></pre>
 </div>
 </div>
@@ -9534,23 +9535,23 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>remove (ie delete) an object from the persistent object store (or do nothing if it has already been deleted).</td>
+<td>(<code>1.13.0-SNAPSHOT</code>) persist (ie save) and flush; same as <code>persist()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>return all persisted instances of specified type.  Mostly for prototyping, though can be useful to obtain all instances of domain entities if the number is known to be small.  The optional varargs parameters are for paging control; more on this below.</td>
+<td>remove (ie delete) an object from the persistent object store (or do nothing if it has already been deleted).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>all persistence instances matching the specified <code>Query</code>.  Query itself is an Isis abstraction on top of JDO/DataNucleus' Query API.  <strong>This is the primary API used for querying</strong></td>
+<td>(<code>1.13.0-SNAPSHOT</code>) remove (delete) and flush;  same as <code>remove()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
+<td>return all persisted instances of specified type.  Mostly for prototyping, though can be useful to obtain all instances of domain entities if the number is known to be small.  The optional varargs parameters are for paging control; more on this below.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>Returns the first instance that matches the supplied query.  If no instance is found then `null `will be returned, while if there is more that one instances a run-time exception will be thrown.  Generally this method is preferred for looking up an object by its (primary or alternate) key.</td>
+<td>all persistence instances matching the specified <code>Query</code>.  Query itself is an Isis abstraction on top of JDO/DataNucleus' Query API.  <strong>This is the primary API used for querying</strong></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
@@ -9558,10 +9559,18 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </tr>
 <tr>
 <td><i class="conum" data-value="10"></i><b>10</b></td>
-<td>Returns the first instance that matches the supplied query.  If no instance is found then <code>null `will be returned.  No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(&#8230;&#8203;)</code>.</td>
+<td>Returns the first instance that matches the supplied query.  If no instance is found then `null `will be returned, while if there is more that one instances a run-time exception will be thrown.  Generally this method is preferred for looking up an object by its (primary or alternate) key.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>Returns the first instance that matches the supplied query.  If no instance is found then <code>null `will be returned.  No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(&#8230;&#8203;)</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
 <td>As the previous, but with client-side filtering using a <code>Predicate</code>.  Only really intended for prototyping.</td>
 </tr>
 </table>
@@ -9573,10 +9582,10 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="sect3">
 <h4 id="_usage_17">11.3.2. Usage</h4>
 <div class="paragraph">
-<p>This section briefly discusses how application code can use these APIs.</p>
+<p>This section briefly discusses how application code can use (some of) these APIs.</p>
 </div>
 <div class="sect4">
-<h5 id="_query">Query</h5>
+<h5 id="_persist">Persist</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java">Customer cust = repositoryService.instantiate(Customer.class);
@@ -9593,7 +9602,108 @@ repositoryService.persist(cust);</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_query_2">Query</h5>
+<h5 id="__code_persistandflush_code_code_removeandflush_code"><code>persistAndFlush(&#8230;&#8203;)</code>, <code>removeAndFlush(&#8230;&#8203;)</code></h5>
+<div class="paragraph">
+<p>In some cases, such as when using managed properties and collections for implementing 1-1, 1-n, or m-n relationships,
+the developer needs to invoke <code>flush()</code> to send the changes to the DataNucleus persistence mechanism.  These
+managed properties and collections and then updated.</p>
+</div>
+<div class="paragraph">
+<p>The <code>persistAndFlush(&#8230;&#8203;)</code> and <code>removeAndFlush(&#8230;&#8203;)</code> methods (introduced in <code>1.13.0-SNAPSHOT</code>) save the developer from
+having to call the <code>flush(&#8230;&#8203;)</code> method.</p>
+</div>
+<div class="paragraph">
+<p>For example, the following code requires a flush to occur, so uses these methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">Warehouse</span> <span class="directive">extends</span> SalesVIPEntity&lt;Marketplace&gt; {
+
+    <span class="annotation">@Persistent</span>(mappedBy = <span class="string"><span class="delimiter">&quot;</span><span class="content">marketplace</span><span class="delimiter">&quot;</span></span>, dependentElement = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>                                                             <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> <span class="predefined-type">SortedSet</span>&lt;MarketplaceExcludedProduct&gt; excludedProducts =
+                            <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;MarketplaceExcludedProduct&gt;();
+
+    <span class="annotation">@Action</span>(semantics = SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> MarketplaceExcludedProduct addExcludedProduct(<span class="directive">final</span> Product product) {
+        MarketplaceExcludedProduct marketplaceExcludedProduct = <span class="local-variable">this</span>.findExcludedProduct(product);
+        <span class="keyword">if</span> (marketplaceExcludedProduct == <span class="predefined-constant">null</span>) {
+            marketplaceExcludedProduct =
+                <span class="local-variable">this</span>.factoryService.instantiate(MarketplaceExcludedProduct.class);
+        }
+
+        <span class="local-variable">this</span>.wrap(marketplaceExcludedProduct).setMarketplace(<span class="local-variable">this</span>);
+        <span class="local-variable">this</span>.wrap(marketplaceExcludedProduct).setProduct(product);
+
+        <span class="local-variable">this</span>.repositoryService.persistAndFlush(marketplaceExcludedProduct);     <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="keyword">return</span> marketplaceExcludedProduct;
+    }
+
+    <span class="annotation">@Action</span>(semantics = SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> <span class="type">void</span> deleteFromExcludedProducts(<span class="directive">final</span> Product product) {
+        <span class="directive">final</span> MarketplaceExcludedProduct marketplaceExcludedProduct = findExcludedProduct(product);
+        <span class="keyword">if</span> (marketplaceExcludedProduct != <span class="predefined-constant">null</span>) {
+            <span class="local-variable">this</span>.repositoryService.removeAndFlush(marketplaceExcludedProduct);
+        }
+    }
+    ...                                                                         <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>using lombok for brevity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Needed for updating the managed properties and collections.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>injected services and other methods ommited</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>On the “addExcludedProduct()�? action, if the user didn’t flush, the following test would fail because the managed
+collection would not containing the given product:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Test</span>
+<span class="directive">public</span> <span class="type">void</span> addExcludedProduct() {
+
+    <span class="comment">// given</span>
+    <span class="directive">final</span> AmazonMarketplace amazonMarketplace = <span class="local-variable">this</span>.wrapSkipRules(
+        <span class="local-variable">this</span>.marketplaceRepository).findOrCreateAmazonMarketplace(
+            AmazonMarketplaceLocation.FRANCE);
+
+    <span class="directive">final</span> Product product = <span class="local-variable">this</span>.wrap(<span class="local-variable">this</span>.productRepository)
+        .createProduct(<span class="predefined-type">UUID</span>.randomUUID().toString(), <span class="predefined-type">UUID</span>.randomUUID().toString());
+
+    <span class="comment">// when</span>
+    <span class="local-variable">this</span>.wrap(amazonMarketplace).addExcludedProduct(product);
+
+    <span class="comment">// then</span>
+    Assertions.assertThat(
+            <span class="local-variable">this</span>.wrapSkipRules(amazonMarketplace).findAllProductsExcluded()
+        ).contains(product);                                                    <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>this would fail.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_query_and_code_xxxmatches_code">Query and <code>xxxMatches(&#8230;&#8203;)</code></h5>
 <div class="paragraph">
 <p>There are various implementations of the <code>Query</code> API, but these either duplicate functionality of the other overloads of <code>allMatches(&#8230;&#8203;)</code> or they are not supported by the JDO/DataNucleus object store.   The only significant implementation of <code>Query</code> to be aware of is <code>QueryDefault</code>, which identifies a named query and a set of parameter/argument tuples.</p>
 </div>
@@ -11077,8 +11187,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_api_8">11.3.1. API</a></li>
 <li><a href="#_usage_17">11.3.2. Usage</a>
 <ul class="sectlevel4">
-<li><a href="#_query">Query</a></li>
-<li><a href="#_query_2">Query</a></li>
+<li><a href="#_persist">Persist</a></li>
+<li><a href="#__code_persistandflush_code_code_removeandflush_code"><code>persistAndFlush(&#8230;&#8203;)</code>, <code>removeAndFlush(&#8230;&#8203;)</code></a></li>
+<li><a href="#_query_and_code_xxxmatches_code">Query and <code>xxxMatches(&#8230;&#8203;)</code></a></li>
 </ul>
 </li>
 <li><a href="#_implementation_29">11.3.3. Implementation</a>
