@@ -5243,7 +5243,7 @@ a reference to the JDO <code>PersistenceManagerFactory</code>.</p>
 also possible to extend the layout architecture for other grid systems.  The component classes, though, are intended to be reusable across all grid systems.</p>
 </div>
 <div class="paragraph">
-<p>The component classes, meanwhile, are broadly equivalent to the "layout" annotations (<a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a>, <a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a> and <a href="rgant.html#_rgant_DomainObjectLayout"><code>@DomainObjectLayout</code></a></p>
+<p>The component classes, meanwhile, are broadly equivalent to the "layout" annotations (<a href="rgant.html#_rgant-PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant-CollectionLayout"><code>@CollectionLayout</code></a>, <a href="rgant.html#_rgant-ActionLayout"><code>@ActionLayout</code></a> and <a href="rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a></p>
 </div>
 <div class="paragraph">
 <p>All of the classes in this package are JAXB-annotated, meaning that they can be serialized to/from XML (the <code>component</code> classes in the <code><a href="http://isis.apache.org/applib/layout/component" class="bare">http://isis.apache.org/applib/layout/component</a></code> XSD namespace, the bootstrap 3 grid classes in the <code><a href="http://isis.apache.org/applib/layout/grid/bootstrap3" class="bare">http://isis.apache.org/applib/layout/grid/bootstrap3</a></code> XSD namespace).  This ability to serialize to/from XML is used by the <a href="rgsvc.html#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a>, the default implementation of which reads the grid layout for a domain class from a <code>.layout.xml</code> file on the classpath.</p>
@@ -5267,16 +5267,16 @@ also possible to extend the layout architecture for other grid systems.  The com
 <div class="ulist">
 <ul>
 <li>
-<p><code>PropertyLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_PropertyLayout"><code>@PropertyLayout</code></a> annotation;</p>
+<p><code>PropertyLayoutData</code>, corresponding to the <a href="rgant.html#_rgant-PropertyLayout"><code>@PropertyLayout</code></a> annotation;</p>
 </li>
 <li>
-<p><code>CollectionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_CollectionLayout"><code>@CollectionLayout</code></a> annotation;</p>
+<p><code>CollectionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant-CollectionLayout"><code>@CollectionLayout</code></a> annotation;</p>
 </li>
 <li>
-<p><code>ActionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_ActionLayout"><code>@ActionLayout</code></a> annotation;</p>
+<p><code>ActionLayoutData</code>, corresponding to the <a href="rgant.html#_rgant-ActionLayout"><code>@ActionLayout</code></a> annotation;</p>
 </li>
 <li>
-<p><code>DomainObjectLayoutData</code>, corresponding to the <a href="rgant.html#_rgant_DomainObjectLayout"><code>@DomainObjectLayout</code></a> annotation.</p>
+<p><code>DomainObjectLayoutData</code>, corresponding to the <a href="rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a> annotation.</p>
 </li>
 </ul>
 </div>
@@ -5365,163 +5365,85 @@ responsive designs.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Most applications need to integrate with other apps in the enterprise.  To facilitate such integration scenarios,
-Apache Isis defines two standard XSD schemas:</p>
+Apache Isis defines a number of standard XSD schemas:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the <a href="#_rgcms_schema-common">common schema</a>, which defines the <code>oidDto</code> complex type: the object&#8217;s type and its identifier.<br></p>
-<div class="paragraph">
-<p>It also defines some two further XSD types, which are building blocks used in&#8230;&#8203;</p>
-</div>
+<p>the <a href="#_rgcms_schema-cmd">command</a> schema (<code>1.13.0-SNAPSHOT</code>), which captures the <em>intention</em> of a user
+to invoke an action or edit a property</p>
 </li>
 <li>
-<p>the <a href="#_rgcms_schema-aim">action memento invocation</a> schema, which allows action invocations to be captured
-and reified.<br></p>
-<div class="paragraph">
-<p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module uses this XML format
-to publish messages onto an <a href="http://activemq.apache.org">Apache ActiveMQ</a> message queue.</p>
-</div>
+<p>the <a href="#_rgcms_schema-ixn">interaction execution</a> schema (<code>1.13.0-SNAPSHOT</code>), which captures the actual execution of an action invocation/property edit</p>
+</li>
+<li>
+<p>the <a href="#_rgcms_schema-chg">changes</a> schema (<code>1.13.0-SNAPSHOT</code>), which captures which objects have been
+created, updated or deleted as the result of an execution of an action invocation/property edit</p>
+</li>
+<li>
+<p>the <a href="#_rgcms_schema-aim">action memento invocation</a> schema (deprecated in <code>1.13.0-SNAPSHOT</code>, replaced by
+either "cmd" or "ixn"), which allows action invocations to be captured and reified.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>These each use XSD types defined by the <a href="#_rgcms_schema-common">common schema</a> (most notably the <code>oidDto</code>
+complex type which identifies a domain object).</p>
+</div>
+<div class="paragraph">
+<p>(As of <code>1.13.0-SNAPSHOT</code>) the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> and
+<a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> modules uses these schemas to reify
+corresponding applib objects (<code>Command</code>, <code>Interaction.Execution</code> and <code>PublishedObjects</code>), either to persist or
+publishing using an <a href="http://activemq.apache.org">Apache ActiveMQ</a> message queue.</p>
 </div>
 <div class="paragraph">
 <p>The sections below discuss these schemas in more detail.</p>
 </div>
 <div class="sect2">
-<h3 id="_rgcms_schema-common">4.1. Common Schema</h3>
+<h3 id="_rgcms_schema-cmd">4.1. Command (<code>1.13.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
-<p>The main purpose of the common schema is to define the <code>oidDto</code> complex type: the object&#8217;s type and its identifier.
-This is basically a formal XML equivalent to the <code>Bookmark</code> object obtained from the
-<a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>.</p>
-</div>
-<div class="paragraph">
-<p>Although simple, this is an enormously powerful concept, in that it represents a URI to any domain object managed by
-a given Apache Isis application.  With it, we have the ability to lookup any arbitrary object.  Further discussion and
-examples can be found <a href="ugfun.html#_ugfun_core-concepts_building-blocks_oid">here</a>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>                           <i class="conum" data-value="1"></i><b>(1)</b>
-           <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qualified</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-
-    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">oidDto</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                                          <i class="conum" data-value="2"></i><b>(2)</b>
-        <span class="tag">&lt;xs:sequence&gt;</span>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectType</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                                <i class="conum" data-value="3"></i><b>(3)</b>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectIdentifier</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                          <i class="conum" data-value="4"></i><b>(4)</b>
-        <span class="tag">&lt;/xs:sequence&gt;</span>
-        <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectState</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookmarkObjectState</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">persistent</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/xs:complexType&gt;</span>
-
-    <span class="tag">&lt;xs:simpleType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookmarkObjectState</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                              <i class="conum" data-value="5"></i><b>(5)</b>
-        <span class="tag">&lt;xs:restriction</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">persistent</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">transient</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">viewModel</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:restriction&gt;</span>
-    <span class="tag">&lt;/xs:simpleType&gt;</span>
-    ...
-<span class="tag">&lt;/xs:schema&gt;</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the common schema has a namespace URI of "http://isis.apache.org/schema/common".  Although URIs are not the same as URLs, you will find that the schemas are also downloadable from this location.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>the <code>oidDto</code> complex type defines the unique identifier for any domain object: its type, and an identifier.  The <code>objectState</code> attribute is of type <code>bookmarkObjectState</code> and will typically be "transient" or "viewModel"</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the object type, corresponding to either the
-<a href="rgant.html#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> attribute, or to the (JDO)
-<a href="rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a> annotation (<code>schema</code> and/or <code>table</code>
-attributes), or to the (JDO) <a href="rgant.html#_rgant-Discriminator"><code>@Discriminator</code></a> annotation.  If none
-is specified, then the fully
-qualified class name will be used.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>the object identifier (aka primary key), converted to string form.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>the <code>bookmarkObjectState</code> enumerates the possible persistence states of the referenced object.  Although "transient" is shown,
-in practice the only types of objects will be "persistent" (entities) or "viewModel".</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The <code>oidDto</code> complex type is used in two specific places by the framework:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>first, as a means of serializing JAXB view model/DTOs (annotated with
-<a href="rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>), that reference domain entities.<br></p>
-<div class="paragraph">
-<p>These references are serialized instead into OIDs</p>
-</div>
-</li>
-<li>
-<p>second, as references to the target of action invocations, as described by the
-<a href="#_rgcms_schema-aim">action invocation memento</a> schema.<br></p>
-<div class="paragraph">
-<p>They are also used to represent references to any action arguments that take domain object entities.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The common schema also defines two further types: the <code>valueDto</code> complex type and the <code>valueType</code> simple type:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qualified</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
-           <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    ...
-    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">valueDto</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                              <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="tag">&lt;xs:choice</span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">string</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">byte</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:byte</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">short</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:short</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            ...
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">localTime</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:time</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">reference</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">oidDto</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:choice&gt;</span>
-    <span class="tag">&lt;/xs:complexType&gt;</span>
-
-    <span class="tag">&lt;xs:simpleType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">valueType</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                              <i class="conum" data-value="2"></i><b>(2)</b>
-        <span class="tag">&lt;xs:restriction</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">byte</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">short</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            ...
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">isisApplibClob</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">reference</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:restriction&gt;</span>
-    <span class="tag">&lt;/xs:simpleType&gt;</span>
-<span class="tag">&lt;/xs:schema&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>These two type definitions are just building blocks, also used within the
-<a href="#_rgcms_schema-aim">action iInvocation memento</a> schema.  The first, <code>valueDto</code> is intended to hold any valid
-value, eg of an argument to an action.  The second, <code>valueType</code>, enumerates the different types of vales, eg of a
-formal parameter to an action.</p>
+<p>The "cmd" schema (<code>1.13.0-SNAPSHOT</code>) defines the serialized form of the <em>intention</em> to invoke an action or to
+edit a property.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgcms_schema-aim">4.2. Action Invocation Memento</h3>
+<h3 id="_rgcms_schema-ixn">4.2. Interaction Execution (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The "ixn" schema (<code>1.13.0-SNAPSHOT</code>) defines the serialized form of an action invocation or a property edit.  In fact,
+it actually defines a callgraph of such executions for those cases where the
+<a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> is used to execute sub-actions/property edits.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgcms_schema-chg">4.3. Changes (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The "chg" schema (<code>1.13.0-SNAPSHOT</code>) defines the serialized form identifying which objects have been created, updated
+or deleted as the result of invoking an action or editing a property.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgcms_schema-aim">4.4. Action Invocation Memento</h3>
 <div class="paragraph">
 <p>The "aim" schema defines the serialized form (or memento) of an action invocation.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This schema has been removed in <code>1.13.0-SNAPSHOT</code>, replaced with <a href="#_rgcms_schema-ixn">ixn.xsd</a> (for action
+invocations/property edits) and with <a href="#_rgcms_schema-cmd">cmd.xsd</a> (commands, ie the <em>intention</em> to
+invoke an action/edit a property).</p>
+</div>
+<div class="paragraph">
+<p>The remaining content on this page describes how <code>CommandContext</code> works up to v1.12.x.  However, as of <code>1.13.0-SNAPSHOT</code> the <code>CommandContext</code> uses its own <code>cmd.xsd</code> schema).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Action invocations are captured (in memory rather than in serialized form) when the end-user invokes the action
@@ -5670,12 +5592,142 @@ be serialized to/from using the same <code>ActionInvocationMementoDtoUtils</code
 </td>
 <td class="content">
 <div class="paragraph">
-<p>As of <code>1.11.0</code> this schema is not used directly by the framework; in particular <code>Command#setMemento(&#8230;&#8203;)</code> sets a similar
-but less formal XML structure.  This may change in the future.</p>
+<p>As of <code>1.11.0</code> through <code>1.12.1</code> this schema is not used directly by the framework; in particular
+<code>Command#setMemento(&#8230;&#8203;)</code> sets a similar but less formal XML structure.  This may change in the future.</p>
 </div>
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgcms_schema-common">4.5. Common Schema</h3>
+<div class="paragraph">
+<p>The main purpose of the common schema is to define the <code>oidDto</code> complex type: the object&#8217;s type and its identifier.
+This is basically a formal XML equivalent to the <code>Bookmark</code> object obtained from the
+<a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Although simple, this is an enormously powerful concept, in that it represents a URI to any domain object managed by
+a given Apache Isis application.  With it, we have the ability to lookup any arbitrary object.  Further discussion and
+examples can be found <a href="ugfun.html#_ugfun_core-concepts_building-blocks_oid">here</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>                           <i class="conum" data-value="1"></i><b>(1)</b>
+           <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qualified</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">oidDto</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                                          <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;xs:sequence&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectType</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                                <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectIdentifier</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                          <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="tag">&lt;/xs:sequence&gt;</span>
+        <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">objectState</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookmarkObjectState</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">persistent</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:simpleType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookmarkObjectState</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                              <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tag">&lt;xs:restriction</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">persistent</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">transient</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">viewModel</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/xs:restriction&gt;</span>
+    <span class="tag">&lt;/xs:simpleType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the common schema has a namespace URI of "http://isis.apache.org/schema/common".  Although URIs are not the same as URLs, you will find that the schemas are also downloadable from this location.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the <code>oidDto</code> complex type defines the unique identifier for any domain object: its type, and an identifier.  The <code>objectState</code> attribute is of type <code>bookmarkObjectState</code> and will typically be "transient" or "viewModel"</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the object type, corresponding to either the
+<a href="rgant.html#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> attribute, or to the (JDO)
+<a href="rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a> annotation (<code>schema</code> and/or <code>table</code>
+attributes), or to the (JDO) <a href="rgant.html#_rgant-Discriminator"><code>@Discriminator</code></a> annotation.  If none
+is specified, then the fully
+qualified class name will be used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the object identifier (aka primary key), converted to string form.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the <code>bookmarkObjectState</code> enumerates the possible persistence states of the referenced object.  Although "transient" is shown,
+in practice the only types of objects will be "persistent" (entities) or "viewModel".</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>oidDto</code> complex type is used in two specific places by the framework:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>first, as a means of serializing JAXB view model/DTOs (annotated with
+<a href="rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>), that reference domain entities.<br></p>
+<div class="paragraph">
+<p>These references are serialized instead into OIDs</p>
+</div>
+</li>
+<li>
+<p>second, as references to the target of action invocations, as described by the
+<a href="#_rgcms_schema-aim">action invocation memento</a> schema.<br></p>
+<div class="paragraph">
+<p>They are also used to represent references to any action arguments that take domain object entities.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The common schema also defines two further types: the <code>valueDto</code> complex type and the <code>valueType</code> simple type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qualified</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
+           <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">valueDto</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                              <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;xs:choice</span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">string</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">byte</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:byte</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">short</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:short</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            ...
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">localTime</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:time</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">reference</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">oidDto</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/xs:choice&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:simpleType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">valueType</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                              <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;xs:restriction</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xs:string</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">string</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">byte</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">short</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            ...
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">isisApplibClob</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;xs:enumeration</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">reference</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/xs:restriction&gt;</span>
+    <span class="tag">&lt;/xs:simpleType&gt;</span>
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These two type definitions are just building blocks, also used within the
+<a href="#_rgcms_schema-aim">action iInvocation memento</a> schema.  The first, <code>valueDto</code> is intended to hold any valid
+value, eg of an argument to an action.  The second, <code>valueType</code>, enumerates the different types of vales, eg of a
+formal parameter to an action.</p>
 </div>
 </div>
 </div>
@@ -5936,8 +5988,11 @@ but less formal XML structure.  This may change in the future.</p>
 </li>
 <li><a href="#_rgcms_schema">4. Schema</a>
 <ul class="sectlevel2">
-<li><a href="#_rgcms_schema-common">4.1. Common Schema</a></li>
-<li><a href="#_rgcms_schema-aim">4.2. Action Invocation Memento</a></li>
+<li><a href="#_rgcms_schema-cmd">4.1. Command (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgcms_schema-ixn">4.2. Interaction Execution (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgcms_schema-chg">4.3. Changes (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgcms_schema-aim">4.4. Action Invocation Memento</a></li>
+<li><a href="#_rgcms_schema-common">4.5. Common Schema</a></li>
 </ul>
 </li>
 </ul>
