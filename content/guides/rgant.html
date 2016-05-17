@@ -2534,30 +2534,37 @@ wrapping the target object using the <a href="rgsvc.html#_rgsvc_api_WrapperFacto
 <div class="sect2">
 <h3 id="_rgant-Action_publishing">3.5. <code>publishing()</code></h3>
 <div class="paragraph">
-<p>The <code>publishing()</code> attribute determines whether and how an action invocation is published via the registered implementation of a <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>).  This attribute is also supported for <a href="#_rgant-DomainObject_publishing">domain objects</a>, where it controls whether changed objects are published as events.</p>
+<p>The <code>publishing()</code> attribute determines whether and how an action invocation is published via the registered
+implementation of a <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>) or
+<a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>).  This attribute is also
+supported for <a href="#_rgant-DomainObject_publishing">domain objects</a>, where it controls whether changed objects
+are published as events, and for <a href="#_rgant_Property_publishing"><code>@Property#publishing()</code></a>, where it controls
+whether property edits are published as events.</p>
 </div>
 <div class="paragraph">
 <p>A common use case is to notify external "downstream" systems of changes in the state of the Isis application.
-The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that the <a href="rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.publish.actions</code> is used to determine the whether the action is published:</p>
+The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that the
+<a href="rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.publish.actions</code> is used to determine
+the whether the action is published:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><code>all</code><br></p>
 <div class="paragraph">
-<p>all actions are published</p>
+<p>all action invocations are published</p>
 </div>
 </li>
 <li>
 <p><code>ignoreSafe</code> (or <code>ignoreQueryOnly</code>)<br></p>
 <div class="paragraph">
-<p>actions with safe (read-only) semantics are ignored, but actions which may modify data are not ignored</p>
+<p>invocations of actions with safe (read-only) semantics are ignored, but actions which may modify data are not ignored</p>
 </div>
 </li>
 <li>
 <p><code>none</code><br></p>
 <div class="paragraph">
-<p>no actions are published</p>
+<p>no action invocations are published</p>
 </div>
 </li>
 </ul>
@@ -2566,7 +2573,9 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
 <p>If there is no configuration property in <code>isis.properties</code> then publishing is automatically enabled.</p>
 </div>
 <div class="paragraph">
-<p>This default can be overridden on an action-by-action basis; if <code>publishing()</code> is set to <code>ENABLED</code> then the action invocation is published irrespective of the configured value; if set to <code>DISABLED</code> then the action invocation is <em>not</em> published, again irrespective of the configured value.</p>
+<p>This default can be overridden on an action-by-action basis; if <code>publishing()</code> is set to <code>ENABLED</code> then the action
+invocation is published irrespective of the configured value; if set to <code>DISABLED</code> then the action invocation is
+<em>not</em> published, again irrespective of the configured value.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -2590,10 +2599,29 @@ The default value for the attribute is <code>AS_CONFIGURED</code>, meaning that 
 <div class="sect3">
 <h4 id="__code_publishingpayloadfactory_code">3.5.1. <code>publishingPayloadFactory()</code></h4>
 <div class="paragraph">
-<p>The (optional) related <code>publishingPayloadFactory()</code> specifies the class to use to create the (payload of the) event to be published by the publishing factory.</p>
+<p>The (optional) related <code>publishingPayloadFactory()</code> specifies the class to use to create the (payload of the) event to
+be published by the publishing factory.</p>
 </div>
 <div class="paragraph">
-<p>Rather than simply broadcast that the action was invoked, the payload factory allows a "fatter" payload to be instantiated that can eagerly push commonly-required information to all subscribers. For at least some subscribers this should avoid the necessity to query back for additional information.</p>
+<p>Rather than simply broadcast that the action was invoked, the payload factory allows a "fatter" payload to be
+instantiated that can eagerly push commonly-required information to all subscribers. For at least some subscribers
+this should avoid the necessity to query back for additional information.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Be aware that this attribute is only honoured by the deprecated ( in <code>1.13.0-SNAPSHOT</code>)
+<a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>, so should itself be considered as deprecated.  It
+is ignored by the replacement <a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>,</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -6149,7 +6177,12 @@ then no event will be posted.</p>
 <div class="sect2">
 <h3 id="_rgant-DomainObject_publishing">10.11. <code>publishing()</code></h3>
 <div class="paragraph">
-<p>The <code>publishing()</code> attribute determines whether and how a modified object instance is published via the registered implementation of a <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>).  This attribute is also supported for <a href="#_rgant-Action_publishing">actions</a>, where it controls whether action invocations are published as events.</p>
+<p>The <code>publishing()</code> attribute determines whether and how a modified object instance is published via the registered
+implementation of a <a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>) or
+<a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>).  This attribute is also supported
+for <a href="#_rgant-Action_publishing">actions</a>, where it controls whether action invocations are published as
+events, and for <a href="#_rgant_Property_publishing"><code>@Property#publishing()</code></a>, where it controls whether
+property edits are published as events.</p>
 </div>
 <div class="paragraph">
 <p>A common use case is to notify external "downstream" systems of changes in the state of the Isis application.</p>
@@ -6203,10 +6236,29 @@ then no event will be posted.</p>
 <div class="sect3">
 <h4 id="__code_publishingpayloadfactory_code_2">10.11.1. <code>publishingPayloadFactory()</code></h4>
 <div class="paragraph">
-<p>The (optional) related <code>publishingPayloadFactory()</code> specifies the class to use to create the (payload of the) event to be published by the publishing factory.</p>
+<p>The (optional) related <code>publishingPayloadFactory()</code> specifies the class to use to create the (payload of the) event to
+be published by the publishing factory.</p>
 </div>
 <div class="paragraph">
-<p>Rather than simply broadcast that the object was changed, the payload factory allows a "fatter" payload to be instantiated that can eagerly push commonly-required information to all subscribers. For at least some subscribers this should avoid the necessity to query back for additional information.</p>
+<p>Rather than simply broadcast that the object was changed, the payload factory allows a "fatter" payload to be
+instantiated that can eagerly push commonly-required information to all subscribers. For at least some subscribers
+this should avoid the necessity to query back for additional information.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Be aware that this attribute is only honoured by the deprecated ( in <code>1.13.0-SNAPSHOT</code>)
+<a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>, so should itself be considered as deprecated.  It
+is ignored by the replacement <a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>,</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

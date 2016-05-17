@@ -3519,7 +3519,8 @@ is specified.</p></td>
 <div class="sect3">
 <h4 id="_rgcms_classes_domainevent_AbstractDomainEvent">3.3.1. <code>AbstractDomainEvent</code></h4>
 <div class="paragraph">
-<p>This class is the superclass for all domain events that are raised by the framework when interacting with actions, properties or collections.</p>
+<p>This class is the superclass for all domain events that are raised by the framework when interacting with actions,
+properties or collections.</p>
 </div>
 <div class="paragraph">
 <p>Its immediate subclasses are:</p>
@@ -3538,10 +3539,122 @@ is specified.</p></td>
 </ul>
 </div>
 <div class="paragraph">
-<p>This class defines the <code>Phase</code> enum that is common to all domain events (hide/disable/validate/pre-execute/post-execute), and provides methods such as <code>veto(&#8230;&#8203;)</code> by which subscribers can influence the interaction (eg hide a collection, disable a property, validate action arguments).</p>
+<p>The main purpose of the class is to define the protocol by which subscribers can influence an interaction (eg hide a
+collection, disable a property, validate action arguments).  It class also provides a simple mechanism to allow
+adhoc sharing of user data between different phases.</p>
+</div>
+<div class="sect4">
+<h5 id="_api_2">API</h5>
+<div class="paragraph">
+<p>The API of the class is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">AbstractDomainEvent</span>&lt;S&gt; <span class="directive">extends</span> java.util.EventObject {
+
+    <span class="directive">public</span> Phase getEventPhase();                                   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> S getSource();                                           <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> Identifier getIdentifier();                              <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="directive">public</span> <span class="type">void</span> hide();                                             <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="directive">public</span> <span class="type">boolean</span> isHidden();                                      <i class="conum" data-value="5"></i><b>(5)</b>
+
+    <span class="directive">public</span> <span class="type">void</span> disable(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                       <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="directive">public</span> <span class="type">void</span> disable(<span class="directive">final</span> TranslatableString reason);
+    <span class="directive">public</span> <span class="predefined-type">String</span> getDisabledReason();                              <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="directive">public</span> TranslatableString getDisabledReasonTranslatable();
+    <span class="directive">public</span> <span class="type">boolean</span> isDisabled();
+
+    <span class="directive">public</span> <span class="type">void</span> invalidate(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                    <i class="conum" data-value="8"></i><b>(8)</b>
+    <span class="directive">public</span> <span class="type">void</span> invalidate(<span class="directive">final</span> TranslatableString reason);
+    <span class="directive">public</span> <span class="predefined-type">String</span> getInvalidityReason();                            <i class="conum" data-value="9"></i><b>(9)</b>
+    <span class="directive">public</span> TranslatableString getInvalidityReasonTranslatable();
+    <span class="directive">public</span> <span class="type">boolean</span> isInvalid();
+
+    <span class="directive">public</span> <span class="type">void</span> veto(<span class="directive">final</span> <span class="predefined-type">String</span> reason, <span class="directive">final</span> <span class="predefined-type">Object</span>... args);    <i class="conum" data-value="10"></i><b>(10)</b>
+    <span class="directive">public</span> <span class="type">void</span> veto(<span class="directive">final</span> TranslatableString translatableReason);
+
+    <span class="directive">public</span> <span class="predefined-type">Object</span> get(<span class="predefined-type">Object</span> key);                                  <i class="conum" data-value="11"></i><b>(11)</b>
+    <span class="directive">public</span> <span class="type">void</span> put(<span class="predefined-type">Object</span> key, <span class="predefined-type">Object</span> value);
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Whether the framework is checking visibility, enablement, validity or actually executing
+(invoking action, editing property), as per the <code>Phase</code> enum (defined below).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The domain object raising this event</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Identifier of the action, property or collection being interacted with.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>API for subscribers to hide the member</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Used by the framework to determine if the member should be hidden (not rendered)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>API for subscribers to disable the member, specifying the reason why (possibly translated)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Used by the framework to determine whether the member should be disabled (greyed out) when rendered.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>API for subscribers to invalidate an interaction, eg invalid arguments to an action</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Used by the framework to determine whether the interaction is invalid and should be blocked (eg pressing OK shows
+message)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Convenience API for subscribers to veto; will automatically call either <code>hide()</code>, <code>disable(&#8230;&#8203;)</code> or
+<code>invalidate(&#8230;&#8203;)</code> based on the phase</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>Mechanism to allow subscribers to share arbitrary information between phases.  One event instance is used for both
+the hide and disable phases, and a different event instance is shared between validate/pre-execute/post-execute.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>It class also provides <code>get(&#8230;&#8203;)</code> and <code>put(&#8230;&#8203;)</code> methods that allow adhoc sharing of user data between different phases.  One event instance is used for both the hide and disable phases, and a different event instance is shared between validate/pre-execute/post-execute.</p>
+<p>The referenced <code>Phase</code> enum is in turn:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">enum</span> Phase {
+    HIDE,
+    DISABLE,
+    VALIDATE,
+    EXECUTING,
+    EXECUTED;
+    <span class="directive">public</span> <span class="type">boolean</span> isValidatingOrLater();    <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The significance being that at this point the proposed values/arguments are known, and so the event can be fully
+populated.</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -3571,6 +3684,68 @@ is specified.</p></td>
 <div class="paragraph">
 <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s action.</p>
 </div>
+<div class="sect4">
+<h5 id="_api_3">API</h5>
+<div class="paragraph">
+<p>The API of the class is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">ActionDomainEvent</span>&lt;S&gt; <span class="directive">extends</span> AbstractDomainEvent&lt;S&gt; {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Default</span> <span class="directive">extends</span> ActionDomainEvent&lt;<span class="predefined-type">Object</span>&gt; { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Noop</span> <span class="directive">extends</span> ActionDomainEvent&lt;<span class="predefined-type">Object</span>&gt; { ... }      <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Doop</span> <span class="directive">extends</span> ActionDomainEvent&lt;<span class="predefined-type">Object</span>&gt; { ... }      <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="annotation">@Deprecated</span>
+    <span class="directive">public</span> Command getCommand();                                            <i class="conum" data-value="4"></i><b>(4)</b>
+
+    <span class="directive">public</span> SemanticsOf getSemantics();
+
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; getParameterNames();
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getParameterTypes();
+
+    <span class="directive">public</span> <span class="predefined-type">Object</span> getMixedIn();                                             <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Object</span>&gt; getArguments();                                     <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> getReturnValue();                                         <i class="conum" data-value="7"></i><b>(7)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>Default</code> nested static class is the default for the <a href="rgant.html#_rgant_Action_domainEvent"><code>@Action#domainEvent()</code></a>
+annotation attribute.  Whether this raises an event or not depends upon the
+<code>isis.reflector.facet.actionAnnotation.domainEvent.postForDefault</code> configuration property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>Noop</code> class is provided as a convenience to indicate that an event should <em>not</em> be posted (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Similarly, the <code>Doop</code> class is provided as a convenience to indicate that an event <em>should</em> be raised (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Deprecated, use <a href="rgsvc.html#_rgsvc_api_CommandContext"><code>CommandContext</code></a> or (better)  <a href="rgsvc.html#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> (<code>1.13.0-SNAPSHOT</code>) instead.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>(<code>1.13.0-SNAPSHOT</code>) Populated only for mixins; holds the underlying domain object that the mixin contributes to.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The arguments being used to invoke the action; populated during validate phase and subsequent phases.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The value returned by the action; populated only in the executed phase.</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_rgcms_classes_domainevent_CollectionDomainEvent">3.3.3. <code>CollectionDomainEvent</code></h4>
@@ -3596,6 +3771,82 @@ is specified.</p></td>
 <div class="paragraph">
 <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s collection.</p>
 </div>
+<div class="sect4">
+<h5 id="_api_4">API</h5>
+<div class="paragraph">
+<p>The API of the class is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">CollectionDomainEvent</span>&lt;S,T&gt; <span class="directive">extends</span> AbstractDomainEvent&lt;S&gt; {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Default</span>                                 <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="directive">extends</span> CollectionDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Noop</span>                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">extends</span> CollectionDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Doop</span>                                    <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">extends</span> CollectionDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+
+    <span class="directive">public</span> T getValue();                                        <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="directive">public</span> Of getOf();                                          <i class="conum" data-value="5"></i><b>(5)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>Default</code> nested static class is the default for the <a href="rgant.html#_rgant_Collection_domainEvent"><code>@Collection#domainEvent()</code></a>
+annotation attribute.  Whether this raises an event or not depends upon the
+<code>isis.reflector.facet.collectionAnnotation.domainEvent.postForDefault</code> configuration property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>Noop</code> class is provided as a convenience to indicate that an event should <em>not</em> be posted (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Similarly, the <code>Doop</code> class is provided as a convenience to indicate that an event <em>should</em> be raised (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the object being added or removed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>whether this is to add or to remove</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>where the <code>Of</code> enum indicates in turn how the collection is being interacted with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">enum</span> Of {
+    ACCESS,         <i class="conum" data-value="1"></i><b>(1)</b>
+    ADD_TO,         <i class="conum" data-value="2"></i><b>(2)</b>
+    REMOVE_FROM     <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>collection is being rendered; set during for hide and disable phases</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>collection is being added to; set for validate, executing and executed phases</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>or, collection is being removed from; set for validate, executing and executed phases</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_rgcms_classes_domainevent_PropertyDomainEvent">3.3.4. <code>PropertyDomainEvent</code></h4>
@@ -3617,6 +3868,54 @@ is specified.</p></td>
 </div>
 <div class="paragraph">
 <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object&#8217;s property.</p>
+</div>
+<div class="sect4">
+<h5 id="_api_5">API</h5>
+<div class="paragraph">
+<p>The API of the class is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">PropertyDomainEvent</span>&lt;S,T&gt; <span class="directive">extends</span> AbstractDomainEvent&lt;S&gt; {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Default</span>                                 <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="directive">extends</span> PropertyDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Noop</span>                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">extends</span> PropertyDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Doop</span>                                    <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">extends</span> PropertyDomainEvent&lt;<span class="predefined-type">Object</span>, <span class="predefined-type">Object</span>&gt; { ... }
+
+    <span class="directive">public</span> T getOldValue();                                     <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="directive">public</span> T getNewValue();                                     <i class="conum" data-value="5"></i><b>(5)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>Default</code> nested static class is the default for the <a href="rgant.html#_rgant_Property_domainEvent"><code>@Property#domainEvent()</code></a>
+annotation attribute.  Whether this raises an event or not depends upon the
+<code>isis.reflector.facet.propertyAnnotation.domainEvent.postForDefault</code> configuration property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>Noop</code> class is provided as a convenience to indicate that an event should <em>not</em> be posted (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Similarly, the <code>Doop</code> class is provided as a convenience to indicate that an event <em>should</em> be raised (irrespective of the configuration property setting).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The pre-modification value of the property; populated at validate and subsequent phases.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The proposed (post-modification) value of the property; populated at validate and subsequent phases</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -6634,10 +6933,26 @@ the <a href="#_rgcms_schema_cmd">"cmd"</a> and <a href="#_rgcms_schema_ixn">"ixn
 </li>
 <li><a href="#_rgcms_classes_domainevent">3.3. Domain Event Classes</a>
 <ul class="sectlevel3">
-<li><a href="#_rgcms_classes_domainevent_AbstractDomainEvent">3.3.1. <code>AbstractDomainEvent</code></a></li>
-<li><a href="#_rgcms_classes_domainevent_ActionDomainEvent">3.3.2. <code>ActionDomainEvent</code></a></li>
-<li><a href="#_rgcms_classes_domainevent_CollectionDomainEvent">3.3.3. <code>CollectionDomainEvent</code></a></li>
-<li><a href="#_rgcms_classes_domainevent_PropertyDomainEvent">3.3.4. <code>PropertyDomainEvent</code></a></li>
+<li><a href="#_rgcms_classes_domainevent_AbstractDomainEvent">3.3.1. <code>AbstractDomainEvent</code></a>
+<ul class="sectlevel4">
+<li><a href="#_api_2">API</a></li>
+</ul>
+</li>
+<li><a href="#_rgcms_classes_domainevent_ActionDomainEvent">3.3.2. <code>ActionDomainEvent</code></a>
+<ul class="sectlevel4">
+<li><a href="#_api_3">API</a></li>
+</ul>
+</li>
+<li><a href="#_rgcms_classes_domainevent_CollectionDomainEvent">3.3.3. <code>CollectionDomainEvent</code></a>
+<ul class="sectlevel4">
+<li><a href="#_api_4">API</a></li>
+</ul>
+</li>
+<li><a href="#_rgcms_classes_domainevent_PropertyDomainEvent">3.3.4. <code>PropertyDomainEvent</code></a>
+<ul class="sectlevel4">
+<li><a href="#_api_5">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_rgcms_classes_uievent">3.4. UI Event Classes</a>
