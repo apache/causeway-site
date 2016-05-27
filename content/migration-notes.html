@@ -503,6 +503,77 @@ table.CodeRay td.code>pre{padding:0}
 
         <div id="doc-content">
           <div class="sect1">
+<h2 id="_migration-notes_1.11.0-to-1.12.0">From v1.12.0 to 1.13.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Existing projects written against v1.12.x should run against v1.13.0 with few if any changes.  If you <strong>do</strong> encounter
+any difficulties then let us know via the <a href="support.html">users mailing list</a>, so we can support you and document
+issues here.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>1.13.0-SNAPSHOT</code> is currently still in development.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_faster_startup_times">Faster startup times</h3>
+<div class="paragraph">
+<p>Several new configuration settings influence application startup times:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isis.services.applicationFeatures.init</code><br></p>
+<div class="paragraph">
+<p>This setting can be used to control whether the
+<a href="rgsvc.html#_rgsvc_api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a> domain service lazily or
+eagerly initializes itself based on the framework&#8217;s internal metamodel.<br></p>
+</div>
+<div class="paragraph">
+<p>Prior to <code>1.13.0</code> this service eagerly initialized itself, causing the framework to have to traverse the domain object
+model graph for all types.  This could add noticeable overhead.  For <code>1.13.0</code> this service now initializes itself
+lazily.  The previous behaviour (of eager initialization) can be re-enabled by setting this property to <code>eager</code>.</p>
+</div>
+</li>
+<li>
+<p><code>isis.services.injector.injectPrefix</code> and <code>isis.services.injector.setPrefix</code><br></p>
+<div class="paragraph">
+<p>These settings can be used to control the styles of injection of domain services that the framework supports.<br></p>
+</div>
+<div class="paragraph">
+<p>Prior to <code>1.13.0</code> the framework supported the injection of fields using <a href="rgant.html#_rgant-Inject"><code>@Inject</code></a>, and
+also injection to <code>set&#8230;&#8203;()</code> setter methods and also <code>inject&#8230;&#8203;()</code> methods.  In <code>1.13.0</code> the injection through <code>@Inject</code>
+remains, and injection through setters is enabled by default.  Injection through <code>inject&#8230;&#8203;()</code> is disabled however.
+For faster start-up times still, consider disabling injection through <code>set&#8230;&#8203;()</code>.</p>
+</div>
+</li>
+<li>
+<p><code>isis.reflector.facets.ignoreDeprecated</code><br></p>
+<div class="paragraph">
+<p>This setting indicates whether to continue to honour or to simply ignore any deprecated annotations and other
+semantics that make up the programming model.<br></p>
+</div>
+<div class="paragraph">
+<p>Be aware that enabling this setting could substantially alter the semantics of your application.  To be safe, we
+recommend that you first run the application using <code>isis.reflector.validator.allowDeprecated</code> set to <code>false</code>; if any
+deprecated annotations etc. are in use, then the app will fail-fast and refuse to start.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_migration-notes_1.11.0-to-1.12.0">From v1.11.0 to 1.12.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2096,6 +2167,11 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
         <div id="toc" class="toc2">
             <div class="fallback-toc">
                 <ul class="sectlevel1">
+<li><a href="#_migration-notes_1.11.0-to-1.12.0">From v1.12.0 to 1.13.0</a>
+<ul class="sectlevel2">
+<li><a href="#_faster_startup_times">Faster startup times</a></li>
+</ul>
+</li>
 <li><a href="#_migration-notes_1.11.0-to-1.12.0">From v1.11.0 to 1.12.0</a>
 <ul class="sectlevel2">
 <li><a href="#_dynamic_xml_layouts">Dynamic XML Layouts</a></li>
