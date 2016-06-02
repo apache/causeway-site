@@ -4121,12 +4121,33 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 <div class="sect2">
 <h3 id="_ugbtb_deployment_externalized-configuration">8.3. Externalized Configuration</h3>
 <div class="paragraph">
-<p>As described <a href="rgcfg.html#_rgcfg_configuration-files">here</a>, by default Apache Isis itself bootstraps from the <code>isis.properties</code> configuration file.  It will also read configuration from the (optional) component/implementation-specific configuration files (such as
+<p>As described <a href="rgcfg.html#_rgcfg_configuration-files">here</a>, by default Apache Isis itself bootstraps from the
+<code>isis.properties</code> configuration file.  It will also read configuration from the (optional)
+component/implementation-specific configuration files (such as
 <code>persistor_datanucleus.properties</code> or <code>viewer_wicket.properties</code>), and also (optional) component-specific configuration
 files (such as <code>persistor.properties</code> or <code>viewer.properties</code>).</p>
 </div>
 <div class="paragraph">
-<p>By default these are read from the <code>WEB-INF</code> directory. Having this configuration "baked into" the application is
+<p>It&#8217;s generally not good practice to have the same configuration property in more than one file, but if that does occur,
+then the subsequent configuration property will be ignored.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In addition (as of <code>1.13.0-SNAPSHOT</code>) the framework will also load the <code>overrides.properties</code> file.  This is intended
+to support deployment through Docker, as discussed <a href="#_ugbtb_deployment_docker">next</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All of these files are read from the <code>WEB-INF</code> directory.  Having this configuration "baked into" the application is
 okay in a development environment, but when the app needs to be deployed to a test or production environment, this
 configuration should be read from an external location.</p>
 </div>
@@ -4407,7 +4428,62 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_gae">8.4. Deploying to Google App Engine</h3>
+<h3 id="_ugbtb_deployment_docker">8.4. Docker (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>In addition to loading the regular configuration properties from <code>WEB-INF</code> directory (described
+<a href="rgcfg.html#_rgcfg_configuration-files">here</a>), Apache Isis will also (as of <code>1.13.0-SNAPSHOT</code>)load the
+<code>overrides.properties</code> file.</p>
+</div>
+<div class="paragraph">
+<p>This file is treated slightly differently than the other configuration files; it is loaded last, and any configuration
+properties defined in it will <em>override</em> any configuration properties already read from other files (this includes
+any properties specified via the command line).</p>
+</div>
+<div class="paragraph">
+<p>While the regular configuration files are "baked into" the application WAR file, the <code>overrides.properties</code> file is
+created dynamically as part of the Docker <code>ENTRYPOINT</code> script, eg as documented in the
+<a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile best practices</a>.</p>
+</div>
+<div class="paragraph">
+<p>This, Docker can be supported relatively trivially:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>use <code>mvn</code> (as currently) to create a WAR file; set up with the <code>pom.xml</code> with the JDBC drivers of all DB servers that
+you might want to connect to (hsqldb, sql server, postgresql etc)</p>
+</li>
+<li>
+<p>in the <code>Dockerfile</code>, specify a base image containing Tomcat 8 + Java 8 (say)</p>
+</li>
+<li>
+<p>also in the <code>Dockerfile</code>, arrange it such that the WAR file is "exploded" (there is no need to copy over the WAR file itself)</p>
+</li>
+<li>
+<p>write a script that:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>explodes the WAR file, copying it into the Tomcat&#8217;s <code>webapp</code> directory.  There is no need to copy
+over the WAR file itself.</p>
+</li>
+<li>
+<p>creates the <code>overrides.properties</code> file from any input arguments, placing it into the <code>WEB-INF</code> directory</p>
+</li>
+<li>
+<p>sets all files to read-only</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>use <code>ENTRYPOINT</code> (and probably also <code>CMD</code>) to invoke above script.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugbtb_deployment_gae">8.5. Deploying to Google App Engine</h3>
 <div class="paragraph">
 <p>The <a href="https://cloud.google.com/appengine/docs">Google App Engine</a> (GAE) provides a JDO API, meaning that you can deploy Apache Isis onto GAE using the JDO objectstore.</p>
 </div>
@@ -4415,7 +4491,7 @@ configuration should be read from an external location.</p>
 <p>However, GAE is not an RDBMS, and so there are some limitations that it imposes. This page gathers together various hints, tips and workarounds.</p>
 </div>
 <div class="sect3">
-<h4 id="_primary_keys_and_owned_unowned_relationships">8.4.1. Primary Keys and Owned/Unowned Relationships</h4>
+<h4 id="_primary_keys_and_owned_unowned_relationships">8.5.1. Primary Keys and Owned/Unowned Relationships</h4>
 <div class="paragraph">
 <p>All entities must have a <code>@PrimaryKey</code>. Within GAE, the type of this key matters.</p>
 </div>
@@ -4433,7 +4509,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_custom_types">8.4.2. Custom Types</h4>
+<h4 id="_custom_types">8.5.2. Custom Types</h4>
 <div class="paragraph">
 <p>Currently Apache Isis' <code>Blob</code> and <code>Clob</code> types and the JODA types (<code>LocalDate</code> et al) are <em>not</em> supported in GAE.</p>
 </div>
@@ -4463,7 +4539,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_neo4j">8.5. Neo4J</h3>
+<h3 id="_ugbtb_deployment_neo4j">8.6. Neo4J</h3>
 <div class="paragraph">
 <p>As of 1.8.0 Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' <a href="http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html">Neo4J Datastore</a> implementation.</p>
 </div>
@@ -4488,7 +4564,7 @@ configuration should be read from an external location.</p>
 <p>The steps below describe the configuration steps required to update an existing app.</p>
 </div>
 <div class="sect3">
-<h4 id="_connectionurl">8.5.1. ConnectionURL</h4>
+<h4 id="_connectionurl">8.6.1. ConnectionURL</h4>
 <div class="paragraph">
 <p>In <code>persistor.properties</code>, update the JDO <code>ConnectionURL</code> property, eg:</p>
 </div>
@@ -4502,7 +4578,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_pom_xml">8.5.2. Update pom.xml</h4>
+<h4 id="_update_pom_xml">8.6.2. Update pom.xml</h4>
 <div class="paragraph">
 <p>Add the following dependency to the <code>webapp</code> project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -4532,7 +4608,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_try_it_out">8.5.3. Try it out!</h4>
+<h4 id="_try_it_out">8.6.3. Try it out!</h4>
 <div class="paragraph">
 <p>If you want to quickly try out neo4j for yourself:</p>
 </div>
@@ -4555,7 +4631,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_jvm-flags">8.6. JVM Flags</h3>
+<h3 id="_ugbtb_deployment_jvm-flags">8.7. JVM Flags</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4611,7 +4687,7 @@ Minimum heap size</p></td>
 <p>There are also a whole bunch of GC-related flags, that you might want to explore; see this detailed <a href="http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html">Hotspot JVM</a> documentation and also this <a href="http://blog.ragozin.info/2011/09/hotspot-jvm-garbage-collection-options.html">blog post</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_configuring_in_tomcat">8.6.1. Configuring in Tomcat</h4>
+<h4 id="_configuring_in_tomcat">8.7.1. Configuring in Tomcat</h4>
 <div class="paragraph">
 <p>If using Tomcat, update the <code>CATALINA_OPTS</code> variable.  (This variable is also updated if <a href="#_ugbtb_deployment_externalized-configuration_Log4j">configuring logging to run externally</a>).</p>
 </div>
@@ -5439,22 +5515,23 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_see_also">8.3.5. See also</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_gae">8.4. Deploying to Google App Engine</a>
+<li><a href="#_ugbtb_deployment_docker">8.4. Docker (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_ugbtb_deployment_gae">8.5. Deploying to Google App Engine</a>
 <ul class="sectlevel3">
-<li><a href="#_primary_keys_and_owned_unowned_relationships">8.4.1. Primary Keys and Owned/Unowned Relationships</a></li>
-<li><a href="#_custom_types">8.4.2. Custom Types</a></li>
+<li><a href="#_primary_keys_and_owned_unowned_relationships">8.5.1. Primary Keys and Owned/Unowned Relationships</a></li>
+<li><a href="#_custom_types">8.5.2. Custom Types</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_neo4j">8.5. Neo4J</a>
+<li><a href="#_ugbtb_deployment_neo4j">8.6. Neo4J</a>
 <ul class="sectlevel3">
-<li><a href="#_connectionurl">8.5.1. ConnectionURL</a></li>
-<li><a href="#_update_pom_xml">8.5.2. Update pom.xml</a></li>
-<li><a href="#_try_it_out">8.5.3. Try it out!</a></li>
+<li><a href="#_connectionurl">8.6.1. ConnectionURL</a></li>
+<li><a href="#_update_pom_xml">8.6.2. Update pom.xml</a></li>
+<li><a href="#_try_it_out">8.6.3. Try it out!</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_jvm-flags">8.6. JVM Flags</a>
+<li><a href="#_ugbtb_deployment_jvm-flags">8.7. JVM Flags</a>
 <ul class="sectlevel3">
-<li><a href="#_configuring_in_tomcat">8.6.1. Configuring in Tomcat</a></li>
+<li><a href="#_configuring_in_tomcat">8.7.1. Configuring in Tomcat</a></li>
 </ul>
 </li>
 </ul>
