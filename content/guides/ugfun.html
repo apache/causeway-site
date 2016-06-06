@@ -1698,8 +1698,16 @@ a given Apache Isis application.  With it, we have the ability to lookup any arb
 scanned by the mail room, the barcode could be read to attach the correspondence to the relevant domain object.</p>
 </li>
 <li>
-<p>as a handle to any object in an audit record (as used by the
-<a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>, in fact).</p>
+<p>as a handle to any object in an audit record (as used by <a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>
+or <a href="rgsvc.html#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>));</p>
+</li>
+<li>
+<p>similarly within implementations of <a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> to persist <code>Command</code>
+objects</p>
+</li>
+<li>
+<p>similarly within implementations of <a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>
+(<code>1.13.0-SNAPSHOT</code>) to persist published action invocations</p>
 </li>
 <li>
 <p>and of course both the <a href="ugvro.html">RestfulObjects viewer</a> and
@@ -1741,7 +1749,9 @@ TODO
 <p>Most framework domain services are API: they exist to provide support functionality to the application&#8217;s domain objects and services.  In this case an implementation of the service will be available, either by Apache Isis itself or by Isis Addons (non ASF).</p>
 </div>
 <div class="paragraph">
-<p>Some framework domain services are SPI: they exist primarily so that the application can influence the framework&#8217;s behaviour.  In these cases there is (usually) no default implementation; it is up to the application to provide an implementation.</p>
+<p>Some framework domain services are SPI: they exist primarily so that the application can influence the framework&#8217;s
+ehaviour.  In these cases there is (usually) no default implementation; it is up to the application to provide an
+implementation.</p>
 </div>
 <div class="paragraph">
 <p>General purpose:</p>
@@ -1749,10 +1759,32 @@ TODO
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a></p>
-</li>
+<p><a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>; mostly deprecated, replaced by:</p>
+<div class="ulist">
+<ul>
 <li>
 <p><a href="rgsvc.html#_rgsvc_api_ClockService"><code>ClockService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_ConfigurationService"><code>ConfigurationService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_ServiceRegistry"><code>ServiceRegistry</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_TitleService"><code>TitleService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_UserService"><code>UserService</code></a></p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p><a href="rgsvc.html#_rgsvc_api_IsisJdoSupport"><code>IsisJdoSupport</code></a></p>
@@ -1769,7 +1801,7 @@ TODO
 </ul>
 </div>
 <div class="paragraph">
-<p>Commands/Background/Auditing:</p>
+<p>Commands/Interactions/Background/Auditing/Publishing/Profiling:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1780,7 +1812,16 @@ TODO
 <p><a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> (SPI)</p>
 </li>
 <li>
+<p><a href="rgsvc.html#_rgsvc_spi_CommandMementoService"><code>CommandMementoService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> (SPI)</p>
+</li>
+<li>
 <p><a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (SPI) (<code>1.13.0-SNAPSHOT</code>)</p>
 </li>
 <li>
 <p><a href="rgsvc.html#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a></p>
@@ -1790,6 +1831,12 @@ TODO
 </li>
 <li>
 <p><a href="rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_PublisherService"><code>PublishererService</code></a> (SPI) (<code>1.13.0-SNAPSHOT</code>)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_MetricsService"><code>MetricsService</code></a></p>
 </li>
 </ul>
 </div>
@@ -1840,7 +1887,123 @@ TODO
 <p><a href="rgsvc.html#_rgsvc_api_DeepLinkService"><code>DeepLinkService</code></a></p>
 </li>
 <li>
+<p><a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a></p>
+</li>
+<li>
 <p><a href="rgsvc.html#_rgsvc_api_XmlSnapshotService"><code>XmlSnapshotService</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Layout and UI Management:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_HomePageProviderService"><code>HomePageProviderService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_GridService"><code>GridService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_HintStore"><code>HintStore</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_RoutingService"><code>RoutingService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_UrlEncodingService"><code>UrlEncodingService</code></a> (SPI)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>REST Support:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_AcceptHeaderService"><code>AcceptHeaderService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> (SPI)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Metamodel:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_MetamodelService"><code>MetamodelService</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Other API:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_GuiceBeanProvider"><code>GuiceBeanProvider</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_SudoService"><code>SudoService</code></a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_TransactionService"><code>TransactionService</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Other SPI:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_ClassDiscoveryService"><code>ClassDiscoveryService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_ErrorReportingService"><code>ErrorReportingService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_EventSerializer"><code>EventSerializer</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_LocaleProvider"><code>LocaleProvider</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_TranslationService"><code>TranslationService</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_TranslationsResolver"><code>TranslationsResolver</code></a> (SPI)</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_TranslationsResolver"><code>TranslationsResolver</code></a> (SPI)</p>
 </li>
 </ul>
 </div>

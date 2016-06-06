@@ -853,14 +853,30 @@ registered <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code><
 </div>
 </li>
 <li>
-<p>At the end of all executions, details of all changed objects are published, again through the (internal)
+<p>At the end of each transaction, details of all changed objects are published, again through the (internal)
 <a href="rgfis.html#_rgfis_spi_PublisherServiceInternal"><code>PublisherServiceInternal</code></a> to any registered <code>PublishingService</code>
 or <code>PublisherService</code> implementations.  Only domain objects specified to be published with
-<a href="rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a> are published.</p>
+<a href="rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a> are published.<br></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that it&#8217;s possible for there to be more than one transaction per top-level interaction, by virtue of the
+<a href="#_rgsvc_api_TransactionService"><code>TransactionService</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
-<p>Also at the end of all executions, details of all changed properties are passed to any registered
-<a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> by way of the (internal)
+<p>Also at the end of each transaction, details of all changed properties are passed to any registered
+<a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> or
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) by way of the (internal)
 <a href="rgfis.html#_rgfis_spi_AuditingServiceInternal"><code>AuditingServiceInternal</code></a> domain service.</p>
 </li>
 </ul>
@@ -3341,7 +3357,13 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
  supporting <a href="#_rgsvc_spi_CommandService"><code>CommandService</code></a> enables the implementation of <code>Command</code> to be pluggable. With an appropriate implementation (eg as provided by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module&#8217;s <a href="#_rgsvc_spi_CommandService"><code>CommandService</code></a>) the <code>Command</code> may then be persisted.</p>
 </div>
 <div class="paragraph">
-<p>Persistent <code>Command</code>s support several use cases:</p>
+<p>As of <code>1.13.0-SNAPSHOT</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
+act as a parent to any background commands that can be persisted either explicitly using the
+<a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the
+<a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>In previous versions of the framework, persistent <code>Command</code>s also supported a number of other use cases:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3349,18 +3371,23 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
 <p>they enable profiling of the running application (which actions are invoked then most often, what is their response time)</p>
 </li>
 <li>
-<p>they act as a parent to any background commands that might be invoked through the <a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a></p>
+<p>if <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> or
+<a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better traceability
+as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> is configured, they provide better audit information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the unique <code>transactionId</code> GUID</p>
-</li>
-<li>
-<p>if <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> is configured, they provide better traceability as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
+<p>if <a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> or
+<a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better audit
+information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of
+the action) through the <code>transactionId</code> GUID</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Assuming that the <code>CommandService</code> supports persistent <code>Command`s, the associated <a href="rgant.html#_rgant-Action_command"></code>@Action#command()<code></a> annotation also allows action invocations to be performed in the background. In this case the act of invoking the action on an object instead returns the `Command</code> to the user.</p>
+<p>As of <code>1.13.0-SNAPSHOT</code>, these other uses cases are now more fully supported through the
+<a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the
+<code>Interaction</code> object, eg as provided by the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module.</p>
 </div>
 <div class="sect3">
 <h4 id="_rgsvc_api_CommandContext_screencast">4.4.1. Screencast</h4>
@@ -3661,16 +3688,41 @@ created explicitly through the <a href="#_rgsvc_api_BackgroundService"><code>Bac
 <div class="sect2">
 <h3 id="_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
-<p>The <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>) is a request-scoped domain service that is used to obtain the current <code>Interaction</code>.</p>
+<p>The <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>) is a request-scoped domain service that is used to obtain the current
+<code>Interaction</code>.</p>
 </div>
 <div class="paragraph">
-<p>An <code>Interaction</code> generally consists of a single top-level <code>Execution</code>, either to invoke an action or to edit a property.  If that top-level action or property uses <a href="#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> to invoke child actions/properties, then those sub-executions are captured as a call-graph.  The <code>Execution</code> is thus a graph structure.</p>
+<p>An <code>Interaction</code> generally consists of a single top-level <code>Execution</code>, either to invoke an action or to edit a
+property.  If that top-level action or property uses <a href="#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> to
+invoke child actions/properties, then those sub-executions are captured as a call-graph.  The <code>Execution</code> is thus a
+graph structure.</p>
 </div>
 <div class="paragraph">
-<p>If a bulk action is performed (as per an action annotated using <a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a>), then this will result in multiple <code>Interaction</code>s, one per selected object (not one <code>Interaction</code> with multiple top-level <code>Execution</code>s).</p>
+<p>If a bulk action is performed (as per an action annotated using
+<a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a>), then this will result in multiple <code>Interaction</code>s, one
+per selected object (not one <code>Interaction</code> with multiple top-level <code>Execution</code>s).</p>
+</div>
+<div class="paragraph">
+<p>It is possible for <code>Interaction.Execution</code>s to be persisted; this is supported by the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module, for example.  Persistent
+<code>Interaction</code>s support several use cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>they enable profiling of the running application (which actions are invoked then most often, what is their response
+time)</p>
+</li>
+<li>
+<p>if auditing is configured (using either <a href="#_rgsvc_spi_AuditingService">auditing</a> or
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>), they provide better audit information, since the
+<code>Interaction.Execution</code> captures the 'cause' of an interaction and can be correlated to the audit records (the "effect"
+of the interaction) by way of the <a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>transactionId</code></a></p>
+</li>
+</ul>
 </div>
 <div class="sect3">
-<h4 id="_api_implementatin">4.5.1. API &amp; Implementatin</h4>
+<h4 id="_api_implementation_5">4.5.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The public API of the service consists of several related classes:</p>
 </div>
@@ -4225,35 +4277,68 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TransactionService</span> {
-    <span class="type">void</span> flushTransaction();
-    <span class="type">void</span> nextTransaction();
+    Transaction currentTransaction();   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">void</span> nextTransaction();             <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> flushTransaction();            <i class="conum" data-value="3"></i><b>(3)</b>
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Normally, the framework will automatically start a transaction before each user interaction (action invocation or
-property modification), and commit that transaction after the interaction has completed.  If the interaction throws
-an exception then the transaction is aborted.</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>to obtain a handle on the current <code>Transaction</code>, discussed further below</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The framework automatically start a transaction before each user interaction (action invocation or property edit),
+and will commit that transaction after the interaction has completed.  Under certain circumstances (eg actions used to
+perform data migration, say, or for large fixture scripts), it can be helpful to programmatically complete one
+transaction and start another one.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If the user interaction creates/persists an object or deletes an object (eg using the
+<a href="#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a>'s <code>persist()</code> or <code>delete()</code> methods), then the
+framework actually queues up the work and only performs the persistence command either at the end of the transaction
+or immediately prior to the next query.  Performing a flush will cause any pending calls to be performed immediately.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>If the user interaction creates and persists an object (using <a href="#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <code>persist()</code> method), then the framework actually defers the call and only performs the persistence command at the
-end of the transaction, or immediately prior to the next query.</p>
+<p>The <code>nextTransaction()</code> is also used by the <a href="ugvw.html">Wicket viewer</a>'s support for bulk actions; each action
+is invoked in its own transaction.</p>
 </div>
-<div class="literalblock">
+<div class="paragraph">
+<p>The <code>Transaction</code> object - as obtained by <code>currentTransaction()</code> method, above - is a minimal wrapper around the
+underlying database transaction.  Its API is:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<pre>/**
- *
- *
- * &lt;p&gt;
- * Occasionally useful to ensure that newly persisted domain objects
- * are flushed to the database prior to a subsequent repository query.
- */</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Transaction</span> {
+    <span class="predefined-type">UUID</span> getTransactionId();            <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">int</span> getSequence();                  <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> flush();                       <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>/**
-* Intended only for use by fixture scripts and integration tests; commits this transaction and starts a new one.
-*/</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>is a unique identifier for the interaction/request, as defined by the
+<a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>HasTransactionId</code></a> mixin.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>there can actually be multiple transactions within such a request/interaction; the sequence is a (0-based) is used
+to distinguish such.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>as per <code>TransactionService#flushTransaction()</code> described above.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -4796,32 +4881,37 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 that <code>Command</code> objects (that reify the invocation of an action/edit of a property on a domain object) can be persisted.</p>
 </div>
 <div class="paragraph">
-<p>Persistent <code>Command</code>s support several use cases:</p>
+<p>As of <code>1.13.0-SNAPSHOT</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
+act as a parent to any background commands that can be persisted either explicitly using the
+<a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the
+<a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>In previous versions of the framework, persistent <code>Command</code>s also supported a number of other use cases:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>they enable profiling of the running application (which actions are invoked then most often, what is their response
-time) ++</p>
-<div class="paragraph">
-<p>However, note that (as of <code>1.13.0-SNAPSHOT</code>) much more powerful profiling capabilities are provided by
-<a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a>; these can be logged using the
-<a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>.</p>
-</div>
+<p>they enable profiling of the running application (which actions are invoked then most often, what is their response time)</p>
 </li>
 <li>
-<p>they act as a parent to any background commands that might be invoked through the <a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a></p>
+<p>if <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> or
+<a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better traceability
+as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_AuditingService">auditing</a> is configured, they provide better audit information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) by way of the <a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>transactionId</code></a></p>
-</li>
-<li>
-<p>if <a href="#_rgsvc_spi_PublishingService">publishing</a> is configured, they provide better traceability as the <code>Command</code> is also correlated with any published events, again through the unique  <a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>transactionId</code></a></p>
-</li>
-<li>
-<p>the associated <a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation attribute also allows action invocations to be performed in the background. In this case the act of invoking the action on an object instead returns the <code>Command</code> to the user.</p>
+<p>if <a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> or
+<a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better audit
+information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of
+the action) through the <code>transactionId</code> GUID</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>As of <code>1.13.0-SNAPSHOT</code>, these other uses cases are now more fully supported through the
+<a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the
+<code>Interaction</code> object, eg as provided by the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module.</p>
 </div>
 <div class="sect3">
 <h4 id="_screencast">5.2.1. Screencast</h4>
@@ -4957,7 +5047,7 @@ action annotated with <a href="rgant.html#_rgant-HomePage"><code>@HomePage</code
 of that service (and may be useful for other use cases).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_5">5.3.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_6">5.3.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>HomePageProviderService</code> is:</p>
 </div>
@@ -5210,7 +5300,7 @@ Supercedes methods in <a href="#_rgsvc_api_DomainObjectContainer"><code>DomainOb
 <p>Therefore it&#8217;s common to provide a domain service whose responsibility is to provide the current time.  This service can be injected into any domain object (and can be mocked out for unit testing). Apache Isis provides such a facade through the <code>ClockService</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_6">6.1.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_7">6.1.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>ClockService</code> is:</p>
 </div>
@@ -6731,7 +6821,7 @@ instantiated object.</p>
 <p>The <code>Scratchpad</code> service is a <a href="../../more-advanced-topics/how-to-09-020-How-to-write-a-typical-domain-service.html">request-scoped</a> service to allow objects to exchange information even if they do not directly call each other.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_7">6.6.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_8">6.6.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API of <code>Scratchpad</code> service is:</p>
 </div>
@@ -7130,7 +7220,11 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </table>
 </div>
 <div class="paragraph">
-<p><code>Bookmark</code>s are used by several other domain services as a means of storing areference to an arbitrary object (a polymorphic relationship).  For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of <a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> uses bookmarks to capture the object that is being audited.</p>
+<p><code>Bookmark</code>s are used by several other domain services as a means of storing areference to an arbitrary object
+(a polymorphic relationship).  For example, the (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) uses bookmarks to capture the object
+that is being audited.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -7147,7 +7241,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_8">7.1.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_9">7.1.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>BookmarkService2</code> is:</p>
 </div>
@@ -7234,10 +7328,15 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="sect3">
 <h4 id="_usage_by_other_services">7.1.3. Usage by other services</h4>
 <div class="paragraph">
-<p>Bookmarks are used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module&#8217;s implementation of  <a href="#_rgsvc_api_BackgroundCommandService"><code>BackgroundCommandService</code></a>, which uses a bookmark to capture the target object on which an action will be invoked subsequently.</p>
+<p>Bookmarks are used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module&#8217;s
+implementation of  <a href="#_rgsvc_api_BackgroundCommandService"><code>BackgroundCommandService</code></a>, which uses a
+bookmark to capture the target object on which an action will be invoked subsequently.</p>
 </div>
 <div class="paragraph">
-<p>Bookmarks are also used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module&#8217;s implementation of <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>, and by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of <a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>.</p>
+<p>Bookmarks are also used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a>
+module&#8217;s implementation of <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>, and by the
+(non-ASF) <a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>).</p>
 </div>
 </div>
 <div class="sect3">
@@ -7265,7 +7364,7 @@ view model.</p>
 <p>A typical use case is to generate a clickable link for rendering in an email, PDF, tweet or other communication.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_9">7.2.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_10">7.2.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>DeepLinkService</code> is:</p>
 </div>
@@ -7331,7 +7430,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>Apache Isis provides a default implementation to send emails using an external SMTP provider.  Note that this must be configured (using a number of configuration properties) before it can be used.  The that sends email as an HTML message, using an external SMTP provider.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_10">7.3.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_11">7.3.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API for the service is:</p>
 </div>
@@ -7485,7 +7584,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_11">7.4.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_12">7.4.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by this service is:</p>
 </div>
@@ -7672,7 +7771,7 @@ the state of action invocations so that they can be executed by a background pro
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_12">7.6.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_13">7.6.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>MementoService</code> is:</p>
 </div>
@@ -8240,7 +8339,7 @@ module, where the string representations of the various features are used to rep
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_13">8.1.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_14">8.1.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by the service is:</p>
 </div>
@@ -8810,7 +8909,7 @@ SpecificationProvider</code></a>.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_14">9.1.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_15">9.1.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API for the service is:</p>
 </div>
@@ -8855,7 +8954,7 @@ SpecificationProvider</code></a>.</p></td>
 other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="ugtst.html#_ugtst_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_15">9.2.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_16">9.2.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -9440,7 +9539,7 @@ ObjectStore to provide a number of counters relating to numbers of object loaded
 the <code>PublishedObjects</code> class.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_16">10.2.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_17">10.2.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API of the service is:</p>
 </div>
@@ -9466,7 +9565,9 @@ the <code>PublishedObjects</code> class.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The number of individual properties of objects that were modified; a good measure of the amount of work being done in the interaction.  Corresponds to the number of times that the <a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>'s <code>audit(&#8230;&#8203;)</code> method will be called as the transaction completes.</td>
+<td>The number of individual properties of objects that were modified; a good measure of the amount of work being done in the interaction.  Corresponds to the number of times that the <a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>'s (or
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>'s) <code>audit(&#8230;&#8203;)</code> method will be called as the transaction
+completes.</td>
 </tr>
 </table>
 </div>
@@ -9514,7 +9615,7 @@ so no further configuration is required.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_17">10.3.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_18">10.3.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>QueryResultsCache</code> is:</p>
 </div>
@@ -10059,13 +10160,26 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgsvc_spi_AuditingService"><code>o.a.i.applib.</code><br>
 <code>services.audit</code><br>
-<code>AuditingService3</code></a></p></td>
+<code>AuditerService</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Create an audit record for every changed property of every changed object within a transaction.</p>
+<p>(<code>1.13.0-SNAPSHOT</code>) Create an audit record for every changed property of every changed object within a transaction.</p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AuditingService</code><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AuditerServiceLogging</code><br>
+also<br>
+<code>AuditerServiceUsingJdo</code><br>
 <code>o.ia.m.audit</code><br>
 <code>isis-module-audit</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgsvc_spi_AuditingService"><code>o.a.i.applib.</code><br>
+<code>services.audit</code><br>
+<code>AuditingService3</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(deprecated in <code>1.13.0-SNAPSHOT</code>, replaced by <a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>); creates
+an audit record for every changed property of every changed object within a transaction.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -10147,7 +10261,172 @@ a configured <code>EmailService</code></p></td>
 <p>Where an implementation is available (on the classpath) then it is always registered automatically (that is, they are all (with one exception) annotated with <a href="rgant.html#_rgant-DomainService"><code>@DomainService</code></a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_AuditingService">11.1. <code>AuditingService3</code></h3>
+<h3 id="_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>AuditerService</code> auditing service provides a simple mechanism to capture changes to data. It is called for each property that has changed on any domain object, as a set of pre- and post-values.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This service is intended to replace the now-deprecated <a href="#_rgsvc_spi_AuditingService"><code>AuditingService3</code></a>.
+The difference between the two is that this service recognises that the <code>transactionId</code> is now (in <code>1.13.0-SNAPSHOT</code>)
+actually a request/interaction Id, and that an additional `sequence</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_spi_18">11.1.1. SPI</h4>
+<div class="paragraph">
+<p>The SPI for the service is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AuditerService</span> {
+    <span class="type">boolean</span> isEnabled();                                    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="type">void</span> audit(
+            <span class="predefined-type">UUID</span> transactionId, <span class="type">int</span> sequence,               <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="predefined-type">String</span> targetClassName,
+            Bookmark target,                                <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="predefined-type">String</span> memberIdentifier,
+            <span class="predefined-type">String</span> propertyName,                            <i class="conum" data-value="4"></i><b>(4)</b>
+            <span class="predefined-type">String</span> preValue, <span class="predefined-type">String</span> postValue,              <i class="conum" data-value="5"></i><b>(5)</b>
+            <span class="predefined-type">String</span> user, java.sql.Timestamp timestamp);     <i class="conum" data-value="6"></i><b>(6)</b>
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>whether this implementation is enabled.  If all configured implementations are disabled, then auditing is
+suppressed (a minor performance optimization).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>together the <code>transactionId</code> (misnamed; really is the request/interaction Id) and the <code>sequence</code> uniquely identify
+the transaction in which the object was changed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>identifies the object that has changed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the property of the object that has changed.  The combination of the <code>transactionId</code>, <code>sequence</code>, <code>target</code> and
+<code>propertyName</code> is unique.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the before and after values of the property (in string format).  If the object was created then "[NEW]" is used
+as the pre-value; if the object was deleted then "[DELETED]" is used as the post-value.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>the user that changed the object, and the date/time that this occurred.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The framework will call this for each and every domain object property that is modified within a transaction.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementation_28">11.1.2. Implementation</h4>
+<div class="paragraph">
+<p>The framework allows multiple implementations of this service to be registered; all will be called.  The framework
+provides one implementation of its own, <code>AuditerServiceLogging</code> (in <code>o.a.i.applib.services.audit</code> package); this
+logs simple messages to an SLF4J logger.</p>
+</div>
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' Audit module</a> also provides an
+implementation, <code>org.isisaddons.module.audit.dom.AuditerServiceUsingJdo</code>.  This creates an audit record for each
+changed property (ie every time that <code>AuditerService#audit(&#8230;&#8203;)</code> is called.</p>
+</div>
+<div class="paragraph">
+<p>The module also provides:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AuditingServiceMenu</code> service which provides actions to search for <code>AuditEntry</code>s, underneath an 'Activity' menu on
+the secondary menu bar.</p>
+</li>
+<li>
+<p><code>AuditingServiceRepository</code> service to to search for persisted <code>AuditEntry``s.  None of its actions are visible in
+the user interface (they are all `@Programmatic</code>).</p>
+</li>
+<li>
+<p><code>AuditingServiceContributions</code> which contrbutes collections to the
+<a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"> <code>HasTransactionId</code></a> interface. This will therefore display all
+audit entries that occurred in a given request/transaction, in other words whenever a command, a published event or
+another audit entry is displayed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_usage_17">11.1.3. Usage</h4>
+<div class="paragraph">
+<p>The typical way to indicate that an object should be audited is to annotate it with the <a href="rgant.html#_rgant-DomainObject_auditing"><code>@DomainObject#auditing()</code></a> annotation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_registering_the_services_18">11.1.4. Registering the Services</h4>
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module provides an implementation of
+this service (<code>AuditerService</code>), and also provides a number of related domain services (<code>AuditingServiceMenu</code>,
+<code>AuditingServiceRepository</code> and <code>AuditingServiceContributions</code>).</p>
+</div>
+<div class="paragraph">
+<p>Assuming that an <code>AppManifest</code> is being used to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>)
+then this can be activated by updating the <code>pom.xml</code> and updating the <code>AppManifest#getModules()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>If menu items or contributions are not required in the UI, these can be suppressed either using security or by
+implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing subscriber</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_related_services_28">11.1.5. Related Services</h4>
+<div class="paragraph">
+<p>The auditing service works very well with implementations of
+<a href="#<em>rgsvc_spi_PublisherService"><code>PublisherService</code></a> that persist the <code>Interaction.Execution</code> objects
+obtained from the <a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service.  The interaction
+execution captures the _cause</em> of an interaction (an action was invoked, a property was edited), while the
+<code>AuditerService</code> audit entries capture the <em>effect</em> of that interaction in terms of changed state.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Prior to <code>1.13.0-SNAPSHOT</code> the <a href="#<em>rgsvc_spi_CommandService"><code>CommandService</code></a> performed a similar role,
+of capturing the cause.  As of <code>1.13.0-SNAPSHOT</code>, <code>Command</code>s are now primarily to capture the _intent</em> of an action,
+not the actual action invocation itself.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>AuditerService</code> is intended to replace the (now-deprecated)
+<a href="#_rgsvc_spi_AuditingService3"><code>AuditingService3</code></a>, as the latter does not support the concept of multiple
+transactions within a single interaction.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgsvc_spi_AuditingService">11.2. <code>AuditingService3</code></h3>
 <div class="paragraph">
 <p>The <code>AuditingService3</code> auditing service provides a simple mechanism to capture changes to data. It is called for each property that has changed on any domain object, as a set of pre- and post-values.</p>
 </div>
@@ -10166,7 +10445,7 @@ a configured <code>EmailService</code></p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_18">11.1.1. SPI</h4>
+<h4 id="_spi_19">11.2.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI for the service is:</p>
 </div>
@@ -10188,7 +10467,7 @@ a configured <code>EmailService</code></p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_28">11.1.2. Implementation</h4>
+<h4 id="_implementation_29">11.2.2. Implementation</h4>
 <div class="paragraph">
 <p>The most full-featured available implementation is the (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' Audit module</a>.  This creates an audit records for each changed property (ie every time that <code>AuditingService3#audit(&#8230;&#8203;)</code> is called.  The implementation is <code>org.isisaddons.module.audit.dom.AuditingService</code>.</p>
 </div>
@@ -10213,13 +10492,13 @@ a configured <code>EmailService</code></p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_17">11.1.3. Usage</h4>
+<h4 id="_usage_18">11.2.3. Usage</h4>
 <div class="paragraph">
 <p>The typical way to indicate that an object should be audited is to annotate it with the <a href="rgant.html#_rgant-DomainObject_auditing"><code>@DomainObject#auditing()</code></a> annotation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_18">11.1.4. Registering the Services</h4>
+<h4 id="_registering_the_services_19">11.2.4. Registering the Services</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module provides an implementation of
 this service (<code>AuditingService</code>), and also provides a number of related domain services (<code>AuditingServiceMenu</code>,
@@ -10235,20 +10514,15 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_28">11.1.5. Related Services</h4>
+<h4 id="_related_services_29">11.2.5. Related Services</h4>
 <div class="paragraph">
-<p>The auditing service works very well with the <a href="#<em>rgsvc_spi_CommandService"><code>CommandService</code></a>.  The <code>CommandService</code> captures the _cause</em> of an interaction (an action was invoked, a property was edited), while the <code>AuditingService3</code> captures the <em>effect</em> of that interaction in terms of changed state.</p>
-</div>
-<div class="paragraph">
-<p>You may also want to configure the <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.</p>
-</div>
-<div class="paragraph">
-<p>All three of these services collaborate implicitly by way of the <a href="rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>HasTransactionId</code></a> interface.</p>
+<p>This service has been deprecated and replaced by the equivalent
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>).</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_EventSerializer">11.2. <code>EventSerializer</code></h3>
+<h3 id="_rgsvc_spi_EventSerializer">11.3. <code>EventSerializer</code></h3>
 <div class="paragraph">
 <p>The <code>EmailSerializer</code> service is a supporting service intended for use by (any implementation of) <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.  Its responsibility is to combine the <code>EventMetadata</code> and the <code>EventPayload</code> into some serialized form (such as JSON, XML or a string) that can then be published.</p>
 </div>
@@ -10271,7 +10545,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 <p>See <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> for further discussion.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_19">11.2.1. SPI</h4>
+<h4 id="_spi_20">11.3.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by this service is:</p>
 </div>
@@ -10306,7 +10580,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_29">11.2.2. Implementation</h4>
+<h4 id="_implementation_30">11.3.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an implementation (<code>org.isisaddons.module.publishing.dom.eventserializer.RestfulObjectsSpecEventSerializer</code>) that represents the event payload using the representation defined by the <a href="http://restfulobjects.org">Restful Objects spec</a> of (transient) objects, grafting on the metadata as additional JSON nodes.</p>
 </div>
@@ -10333,7 +10607,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_19">11.2.3. Registering the Services</h4>
+<h4 id="_registering_the_services_20">11.3.3. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -10349,7 +10623,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_29">11.2.4. Related Services</h4>
+<h4 id="_related_services_30">11.3.4. Related Services</h4>
 <div class="paragraph">
 <p>This service is intended (though not mandated) to be used by implementations of <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.  The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module does use it (though the (non-ASF)
 <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module does not).</p>
@@ -10357,7 +10631,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_PublisherService">11.3. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
 <div class="paragraph">
 <p>The <code>PublisherService</code> API (<code>1.13.0-SNAPSHOT</code>) is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Events that can be published are action invocations/property
 edits, and changed objects. A typical use case is to publish onto a pub/sub bus such as
@@ -10377,7 +10651,7 @@ these execution graphs (in XML form, per the <a href="rgcms.html#_rgcms_schema-i
 <a href="rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a>) are published.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_20">11.3.1. SPI</h4>
+<h4 id="_spi_21">11.4.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -10456,7 +10730,7 @@ serializable XML representation can be obtained using the <code>ChangesDtoUtils<
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_30">11.3.2. Implementation</h4>
+<h4 id="_implementation_31">11.4.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework allows multiple implementations of this service to be registered; all will be called.  The framework
 provides one implementation of its own, <code>PublisherServiceLogging</code> (in <code>o.a.i.applib.services.publish</code> package); this
@@ -10472,7 +10746,7 @@ and monitoring the activity of subscribers of said message queues.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_18">11.3.3. Usage</h4>
+<h4 id="_usage_19">11.4.3. Usage</h4>
 <div class="paragraph">
 <p>To indicate that an action invocation should be published, annotate it with the
 <a href="rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p>
@@ -10487,7 +10761,7 @@ and monitoring the activity of subscribers of said message queues.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_20">11.3.4. Registering the Services</h4>
+<h4 id="_registering_the_services_21">11.4.4. Registering the Services</h4>
 <div class="paragraph">
 <p>The (non-ASF) Isis addons' <a href="http://github.com/isisaddons/isis-module-publishmq">publishmq</a> module provides an
 implementation of this service. Assuming that an <code>AppManifest</code> is being used to
@@ -10501,7 +10775,7 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_30">11.3.5. Related Services</h4>
+<h4 id="_related_services_31">11.4.5. Related Services</h4>
 <div class="paragraph">
 <p>This service supports two main use cases:</p>
 </div>
@@ -10566,7 +10840,7 @@ invocation/property edit causing the current event to be raised using
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_PublishingService">11.4. <code>PublishingService</code></h3>
+<h3 id="_rgsvc_spi_PublishingService">11.5. <code>PublishingService</code></h3>
 <div class="paragraph">
 <p>The <code>PublishingService</code> API is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Here the only events published are those that action invocations and of changed objects.  A typical use case is to publish onto a pub/sub bus such as <a href="http://activemq.apache.org/">ActiveMQ</a> with <a href="http://camel.apache.org">Camel</a> to keep other systems up to date.</p>
 </div>
@@ -10585,7 +10859,7 @@ invocation/property edit causing the current event to be raised using
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_21">11.4.1. SPI</h4>
+<h4 id="_spi_22">11.5.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -10631,7 +10905,7 @@ invocation/property edit causing the current event to be raised using
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_31">11.4.2. Implementation</h4>
+<h4 id="_implementation_32">11.5.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an
 implementation (<code>org.isisaddons.module.publishing.dom.PublishingService</code>) that persists each
@@ -10651,7 +10925,7 @@ here is that an event bus can poll this table to grab pending events and dispatc
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_19">11.4.3. Usage</h4>
+<h4 id="_usage_20">11.5.3. Usage</h4>
 <div class="paragraph">
 <p>To indicate that an action invocation should be published, annotate it with the <a href="rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p>
 </div>
@@ -10759,7 +11033,7 @@ for the objects, this nevertheless requires an additional network call to obtain
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_21">11.4.4. Registering the Services</h4>
+<h4 id="_registering_the_services_22">11.5.4. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -10776,7 +11050,7 @@ suppressed either using security or by implementing a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_31">11.4.5. Related Services</h4>
+<h4 id="_related_services_32">11.5.5. Related Services</h4>
 <div class="paragraph">
 <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from
 Apache Isis to some other system. Here the only events published are those that action invocations (for actions
@@ -10809,7 +11083,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_design_notes">11.4.6. Design Notes</h4>
+<h4 id="_design_notes">11.5.6. Design Notes</h4>
 <div class="paragraph">
 <p>The following class diagram shows how the above components fit together:</p>
 </div>
@@ -10824,7 +11098,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_UserRegistrationService">11.5. <code>UserRegistrationService</code></h3>
+<h3 id="_rgsvc_spi_UserRegistrationService">11.6. <code>UserRegistrationService</code></h3>
 <div class="paragraph">
 <p>The <code>UserRegistrationService</code> provides the ability for users to sign-up to access an application by providing a valid email address, and also provides the capability for users to reset their password if forgotten.</p>
 </div>
@@ -10852,7 +11126,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_spi_22">11.5.1. SPI</h4>
+<h4 id="_spi_23">11.6.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -10892,7 +11166,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_32">11.5.2. Implementation</h4>
+<h4 id="_implementation_33">11.6.2. Implementation</h4>
 <div class="paragraph">
 <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p>
 </div>
@@ -10904,7 +11178,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_22">11.5.3. Registering the Services</h4>
+<h4 id="_registering_the_services_23">11.6.3. Registering the Services</h4>
 <div class="paragraph">
 <p>There is no default implementation of this service provided by the core Apache Isis framework.</p>
 </div>
@@ -10937,7 +11211,7 @@ to implement a subclass and register.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_services_32">11.5.4. Related Services</h4>
+<h4 id="_related_services_33">11.6.4. Related Services</h4>
 <div class="paragraph">
 <p>The most common use case is to allow users to sign-up through Apache Isis' Wicket viewer. Because the process requires email to be sent, the following services must be configured:</p>
 </div>
@@ -11033,7 +11307,7 @@ to implement a subclass and register.</p>
 <p>This service is used by the <a href="rgcms.html#_rgcms_classes_super_FixtureScripts"><code>FixtureScripts</code></a> service to automatically locate any <a href="rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a> implementations.</p>
 </div>
 <div class="sect3">
-<h4 id="_spi_23">12.1.1. SPI</h4>
+<h4 id="_spi_24">12.1.1. SPI</h4>
 <div class="paragraph">
 <p>The SPI defined by the service is:</p>
 </div>
@@ -11058,7 +11332,7 @@ to implement a subclass and register.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_33">12.1.2. Implementation</h4>
+<h4 id="_implementation_34">12.1.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p>
 </div>
@@ -11078,7 +11352,7 @@ to implement a subclass and register.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_20">12.1.3. Usage</h4>
+<h4 id="_usage_21">12.1.3. Usage</h4>
 <div class="paragraph">
 <p>The usage will vary depending upon the conventions of the design.  As of 1.9.0, the usage of the service has been
 centralized such that the packages to be scanned are located from the <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>'s <code>#getModules()</code> method.</p>
@@ -11109,7 +11383,7 @@ centralized such that the packages to be scanned are located from the <a href="r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_services_23">12.1.4. Registering the Services</h4>
+<h4 id="_registering_the_services_24">12.1.4. Registering the Services</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -11310,7 +11584,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementatin">4.5.1. API &amp; Implementatin</a>
+<li><a href="#_api_implementation_5">4.5.1. API &amp; Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#__code_interactioncontext_code"><code>InteractionContext</code></a></li>
 <li><a href="#__code_interaction_code"><code>Interaction</code></a></li>
@@ -11385,7 +11659,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_HomePageProviderService">5.3. <code>HomePageProviderService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_5">5.3.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_6">5.3.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_the_service_12">5.3.2. Registering the Service</a></li>
 </ul>
 </li>
@@ -11395,7 +11669,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <ul class="sectlevel2">
 <li><a href="#_rgsvc_api_ClockService">6.1. <code>ClockService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_6">6.1.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_7">6.1.1. API &amp; Implementation</a></li>
 <li><a href="#_testing_support">6.1.2. Testing Support</a>
 <ul class="sectlevel4">
 <li><a href="#_alternative_implementations_2">Alternative Implementations</a></li>
@@ -11460,7 +11734,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_Scratchpad">6.6. <code>Scratchpad</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_7">6.6.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_8">6.6.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_10">6.6.2. Usage</a></li>
 <li><a href="#_registering_the_service_17">6.6.3. Registering the Service</a></li>
 <li><a href="#_related_services_18">6.6.4. Related Services</a></li>
@@ -11479,7 +11753,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <ul class="sectlevel2">
 <li><a href="#_rgsvc_api_BookmarkService">7.1. <code>BookmarkService2</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_8">7.1.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_9">7.1.1. API &amp; Implementation</a></li>
 <li><a href="#__code_bookmarkholder_code">7.1.2. <code>BookmarkHolder</code></a></li>
 <li><a href="#_usage_by_other_services">7.1.3. Usage by other services</a></li>
 <li><a href="#_registering_the_service_19">7.1.4. Registering the Service</a></li>
@@ -11487,7 +11761,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_DeepLinkService">7.2. <code>DeepLinkService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_9">7.2.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_10">7.2.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_within_the_framework">7.2.2. Usage within the framework</a></li>
 <li><a href="#_implementations_2">7.2.3. Implementations</a></li>
 <li><a href="#_registering_the_services_14">7.2.4. Registering the Services</a></li>
@@ -11495,7 +11769,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_EmailService">7.3. <code>EmailService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_10">7.3.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_11">7.3.1. API &amp; Implementation</a></li>
 <li><a href="#_configuration">7.3.2. Configuration</a></li>
 <li><a href="#_alternative_implementations_3">7.3.3. Alternative Implementations</a></li>
 <li><a href="#_registering_the_services_15">7.3.4. Registering the Services</a></li>
@@ -11504,7 +11778,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_GuiceBeanProvider">7.4. <code>GuiceBeanProvider</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_11">7.4.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_12">7.4.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_11">7.4.2. Usage</a></li>
 <li><a href="#_registering_the_services_16">7.4.3. Registering the Services</a></li>
 </ul>
@@ -11518,7 +11792,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_MementoService">7.6. <code>MementoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_12">7.6.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_13">7.6.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_12">7.6.2. Usage</a></li>
 <li><a href="#_related_services_20">7.6.3. Related Services</a></li>
 <li><a href="#_registering_the_service_21">7.6.4. Registering the Service</a></li>
@@ -11540,7 +11814,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <ul class="sectlevel2">
 <li><a href="#_rgsvc_api_ApplicationFeatureRepository">8.1. <code>ApplicationFeatureRepository</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_13">8.1.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_14">8.1.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_the_service_23">8.1.2. Registering the Service</a></li>
 </ul>
 </li>
@@ -11581,14 +11855,14 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <ul class="sectlevel2">
 <li><a href="#_rgsvc_api_FixtureScriptsDefault">9.1. <code>FixtureScriptsDefault</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_14">9.1.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_15">9.1.1. API &amp; Implementation</a></li>
 <li><a href="#_configuration_2">9.1.2. Configuration</a></li>
 <li><a href="#_related_services_24">9.1.3. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rgsvc_api_SudoService">9.2. <code>SudoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_15">9.2.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_16">9.2.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_14">9.2.2. Usage</a></li>
 <li><a href="#_registering_the_service_27">9.2.3. Registering the Service</a></li>
 </ul>
@@ -11615,14 +11889,14 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_MetricsService">10.2. <code>MetricsService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_16">10.2.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_17">10.2.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_the_service_28">10.2.2. Registering the Service</a></li>
 <li><a href="#_related_services_25">10.2.3. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rgsvc_api_QueryResultsCache">10.3. <code>QueryResultsCache</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_17">10.3.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_18">10.3.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_15">10.3.2. Usage</a></li>
 <li><a href="#_registering_the_service_29">10.3.3. Registering the Service</a></li>
 <li><a href="#_related_services_26">10.3.4. Related Services</a></li>
@@ -11651,7 +11925,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_persistence-layer-spi">11. Persistence Layer SPI</a>
 <ul class="sectlevel2">
-<li><a href="#_rgsvc_spi_AuditingService">11.1. <code>AuditingService3</code></a>
+<li><a href="#_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
 <li><a href="#_spi_18">11.1.1. SPI</a></li>
 <li><a href="#_implementation_28">11.1.2. Implementation</a></li>
@@ -11660,39 +11934,48 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_related_services_28">11.1.5. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_spi_EventSerializer">11.2. <code>EventSerializer</code></a>
+<li><a href="#_rgsvc_spi_AuditingService">11.2. <code>AuditingService3</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_19">11.2.1. SPI</a></li>
 <li><a href="#_implementation_29">11.2.2. Implementation</a></li>
-<li><a href="#_registering_the_services_19">11.2.3. Registering the Services</a></li>
-<li><a href="#_related_services_29">11.2.4. Related Services</a></li>
+<li><a href="#_usage_18">11.2.3. Usage</a></li>
+<li><a href="#_registering_the_services_19">11.2.4. Registering the Services</a></li>
+<li><a href="#_related_services_29">11.2.5. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_spi_PublisherService">11.3. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc_spi_EventSerializer">11.3. <code>EventSerializer</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_20">11.3.1. SPI</a></li>
 <li><a href="#_implementation_30">11.3.2. Implementation</a></li>
-<li><a href="#_usage_18">11.3.3. Usage</a></li>
-<li><a href="#_registering_the_services_20">11.3.4. Registering the Services</a></li>
-<li><a href="#_related_services_30">11.3.5. Related Services</a></li>
+<li><a href="#_registering_the_services_20">11.3.3. Registering the Services</a></li>
+<li><a href="#_related_services_30">11.3.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_spi_PublishingService">11.4. <code>PublishingService</code></a>
+<li><a href="#_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
 <ul class="sectlevel3">
 <li><a href="#_spi_21">11.4.1. SPI</a></li>
 <li><a href="#_implementation_31">11.4.2. Implementation</a></li>
 <li><a href="#_usage_19">11.4.3. Usage</a></li>
 <li><a href="#_registering_the_services_21">11.4.4. Registering the Services</a></li>
 <li><a href="#_related_services_31">11.4.5. Related Services</a></li>
-<li><a href="#_design_notes">11.4.6. Design Notes</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_spi_UserRegistrationService">11.5. <code>UserRegistrationService</code></a>
+<li><a href="#_rgsvc_spi_PublishingService">11.5. <code>PublishingService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_22">11.5.1. SPI</a></li>
 <li><a href="#_implementation_32">11.5.2. Implementation</a></li>
-<li><a href="#_registering_the_services_22">11.5.3. Registering the Services</a></li>
-<li><a href="#_related_services_32">11.5.4. Related Services</a></li>
+<li><a href="#_usage_20">11.5.3. Usage</a></li>
+<li><a href="#_registering_the_services_22">11.5.4. Registering the Services</a></li>
+<li><a href="#_related_services_32">11.5.5. Related Services</a></li>
+<li><a href="#_design_notes">11.5.6. Design Notes</a></li>
+</ul>
+</li>
+<li><a href="#_rgsvc_spi_UserRegistrationService">11.6. <code>UserRegistrationService</code></a>
+<ul class="sectlevel3">
+<li><a href="#_spi_23">11.6.1. SPI</a></li>
+<li><a href="#_implementation_33">11.6.2. Implementation</a></li>
+<li><a href="#_registering_the_services_23">11.6.3. Registering the Services</a></li>
+<li><a href="#_related_services_33">11.6.4. Related Services</a></li>
 </ul>
 </li>
 </ul>
@@ -11701,10 +11984,10 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <ul class="sectlevel2">
 <li><a href="#_rgsvc_spi_ClassDiscoveryService">12.1. <code>ClassDiscoveryService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_spi_23">12.1.1. SPI</a></li>
-<li><a href="#_implementation_33">12.1.2. Implementation</a></li>
-<li><a href="#_usage_20">12.1.3. Usage</a></li>
-<li><a href="#_registering_the_services_23">12.1.4. Registering the Services</a></li>
+<li><a href="#_spi_24">12.1.1. SPI</a></li>
+<li><a href="#_implementation_34">12.1.2. Implementation</a></li>
+<li><a href="#_usage_21">12.1.3. Usage</a></li>
+<li><a href="#_registering_the_services_24">12.1.4. Registering the Services</a></li>
 </ul>
 </li>
 </ul>
