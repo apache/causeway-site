@@ -1042,7 +1042,16 @@ For use with <code>@ViewModel</code>. If specifying view models using <code>@Dom
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-PostConstruct"><code>@javax.annotations.</code><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-Digits"><code>@javax.annotation.</code><br>
+<code>Nullable</code></a></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>1.13.0-SNAPSHOT</code> Specify that a property/parameter is optional.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-PostConstruct"><code>@javax.annotation.</code><br>
 <code>PostConstruct</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Callback for domain services (either singleton or <a href="#_rgant-RequestScoped">request-scoped</a>) to initialize themselves once instantiated.</p>
@@ -1051,7 +1060,7 @@ For use with <code>@ViewModel</code>. If specifying view models using <code>@Dom
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-PreDestroy"><code>@javax.annotations.</code><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-PreDestroy"><code>@javax.annotation.</code><br>
 <code>PreDestroy</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Callback for domain services (either singleton or <a href="#_rgant-RequestScoped">request-scoped</a>) to clean up resources prior to destruction.</p>
@@ -8456,7 +8465,70 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-NotPersistent">19. <code>@NotPersistent</code> (<code>javax.jdo</code>)</h2>
+<h2 id="_rgant-Nullable">19. <code>@Nullable</code> (<code>javax</code>) (<code>1.13.0-SNAPSHOT</code>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Isis' defaults for properties and parameters is that they are mandatory unless otherwise stated.  The
+<code>@javax.annotation.Nullable</code> annotation (<code>1.13.0-SNAPSHOT</code>) is recognized by Apache Isis for both properties and
+parameters as means to indicate that the property/parameter is not mandatory.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.annotation.Nullable
+<span class="directive">public</span> <span class="predefined-type">String</span> getName() {
+    <span class="keyword">return</span> name;
+}
+<span class="directive">public</span> <span class="type">void</span> setName(<span class="directive">final</span> <span class="predefined-type">String</span> name) {
+    <span class="local-variable">this</span>.name = name;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Customer updateName(<span class="annotation">@javax</span>.annotation.Nullable <span class="directive">final</span> <span class="predefined-type">String</span> name) {
+    setName(name);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Apache Isis does provide several other ways to specify optionality: using the
+<a href="#_rgant_Property_optionality"><code>@Property#optionality()</code></a> /
+<a href="#_rgant_Parameter_optionality"><code>@Parameter#optionality()</code></a> annotation.  For properties, the optionality
+can also be inferred from the <a href="#_rgant_Column_allowsNull"><code>@Column#allowsNull()</code></a> attribute.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See the
+<a href="#_rgant_Property_optionality"><code>@Property#optionality()</code></a> documentation for a much fuller discussion on
+the relationship between using the Apache Isis annotations vs
+<a href="#_rgant_Column_allowsNull"><code>@Column#allowsNull()</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If more than one method is specified then the framework will validate that there are no incompatibilities (and fail to
+boot otherwise).  This can also be verified using the <a href="rgmvn.html#_rgmvn_validate">validate goal</a> of the Apache
+Isis Maven plugin.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rgant-NotPersistent">20. <code>@NotPersistent</code> (<code>javax.jdo</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.jdo.annotation.NotPersistent</code> annotation is used by JDO/DataNucleus to indicate that a property should not be persisted to the database.</p>
@@ -8484,7 +8556,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-MinLength">20. <code>@MinLength</code></h2>
+<h2 id="_rgant-MinLength">21. <code>@MinLength</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@MinLength</code> annotation is used to specify the minimum number of characters in a search of an <a href="rgcms.html#_rgcms_methods_prefixes_autoComplete"><code>autoComplete&#8230;&#8203;()</code></a> supporting method.</p>
@@ -8516,7 +8588,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-Parameter">21. <code>@Parameter</code></h2>
+<h2 id="_rgant-Parameter">22. <code>@Parameter</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@Parameter</code> annotation applies to action parameters collecting together all domain semantics within a single annotation.</p>
@@ -8630,7 +8702,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_maxLength">21.1. <code>maxLength()</code></h3>
+<h3 id="_rgant-Parameter_maxLength">22.1. <code>maxLength()</code></h3>
 <div class="paragraph">
 <p>The <code>maxLength()</code> attribute applies only to <code>String</code> parameters, indicating the maximum number of characters that the user may enter (for example in a text field in the UI).  It is ignored if applied to parameters of any other type.  This attribute can also be applied to <a href="#_rgant-Property_maxLength">properties</a>.</p>
 </div>
@@ -8662,7 +8734,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_mustSatisfy">21.2. <code>mustSatisfy()</code></h3>
+<h3 id="_rgant-Parameter_mustSatisfy">22.2. <code>mustSatisfy()</code></h3>
 <div class="paragraph">
 <p>The <code>mustSatisfy()</code> attribute allows arbitrary validation to be applied to parameters using an (implementation of a) <code>org.apache.isis.applib.spec.Specification</code> object.  The attribute is also supported on <a href="#_rgant-Property_mustSatisfy">properties</a>.</p>
 </div>
@@ -8747,7 +8819,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_optionality">21.3. <code>optionality()</code></h3>
+<h3 id="_rgant-Parameter_optionality">22.3. <code>optionality()</code></h3>
 <div class="paragraph">
 <p>By default, Apache Isis assumes that all parameters of an action are required (mandatory).  The <code>optionality()</code> attribute allows this to be relaxed.  The attribute is also supported for <a href="#_rgant-Property_optionality">properties</a>.</p>
 </div>
@@ -8787,9 +8859,23 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to specify optionality using <a href="#_rgant_Nullable"><code>@Nullable</code></a> annotation (<code>1.13.0-SNAPSHOT</code>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_regexPattern">21.4. <code>regexPattern()</code></h3>
+<h3 id="_rgant-Parameter_regexPattern">22.4. <code>regexPattern()</code></h3>
 <div class="paragraph">
 <p>There are three attributes related to enforcing regular expressions:</p>
 </div>
@@ -8839,7 +8925,7 @@ the provided argument does not match the regex pattern.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-ParameterLayout">22. <code>@ParameterLayout</code></h2>
+<h2 id="_rgant-ParameterLayout">23. <code>@ParameterLayout</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@ParameterLayout</code> annotation applies to action parameters, collecting together all UI hints within a single annotation.</p>
@@ -8967,7 +9053,7 @@ the provided argument does not match the regex pattern.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_cssClass">22.1. <code>cssClass()</code></h3>
+<h3 id="_rgant-ParameterLayout_cssClass">23.1. <code>cssClass()</code></h3>
 <div class="paragraph">
 <p>The <code>cssClass()</code> attribute can be used to render additional CSS classes in the HTML (a wrapping <code>&lt;div&gt;</code>) that represents the action parameter.   <a href="rgcfg.html#_rgcfg_application-specific_application-css">Application-specific CSS</a> can then be used to target and adjust the UI representation of that particular element.</p>
 </div>
@@ -8993,7 +9079,7 @@ the provided argument does not match the regex pattern.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_describedAs">22.2. <code>describedAs()</code></h3>
+<h3 id="_rgant-ParameterLayout_describedAs">23.2. <code>describedAs()</code></h3>
 <div class="paragraph">
 <p>The <code>describedAs()</code> attribute is used to provide a short description of the action parameter to the user.  In the <a href="ugvw.html">Wicket viewer</a> it is displayed as a 'tool tip'.  The <code>describedAs()</code> attribute can also be specified for <a href="#_rgant-CollectionLayout_describedAs">collections</a>,  <a href="#_rgant-PropertyLayout_describedAs">properties</a>, <a href="#_rgant-ActionLayout_describedAs">actions</a>, <a href="#_rgant-DomainObjectLayout_describedAs">domain objects</a> and <a href="#_rgant-ViewModelLayout_describedAs">view models</a>.</p>
 </div>
@@ -9029,7 +9115,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_labelPosition">22.3. <code>labelPosition()</code></h3>
+<h3 id="_rgant-ParameterLayout_labelPosition">23.3. <code>labelPosition()</code></h3>
 <div class="paragraph">
 <p>The <code>labelPosition()</code> attribute determines the positioning of labels for parameters.  This attribute can also be specified for <a href="#_rgant-PropertyLayout_labelPosition">properties</a>.</p>
 </div>
@@ -9069,7 +9155,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_multiLine">22.4. <code>multiLine()</code></h3>
+<h3 id="_rgant-ParameterLayout_multiLine">23.4. <code>multiLine()</code></h3>
 <div class="paragraph">
 <p>The <code>multiLine()</code> attribute specifies that the text field for a string parameter should span multiple lines.  It is ignored for other parameter types.  The attribute is also supported for <a href="#_rgant-PropertyLayout_multiLine">properties</a>.</p>
 </div>
@@ -9107,7 +9193,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_named">22.5. <code>named()</code></h3>
+<h3 id="_rgant-ParameterLayout_named">23.5. <code>named()</code></h3>
 <div class="paragraph">
 <p>The <code>named()</code> attribute explicitly specifies the action parameter&#8217;s name. This attribute can also be specified for <a href="#_rgant-ActionLayout_named">actions</a>, <a href="#_rgant-CollectionLayout_named">collections</a>, <a href="#_rgant-PropertyLayout_named">properties</a>, <a href="#_rgant-DomainObjectLayout_named">domain objects</a>, <a href="#_rgant-ViewModelLayout_named">view models</a> and <a href="#_rgant-DomainServiceLayout_named">domain services</a>.</p>
 </div>
@@ -9159,7 +9245,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_renderedAsDayBefore">22.6. <code>renderedAsDayBefore()</code></h3>
+<h3 id="_rgant-ParameterLayout_renderedAsDayBefore">23.6. <code>renderedAsDayBefore()</code></h3>
 <div class="paragraph">
 <p>The <code>renderedAsDayBefore()</code> attribute applies only to date parameters whereby the date will be rendered as the day before the value actually held in the domain object.  It is ignored for parameters of other types.  This attribute is also supported for <a href="#_rgant-PropertyLayout_renderedAsDayBefore">properties</a>.</p>
 </div>
@@ -9193,7 +9279,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ParameterLayout_typicalLength">22.7. <code>typicalLength()</code></h3>
+<h3 id="_rgant-ParameterLayout_typicalLength">23.7. <code>typicalLength()</code></h3>
 <div class="paragraph">
 <p>The <code>typicalLength()</code> attribute indicates the typical length of a string parameter.  It is ignored for parameters of other types.  The attribute is also supported for <a href="#_rgant-PropertyLayout_typicalLength">properties</a>.</p>
 </div>
@@ -9229,7 +9315,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-PersistenceCapable">23. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</h2>
+<h2 id="_rgant-PersistenceCapable">24. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.jdo.annotation.PersistenceCapable</code> is used by JDO/DataNucleus to indicate that a class is a domain entity to be persisted to the database.</p>
@@ -9364,7 +9450,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-PostConstruct">24. <code>@PostConstruct</code> (<code>javax</code>)</h2>
+<h2 id="_rgant-PostConstruct">25. <code>@PostConstruct</code> (<code>javax</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.annotation.PostConstruct</code> annotation, as defined in <a href="https://jcp.org/en/jsr/detail?id=250">JSR-250</a>,  is recognized by Apache Isis as a callback method on domain services to be called just after they have been constructed, in order that they initialize themselves.</p>
@@ -9467,7 +9553,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-PreDestroy">25. <code>@PreDestroy</code> (<code>javax</code>)</h2>
+<h2 id="_rgant-PreDestroy">26. <code>@PreDestroy</code> (<code>javax</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.annotation.PreDestroy</code> annotation, as defined in <a href="https://jcp.org/en/jsr/detail?id=250">JSR-250</a>, recognized by Apache Isis as a callback method on domain services to be called just as they go out of scope.</p>
@@ -9540,7 +9626,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-PrimaryKey">26. <code>@PrimaryKey</code> (<code>javax.jdo</code>)</h2>
+<h2 id="_rgant-PrimaryKey">27. <code>@PrimaryKey</code> (<code>javax.jdo</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.jdo.annotation.PrimaryKey</code> annotation is used by JDO/DataNucleus to indicate that a property is used as the primary key for an entity with application-managed identity.</p>
@@ -9568,7 +9654,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-Programmatic">27. <code>@Programmatic</code></h2>
+<h2 id="_rgant-Programmatic">28. <code>@Programmatic</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@Programmatic</code> annotation causes the method to be excluded completely from the Apache Isis metamodel. This means it won&#8217;t appear in any UI, and it won&#8217;t appear in any <a href="rgsvc.html#_rgsvc_api_MementoService">memento</a>s or <a href="rgsvc.html#_rgsvc_api_XmlSnapshotService">snapshot</a>s.</p>
@@ -9594,7 +9680,7 @@ declaration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-Property">28. <code>@Property</code></h2>
+<h2 id="_rgant-Property">29. <code>@Property</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@Property</code> annotation applies to properties collecting together all domain semantics within a single annotation.</p>
@@ -9761,7 +9847,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_domainEvent">28.1. <code>domainEvent()</code></h3>
+<h3 id="_rgant-Property_domainEvent">29.1. <code>domainEvent()</code></h3>
 <div class="paragraph">
 <p>Whenever a domain object (or list of domain objects) is to be rendered, the framework fires off multiple domain events for every property, collection and action of the domain object.  In the cases of the domain object&#8217;s properties, the events that are fired are:</p>
 </div>
@@ -9845,7 +9931,7 @@ rather than through the constructor.  This substantially reduces the boilerplate
 </table>
 </div>
 <div class="sect3">
-<h4 id="_subscribers_13">28.1.1. Subscribers</h4>
+<h4 id="_subscribers_13">29.1.1. Subscribers</h4>
 <div class="paragraph">
 <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API.  The examples below use the Guava API.</p>
 </div>
@@ -9945,7 +10031,7 @@ rather than through the constructor.  This substantially reduces the boilerplate
 </div>
 </div>
 <div class="sect3">
-<h4 id="_default_doop_and_noop_events_13">28.1.2. Default, Doop and Noop events</h4>
+<h4 id="_default_doop_and_noop_events_13">29.1.2. Default, Doop and Noop events</h4>
 <div class="paragraph">
 <p>If the <code>domainEvent</code> attribute is not explicitly specified (is left as its default value, <code>PropertyDomainEvent.Default</code>),
 then the framework will, by default, post an event.</p>
@@ -9965,7 +10051,7 @@ then no event will be posted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_raising_events_programmatically_6">28.1.3. Raising events programmatically</h4>
+<h4 id="_raising_events_programmatically_6">29.1.3. Raising events programmatically</h4>
 <div class="paragraph">
 <p>Normally events are only raised for interactions through the UI. However, events can be raised programmatically by
 wrapping the target object using the <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> service.</p>
@@ -9973,7 +10059,7 @@ wrapping the target object using the <a href="rgsvc.html#_rgsvc_api_WrapperFacto
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_editing">28.2. <code>editing()</code></h3>
+<h3 id="_rgant-Property_editing">29.2. <code>editing()</code></h3>
 <div class="paragraph">
 <p>The <code>editing()</code> attribute can be used to prevent a property from being modified or cleared, ie to make it read-only. This attribute can also be specified for <a href="#_rgant-Collection_editing">collections</a>, and can also be specified for the <a href="#_rgant-DomainObject_editing">domain object</a>.</p>
 </div>
@@ -10030,7 +10116,7 @@ wrapping the target object using the <a href="rgsvc.html#_rgsvc_api_WrapperFacto
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_hidden">28.3. <code>hidden()</code></h3>
+<h3 id="_rgant-Property_hidden">29.3. <code>hidden()</code></h3>
 <div class="paragraph">
 <p>Properties can be hidden at the domain-level, indicating that they are not visible to the end-user.  This attribute can also be applied to <a href="#_rgant-ActionLayout_hidden">actions</a> and <a href="#_rgant-CollectionLayout_hidden">collections</a>.</p>
 </div>
@@ -10131,7 +10217,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_maxLength">28.4. <code>maxLength()</code></h3>
+<h3 id="_rgant-Property_maxLength">29.4. <code>maxLength()</code></h3>
 <div class="paragraph">
 <p>The <code>maxLength()</code> attribute applies only to <code>String</code> properties, indicating the maximum number of characters that the user may enter (for example in a text field in the UI).  The attribute It is ignored if applied to properties of any other type.  This attribute can also be applied to <a href="#_rgant-Parameter_maxLength">parameters</a>.</p>
 </div>
@@ -10155,7 +10241,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 <p>In this case there is therefore no need for the <code>@Property#maxLength()</code> attribute.</p>
 </div>
 <div class="sect3">
-<h4 id="_non_persistent_properties">28.4.1. Non-persistent properties</h4>
+<h4 id="_non_persistent_properties">29.4.1. Non-persistent properties</h4>
 <div class="paragraph">
 <p>Of course, not every property is persistent (it could instead be derived), and neither is every domain object an entity (it could be a view model).  For these non persistable properties the <code>maxLength()</code> attribute is still required.</p>
 </div>
@@ -10192,7 +10278,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_mustSatisfy">28.5. <code>mustSatisfy()</code></h3>
+<h3 id="_rgant-Property_mustSatisfy">29.5. <code>mustSatisfy()</code></h3>
 <div class="paragraph">
 <p>The <code>mustSatisfy()</code> attribute allows arbitrary validation to be applied to properties using an (implementation of a) <code>org.apache.isis.applib.spec.Specification</code> object.
  The attribute is also supported on <a href="#_rgant-Parameter_mustSatisfy">parameters</a>.</p>
@@ -10267,7 +10353,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_notPersisted">28.6. <code>notPersisted()</code></h3>
+<h3 id="_rgant-Property_notPersisted">29.6. <code>notPersisted()</code></h3>
 <div class="paragraph">
 <p>The (somewhat misnamed) <code>notPersisted()</code> attribute indicates that the collection should be excluded from any snapshots generated by the <a href="rgsvc.html#_rgsvc_api_XmlSnapshotService"><code>XmlSnapshotService</code></a>.  This attribute is also supported for <a href="#_rgant-Collection_notPersisted">collections</a>.</p>
 </div>
@@ -10340,7 +10426,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_optionality">28.7. <code>optionality()</code></h3>
+<h3 id="_rgant-Property_optionality">29.7. <code>optionality()</code></h3>
 <div class="paragraph">
 <p>By default, Apache Isis assumes that all properties of an domain object or view model are required (mandatory).  The <code>optionality()</code> attribute allows this to be relaxed.  The attribute is also supported for <a href="#_rgant-Parameter_optionality">parameters</a>.</p>
 </div>
@@ -10367,7 +10453,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 <p>In this case there is no need for the <code>@Property#optionality()</code> attribute.</p>
 </div>
 <div class="sect3">
-<h4 id="_mismatched_defaults">28.7.1. Mismatched defaults</h4>
+<h4 id="_mismatched_defaults">29.7.1. Mismatched defaults</h4>
 <div class="paragraph">
 <p>If the <code>@Column#allowNulls()</code> attribute is omitted and the `@Property#optionality() attribute is also omitted, then note that Isis' defaults and JDO&#8217;s defaults differ.  Specifically, Isis always assumes properties are mandatory, whereas JDO specifies that primitives are mandatory, but all reference types are optional.</p>
 </div>
@@ -10376,7 +10462,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect3">
-<h4 id="_superclass_inheritance_type">28.7.2. Superclass inheritance type</h4>
+<h4 id="_superclass_inheritance_type">29.7.2. Superclass inheritance type</h4>
 <div class="paragraph">
 <p>There is one case (at least) it may be necessary to annotate the property with both <code>@Column#allowsNull</code> and also <code>@Property#optionality()</code>.  If the property is logically mandatory and is in a subclass, but the mapping of the class hierarchy is to store both the superclass and subclass(es) into a single table (ie a "roll-up" mapping using <code>javax.jdo.annotations.InheritanceStrategy#SUPERCLASS_TABLE</code>), then JDO requires that the property is annotated as <code>@Column#allowsNull="true"</code>: its value will be not defined for other subclasses.</p>
 </div>
@@ -10423,7 +10509,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect3">
-<h4 id="_non_persistent_properties_2">28.7.3. Non-persistent properties</h4>
+<h4 id="_non_persistent_properties_2">29.7.3. Non-persistent properties</h4>
 <div class="paragraph">
 <p>Of course, not every property is persistent (it could instead be derived), and neither is every domain object an entity (it could be a view model).  For these non persistable properties the <code>optionality()</code> attribute is still required.</p>
 </div>
@@ -10493,10 +10579,24 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to specify optionality using <a href="#_rgant_Nullable"><code>@Nullable</code></a> annotation (<code>1.13.0-SNAPSHOT</code>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_regexPattern">28.8. <code>regexPattern()</code></h3>
+<h3 id="_rgant-Property_regexPattern">29.8. <code>regexPattern()</code></h3>
 <div class="paragraph">
 <p>There are three attributes related to enforcing regular expressions:</p>
 </div>
@@ -10542,7 +10642,7 @@ the provided argument does not match the regex pattern.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-PropertyLayout">29. <code>@PropertyLayout</code></h2>
+<h2 id="_rgant-PropertyLayout">30. <code>@PropertyLayout</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@PropertyLayout</code> annotation applies to properties collecting together all UI hints within a single annotation.</p>
@@ -10699,7 +10799,7 @@ so that boilerplate-busting tools such as <a href="https://projectlombok.org/">P
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_cssClass">29.1. <code>cssClass()</code></h3>
+<h3 id="_rgant-PropertyLayout_cssClass">30.1. <code>cssClass()</code></h3>
 <div class="paragraph">
 <p>The <code>cssClass()</code> attribute can be used to render additional CSS classes in the HTML (a wrapping <code>&lt;div&gt;</code>) that represents the property.   <a href="rgcfg.html#_rgcfg_application-specific_application-css">Application-specific CSS</a> can then be used to target and adjust the UI representation of that particular element.</p>
 </div>
@@ -10730,7 +10830,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_describedAs">29.2. <code>describedAs()</code></h3>
+<h3 id="_rgant-PropertyLayout_describedAs">30.2. <code>describedAs()</code></h3>
 <div class="paragraph">
 <p>The <code>describedAs()</code> attribute is used to provide a short description of the property to the user.  In the <a href="ugvw.html">Wicket viewer</a> it is displayed as a 'tool tip'. The attribute can also be specified for <a href="#_rgant-CollectionLayout_describedAs">collections</a>,  <a href="#_rgant-ActionLayout_describedAs">actions</a>, <a href="#_rgant-ParameterLayout_describedAs">parameters</a>, <a href="#_rgant-DomainObjectLayout_describedAs">domain objects</a> and <a href="#_rgant-ViewModelLayout_describedAs">view models</a>.</p>
 </div>
@@ -10761,7 +10861,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_labelPosition">29.3. <code>labelPosition()</code></h3>
+<h3 id="_rgant-PropertyLayout_labelPosition">30.3. <code>labelPosition()</code></h3>
 <div class="paragraph">
 <p>The <code>labelPosition()</code> attribute determines the positioning of labels for properties.  This attribute can also be specified for <a href="#_rgant-ParameterLayout_labelPosition">parameters</a>.</p>
 </div>
@@ -10881,7 +10981,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_multiLine">29.4. <code>multiLine()</code></h3>
+<h3 id="_rgant-PropertyLayout_multiLine">30.4. <code>multiLine()</code></h3>
 <div class="paragraph">
 <p>The <code>multiLine()</code> attribute specifies that the text field for a string property should span multiple lines.  It is ignored for other property types.  The attribute is also supported for <a href="#_rgant-ParameterLayout_multiLine">parameters</a>.</p>
 </div>
@@ -10932,7 +11032,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_named">29.5. named()</h3>
+<h3 id="_rgant-PropertyLayout_named">30.5. named()</h3>
 <div class="paragraph">
 <p>The <code>named()</code> attribute explicitly specifies the property&#8217;s name, overriding the name that would normally be inferred from the Java source code.  This attribute can also be specified for <a href="#_rgant-ActionLayout_named">actions</a>, <a href="#_rgant-CollectionLayout_named">collections</a>, <a href="#_rgant-ParameterLayout_named">parameters</a>, <a href="#_rgant-DomainObjectLayout_named">domain objects</a>, <a href="#_rgant-ViewModelLayout_named">view models</a> and <a href="#_rgant-DomainServiceLayout_named">domain services</a>.</p>
 </div>
@@ -10998,7 +11098,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_renderedAsDayBefore">29.6. <code>renderedAsDayBefore()</code></h3>
+<h3 id="_rgant-PropertyLayout_renderedAsDayBefore">30.6. <code>renderedAsDayBefore()</code></h3>
 <div class="paragraph">
 <p>The <code>renderedAsDayBefore()</code> attribute applies only to date properties whereby the date will be rendered as the day before the value actually held in the domain object.  It is ignored for properties of other types. This attribute is also supported for <a href="#_rgant-ParameterLayout_renderedAsDayBefore">parameters</a>.</p>
 </div>
@@ -11043,7 +11143,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-PropertyLayout_typicalLength">29.7. <code>typicalLength()</code></h3>
+<h3 id="_rgant-PropertyLayout_typicalLength">30.7. <code>typicalLength()</code></h3>
 <div class="paragraph">
 <p>The <code>typicalLength()</code> attribute indicates the typical length of a string property.  It is ignored for properties of other types.  The attribute is also supported for <a href="#_rgant-ParameterLayout_typicalLength">parameters</a>.</p>
 </div>
@@ -11068,7 +11168,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-RequestScoped">30. <code>@RequestScoped</code> (<code>javax</code>)</h2>
+<h2 id="_rgant-RequestScoped">31. <code>@RequestScoped</code> (<code>javax</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@javax.enterprise.context.RequestScoped</code> <a href="https://jcp.org/en/jsr/detail?id=299">JSR-299</a> CDI annotation is used to specify that a <a href="#_rgant-DomainService">domain service</a> should be request-scoped rather than a singleton.</p>
@@ -11142,7 +11242,7 @@ can be used instead, eg:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-Title">31. <code>@Title</code></h2>
+<h2 id="_rgant-Title">32. <code>@Title</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@Title</code> annotation is used to indicate which property or properties make up the object title. If more than one property is used, the order can be specified (using the same Dewey-decimal notation as used by <code>@MemberOrder</code>) and the string to use between the components can also be specified.</p>
@@ -11190,7 +11290,7 @@ present in the title column. This convention can be overridden using
 <code>@Hidden(where=Where.NOWHERE)</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_lombok_support">31.1. Lombok support</h3>
+<h3 id="_lombok_support">32.1. Lombok support</h3>
 <div class="paragraph">
 <p>If <a href="dg.html#_dg_ide_project-lombok">Project Lombok</a> is being used, then <code>@Title</code> can be specified on the backing field.</p>
 </div>
@@ -11218,7 +11318,7 @@ present in the title column. This convention can be overridden using
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-ViewModel">32. <code>@ViewModel</code></h2>
+<h2 id="_rgant-ViewModel">33. <code>@ViewModel</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@ViewModel</code> annotation, applied to a class, is the simplest way to indicate that the class is a view model.</p>
@@ -11278,7 +11378,7 @@ represented in the URL). As such, view models are immutable.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-ViewModelLayout">33. <code>@ViewModelLayout</code></h2>
+<h2 id="_rgant-ViewModelLayout">34. <code>@ViewModelLayout</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@ViewModelLayout</code> annotation is identical to the <a href="#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a>, but is provided
@@ -11394,7 +11494,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_cssClass">33.1. <code>cssClass()</code></h3>
+<h3 id="_rgant-ViewModelLayout_cssClass">34.1. <code>cssClass()</code></h3>
 <div class="paragraph">
 <p>The <code>cssClass()</code> attribute can be used to render additional CSS classes in the HTML (a wrapping <code>&lt;div&gt;</code>) that represents the view model.   <a href="rgcfg.html#_rgcfg_application-specific_application-css">Application-specific CSS</a> can then be used to target and adjust the UI representation of that particular element.</p>
 </div>
@@ -11427,7 +11527,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_cssClassFa">33.2. <code>cssClassFa()</code></h3>
+<h3 id="_rgant-ViewModelLayout_cssClassFa">34.2. <code>cssClassFa()</code></h3>
 <div class="paragraph">
 <p>The <code>cssClassFa()</code> attribute is used to specify the name of a <a href="http://fortawesome.github.io/Font-Awesome/icons/">Font Awesome icon</a> name, to be rendered as the domain object&#8217;s icon.</p>
 </div>
@@ -11471,7 +11571,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_describedAs">33.3. <code>describedAs()</code></h3>
+<h3 id="_rgant-ViewModelLayout_describedAs">34.3. <code>describedAs()</code></h3>
 <div class="paragraph">
 <p>The <code>describedAs()</code> attribute is used to provide a short description of the view model to the user.  In the <a href="ugvw.html">Wicket viewer</a> it is displayed as a 'tool tip'.  The <code>describedAs()</code> attribute can also be specified for <a href="#_rgant-CollectionLayout_describedAs">collections</a>,  <a href="#_rgant-PropertyLayout_describedAs">properties</a>, <a href="#_rgant-ActionLayout_describedAs">actions</a>, <a href="#_rgant-ParameterLayout_describedAs">parameters</a> and <a href="#_rgant-DomainObjectLayout_describedAs">domain objects</a>.</p>
 </div>
@@ -11491,7 +11591,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_named">33.4. <code>named()</code></h3>
+<h3 id="_rgant-ViewModelLayout_named">34.4. <code>named()</code></h3>
 <div class="paragraph">
 <p>The <code>named()</code> attribute explicitly specifies the view model&#8217;s name, overriding the name that would normally be inferred from the Java source code.  This attribute can also be specified for <a href="#_rgant-ActionLayout_named">actions</a>, <a href="#_rgant-CollectionLayout_named">collections</a>, <a href="#_rgant-PropertyLayout_named">properties</a>, <a href="#_rgant-ParameterLayout_named">parameters</a>, <a href="#_rgant-DomainObjectLayout_named">domain objects</a> and <a href="#_rgant-DomainServiceLayout_named">domain services</a>.</p>
 </div>
@@ -11539,7 +11639,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_paged">33.5. <code>paged()</code></h3>
+<h3 id="_rgant-ViewModelLayout_paged">34.5. <code>paged()</code></h3>
 <div class="paragraph">
 <p>The <code>paged()</code> attribute specifies the number of rows to display in a standalone collection, as returned from an action invocation.  This attribute can also be applied to <a href="#_rgant-CollectionLayout_paged">collections</a> and <a href="#_rgant-DomainObjectLayout_paged">domain objects</a>.</p>
 </div>
@@ -11577,7 +11677,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-ViewModelLayout_plural">33.6. <code>plural()</code></h3>
+<h3 id="_rgant-ViewModelLayout_plural">34.6. <code>plural()</code></h3>
 <div class="paragraph">
 <p>When Apache Isis displays a standalone collection of several objects, it will label the collection using the plural form of the object type.</p>
 </div>
@@ -11603,7 +11703,7 @@ for symmetry with domain objects that have been annotated using <a href="#_rgant
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-XmlJavaTypeAdapter">34. <code>@XmlJavaTypeAdapter</code> (<code>jaxb</code>)</h2>
+<h2 id="_rgant-XmlJavaTypeAdapter">35. <code>@XmlJavaTypeAdapter</code> (<code>jaxb</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The JAXB <code>@XmlJavaTypeAdapter</code> annotation is used with the framework-provided
@@ -11632,7 +11732,7 @@ in the user guide.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rgant-XmlRootElement">35. <code>@XmlRootElement</code> (<code>jaxb</code>)</h2>
+<h2 id="_rgant-XmlRootElement">36. <code>@XmlRootElement</code> (<code>jaxb</code>)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>@XmlRootElement</code> annotation provides an alternative way to define a
@@ -11696,7 +11796,7 @@ implementation (eg which maps XML strings to a GUID, say) can be configured usin
 </table>
 </div>
 <div class="sect2">
-<h3 id="_example">35.1. Example</h3>
+<h3 id="_example">36.1. Example</h3>
 <div class="paragraph">
 <p>This example is taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>:</p>
 </div>
@@ -11729,7 +11829,7 @@ implementation (eg which maps XML strings to a GUID, say) can be configured usin
 </div>
 </div>
 <div class="sect2">
-<h3 id="_see_also">35.2. See also</h3>
+<h3 id="_see_also">36.2. See also</h3>
 <div class="paragraph">
 <p>Although (like any other viewmodel) a JAXB-annotated can have behaviour (actions) and UI hints, you may wish to keep
 the DTO "clean", just focused on specifying the data contract.</p>
@@ -11977,93 +12077,94 @@ in the user guide.</p>
 </li>
 <li><a href="#_rgant-MemberGroupLayout">17. <code>@MemberGroupLayout</code></a></li>
 <li><a href="#_rgant-MemberOrder">18. <code>@MemberOrder</code></a></li>
-<li><a href="#_rgant-NotPersistent">19. <code>@NotPersistent</code> (<code>javax.jdo</code>)</a></li>
-<li><a href="#_rgant-MinLength">20. <code>@MinLength</code></a></li>
-<li><a href="#_rgant-Parameter">21. <code>@Parameter</code></a>
+<li><a href="#_rgant-Nullable">19. <code>@Nullable</code> (<code>javax</code>) (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgant-NotPersistent">20. <code>@NotPersistent</code> (<code>javax.jdo</code>)</a></li>
+<li><a href="#_rgant-MinLength">21. <code>@MinLength</code></a></li>
+<li><a href="#_rgant-Parameter">22. <code>@Parameter</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-Parameter_maxLength">21.1. <code>maxLength()</code></a></li>
-<li><a href="#_rgant-Parameter_mustSatisfy">21.2. <code>mustSatisfy()</code></a></li>
-<li><a href="#_rgant-Parameter_optionality">21.3. <code>optionality()</code></a></li>
-<li><a href="#_rgant-Parameter_regexPattern">21.4. <code>regexPattern()</code></a></li>
+<li><a href="#_rgant-Parameter_maxLength">22.1. <code>maxLength()</code></a></li>
+<li><a href="#_rgant-Parameter_mustSatisfy">22.2. <code>mustSatisfy()</code></a></li>
+<li><a href="#_rgant-Parameter_optionality">22.3. <code>optionality()</code></a></li>
+<li><a href="#_rgant-Parameter_regexPattern">22.4. <code>regexPattern()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-ParameterLayout">22. <code>@ParameterLayout</code></a>
+<li><a href="#_rgant-ParameterLayout">23. <code>@ParameterLayout</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-ParameterLayout_cssClass">22.1. <code>cssClass()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_describedAs">22.2. <code>describedAs()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_labelPosition">22.3. <code>labelPosition()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_multiLine">22.4. <code>multiLine()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_named">22.5. <code>named()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_renderedAsDayBefore">22.6. <code>renderedAsDayBefore()</code></a></li>
-<li><a href="#_rgant-ParameterLayout_typicalLength">22.7. <code>typicalLength()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_cssClass">23.1. <code>cssClass()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_describedAs">23.2. <code>describedAs()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_labelPosition">23.3. <code>labelPosition()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_multiLine">23.4. <code>multiLine()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_named">23.5. <code>named()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_renderedAsDayBefore">23.6. <code>renderedAsDayBefore()</code></a></li>
+<li><a href="#_rgant-ParameterLayout_typicalLength">23.7. <code>typicalLength()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-PersistenceCapable">23. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</a></li>
-<li><a href="#_rgant-PostConstruct">24. <code>@PostConstruct</code> (<code>javax</code>)</a></li>
-<li><a href="#_rgant-PreDestroy">25. <code>@PreDestroy</code> (<code>javax</code>)</a></li>
-<li><a href="#_rgant-PrimaryKey">26. <code>@PrimaryKey</code> (<code>javax.jdo</code>)</a></li>
-<li><a href="#_rgant-Programmatic">27. <code>@Programmatic</code></a></li>
-<li><a href="#_rgant-Property">28. <code>@Property</code></a>
+<li><a href="#_rgant-PersistenceCapable">24. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</a></li>
+<li><a href="#_rgant-PostConstruct">25. <code>@PostConstruct</code> (<code>javax</code>)</a></li>
+<li><a href="#_rgant-PreDestroy">26. <code>@PreDestroy</code> (<code>javax</code>)</a></li>
+<li><a href="#_rgant-PrimaryKey">27. <code>@PrimaryKey</code> (<code>javax.jdo</code>)</a></li>
+<li><a href="#_rgant-Programmatic">28. <code>@Programmatic</code></a></li>
+<li><a href="#_rgant-Property">29. <code>@Property</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-Property_domainEvent">28.1. <code>domainEvent()</code></a>
+<li><a href="#_rgant-Property_domainEvent">29.1. <code>domainEvent()</code></a>
 <ul class="sectlevel3">
-<li><a href="#_subscribers_13">28.1.1. Subscribers</a></li>
-<li><a href="#_default_doop_and_noop_events_13">28.1.2. Default, Doop and Noop events</a></li>
-<li><a href="#_raising_events_programmatically_6">28.1.3. Raising events programmatically</a></li>
+<li><a href="#_subscribers_13">29.1.1. Subscribers</a></li>
+<li><a href="#_default_doop_and_noop_events_13">29.1.2. Default, Doop and Noop events</a></li>
+<li><a href="#_raising_events_programmatically_6">29.1.3. Raising events programmatically</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-Property_editing">28.2. <code>editing()</code></a></li>
-<li><a href="#_rgant-Property_hidden">28.3. <code>hidden()</code></a></li>
-<li><a href="#_rgant-Property_maxLength">28.4. <code>maxLength()</code></a>
+<li><a href="#_rgant-Property_editing">29.2. <code>editing()</code></a></li>
+<li><a href="#_rgant-Property_hidden">29.3. <code>hidden()</code></a></li>
+<li><a href="#_rgant-Property_maxLength">29.4. <code>maxLength()</code></a>
 <ul class="sectlevel3">
-<li><a href="#_non_persistent_properties">28.4.1. Non-persistent properties</a></li>
+<li><a href="#_non_persistent_properties">29.4.1. Non-persistent properties</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-Property_mustSatisfy">28.5. <code>mustSatisfy()</code></a></li>
-<li><a href="#_rgant-Property_notPersisted">28.6. <code>notPersisted()</code></a></li>
-<li><a href="#_rgant-Property_optionality">28.7. <code>optionality()</code></a>
+<li><a href="#_rgant-Property_mustSatisfy">29.5. <code>mustSatisfy()</code></a></li>
+<li><a href="#_rgant-Property_notPersisted">29.6. <code>notPersisted()</code></a></li>
+<li><a href="#_rgant-Property_optionality">29.7. <code>optionality()</code></a>
 <ul class="sectlevel3">
-<li><a href="#_mismatched_defaults">28.7.1. Mismatched defaults</a></li>
-<li><a href="#_superclass_inheritance_type">28.7.2. Superclass inheritance type</a></li>
-<li><a href="#_non_persistent_properties_2">28.7.3. Non-persistent properties</a></li>
+<li><a href="#_mismatched_defaults">29.7.1. Mismatched defaults</a></li>
+<li><a href="#_superclass_inheritance_type">29.7.2. Superclass inheritance type</a></li>
+<li><a href="#_non_persistent_properties_2">29.7.3. Non-persistent properties</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-Property_regexPattern">28.8. <code>regexPattern()</code></a></li>
+<li><a href="#_rgant-Property_regexPattern">29.8. <code>regexPattern()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-PropertyLayout">29. <code>@PropertyLayout</code></a>
+<li><a href="#_rgant-PropertyLayout">30. <code>@PropertyLayout</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-PropertyLayout_cssClass">29.1. <code>cssClass()</code></a></li>
-<li><a href="#_rgant-PropertyLayout_describedAs">29.2. <code>describedAs()</code></a></li>
-<li><a href="#_rgant-PropertyLayout_labelPosition">29.3. <code>labelPosition()</code></a></li>
-<li><a href="#_rgant-PropertyLayout_multiLine">29.4. <code>multiLine()</code></a></li>
-<li><a href="#_rgant-PropertyLayout_named">29.5. named()</a></li>
-<li><a href="#_rgant-PropertyLayout_renderedAsDayBefore">29.6. <code>renderedAsDayBefore()</code></a></li>
-<li><a href="#_rgant-PropertyLayout_typicalLength">29.7. <code>typicalLength()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_cssClass">30.1. <code>cssClass()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_describedAs">30.2. <code>describedAs()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_labelPosition">30.3. <code>labelPosition()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_multiLine">30.4. <code>multiLine()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_named">30.5. named()</a></li>
+<li><a href="#_rgant-PropertyLayout_renderedAsDayBefore">30.6. <code>renderedAsDayBefore()</code></a></li>
+<li><a href="#_rgant-PropertyLayout_typicalLength">30.7. <code>typicalLength()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-RequestScoped">30. <code>@RequestScoped</code> (<code>javax</code>)</a></li>
-<li><a href="#_rgant-Title">31. <code>@Title</code></a>
+<li><a href="#_rgant-RequestScoped">31. <code>@RequestScoped</code> (<code>javax</code>)</a></li>
+<li><a href="#_rgant-Title">32. <code>@Title</code></a>
 <ul class="sectlevel2">
-<li><a href="#_lombok_support">31.1. Lombok support</a></li>
+<li><a href="#_lombok_support">32.1. Lombok support</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-ViewModel">32. <code>@ViewModel</code></a></li>
-<li><a href="#_rgant-ViewModelLayout">33. <code>@ViewModelLayout</code></a>
+<li><a href="#_rgant-ViewModel">33. <code>@ViewModel</code></a></li>
+<li><a href="#_rgant-ViewModelLayout">34. <code>@ViewModelLayout</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-ViewModelLayout_cssClass">33.1. <code>cssClass()</code></a></li>
-<li><a href="#_rgant-ViewModelLayout_cssClassFa">33.2. <code>cssClassFa()</code></a></li>
-<li><a href="#_rgant-ViewModelLayout_describedAs">33.3. <code>describedAs()</code></a></li>
-<li><a href="#_rgant-ViewModelLayout_named">33.4. <code>named()</code></a></li>
-<li><a href="#_rgant-ViewModelLayout_paged">33.5. <code>paged()</code></a></li>
-<li><a href="#_rgant-ViewModelLayout_plural">33.6. <code>plural()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_cssClass">34.1. <code>cssClass()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_cssClassFa">34.2. <code>cssClassFa()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_describedAs">34.3. <code>describedAs()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_named">34.4. <code>named()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_paged">34.5. <code>paged()</code></a></li>
+<li><a href="#_rgant-ViewModelLayout_plural">34.6. <code>plural()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-XmlJavaTypeAdapter">34. <code>@XmlJavaTypeAdapter</code> (<code>jaxb</code>)</a></li>
-<li><a href="#_rgant-XmlRootElement">35. <code>@XmlRootElement</code> (<code>jaxb</code>)</a>
+<li><a href="#_rgant-XmlJavaTypeAdapter">35. <code>@XmlJavaTypeAdapter</code> (<code>jaxb</code>)</a></li>
+<li><a href="#_rgant-XmlRootElement">36. <code>@XmlRootElement</code> (<code>jaxb</code>)</a>
 <ul class="sectlevel2">
-<li><a href="#_example">35.1. Example</a></li>
-<li><a href="#_see_also">35.2. See also</a></li>
+<li><a href="#_example">36.1. Example</a></li>
+<li><a href="#_see_also">36.2. See also</a></li>
 </ul>
 </li>
 </ul>
