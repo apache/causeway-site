@@ -8612,6 +8612,14 @@ Isis Maven plugin.</p>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-Parameter_fileAccept"><code>fileAccept()</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media type or file extension</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>1.13.0-SNAPSHOT</code>) restrict the files to be uploaded to a <a href="rgcms.html#_rgcms_classes_value-types_Blob"><code>Blob</code></a>
+ or <a href="rgcms.html#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-Parameter_maxLength"><code>maxLength()</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Positive integer</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -8622,7 +8630,7 @@ Isis Maven plugin.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>minLength()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Positive integer</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Deprecated; use <a href="#_rgant-MinLength"><code>@MinLength</code></a> instead.<br></p>
+<p>Deprecated; use <a href="#_rgant_minLength"><code>@MinLength</code></a> instead.<br></p>
 </div>
 <div class="paragraph">
 <p>Can be used to specify the minimum length for <a href="rgcms.html#<em>rgcms_methods_prefixes_autoComplete"><code>autoComplete&#8230;&#8203;()</code></a> supporting method; but because this _is a</em> supporting method rather than the action method itself, we now feel it is misleading to use the <code>@Parameter</code> annotation in this situation.</p>
@@ -8702,7 +8710,44 @@ Isis Maven plugin.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_maxLength">22.1. <code>maxLength()</code></h3>
+<h3 id="_rgant-Parameter_fileAccept">22.1. <code>fileAccept()</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>fileAccept()</code> attribute (<code>1.13.0-SNAPSHOT</code>) applies only to <a href="rgcms.html#_rgcms_classes_value-types_Blob"><code>Blob</code></a>
+or <a href="rgcms.html#_rgcms_classes_value-types_Clob"><code>Clob</code></a> parameters, indicating the type of file to accept when
+uploading a new value.   The attribute is also supported on <a href="#_rgant-Property_fileAccept">properties</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Scanner</span> {
+    <span class="directive">public</span> ScannedDocument newScan(
+        <span class="annotation">@Parameter</span>(fileAccept=<span class="string"><span class="delimiter">&quot;</span><span class="content">image/*</span><span class="delimiter">&quot;</span></span>)            <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">&quot;</span><span class="content">Scanned image</span><span class="delimiter">&quot;</span></span>)     <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">final</span> <span class="predefined-type">Blob</span> scannedImage) {
+        ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>as per <a href="http://www.w3schools.com/tags/att_input_accept.asp">reference docs</a>, either a media type (such as
+<code>image/*</code>) or a file type extension (such as <code>.png</code>).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the <code>@ParameterLayout(named=&#8230;&#8203;)</code> attribute is required for Java 7; for Java 8 it can be omitted if the
+(non-ASF) <a href="http://github.com/isisaddons/isis-metamodel-paraname8">Isis addons' paraname8</a> metamodel extension is used.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgant-Parameter_maxLength">22.2. <code>maxLength()</code></h3>
 <div class="paragraph">
 <p>The <code>maxLength()</code> attribute applies only to <code>String</code> parameters, indicating the maximum number of characters that the user may enter (for example in a text field in the UI).  It is ignored if applied to parameters of any other type.  This attribute can also be applied to <a href="#_rgant-Property_maxLength">properties</a>.</p>
 </div>
@@ -8734,7 +8779,7 @@ Isis Maven plugin.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_mustSatisfy">22.2. <code>mustSatisfy()</code></h3>
+<h3 id="_rgant-Parameter_mustSatisfy">22.3. <code>mustSatisfy()</code></h3>
 <div class="paragraph">
 <p>The <code>mustSatisfy()</code> attribute allows arbitrary validation to be applied to parameters using an (implementation of a) <code>org.apache.isis.applib.spec.Specification</code> object.  The attribute is also supported on <a href="#_rgant-Property_mustSatisfy">properties</a>.</p>
 </div>
@@ -8819,7 +8864,7 @@ Isis Maven plugin.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_optionality">22.3. <code>optionality()</code></h3>
+<h3 id="_rgant-Parameter_optionality">22.4. <code>optionality()</code></h3>
 <div class="paragraph">
 <p>By default, Apache Isis assumes that all parameters of an action are required (mandatory).  The <code>optionality()</code> attribute allows this to be relaxed.  The attribute is also supported for <a href="#_rgant-Property_optionality">properties</a>.</p>
 </div>
@@ -8875,7 +8920,7 @@ Isis Maven plugin.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Parameter_regexPattern">22.4. <code>regexPattern()</code></h3>
+<h3 id="_rgant-Parameter_regexPattern">22.5. <code>regexPattern()</code></h3>
 <div class="paragraph">
 <p>There are three attributes related to enforcing regular expressions:</p>
 </div>
@@ -9720,6 +9765,14 @@ declaration.</p>
 </div></div></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-Property_fileAccept"><code>fileAccept()</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media type or file extension</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>1.13.0-SNAPSHOT</code>) restrict the files to be uploaded to a <a href="rgcms.html#_rgcms_classes_value-types_Blob"><code>Blob</code></a>
+ or <a href="rgcms.html#_rgcms_classes_value-types_Clob"><code>Clob</code></a>.</p>
+</div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-Property_hidden"><code>hidden()</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>EVERYWHERE</code>, <code>OBJECT_FORMS</code>, <code>PARENTED_TABLES</code>, <code>STANDALONE_TABLES</code>, <code>ALL_TABLES</code>, <code>NOWHERE</code><br>
 (<code>NOWHERE</code>)</p></td>
@@ -10116,7 +10169,38 @@ wrapping the target object using the <a href="rgsvc.html#_rgsvc_api_WrapperFacto
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_hidden">29.3. <code>hidden()</code></h3>
+<h3 id="_rgant-Property_fileAccept">29.3. <code>fileAccept()</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>fileAccept()</code> attribute (<code>1.13.0-SNAPSHOT</code>) applies only to <a href="rgcms.html#_rgcms_classes_value-types_Blob"><code>Blob</code></a>
+or <a href="rgcms.html#_rgcms_classes_value-types_Clob"><code>Clob</code></a> parameters, indicating the type of file to accept when
+uploading a new value.   The attribute is also supported on <a href="#_rgant-Parameter_fileAccept">parameters</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ScannedDocument</span> {
+
+    <span class="annotation">@Property</span>(fileAccept=<span class="string"><span class="delimiter">&quot;</span><span class="content">image/*</span><span class="delimiter">&quot;</span></span>)                 <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> <span class="predefined-type">Blob</span> scannedImage;
+    <span class="comment">// getters and setters omitted</span>
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>as per <a href="http://www.w3schools.com/tags/att_input_accept.asp">reference docs</a>, either a media type (such as
+<code>image/*</code>) or a file type extension (such as <code>.png</code>).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgant-Property_hidden">29.4. <code>hidden()</code></h3>
 <div class="paragraph">
 <p>Properties can be hidden at the domain-level, indicating that they are not visible to the end-user.  This attribute can also be applied to <a href="#_rgant-ActionLayout_hidden">actions</a> and <a href="#_rgant-CollectionLayout_hidden">collections</a>.</p>
 </div>
@@ -10217,7 +10301,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_maxLength">29.4. <code>maxLength()</code></h3>
+<h3 id="_rgant-Property_maxLength">29.5. <code>maxLength()</code></h3>
 <div class="paragraph">
 <p>The <code>maxLength()</code> attribute applies only to <code>String</code> properties, indicating the maximum number of characters that the user may enter (for example in a text field in the UI).  The attribute It is ignored if applied to properties of any other type.  This attribute can also be applied to <a href="#_rgant-Parameter_maxLength">parameters</a>.</p>
 </div>
@@ -10241,7 +10325,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 <p>In this case there is therefore no need for the <code>@Property#maxLength()</code> attribute.</p>
 </div>
 <div class="sect3">
-<h4 id="_non_persistent_properties">29.4.1. Non-persistent properties</h4>
+<h4 id="_non_persistent_properties">29.5.1. Non-persistent properties</h4>
 <div class="paragraph">
 <p>Of course, not every property is persistent (it could instead be derived), and neither is every domain object an entity (it could be a view model).  For these non persistable properties the <code>maxLength()</code> attribute is still required.</p>
 </div>
@@ -10278,7 +10362,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_mustSatisfy">29.5. <code>mustSatisfy()</code></h3>
+<h3 id="_rgant-Property_mustSatisfy">29.6. <code>mustSatisfy()</code></h3>
 <div class="paragraph">
 <p>The <code>mustSatisfy()</code> attribute allows arbitrary validation to be applied to properties using an (implementation of a) <code>org.apache.isis.applib.spec.Specification</code> object.
  The attribute is also supported on <a href="#_rgant-Parameter_mustSatisfy">parameters</a>.</p>
@@ -10353,7 +10437,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_notPersisted">29.6. <code>notPersisted()</code></h3>
+<h3 id="_rgant-Property_notPersisted">29.7. <code>notPersisted()</code></h3>
 <div class="paragraph">
 <p>The (somewhat misnamed) <code>notPersisted()</code> attribute indicates that the collection should be excluded from any snapshots generated by the <a href="rgsvc.html#_rgsvc_api_XmlSnapshotService"><code>XmlSnapshotService</code></a>.  This attribute is also supported for <a href="#_rgant-Collection_notPersisted">collections</a>.</p>
 </div>
@@ -10426,7 +10510,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_optionality">29.7. <code>optionality()</code></h3>
+<h3 id="_rgant-Property_optionality">29.8. <code>optionality()</code></h3>
 <div class="paragraph">
 <p>By default, Apache Isis assumes that all properties of an domain object or view model are required (mandatory).  The <code>optionality()</code> attribute allows this to be relaxed.  The attribute is also supported for <a href="#_rgant-Parameter_optionality">parameters</a>.</p>
 </div>
@@ -10453,7 +10537,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 <p>In this case there is no need for the <code>@Property#optionality()</code> attribute.</p>
 </div>
 <div class="sect3">
-<h4 id="_mismatched_defaults">29.7.1. Mismatched defaults</h4>
+<h4 id="_mismatched_defaults">29.8.1. Mismatched defaults</h4>
 <div class="paragraph">
 <p>If the <code>@Column#allowNulls()</code> attribute is omitted and the `@Property#optionality() attribute is also omitted, then note that Isis' defaults and JDO&#8217;s defaults differ.  Specifically, Isis always assumes properties are mandatory, whereas JDO specifies that primitives are mandatory, but all reference types are optional.</p>
 </div>
@@ -10462,7 +10546,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect3">
-<h4 id="_superclass_inheritance_type">29.7.2. Superclass inheritance type</h4>
+<h4 id="_superclass_inheritance_type">29.8.2. Superclass inheritance type</h4>
 <div class="paragraph">
 <p>There is one case (at least) it may be necessary to annotate the property with both <code>@Column#allowsNull</code> and also <code>@Property#optionality()</code>.  If the property is logically mandatory and is in a subclass, but the mapping of the class hierarchy is to store both the superclass and subclass(es) into a single table (ie a "roll-up" mapping using <code>javax.jdo.annotations.InheritanceStrategy#SUPERCLASS_TABLE</code>), then JDO requires that the property is annotated as <code>@Column#allowsNull="true"</code>: its value will be not defined for other subclasses.</p>
 </div>
@@ -10509,7 +10593,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect3">
-<h4 id="_non_persistent_properties_2">29.7.3. Non-persistent properties</h4>
+<h4 id="_non_persistent_properties_2">29.8.3. Non-persistent properties</h4>
 <div class="paragraph">
 <p>Of course, not every property is persistent (it could instead be derived), and neither is every domain object an entity (it could be a view model).  For these non persistable properties the <code>optionality()</code> attribute is still required.</p>
 </div>
@@ -10596,7 +10680,7 @@ tables. Annotating with <code>@Property(where=Where.NOWHERE)</code> overrides th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-Property_regexPattern">29.8. <code>regexPattern()</code></h3>
+<h3 id="_rgant-Property_regexPattern">29.9. <code>regexPattern()</code></h3>
 <div class="paragraph">
 <p>There are three attributes related to enforcing regular expressions:</p>
 </div>
@@ -12082,10 +12166,11 @@ in the user guide.</p>
 <li><a href="#_rgant-MinLength">21. <code>@MinLength</code></a></li>
 <li><a href="#_rgant-Parameter">22. <code>@Parameter</code></a>
 <ul class="sectlevel2">
-<li><a href="#_rgant-Parameter_maxLength">22.1. <code>maxLength()</code></a></li>
-<li><a href="#_rgant-Parameter_mustSatisfy">22.2. <code>mustSatisfy()</code></a></li>
-<li><a href="#_rgant-Parameter_optionality">22.3. <code>optionality()</code></a></li>
-<li><a href="#_rgant-Parameter_regexPattern">22.4. <code>regexPattern()</code></a></li>
+<li><a href="#_rgant-Parameter_fileAccept">22.1. <code>fileAccept()</code> (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgant-Parameter_maxLength">22.2. <code>maxLength()</code></a></li>
+<li><a href="#_rgant-Parameter_mustSatisfy">22.3. <code>mustSatisfy()</code></a></li>
+<li><a href="#_rgant-Parameter_optionality">22.4. <code>optionality()</code></a></li>
+<li><a href="#_rgant-Parameter_regexPattern">22.5. <code>regexPattern()</code></a></li>
 </ul>
 </li>
 <li><a href="#_rgant-ParameterLayout">23. <code>@ParameterLayout</code></a>
@@ -12114,22 +12199,23 @@ in the user guide.</p>
 </ul>
 </li>
 <li><a href="#_rgant-Property_editing">29.2. <code>editing()</code></a></li>
-<li><a href="#_rgant-Property_hidden">29.3. <code>hidden()</code></a></li>
-<li><a href="#_rgant-Property_maxLength">29.4. <code>maxLength()</code></a>
+<li><a href="#_rgant-Property_fileAccept">29.3. <code>fileAccept()</code> (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgant-Property_hidden">29.4. <code>hidden()</code></a></li>
+<li><a href="#_rgant-Property_maxLength">29.5. <code>maxLength()</code></a>
 <ul class="sectlevel3">
-<li><a href="#_non_persistent_properties">29.4.1. Non-persistent properties</a></li>
+<li><a href="#_non_persistent_properties">29.5.1. Non-persistent properties</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-Property_mustSatisfy">29.5. <code>mustSatisfy()</code></a></li>
-<li><a href="#_rgant-Property_notPersisted">29.6. <code>notPersisted()</code></a></li>
-<li><a href="#_rgant-Property_optionality">29.7. <code>optionality()</code></a>
+<li><a href="#_rgant-Property_mustSatisfy">29.6. <code>mustSatisfy()</code></a></li>
+<li><a href="#_rgant-Property_notPersisted">29.7. <code>notPersisted()</code></a></li>
+<li><a href="#_rgant-Property_optionality">29.8. <code>optionality()</code></a>
 <ul class="sectlevel3">
-<li><a href="#_mismatched_defaults">29.7.1. Mismatched defaults</a></li>
-<li><a href="#_superclass_inheritance_type">29.7.2. Superclass inheritance type</a></li>
-<li><a href="#_non_persistent_properties_2">29.7.3. Non-persistent properties</a></li>
+<li><a href="#_mismatched_defaults">29.8.1. Mismatched defaults</a></li>
+<li><a href="#_superclass_inheritance_type">29.8.2. Superclass inheritance type</a></li>
+<li><a href="#_non_persistent_properties_2">29.8.3. Non-persistent properties</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-Property_regexPattern">29.8. <code>regexPattern()</code></a></li>
+<li><a href="#_rgant-Property_regexPattern">29.9. <code>regexPattern()</code></a></li>
 </ul>
 </li>
 <li><a href="#_rgant-PropertyLayout">30. <code>@PropertyLayout</code></a>
