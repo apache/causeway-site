@@ -686,7 +686,39 @@ isis.authorization=shiro</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bootstrapping_shiro">2.2. Bootstrapping Shiro</h3>
+<h3 id="_configuring_isis_shiro_authenticator">2.2. Configuring Isis' Shiro Authenticator</h3>
+<div class="paragraph">
+<p>The <code>ShiroAuthenticatorOrAuthorizor</code> class itself supports a single optional property (<code>1.13.0-SNAPSHOT</code>).  This can
+be configured in <code>authentication_shiro.properties</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.authentication.shiro.autoLogoutIfAlreadyAuthenticated=false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration property only comes into effect for the <a href="ugvro.html">Restful Objects viewer</a>; if set then
+the Shiro subject - if found to be still authenticated - will be logged out anyway and then re-authenticated.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This auto-logout behaviour was the default prior to <code>1.13.0-SNAPSHOT</code>, but is believed to be the root cause of some
+exceptions caused by a possible race condition.  There should generally be no need to change this property from its
+default (<code>false</code>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bootstrapping_shiro">2.3. Bootstrapping Shiro</h3>
 <div class="paragraph">
 <p>The Shiro environment (in essence, thread-locals holding the security credentials) needs to be bootstrapped using the following settings in the <code>WEB-INF/web.xml</code> file:</p>
 </div>
@@ -710,7 +742,7 @@ isis.authorization=shiro</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="__code_web_inf_shiro_ini_code">2.3. <code>WEB-INF/shiro.ini</code></h3>
+<h3 id="__code_web_inf_shiro_ini_code">2.4. <code>WEB-INF/shiro.ini</code></h3>
 <div class="paragraph">
 <p>The <code>shiro.ini</code> file is used to specify the realm(s) that Shiro will delegate to:</p>
 </div>
@@ -1925,8 +1957,9 @@ userRegistrationService.registerUser(userDetails);</code></pre>
 <li><a href="#_ugsec_configuring-isis-to-use-shiro">2. Configuring Apache Isis to use Shiro</a>
 <ul class="sectlevel2">
 <li><a href="#_telling_apache_isis_to_use_shiro">2.1. Telling Apache Isis to use Shiro</a></li>
-<li><a href="#_bootstrapping_shiro">2.2. Bootstrapping Shiro</a></li>
-<li><a href="#__code_web_inf_shiro_ini_code">2.3. <code>WEB-INF/shiro.ini</code></a></li>
+<li><a href="#_configuring_isis_shiro_authenticator">2.2. Configuring Isis' Shiro Authenticator</a></li>
+<li><a href="#_bootstrapping_shiro">2.3. Bootstrapping Shiro</a></li>
+<li><a href="#__code_web_inf_shiro_ini_code">2.4. <code>WEB-INF/shiro.ini</code></a></li>
 </ul>
 </li>
 <li><a href="#_ugsec_shiro-ini-realm">3. Shiro Ini Realm</a>
