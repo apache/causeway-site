@@ -5294,7 +5294,8 @@ the changed properties of instances are <em>not</em> audited, again irrespective
 <div class="sect2">
 <h3 id="_rgant-DomainObject_autoCompleteRepository">10.2. <code>autoCompleteRepository()</code></h3>
 <div class="paragraph">
-<p>The <code>autoCompleteRepository()</code> attribute nominates a single method on a domain service as the fallback means for lookuping up instances of the domain object using a simple string.</p>
+<p>The <code>autoCompleteRepository()</code> attribute nominates a single method on a domain service as the fallback means for
+looking up instances of the domain object using a simple string.</p>
 </div>
 <div class="paragraph">
 <p>For example, this might search for a customer by their name or number.  Or it could search for a country based on its ISO-3 code or user-friendly name.</p>
@@ -5318,10 +5319,10 @@ the changed properties of instances are <em>not</em> audited, again irrespective
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@AutoComplete</span>(
-    autoCompleteRepository=Customers.class
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(
+    autoCompleteRepository=CustomerRepository.class
 )
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">extends</span> AbstractDomainObject {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
    ....
 }</code></pre>
 </div>
@@ -5331,9 +5332,9 @@ the changed properties of instances are <em>not</em> audited, again irrespective
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Customers</span> {
-    <span class="annotation">@Programmatic</span>                                <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="predefined-type">List</span>&lt;Customer&gt; autoComplete(<span class="predefined-type">String</span> search);  <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerRepository</span> {
+    <span class="predefined-type">List</span>&lt;Customer&gt; autoComplete(<span class="predefined-type">String</span> search);  <i class="conum" data-value="1"></i><b>(1)</b>
     ...
 }</code></pre>
 </div>
@@ -5342,10 +5343,6 @@ the changed properties of instances are <em>not</em> audited, again irrespective
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>do not expose in the UI</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>is assumed to be called "autoComplete", and accepts a single string</td>
 </tr>
 </table>
@@ -5360,23 +5357,50 @@ the changed properties of instances are <em>not</em> audited, again irrespective
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@AutoComplete</span>(
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(
     autoCompleteRepository=Customers.class,
-    autoCompleteAction=<span class="string"><span class="delimiter">&quot;</span><span class="content">findByCustomerName</span><span class="delimiter">&quot;</span></span>
+    autoCompleteAction=<span class="string"><span class="delimiter">&quot;</span><span class="content">findByName</span><span class="delimiter">&quot;</span></span>
 )
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">extends</span> AbstractDomainObject {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
    ....
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where in this case <code>findByCustomerName</code> might be an existing method already defined:</p>
+<p>where in this case <code>findByName</code> might be an existing action already defined:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Customers</span> {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(natureOfService=VIEW_MENU_ONLY)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customers</span> {
     <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
-    <span class="predefined-type">List</span>&lt;Customer&gt; findByCustomerName(<span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> name);
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; findByName(
+        <span class="annotation">@Parameter</span>(minLength=<span class="integer">3</span>)             <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>)
+        <span class="predefined-type">String</span> name);
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>end-user must enter minimum number of characters to trigger the query</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>(As of <code>1.13.0-SNAPSHOT</code>), the autocomplete action can also be a regular method, annotated using <a href="#_rgant_Programmatic"><code>@Programmatic</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(natureOfService=VIEW_MENU_ONLY)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Customers</span> {
+    <span class="annotation">@Programmatic</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Customer&gt; findByName(
+        <span class="annotation">@Parameter</span>(minLength=<span class="integer">3</span>)
+        <span class="predefined-type">String</span> name);
     ...
 }</code></pre>
 </div>
