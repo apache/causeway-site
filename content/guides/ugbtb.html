@@ -1891,24 +1891,142 @@ general purpose implementation of the same concepts.</p>
 <p>Contributed services provide many of the same benefits as <a href="#_ugbtb_decoupling_mixins">mixins</a>;
 indeed mixins are an evolution and refinement of the contributions concept.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It&#8217;s possible that contributions may be deprecated and eventually removed in a future version of the framework, to be replaced entirely by mixins.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The main difference between contributed services and mixins is that the actions of a contributed service will
 contribute to <em>all</em> the parameters of its actions, whereas a mixin only contributes to the type accepted in its
 constructor.  Also, contributed services are long-lived
 singletons, whereas mixins are instantiated as required (by the framework) and then discarded almost immediately.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>For more on contributed services:</p>
+<p>There&#8217;s further useful information on contributed services in the reference guide, discussing the <a href="rgant.html#_rgant-DomainService_nature">@DomainService#nature()</a> attribute, for the <code>NatureOfService.VIEW_CONTRIBUTIONS_ONLY</code> nature.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>the syntax of writing contributed actions/properties/collections is described in this <a href="ugfun.html#_ugfun_how-tos_contributed-members">how-to</a></p>
-</li>
-<li>
-<p>there&#8217;s also useful information in the reference guide, discussing the <a href="rgant.html#_rgant-DomainService_nature">@DomainService#nature()</a> attribute, for the <code>NatureOfService.VIEW_CONTRIBUTIONS_ONLY</code> nature.</p>
-</li>
-</ul>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_syntax">3.3.1. Syntax</h4>
+<div class="paragraph">
+<p>Any n-parameter action provided by a service will automatically be contributed to the list of actions for each of its (entity) parameters. From the viewpoint of the entity the action is called a contributed action.</p>
+</div>
+<div class="paragraph">
+<p>For example, given a service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Library</span> {
+    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the entities:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Book</span> <span class="directive">implements</span> Loanable { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryMember</span> <span class="directive">implements</span> Borrower { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then the <code>borrow(&#8230;&#8203;)</code> action will be contributed to both <code>Book</code> and to <code>LibraryMember</code>.</p>
+</div>
+<div class="paragraph">
+<p>This is an important capability because it helps to decouple the concrete classes from the services.</p>
+</div>
+<div class="paragraph">
+<p>If necessary, though, this behaviour can be suppressed by annotating the service action with <code>@org.apache.isis.applib.annotations.NotContributed</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Library</span> {
+    <span class="annotation">@NotContributed</span>
+    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If annotated at the interface level, then the annotation will be inherited by every concrete class. Alternatively the annotation can be applied at the implementation class level and only apply to that particular implementation.</p>
+</div>
+<div class="paragraph">
+<p>Note that an action annotated as being <code>@NotContributed</code> will still appear in the service menu for the service. If an action should neither be contributed nor appear in service menu items, then simply annotate it as <code>@Hidden</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contributed_action">3.3.2. Contributed Action</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contributed_property">3.3.3. Contributed Property</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contributed_collection">3.3.4. Contributed Collection</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5480,7 +5598,14 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_related_reading">3.2.5. Related reading</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_decoupling_contributions">3.3. Contributions</a></li>
+<li><a href="#_ugbtb_decoupling_contributions">3.3. Contributions</a>
+<ul class="sectlevel3">
+<li><a href="#_syntax">3.3.1. Syntax</a></li>
+<li><a href="#_contributed_action">3.3.2. Contributed Action</a></li>
+<li><a href="#_contributed_property">3.3.3. Contributed Property</a></li>
+<li><a href="#_contributed_collection">3.3.4. Contributed Collection</a></li>
+</ul>
+</li>
 <li><a href="#_ugbtb_decoupling_vetoing-visibility">3.4. Vetoing Visibility</a></li>
 <li><a href="#_ugbtb_decoupling_event-bus">3.5. Event Bus</a></li>
 <li><a href="#_ugbtb_decoupling_pushing-changes">3.6. Pushing Changes</a>

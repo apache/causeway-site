@@ -4566,7 +4566,7 @@ TODO using <code>DomainObjectContainer</code>'s support for  <a href="rgsvc.html
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_entity-relationships">4.5. Entity Relationships</h3>
+<h3 id="_ugfun_how-tos_business-rules">4.5. Business Rules</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4580,237 +4580,7 @@ TODO
 </table>
 </div>
 <div class="sect3">
-<h4 id="_mandatory_and_optional">4.5.1. Mandatory and Optional</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ugfun_how-tos_entity-relationships_managed-1-to-m-bidirectional-relationships">4.5.2. 1-m bidir relationships</h4>
-<div class="paragraph">
-<p>When an object is added to a 1:m bidirectional relationship, the child object must refer to the parent and the child must be added to the parent&#8217;s children collection.</p>
-</div>
-<div class="paragraph">
-<p>If there were no database involved then we would have recommended that you use the <a href="http://www.two-sdg.demon.co.uk/curbralan/papers/MutualRegistration.pdf">mutual registration</a> pattern to ensure that both the parent and child are updated correctly.  (The  <a href="rgcms.html#_rgcms_methods_prefixes_modify"><code>modify&#8230;&#8203;()</code></a> and <a href="rgcms.html#_rgcms_methods_prefixes_clear"><code>clear&#8230;&#8203;()</code></a> supporting methods were introduced in the framework primarily to help support implement the mutual registration pattern.</p>
-</div>
-<div class="paragraph">
-<p>However, in a relational database, these two operations in the domain object model correspond simply to updating the foreign key of the child table to reference the parent&#8217;s primary key.</p>
-</div>
-<div class="paragraph">
-<p>So long as the parent&#8217;s children collection is a <code>java.util.Set</code> (rather than a <code>Collection</code> or a <code>List</code>), the JDO Objectstore will automatically maintain both sides of the relationship. All that is necessary is to set the child to refer to the parent.</p>
-</div>
-<div class="paragraph">
-<p>For example, all you need write is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Department</span> {
-    <span class="annotation">@javax</span>.jdo.annotations.Persistent(mappedBy=<span class="string"><span class="delimiter">&quot;</span><span class="content">department</span><span class="delimiter">&quot;</span></span>) <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">private</span> <span class="predefined-type">SortedSet</span>&lt;Employee&gt; employees = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;Employee&gt;();
-
-    <span class="directive">public</span> <span class="predefined-type">SortedSet</span>&lt;Employee&gt; getEmployees() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setEmployees(<span class="predefined-type">SortedSet</span>&lt;Employee&gt; employees) { ... }
-    ...
-}
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Employee</span> {
-    <span class="directive">private</span> Department department;
-    <span class="directive">public</span> Department getDepartment() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setDepartment(Department department) { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>it&#8217;s the <code>mappedBy</code> attribute that tells DataNucleus this is a bidirectional relationship.  The value "department" refers to the Employee#department property.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Moreover, when maintaining a bidirectional 1-n relationship that is automatically managed by DataNucleus, it&#8217;s preferred to "add" to the parent&#8217;s child collection, don&#8217;t set the parent on the child.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If you don&#8217;t do this then you may hit a <code>NullPointerException</code>. The above idiom fixes the issue.</p>
-</div>
-<div class="paragraph">
-<p>For more information, see <a href="http://isis.markmail.org/thread/ipu2lzqqikqdglox">this thread</a> on the Apache Isis users
-mailing list, including this <a href="http://markmail.org/message/hblptpw675mlw723">message</a> with the above recommendation.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>In fact, not only do you not need to manually maintain the relationship, we have noted on at least <a href="http://markmail.org/message/agnwmzocvdfht32f">one occasion</a> a subtle error if the code is programmatically added.</p>
-</div>
-<div class="paragraph">
-<p>The error in that case was that the same object was contained in the parents collection. This of course should not happen for a <code>TreeSet</code>. However, JDO/DataNucleus replaces the <code>TreeSet</code> with its own implementation, and (either by design or otherwise) this does not enforce <code>Set</code> semantics.</p>
-</div>
-<div class="paragraph">
-<p>The upshot is that you should NEVER programmatically add the child object to the parent&#8217;s collection if using JDO Objectstore.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugfun_how-tos_contributed-members">4.6. Contributed Members</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO - generalize to discussion on contributed collections/properties; update to new annotations
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Any n-parameter action provided by a service will automatically be contributed to the list of actions for each of its (entity) parameters. From the viewpoint of the entity the action is called a contributed action.</p>
-</div>
-<div class="paragraph">
-<p>For example, given a service:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Library</span> {
-    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and the entities:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Book</span> <span class="directive">implements</span> Loanable { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">LibraryMember</span> <span class="directive">implements</span> Borrower { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>then the <code>borrow(&#8230;&#8203;)</code> action will be contributed to both <code>Book</code> and to <code>LibraryMember</code>.</p>
-</div>
-<div class="paragraph">
-<p>This is an important capability because it helps to decouple the concrete classes from the services.</p>
-</div>
-<div class="paragraph">
-<p>If necessary, though, this behaviour can be suppressed by annotating the service action with <code>@org.apache.isis.applib.annotations.NotContributed</code>.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Library</span> {
-    <span class="annotation">@NotContributed</span>
-    <span class="directive">public</span> Loan borrow(Loanable l, Borrower b);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If annotated at the interface level, then the annotation will be inherited by every concrete class. Alternatively the annotation can be applied at the implementation class level and only apply to that particular implementation.</p>
-</div>
-<div class="paragraph">
-<p>Note that an action annotated as being <code>@NotContributed</code> will still appear in the service menu for the service. If an action should neither be contributed nor appear in service menu items, then simply annotate it as <code>@Hidden</code>.</p>
-</div>
-<div class="sect3">
-<h4 id="_contributed_action">4.6.1. Contributed Action</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_contributed_property">4.6.2. Contributed Property</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_contributed_collection">4.6.3. Contributed Collection</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugfun_how-tos_business-rules">4.7. Business Rules</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_visibility_see_it">4.7.1. Visibility ("see it")</h4>
+<h4 id="_visibility_see_it">4.5.1. Visibility ("see it")</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4845,7 +4615,7 @@ TODO - <a href="rgcms.html#_rgcms_methods_prefixes_hide"><code>hide&#8230;&#8203
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usability_use_it">4.7.2. Usability ("use it")</h4>
+<h4 id="_usability_use_it">4.5.2. Usability ("use it")</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4895,7 +4665,7 @@ TODO - <a href="rgcms.html#_rgcms_methods_prefixes_disable"><code>disable&#8230;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validity_do_it">4.7.3. Validity ("do it")</h4>
+<h4 id="_validity_do_it">4.5.3. Validity ("do it")</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4942,7 +4712,7 @@ TODO - using <a href="rgant.html#_rgant-Parameter_mustSatisfy"><code>@Parameter#
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_derived-members">4.8. Derived Members</h3>
+<h3 id="_ugfun_how-tos_derived-members">4.6. Derived Members</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4956,7 +4726,7 @@ TODO
 </table>
 </div>
 <div class="sect3">
-<h4 id="_derived_property">4.8.1. Derived Property</h4>
+<h4 id="_derived_property">4.6.1. Derived Property</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4971,7 +4741,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_derived_collection">4.8.2. Derived Collection</h4>
+<h4 id="_derived_collection">4.6.2. Derived Collection</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5002,7 +4772,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_trigger_on_property_change">4.8.3. Trigger on property change</h4>
+<h4 id="_trigger_on_property_change">4.6.3. Trigger on property change</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5017,7 +4787,7 @@ TODO - <a href="rgcms.html#_rgcms_methods_prefixes_modify"><code>modify&#8230;&#
 </div>
 </div>
 <div class="sect3">
-<h4 id="_trigger_on_collection_change">4.8.4. Trigger on collection change</h4>
+<h4 id="_trigger_on_collection_change">4.6.4. Trigger on collection change</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5033,7 +4803,7 @@ TODO - <a href="rgcms.html#_rgcms_methods_prefixes_addTo"><code>addTo&#8230;&#82
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_drop-downs-and-defaults">4.9. Drop Downs and Defaults</h3>
+<h3 id="_ugfun_how-tos_drop-downs-and-defaults">4.7. Drop Downs and Defaults</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5047,7 +4817,7 @@ TODO
 </table>
 </div>
 <div class="sect3">
-<h4 id="_for_properties">4.9.1. For Properties</h4>
+<h4 id="_for_properties">4.7.1. For Properties</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5107,7 +4877,7 @@ TODO -  <a href="rgcms.html#_rgcms_methods_prefixes_default"><code>default&#8230
 </div>
 </div>
 <div class="sect3">
-<h4 id="_for_action_parameters">4.9.2. For Action Parameters</h4>
+<h4 id="_for_action_parameters">4.7.2. For Action Parameters</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5182,7 +4952,7 @@ TODO -  <a href="rgcms.html#_rgcms_methods_prefixes_default"><code>default&#8230
 </div>
 </div>
 <div class="sect3">
-<h4 id="_for_both_properties_and_action_parameters">4.9.3. For both Properties and Action Parameters</h4>
+<h4 id="_for_both_properties_and_action_parameters">4.7.3. For both Properties and Action Parameters</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5219,7 +4989,7 @@ TODO - <a href="rgant.html#_rgant-DomainObject_bounded"><code>@DomainObject#boun
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_bulk-actions">4.10. Bulk Actions</h3>
+<h3 id="_ugfun_how-tos_bulk-actions">4.8. Bulk Actions</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5234,7 +5004,7 @@ TODO - <a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_simulating-collections-of-values">4.11. Collections of values</h3>
+<h3 id="_ugfun_how-tos_simulating-collections-of-values">4.9. Collections of values</h3>
 <div class="paragraph">
 <p>Although in Apache Isis you can have properties of either values (string, number, date etc) or of (references to other) entities, with collections the framework (currently) only supports collections of (references to) entities.  That is, collections of values (a bag of numbers, say) are not supported.</p>
 </div>
@@ -5242,7 +5012,7 @@ TODO - <a href="rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</cod
 <p>However, it is possible to simulate a bag of numbers using view models.</p>
 </div>
 <div class="sect3">
-<h4 id="_view_model">4.11.1. View Model</h4>
+<h4 id="_view_model">4.9.1. View Model</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5257,7 +5027,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_persistence_concerns">4.11.2. Persistence Concerns</h4>
+<h4 id="_persistence_concerns">4.9.2. Persistence Concerns</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5273,7 +5043,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_how-tos_render-all-properties-in-tables">4.12. Subclass properties in tables</h3>
+<h3 id="_ugfun_how-tos_render-all-properties-in-tables">4.10. Subclass properties in tables</h3>
 <div class="paragraph">
 <p>Suppose you have a hierarchy of classes where a property is derived and abstract in the superclass, concrete implementations in the subclasses. For example:</p>
 </div>
@@ -5332,7 +5102,449 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugfun_object-layout">5. Object Layout</h2>
+<h2 id="_ugfun_jdo-mappings">5. JDO Mappings</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ugfun_jdo-mappings_1-to-m-bidirectional-relationships">5.1. 1-m Bidirectional relationships</h3>
+<div class="paragraph">
+<p>Consider a bidirectional one-to-many association between two entities; a collection member in the "parent" and a property member on the "child".</p>
+</div>
+<div class="paragraph">
+<p>We can tell DataNucleus about the bidirectionality using <code>@Persistent(mappedBy=&#8230;&#8203;)</code>, or we can take responsibility for
+this aspect ourselves.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the two entities can be associated either without or with a join table (indicated by the <code>@Join</code> annotation):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>without a join table is more common; a regular foreign key in the child table for <code>FermentationVessel</code> points back up to the associated parent <code>Batch</code></p>
+</li>
+<li>
+<p>with a join table; a link table holds the tuple representing the linkage.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Testing in <code>1.13.0-SNAPSHOT</code> (against <code>dn-core 4.1.7</code>/<code>dn-rdbms 4.1.9</code>) has determined there are two main rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If not using <code>@Join</code>, then the association must be maintained by setting the child association on the parent.<br></p>
+<div class="paragraph">
+<p>It is not sufficient to simply add the child object to the parent&#8217;s collection.</p>
+</div>
+</li>
+<li>
+<p><code>@Persistent(mappedBy=&#8230;&#8203;)</code> and <code>@Join</code> cannot be used together.<br></p>
+<div class="paragraph">
+<p>Put another way, if using <code>@Join</code> then you must maintain both sides of the relationship in the application code.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the examples that follow, we use two entities, <code>Batch</code> and <code>FermentationVessel</code> (from a brewery domain).  In the
+original example domain the relationship between these two entities was optional (a <code>FermentationVessel</code> may
+have either none or one <code>Batch</code> associated with it); for the purpose of this article we&#8217;ll explore both mandatory and
+optional associations.</p>
+</div>
+<div class="sect3">
+<h4 id="_mandatory_no_code_join_code">5.1.1. Mandatory, no <code>@Join</code></h4>
+<div class="paragraph">
+<p>In the first scenario we have use <code>@Persistent(mappedBy=&#8230;&#8203;)</code> to indicate a bidirectional association, without any <code>@Join</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Batch</span> {
+
+    <span class="comment">// getters and setters omitted</span>
+
+    <span class="annotation">@Persistent</span>(mappedBy = <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>, dependentElement = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)     <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> <span class="predefined-type">SortedSet</span>&lt;FermentationVessel&gt; vessels = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;FermentationVessel&gt;();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>"mappedBy" means this is bidirectional</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">FermentationVessel</span> <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;FermentationVessel&gt; {
+
+    <span class="comment">// getters and setters omitted</span>
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)       <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> Batch batch;
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">private</span> State state;                <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mandatory association up to parent</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>State is an enum (omitted)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Which creates this schema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)
+<span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">fvessel</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">batch_id_OID</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span> NVARCHAR(<span class="integer">255</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">TIMESTAMP</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That is, there is an mandatory foreign key from <code>FermentationVessel</code> to <code>Batch</code>.</p>
+</div>
+<div class="paragraph">
+<p>In this case we can use this code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Batch transfer(<span class="directive">final</span> FermentationVessel vessel) {
+    vessel.setBatch(<span class="local-variable">this</span>);                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    vessel.setState(FermentationVessel.State.FERMENTING);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>set the parent on the child</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This sets up the association correctly, using this SQL:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">UPDATE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">fvessel</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel</span><span class="delimiter">&quot;</span></span>
+   <span class="class">SET</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch_id_OID</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">0</span>&gt;
+       ,<span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span>=&lt;<span class="string"><span class="delimiter">'</span><span class="content">FERMENTING</span><span class="delimiter">'</span></span>&gt;
+       ,<span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">2016</span><span class="integer">-07</span><span class="integer">-07</span> <span class="integer">12</span>:<span class="integer">37</span>:<span class="float">14.968</span>&gt;
+ <span class="keyword">WHERE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">0</span>&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following code will also work:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Batch transfer(<span class="directive">final</span> FermentationVessel vessel) {
+    vessel.setBatch(<span class="local-variable">this</span>);                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    getVessels().add(vessel);                               <i class="conum" data-value="2"></i><b>(2)</b>
+    vessel.setState(FermentationVessel.State.FERMENTING);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>set the parent on the child</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>add the child to the parent&#8217;s collection.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>However, obviously the second statement is redundant.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optional_no_code_join_code">5.1.2. Optional, no <code>@Join</code></h4>
+<div class="paragraph">
+<p>If the association to the parent is made optional:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">FermentationVessel</span> <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;FermentationVessel&gt; {
+
+    <span class="comment">// getters and setters omitted</span>
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)       <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> Batch batch;
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">private</span> State state;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>optional association up to parent</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Which creates this schema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)
+<span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">fvessel</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">batch_id_OID</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="predefined-constant">NULL</span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span> NVARCHAR(<span class="integer">255</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">TIMESTAMP</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is almost exactly the same, except the foreign key from <code>FermentationVessel</code> to <code>Batch</code> is now nullable.</p>
+</div>
+<div class="paragraph">
+<p>In this case then setting the parent on the child still works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Batch transfer(<span class="directive">final</span> FermentationVessel vessel) {
+    vessel.setBatch(<span class="local-variable">this</span>);                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    vessel.setState(FermentationVessel.State.FERMENTING);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>set the parent on the child</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>HOWEVER</strong>, if we (redundantly) update both sides, then - paradoxically - the association is NOT set up</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Batch transfer(<span class="directive">final</span> FermentationVessel vessel) {
+    vessel.setBatch(<span class="local-variable">this</span>);                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    getVessels().add(vessel);                               <i class="conum" data-value="2"></i><b>(2)</b>
+    vessel.setState(FermentationVessel.State.FERMENTING);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>set the parent on the child</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>add the child to the parent&#8217;s collection.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It&#8217;s not clear if this is a bug in <code>dn-core 4.1.7</code>/<code>dn-rdbms 4.19</code>; an earlier thread on the mailing list from 2014 actually gave
+the opposite advice, see <a href="http://isis.markmail.org/thread/ipu2lzqqikqdglox">this thread</a> and in particular this <a href="http://markmail.org/message/hblptpw675mlw723">message</a>.</p>
+</div>
+<div class="paragraph">
+<p>In fact we also have <a href="http://markmail.org/message/agnwmzocvdfht32f">a different case</a> which argues that the parent
+should only be set on the child, and the child <em>not</em> added to the parent&#8217;s collection.  This concurs with the most recent testing.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Therefore, the simple advice is that, for bidirectional associations, simply set the parent on the child, and this will work
+reliably irrespective of whether the association is mandatory or optional.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_with_code_join_code">5.1.3. With <code>@Join</code></h4>
+<div class="paragraph">
+<p>Although DataNucleus does not complain if <code>@Persistence(mappedBy=&#8230;&#8203;)</code> and <code>@Join</code> are combined, testing (against <code>dn-core 4.1.7</code>/<code>dn-rdbms 4.19</code>) has shown that the bidirectional association is not properly maintained.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, we recommend that if <code>@Join</code> is used, then manually maintain both sides of the relationship and do not indicate
+that the association is bidirectional.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Batch</span> {
+
+    <span class="comment">// getters and setters omitted</span>
+
+    <span class="annotation">@Join</span>(table = <span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_vessels</span><span class="delimiter">&quot;</span></span>)
+    <span class="annotation">@Persistent</span>(dependentElement = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">private</span> <span class="predefined-type">SortedSet</span>&lt;FermentationVessel&gt; vessels = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;FermentationVessel&gt;();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">FermentationVessel</span> <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;FermentationVessel&gt; {
+
+    <span class="comment">// getters and setters omitted</span>
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)       <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> Batch batch;
+
+    <span class="annotation">@Column</span>(allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">private</span> State state;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>optional association up to parent</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>creates this schema:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)
+<span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">fvessel</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> GENERATED <span class="keyword">BY</span> <span class="directive">DEFAULT</span> <span class="keyword">AS</span> IDENTITY,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span> NVARCHAR(<span class="integer">255</span>) <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    ...
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">TIMESTAMP</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>)
+)
+<span class="class">CREATE</span> <span class="type">TABLE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_vessels</span><span class="delimiter">&quot;</span></span>
+(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id_OID</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">id_EID</span><span class="delimiter">&quot;</span></span> <span class="predefined-type">BIGINT</span> <span class="keyword">NOT</span> <span class="predefined-constant">NULL</span>,
+    <span class="type">CONSTRAINT</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_vessels_PK</span><span class="delimiter">&quot;</span></span> <span class="directive">PRIMARY</span> <span class="type">KEY</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id_OID</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">id_EID</span><span class="delimiter">&quot;</span></span>)
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That is, there is NO foreign key from <code>FermentationVessel</code> to <code>Batch</code>, instead the <code>Batch_vessels</code> table links the two together.</p>
+</div>
+<div class="paragraph">
+<p>These should then be maintained using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Batch transfer(<span class="directive">final</span> FermentationVessel vessel) {
+    vessel.setBatch(<span class="local-variable">this</span>);                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    getVessels().add(vessel);                               <i class="conum" data-value="2"></i><b>(2)</b>
+    vessel.setState(FermentationVessel.State.FERMENTING);
+    <span class="keyword">return</span> <span class="local-variable">this</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>set the parent on the child</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>add the child to the parent&#8217;s collection.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>that is, explicitly update both sides of the relationship.</p>
+</div>
+<div class="paragraph">
+<p>This generates this SQL:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span class="class">INSERT</span> <span class="class">INTO</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch_vessels</span><span class="delimiter">&quot;</span></span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">id_OID</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">id_EID</span><span class="delimiter">&quot;</span></span>) <span class="keyword">VALUES</span> (&lt;<span class="integer">0</span>&gt;,&lt;<span class="integer">0</span>&gt;)
+<span class="class">UPDATE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">Batch</span><span class="delimiter">&quot;</span></span>
+   <span class="class">SET</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">3</span>&gt;
+ <span class="keyword">WHERE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">0</span>&gt;
+<span class="class">UPDATE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">fvessel</span><span class="delimiter">&quot;</span></span>.<span class="string"><span class="delimiter">&quot;</span><span class="content">FermentationVessel</span><span class="delimiter">&quot;</span></span>
+   <span class="class">SET</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span>=&lt;<span class="string"><span class="delimiter">'</span><span class="content">FERMENTING</span><span class="delimiter">'</span></span>&gt;
+      ,<span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">2016</span><span class="integer">-07</span><span class="integer">-07</span> <span class="integer">12</span>:<span class="integer">49</span>:<span class="float">21.49</span>&gt;
+ <span class="keyword">WHERE</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>=&lt;<span class="integer">0</span>&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It doesn&#8217;t matter in these cases whether the association is mandatory or optional; it will be the same SQL generated.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugfun_object-layout">6. Object Layout</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In implementing the <a href="http://en.wikipedia.org/wiki/Naked_objects">naked objects pattern</a>, Apache Isis aims to infer as much information from the domain classes as possible.  Nevertheless, some metadata relating solely to the UI is inevitably required.</p>
@@ -5341,7 +5553,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 <p>This chapter describes how this is done both for domain objects&#8201;&#8212;&#8201;statically or dynamically&#8201;&#8212;&#8201;and for the application menu bar (containing domain service' actions).</p>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_static">5.1. Static Object Layout</h3>
+<h3 id="_ugfun_object-layout_static">6.1. Static Object Layout</h3>
 <div class="paragraph">
 <p>Metadata providing UI hints can be specified either statically, using annotations, or dynamically, using either a <a href="#_ugfun_object-layout_dynamic_xml"><code>layout.xml</code></a> file or a <a href="#_ugfun_object-layout_dynamic"><code>.layout.json</code></a> file.</p>
 </div>
@@ -5363,7 +5575,7 @@ TODO -  easiest to simply store using DataNucleus' support for collections, mark
 </table>
 </div>
 <div class="sect3">
-<h4 id="__code_memberorder_code">5.1.1. <code>@MemberOrder</code></h4>
+<h4 id="__code_memberorder_code">6.1.1. <code>@MemberOrder</code></h4>
 <div class="paragraph">
 <p>The <a href="rgant.html#_rgant-MemberOrder"><code>@MemberOrder</code></a>  annotation is used to specify the relative order of domain class properties, collections and actions.</p>
 </div>
@@ -5468,7 +5680,7 @@ property is placed in a fallback "General" group, called "General".<br></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_membergrouplayout_code">5.1.2. <code>@MemberGroupLayout</code></h4>
+<h4 id="__code_membergrouplayout_code">6.1.2. <code>@MemberGroupLayout</code></h4>
 <div class="paragraph">
 <p>The <a href="rgant.html#_rgant-MemberGroupLayout"><code>@MemberGroupLayout</code></a> annotation specifies the relative positioning of property groups/fieldsets as being either in a left column, a middle column or in a right column.  The annotation also specifies the relative width of the columns.</p>
 </div>
@@ -5599,7 +5811,7 @@ property is placed in a fallback "General" group, called "General".<br></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_layouts">5.1.3. Example Layouts</h4>
+<h4 id="_example_layouts">6.1.3. Example Layouts</h4>
 <div class="paragraph">
 <p>Below are sketches for the layout of the <a href="https://github.com/apache/isis/blob/f38fdb92941172eabb12e0943509f239e6d5925f/example/application/quickstart_wicket_restful_jdo/dom/src/main/java/dom/todo/ToDoItem.java">ToDoItem</a> class of the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF):</p>
 </div>
@@ -5629,14 +5841,14 @@ property is placed in a fallback "General" group, called "General".<br></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_other_annotations">5.1.4. Other Annotations</h4>
+<h4 id="_other_annotations">6.1.4. Other Annotations</h4>
 <div class="paragraph">
 <p>As of 1.8.0, all the layout annotations have been consolidated into the various <code>XxxLayout</code> annotations: <a href="rgant.html#_rgant-ActionLayout, "><code>@ActionLayout</code></a> <a href="rgant.html#_rgant-CollectionLayout"><code>@CollectionLayout</code></a>,  <a href="rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a>,  <a href="rgant.html#_rgant-DomainServiceLayout"><code>@DomainServiceLayout</code></a>,  <a href="rgant.html#_rgant-ParameterLayout"><code>@ParameterLayout</code></a>, <a href="rgant.html#_rgant-PropertyLayout"><code>@PropertyLayout</code></a>, and <a href="rgant.html#_rgant-ViewModelLayout"><code>@ViewModelLayout</code></a></p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_dynamic_xml">5.2. Dynamic (XML) Layout</h3>
+<h3 id="_ugfun_object-layout_dynamic_xml">6.2. Dynamic (XML) Layout</h3>
 <div class="paragraph">
 <p>Metadata providing UI hints can be specified either <a href="#_ugfun_object-layout_static">statically</a>, using annotations, or dynamically using an <code>Xxx.layout.xml</code> file (where <code>Xxx</code> is the entity or view model object to be rendered).</p>
 </div>
@@ -5662,7 +5874,7 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </table>
 </div>
 <div class="sect3">
-<h4 id="_grids_vs_components">5.2.1. Grids vs Components</h4>
+<h4 id="_grids_vs_components">6.2.1. Grids vs Components</h4>
 <div class="paragraph">
 <p>The XML file distinguishes between two types of element:</p>
 </div>
@@ -5684,13 +5896,13 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </div>
 </div>
 <div class="sect3">
-<h4 id="_screencast">5.2.2. Screencast</h4>
+<h4 id="_screencast">6.2.2. Screencast</h4>
 <div class="paragraph">
 <p>This <a href="https://www.youtube.com/watch?v=MxewC5Pve5k">screencast</a> describes the feature.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_examples">5.2.3. Examples</h4>
+<h4 id="_examples">6.2.3. Examples</h4>
 <div class="paragraph">
 <p>Probably the easiest way to understand dynamic XML layouts is by example.  For this we&#8217;ll use the <code>ToDoItem</code> from the
 (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>:</p>
@@ -5843,7 +6055,7 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ugfun_object-layout_dynamic_xml-unreferenced">5.2.4. Unreferenced Members</h4>
+<h4 id="_ugfun_object-layout_dynamic_xml-unreferenced">6.2.4. Unreferenced Members</h4>
 <div class="paragraph">
 <p>As noted in the preceding discussion, several of the grid&#8217;s regions have either an <code>unreferencedActions</code>, <code>unreferencedCollections</code> or <code>unreferencedProperties</code> attribute.</p>
 </div>
@@ -5877,7 +6089,7 @@ is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making ite
 </div>
 </div>
 <div class="sect3">
-<h4 id="_more_advanced_features">5.2.5. More advanced features</h4>
+<h4 id="_more_advanced_features">6.2.5. More advanced features</h4>
 <div class="paragraph">
 <p>This section decribes a number of more features useful in more complex layouts.</p>
 </div>
@@ -6012,7 +6224,7 @@ from the top of the page slightly, using the following CSS:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_migrating_from_earlier_versions">5.2.6. Migrating from earlier versions</h4>
+<h4 id="_migrating_from_earlier_versions">6.2.6. Migrating from earlier versions</h4>
 <div class="paragraph">
 <p>As noted earlier on, it is possible to download layout XML files using the <a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (exposed on the prototyping menu); this will download a ZIP file of layout XML files for all domain entities and view models.  Alternatively the layout XML for a single domain object can be downloaded using the <a href="rgcms.html#_rgcms_classes_mixins_Object">mixin action</a> (contributed to every domain object).</p>
 </div>
@@ -6099,7 +6311,7 @@ below summarises the choices:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_domain_services">5.2.7. Domain Services</h4>
+<h4 id="_domain_services">6.2.7. Domain Services</h4>
 <div class="paragraph">
 <p>For more information about layouts, see:</p>
 </div>
@@ -6118,7 +6330,7 @@ below summarises the choices:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_required_updates_to_the_dom_project_s_pom_xml">5.2.8. Required updates to the dom project&#8217;s pom.xml</h4>
+<h4 id="_required_updates_to_the_dom_project_s_pom_xml">6.2.8. Required updates to the dom project&#8217;s pom.xml</h4>
 <div class="paragraph">
 <p>Any <code>.layout.xml</code> files must be compiled and available in the classpath.  Ensure the following is defined in the dom project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -6148,7 +6360,7 @@ below summarises the choices:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_dynamic">5.3. Dynamic (JSON) Layout</h3>
+<h3 id="_ugfun_object-layout_dynamic">6.3. Dynamic (JSON) Layout</h3>
 <div class="paragraph">
 <p>Metadata providing UI hints can be specified either <a href="#_ugfun_object-layout_static">statically</a>, using annotations, or dynamically, using either a <a href="#_ugfun_object-layout_dynamic_xml"><code>layout.xml</code></a> file or (as described here) a <code>.layout.json</code> file.</p>
 </div>
@@ -6172,7 +6384,7 @@ The <code>.layout.json</code> file will be ignored once a <code>.layout.xml</cod
 </table>
 </div>
 <div class="sect3">
-<h4 id="_json_layout_file">5.3.1. JSON layout file</h4>
+<h4 id="_json_layout_file">6.3.1. JSON layout file</h4>
 <div class="paragraph">
 <p>The JSON layout file for class <code>Xxx</code> takes the name <code>Xxx.layout.json</code>, and resides in the same package as the class.</p>
 </div>
@@ -6272,13 +6484,13 @@ ordered according either to annotations (if present) or fallback/default values.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_downloading_an_initial_layout">5.3.2. Downloading an initial layout</h4>
+<h4 id="_downloading_an_initial_layout">6.3.2. Downloading an initial layout</h4>
 <div class="paragraph">
 <p>The fastest way to get started is to use the (non-ASF) <a href="http://github.com/isisaddons/isis-module-devutils">Isis addons' devutils</a> module to download the layout file (derived from any existing static metadata defined by annotations).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_required_updates_to_the_dom_project_s_pom_xml_2">5.3.3. Required updates to the dom project&#8217;s pom.xml</h4>
+<h4 id="_required_updates_to_the_dom_project_s_pom_xml_2">6.3.3. Required updates to the dom project&#8217;s pom.xml</h4>
 <div class="paragraph">
 <p>Any <code>.layout.json</code> files must be compiled and available in the classpath.  Ensure the following is defined in the dom project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -6308,7 +6520,7 @@ ordered according either to annotations (if present) or fallback/default values.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_application-menu">5.4. Application Menu Layout</h3>
+<h3 id="_ugfun_object-layout_application-menu">6.4. Application Menu Layout</h3>
 <div class="paragraph">
 <p>The actions of domain services are made available as an application menu bar. By default each domain service
 corresponds to a single menu on this menu bar, with its actions as the drop-down menu items. This is rarely exactly
@@ -6320,7 +6532,7 @@ placement of menu items.</p>
 application built using Apache Isis.</p>
 </div>
 <div class="sect3">
-<h4 id="__domainservicelayout">5.4.1. @DomainServiceLayout</h4>
+<h4 id="__domainservicelayout">6.4.1. @DomainServiceLayout</h4>
 <div class="paragraph">
 <p>Menus for domain services can be placed either on a primary, secondary or tertiary menu bar.</p>
 </div>
@@ -6416,7 +6628,7 @@ thereafter the purpose of the <code>menuOrder</code> is to order the menu servic
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ordering_menu_actions">5.4.2. Ordering menu actions</h4>
+<h4 id="_ordering_menu_actions">6.4.2. Ordering menu actions</h4>
 <div class="paragraph">
 <p>For a given service, the actions within a section on a menu is determined by the <code>@MemberOrder</code> annotation. Thus, for
 the <code>Units</code> domain service, its actions are annotated:</p>
@@ -6449,7 +6661,7 @@ is not recommended).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_tertiary_menubar">5.4.3. Tertiary menubar</h4>
+<h4 id="_tertiary_menubar">6.4.3. Tertiary menubar</h4>
 <div class="paragraph">
 <p>The tertiary menu bar consists of a single unnamed menu, rendered underneath the user&#8217;s login, top right. This is
 intended primarily for actions pertaining to the user themselves, eg their account, profile or settings:</p>
@@ -6486,7 +6698,7 @@ viewer does <em>not</em> place dividers between actions from different services 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_isis_add_on_modules">5.4.4. Isis Add-on modules</h4>
+<h4 id="_isis_add_on_modules">6.4.4. Isis Add-on modules</h4>
 <div class="paragraph">
 <p>Some of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> modules also provide services whose actions appear in top-level menus.</p>
 </div>
@@ -6521,7 +6733,7 @@ using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibili
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_object-layout_static-vs-dynamic">5.5. Static vs Dynamic Layouts</h3>
+<h3 id="_ugfun_object-layout_static-vs-dynamic">6.5. Static vs Dynamic Layouts</h3>
 <div class="paragraph">
 <p>Using <a href="#_ugfun_object-layout_dynamic">dynamic object layout</a>s using JSON has the huge benefit that the layout can be updated without requiring a recompile of the code and redeploy of the app.  Many developers also find it easier to rationalize about layout when all the hints are collated together in a single place (rather than scattered across the class members as annotations).</p>
 </div>
@@ -6535,7 +6747,7 @@ using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibili
 <p>Also, dynamic layouts have no notion of inheritance, whereas the dewey-decimal format <code>@MemberOrder</code> annotation allows the metadata of the subclass its superclasses to fit together relatively seamlessly.</p>
 </div>
 <div class="sect3">
-<h4 id="_best_of_both_worlds">5.5.1. Best of both worlds?</h4>
+<h4 id="_best_of_both_worlds">6.5.1. Best of both worlds?</h4>
 <div class="paragraph">
 <p>Using the (non-ASF) <a href="http://github.com/isisaddons/isis-jrebel-plugin">Isis addons' jrebel</a> plugin comes close to getting the best of both words: metadata is specified in a type-safe way using annotations, but can be reloaded automatically.</p>
 </div>
@@ -6550,7 +6762,7 @@ using security or using a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibili
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugfun_faqs">6. FAQs</h2>
+<h2 id="_ugfun_faqs">7. FAQs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter has FAQs (with solutions) for problems we&#8217;ve encountered ourselves or have been raised on the
@@ -6560,7 +6772,7 @@ Apache Isis mailing lists.</p>
 <p>See also <a href="ugvro.html#_ugvro_hints-and-tips">Restful Objects hints-n-tips</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_enabling-logging">6.1. Enabling Logging</h3>
+<h3 id="_ugfun_faqs_enabling-logging">7.1. Enabling Logging</h3>
 <div class="paragraph">
 <p>Sometimes you just need to see what is going on. There are various ways in which logging can be enabled, here are the ones we tend to use.</p>
 </div>
@@ -6619,7 +6831,7 @@ Apache Isis mailing lists.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_subtype-entity-not-fully-populated">6.2. Subtype not fully populated</h3>
+<h3 id="_ugfun_faqs_subtype-entity-not-fully-populated">7.2. Subtype not fully populated</h3>
 <div class="paragraph">
 <p>Taken from <a href="http://markmail.org/message/ovgai56uqgfgnrx7">this thread</a> on the Apache Isis users mailing list&#8230;&#8203;</p>
 </div>
@@ -6698,7 +6910,7 @@ will not resolve such references (otherwise, where to stop&#8230;&#8203; and the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_restful-image-property">6.3. How parse images in RO viewer?</h3>
+<h3 id="_ugfun_faqs_restful-image-property">7.3. How parse images in RO viewer?</h3>
 <div class="paragraph">
 <p>From this <a href="http://markmail.org/message/4kcu7sml4ufdsah3">thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -6734,7 +6946,7 @@ an Isis RO web service as a string, but it won&#8217;t show.  Is there something
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_enhance-only">6.4. Enhance only (IntelliJ)</h3>
+<h3 id="_ugfun_faqs_enhance-only">7.4. Enhance only (IntelliJ)</h3>
 <div class="paragraph">
 <p>From the Apache Isis mailing list is:</p>
 </div>
@@ -6770,7 +6982,7 @@ an Isis RO web service as a string, but it won&#8217;t show.  Is there something
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_per-user-themes">6.5. Per-user Themes</h3>
+<h3 id="_ugfun_faqs_per-user-themes">7.5. Per-user Themes</h3>
 <div class="paragraph">
 <p>From <a href="http://isis.markmail.org/thread/kb4442niwwbnghey">this thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -6861,7 +7073,7 @@ an Isis RO web service as a string, but it won&#8217;t show.  Is there something
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n the Wicket viewer?</h3>
+<h3 id="_ugfun_faqs_i18n-label-in-wicket-viewer">7.6. How i18n the Wicket viewer?</h3>
 <div class="paragraph">
 <p>From <a href="http://isis.markmail.org/thread/ctppmtcbsf4iskzi">this thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -6894,7 +7106,7 @@ supported by the <a href="rgsvc.html#_rgsvc_spi_TranslationService"><code>Transl
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_how-to-handle-void-and-null-results">6.7. How to handle void/null results</h3>
+<h3 id="_ugfun_faqs_how-to-handle-void-and-null-results">7.7. How to handle void/null results</h3>
 <div class="paragraph">
 <p>From this <a href="http://isis.markmail.org/thread/yf7qdeiu3vrvk2ei">thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -7012,7 +7224,7 @@ representation (<code>ObjectAdapter</code>)</td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_how-to-implement-a-spellchecker">6.8. How to implement a spellchecker?</h3>
+<h3 id="_ugfun_faqs_how-to-implement-a-spellchecker">7.8. How to implement a spellchecker?</h3>
 <div class="paragraph">
 <p>From this <a href="http://isis.markmail.org/thread/dduarjscrbnodfsi">thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -7059,7 +7271,7 @@ interface, eg a <code>SpellCheckEvent</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugfun_faqs_how-run-fixtures-on-app-startup">6.9. How run fixtures on startup?</h3>
+<h3 id="_ugfun_faqs_how-run-fixtures-on-app-startup">7.9. How run fixtures on startup?</h3>
 <div class="paragraph">
 <p>From this <a href="http://isis.markmail.org/thread/g6amfj2eyf2xfjbr">thread</a> on the Apache Isis users mailing list:</p>
 </div>
@@ -7323,22 +7535,9 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_deleting_objects">4.4.3. Deleting Objects</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_entity-relationships">4.5. Entity Relationships</a>
+<li><a href="#_ugfun_how-tos_business-rules">4.5. Business Rules</a>
 <ul class="sectlevel3">
-<li><a href="#_mandatory_and_optional">4.5.1. Mandatory and Optional</a></li>
-<li><a href="#_ugfun_how-tos_entity-relationships_managed-1-to-m-bidirectional-relationships">4.5.2. 1-m bidir relationships</a></li>
-</ul>
-</li>
-<li><a href="#_ugfun_how-tos_contributed-members">4.6. Contributed Members</a>
-<ul class="sectlevel3">
-<li><a href="#_contributed_action">4.6.1. Contributed Action</a></li>
-<li><a href="#_contributed_property">4.6.2. Contributed Property</a></li>
-<li><a href="#_contributed_collection">4.6.3. Contributed Collection</a></li>
-</ul>
-</li>
-<li><a href="#_ugfun_how-tos_business-rules">4.7. Business Rules</a>
-<ul class="sectlevel3">
-<li><a href="#_visibility_see_it">4.7.1. Visibility ("see it")</a>
+<li><a href="#_visibility_see_it">4.5.1. Visibility ("see it")</a>
 <ul class="sectlevel4">
 <li><a href="#_hide_a_property">Hide a Property</a></li>
 <li><a href="#_hide_a_collection">Hide a Collection</a></li>
@@ -7347,7 +7546,7 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_all_members_hidden">All Members Hidden</a></li>
 </ul>
 </li>
-<li><a href="#_usability_use_it">4.7.2. Usability ("use it")</a>
+<li><a href="#_usability_use_it">4.5.2. Usability ("use it")</a>
 <ul class="sectlevel4">
 <li><a href="#_disable_a_property">Disable a Property</a></li>
 <li><a href="#_disable_a_collection">Disable a Collection</a></li>
@@ -7356,7 +7555,7 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_all_members_unmodifiable_disabling_the_edit_button">All Members Unmodifiable (Disabling the Edit Button)</a></li>
 </ul>
 </li>
-<li><a href="#_validity_do_it">4.7.3. Validity ("do it")</a>
+<li><a href="#_validity_do_it">4.5.3. Validity ("do it")</a>
 <ul class="sectlevel4">
 <li><a href="#_validate_change_to_a_property">Validate (change to) a Property</a></li>
 <li><a href="#_validate_adding_or_removing_from_a_collection">Validate (adding or removing from) a Collection</a></li>
@@ -7367,24 +7566,24 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 </li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_derived-members">4.8. Derived Members</a>
+<li><a href="#_ugfun_how-tos_derived-members">4.6. Derived Members</a>
 <ul class="sectlevel3">
-<li><a href="#_derived_property">4.8.1. Derived Property</a></li>
-<li><a href="#_derived_collection">4.8.2. Derived Collection</a></li>
-<li><a href="#_trigger_on_property_change">4.8.3. Trigger on property change</a></li>
-<li><a href="#_trigger_on_collection_change">4.8.4. Trigger on collection change</a></li>
+<li><a href="#_derived_property">4.6.1. Derived Property</a></li>
+<li><a href="#_derived_collection">4.6.2. Derived Collection</a></li>
+<li><a href="#_trigger_on_property_change">4.6.3. Trigger on property change</a></li>
+<li><a href="#_trigger_on_collection_change">4.6.4. Trigger on collection change</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_drop-downs-and-defaults">4.9. Drop Downs and Defaults</a>
+<li><a href="#_ugfun_how-tos_drop-downs-and-defaults">4.7. Drop Downs and Defaults</a>
 <ul class="sectlevel3">
-<li><a href="#_for_properties">4.9.1. For Properties</a>
+<li><a href="#_for_properties">4.7.1. For Properties</a>
 <ul class="sectlevel4">
 <li><a href="#_choices_for_property">Choices for Property</a></li>
 <li><a href="#_auto_complete_for_property">Auto-complete for property</a></li>
 <li><a href="#_default_for_property">Default for property</a></li>
 </ul>
 </li>
-<li><a href="#_for_action_parameters">4.9.2. For Action Parameters</a>
+<li><a href="#_for_action_parameters">4.7.2. For Action Parameters</a>
 <ul class="sectlevel4">
 <li><a href="#_choices_for_action_parameter">Choices for action parameter</a></li>
 <li><a href="#_dependent_choices_for_action_params">Dependent choices for action params</a></li>
@@ -7392,7 +7591,7 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_default_for_action_param">Default for action param</a></li>
 </ul>
 </li>
-<li><a href="#_for_both_properties_and_action_parameters">4.9.3. For both Properties and Action Parameters</a>
+<li><a href="#_for_both_properties_and_action_parameters">4.7.3. For both Properties and Action Parameters</a>
 <ul class="sectlevel4">
 <li><a href="#_drop_down_for_limited_number_of_instances">Drop-down for limited number of instances</a></li>
 <li><a href="#_auto_complete_repository_based">Auto-complete (repository-based)</a></li>
@@ -7400,31 +7599,42 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 </li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_bulk-actions">4.10. Bulk Actions</a></li>
-<li><a href="#_ugfun_how-tos_simulating-collections-of-values">4.11. Collections of values</a>
+<li><a href="#_ugfun_how-tos_bulk-actions">4.8. Bulk Actions</a></li>
+<li><a href="#_ugfun_how-tos_simulating-collections-of-values">4.9. Collections of values</a>
 <ul class="sectlevel3">
-<li><a href="#_view_model">4.11.1. View Model</a></li>
-<li><a href="#_persistence_concerns">4.11.2. Persistence Concerns</a></li>
+<li><a href="#_view_model">4.9.1. View Model</a></li>
+<li><a href="#_persistence_concerns">4.9.2. Persistence Concerns</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_render-all-properties-in-tables">4.12. Subclass properties in tables</a></li>
+<li><a href="#_ugfun_how-tos_render-all-properties-in-tables">4.10. Subclass properties in tables</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout">5. Object Layout</a>
+<li><a href="#_ugfun_jdo-mappings">5. JDO Mappings</a>
 <ul class="sectlevel2">
-<li><a href="#_ugfun_object-layout_static">5.1. Static Object Layout</a>
+<li><a href="#_ugfun_jdo-mappings_1-to-m-bidirectional-relationships">5.1. 1-m Bidirectional relationships</a>
 <ul class="sectlevel3">
-<li><a href="#__code_memberorder_code">5.1.1. <code>@MemberOrder</code></a></li>
-<li><a href="#__code_membergrouplayout_code">5.1.2. <code>@MemberGroupLayout</code></a></li>
-<li><a href="#_example_layouts">5.1.3. Example Layouts</a></li>
-<li><a href="#_other_annotations">5.1.4. Other Annotations</a></li>
+<li><a href="#_mandatory_no_code_join_code">5.1.1. Mandatory, no <code>@Join</code></a></li>
+<li><a href="#_optional_no_code_join_code">5.1.2. Optional, no <code>@Join</code></a></li>
+<li><a href="#_with_code_join_code">5.1.3. With <code>@Join</code></a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_dynamic_xml">5.2. Dynamic (XML) Layout</a>
+</ul>
+</li>
+<li><a href="#_ugfun_object-layout">6. Object Layout</a>
+<ul class="sectlevel2">
+<li><a href="#_ugfun_object-layout_static">6.1. Static Object Layout</a>
 <ul class="sectlevel3">
-<li><a href="#_grids_vs_components">5.2.1. Grids vs Components</a></li>
-<li><a href="#_screencast">5.2.2. Screencast</a></li>
-<li><a href="#_examples">5.2.3. Examples</a>
+<li><a href="#__code_memberorder_code">6.1.1. <code>@MemberOrder</code></a></li>
+<li><a href="#__code_membergrouplayout_code">6.1.2. <code>@MemberGroupLayout</code></a></li>
+<li><a href="#_example_layouts">6.1.3. Example Layouts</a></li>
+<li><a href="#_other_annotations">6.1.4. Other Annotations</a></li>
+</ul>
+</li>
+<li><a href="#_ugfun_object-layout_dynamic_xml">6.2. Dynamic (XML) Layout</a>
+<ul class="sectlevel3">
+<li><a href="#_grids_vs_components">6.2.1. Grids vs Components</a></li>
+<li><a href="#_screencast">6.2.2. Screencast</a></li>
+<li><a href="#_examples">6.2.3. Examples</a>
 <ul class="sectlevel4">
 <li><a href="#_namespaces">Namespaces</a></li>
 <li><a href="#_rows_full_width_cols_and_tabs">Rows, full-width cols, and tabs</a></li>
@@ -7432,51 +7642,51 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <li><a href="#_collections_3">Collections</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_dynamic_xml-unreferenced">5.2.4. Unreferenced Members</a></li>
-<li><a href="#_more_advanced_features">5.2.5. More advanced features</a>
+<li><a href="#_ugfun_object-layout_dynamic_xml-unreferenced">6.2.4. Unreferenced Members</a></li>
+<li><a href="#_more_advanced_features">6.2.5. More advanced features</a>
 <ul class="sectlevel4">
 <li><a href="#_multiple_references_to_a_feature">Multiple references to a feature</a></li>
 <li><a href="#_custom_css">Custom CSS</a></li>
 </ul>
 </li>
-<li><a href="#_migrating_from_earlier_versions">5.2.6. Migrating from earlier versions</a></li>
-<li><a href="#_domain_services">5.2.7. Domain Services</a></li>
-<li><a href="#_required_updates_to_the_dom_project_s_pom_xml">5.2.8. Required updates to the dom project&#8217;s pom.xml</a></li>
+<li><a href="#_migrating_from_earlier_versions">6.2.6. Migrating from earlier versions</a></li>
+<li><a href="#_domain_services">6.2.7. Domain Services</a></li>
+<li><a href="#_required_updates_to_the_dom_project_s_pom_xml">6.2.8. Required updates to the dom project&#8217;s pom.xml</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_dynamic">5.3. Dynamic (JSON) Layout</a>
+<li><a href="#_ugfun_object-layout_dynamic">6.3. Dynamic (JSON) Layout</a>
 <ul class="sectlevel3">
-<li><a href="#_json_layout_file">5.3.1. JSON layout file</a></li>
-<li><a href="#_downloading_an_initial_layout">5.3.2. Downloading an initial layout</a></li>
-<li><a href="#_required_updates_to_the_dom_project_s_pom_xml_2">5.3.3. Required updates to the dom project&#8217;s pom.xml</a></li>
+<li><a href="#_json_layout_file">6.3.1. JSON layout file</a></li>
+<li><a href="#_downloading_an_initial_layout">6.3.2. Downloading an initial layout</a></li>
+<li><a href="#_required_updates_to_the_dom_project_s_pom_xml_2">6.3.3. Required updates to the dom project&#8217;s pom.xml</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_application-menu">5.4. Application Menu Layout</a>
+<li><a href="#_ugfun_object-layout_application-menu">6.4. Application Menu Layout</a>
 <ul class="sectlevel3">
-<li><a href="#__domainservicelayout">5.4.1. @DomainServiceLayout</a></li>
-<li><a href="#_ordering_menu_actions">5.4.2. Ordering menu actions</a></li>
-<li><a href="#_tertiary_menubar">5.4.3. Tertiary menubar</a></li>
-<li><a href="#_isis_add_on_modules">5.4.4. Isis Add-on modules</a></li>
+<li><a href="#__domainservicelayout">6.4.1. @DomainServiceLayout</a></li>
+<li><a href="#_ordering_menu_actions">6.4.2. Ordering menu actions</a></li>
+<li><a href="#_tertiary_menubar">6.4.3. Tertiary menubar</a></li>
+<li><a href="#_isis_add_on_modules">6.4.4. Isis Add-on modules</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_object-layout_static-vs-dynamic">5.5. Static vs Dynamic Layouts</a>
+<li><a href="#_ugfun_object-layout_static-vs-dynamic">6.5. Static vs Dynamic Layouts</a>
 <ul class="sectlevel3">
-<li><a href="#_best_of_both_worlds">5.5.1. Best of both worlds?</a></li>
+<li><a href="#_best_of_both_worlds">6.5.1. Best of both worlds?</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugfun_faqs">6. FAQs</a>
+<li><a href="#_ugfun_faqs">7. FAQs</a>
 <ul class="sectlevel2">
-<li><a href="#_ugfun_faqs_enabling-logging">6.1. Enabling Logging</a></li>
-<li><a href="#_ugfun_faqs_subtype-entity-not-fully-populated">6.2. Subtype not fully populated</a></li>
-<li><a href="#_ugfun_faqs_restful-image-property">6.3. How parse images in RO viewer?</a></li>
-<li><a href="#_ugfun_faqs_enhance-only">6.4. Enhance only (IntelliJ)</a></li>
-<li><a href="#_ugfun_faqs_per-user-themes">6.5. Per-user Themes</a></li>
-<li><a href="#_ugfun_faqs_i18n-label-in-wicket-viewer">6.6. How i18n the Wicket viewer?</a></li>
-<li><a href="#_ugfun_faqs_how-to-handle-void-and-null-results">6.7. How to handle void/null results</a></li>
-<li><a href="#_ugfun_faqs_how-to-implement-a-spellchecker">6.8. How to implement a spellchecker?</a></li>
-<li><a href="#_ugfun_faqs_how-run-fixtures-on-app-startup">6.9. How run fixtures on startup?</a></li>
+<li><a href="#_ugfun_faqs_enabling-logging">7.1. Enabling Logging</a></li>
+<li><a href="#_ugfun_faqs_subtype-entity-not-fully-populated">7.2. Subtype not fully populated</a></li>
+<li><a href="#_ugfun_faqs_restful-image-property">7.3. How parse images in RO viewer?</a></li>
+<li><a href="#_ugfun_faqs_enhance-only">7.4. Enhance only (IntelliJ)</a></li>
+<li><a href="#_ugfun_faqs_per-user-themes">7.5. Per-user Themes</a></li>
+<li><a href="#_ugfun_faqs_i18n-label-in-wicket-viewer">7.6. How i18n the Wicket viewer?</a></li>
+<li><a href="#_ugfun_faqs_how-to-handle-void-and-null-results">7.7. How to handle void/null results</a></li>
+<li><a href="#_ugfun_faqs_how-to-implement-a-spellchecker">7.8. How to implement a spellchecker?</a></li>
+<li><a href="#_ugfun_faqs_how-run-fixtures-on-app-startup">7.9. How run fixtures on startup?</a></li>
 </ul>
 </li>
 </ul>
