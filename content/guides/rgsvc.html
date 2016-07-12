@@ -783,7 +783,7 @@ inject all implementations of the service, and then to delegate to the first one
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_intro_commands-and-events">2.5. Command and Events (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_intro_commands-and-events">2.5. Command and Events</h3>
 <div class="paragraph">
 <p>A good number of the domain services manage the execution of action invocations/property edits, along with the state
 of domain objects that are modified as a result of these.  These services capture information which can then be used
@@ -875,8 +875,8 @@ or <code>PublisherService</code> implementations.  Only domain objects specified
 </li>
 <li>
 <p>Also at the end of each transaction, details of all changed properties are passed to any registered
-<a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> or
-<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) by way of the (internal)
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> or
+<a href="#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> (the latter deprecated) by way of the (internal)
 <a href="rgfis.html#_rgfis_spi_AuditingServiceInternal"><code>AuditingServiceInternal</code></a> domain service.</p>
 </li>
 </ul>
@@ -2652,7 +2652,7 @@ depends on:<br>
 <code>services.iactn</code><br>
 <code>InteractionContext</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Request-scoped access to the current member execution (action invocation or property edit),
+<p>Request-scoped access to the current member execution (action invocation or property edit),
 represented as the <code>Interaction</code> context.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>InteractionContext</code><br>
@@ -3000,8 +3000,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="paragraph">
 <p>The <code>BackgroundService2</code> domain service, and also the companion
 <a href="#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService2</code></a> SPI service, enable commands
-to be persisted such that they may be invoked in the background.  (The <code>BackgroundService2</code> and
-<code>BackgroundCommandService2</code> extensions to these services have been introduced in <code>1.13.0-SNAPSHOT</code>).</p>
+to be persisted such that they may be invoked in the background.</p>
 </div>
 <div class="paragraph">
 <p>The <code>BackgroundService2</code> is responsible for capturing a memento representing the command in a typesafe way,
@@ -3009,7 +3008,7 @@ and persisting it rather than executing it directly.</p>
 </div>
 <div class="paragraph">
 <p>The default <code>BackgroundServiceDefault</code> implementation works by using a proxy wrapper around the target so that it can
-capture the action to invoke and its arguments.  (As of <code>1.13.0-SNAPSHOT</code>), this is done using <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a> (in previous releases it used (a private copy of) <a href="#_rgsvc_api_MementoService"><code>MementoService</code></a>).</p>
+capture the action to invoke and its arguments.  (As of <code>1.13.0</code>), this is done using <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a> (in previous releases it used (a private copy of) <a href="#_rgsvc_api_MementoService"><code>MementoService</code></a>).</p>
 </div>
 <div class="paragraph">
 <p>The persistence delegates the persistence of the memento to an appropriate implementation of the companion
@@ -3044,7 +3043,7 @@ the persisted (background) <code>Command</code>s.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>(<code>1.13.0-SNAPSHOT</code>) returns a proxy around the mixin; any methods executed against this proxy will result in a command (to invoke the corresponding mixin action) being persisted by <a href="#_rgsvc_spi_BackgroundCommandService2"><code>BackgroundCommandService2</code></a>.</td>
+<td>Returns a proxy around the mixin; any methods executed against this proxy will result in a command (to invoke the corresponding mixin action) being persisted by <a href="#_rgsvc_spi_BackgroundCommandService2"><code>BackgroundCommandService2</code></a>.</td>
 </tr>
 </table>
 </div>
@@ -3161,7 +3160,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>The implementations of <code>CommandService</code> and <code>BackgroundCommandService</code> go together; typically both parent <code>Command`s and child background `Command`s will be persisted in the same way. The (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module provides implementations of both (see <a href="#_rgsvc_spi_CommandService">`CommandService</code></a> and <a href="#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>).</p>
 </div>
 <div class="paragraph">
-<p>The <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a> (<code>1.13.0-SNAPSHOT</code>) is used to obtain
+<p>The <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a> is used to obtain
 a memento of the command such that it can be persisted.  (In earlier versions, <a href="#_rgsvc_api_MementoService"><code>MementoService</code></a> was used for this purpose).</p>
 </div>
 </div>
@@ -3357,7 +3356,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
  supporting <a href="#_rgsvc_spi_CommandService"><code>CommandService</code></a> enables the implementation of <code>Command</code> to be pluggable. With an appropriate implementation (eg as provided by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module&#8217;s <a href="#_rgsvc_spi_CommandService"><code>CommandService</code></a>) the <code>Command</code> may then be persisted.</p>
 </div>
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
+<p>As of <code>1.13.0</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
 act as a parent to any background commands that can be persisted either explicitly using the
 <a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the
 <a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p>
@@ -3371,22 +3370,16 @@ act as a parent to any background commands that can be persisted either explicit
 <p>they enable profiling of the running application (which actions are invoked then most often, what is their response time)</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> or
-<a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better traceability
-as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
+<p>if a <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> or <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> (the latter now deprecated) is configured, they provide better traceability as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> or
-<a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better audit
-information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of
-the action) through the <code>transactionId</code> GUID</p>
+<p>if a <a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> or <a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> (the latter now deprecated) is configured, they provide better audit information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the <code>transactionId</code> GUID</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code>, these other uses cases are now more fully supported through the
-<a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the
-<code>Interaction</code> object, eg as provided by the (non-ASF)
+<p>As of <code>1.13.0</code>, these other uses cases are now more fully supported through the
+<a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the <code>Interaction</code> object, eg as provided by the (non-ASF)
 <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module.</p>
 </div>
 <div class="sect3">
@@ -3532,7 +3525,7 @@ the action) through the <code>transactionId</code> GUID</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="18"></i><b>18</b></td>
-<td>(as of <code>1.13.0-SNAPSHOT</code>) no longer used by the framework; see instead
+<td>No longer used by the framework; see instead
 <a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> and <code>Interaction#next()</code>.</td>
 </tr>
 </table>
@@ -3686,9 +3679,9 @@ created explicitly through the <a href="#_rgsvc_api_BackgroundService"><code>Bac
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code></h3>
 <div class="paragraph">
-<p>The <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>) is a request-scoped domain service that is used to obtain the current
+<p>The <code>InteractionContext</code> is a request-scoped domain service that is used to obtain the current
 <code>Interaction</code>.</p>
 </div>
 <div class="paragraph">
@@ -4881,7 +4874,7 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 that <code>Command</code> objects (that reify the invocation of an action/edit of a property on a domain object) can be persisted.</p>
 </div>
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
+<p>As of <code>1.13.0</code>, the primary use case for persistent <code>Command</code>s is in support of background commands; they
 act as a parent to any background commands that can be persisted either explicitly using the
 <a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the
 <a href="rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p>
@@ -4895,20 +4888,21 @@ act as a parent to any background commands that can be persisted either explicit
 <p>they enable profiling of the running application (which actions are invoked then most often, what is their response time)</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> or
-<a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better traceability
-as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p>
+<p>if <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> or
+<a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> (latter deprecated) is configured, they provide
+better traceability as the <code>Command</code> is also correlated with any published events, again through the unique
+<code>transactionId</code> GUID</p>
 </li>
 <li>
-<p>if <a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> or
-<a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) is configured, they provide better audit
+<p>if <a href="#_rgsvc_spi_AuderService"><code>AuditerService</code></a> or
+<a href="#_rgsvc_spi_AuditService"><code>AuditingService</code></a> (latter deprecated) is configured, they provide better audit
 information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of
 the action) through the <code>transactionId</code> GUID</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code>, these other uses cases are now more fully supported through the
+<p>As of <code>1.13.0</code>, these other uses cases are now more fully supported through the
 <a href="#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the
 <code>Interaction</code> object, eg as provided by the (non-ASF)
 <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module.</p>
@@ -4959,7 +4953,7 @@ the framework.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>(as of <code>1.13.0-SNAPSHOT</code>) is <strong>NO LONGER CALLED</strong> and is deprecated: the framework automatically populates the <code>Command</code>'s <code>timestamp</code>,
+<td>this method (as of <code>1.13.0</code>) is <strong>NO LONGER CALLED</strong> and is deprecated: the framework automatically populates the <code>Command</code>'s <code>timestamp</code>,
 <code>user</code> and <code>transactionId</code> fields, so there is no need for the service implementation to initialize any of these.  In
 particular, the <code>Command</code> will already have been initialized with the provided <code>transactionId</code> argument.</td>
 </tr>
@@ -7223,7 +7217,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p><code>Bookmark</code>s are used by several other domain services as a means of storing areference to an arbitrary object
 (a polymorphic relationship).  For example, the (non-ASF)
 <a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of
-<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>) uses bookmarks to capture the object
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> uses bookmarks to capture the object
 that is being audited.</p>
 </div>
 <div class="admonitionblock tip">
@@ -7336,7 +7330,7 @@ bookmark to capture the target object on which an action will be invoked subsequ
 <p>Bookmarks are also used by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a>
 module&#8217;s implementation of <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>, and by the
 (non-ASF) <a href="http://github.com/isisaddons/isis-module-auditing">Isis addons' auditing</a> module&#8217;s implementation of
-<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>).</p>
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -7752,9 +7746,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 all of their backing state, moreover which is safe for use within a URL.</p>
 </div>
 <div class="paragraph">
-<p>However, it can also be used to create a memento of arbitrary objects.  (Prior to <code>1.13.0-SNAPSHOT) it is used
-internally by the core implementation of <a href="#_rgsvc_api_BackgroundService">`BackgroundService</code></a> to capture
-the state of action invocations so that they can be executed by a background process.</p>
+<p>However, it can also be used to create a memento of arbitrary objects.  (Prior to <code>1.13.0</code> it wass used
+internally by the core implementation of <a href="#_rgsvc_api_BackgroundService"><code>BackgroundService</code></a> to capture
+the state of action invocations so that they can be executed by a background process; this is now done using <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7764,7 +7758,7 @@ the state of action invocations so that they can be executed by a background pro
 </td>
 <td class="content">
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code> this service is deprecated.</p>
+<p>As of <code>1.13.0</code> this service is deprecated.</p>
 </div>
 </td>
 </tr>
@@ -7932,10 +7926,8 @@ entities). Nulls can also be set.</p>
 <div class="sect3">
 <h4 id="_related_services_20">7.6.3. Related Services</h4>
 <div class="paragraph">
-<p>(Prior to <code>1.13.0-SNAPSHOT</code>), the memento service is used by the
-<a href="#_rgsvc_api_CommandContext"><code>CommandContext</code></a> service and also
-<a href="#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>. These both use a memento to capture a
-representation of an action invocation.</p>
+<p>(Prior to <code>1.13.0</code>), the memento service was used by the <a href="#_rgsvc_api_CommandContext"><code>CommandContext</code></a> service and also
+<a href="#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>. These both use a memento to capture a representation of an action invocation.  This is now done using <a href="rgfis.html#_rgfis_spi_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -8523,8 +8515,7 @@ services.</p>
 <div class="sect2">
 <h3 id="_rgsvc_api_MetaModelService">8.3. <code>MetaModelService</code></h3>
 <div class="paragraph">
-<p>The <code>MetaModelService2</code> (<code>MetaModelService2</code> sub-interface introduced in <code>1.13.0-SNAPSHOT</code>) provides access to
-a number of aspects of Apache Isis' internal metamodel.</p>
+<p>The <code>MetaModelService2</code> service provides access to a number of aspects of Apache Isis' internal metamodel.</p>
 </div>
 <div class="sect3">
 <h4 id="_api_6">8.3.1. API</h4>
@@ -8568,7 +8559,7 @@ a number of aspects of Apache Isis' internal metamodel.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>(<code>1.13.0-SNAPSHOT</code>) what sort of object a domain type is (or bookmark represents)</td>
+<td>what sort of object a domain type is (or bookmark) represents</td>
 </tr>
 </table>
 </div>
@@ -8605,7 +8596,7 @@ this calls <code>MetaModelService#export()</code>.  Under the covers this uses t
 <div class="sect2">
 <h3 id="_rgsvc_api_ServiceRegistry">8.4. <code>ServiceRegistry2</code></h3>
 <div class="paragraph">
-<p>The <code>ServiceRegistry2</code> service collects together methods for accessing other domain services.  (The <code>ServiceRegistry2</code> extension to the original <code>ServiceRegistry</code> API has been introduced in <code>1.13.0-SNAPSHOT</code>).</p>
+<p>The <code>ServiceRegistry2</code> service collects together methods for accessing other domain services.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -8624,7 +8615,7 @@ this calls <code>MetaModelService#export()</code>.  Under the covers this uses t
 <div class="sect3">
 <h4 id="_api_7">8.4.1. API</h4>
 <div class="paragraph">
-<p>The API of <code>ServiceRegistry</code> is:</p>
+<p>The API of <code>ServiceRegistry2</code> is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8652,7 +8643,7 @@ this calls <code>MetaModelService#export()</code>.  Under the covers this uses t
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>(<code>1.13.0-SNAPSHOT</code>) returns the list of all domain services that constitute the running application (including internal domain services).</td>
+<td>returns the list of all domain services that constitute the running application (including internal domain services).</td>
 </tr>
 </table>
 </div>
@@ -9530,9 +9521,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_api_MetricsService">10.2. <code>MetricsService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_api_MetricsService">10.2. <code>MetricsService</code></h3>
 <div class="paragraph">
-<p>The <code>MetricsService</code> (<code>1.13.0-SNAPSHOT</code>) is a request-scoped domain service that hooks into the JDO/DataNucleus
+<p>The <code>MetricsService</code> is a request-scoped domain service that hooks into the JDO/DataNucleus
 ObjectStore to provide a number of counters relating to numbers of object loaded, dirtied etc.</p>
 </div>
 <div class="paragraph">
@@ -9812,7 +9803,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>(<code>1.13.0-SNAPSHOT</code>) persist (ie save) and flush; same as <code>persist()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
+<td>persist (ie save) and flush; same as <code>persist()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -9820,7 +9811,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>(<code>1.13.0-SNAPSHOT</code>) remove (delete) and flush;  same as <code>remove()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
+<td>remove (delete) and flush;  same as <code>remove()</code>, but also flushes changes to database and updates managed properties and collections (i.e., 1-1, 1-n, m-n relationships automatically maintained by the DataNucleus persistence mechanism).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
@@ -9886,8 +9877,8 @@ the developer needs to invoke <code>flush()</code> to send the changes to the Da
 managed properties and collections and then updated.</p>
 </div>
 <div class="paragraph">
-<p>The <code>persistAndFlush(&#8230;&#8203;)</code> and <code>removeAndFlush(&#8230;&#8203;)</code> methods (introduced in <code>1.13.0-SNAPSHOT</code>) save the developer from
-having to call the <code>flush(&#8230;&#8203;)</code> method.</p>
+<p>The <code>persistAndFlush(&#8230;&#8203;)</code> and <code>removeAndFlush(&#8230;&#8203;)</code> methods save the developer from
+having to additionally call the <code>flush(&#8230;&#8203;)</code> method after calling <code>persist()</code> or <code>remove()</code>.</p>
 </div>
 <div class="paragraph">
 <p>For example, the following code requires a flush to occur, so uses these methods:</p>
@@ -10163,7 +10154,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <code>services.audit</code><br>
 <code>AuditerService</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Create an audit record for every changed property of every changed object within a transaction.</p>
+<p>Create an audit record for every changed property of every changed object within a transaction.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>AuditerServiceLogging</code><br>
 also<br>
@@ -10177,7 +10168,7 @@ also<br>
 <code>services.audit</code><br>
 <code>AuditingService3</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(deprecated in <code>1.13.0-SNAPSHOT</code>, replaced by <a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>); creates
+<p>(deprecated, replaced by <a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>); creates
 an audit record for every changed property of every changed object within a transaction.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -10188,7 +10179,7 @@ an audit record for every changed property of every changed object within a tran
 <code>services.publish</code><br>
 <code>EventSerializer</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(deprecated in <code>1.13.0-SNAPSHOT</code>) Creates a representation of either an action invocation or a changed object being published through the <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.</p>
+<p>(deprecated, not used by replacement <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>) Creates a representation of either an action invocation or a changed object being published through the <a href="#_rgsvc_spi_PublishingService"><code>PublishingService</code></a>.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestfulObjects-</code><br>
 <code>SpecEventSerializer</code><br>
@@ -10201,7 +10192,7 @@ an audit record for every changed property of every changed object within a tran
 <code>services.publish</code><br>
 <code>PublisherService</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Publish any action invocations/property edits and changed objects, typically for interchange with an external system in a different bounded context.</p>
+<p>Publish any action invocations/property edits and changed objects, typically for interchange with an external system in a different bounded context.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PublisherServiceLogging</code><br>
 also<br>
@@ -10216,7 +10207,7 @@ also<br>
 <code>services.publish</code><br>
 <code>PublishingService</code></a></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(deprecated in <code>1.13.0-SNAPSHOT</code>) Publish any action invocations and changed objects, typically for interchange with an external system in a different bounded context.</p>
+<p>(deprecated, replaced by <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>) Publish any action invocations and changed objects, typically for interchange with an external system in a different bounded context.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PublishingService</code><br>
 <code>o.ia.m.publishing</code><br>
@@ -10262,7 +10253,7 @@ a configured <code>EmailService</code></p></td>
 <p>Where an implementation is available (on the classpath) then it is always registered automatically (that is, they are all (with one exception) annotated with <a href="rgant.html#_rgant-DomainService"><code>@DomainService</code></a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code></h3>
 <div class="paragraph">
 <p>The <code>AuditerService</code> auditing service provides a simple mechanism to capture changes to data. It is called for each property that has changed on any domain object, as a set of pre- and post-values.</p>
 </div>
@@ -10275,7 +10266,7 @@ a configured <code>EmailService</code></p></td>
 <td class="content">
 <div class="paragraph">
 <p>This service is intended to replace the now-deprecated <a href="#_rgsvc_spi_AuditingService"><code>AuditingService3</code></a>.
-The difference between the two is that this service recognises that the <code>transactionId</code> is now (in <code>1.13.0-SNAPSHOT</code>)
+The difference between the two is that this service recognises that the <code>transactionId</code> is now (as of <code>1.13.0</code>)
 actually a request/interaction Id, and that an additional `sequence</p>
 </div>
 </td>
@@ -10426,8 +10417,8 @@ execution captures the _cause</em> of an interaction (an action was invoked, a p
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Prior to <code>1.13.0-SNAPSHOT</code> the <a href="#<em>rgsvc_spi_CommandService"><code>CommandService</code></a> performed a similar role,
-of capturing the cause.  As of <code>1.13.0-SNAPSHOT</code>, <code>Command</code>s are now primarily to capture the _intent</em> of an action,
+<p>Prior to <code>1.13.0</code> the <a href="#<em>rgsvc_spi_CommandService"><code>CommandService</code></a> performed a similar role,
+of capturing the cause.  As of <code>1.13.0</code>, <code>Command</code>s are now primarily to capture the _intent</em> of an action,
 not the actual action invocation itself.</p>
 </div>
 </td>
@@ -10533,7 +10524,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 <h4 id="_related_services_29">11.2.5. Related Services</h4>
 <div class="paragraph">
 <p>This service has been deprecated and replaced by the equivalent
-<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> (<code>1.13.0-SNAPSHOT</code>).</p>
+<a href="#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>.</p>
 </div>
 </div>
 </div>
@@ -10550,8 +10541,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This service is deprecated, replaced with <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>
-(<code>1.13.0-SNAPSHOT</code>).</p>
+<p>This service is deprecated, replaced with <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>.</p>
 </div>
 </td>
 </tr>
@@ -10647,9 +10637,9 @@ then this can be activated by updating the <code>pom.xml</code> and updating the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</h3>
+<h3 id="_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code></h3>
 <div class="paragraph">
-<p>The <code>PublisherService</code> API (<code>1.13.0-SNAPSHOT</code>) is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Events that can be published are action invocations/property
+<p>The <code>PublisherService</code> API is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.  Events that can be published are action invocations/property
 edits, and changed objects. A typical use case is to publish onto a pub/sub bus such as
 <a href="http://activemq.apache.org/">ActiveMQ</a> with <a href="http://camel.apache.org">Camel</a> to keep other systems up to date.</p>
 </div>
@@ -10883,7 +10873,7 @@ invocation/property edit causing the current event to be raised using
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This service is deprecated, replaced with <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a> (<code>1.13.0-SNAPSHOT</code>).</p>
+<p>This service is deprecated, replaced with <a href="#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>.</p>
 </div>
 </td>
 </tr>
@@ -11458,7 +11448,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_intro_public-api">2.2. Public API vs Internal Services</a></li>
 <li><a href="#_rgsvc_intro_using-the-services">2.3. Using the services</a></li>
 <li><a href="#_rgsvc_intro_overriding-the-services">2.4. Overriding the services</a></li>
-<li><a href="#_rgsvc_intro_commands-and-events">2.5. Command and Events (<code>1.13.0-SNAPSHOT</code>)</a></li>
+<li><a href="#_rgsvc_intro_commands-and-events">2.5. Command and Events</a></li>
 </ul>
 </li>
 <li><a href="#_rgsvc_presentation-layer-spi">3. Presentation Layer SPI</a>
@@ -11613,7 +11603,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_related_services_12">4.4.6. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code> (<code>1.13.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc_api_InteractionContext">4.5. <code>InteractionContext</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_5">4.5.1. API &amp; Implementation</a>
 <ul class="sectlevel4">
@@ -11918,7 +11908,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_registering_the_services_17">10.1.6. Registering the Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_api_MetricsService">10.2. <code>MetricsService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc_api_MetricsService">10.2. <code>MetricsService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_implementation_17">10.2.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_the_service_28">10.2.2. Registering the Service</a></li>
@@ -11956,7 +11946,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_persistence-layer-spi">11. Persistence Layer SPI</a>
 <ul class="sectlevel2">
-<li><a href="#_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc_spi_AuditerService">11.1. <code>AuditerService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_18">11.1.1. SPI</a></li>
 <li><a href="#_implementations_3">11.1.2. Implementations</a></li>
@@ -11982,7 +11972,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_related_services_30">11.3.4. Related Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code> (<code>1.13.0-SNAPSHOT</code>)</a>
+<li><a href="#_rgsvc_spi_PublisherService">11.4. <code>PublisherService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_21">11.4.1. SPI</a></li>
 <li><a href="#_implementations_4">11.4.2. Implementations</a></li>

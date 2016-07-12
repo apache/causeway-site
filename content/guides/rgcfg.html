@@ -960,18 +960,10 @@ for Apache Isis and contribute back to the project)</p>
 <div class="sect2">
 <h3 id="_viewer_configuration">4.1. Viewer Configuration</h3>
 <div class="paragraph">
-<p>Viewers are specified by way of the filters and servlets in the <a href="ugbtb.html#_ugbtb_web-xml"><code>web.xml</code></a> file; these are not bootstrapped by the framework, rather it is the other way around.  However, we can also hint to the framework as to which viewers are in use by way of a context parameter:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
-    <span class="tag">&lt;param-name&gt;</span>isis.viewers<span class="tag">&lt;/param-name&gt;</span>
-    <span class="tag">&lt;param-value&gt;</span>wicket,restfulobjects<span class="tag">&lt;/param-value&gt;</span>
-<span class="tag">&lt;/context-param&gt;</span></code></pre>
-</div>
+<p>Viewers are specified by way of the filters and servlets in the <a href="ugbtb.html#_ugbtb_web-xml"><code>web.xml</code></a> file; these are not bootstrapped by the framework, rather it is the other way around.</p>
 </div>
 <div class="paragraph">
-<p>As of <code>1.13.0-SNAPSHOT</code>, this configuration property has no effect: the <code>viewer_wicket.properties</code> and <code>viewer_restulobjects.properties</code> are always checked.  In previous versions, this context param was used to indicate which of the two config files should be read.</p>
+<p>In versions prior to <code>1.13.0</code>, the "isis.viewers" context parameter was used to hint which configuration files should be read (corresponding to the viewers in use).  As of <code>1.13.0</code>, however, the configuration property has no effect: the <code>viewer_wicket.properties</code> and <code>viewer_restulobjects.properties</code> are always loaded if available.</p>
 </div>
 </div>
 </div>
@@ -1263,12 +1255,11 @@ for Apache Isis and contribute back to the project)</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lazy</code>, <code>eager</code><br>
 (<code>lazy</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Whether the application features repository (which surfaces the framework&#8217;s metamodel) should be
+<p>Whether the application features repository (which surfaces the framework&#8217;s metamodel) should be
 initialized lazily or eagerly. <br></p>
 </div>
 <div class="paragraph">
-<p>Lazy initialization can speed up bootstrapping, useful while developing and running tests.  The default prior to
-<code>1.13.0</code> was eager initialization.</p>
+<p>Lazy initialization can speed up bootstrapping, useful while developing and running tests.  The default prior to <code>1.13.0</code> was eager initialization.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1302,7 +1293,7 @@ initialized lazily or eagerly. <br></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>all</code>, <code>none</code> (<code>all</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Whether property edits should be automatically reified into commands (for properties annotated with <a href="rgant.html#_rgant-Property_command"><code>@Property(command=CommandReification.AS_CONFIGURED)</code></a>. <br></p>
+<p>(Whether property edits should be automatically reified into commands (for properties annotated with <a href="rgant.html#_rgant-Property_command"><code>@Property(command=CommandReification.AS_CONFIGURED)</code></a>. <br></p>
 </div></div></td>
 </tr>
 <tr>
@@ -1461,7 +1452,7 @@ FQCN (<code><em>guava</em></code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> <br>
 (<code>false</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Whether the framework should support <code>inject&#8230;&#8203;()</code> as a prefix for injecting domain services into other domain objects.</p>
+<p>(Whether the framework should support <code>inject&#8230;&#8203;()</code> as a prefix for injecting domain services into other domain objects.</p>
 </div>
 <div class="paragraph">
 <p>+
@@ -1476,7 +1467,7 @@ By default this is disabled.  The default prior to <code>1.13.0</code> was enabl
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> <br>
 (<code>true</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Whether the framework should support <code>set&#8230;&#8203;()</code> as a prefix for injecting domain services into other domain objects.</p>
+<p>Whether the framework should support <code>set&#8230;&#8203;()</code> as a prefix for injecting domain services into other domain objects.</p>
 </div>
 <div class="paragraph">
 <p>+
@@ -1511,7 +1502,7 @@ By default this is enabled (no change in <code>1.13.0</code>).  If the setting i
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>all</code>, <code>none</code> (<code>none</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) Whether properties should be automatically published (for properties annotated with <a href="rgant.html#_rgant-Action_publishing"><code>@Property(publishing=Publishing.AS_CONFIGURED)</code></a>.<br></p>
+<p>Whether properties should be automatically published (for properties annotated with <a href="rgant.html#_rgant-Action_publishing"><code>@Property(publishing=Publishing.AS_CONFIGURED)</code></a>.<br></p>
 </div></div></td>
 </tr>
 <tr>
@@ -1633,13 +1624,11 @@ By default this is enabled (no change in <code>1.13.0</code>).  If the setting i
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>FQCN</code></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Fully qualified class names of a custom implementation of <code>ProgrammingModel</code> interface.<br></p>
+<p>This property is now ignored. <br></p>
 </div>
 <div class="paragraph">
-<p>See <a href="ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the programming model</a> for more details.</p>
-</div>
-<div class="paragraph">
-<p><code>1.13.0-SNAPSHOT</code> - this property is now ignored.  To customize the programming model, use <code>facets.exclude</code> and <code>facets.include</code>.</p>
+<p>+
+To customize the programming model, use <code>facets.exclude</code> and <code>facets.include</code>. See <a href="ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the programming model</a> for more details.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1663,7 +1652,7 @@ By default this is enabled (no change in <code>1.13.0</code>).  If the setting i
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br>
 (<code>false</code>)</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>(<code>1.13.0-SNAPSHOT</code>) whether deprecated facets should be ignored or honoured. <br></p>
+<p>Whether deprecated facets should be ignored or honoured. <br></p>
 </div>
 <div class="paragraph">
 <p>+
@@ -1726,7 +1715,7 @@ See <a href="ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the prog
 </div>
 <div class="paragraph">
 <p>+
-See also <code>isis.reflector.facets.ignoreDeprecated</code> (<code>1.13.0-SNAPSHOT</code>).</p>
+See also <code>isis.reflector.facets.ignoreDeprecated</code>.</p>
 </div></div></td>
 </tr>
 <tr>

@@ -1547,6 +1547,46 @@ CustomerRepository customers;</code></pre>
 <p>The bootstrapping itself is performed by a "system initializer" class.  This is responsible for instantiating the Apache Isis runtime, and binding it to a thread-local.</p>
 </div>
 <div class="sect4">
+<h5 id="_1_13_0_improved_intent">1.13.0 (Improved intent)</h5>
+<div class="paragraph">
+<p>As of <code>1.13.0</code>, the <code>IsisConfigurationForJdoIntegTests</code> (which provides a number of configuration settings specifically for running integration tests) can be removed; instead all configuration properties can be defined through the <code>AppManifest</code>:</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
+        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
+        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
+            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
+                    .withLoggingAt(org.apache.log4j.Level.INFO)
+                    .with(<span class="keyword">new</span> DomainAppAppManifest() {
+                        <span class="annotation">@Override</span>
+                        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
+                            <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map = Maps.newHashMap();
+                            <span class="predefined-type">Util</span>.withJavaxJdoRunInMemoryProperties(map);
+                            <span class="predefined-type">Util</span>.withDataNucleusProperties(map);
+                            <span class="predefined-type">Util</span>.withIsisIntegTestProperties(map);
+                            <span class="keyword">return</span> map;
+                        }
+                    })
+                    .build();
+            isft.setUpSystem();
+            IsisSystemForTest.set(isft);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While the code is slightly longer than previously, the responsibilities for returning the configuration properties to
+use for the test now reside in a single location.  The new <code>AppManifest.Util</code> class provides the helper methods to
+actually add in the appropriate config properties.</p>
+</div>
+</div>
+<div class="sect4">
 <h5 id="_1_9_0_code_appmanifest_code">1.9.0 (<code>AppManifest</code>)</h5>
 <div class="paragraph">
 <p>As of 1.9.0, the code (using <code>AppManifest</code>) is:</p>
@@ -3317,6 +3357,7 @@ toDoItem = sudoService.sudo(username,
 <ul class="sectlevel3">
 <li><a href="#_system_initializer">4.2.1. System Initializer</a>
 <ul class="sectlevel4">
+<li><a href="#_1_13_0_improved_intent">1.13.0 (Improved intent)</a></li>
 <li><a href="#_1_9_0_code_appmanifest_code">1.9.0 (<code>AppManifest</code>)</a></li>
 <li><a href="#_1_8_0_and_earlier">1.8.0 and earlier</a></li>
 <li><a href="#_isisconfigurationforjdointegtests">IsisConfigurationForJdoIntegTests</a></li>

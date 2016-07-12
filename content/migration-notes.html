@@ -503,69 +503,315 @@ table.CodeRay td.code>pre{padding:0}
 
         <div id="doc-content">
           <div class="sect1">
-<h2 id="_migration-notes_1.12.0-to-1.13.0">From v1.12.0 to 1.13.0</h2>
+<h2 id="_migration-notes_1.12.0-to-1.13.0">From v1.12.x to 1.13.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Existing projects written against v1.12.x should run against v1.13.0 with few if any changes.  If you <strong>do</strong> encounter
-any difficulties then let us know via the <a href="support.html">users mailing list</a>, so we can support you and document
-issues here.</p>
+<p>Most applications written against v1.12.x should run against v1.13.0 with few if any changes.  That said, this release
+has removed a small number of features that were dependent on internal APIs, and some configuration properties are
+now removed/unsupported.  We therefore do recommend that you read and keep in mind these notes when you upgrade your app.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p><code>1.13.0-SNAPSHOT</code> is currently still in development.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>If you <strong>do</strong> encounter any difficulties then let us know via the <a href="support.html">users mailing list</a>, so we can
+support you and document issues here.</p>
 </div>
 <div class="sect2">
-<h3 id="_faster_startup_times">Faster startup times</h3>
+<h3 id="_command_changes">Command changes</h3>
 <div class="paragraph">
-<p>Several new configuration settings influence application startup times:</p>
+<p>The main feature in <code>1.13.0</code> is the <a href="guides/rgsvc.html#<em>rgsvc_api_InteractionContext"><code>InteractionContext</code></a> domain service
+to represent an action invocation/property edit, with the re-positioning of
+<a href="guides/rgsvc.html#_rgsvc_api_CommandContext"><code>CommandContext</code></a> to represent the _intention</em> to invoke an action/edit a
+property.  You can read more about this design in the reference guide on domain services, in the
+<a href="guides/rgsvc.html#_rgsvc_intro_commands-and-events">commands and events</a> section.</p>
+</div>
+<div class="paragraph">
+<p>This refactoring completely overhauls the structure of the XML mementos passed to
+<a href="guides/rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> (to persist) and to
+<a href="guides/rgsvc.html#_rgsvc_spi_BackgroundCommandService"><code>BackgroundCommandService</code></a> (to invoke persisted commands in the
+background).  If you are using these services then ensure that there are no pending commands at the point at which you
+cut-over.  If you have any code that makes assumptions on the format of the XML, it will also need to be rewritten.
+Note that the XML which is persisted henceforth is well-defined and any future changes to it will be backward
+compatible; see <a href="guides/rgcms.html#_rgcms_schema">schema reference guide</a>.  In fact, there are three schema: for commands
+(<code>cmd.xsd</code>), inteactions (<code>ixn.xsd</code>) and for changes (<code>chg.xsd</code>).  These replace the earlier <code>aim.xsd</code> schema (which
+was an amalgam of <code>cmd.xsd</code> and <code>ixn.xsd</code>).</p>
+</div>
+<div class="paragraph">
+<p>The reworked <code>CommandService</code> now properly supports property edits in the exact same way as action invocations.</p>
+</div>
+<div class="paragraph">
+<p>As a side-effect of this work, note also that the <code>CommandService#startTransaction(&#8230;&#8203;)</code> SPI is <strong>NO LONGER CALLED</strong> by
+the framework.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_auditing">Auditing</h3>
+<div class="paragraph">
+<p>The <a href="guides/rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> SPI service has been deprecated, instead replaced
+by the <a href="guides/rgsvc.html#_rgsvc_spi_AuditerService"><code>AuditerService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>There can be more than one implementation of this new SPI, and a framework-provided implementation
+(<code>AuditerServiceLogging</code>) will log to a file.  The (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module also implements the new SPI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publishing">Publishing</h3>
+<div class="paragraph">
+<p>The <a href="guides/rgsvc.html#_rgsvc_spi_PublishingService"><code>PublishingService</code></a> SPI service and its supporting
+<a href="guides/rgsvc.html#_rgsvc_spi_EventSerializer"><code>EventSerializer</code></a> domain service, have both deprecated, instead
+replaced by the <a href="guides/rgsvc.html#_rgsvc_spi_PublisherService"><code>PublisherService</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>There can be more than one implementation of this new SPI, and a framework-provided implementation
+(<code>PublisherServiceLogging</code>) will log to a file.  The (non-ASF)
+<a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module also implements the new SPI.</p>
+</div>
+<div class="paragraph">
+<p>The new service also supports the notion of published property edits; the new
+<a href="guides/rgant.html#_rgant_Property_publishing"><code>@Property#publishing()</code></a> annotation attribute can be used to specify.  The `
+isis.services.publish.properties` configuration property can be used to specify a fallback default for properties where
+the attribute is not set explicitly.</p>
+</div>
+<div class="paragraph">
+<p>Conversely, neither the <a href="guides/rgant.html#_rgant_Action_publishingPayloadFactory"><code>@Action#publishingPayloadFactory()</code></a>
+nor the <a href="guides/rgant.html#_rgant_DomainObject_publishingPayloadFactory"><code>@DomainObject#publishingPayloadFactory()</code></a> are
+supported by <code>PublisherService</code>; instead the consumers of the events are expected to callback for any additional
+information, eg using <a href="#guides/ugvro.adoc">Resful Objects</a> viewer.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_auto_logout">Auto-logout</h3>
+<div class="paragraph">
+<p>The new configuration property <code>isis.authentication.shiro.autoLogoutIfAlreadyAuthenticated</code> (documented more fully in
+the  <a href="guides/ugsec.html#_ugsec_configuring-isis-to-use-shiro">security guide</a>) is by default set to false, thereby
+disabling auto-logout behaviour that is believed to be the root cause of some exceptions thrown by the
+<a href="guides/ugvro.html">Restful Objects viewer</a> during a race condition.  The <strong>previous behaviour can be re-enabled</strong> by setting
+to <code>true</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_safe_rememberme_cookies">Safe 'rememberMe' cookies</h3>
+<div class="paragraph">
+<p>Apache Isis leverages <a href="http://wicket.apache.org">Apache Wicket</a>'s rememberMe support which holds remembered
+user/passwords in an encrypted cookie.</p>
+</div>
+<div class="paragraph">
+<p>If a hard-coded and publicly known value were to be used (as was the case prior to <code>1.13.0</code>), then it would be
+possible for rememberMe user/password to be intercepted and decrypted, possibly compromising access.  The
+<code>isis.viewer.wicket.rememberMe.encryptionKey</code> configuration property therefore allows a private key to be specified,
+baked into the application.</p>
+</div>
+<div class="paragraph">
+<p>If no value is set then (for safety) a random UUID will be used as the encryption key.  (The net effect of this
+fallback behaviour is that 'rememberMe' will work, but only until the webapp is restarted (after which the end-user
+will have to log in again).</p>
+</div>
+<div class="paragraph">
+<p>Related, the <code>isis.viewer.wicket.suppressRememberMe</code> configuration property has been replaced by
+<code>isis.viewer.wicket.rememberMe.suppress</code> (though the old configuration property is still supported).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_programming_models">Custom programming models</h3>
+<div class="paragraph">
+<p>In previous releases the <code>isis.reflector.facets</code> configuration property could be used to specify a new implementation
+of the (internal) <code>ProgrammingModel</code> API.  This configuration property is no longer supported.  See the
+<a href="guides/ugbtb.html#_ugbtb_programming-model_finetuning">beyond the basics</a> guide for an alternative broadly equivalent
+approach.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_injectxxx_no_longer_supported">injectXxx() no longer supported</h3>
+<div class="paragraph">
+<p>Apache Isis automatically injects domain services into other domain objects, supporting the
+<a href="guides/rgant.html#_rgant-Inject"><code>@Inject</code></a> annotation, also injection to <code>set&#8230;&#8203;()</code> setter methods and finally injection
+into <code>inject&#8230;&#8203;()</code> methods.  This last method is now no longer supported by default.  It can be re-enabled if necessary
+using the <code>isis.services.injector.injectPrefix</code> configuration property.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to disable injection to <code>set&#8230;&#8203;()</code> methods (using the <code>isis.services.injector.setPrefix</code>
+configuration property), though this is enabled by default.</p>
+</div>
+<div class="paragraph">
+<p>Disabling auto-wiring has a positive impact on bootstrap times, as well as standarding Apache Isis' conventions to be
+more in line with JEE.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_optionally_ignore_deprecated_facets">Optionally ignore deprecated facets</h3>
+<div class="paragraph">
+<p>The <code>isis.reflector.facets.ignoreDeprecated</code> configuration property indicates whether to continue to honour or to simply
+ignore any deprecated annotations and other semantics that make up the programming model.</p>
+</div>
+<div class="paragraph">
+<p>This is disabled by default, in other words deprecated facets continue to be recognized.  Be aware that enabling this
+setting could substantially alter the semantics of your application.  To be safe, we recommend that you first run the
+application using <code>isis.reflector.validator.allowDeprecated</code> set to <code>false</code>; if any deprecated annotations etc. are
+in use, then the app will fail-fast and refuse to start.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_applicationfeaturerepository">ApplicationFeatureRepository</h3>
+<div class="paragraph">
+<p>The <code>isis.services.applicationFeatures.init</code> configuration property is used to control whether the
+<a href="guides/rgsvc.html#_rgsvc_api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a> domain service lazily or
+eagerly initializes itself based on the framework&#8217;s internal metamodel.</p>
+</div>
+<div class="paragraph">
+<p>Previously this service eagerly initialized itself, causing the framework to have to traverse the domain object
+model graph for all types, noticeably increasing the bootstrap time.  For <code>1.13.0</code> this service now initializes itself
+lazily.  The previous behaviour (of eager initialization) can be re-enabled by setting this property to <code>eager</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_testing">Integration testing</h3>
+<div class="paragraph">
+<p>There are two sets of changes relating to integration tests.</p>
+</div>
+<div class="sect3">
+<h4 id="_builder">Builder</h4>
+<div class="paragraph">
+<p>The <code>IsisSystemForTest.Builder</code> class is used to <a href="guides/ugtst.html#_ugtst_integ-test-support_bootstrapping">bootstrap integration tests</a>.</p>
+</div>
+<div class="paragraph">
+<p>A number of the clauses within this class have been removed:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>isis.services.applicationFeatures.init</code><br></p>
+<p><code>with(PersistenceMechanismInstaller persistenceMechanismInstaller)</code><br></p>
 <div class="paragraph">
-<p>This <a href="rgcfg.html#_rgcfg_configuring-core_services">setting</a> can be used to control whether the
-<a href="rgsvc.html#_rgsvc_api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a> domain service lazily or
-eagerly initializes itself based on the framework&#8217;s internal metamodel.<br></p>
-</div>
-<div class="paragraph">
-<p>Prior to <code>1.13.0</code> this service eagerly initialized itself, causing the framework to have to traverse the domain object
-model graph for all types.  This could add noticeable overhead.  For <code>1.13.0</code> this service now initializes itself
-lazily.  The previous behaviour (of eager initialization) can be re-enabled by setting this property to <code>eager</code>.</p>
+<p>Apache Isis has for many releases only supported a single implementation of persistence mechanism (JDO/DataNucleus),
+so this builder method is redundant.</p>
 </div>
 </li>
 <li>
-<p><code>isis.services.injector.injectPrefix</code> and <code>isis.services.injector.setPrefix</code><br></p>
+<p><code>with(ProgrammingModel programmingModel)</code><br></p>
 <div class="paragraph">
-<p>These <a href="rgcfg.html#_rgcfg_configuring-core_services">settings</a> can be used to control the styles of injection of domain services that the framework supports.<br></p>
-</div>
-<div class="paragraph">
-<p>Prior to <code>1.13.0</code> the framework supported the injection of fields using <a href="rgant.html#_rgant-Inject"><code>@Inject</code></a>, and
-also injection to <code>set&#8230;&#8203;()</code> setter methods and also <code>inject&#8230;&#8203;()</code> methods.  In <code>1.13.0</code> the injection through <code>@Inject</code>
-remains, and injection through setters is enabled by default.  Injection through <code>inject&#8230;&#8203;()</code> is disabled however.
-For faster start-up times still, consider disabling injection through <code>set&#8230;&#8203;()</code>.</p>
+<p>Instead, use <code>AppManifest#getConfiguration()</code> to <a href="guides/ugbtb.html#_ugbtb_programming-model_finetuning">include/exclude facets</a></p>
 </div>
 </li>
 <li>
-<p><code>isis.reflector.facets.ignoreDeprecated</code><br></p>
+<p><code>with(MetaModelValidator metaModelValidator)</code><br></p>
 <div class="paragraph">
-<p>This <a href="rgcfg.html#_rgcfg_configuring-core_services">setting</a> indicates whether to continue to honour or to simply ignore any deprecated annotations and other
-semantics that make up the programming model.<br></p>
+<p>Instead, use <code>AppManifest#getConfiguration()</code> to specify a <a href="guides/ugbtb.html#_ugbtb_programming-model_custom-validator">custom validator</a>.</p>
+</div>
+</li>
+<li>
+<p><code>withServicesIn(String&#8230;&#8203; packagePrefixes)</code> and <code>withServices(Object&#8230;&#8203; services)</code><br></p>
+<div class="paragraph">
+<p>Instead, use <code>AppManifest#getAdditionalServices()</code></p>
+</div>
+</li>
+<li>
+<p><code>withFixtures(InstallableFixture&#8230;&#8203; fixtures)</code><br></p>
+<div class="paragraph">
+<p>Instead, use <code>AppManifest#getFixtures()</code></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_centralizing_configuration">Centralizing configuration</h4>
+<div class="paragraph">
+<p>Previously when bootstrapping the integration tests, the <code>IsisConfigurationForJdoIntegTests</code> was provided as a custom
+implementation of <code>IsisConfiguration</code>, providing a number of configuration settings specifically for running
+integration tests (eg run using an in-memory database).  This design split the responsiblity of providing the
+configuration properties between that class and <code>AppManifest</code>.</p>
 </div>
 <div class="paragraph">
-<p>Be aware that enabling this setting could substantially alter the semantics of your application.  To be safe, we
-recommend that you first run the application using <code>isis.reflector.validator.allowDeprecated</code> set to <code>false</code>; if any
-deprecated annotations etc. are in use, then the app will fail-fast and refuse to start.</p>
+<p>A new <code>AppManifest.Util</code> helper class now allows these responsibilities to belong exlusively to the <code>AppManifest</code>.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
+        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
+        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
+            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
+                    .withLoggingAt(org.apache.log4j.Level.INFO)
+                    .with(<span class="keyword">new</span> DomainAppAppManifest() {
+                        <span class="annotation">@Override</span>
+                        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
+                            <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map = Maps.newHashMap();
+                            <span class="predefined-type">Util</span>.withJavaxJdoRunInMemoryProperties(map);
+                            <span class="predefined-type">Util</span>.withDataNucleusProperties(map);
+                            <span class="predefined-type">Util</span>.withIsisIntegTestProperties(map);
+                            <span class="keyword">return</span> map;
+                        }
+                    })
+                    .build();
+            isft.setUpSystem();
+            IsisSystemForTest.set(isft);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_web_xml">web.xml</h3>
+<div class="paragraph">
+<p>In the <a href="guides/ugbtb.html#_ugbtb_web-xml"><code>web.xml</code></a>, the "isis.viewers" context-param is now ignored.  Instead the
+<code>viewer_wicket.properties</code> and <code>viewer_restfulobjects.properties</code> will both be loaded if present (but neither need be present).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_hastransactionid_code_mixin"><code>HasTransactionId</code> mixin</h3>
+<div class="paragraph">
+<p>The <a href="guides/rgcms.html#_rgcms_classes_mixins_HasTransactionId"><code>HasTransactionId</code></a> mixin interface has subtly changed its
+meaning (and is now somewhat mis-named).  Prior to <code>1.13.0</code>, this identifier was the GUID of the Isis transaction in
+which the object was created.  As of <code>1.13.0</code>, this identifier actually is for the request/interaction (as per the new
+<a href="guides/rgsvc.html#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> service) in which the object was created.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notable_new_features">Notable new features</h3>
+<div class="paragraph">
+<p>The following are new features so do not impact in themselves impact any migration effort, but you may wish to start
+taking advantage of once you have upgraded.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@Nullable</code> annotation<br></p>
+<div class="paragraph">
+<p>The <a href="guides/rgant.html#_rgant_Nullable"><code>@Nullable</code></a> annotation can now be used to specify the optionality of properties
+and parameters.</p>
+</div>
+</li>
+<li>
+<p><code>ActionDomainEvent</code> for mixins<br></p>
+<div class="paragraph">
+<p>Previously it was not possible to discover the mixed-in domain object when an <code>ActionDomainEvent</code> was raised by a
+mixin action.  This is now possible, through the <a href="guides/rgcms.html#_rgcms_classes_domainevent_ActionDomainEvent"><code>mixedIn()</code></a> method.</p>
+</div>
+</li>
+<li>
+<p><code>Blob</code> and <code>Clob</code> file types<br></p>
+<div class="paragraph">
+<p>The <a href="guides/rgant.html#_rgant_Property_fileAccept"><code>@Property#fileAccept()</code></a> and
+<a href="guides/rgant.html#_rgant_Parameter_fileAccept"><code>@Parameter#fileAccept()</code></a> annotation attributes can be used to hint at
+the file type to upload for a blob or clob.</p>
+</div>
+</li>
+<li>
+<p>Live reloading<br></p>
+<div class="paragraph">
+<p>The <code>isis.viewer.wicket.liveReloadUrl</code> configuration property allows live reloading of objects if the layout is updated,
+reducing feedback times.  Further guidance on setting this up can be found
+<a href="guides/dg.html#_dg_ide_intellij_advanced_gradle-liveReload">here</a>.</p>
+</div>
+</li>
+<li>
+<p>Docker support<br></p>
+<div class="paragraph">
+<p>The <code>overrides.properties</code> configuration file, if present, is loaded last as the configuration property file, with
+its contents overriding any previously defined configuration properties.  This simple idea makes it easy to create Docker
+container images; see <a href="guides/ugbtb.html#_ugbtb_deployment_docker">here</a> for further discussion.</p>
 </div>
 </li>
 </ul>
@@ -584,15 +830,15 @@ issues here.</p>
 <div class="sect2">
 <h3 id="_dynamic_xml_layouts">Dynamic XML Layouts</h3>
 <div class="paragraph">
-<p>The major new feature in 1.12.0 is <a href="ugfun.html#_ugfun_object-layout_dynamic_xml">dynamic XML layouts</a>, providing
+<p>The major new feature in 1.12.0 is <a href="guides/ugfun.html#_ugfun_object-layout_dynamic_xml">dynamic XML layouts</a>, providing
 much enhanced support for custom layouts.</p>
 </div>
 <div class="paragraph">
 <p>The new <code>Xxx.layout.xml</code> file is optional; without it domain objects will
-continue to be rendered as before, using metadata from annotations (<a href="rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a>,
-<a href="rgant.html#_rgant-PropertyLayout"><code>@PropertyLayout</code></a>, <a href="rgant.html#_rgant-CollectionLayout"><code>@CollectionLayout</code></a>,
-<a href="rgant.html#_rgant-ActionLayout"><code>@ActionLayout</code></a>, <a href="rgant.html#_rgant-MemberOrder"><code>@MemberOrder</code></a> and
-<a href="rgant.html#_rgant-MemberGroupLayout"><code>@MemberGroupLayout</code></a>), and also from any <a href="ugfun.html#_ugfun_object-layout_dynamic"><code>Xxx.layout.json</code></a>
+continue to be rendered as before, using metadata from annotations (<a href="guides/rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout</code></a>,
+<a href="guides/rgant.html#_rgant-PropertyLayout"><code>@PropertyLayout</code></a>, <a href="guides/rgant.html#_rgant-CollectionLayout"><code>@CollectionLayout</code></a>,
+<a href="guides/rgant.html#_rgant-ActionLayout"><code>@ActionLayout</code></a>, <a href="guides/rgant.html#_rgant-MemberOrder"><code>@MemberOrder</code></a> and
+<a href="guides/rgant.html#_rgant-MemberGroupLayout"><code>@MemberGroupLayout</code></a>), and also from any <a href="guides/ugfun.html#_ugfun_object-layout_dynamic"><code>Xxx.layout.json</code></a>
 file that might already exist.  There is therefore no requirement to move to the new more flexible XML-based layout.</p>
 </div>
 <div class="paragraph">
@@ -614,21 +860,21 @@ is present, any existing <code>Xxx.layout.json</code> file will be ignored; any 
 <div class="ulist">
 <ul>
 <li>
-<p><a href="rgcms.html#_rgcms_classes_mixins_Object_clearHints">clear hints</a> action</p>
+<p><a href="guides/rgcms.html#_rgcms_classes_mixins_Object_clearHints">clear hints</a> action</p>
 </li>
 <li>
-<p><a href="rgcms.html#_rgcms_classes_mixins_Object_downloadLayoutXml">download Layout XML</a> action (prototype mode)</p>
+<p><a href="guides/rgcms.html#_rgcms_classes_mixins_Object_downloadLayoutXml">download Layout XML</a> action (prototype mode)</p>
 </li>
 <li>
-<p><a href="rgcms.html#_rgcms_classes_mixins_Object_rebuildMetamodel">rebuild metamodel</a> action (prototype mode)</p>
+<p><a href="guides/rgcms.html#_rgcms_classes_mixins_Object_rebuildMetamodel">rebuild metamodel</a> action (prototype mode)</p>
 </li>
 <li>
-<p><a href="rgcms.html#_rgcms_classes_mixins_Persistable_datanucleusXxx">id and version</a> properties (for domain entities only)</p>
+<p><a href="guides/rgcms.html#_rgcms_classes_mixins_Persistable_datanucleusXxx">id and version</a> properties (for domain entities only)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These are in addition to the <a href="rgcms.html#_rgcms_classes_mixins_Persistable_downloadJdoMetadata">download JDO metadata</a> mixin action (prototype mode) provided in earlier versions of the framework.</p>
+<p>These are in addition to the <a href="guides/rgcms.html#_rgcms_classes_mixins_Persistable_downloadJdoMetadata">download JDO metadata</a> mixin action (prototype mode) provided in earlier versions of the framework.</p>
 </div>
 <div class="paragraph">
 <p>The properties are grouped in a "metadata" fieldset, and the mixin actions associated with that fieldset.  If the
@@ -637,38 +883,38 @@ as top-level actions.</p>
 </div>
 <div class="paragraph">
 <p>Most of these mixin object members are visible only in prototype mode, though some are visible in production mode and
-so potentially visible to end-users.  If you wish to suppress these members from the view, you can either use <a href="#ugsec.adoc">security</a>,
-or alternatively you can write <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a>s to veto the visibility
+so potentially visible to end-users.  If you wish to suppress these members from the view, you can either use <a href="#guides/ugsec.adoc">security</a>,
+or alternatively you can write <a href="guides/rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a>s to veto the visibility
 of these members by subscribing to their respective domain events.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_jaxb_view_models_are_editable">JAXB view models are editable</h3>
 <div class="paragraph">
-<p>All <a href="rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a> view models are now implicitly editable.  Therefore any
-view models that should be read-only should have editing attribute disabled using <a href="rgant.html#_rgant-DomainObject_editing"><code>@DomainObject#editing()</code></a> (or use a <a href="rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a> to veto editability).</p>
+<p>All <a href="guides/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a> view models are now implicitly editable.  Therefore any
+view models that should be read-only should have editing attribute disabled using <a href="guides/rgant.html#_rgant-DomainObject_editing"><code>@DomainObject#editing()</code></a> (or use a <a href="guides/rgcms.html#_rgcms_classes_super_AbstractSubscriber">subscriber</a> to veto editability).</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="__code_domainobjectcontainer_code_domain_service"><code>DomainObjectContainer</code> domain service</h3>
 <div class="paragraph">
-<p>The <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>domain service has been deprecated, with
+<p>The <a href="guides/rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a>domain service has been deprecated, with
 its methods moved to a new set of more fine-grained domain services, such as
-<a href="rgsvc.html#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a> and
-<a href="rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a>.</p>
+<a href="guides/rgsvc.html#_rgsvc_api_RepositoryService"><code>RepositoryService</code></a> and
+<a href="guides/rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>DomainObjectContainer</code> service will continue to be supported until Apache Isis v2.0.0, but in the meantime, consider
 changing existing application code to use these new domain services.</p>
 </div>
 <div class="paragraph">
-<p>Please note that when migrating from _rgsvc_api_DomainObjectContainer_object-persistence-api.adoc#_rgsvc_api_DomainObjectContainer_object-persistence-api[<code>DomainObjectContainer#persist()</code>] to <a href="_rgsvc_api_RepositoryService.adoc.html#_rgsvc_api_RepositoryService"><code>RepositoryService#persist()</code></a>, no exception will be thrown if the Domain Object is already persisted, so the behavior of <a href="_rgsvc_api_RepositoryService.html#_rgsvc_api_RepositoryService"><code>RepositoryService#persist()</code></a> will be the same as that of _rgsvc_api_DomainObjectContainer_object-persistence-api.adoc#_rgsvc_api_DomainObjectContainer_object-persistence-api[<code>DomainObjectContainer#persistIfNotAlready()</code>].</p>
+<p>Please note that when migrating from _rgsvc_api_DomainObjectContainer_object-persistence-api.adoc#_rgsvc_api_DomainObjectContainer_object-persistence-api[<code>DomainObjectContainer#persist()</code>] to <a href="guides/_rgsvc_api_RepositoryService.adoc.html#_rgsvc_api_RepositoryService"><code>RepositoryService#persist()</code></a>, no exception will be thrown if the Domain Object is already persisted, so the behavior of <a href="guides/_rgsvc_api_RepositoryService.html#_rgsvc_api_RepositoryService"><code>RepositoryService#persist()</code></a> will be the same as that of _rgsvc_api_DomainObjectContainer_object-persistence-api.adoc#_rgsvc_api_DomainObjectContainer_object-persistence-api[<code>DomainObjectContainer#persistIfNotAlready()</code>].</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_removal_of_the_code_self_host_code_profile">Removal of the <code>self-host</code> profile</h3>
 <div class="paragraph">
-<p>The <code>self-host</code> profile has been removed from the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.
+<p>The <code>self-host</code> profile has been removed from the <a href="guides/ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a>.
 Instead, run the application using either the <code>org.apache.isis.WebServer</code> main class, or <code>mvn jetty:run</code>, or build the
 WAR and deploy to a servlet container such as Tomcat.</p>
 </div>
@@ -850,7 +1096,7 @@ parent <code>pom.xml</code> for the Core framework.</p>
 <div class="sect2">
 <h3 id="__code_allowlateregistration_code"><code>allowLateRegistration</code></h3>
 <div class="paragraph">
-<p>One possible issue is that (as per <a href="https://issues.apache.org/jira/browse/ISIS-830">ISIS-830</a>) the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> is now initialized as one of the first domain
+<p>One possible issue is that (as per <a href="https://issues.apache.org/jira/browse/ISIS-830">ISIS-830</a>) the <a href="guides/rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> is now initialized as one of the first domain
 services; this is to ensure that any object lifecycle events caused by domain services initializing themselves can be
 posted on the event bus for subscribers.  The typical case for such lifecycle events to occur is from domain services
 that seed reference data; one such example can be found in the (non-ASF)
@@ -887,7 +1133,7 @@ org.apache.isis.core.runtime.runner.IsisInjectModule.provideIsisSystem(IsisInjec
 </div>
 </div>
 <div class="paragraph">
-<p>To ensure that subscriber domain services are initialized before "seed" domain services, the <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute can be used.
+<p>To ensure that subscriber domain services are initialized before "seed" domain services, the <a href="guides/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute can be used.
 Normally this attribute is just used to order UI-visible services on the menu bars, but it also is used
 internally to sequence the internal list of services being initialized.</p>
 </div>
@@ -903,7 +1149,7 @@ internally to sequence the internal list of services being initialized.</p>
 <p>If you do that, be aware that not all subscribers may not receive some events generated by other domain services.</p>
 </div>
 <div class="paragraph">
-<p>For more details, see the <a href="rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> man page.</p>
+<p>For more details, see the <a href="guides/rgsvc.html#_rgsvc_api_EventBusService"><code>EventBusService</code></a> man page.</p>
 </div>
 </div>
 <div class="sect2">
@@ -948,7 +1194,7 @@ internally to sequence the internal list of services being initialized.</p>
 <h3 id="_isis_maven_plugin">isis-maven-plugin</h3>
 <div class="paragraph">
 <p>The way that the Isis Maven plugin is configured has changed slightly; check out its
-<a href="#rgmvn.adoc">documentation</a> for full details.</p>
+<a href="#guides/rgmvn.adoc">documentation</a> for full details.</p>
 </div>
 </div>
 </div>
@@ -962,7 +1208,7 @@ internally to sequence the internal list of services being initialized.</p>
 <p>Apache Isis 1.9.0 updates to DataNucleus 4.0.0, which requires some changes (simplifications) to the Maven configuration.</p>
 </div>
 <div class="paragraph">
-<p>If you starting a new app then you can start from the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>; its Maven configuration has been updated.</p>
+<p>If you starting a new app then you can start from the <a href="guides/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>; its Maven configuration has been updated.</p>
 </div>
 <div class="paragraph">
 <p>If you have an existing Apache Isis app that you want to upgrade, then you&#8217;ll need to make some changes.</p>
@@ -1233,13 +1479,13 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="ulist">
 <ul>
 <li>
-<p>searching for classes annotated with <a href="rgant.html#_rgant-DomainService"><code>@DomainService</code></a>.</p>
+<p>searching for classes annotated with <a href="guides/rgant.html#_rgant-DomainService"><code>@DomainService</code></a>.</p>
 </li>
 <li>
-<p>searching for classes extending <a href="rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a></p>
+<p>searching for classes extending <a href="guides/rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a></p>
 </li>
 <li>
-<p>searching for classes annotated with <a href="rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a>.</p>
+<p>searching for classes annotated with <a href="guides/rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a>.</p>
 </li>
 </ul>
 </div>
@@ -1369,10 +1615,10 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="sect2">
 <h3 id="_migration-notes_1.8.0-to-1.9.0_exception-recognizer"><code>ExceptionRecognizerCompositeForJdoObjectStore</code></h3>
 <div class="paragraph">
-<p>The <code>ExceptionRecognizerCompositeForJdoObjectStore</code> service (an implementation of the <a href="rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a> SPI) recognizes certain expected exceptions thrown by the JDO objectstore (for example, violations of uniqueness) and converts them into meaningful messages for the end-user.</p>
+<p>The <code>ExceptionRecognizerCompositeForJdoObjectStore</code> service (an implementation of the <a href="guides/rgsvc.html#_rgsvc_spi_ExceptionRecognizer"><code>ExceptionRecognizer</code></a> SPI) recognizes certain expected exceptions thrown by the JDO objectstore (for example, violations of uniqueness) and converts them into meaningful messages for the end-user.</p>
 </div>
 <div class="paragraph">
-<p>Prior to 1.9.0 this implementation was <em>not</em> annotated with <a href="rgant.html#_rgant-DomainService"><code>@DomainService</code></a> and thus needed to be explicitly registered in <code>isis.properties</code>.</p>
+<p>Prior to 1.9.0 this implementation was <em>not</em> annotated with <a href="guides/rgant.html#_rgant-DomainService"><code>@DomainService</code></a> and thus needed to be explicitly registered in <code>isis.properties</code>.</p>
 </div>
 <div class="paragraph">
 <p>In 1.9.0 the service has been annotated with <code>@DomainService</code> meaning that:</p>
@@ -1380,23 +1626,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="ulist">
 <ul>
 <li>
-<p>it must be removed from <code>isis.properties</code>:<br></p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="ini">isis.services = \
-    # \
-    #org.apache.isis.objectstore.jdo.applib.service.exceprecog.ExceptionRecognizerCompositeForJdoObjectStore,\   <i class="conum" data-value="1"></i><b>(1)</b>
-    #</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>remove this line (or comment it out, as shown)</td>
-</tr>
-</table>
-</div>
+<p>it must be removed from <code>isis.services</code> property in <code>isis.properties</code> configuration file</p>
 </li>
 <li>
 <p>in integration tests, if the service is explicitly registered, then it should be removed; for example:<br></p>
@@ -1428,7 +1658,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <p>If you fail to do this you will get an exception to the effect of duplicate service Ids being registered.</p>
 </div>
 <div class="paragraph">
-<p>Now that the <code>ExceptionRecognizerCompositeForJdoObjectStore</code> no longer needs to be explicitly registered, you might (very rarely) require the opposite situation, namely to disable the service.  As this can&#8217;t be done by just removing it from <code>isis.poperties</code>, you instead can set a new <a href="rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.ExceptionRecognizerCompositeForJdoObjectStore.disable</code>:</p>
+<p>Now that the <code>ExceptionRecognizerCompositeForJdoObjectStore</code> no longer needs to be explicitly registered, you might (very rarely) require the opposite situation, namely to disable the service.  As this can&#8217;t be done by just removing it from <code>isis.properties</code>, you instead can set a new <a href="guides/rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.ExceptionRecognizerCompositeForJdoObjectStore.disable</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1442,19 +1672,19 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <div class="sect2">
 <h3 id="_migration-notes_1.8.0-to-1.9.0_fixture-scripts-specification-provider"><code>FixtureScriptsSpecificationProvider</code></h3>
 <div class="paragraph">
-<p>The <code>FixtureScriptsSpecificationProvider</code> SPI service is an alternative to subclassing the <a href="rgcms.html#_rgcms_classes_super_FixtureScripts"><code>FixtureScripts</code></a> domain service.  The logic that would normally be in the subclass moves to the provider service instead, and the framework instantiates a fallback default instance, <a href="rgsvc.html#_rgsvc_api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a>.</p>
+<p>The <code>FixtureScriptsSpecificationProvider</code> SPI service is an alternative to subclassing the <a href="guides/rgcms.html#_rgcms_classes_super_FixtureScripts"><code>FixtureScripts</code></a> domain service.  The logic that would normally be in the subclass moves to the provider service instead, and the framework instantiates a fallback default instance, <a href="guides/rgsvc.html#_rgsvc_api_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a>.</p>
 </div>
 <div class="paragraph">
 <p>This new design is optional; if you continue to provide your own subclass then everything will continue as before.  However the new design is more flexible and involves less code.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="ugtst.html#_ugtst_fixture-scripts_api-and-usage">user guide</a> for further discussion.</p>
+<p>See <a href="guides/ugtst.html#_ugtst_fixture-scripts_api-and-usage">user guide</a> for further discussion.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_migration-notes_1.8.0-to-1.9.0_war-packaging">War packaging</h3>
 <div class="paragraph">
-<p>As discussed in <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> and elsewhere, the <code>org.apache.isis.WebServer</code> provides the ability to run your app from an embedded jetty.  This is great for prototyping.  The class resides in the <code>isis-core-webserver</code> module, which also has the dependency on jetty.</p>
+<p>As discussed in <a href="guides/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> and elsewhere, the <code>org.apache.isis.WebServer</code> provides the ability to run your app from an embedded jetty.  This is great for prototyping.  The class resides in the <code>isis-core-webserver</code> module, which also has the dependency on jetty.</p>
 </div>
 <div class="paragraph">
 <p>In 1.9.0 we have upgraded the jetty dependency to use Jetty 9.2.0 (<code>org.eclipse.jetty.aggregate:jetty-all:9.2.11.v20150529</code>, to be precise).  One consequence of this is that the packaged WAR file will not boot on Tomcat.</p>
@@ -1482,7 +1712,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </div>
 </div>
 <div class="paragraph">
-<p>For future projects the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has been updated with this change.</p>
+<p>For future projects the <a href="guides/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has been updated with this change.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1491,7 +1721,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <p>Apache Isis 1.9.0 provides a simplified programmatic way of bootstrapping the application, that also unifies bootstrapping for integration tests.</p>
 </div>
 <div class="paragraph">
-<p>For now this new bootstrapping mechanism is optional (you don&#8217;t have to change your code), but it may become mandatory in future releases.  The <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has been updated to use this new mechanism.</p>
+<p>For now this new bootstrapping mechanism is optional (you don&#8217;t have to change your code), but it may become mandatory in future releases.  The <a href="guides/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has been updated to use this new mechanism.</p>
 </div>
 <div class="paragraph">
 <p>The instructions below assume that your application is structured as per the simpleapp archetype.  Adjust accordingly.</p>
@@ -1578,7 +1808,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 </div>
 </li>
 <li>
-<p>if your application uses any of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> modules, then add dependencies to these modules in the <code>pom.xml</code>.  You should be able to copy-and-paste the dependencies from the <code>pom.xml</code> of your <code>myapp-webapp</code> module.</p>
+<p>if your application uses any of the (non-ASF) <a href="http://www.isisaddons.org">Isis Addons</a> modules, then add dependencies to these modules in the <code>pom.xml</code>.  You should be able to copy-and-paste the dependencies from the <code>pom.xml</code> of your <code>myapp-webapp</code> module.</p>
 </li>
 </ul>
 </div>
@@ -1625,7 +1855,7 @@ isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints=true</cod
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the module classes, whose packages specify the existence of domain services and/or persistent entities.  If your app uses (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> modules, then include the module classes for these addons in <code>getModules()</code>.   For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module provides the <code>org.isisaddons.module.security.SecurityModule</code> class.</td>
+<td>the module classes, whose packages specify the existence of domain services and/or persistent entities.  If your app uses (non-ASF) <a href="http://www.isisaddons.org">Isis Addons</a> modules, then include the module classes for these addons in <code>getModules()</code>.   For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module provides the <code>org.isisaddons.module.security.SecurityModule</code> class.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1836,7 +2066,7 @@ then let us know via the <a href="support.html">users mailing list</a>, so we ca
 </div>
 <div class="paragraph">
 <p>That said, many of the existing annotations have been deprecated in 1.8.0, replaced with a simplified and rationalized
- set of annotations; see <a href="../../reference/recognized-annotations/about.html">here</a>.  To help you migrate your application
+ set of annotations; see <a href="guides/rgant.html">here</a>.  To help you migrate your application
  over to the new annotations, there is a new configuration property that can be set in <code>isis.properties</code>:</p>
 </div>
 <div class="listingblock">
@@ -2167,9 +2397,26 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
         <div id="toc" class="toc2">
             <div class="fallback-toc">
                 <ul class="sectlevel1">
-<li><a href="#_migration-notes_1.12.0-to-1.13.0">From v1.12.0 to 1.13.0</a>
+<li><a href="#_migration-notes_1.12.0-to-1.13.0">From v1.12.x to 1.13.0</a>
 <ul class="sectlevel2">
-<li><a href="#_faster_startup_times">Faster startup times</a></li>
+<li><a href="#_command_changes">Command changes</a></li>
+<li><a href="#_auditing">Auditing</a></li>
+<li><a href="#_publishing">Publishing</a></li>
+<li><a href="#_auto_logout">Auto-logout</a></li>
+<li><a href="#_safe_rememberme_cookies">Safe 'rememberMe' cookies</a></li>
+<li><a href="#_custom_programming_models">Custom programming models</a></li>
+<li><a href="#_injectxxx_no_longer_supported">injectXxx() no longer supported</a></li>
+<li><a href="#_optionally_ignore_deprecated_facets">Optionally ignore deprecated facets</a></li>
+<li><a href="#_applicationfeaturerepository">ApplicationFeatureRepository</a></li>
+<li><a href="#_integration_testing">Integration testing</a>
+<ul class="sectlevel3">
+<li><a href="#_builder">Builder</a></li>
+<li><a href="#_centralizing_configuration">Centralizing configuration</a></li>
+</ul>
+</li>
+<li><a href="#_web_xml">web.xml</a></li>
+<li><a href="#__code_hastransactionid_code_mixin"><code>HasTransactionId</code> mixin</a></li>
+<li><a href="#_notable_new_features">Notable new features</a></li>
 </ul>
 </li>
 <li><a href="#_migration-notes_1.11.0-to-1.12.0">From v1.11.0 to 1.12.0</a>
