@@ -2888,7 +2888,7 @@ listener; see <a href="#_rgcms_methods_lifecycle_jdo-api">here</a> for further d
 </div>
 </div>
 <div class="paragraph">
-<p>This tells the framework that the package and subpackages under <code>com.mycompany.myapp.dom</code> should be searched for domain services and entities.</p>
+<p>This tells the framework that the package and subpackages under <code>com.mycompany.myapp.dom</code> should be searched for domain services (annotated with <code>@DomainService</code>), mixins (<code>@Mixin</code>) and entities (<code>@PersistenceCapabable</code>).</p>
 </div>
 <div class="paragraph">
 <p>As is perhaps apparent, the <code>getModules()</code> method replaces and overrides both the <code>isis.services.ServicesInstallerFromAnnotation.packagePrefix</code> key (usually found in the <code>isis.properties</code>  file) and also the`isis.persistor.datanucleus.RegisterEntities.packagePrefix` key (usually found in the <code>persistor_datanucleus.properties</code> file).  The value of the <code>isis.services-installer</code> configuration property is also ignored.</p>
@@ -3042,10 +3042,47 @@ listener; see <a href="#_rgcms_methods_lifecycle_jdo-api">here</a> for further d
 <div class="sect4">
 <h5 id="_integration_tests">Integration Tests</h5>
 <div class="paragraph">
-<p>Bootstrapping integration tests is still performed using the <code>IsisSystemForTest.Builder</code>, but very often the bootstrapping code can be substantially simplified (compared to not using an <code>AppManifest</code>, that is).</p>
+<p>A <code>AppManifest.Util</code> helper class provides a number of static methods that can be used to set up configuration
+properties appropriate for integration testing (eg run using an in-memory database).  This allows the responsibility
+of returning the configuration properties to belong exlusively to the <code>AppManifest</code>.</p>
 </div>
 <div class="paragraph">
-<p>For example, this is the bootstrapping code for the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> looks something like:</p>
+<p>There are three such static methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AppManifest</span> {
+  ...
+  public <span class="directive">static</span> <span class="type">class</span> <span class="class">Util</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
+        withJavaxJdoRunInMemoryProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
+        withDataNucleusProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }           <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
+        withIsisIntegTestProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }         <i class="conum" data-value="3"></i><b>(3)</b>
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>sets up the <code>javax.jdo.option.Connection*</code> properties so as to run against an in-memory instance of HSQLDB</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>sets up DataNucleus to automatically create the databse schema, as well as a number of other standard properties
+(disable persistence by reachability, support mixed case identifiers, disable level 2 cache)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>sets up standard properties for the Apache Isis framework, most specifically to enable fixtures to be installed.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, the bootstrapping code for the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> looks something like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3055,15 +3092,27 @@ listener; see <a href="#_rgcms_methods_lifecycle_jdo-api">here</a> for further d
         <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
             isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
                     .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(<span class="keyword">new</span> MyAppAppManifest())
-                    .with(<span class="keyword">new</span> IsisConfigurationForJdoIntegTests())
-                    .build()
-                    .setUpSystem();
+                    .with(<span class="keyword">new</span> DomainAppAppManifest() {
+                        <span class="annotation">@Override</span>
+                        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
+                            <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map = Maps.newHashMap();
+                            <span class="predefined-type">Util</span>.withJavaxJdoRunInMemoryProperties(map);
+                            <span class="predefined-type">Util</span>.withDataNucleusProperties(map);
+                            <span class="predefined-type">Util</span>.withIsisIntegTestProperties(map);
+                            <span class="keyword">return</span> map;
+                        }
+                    })
+                    .build();
+            isft.setUpSystem();
             IsisSystemForTest.set(isft);
         }
     }
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Previously the <code>IsisConfigurationJdoIntegTests</code> (subclass of <code>IsisConfiguration</code>) was provided to set up these
+configuration properties.  This class is still supported, but is deprecated.</p>
 </div>
 </div>
 <div class="sect4">
@@ -3130,7 +3179,7 @@ listener; see <a href="#_rgcms_methods_lifecycle_jdo-api">here</a> for further d
 <div class="sect3">
 <h4 id="_subsidiary_goals">3.1.3. Subsidiary Goals</h4>
 <div class="paragraph">
-<p>There are a number of subsidiary goals of the <code>AppManifest</code> class (though as of v1.9.0 these have not yet implemented):</p>
+<p>There are a number of subsidiary goals of the <code>AppManifest</code> class (though as of v1.13.0 these have not yet implemented):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3139,13 +3188,10 @@ listener; see <a href="#_rgcms_methods_lifecycle_jdo-api">here</a> for further d
 <div class="ulist">
 <ul>
 <li>
-<p>Normally the running application is shared (on a thread-local) between integration tests. What the framework could do is to be intelligent enough to keep track of the manifest in use for each integration test and tear down the shared state if the "next" test uses a different manifest</p>
+<p>Normally the running application is shared (on a thread-local) between integration tests. What the framework could perhaps do is to be intelligent enough to keep track of the manifest in use for each integration test and tear down the shared state if the "next" test uses a different manifest</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Speed up bootstrapping by only scanning for classes annotated by <code>@DomainService</code> and <code>@PersistenceCapable</code> once.</p>
 </li>
 <li>
 <p>Provide a programmatic way to contribute elements of <code>web.xml</code>.</p>
