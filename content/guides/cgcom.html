@@ -2596,7 +2596,7 @@ git tag -d simpleapp-archetype-1.13.0-RC1</code></pre>
 <h2 id="_cgcom_release-process-for-snapshots">7. Snapshot Releases</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Isis consists of a number of separately releasable modules; see the main <a href="release-process.html">release process</a> documentation for full details. All the non-core components depend on the <code>core</code>, and use the <code>core&#8217;s parent `pom.xml</code> as their parent pom.</p>
+<p>Snapshot releases allows the current <code>-SNAPSHOT</code> version of the <code>core</code> modules  of the framework to be released to the Maven snapshot repository maintained by Apache Software Foundation.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2703,7 +2703,135 @@ mvn -D deploy=snapshot deploy</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_key-generation">8. Key Generation</h2>
+<h2 id="_cgcom_release-process-for-interim-releases">8. Interim Releases</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The intent of an "interim" release is to allow a developer team to release their application based on a <code>-SNAPSHOT</code> version of the framework.  Since <code>-SNAPSHOT</code> changes on a day-to-day basis, the idea is to tag a particular revision and to release this, thereby providing stability/traceability for the application being developed.</p>
+</div>
+<div class="paragraph">
+<p>Whereas <a href="#<em>cgcom_cutting-a-release.adoc">formal release</a>s and <a href="#_cgcom_relesae-process-for-snapshots.adoc">snapshot release</a>s are public (released through the Maven repository maintained by Apache Software Foundation), interim releases are non-public and rely on infrastructure provided by a developer team.  The tagged release resides _not</em> in the <a href="../downloads.adoc#_downloads_source_code">official Apache Isis git repository</a>, but instead in a fork/clone maintained by the developer team.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The procedure developed here was put together for the team working on the <a href="../powered-by.adoc#_powered-by_estatio">Estatio app</a>, which maintains its own <a href="https://github.com/incodehq/isis">fork on github</a> and uses <a href="https://www.cloudbees.com/">CloudBees</a> as a Jenkins build server/private Maven repo.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites_4">8.1. Prerequisites</h3>
+<div class="paragraph">
+<p>Create a remote fork/clone of the Apache Isis repository (eg using <a href="http://github.com">github</a> or <a href="http://bitbucket.org">bitbucket</a> or similar), and ensure that your local fork specifies this remote.</p>
+</div>
+<div class="paragraph">
+<p>Also, set up a CI server against your fork/clone, to build against any branches called <code>origin/interim/*</code>.  To build it should use the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install -Dskip.app -Dskip.arch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>that is, skipping the example simpleapp and archetype; only <code>core</code> framework is built</p>
+</div>
+<div class="paragraph">
+<p>The CI server should then also publish the resultant artifacts to a local Maven repository.  For example, Jenkins provides post-build plugins to perform such a task.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sanity_check_2">8.2. Sanity Check</h3>
+<div class="paragraph">
+<p>Ensure that the framework builds ok using the same command that your CI server is set up to execute (see section above).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_release">8.3. Release</h3>
+<div class="paragraph">
+<p>Deploy the framework using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bsah">sh interim-release.sh xxx yyyyy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>xxx</code> is the most recent release of Isis (to act as the base), and <code>yyyyy</code> is the name of the remote.</p>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh interim-release.sh 1.13.0 incodehq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will result in a new branch and tagged being pushed to the remote, with an appropriate version (details below).</p>
+</div>
+<div class="paragraph">
+<p>As noted in the prereqs (above), the CI server configured should then detect the new branch (or tag, if you prefer), build the framework (skipping application and architecture, as in the prerequisites) and then publish the resultant artifacts to a private Maven repo.</p>
+</div>
+<div class="sect3">
+<h4 id="_implementation_details">8.3.1. Implementation details</h4>
+<div class="paragraph">
+<p>The script itself:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>removes any local branches called <code>interim/*</code></p>
+</li>
+<li>
+<p>creates a new branch called <code>interim/YYYYmmDD-HHMM</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>eg <code>interim/1.13.0.20160909-0758</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>updates the version of the pom.xml to the baseline plus the date</p>
+<div class="ulist">
+<ul>
+<li>
+<p>eg <code>&lt;version&gt;1.13.0.20160909-0758&lt;/version&gt;</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>commits the changes and tags the new commit</p>
+<div class="ulist">
+<ul>
+<li>
+<p>eg <code>isis-1.13.0.20160909-0758</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>removes any remote branches called <code>interim/*</code></p>
+</li>
+<li>
+<p>pushes both the branch and the tag to the remote.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_key-generation">9. Key Generation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order that a contributor can make a release it is necessary for them to have generated a key and had that key recognized by other members of the Apache Software Foundation.</p>
@@ -2712,7 +2840,7 @@ mvn -D deploy=snapshot deploy</code></pre>
 <p>For further background information on this topic, see the <a href="http://www.apache.org/dev/release-signing.html">release signing page</a> and the <a href="http://www.apache.org/dev/openpgp.html#generate-key">openpgp page</a> on the Apache wiki.</p>
 </div>
 <div class="sect2">
-<h3 id="_install_and_configure_gpg">8.1. Install and Configure gpg</h3>
+<h3 id="_install_and_configure_gpg">9.1. Install and Configure gpg</h3>
 <div class="paragraph">
 <p>Download and install GnuPG (gpg), version 1.4.10 or higher.</p>
 </div>
@@ -2728,7 +2856,7 @@ default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB
 </div>
 </div>
 <div class="sect2">
-<h3 id="_key_generation">8.2. Key Generation</h3>
+<h3 id="_key_generation">9.2. Key Generation</h3>
 <div class="paragraph">
 <p>The Apache Software Foundation requires that keys are signed with a key (or subkey) based on RSA 4096 bits. To do this:</p>
 </div>
@@ -2907,7 +3035,7 @@ gpg&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_subkey_generation">8.3. Subkey Generation</h3>
+<h3 id="_subkey_generation">9.3. Subkey Generation</h3>
 <div class="paragraph">
 <p>It&#8217;s recommended to use a subkey with an expiry date to sign releases, rather than your main, non-expiring key. If a subkey is present, then gpg will use it for signing in preference to the main key.</p>
 </div>
@@ -3020,7 +3148,7 @@ gpg&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generate_a_revocation_certificate">8.4. Generate a Revocation Certificate</h3>
+<h3 id="_generate_a_revocation_certificate">9.4. Generate a Revocation Certificate</h3>
 <div class="paragraph">
 <p>It&#8217;s good practice to generate a number of revocation certificates so that the key can be revoked if it happens to be compromised. See the <a href="http://www.apache.org/dev/openpgp.html#revocation-certs">gpg page</a> on the Apache wiki for more background on this topic.</p>
 </div>
@@ -3123,7 +3251,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_publish_key">8.5. Publish Key</h3>
+<h3 id="_publish_key">9.5. Publish Key</h3>
 <div class="paragraph">
 <p>It is also necessary to publish your key. There are several places where this should be done. In most cases, you&#8217;ll need the "armored" &quot; (ie ASCII) representation of your key. This can be generated using:</p>
 </div>
@@ -3147,7 +3275,7 @@ your machine might store the data and make it available to others!</code></pre>
 <p>The output from this command includes a line beginning "Key fingerprint", followed by a (space delimited) 40 character hexadecimal fingerprint. The last 8 characters should be the same as the key id (<code>nnnnnnnn</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_a_public_key_server">8.5.1. Publish to a public key server</h4>
+<h4 id="_publish_to_a_public_key_server">9.5.1. Publish to a public key server</h4>
 <div class="paragraph">
 <p>To a publish your key to a public key server (eg the MIT key server hosted at <a href="http://pgp.mit.edu">http://pgp.mit.edu</a>), use the procedure below. Public key servers synchronize with each other, so publishing to one key server should be sufficient. For background reading on this, see the <a href="http://www.apache.org/dev/release-signing.html#keyserver-upload">release signing page</a> on the Apache wiki, and the <a href="http://maven.apache.org/developers/release/pmc-gpg-keys.html">gpg key page</a> on the Maven wiki.</p>
 </div>
@@ -3176,13 +3304,13 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_your_apache_home_directory">8.5.2. Publish to your Apache home directory</h4>
+<h4 id="_publish_to_your_apache_home_directory">9.5.2. Publish to your Apache home directory</h4>
 <div class="paragraph">
 <p>The armored representation of your public key should be uploaded to your home directory on <code>people.apache.org</code>, and renamed as <code>.pgpkey</code>. Make sure this is readable by all.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_your_apache_html_home_directory">8.5.3. Publish to your Apache HTML home directory</h4>
+<h4 id="_publish_to_your_apache_html_home_directory">9.5.3. Publish to your Apache HTML home directory</h4>
 <div class="paragraph">
 <p>The armored representation of your public key should be uploaded to your <code>public_html</code> home directory on <code>people.apache.org</code>, named <code>nnnnnnnn.asc</code>. Make sure this is readable by all.</p>
 </div>
@@ -3207,7 +3335,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_foaf">8.5.4. FOAF</h4>
+<h4 id="_foaf">9.5.4. FOAF</h4>
 <div class="paragraph">
 <p>First, check out the committers/info directory:</p>
 </div>
@@ -3305,7 +3433,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_save_to_code_keys_code">8.5.5. Save to <code>KEYS</code></h4>
+<h4 id="_save_to_code_keys_code">9.5.5. Save to <code>KEYS</code></h4>
 <div class="paragraph">
 <p>The armored representation of the public key should be saved to Apache Isis' <code>KEYS</code> file, <a href="http://www.apache.org/dist/isis/KEYS">http://www.apache.org/dist/isis/KEYS</a> (that is, in the ASF distribution directory for Apache Isis).</p>
 </div>
@@ -3334,20 +3462,20 @@ gpg --armor --export nnnnnnnn &gt;&gt;KEYS</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_id_apache_org">8.5.6. id.apache.org</h4>
+<h4 id="_id_apache_org">9.5.6. id.apache.org</h4>
 <div class="paragraph">
 <p>Log onto <code>id.apache.org</code> and ensure that the finger print of your public key is correct.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_attend_key_signing_party_apache_web_of_trust">8.6. Attend Key Signing Party (Apache web of trust)</h3>
+<h3 id="_attend_key_signing_party_apache_web_of_trust">9.6. Attend Key Signing Party (Apache web of trust)</h3>
 <div class="paragraph">
 <p>It is strongly advised that the contributor attend a key signing party at an Apache event, in order that other Apache committers/members can in person verify their identity against the key. The process for this is described <a href="http://www.apache.org/dev/release-signing.html#key-signing-party">here</a> and <a href="http://wiki.apache.org/apachecon/PgpKeySigning">here</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_update_maven_settings_file_code_m2_settings_xml_code">8.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</h3>
+<h3 id="_update_maven_settings_file_code_m2_settings_xml_code">9.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</h3>
 <div class="paragraph">
 <p>The Maven release plugin will automatically sign the release, however it is necessary to update the <code>~/.m2/settings.xml</code> file with your GPG acronym passphrase in order that it can use your secret key. This is defined under a profile so that it is activated only when we perform a release (as defined by <code>[org,apache:apache]</code> parent POM.</p>
 </div>
@@ -3391,13 +3519,13 @@ gpg --armor --export nnnnnnnn &gt;&gt;KEYS</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_release-process-prereqs">9. Appendix: Release Prereqs</h2>
+<h2 id="_cgcom_release-process-prereqs">10. Appendix: Release Prereqs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section (appendix) describes the prerequisites for the <a href="#_cgcom_release-process">release process</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_configure_toolchains_plugin">9.1. Configure toolchains plugin</h3>
+<h3 id="_configure_toolchains_plugin">10.1. Configure toolchains plugin</h3>
 <div class="paragraph">
 <p>Apache Isis releases are built using Java 7, enforced using the maven toolchains plugin.  Ensure that Java 7 is
 installed and the toolchains plugin is configured, as described in the
@@ -3405,7 +3533,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_public_private_key">9.2. Public/private key</h3>
+<h3 id="_public_private_key">10.2. Public/private key</h3>
 <div class="paragraph">
 <p>The most important configuration you require is to set up public/private key pair. This is used by the <code>maven-release-plugin</code> to sign the code artifacts. See the page on <a href="#_cgcom_key-generation">key generation</a> for more details.</p>
 </div>
@@ -3428,7 +3556,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven_code_settings_xml_code">9.3. Maven <code>settings.xml</code></h3>
+<h3 id="_maven_code_settings_xml_code">10.3. Maven <code>settings.xml</code></h3>
 <div class="paragraph">
 <p>During the release process the <code>maven-deploy-plugin</code> uploads the generated artifacts to a staging repo on the <a href="http://repository.apache.org">Apache repository manager</a>. This requires your Apache LDAP credentials to be specified in your <code>~/.m2/settings.xml</code> file:</p>
 </div>
@@ -3490,15 +3618,15 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_policies">10. Policies</h2>
+<h2 id="_cgcom_policies">11. Policies</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter pulls together various policy documents relating to the development of Apache Isis'.</p>
 </div>
 <div class="sect2">
-<h3 id="_cgcom_versioning-policy">10.1. Versioning Policy</h3>
+<h3 id="_cgcom_versioning-policy">11.1. Versioning Policy</h3>
 <div class="sect3">
-<h4 id="_semantic_versioning">10.1.1. Semantic Versioning</h4>
+<h4 id="_semantic_versioning">11.1.1. Semantic Versioning</h4>
 <div class="paragraph">
 <p>Starting from v1.0.0, Apache Isis has adopted <a href="http://semver.org">semantic versioning</a> for its versioning policy.</p>
 </div>
@@ -3523,7 +3651,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_version_ranges">10.1.2. Version ranges</h4>
+<h4 id="_version_ranges">11.1.2. Version ranges</h4>
 <div class="paragraph">
 <p>Version ranges may not be used.  If necessary, end-users can use <code>&lt;dependencyManagement</code> elements to have combine components built against different versions of core.</p>
 </div>
@@ -3536,7 +3664,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcom_policies_git-policy">10.2. Git Policy</h3>
+<h3 id="_cgcom_policies_git-policy">11.2. Git Policy</h3>
 <div class="paragraph">
 <p>These notes recommend how contributors should work with git. To understand these notes, the only real concepts that you need to grok are:</p>
 </div>
@@ -3573,7 +3701,7 @@ installed and the toolchains plugin is configured, as described in the
 <p>And, of course, there is loads of good advice on <a href="http://stackoverflow.com/questions/tagged/git">stackoverflow.com</a></p>
 </div>
 <div class="sect3">
-<h4 id="_workflow">10.2.1. Workflow</h4>
+<h4 id="_workflow">11.2.1. Workflow</h4>
 <div class="paragraph">
 <p>There are many ways of using Git, but the Apache Isis committers have adopted the following workflow:</p>
 </div>
@@ -3635,7 +3763,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_commit_message">10.2.2. Commit message</h4>
+<h4 id="_commit_message">11.2.2. Commit message</h4>
 <div class="paragraph">
 <p>The minimum we expect in a commit messages is:</p>
 </div>
@@ -3659,7 +3787,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_pmc-notes">11. Appendix: PMC</h2>
+<h2 id="_cgcom_pmc-notes">12. Appendix: PMC</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Every ASF project has a Project Management Committee, or PMC.  This committee is ultimately responsible for the long-term management of the framework.  More information about PMCs can be found <a href="http://www.apache.org/dev/pmc.html">here</a></p>
@@ -3671,7 +3799,7 @@ git push origin --delete ISIS-999</code></pre>
 <p>This page contains some general notes on maintenance activities required by PMC members.</p>
 </div>
 <div class="sect2">
-<h3 id="_accessing_code_people_apache_org_code">11.1. Accessing <code>people.apache.org</code></h3>
+<h3 id="_accessing_code_people_apache_org_code">12.1. Accessing <code>people.apache.org</code></h3>
 <div class="paragraph">
 <p>Must be accessed via ssh.</p>
 </div>
@@ -3688,7 +3816,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ldap_access_unix_groups">11.2. LDAP Access (UNIX groups)</h3>
+<h3 id="_ldap_access_unix_groups">12.2. LDAP Access (UNIX groups)</h3>
 <div class="paragraph">
 <p>Whenever we get a new committer, the ASF LDAP entries must be maintained to grant access to our repos and various other 'karma'.</p>
 </div>
@@ -3877,53 +4005,64 @@ modify_committee.pl gump --remove joebloggs</code></pre>
 <li><a href="#_deploy">7.3. Deploy</a></li>
 </ul>
 </li>
-<li><a href="#_cgcom_key-generation">8. Key Generation</a>
+<li><a href="#_cgcom_release-process-for-interim-releases">8. Interim Releases</a>
 <ul class="sectlevel2">
-<li><a href="#_install_and_configure_gpg">8.1. Install and Configure gpg</a></li>
-<li><a href="#_key_generation">8.2. Key Generation</a></li>
-<li><a href="#_subkey_generation">8.3. Subkey Generation</a></li>
-<li><a href="#_generate_a_revocation_certificate">8.4. Generate a Revocation Certificate</a></li>
-<li><a href="#_publish_key">8.5. Publish Key</a>
+<li><a href="#_prerequisites_4">8.1. Prerequisites</a></li>
+<li><a href="#_sanity_check_2">8.2. Sanity Check</a></li>
+<li><a href="#_release">8.3. Release</a>
 <ul class="sectlevel3">
-<li><a href="#_publish_to_a_public_key_server">8.5.1. Publish to a public key server</a></li>
-<li><a href="#_publish_to_your_apache_home_directory">8.5.2. Publish to your Apache home directory</a></li>
-<li><a href="#_publish_to_your_apache_html_home_directory">8.5.3. Publish to your Apache HTML home directory</a></li>
-<li><a href="#_foaf">8.5.4. FOAF</a></li>
-<li><a href="#_save_to_code_keys_code">8.5.5. Save to <code>KEYS</code></a></li>
-<li><a href="#_id_apache_org">8.5.6. id.apache.org</a></li>
+<li><a href="#_implementation_details">8.3.1. Implementation details</a></li>
 </ul>
 </li>
-<li><a href="#_attend_key_signing_party_apache_web_of_trust">8.6. Attend Key Signing Party (Apache web of trust)</a></li>
-<li><a href="#_update_maven_settings_file_code_m2_settings_xml_code">8.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</a></li>
 </ul>
 </li>
-<li><a href="#_cgcom_release-process-prereqs">9. Appendix: Release Prereqs</a>
+<li><a href="#_cgcom_key-generation">9. Key Generation</a>
 <ul class="sectlevel2">
-<li><a href="#_configure_toolchains_plugin">9.1. Configure toolchains plugin</a></li>
-<li><a href="#_public_private_key">9.2. Public/private key</a></li>
-<li><a href="#_maven_code_settings_xml_code">9.3. Maven <code>settings.xml</code></a></li>
-</ul>
-</li>
-<li><a href="#_cgcom_policies">10. Policies</a>
-<ul class="sectlevel2">
-<li><a href="#_cgcom_versioning-policy">10.1. Versioning Policy</a>
+<li><a href="#_install_and_configure_gpg">9.1. Install and Configure gpg</a></li>
+<li><a href="#_key_generation">9.2. Key Generation</a></li>
+<li><a href="#_subkey_generation">9.3. Subkey Generation</a></li>
+<li><a href="#_generate_a_revocation_certificate">9.4. Generate a Revocation Certificate</a></li>
+<li><a href="#_publish_key">9.5. Publish Key</a>
 <ul class="sectlevel3">
-<li><a href="#_semantic_versioning">10.1.1. Semantic Versioning</a></li>
-<li><a href="#_version_ranges">10.1.2. Version ranges</a></li>
+<li><a href="#_publish_to_a_public_key_server">9.5.1. Publish to a public key server</a></li>
+<li><a href="#_publish_to_your_apache_home_directory">9.5.2. Publish to your Apache home directory</a></li>
+<li><a href="#_publish_to_your_apache_html_home_directory">9.5.3. Publish to your Apache HTML home directory</a></li>
+<li><a href="#_foaf">9.5.4. FOAF</a></li>
+<li><a href="#_save_to_code_keys_code">9.5.5. Save to <code>KEYS</code></a></li>
+<li><a href="#_id_apache_org">9.5.6. id.apache.org</a></li>
 </ul>
 </li>
-<li><a href="#_cgcom_policies_git-policy">10.2. Git Policy</a>
-<ul class="sectlevel3">
-<li><a href="#_workflow">10.2.1. Workflow</a></li>
-<li><a href="#_commit_message">10.2.2. Commit message</a></li>
+<li><a href="#_attend_key_signing_party_apache_web_of_trust">9.6. Attend Key Signing Party (Apache web of trust)</a></li>
+<li><a href="#_update_maven_settings_file_code_m2_settings_xml_code">9.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#_cgcom_pmc-notes">11. Appendix: PMC</a>
+<li><a href="#_cgcom_release-process-prereqs">10. Appendix: Release Prereqs</a>
 <ul class="sectlevel2">
-<li><a href="#_accessing_code_people_apache_org_code">11.1. Accessing <code>people.apache.org</code></a></li>
-<li><a href="#_ldap_access_unix_groups">11.2. LDAP Access (UNIX groups)</a></li>
+<li><a href="#_configure_toolchains_plugin">10.1. Configure toolchains plugin</a></li>
+<li><a href="#_public_private_key">10.2. Public/private key</a></li>
+<li><a href="#_maven_code_settings_xml_code">10.3. Maven <code>settings.xml</code></a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_policies">11. Policies</a>
+<ul class="sectlevel2">
+<li><a href="#_cgcom_versioning-policy">11.1. Versioning Policy</a>
+<ul class="sectlevel3">
+<li><a href="#_semantic_versioning">11.1.1. Semantic Versioning</a></li>
+<li><a href="#_version_ranges">11.1.2. Version ranges</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_policies_git-policy">11.2. Git Policy</a>
+<ul class="sectlevel3">
+<li><a href="#_workflow">11.2.1. Workflow</a></li>
+<li><a href="#_commit_message">11.2.2. Commit message</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_cgcom_pmc-notes">12. Appendix: PMC</a>
+<ul class="sectlevel2">
+<li><a href="#_accessing_code_people_apache_org_code">12.1. Accessing <code>people.apache.org</code></a></li>
+<li><a href="#_ldap_access_unix_groups">12.2. LDAP Access (UNIX groups)</a></li>
 </ul>
 </li>
 </ul>

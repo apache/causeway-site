@@ -3195,7 +3195,130 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dg_asciidoc-templates">7. Appendix: Asciidoc Templates</h2>
+<h2 id="_dg_working-with-many-repos">7. Appendix: Working with Many Repos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Applications built with Apache Isis often (should) consist of multiple modules, each in separate git repositories.  For example, there are the various (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> that provide various cross-cutting concerns/technical services (security, mail-merge etc), as well the modules eg as provided by the (non-ASF) <a href="http://catalog.incode.org">Incode Catalog</a>, which provides generic business subdomains (communication channels, documents etc).</p>
+</div>
+<div class="paragraph">
+<p>In addition, your own application may well be structured as a number of distinct modules (probably with the entities in each module being mapped to a different schema), and using such techniques as the <a href="ugbtb.html#_ugbtb_decoupling_event-bus">event bus</a> and <a href="ugbtb.html#_ugbtb_decoupling_mixins">mixins</a> so that these modules are decoupled from each other.</p>
+</div>
+<div class="paragraph">
+<p>All of which is a preamble to say that you will likely have multiple directories on your local development computer, for each such git repository that you contribute to.</p>
+</div>
+<div class="paragraph">
+<p>In this appendix we provide some simple but useful bash scripts to help you manage each such.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">7.1. Prerequisites</h3>
+<div class="paragraph">
+<p>We recommend that you adopt a convention for your directories.  For example, open source repositories (such as the Isis Addons and Incode Catalog mentioned above) reside in <a href="https://github.com/">github.com</a>, while your own proprietary code might reside in some other service, eg <a href="https://bitbucket.org/">bitbucket</a>.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/users/home/me/
+    BITBUCKET/
+        mycompany/
+            myapp-moduleA
+            myapp-moduleB
+            myapp
+    GITHUB/
+        isisaddons/
+            isis-module-docx
+            isis-module-security
+        incodehq/
+            incode-module-commchannel
+            incode-module-classification</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_repos_txt_code">7.2. <code>_repos.txt</code></h3>
+<div class="paragraph">
+<p>Create a file <code>_repos.txt</code> that catalogues the repositories, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>#
+# our code
+#
+/users/home/me/BITBUCKET/mycompany/myapp-moduleA
+/users/home/me/BITBUCKET/mycompany/myapp-moduleB
+/users/home/me/BITBUCKET/mycompany/myapp
+#
+# open source modules
+#
+/users/home/me/GITHUB/isisaddons/isis-module-docx
+/users/home/me/GITHUB/isisaddons/isis-module-security
+/users/home/me/GITHUB/incodehq/incode-module-commchannel
+/users/home/me/GITHUB/incodehq/incode-module-classification</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bash_functions">7.3. Bash functions</h3>
+<div class="paragraph">
+<p>The <code>.bash_functions</code> file (downloadable from this <a href="https://gist.github.com/danhaywood/21b5b885433fd8bc440da3fab88c91cb">gist</a>) provides the following two functions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>repo</code><br></p>
+<div class="paragraph">
+<p>Switches (using <code>pushd</code>) to the specified directory (as listed in the <code>_repos.txt</code> file).</p>
+</div>
+</li>
+<li>
+<p><code>foreach</code><br></p>
+<div class="paragraph">
+<p>Runs the specified command for all (or matching) repositories (as listed in <code>_repos.txt</code> file).</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">repo doc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would switch to <code>/users/home/me/GITHUB/isisaddons/isis-module-docx</code>, the first module that matches the fragment.</p>
+</div>
+<div class="paragraph">
+<p>Meanwhile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach git status</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would perform a <code>git status</code> on every git repository, while</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons git fetch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would perform a <code>git fetch</code> but only to those repositories which match "isisaddons" (<code>-g</code> flag standing for <code>grep</code>).</p>
+</div>
+<div class="paragraph">
+<p>To load the functions into your profile (<code>.bashrc</code> or <code>.profile</code> or similar), use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">. ~/.bash_functions</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dg_asciidoc-templates">8. Appendix: Asciidoc Templates</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This appendix lists the (IntelliJ) live templates available for <a href="#_dg_asciidoc">writing documentation</a> using Asciidoc.  Instructions for installing the templates can be found <a href="#_dg_ide_intellij_live-templates">here</a>.</p>
@@ -3204,7 +3327,7 @@ git reset --hard &lt;i&gt;shaId&lt;/i&gt;      # move master branch shaId of com
 <p>In the examples below the text <code>xxx</code>, <code>yyy</code>, <code>zzz</code> are correspond to template variables (ie placeholders).</p>
 </div>
 <div class="sect2">
-<h3 id="_callouts">7.1. Callouts</h3>
+<h3 id="_callouts">8.1. Callouts</h3>
 <div class="paragraph">
 <p>The Asciidoctor terminology is an "admonition".</p>
 </div>
@@ -3310,7 +3433,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_todo_notes">7.2. TODO notes</h3>
+<h3 id="_todo_notes">8.2. TODO notes</h3>
 <div class="paragraph">
 <p>Add as a placeholder for documentation still to be written or which is work-in-progress.</p>
 </div>
@@ -3378,7 +3501,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_xref_to_guides">7.3. Xref to Guides</h3>
+<h3 id="_xref_to_guides">8.3. Xref to Guides</h3>
 <div class="paragraph">
 <p>Cross-references (links) to the various guides</p>
 </div>
@@ -3635,7 +3758,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_link_to_isis_addons">7.4. Link to Isis Addons</h3>
+<h3 id="_link_to_isis_addons">8.4. Link to Isis Addons</h3>
 <div class="paragraph">
 <p>Links to (non-ASF) <a href="http://isisaddons.org">Isis Addons</a></p>
 </div>
@@ -3744,7 +3867,7 @@ WIP - cool new feature
 </table>
 </div>
 <div class="sect2">
-<h3 id="_source_code">7.5. Source code</h3>
+<h3 id="_source_code">8.5. Source code</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -3894,7 +4017,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_images">7.6. Images</h3>
+<h3 id="_images">8.6. Images</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -3980,7 +4103,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_youtube_screencasts">7.7. YouTube (screencasts)</h3>
+<h3 id="_youtube_screencasts">8.7. YouTube (screencasts)</h3>
 <div class="paragraph">
 <p>Embedded youtube screencasts.  (Don&#8217;t use these in guides, as they cannot be rendered as PDF).</p>
 </div>
@@ -4042,7 +4165,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_tables">7.8. Tables</h3>
+<h3 id="_tables">8.8. Tables</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -4068,7 +4191,7 @@ xxx<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_misc">7.9. Misc.</h3>
+<h3 id="_misc">8.9. Misc.</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -4186,7 +4309,7 @@ xxx<br>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dg_project-lombok">8. Appendix: Project Lombok</h2>
+<h2 id="_dg_project-lombok">9. Appendix: Project Lombok</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://projectlombok.org/">Project Lombok</a> is an open source project to reduce the amount of boilerplate in
@@ -4228,7 +4351,7 @@ within your IDE (eg so that its compiler "knows" that there is, actually, a gett
 Lombok plugin appropriate to that IDE.  See the <a href="https://projectlombok.org/download.html">Lombok download page</a> for more information.</p>
 </div>
 <div class="sect2">
-<h3 id="_future_thoughts">8.1. Future thoughts</h3>
+<h3 id="_future_thoughts">9.1. Future thoughts</h3>
 <div class="paragraph">
 <p>In the future we might extend/fork Lombok so that it understands Isis' own annotations (ie <a href="rgant.html#_rgant-Property"><code>@Property</code></a> and <a href="rgant.html#_rgant-Collection"><code>@Collection</code></a>)
 rather than Lombok&#8217;s own <code>@Getter</code> and `@Setter.</p>
@@ -4240,7 +4363,7 @@ rather than Lombok&#8217;s own <code>@Getter</code> and `@Setter.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dg_agilej">9. Appendix: AgileJ</h2>
+<h2 id="_dg_agilej">10. Appendix: AgileJ</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -4480,25 +4603,32 @@ hide method lines</code></pre>
 <li><a href="#_if_you_ve_forgotten_to_prefix_your_commits_but_not_pushed">6.11. If you&#8217;ve forgotten to prefix your commits (but not pushed)</a></li>
 </ul>
 </li>
-<li><a href="#_dg_asciidoc-templates">7. Appendix: Asciidoc Templates</a>
+<li><a href="#_dg_working-with-many-repos">7. Appendix: Working with Many Repos</a>
 <ul class="sectlevel2">
-<li><a href="#_callouts">7.1. Callouts</a></li>
-<li><a href="#_todo_notes">7.2. TODO notes</a></li>
-<li><a href="#_xref_to_guides">7.3. Xref to Guides</a></li>
-<li><a href="#_link_to_isis_addons">7.4. Link to Isis Addons</a></li>
-<li><a href="#_source_code">7.5. Source code</a></li>
-<li><a href="#_images">7.6. Images</a></li>
-<li><a href="#_youtube_screencasts">7.7. YouTube (screencasts)</a></li>
-<li><a href="#_tables">7.8. Tables</a></li>
-<li><a href="#_misc">7.9. Misc.</a></li>
+<li><a href="#_prerequisites">7.1. Prerequisites</a></li>
+<li><a href="#__code_repos_txt_code">7.2. <code>_repos.txt</code></a></li>
+<li><a href="#_bash_functions">7.3. Bash functions</a></li>
 </ul>
 </li>
-<li><a href="#_dg_project-lombok">8. Appendix: Project Lombok</a>
+<li><a href="#_dg_asciidoc-templates">8. Appendix: Asciidoc Templates</a>
 <ul class="sectlevel2">
-<li><a href="#_future_thoughts">8.1. Future thoughts</a></li>
+<li><a href="#_callouts">8.1. Callouts</a></li>
+<li><a href="#_todo_notes">8.2. TODO notes</a></li>
+<li><a href="#_xref_to_guides">8.3. Xref to Guides</a></li>
+<li><a href="#_link_to_isis_addons">8.4. Link to Isis Addons</a></li>
+<li><a href="#_source_code">8.5. Source code</a></li>
+<li><a href="#_images">8.6. Images</a></li>
+<li><a href="#_youtube_screencasts">8.7. YouTube (screencasts)</a></li>
+<li><a href="#_tables">8.8. Tables</a></li>
+<li><a href="#_misc">8.9. Misc.</a></li>
 </ul>
 </li>
-<li><a href="#_dg_agilej">9. Appendix: AgileJ</a></li>
+<li><a href="#_dg_project-lombok">9. Appendix: Project Lombok</a>
+<ul class="sectlevel2">
+<li><a href="#_future_thoughts">9.1. Future thoughts</a></li>
+</ul>
+</li>
+<li><a href="#_dg_agilej">10. Appendix: AgileJ</a></li>
 </ul>
             </div>
         </div>

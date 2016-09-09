@@ -4312,6 +4312,7 @@ underlying database transaction.  Its API is:</p>
     <span class="predefined-type">UUID</span> getTransactionId();            <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="type">int</span> getSequence();                  <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="type">void</span> flush();                       <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="type">void</span> clearAbortCause();             <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre>
 </div>
 </div>
@@ -4330,6 +4331,41 @@ to distinguish such.</td>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>as per <code>TransactionService#flushTransaction()</code> described above.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If the cause has been rendered higher up in the stack, then clear the cause so that it won&#8217;t be picked up and
+rendered elsewhere.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>One place where <code>clearAboutCause()</code> may be useful is for application-level handling of SQL integrity exceptions, eg as
+described in <a href="https://issues.apache.org/jira/browse/ISIS-1476">ISIS-1476</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">try</span> {
+    <span class="comment">// do something...</span>
+} <span class="keyword">catch</span> (<span class="directive">final</span> JDODataStoreException e) {
+    <span class="keyword">if</span> (Iterables.filter(Throwables.getCausalChain(e),
+        SQLIntegrityConstraintViolationException.class) != <span class="predefined-constant">null</span>) {
+        <span class="comment">// ignore</span>
+        <span class="local-variable">this</span>.transactionService.currentTransaction().clearAbortCause();
+    } <span class="keyword">else</span> {
+        <span class="keyword">throw</span> e;
+    }
+}</code></pre>
+</div>
+</div>
+</td>
 </tr>
 </table>
 </div>
