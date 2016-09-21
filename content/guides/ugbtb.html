@@ -532,6 +532,9 @@ applications.</p>
 <p><a href="ugvro.html">Restful Objects viewer</a></p>
 </li>
 <li>
+<p><a href="ugvro.html">DataNucleus object store</a></p>
+</li>
+<li>
 <p><a href="ugsec.html">Security</a></p>
 </li>
 <li>
@@ -3253,158 +3256,13 @@ The passed object represents passes a context from the caller (eg the scheduler,
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_datanucleus">6. DataNucleus</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Apache Isis uses <a href="http://datanucleus.org">DataNucleus</a> to handle persistence of domain entities, using the JDO API.
-This chapter contains some guidance on working with DataNucleus in the context of Apache Isis applications.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>DataNucleus as a product also supports the JPA API; Apache Isis is likely to also support JPA in the future.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_ugbtb_datanucleus_overriding-jdo-annotations">6.1. Overriding JDO Annotations</h3>
-<div class="paragraph">
-<p>The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by reading both annotations on the class and also by searching for metadata in XML files. The metadata in the XML files takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.</p>
-</div>
-<div class="paragraph">
-<p>For example, as of 1.9.0 the various <a href="http://www.isisaddons.org">Isis addons</a> modules (not ASF) use schemas for each entity. For example, the <code>AuditEntry</code> entity in the <a href="http://github.com/isisaddons/isis-module-audit">audit module</a> is annotated as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
-        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAudit</span><span class="delimiter">&quot;</span></span>,
-        table=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> {
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will map the <code>AuditEntry</code> class to a table <code>&quot;IsisAddonsAudit&quot;.&quot;AuditEntry&quot;</code>; that is using a custom schema to own the object.</p>
-</div>
-<div class="paragraph">
-<p>Suppose though that for whatever reason we didn&#8217;t want to use a custom schema but would rather use the default. We can override the above annotation using a <code>package.jdo</code> file, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
-<span class="tag">&lt;jdo</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span>
-        <span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo_3_0.xsd</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">3.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;package</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.isisaddons.module.audit.dom</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AuditEntry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">schema</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">table</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IsisAddonsAuditEntry</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;/class&gt;</span>
-    <span class="tag">&lt;/package&gt;</span>
-<span class="tag">&lt;/jdo&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This file should be placed can be placed in <code>src/main/java/META-INF</code> within your application&#8217;s <code>dom</code> module.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You can use a mixin action on <a href="rgcms.html#_rgcms_classes_mixins_Persistable"><code>Persistable</code></a> mixin
-to download the JDO class metadata in XML form.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The same approach should work for any other JDO metadata, but some experimentation might be required.+</p>
-<div class="paragraph">
-<p>For example, in writing up the above example we found that writing <code>schema=&quot;&quot;</code> (in an attempt to say, "use the default schema for this table") actually caused the original annotation value to be used instead.</p>
-</div>
-</li>
-<li>
-<p>Forcing the schema to "PUBLIC" (as in the above example) works, but it isn&#8217;t ideal because the name "PUBLIC" is not vendor-neutral (it works for HSQLDB, but MS SQL Server uses "dbo" as its default).</p>
-</li>
-<li>
-<p>As of 1.9.0 Apache Isis will automatically (attempt) to create the owning schema for a given table if it does not exist. This behaviour can be customized, as described in the section on <a href="#_ugbtb_decoupling_db-schemas">using modules</a>.</p>
-</li>
-<li>
-<p>You may need to override the entire class metadata rather than individual elements; the mixin mentioned above can help here.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ugbtb_datanucleus_java8">6.2. Java8</h3>
-<div class="paragraph">
-<p>DataNucleus 4.x supports Java 7, but can also be used with Java 8, eg for streams support against collections managed
-by DataNucleus.</p>
-</div>
-<div class="paragraph">
-<p>Just include within <code>&lt;dependencies&gt;</code> of your <code>dom</code> module&#8217;s <code>pom.xml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
-    <span class="tag">&lt;groupId&gt;</span>org.datanucleus<span class="tag">&lt;/groupId&gt;</span>
-    <span class="tag">&lt;artifactId&gt;</span>datanucleus-java8<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>4.2.0-release<span class="tag">&lt;/version&gt;</span>t
-<span class="tag">&lt;/dependency&gt;</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The DataNucleus website includes a <a href="http://www.datanucleus.org/products/accessplatform/compatibility.html">page</a>
-listing version compatibility of these extensions vis-a-vis the core DataNucleus platform.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_ugbtb_other-techniques">7. Other Techniques</h2>
+<h2 id="_ugbtb_other-techniques">6. Other Techniques</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter pulls together a number of more advanced techniques that we&#8217;ve discovered and developed while building our own Isis applications.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_other-techniques_mapping-rdbms-views">7.1. Mapping RDBMS Views</h3>
+<h3 id="_ugbtb_other-techniques_mapping-rdbms-views">6.1. Mapping RDBMS Views</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3419,7 +3277,7 @@ TODO - as used in <a href="http://github.com/estatio/estatio">Estatio</a>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_other-techniques_transactions-and-errors">7.2. Transactions and Errors</h3>
+<h3 id="_ugbtb_other-techniques_transactions-and-errors">6.2. Transactions and Errors</h3>
 <div class="paragraph">
 <p>In Apache Isis, every interaction (action invocation or property edit) is automatically wrapped in a transaction,
 and any repository query automatically does a flush before hand.</p>
@@ -3459,7 +3317,7 @@ script which is going to perform some sort of bulk migration of data from an old
 <p>You get the idea.</p>
 </div>
 <div class="sect3">
-<h4 id="_raise_message_errors_to_users">7.2.1. Raise message/errors to users</h4>
+<h4 id="_raise_message_errors_to_users">6.2.1. Raise message/errors to users</h4>
 <div class="paragraph">
 <p>The framework provides the <a href="rgsvc.html#_rgsvc_api_MessageService"><code>MessageService</code></a> as a means to return an out-of-band
 message to the end-user.  In the <a href="ugvw.html">Wicket viewer</a> these are shown as "toast" pop-ups; the
@@ -3489,7 +3347,7 @@ message to the end-user.  In the <a href="ugvw.html">Wicket viewer</a> these are
 </div>
 </div>
 <div class="sect3">
-<h4 id="_aborting_transactions">7.2.2. Aborting transactions</h4>
+<h4 id="_aborting_transactions">6.2.2. Aborting transactions</h4>
 <div class="paragraph">
 <p>If you want to abort Apache Isis' transaction, this can be done by throwing an exception.  The exception message
 is displayed to the user on the error page (if <a href="ugvw.html">Wicket viewer</a>) or a 500 status error code (if the
@@ -3516,7 +3374,7 @@ exception inherits from <code>java.sql.SQLIntegrityConstraintViolationException<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_other-techniques_multi-tenancy">7.3. Multi-tenancy</h3>
+<h3 id="_ugbtb_other-techniques_multi-tenancy">6.3. Multi-tenancy</h3>
 <div class="paragraph">
 <p>Of the various Isis Addons, the <a href="https://github.com/isisaddons/isis-module-security">security module</a> has the most features. One significant feature is the ability to associate users and objects with a "tenancy".</p>
 </div>
@@ -3525,7 +3383,7 @@ exception inherits from <code>java.sql.SQLIntegrityConstraintViolationException<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_other-techniques_persisted-title">7.4. Persisted Title</h3>
+<h3 id="_ugbtb_other-techniques_persisted-title">6.4. Persisted Title</h3>
 <div class="paragraph">
 <p>Normally the title of an object is not persisted to the database, rather it is recomputed automatically from underlying properties.  On occasion though you might want the title to also be persisted; either to make things easier for the DBA, or for an integration scenario, or some other purpose.</p>
 </div>
@@ -3614,7 +3472,7 @@ exception inherits from <code>java.sql.SQLIntegrityConstraintViolationException<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_other-techniques_replacing-default-service-implementations">7.5. Overriding Default Service Implns</h3>
+<h3 id="_ugbtb_other-techniques_replacing-default-service-implementations">6.5. Overriding Default Service Implns</h3>
 <div class="paragraph">
 <p>The framework provides default implementations for many of the <a href="#rgsvc.adoc">domain services</a>.  This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p>
 </div>
@@ -3704,14 +3562,14 @@ exception inherits from <code>java.sql.SQLIntegrityConstraintViolationException<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_programming-model">8. Customizing the Prog Model</h2>
+<h2 id="_ugbtb_programming-model">7. Customizing the Prog Model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter explains the main APIs to extend or alter the programming conventions that Apache Isis understands to
 build up its metamodel.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_custom-validator">8.1. Custom validator</h3>
+<h3 id="_ugbtb_programming-model_custom-validator">7.1. Custom validator</h3>
 <div class="paragraph">
 <p>Apache Isis' programming model includes a validator component that detects and prevents (by failing fast) a number of situations where the domain model is logically inconsistent.</p>
 </div>
@@ -3750,7 +3608,7 @@ build up its metamodel.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_and_implementation">8.1.1. API and Implementation</h4>
+<h4 id="_api_and_implementation">7.1.1. API and Implementation</h4>
 <div class="paragraph">
 <p>There are several ways to go about implementing a validator.</p>
 </div>
@@ -3851,7 +3709,7 @@ build up its metamodel.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration">8.1.2. Configuration</h4>
+<h4 id="_configuration">7.1.2. Configuration</h4>
 <div class="paragraph">
 <p>Once you have implemented your validator, you must register it with the framework by defining the appropriate configuration property:</p>
 </div>
@@ -3863,7 +3721,7 @@ build up its metamodel.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_finetuning">8.2. Finetuning</h3>
+<h3 id="_ugbtb_programming-model_finetuning">7.2. Finetuning</h3>
 <div class="paragraph">
 <p>The core metamodel defines APIs and implementations for building the Apache Isis metamodel: a description of the set of entities, domain services and values that make up the domain model.</p>
 </div>
@@ -3898,7 +3756,7 @@ Pretty much all the other <code>FacetFactory</code>s are responsible for install
 <p>There are many many such <code>Facet</code>s, and are used to do such things get values from properties or collections, modify properties or collections, invoke action, hide or disable class members, provide UI hints for class members, and so on. In short, the <code>FacetFactory</code>s registered defines the Apache Isis programming conventions.</p>
 </div>
 <div class="sect3">
-<h4 id="_modifying_the_prog_model">8.2.1. Modifying the Prog. Model</h4>
+<h4 id="_modifying_the_prog_model">7.2.1. Modifying the Prog. Model</h4>
 <div class="paragraph">
 <p>The default implementation of <code>ProgrammingModel</code> is <a href="https://github.com/apache/isis/blob/master/core/metamodel/src/main/java/org/apache/isis/progmodels/dflt/ProgrammingModelFacetsJava5.java">ProgrammingModelFacetsJava5</a>, which registers a large number of <code>FacetFactory</code>s.</p>
 </div>
@@ -3964,7 +3822,7 @@ specify a completely new implementation of the (internal API) <code>ProgrammingM
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_programming-model_layout-metadata-reader">8.3. Layout Metadata Reader</h3>
+<h3 id="_ugbtb_programming-model_layout-metadata-reader">7.3. Layout Metadata Reader</h3>
 <div class="paragraph">
 <p>The metadata for domain objects is obtained both <a href="ugfun.html#_ugfun_object-layout_static">statically</a> and <a href="ugfun.html#_ugfun_object-layout_dynamic">dynamically</a>.</p>
 </div>
@@ -3993,7 +3851,7 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_and_implementation_2">8.3.1. API and Implementation</h4>
+<h4 id="_api_and_implementation_2">7.3.1. API and Implementation</h4>
 <div class="paragraph">
 <p>Any reader must implement Apache Isis' internal <code>LayoutMetadataReader</code> interface:</p>
 </div>
@@ -4079,7 +3937,7 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration_2">8.3.2. Configuration</h4>
+<h4 id="_configuration_2">7.3.2. Configuration</h4>
 <div class="paragraph">
 <p>Once you have implemented your validator, you must register it with the framework by defining the appropriate configuration property:</p>
 </div>
@@ -4103,13 +3961,13 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_deployment">9. Deployment</h2>
+<h2 id="_ugbtb_deployment">8. Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter provides guidance on some common deployment scenarios.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_cmd-line">9.1. Command Line (<code>WebServer</code>)</h3>
+<h3 id="_ugbtb_deployment_cmd-line">8.1. Command Line (<code>WebServer</code>)</h3>
 <div class="paragraph">
 <p>As well as deploying an Apache Isis application into a servlet container, it is also possible to invoke from the command line using the <code>org.apache.isis.WebServer</code> utility class.  This is especially useful while developing and testing, but may also suit some deployment scenarios (eg running as a standalone EXE within a Docker container, for example).  Internally the <code>WebServer</code> spins up a Jetty servlet container.</p>
 </div>
@@ -4294,18 +4152,18 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_tomcat">9.2. Deploying to Tomcat</h3>
+<h3 id="_ugbtb_deployment_tomcat">8.2. Deploying to Tomcat</h3>
 <div class="paragraph">
 <p>Some pointers when deploying to Tomcat (or any other servlet container).</p>
 </div>
 <div class="sect3">
-<h4 id="_externalized_configuration">9.2.1. Externalized Configuration</h4>
+<h4 id="_externalized_configuration">8.2.1. Externalized Configuration</h4>
 <div class="paragraph">
 <p>See the guidance <a href="#_ugbtb_deployment_externalized-configuration">below</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_jvm_args">9.2.2. JVM Args</h4>
+<h4 id="_jvm_args">8.2.2. JVM Args</h4>
 <div class="paragraph">
 <p>The <a href="rgsvc.html#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a> uses <a href="http://www.javassist.org">Javassist</a> to create on-the-fly classes acting as a proxy.  The cost of these proxies can be mitigated using:</p>
 </div>
@@ -4316,14 +4174,14 @@ alternative implementation of the <a href="rgsvc.html#_rgsvc_spi_GridLoaderServi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_a_jndi_datasource">9.2.3. Using a JNDI Datasource</h4>
+<h4 id="_using_a_jndi_datasource">8.2.3. Using a JNDI Datasource</h4>
 <div class="paragraph">
 <p>See the guidance in the <a href="rgcfg.html#_rgcfg_configuring-datanucleus_using-jndi-data-source">configuring datanucleus</a> section.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_externalized-configuration">9.3. Externalized Configuration</h3>
+<h3 id="_ugbtb_deployment_externalized-configuration">8.3. Externalized Configuration</h3>
 <div class="paragraph">
 <p>As described <a href="rgcfg.html#_rgcfg_configuration-files">here</a>, by default Apache Isis itself bootstraps from the
 <code>isis.properties</code> configuration file.  It will also read configuration from the (optional)
@@ -4378,7 +4236,7 @@ configuration should be read from an external location.</p>
 <p>Each of these frameworks has its own way of externalizing its configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Isis">9.3.1. Apache Isis' Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Isis">8.3.1. Apache Isis' Config</h4>
 <div class="paragraph">
 <p>To tell Apache Isis to load configuration from an external directory, specify the <code>isis.config.dir</code> context parameter.</p>
 </div>
@@ -4439,7 +4297,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Shiro">9.3.2. Shiro Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Shiro">8.3.2. Shiro Config</h4>
 <div class="paragraph">
 <p>If using Apache Isis' <a href="ugsec.html#_ugsec_configuring-isis-to-use-shiro">Shiro integration</a> for authentication and/or authorization, note that it reads from the <code>shiro.ini</code> configuration file. By default this also resides in <code>WEB-INF</code>.</p>
 </div>
@@ -4472,7 +4330,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ugbtb_deployment_externalized-configuration_Log4j">9.3.3. Log4j Config</h4>
+<h4 id="_ugbtb_deployment_externalized-configuration_Log4j">8.3.3. Log4j Config</h4>
 <div class="paragraph">
 <p>By default Apache Isis configures log4j to read the <code>logging.properties</code> file in the <code>WEB-INF</code> directory. This can be overridden by setting the <code>log4j.properties</code> system property to the URL of the log4j properties file.</p>
 </div>
@@ -4503,7 +4361,7 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_spring_config">9.3.4. Spring Config</h4>
+<h4 id="_spring_config">8.3.4. Spring Config</h4>
 <div class="paragraph">
 <p>Although Apache Isis does not use Spring, it&#8217;s possible that your app may use other components that do use Spring.  For example, the (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module uses ActiveMQ and Camel to support publishing; both of these leverage Spring.</p>
 </div>
@@ -4625,14 +4483,14 @@ configuration should be read from an external location.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_see_also">9.3.5. See also</h4>
+<h4 id="_see_also">8.3.5. See also</h4>
 <div class="paragraph">
 <p>See <a href="ugbtb.adoc#_ugbtb_deployment_jvm-flags">JVM args</a> for other JVM args and system properties that you might want to consider setting.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_docker">9.4. Docker</h3>
+<h3 id="_ugbtb_deployment_docker">8.4. Docker</h3>
 <div class="paragraph">
 <p>In addition to loading the regular configuration properties from <code>WEB-INF</code> directory (described
 <a href="rgcfg.html#_rgcfg_configuration-files">here</a>), Apache Isis will also load the <code>overrides.properties</code> file.</p>
@@ -4686,7 +4544,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_gae">9.5. Deploying to Google App Engine</h3>
+<h3 id="_ugbtb_deployment_gae">8.5. Deploying to Google App Engine</h3>
 <div class="paragraph">
 <p>The <a href="https://cloud.google.com/appengine/docs">Google App Engine</a> (GAE) provides a JDO API, meaning that you can deploy Apache Isis onto GAE using the JDO objectstore.</p>
 </div>
@@ -4694,7 +4552,7 @@ over the WAR file itself.</p>
 <p>However, GAE is not an RDBMS, and so there are some limitations that it imposes. This page gathers together various hints, tips and workarounds.</p>
 </div>
 <div class="sect3">
-<h4 id="_primary_keys_and_owned_unowned_relationships">9.5.1. Primary Keys and Owned/Unowned Relationships</h4>
+<h4 id="_primary_keys_and_owned_unowned_relationships">8.5.1. Primary Keys and Owned/Unowned Relationships</h4>
 <div class="paragraph">
 <p>All entities must have a <code>@PrimaryKey</code>. Within GAE, the type of this key matters.</p>
 </div>
@@ -4712,7 +4570,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_custom_types">9.5.2. Custom Types</h4>
+<h4 id="_custom_types">8.5.2. Custom Types</h4>
 <div class="paragraph">
 <p>Currently Apache Isis' <code>Blob</code> and <code>Clob</code> types and the JODA types (<code>LocalDate</code> et al) are <em>not</em> supported in GAE.</p>
 </div>
@@ -4742,7 +4600,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_neo4j">9.6. Neo4J</h3>
+<h3 id="_ugbtb_deployment_neo4j">8.6. Neo4J</h3>
 <div class="paragraph">
 <p>As of 1.8.0 Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' <a href="http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html">Neo4J Datastore</a> implementation.</p>
 </div>
@@ -4767,7 +4625,7 @@ over the WAR file itself.</p>
 <p>The steps below describe the configuration steps required to update an existing app.</p>
 </div>
 <div class="sect3">
-<h4 id="_connectionurl">9.6.1. ConnectionURL</h4>
+<h4 id="_connectionurl">8.6.1. ConnectionURL</h4>
 <div class="paragraph">
 <p>In <code>persistor.properties</code>, update the JDO <code>ConnectionURL</code> property, eg:</p>
 </div>
@@ -4781,7 +4639,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_pom_xml">9.6.2. Update pom.xml</h4>
+<h4 id="_update_pom_xml">8.6.2. Update pom.xml</h4>
 <div class="paragraph">
 <p>Add the following dependency to the <code>webapp</code> project&#8217;s <code>pom.xml</code>:</p>
 </div>
@@ -4811,7 +4669,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_try_it_out">9.6.3. Try it out!</h4>
+<h4 id="_try_it_out">8.6.3. Try it out!</h4>
 <div class="paragraph">
 <p>If you want to quickly try out neo4j for yourself:</p>
 </div>
@@ -4834,7 +4692,7 @@ over the WAR file itself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_deployment_jvm-flags">9.7. JVM Flags</h3>
+<h3 id="_ugbtb_deployment_jvm-flags">8.7. JVM Flags</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -4890,7 +4748,7 @@ Minimum heap size</p></td>
 <p>There are also a whole bunch of GC-related flags, that you might want to explore; see this detailed <a href="http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html">Hotspot JVM</a> documentation and also this <a href="http://blog.ragozin.info/2011/09/hotspot-jvm-garbage-collection-options.html">blog post</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_configuring_in_tomcat">9.7.1. Configuring in Tomcat</h4>
+<h4 id="_configuring_in_tomcat">8.7.1. Configuring in Tomcat</h4>
 <div class="paragraph">
 <p>If using Tomcat, update the <code>CATALINA_OPTS</code> variable.  (This variable is also updated if <a href="#_ugbtb_deployment_externalized-configuration_Log4j">configuring logging to run externally</a>).</p>
 </div>
@@ -4899,7 +4757,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugbtb_web-xml">10. <code>web.xml</code></h2>
+<h2 id="_ugbtb_web-xml">9. <code>web.xml</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Apache Isis provides two different viewers, the <a href="ugvw.html">Wicket viewer</a> and the <a href="ugvro.html">RestfulObjects viewer</a>.  You can deploy both of these concurrently, or deploy just the Wicket viewer, or deploy just the Restful Objects viewer.  The configuration in <code>web.xml</code> varies accordingly, both in terms of the servlet context listeners, filters and servlets.</p>
@@ -4965,12 +4823,12 @@ Minimum heap size</p></td>
 <p>The following sections detail these various listeners, filters and servlets in more detail.</p>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_servlet-context-listeners">10.1. Servlet Context Listeners</h3>
+<h3 id="_ugbtb_web-xml_servlet-context-listeners">9.1. Servlet Context Listeners</h3>
 <div class="paragraph">
 <p>Servlet context listeners are used to perform initialization on application startup.  Both Shiro (if configured as the security mechanism) and RestEasy (for the Restful Objects viewer) require their own context listener.  In addition, if the Wicket viewer is <em>not</em> being used, then additional Apache Isis-specific listener is required for bootstrapping of the Apache Isis framework itself.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_environmentloaderlistener_code_shiro">10.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</h4>
+<h4 id="__code_environmentloaderlistener_code_shiro">9.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</h4>
 <div class="paragraph">
 <p>Bootstrap listener to startup and shutdown the web application&#8217;s Shiro <code>WebEnvironment</code> at startup and shutdown respectively.</p>
 </div>
@@ -4986,7 +4844,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isiswebappbootstrapper_code">10.1.2. <code>IsisWebAppBootstrapper</code></h4>
+<h4 id="__code_isiswebappbootstrapper_code">9.1.2. <code>IsisWebAppBootstrapper</code></h4>
 <div class="paragraph">
 <p>The <code>IsisWebAppBootstrapper</code> servlet context listener bootstraps the shared (global) metadata for the Apache Isis framework.  This listener is not required (indeed must not be configured) if the Wicket viewer is in use.</p>
 </div>
@@ -5017,7 +4875,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resteasybootstrap_code_resteasy">10.1.3. <code>ResteasyBootstrap</code> (RestEasy)</h4>
+<h4 id="__code_resteasybootstrap_code_resteasy">9.1.3. <code>ResteasyBootstrap</code> (RestEasy)</h4>
 <div class="paragraph">
 <p>The <code>ResteasyBootstrap</code> servlet context listener initializes the RestEasy runtime, specifying that classes (namely, those specified in Isis' <code>RestfulObjectsApplication</code>) to be exposed as REST resources.  It is required if the Restful Objects viewer is to be deployed.</p>
 </div>
@@ -5061,12 +4919,12 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_servlets">10.2. Servlets</h3>
+<h3 id="_ugbtb_web-xml_servlets">9.2. Servlets</h3>
 <div class="paragraph">
 <p>Servlets process HTTP requests and return corresponding responses.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_httpservletdispatcher_code_resteasy">10.2.1. <code>HttpServletDispatcher</code> (RestEasy)</h4>
+<h4 id="__code_httpservletdispatcher_code_resteasy">9.2.1. <code>HttpServletDispatcher</code> (RestEasy)</h4>
 <div class="paragraph">
 <p>This servlet is provided by the RestEasy framework, and does the dispatching to the resources defined by Apache Isis' <code>RestfulObjectsApplication</code> (see above).</p>
 </div>
@@ -5094,7 +4952,7 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resourceservlet_code">10.2.2. <code>ResourceServlet</code></h4>
+<h4 id="__code_resourceservlet_code">9.2.2. <code>ResourceServlet</code></h4>
 <div class="paragraph">
 <p>The <code>ResourceServlet</code> loads and services static content either from the filesystem or from the classpath, each with an appropriate mime type.</p>
 </div>
@@ -5158,13 +5016,13 @@ Minimum heap size</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_filters">10.3. Filters</h3>
+<h3 id="_ugbtb_web-xml_filters">9.3. Filters</h3>
 <div class="paragraph">
 <p>The order in which filters appear in <code>web.xml</code> matters: first to last they define a pipeline.  This is shown in the
 above diagrams, and the subsections also list the in the same order that they should appear in your <code>web.xml</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="__code_shirofilter_code_shiro">10.3.1. <code>ShiroFilter</code> (Shiro)</h4>
+<h4 id="__code_shirofilter_code_shiro">9.3.1. <code>ShiroFilter</code> (Shiro)</h4>
 <div class="paragraph">
 <p>Shiro filter that sets up a Shiro security manager for the request, obtained from the Shiro <code>WebEnvironment</code> set up
 by the Shiro <code>EnvironmentLoaderListener</code> (discussed above).</p>
@@ -5193,7 +5051,7 @@ by the Shiro <code>EnvironmentLoaderListener</code> (discussed above).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isislogonexceptionfilter_code">10.3.2. <code>IsisLogOnExceptionFilter</code></h4>
+<h4 id="__code_isislogonexceptionfilter_code">9.3.2. <code>IsisLogOnExceptionFilter</code></h4>
 <div class="paragraph">
 <p>The <code>IsisLogOnExceptionFilter</code> filter simply logs the URL of any request that causes an exception to be thrown, then
 re-propagates the exception. The use case is simply to ensure that all exceptions are logged (against the
@@ -5227,7 +5085,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_resourcecachingfilter_code">10.3.3. <code>ResourceCachingFilter</code></h4>
+<h4 id="__code_resourcecachingfilter_code">9.3.3. <code>ResourceCachingFilter</code></h4>
 <div class="paragraph">
 <p>The <code>ResourceCachingFilter</code> adds HTTP cache headers to specified resources, based on their pattern.</p>
 </div>
@@ -5299,7 +5157,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_wicketfilter_code">10.3.4. <code>WicketFilter</code></h4>
+<h4 id="__code_wicketfilter_code">9.3.4. <code>WicketFilter</code></h4>
 <div class="paragraph">
 <p>The <code>WicketFilter</code> is responsible for initiating the handling of Wicket requests.</p>
 </div>
@@ -5358,7 +5216,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isissessionfilter_code">10.3.5. <code>IsisSessionFilter</code></h4>
+<h4 id="__code_isissessionfilter_code">9.3.5. <code>IsisSessionFilter</code></h4>
 <div class="paragraph">
 <p>The <code>IsisSessionFilter</code> is responsible for the (persistence) session management; in effect a wrapper around DataNucleus' <code>PersistenceManager</code> object.  It is only required for the Restful Objects viewer.</p>
 </div>
@@ -5456,7 +5314,7 @@ re-propagates the exception. The use case is simply to ensure that all exception
 </div>
 </div>
 <div class="sect3">
-<h4 id="__code_isistransactionfilterforrestfulobjects_code">10.3.6. <code>IsisTransactionFilterForRestfulObjects</code></h4>
+<h4 id="__code_isistransactionfilterforrestfulobjects_code">9.3.6. <code>IsisTransactionFilterForRestfulObjects</code></h4>
 <div class="paragraph">
 <p>The <code>IsisTransactionFilterForRestfulObjects</code> filter simply ensures that a transaction is in progress for all
 calls routed to the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
@@ -5486,7 +5344,7 @@ calls routed to the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugbtb_web-xml_context-parameters">10.4. Configuration Files</h3>
+<h3 id="_ugbtb_web-xml_context-parameters">9.4. Configuration Files</h3>
 <div class="paragraph">
 <p>However Apache Isis is bootstrapped (using the <code>IsisWicketApplication</code> or using <code>IsisWebAppBootstrapper</code>), it will
 read a number of configuration files, such as <code>isis.properties</code>.</p>
@@ -5650,131 +5508,125 @@ the default ones of <code>isis.properties</code> et al):</p>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_datanucleus">6. DataNucleus</a>
+<li><a href="#_ugbtb_other-techniques">6. Other Techniques</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_datanucleus_overriding-jdo-annotations">6.1. Overriding JDO Annotations</a></li>
-<li><a href="#_ugbtb_datanucleus_java8">6.2. Java8</a></li>
-</ul>
-</li>
-<li><a href="#_ugbtb_other-techniques">7. Other Techniques</a>
-<ul class="sectlevel2">
-<li><a href="#_ugbtb_other-techniques_mapping-rdbms-views">7.1. Mapping RDBMS Views</a></li>
-<li><a href="#_ugbtb_other-techniques_transactions-and-errors">7.2. Transactions and Errors</a>
+<li><a href="#_ugbtb_other-techniques_mapping-rdbms-views">6.1. Mapping RDBMS Views</a></li>
+<li><a href="#_ugbtb_other-techniques_transactions-and-errors">6.2. Transactions and Errors</a>
 <ul class="sectlevel3">
-<li><a href="#_raise_message_errors_to_users">7.2.1. Raise message/errors to users</a></li>
-<li><a href="#_aborting_transactions">7.2.2. Aborting transactions</a></li>
+<li><a href="#_raise_message_errors_to_users">6.2.1. Raise message/errors to users</a></li>
+<li><a href="#_aborting_transactions">6.2.2. Aborting transactions</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_other-techniques_multi-tenancy">7.3. Multi-tenancy</a></li>
-<li><a href="#_ugbtb_other-techniques_persisted-title">7.4. Persisted Title</a></li>
-<li><a href="#_ugbtb_other-techniques_replacing-default-service-implementations">7.5. Overriding Default Service Implns</a></li>
+<li><a href="#_ugbtb_other-techniques_multi-tenancy">6.3. Multi-tenancy</a></li>
+<li><a href="#_ugbtb_other-techniques_persisted-title">6.4. Persisted Title</a></li>
+<li><a href="#_ugbtb_other-techniques_replacing-default-service-implementations">6.5. Overriding Default Service Implns</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_programming-model">8. Customizing the Prog Model</a>
+<li><a href="#_ugbtb_programming-model">7. Customizing the Prog Model</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_programming-model_custom-validator">8.1. Custom validator</a>
+<li><a href="#_ugbtb_programming-model_custom-validator">7.1. Custom validator</a>
 <ul class="sectlevel3">
-<li><a href="#_api_and_implementation">8.1.1. API and Implementation</a>
+<li><a href="#_api_and_implementation">7.1.1. API and Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#__code_metamodelvalidator_code"><code>MetaModelValidator</code></a></li>
 <li><a href="#__code_visitor_code"><code>Visitor</code></a></li>
 <li><a href="#__code_summarizingvisitor_code"><code>SummarizingVisitor</code></a></li>
 </ul>
 </li>
-<li><a href="#_configuration">8.1.2. Configuration</a></li>
+<li><a href="#_configuration">7.1.2. Configuration</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_programming-model_finetuning">8.2. Finetuning</a>
+<li><a href="#_ugbtb_programming-model_finetuning">7.2. Finetuning</a>
 <ul class="sectlevel3">
-<li><a href="#_modifying_the_prog_model">8.2.1. Modifying the Prog. Model</a>
+<li><a href="#_modifying_the_prog_model">7.2.1. Modifying the Prog. Model</a>
 <ul class="sectlevel4">
 <li><a href="#_including_or_excluding_facets">Including or excluding facets</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_programming-model_layout-metadata-reader">8.3. Layout Metadata Reader</a>
+<li><a href="#_ugbtb_programming-model_layout-metadata-reader">7.3. Layout Metadata Reader</a>
 <ul class="sectlevel3">
-<li><a href="#_api_and_implementation_2">8.3.1. API and Implementation</a>
+<li><a href="#_api_and_implementation_2">7.3.1. API and Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#_extended_api">Extended API</a></li>
 </ul>
 </li>
-<li><a href="#_configuration_2">8.3.2. Configuration</a></li>
+<li><a href="#_configuration_2">7.3.2. Configuration</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment">9. Deployment</a>
+<li><a href="#_ugbtb_deployment">8. Deployment</a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_deployment_cmd-line">9.1. Command Line (<code>WebServer</code>)</a></li>
-<li><a href="#_ugbtb_deployment_tomcat">9.2. Deploying to Tomcat</a>
+<li><a href="#_ugbtb_deployment_cmd-line">8.1. Command Line (<code>WebServer</code>)</a></li>
+<li><a href="#_ugbtb_deployment_tomcat">8.2. Deploying to Tomcat</a>
 <ul class="sectlevel3">
-<li><a href="#_externalized_configuration">9.2.1. Externalized Configuration</a></li>
-<li><a href="#_jvm_args">9.2.2. JVM Args</a></li>
-<li><a href="#_using_a_jndi_datasource">9.2.3. Using a JNDI Datasource</a></li>
+<li><a href="#_externalized_configuration">8.2.1. Externalized Configuration</a></li>
+<li><a href="#_jvm_args">8.2.2. JVM Args</a></li>
+<li><a href="#_using_a_jndi_datasource">8.2.3. Using a JNDI Datasource</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_externalized-configuration">9.3. Externalized Configuration</a>
+<li><a href="#_ugbtb_deployment_externalized-configuration">8.3. Externalized Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#_ugbtb_deployment_externalized-configuration_Isis">9.3.1. Apache Isis' Config</a></li>
-<li><a href="#_ugbtb_deployment_externalized-configuration_Shiro">9.3.2. Shiro Config</a></li>
-<li><a href="#_ugbtb_deployment_externalized-configuration_Log4j">9.3.3. Log4j Config</a></li>
-<li><a href="#_spring_config">9.3.4. Spring Config</a>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Isis">8.3.1. Apache Isis' Config</a></li>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Shiro">8.3.2. Shiro Config</a></li>
+<li><a href="#_ugbtb_deployment_externalized-configuration_Log4j">8.3.3. Log4j Config</a></li>
+<li><a href="#_spring_config">8.3.4. Spring Config</a>
 <ul class="sectlevel4">
 <li><a href="#_an_alternative_approach">An alternative approach</a></li>
 </ul>
 </li>
-<li><a href="#_see_also">9.3.5. See also</a></li>
+<li><a href="#_see_also">8.3.5. See also</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_docker">9.4. Docker</a></li>
-<li><a href="#_ugbtb_deployment_gae">9.5. Deploying to Google App Engine</a>
+<li><a href="#_ugbtb_deployment_docker">8.4. Docker</a></li>
+<li><a href="#_ugbtb_deployment_gae">8.5. Deploying to Google App Engine</a>
 <ul class="sectlevel3">
-<li><a href="#_primary_keys_and_owned_unowned_relationships">9.5.1. Primary Keys and Owned/Unowned Relationships</a></li>
-<li><a href="#_custom_types">9.5.2. Custom Types</a></li>
+<li><a href="#_primary_keys_and_owned_unowned_relationships">8.5.1. Primary Keys and Owned/Unowned Relationships</a></li>
+<li><a href="#_custom_types">8.5.2. Custom Types</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_neo4j">9.6. Neo4J</a>
+<li><a href="#_ugbtb_deployment_neo4j">8.6. Neo4J</a>
 <ul class="sectlevel3">
-<li><a href="#_connectionurl">9.6.1. ConnectionURL</a></li>
-<li><a href="#_update_pom_xml">9.6.2. Update pom.xml</a></li>
-<li><a href="#_try_it_out">9.6.3. Try it out!</a></li>
+<li><a href="#_connectionurl">8.6.1. ConnectionURL</a></li>
+<li><a href="#_update_pom_xml">8.6.2. Update pom.xml</a></li>
+<li><a href="#_try_it_out">8.6.3. Try it out!</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_jvm-flags">9.7. JVM Flags</a>
+<li><a href="#_ugbtb_deployment_jvm-flags">8.7. JVM Flags</a>
 <ul class="sectlevel3">
-<li><a href="#_configuring_in_tomcat">9.7.1. Configuring in Tomcat</a></li>
+<li><a href="#_configuring_in_tomcat">8.7.1. Configuring in Tomcat</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml">10. <code>web.xml</code></a>
+<li><a href="#_ugbtb_web-xml">9. <code>web.xml</code></a>
 <ul class="sectlevel2">
-<li><a href="#_ugbtb_web-xml_servlet-context-listeners">10.1. Servlet Context Listeners</a>
+<li><a href="#_ugbtb_web-xml_servlet-context-listeners">9.1. Servlet Context Listeners</a>
 <ul class="sectlevel3">
-<li><a href="#__code_environmentloaderlistener_code_shiro">10.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</a></li>
-<li><a href="#__code_isiswebappbootstrapper_code">10.1.2. <code>IsisWebAppBootstrapper</code></a></li>
-<li><a href="#__code_resteasybootstrap_code_resteasy">10.1.3. <code>ResteasyBootstrap</code> (RestEasy)</a></li>
+<li><a href="#__code_environmentloaderlistener_code_shiro">9.1.1. <code>EnvironmentLoaderListener</code> (Shiro)</a></li>
+<li><a href="#__code_isiswebappbootstrapper_code">9.1.2. <code>IsisWebAppBootstrapper</code></a></li>
+<li><a href="#__code_resteasybootstrap_code_resteasy">9.1.3. <code>ResteasyBootstrap</code> (RestEasy)</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_servlets">10.2. Servlets</a>
+<li><a href="#_ugbtb_web-xml_servlets">9.2. Servlets</a>
 <ul class="sectlevel3">
-<li><a href="#__code_httpservletdispatcher_code_resteasy">10.2.1. <code>HttpServletDispatcher</code> (RestEasy)</a></li>
-<li><a href="#__code_resourceservlet_code">10.2.2. <code>ResourceServlet</code></a></li>
+<li><a href="#__code_httpservletdispatcher_code_resteasy">9.2.1. <code>HttpServletDispatcher</code> (RestEasy)</a></li>
+<li><a href="#__code_resourceservlet_code">9.2.2. <code>ResourceServlet</code></a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_filters">10.3. Filters</a>
+<li><a href="#_ugbtb_web-xml_filters">9.3. Filters</a>
 <ul class="sectlevel3">
-<li><a href="#__code_shirofilter_code_shiro">10.3.1. <code>ShiroFilter</code> (Shiro)</a></li>
-<li><a href="#__code_isislogonexceptionfilter_code">10.3.2. <code>IsisLogOnExceptionFilter</code></a></li>
-<li><a href="#__code_resourcecachingfilter_code">10.3.3. <code>ResourceCachingFilter</code></a></li>
-<li><a href="#__code_wicketfilter_code">10.3.4. <code>WicketFilter</code></a></li>
-<li><a href="#__code_isissessionfilter_code">10.3.5. <code>IsisSessionFilter</code></a></li>
-<li><a href="#__code_isistransactionfilterforrestfulobjects_code">10.3.6. <code>IsisTransactionFilterForRestfulObjects</code></a></li>
+<li><a href="#__code_shirofilter_code_shiro">9.3.1. <code>ShiroFilter</code> (Shiro)</a></li>
+<li><a href="#__code_isislogonexceptionfilter_code">9.3.2. <code>IsisLogOnExceptionFilter</code></a></li>
+<li><a href="#__code_resourcecachingfilter_code">9.3.3. <code>ResourceCachingFilter</code></a></li>
+<li><a href="#__code_wicketfilter_code">9.3.4. <code>WicketFilter</code></a></li>
+<li><a href="#__code_isissessionfilter_code">9.3.5. <code>IsisSessionFilter</code></a></li>
+<li><a href="#__code_isistransactionfilterforrestfulobjects_code">9.3.6. <code>IsisTransactionFilterForRestfulObjects</code></a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_web-xml_context-parameters">10.4. Configuration Files</a></li>
+<li><a href="#_ugbtb_web-xml_context-parameters">9.4. Configuration Files</a></li>
 </ul>
 </li>
 </ul>
