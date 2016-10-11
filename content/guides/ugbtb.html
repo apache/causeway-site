@@ -4492,6 +4492,31 @@ configuration should be read from an external location.</p>
 <div class="sect2">
 <h3 id="_ugbtb_deployment_docker">8.4. Docker</h3>
 <div class="paragraph">
+<p>When running the application within a Docker container, the problem that must be solved is to override the
+configuration properties baked into the war file, eg to point to the app to a different JDBC URL.</p>
+</div>
+<div class="paragraph">
+<p>There are several options.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All the options here rely on starting the Docker container with a set of arguments, some of which would very likely
+be passwords for database connections etc.  As such these techniques are only suitable where the security of the
+Docker host can be assured.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_using_an_code_overrides_properties_code_file">8.4.1. Using an <code>overrides.properties</code> file</h4>
+<div class="paragraph">
 <p>In addition to loading the regular configuration properties from <code>WEB-INF</code> directory (described
 <a href="rgcfg.html#_rgcfg_configuration-files">here</a>), Apache Isis will also load the <code>overrides.properties</code> file.</p>
 </div>
@@ -4506,7 +4531,7 @@ created dynamically as part of the Docker <code>ENTRYPOINT</code> script, eg as 
 <a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile best practices</a>.</p>
 </div>
 <div class="paragraph">
-<p>This, Docker can be supported relatively trivially:</p>
+<p>Thus, Docker can be supported as follows:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4541,6 +4566,54 @@ over the WAR file itself.</p>
 <p>use <code>ENTRYPOINT</code> (and probably also <code>CMD</code>) to invoke above script.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_system_properties">8.4.2. Using system properties</h4>
+<div class="paragraph">
+<p>(As of <code>1.13.1-SNAPSHOT</code>), the servlet context initializer will search for any system properties called <code>isis.xxx</code>
+ and if present will use them as overrides.</p>
+</div>
+<div class="paragraph">
+<p>Thus, an alternative option for a Docker image is to bootstrap the servlet container (Tomcat, Jetty) with appropriate
+system properties set up.  For example, with Tomcat this can be done by writing into the <code>conf/catalina.properties</code> file
+(see for example <a href="http://stackoverflow.com/a/16566920">this stackoverflow</a> post).</p>
+</div>
+<div class="paragraph">
+<p>The Docker&#8217;s <code>ENTRYPOINT</code> therefore just needs to parse the Docker container&#8217;s own command line arguments and use to
+create this file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_the_code_isis_opt_code_environment_variable">8.4.3. Using the <code>ISIS_OPT</code> environment variable</h4>
+<div class="paragraph">
+<p>(As of <code>1.13.1-SNAPSHOT</code>), the servlet context initializer will search for an environment variable called <code>$ISIS_OPTS</code>
+ and if present will parse the content as a set of key/value pairs.  Each key/value pair is separated by "||".</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export ISIS_OPTS=&quot;isis.appManifest=domainapp.app.DomainAppAppManifestWithFixtures||isis.objects.editing=false&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be used to run with a different app manifest, and also to disable editing of properties.</p>
+</div>
+<div class="paragraph">
+<p>To use a different separator, set the (optional) <code>$ISIS_OPTS_SEPARATOR</code> variable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export ISIS_OPTS_SEPARATOR=&quot;;&quot;
+export ISIS_OPTS=&quot;isis.appManifest=domainapp.app.DomainAppAppManifestWithFixtures;isis.objects.editing=false&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Docker&#8217;s <code>ENTRYPOINT</code> therefore just needs to parse the Docker container&#8217;s own command line arguments and use to
+set this environment variable.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5580,7 +5653,13 @@ the default ones of <code>isis.properties</code> et al):</p>
 <li><a href="#_see_also">8.3.5. See also</a></li>
 </ul>
 </li>
-<li><a href="#_ugbtb_deployment_docker">8.4. Docker</a></li>
+<li><a href="#_ugbtb_deployment_docker">8.4. Docker</a>
+<ul class="sectlevel3">
+<li><a href="#_using_an_code_overrides_properties_code_file">8.4.1. Using an <code>overrides.properties</code> file</a></li>
+<li><a href="#_using_system_properties">8.4.2. Using system properties</a></li>
+<li><a href="#_using_the_code_isis_opt_code_environment_variable">8.4.3. Using the <code>ISIS_OPT</code> environment variable</a></li>
+</ul>
+</li>
 <li><a href="#_ugbtb_deployment_gae">8.5. Deploying to Google App Engine</a>
 <ul class="sectlevel3">
 <li><a href="#_primary_keys_and_owned_unowned_relationships">8.5.1. Primary Keys and Owned/Unowned Relationships</a></li>
