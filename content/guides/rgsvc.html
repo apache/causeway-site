@@ -8556,9 +8556,9 @@ services.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgsvc_api_MetaModelService">8.3. <code>MetaModelService</code></h3>
+<h3 id="_rgsvc_api_MetaModelService">8.3. <code>MetaModelService3</code></h3>
 <div class="paragraph">
-<p>The <code>MetaModelService2</code> service provides access to a number of aspects of Apache Isis' internal metamodel.</p>
+<p>The <code>MetaModelService3</code> service provides access to a number of aspects of Apache Isis' internal metamodel.</p>
 </div>
 <div class="sect3">
 <h4 id="_api_6">8.3.1. API</h4>
@@ -8568,17 +8568,23 @@ services.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService2</span> {
-    <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="directive">final</span> <span class="predefined-type">String</span> objectType);   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="predefined-type">String</span> toObjectType(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);     <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> rebuild(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);            <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="predefined-type">List</span>&lt;DomainMember&gt; <span class="keyword">export</span>();                        <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="predefined-type">String</span> objectType);   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="predefined-type">String</span> toObjectType(<span class="predefined-type">Class</span>&lt;?&gt; domainType);     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> rebuild(<span class="predefined-type">Class</span>&lt;?&gt; domainType);            <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="predefined-type">List</span>&lt;DomainMember&gt; <span class="keyword">export</span>();                  <i class="conum" data-value="4"></i><b>(4)</b>
 
-    <span class="type">enum</span> Sort {                                         <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="type">enum</span> Sort {                                   <i class="conum" data-value="5"></i><b>(5)</b>
         VIEW_MODEL, JDO_ENTITY, DOMAIN_SERVICE,
-        MIXIN, VALUE, COLLECTION;
+        MIXIN, VALUE, COLLECTION, UNKNOWN;
     }
-    Sort sortOf(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; domainType);
-    Sort sortOf(<span class="directive">final</span> Bookmark bookmark);
+    <span class="type">enum</span> Mode {
+        STRICT,
+        RELAXED
+    }
+    Sort sortOf(<span class="predefined-type">Class</span>&lt;?&gt; domainType);             <i class="conum" data-value="6"></i><b>(6)</b>
+    Sort sortOf(Bookmark bookmark);
+    Sort sortOf(<span class="predefined-type">Class</span>&lt;?&gt; domainType, Mode mode);
+    Sort sortOf(Bookmark bookmark, Mode mode);
 }</code></pre>
 </div>
 </div>
@@ -8603,6 +8609,10 @@ services.</p>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
 <td>what sort of object a domain type is (or bookmark) represents</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>whether to throw an exception or return <code>Sort.UNKNOWN</code> if the object type is not recognized.  (The overloads with no <code>Mode</code> parameter default to strict mode).</td>
 </tr>
 </table>
 </div>
@@ -11993,7 +12003,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_api_LayoutService_related-domain-services">8.2.3. Related Domain Services</a></li>
 </ul>
 </li>
-<li><a href="#_rgsvc_api_MetaModelService">8.3. <code>MetaModelService</code></a>
+<li><a href="#_rgsvc_api_MetaModelService">8.3. <code>MetaModelService3</code></a>
 <ul class="sectlevel3">
 <li><a href="#_api_6">8.3.1. API</a></li>
 <li><a href="#_implementation_24">8.3.2. Implementation</a></li>
