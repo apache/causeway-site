@@ -1871,8 +1871,14 @@ property:</p>
 <h2 id="_ugvw_layout">5. Layout</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The wicket viewer has full support for the various methods of specifying the <a href="ugfun.html#_ugfun_object-layout">layout of objects</a>, either statically or dynamically.</p>
+<p>The layout of domain objects can be controlled either through annotations, or through the supplementary <code>layout.xml</code> file.
+Of these, the <code>layout.xml</code> file is superior; it offers more flexibility, and can be reloaded at runtime, thereby reducing the feedback loop.</p>
 </div>
+<div class="paragraph">
+<p>In addition, the layout can be fine-tuned using the <a href="rgsvc.html#_rgsvc_spi_TableColumnOrderService"><code>TableColumnOrderService</code></a> optional SPI service (<code>1.14.0-SNAPSHOT</code>).</p>
+</div>
+<div class="sect2">
+<h3 id="__code_layout_xml_code">5.1. <code>layout.xml</code></h3>
 <div class="paragraph">
 <p>For more information, see:</p>
 </div>
@@ -1891,6 +1897,64 @@ property:</p>
 <p><a href="rgcms.html#_rgcms_classes_layout">grid layout classes</a>, defined in the Apache Isis applib</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reordering_columns_code_1_14_0_snapshot_code">5.2. Reordering columns (<code>1.14.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The optional <a href="rgsvc.html#_rgsvc_spi_TableColumnOrderService"><code>TableColumnOrderService</code></a> SPI service can be used to reorder columns in a table, either for a parented collection (owned by parent domain object) or a standalone collection (returned from an action invocation).</p>
+</div>
+<div class="paragraph">
+<p>For example, suppose there is a <code>Customer</code> and an <code>Order</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Customer "1" *--&gt; "many" Order : orders
+
+class Order {
+    int num
+    Date placedOn
+    Date shippedOn
+    State state
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The order of these properties of <code>Order</code>, when rendered in the context of its owning <code>Customer</code>, can be controlled using this implementation of <code>TableColumnOrderService</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature = NatureOfService.DOMAIN,
+    menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span>                               <i class="conum" data-value="1"></i><b>(1)</b>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">TableColumnOrderServiceForCustomerOrders</span>
+                 <span class="directive">implements</span> TableColumnOrderService {
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; orderParented(
+            <span class="directive">final</span> <span class="predefined-type">Object</span> parent,
+            <span class="directive">final</span> <span class="predefined-type">String</span> collectionId,
+            <span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; collectionType,
+            <span class="directive">final</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds) {
+        <span class="keyword">return</span> parent <span class="keyword">instanceof</span> Customer &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">orders</span><span class="delimiter">&quot;</span></span>.equals(collectionId)
+             ? <span class="predefined-type">Arrays</span>.asList(<span class="string"><span class="delimiter">&quot;</span><span class="content">num</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">placedOn</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">shippedOn</span><span class="delimiter">&quot;</span></span>)
+             : <span class="predefined-constant">null</span>;
+    }
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; orderStandalone(
+            <span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; collectionType,
+            <span class="directive">final</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds) {
+        <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>specifies the order in which the <code>TableColumnOrderService</code> implementations are called.</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -3293,7 +3357,12 @@ TODO
 </li>
 </ul>
 </li>
-<li><a href="#_ugvw_layout">5. Layout</a></li>
+<li><a href="#_ugvw_layout">5. Layout</a>
+<ul class="sectlevel2">
+<li><a href="#__code_layout_xml_code">5.1. <code>layout.xml</code></a></li>
+<li><a href="#_reordering_columns_code_1_14_0_snapshot_code">5.2. Reordering columns (<code>1.14.0-SNAPSHOT</code>)</a></li>
+</ul>
+</li>
 <li><a href="#_ugvw_customisation">6. Customisation</a>
 <ul class="sectlevel2">
 <li><a href="#_ugvw_customisation_brand-logo">6.1. Brand logo</a>

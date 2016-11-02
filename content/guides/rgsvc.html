@@ -2273,14 +2273,14 @@ default implementation of <code>RoutingService</code> service is automatically r
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TableColumnOrderService</span> {
-    <span class="predefined-type">Set</span>&lt;<span class="predefined-type">String</span>&gt; orderParented(                  <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; orderParented(                  <i class="conum" data-value="1"></i><b>(1)</b>
             <span class="predefined-type">Object</span> parent,
             <span class="predefined-type">String</span> collectionId,
             <span class="predefined-type">Class</span>&lt;?&gt; collectionType,
-            <span class="predefined-type">Set</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds);
-    <span class="predefined-type">Set</span>&lt;<span class="predefined-type">String</span>&gt; orderStandalone(                <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds);
+    <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; orderStandalone(                <i class="conum" data-value="2"></i><b>(2)</b>
             <span class="predefined-type">Class</span>&lt;?&gt; collectionType,
-            <span class="predefined-type">Set</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds);
+            <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; propertyIds);
 }</code></pre>
 </div>
 </div>
@@ -2288,7 +2288,7 @@ default implementation of <code>RoutingService</code> service is automatically r
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>for the parent collection owned by the specified parent and collection Id, return the set of property ids in the same or other order, else return <code>null</code> if provides no reordering.</td>
+<td>for the parent collection owned by the specified parent and collection Id, return the set of property ids in the same or other order.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -2297,7 +2297,9 @@ default implementation of <code>RoutingService</code> service is automatically r
 </table>
 </div>
 <div class="paragraph">
-<p>There can be multiple implementations of <code>TableColumnOrderService</code> registered; the first such service that returns a non-<code>null</code> value will be used.  If all provided implementations return <code>null</code>, then the framework will fallback to a default implementation.</p>
+<p>There can be multiple implementations of <code>TableColumnOrderService</code> registered, ordered as per <a href="rgant.html#_rgant_DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a>.
+The ordering provided by the first such service that returns a non-<code>null</code> value will be used.
+If all provided implementations return <code>null</code>, then the framework will fallback to a default implementation.</p>
 </div>
 </div>
 <div class="sect3">
