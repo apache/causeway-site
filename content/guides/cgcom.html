@@ -1206,7 +1206,27 @@ re
 <div class="sect2">
 <h3 id="_cgcom_cutting-a-release_releasing-the-archetype">3.5. Releasing the Archetype</h3>
 <div class="paragraph">
-<p>Apache Isis archetypes are reverse engineered from example applications. Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p>
+<p>Apache Isis archetypes are reverse engineered from example applications.
+Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If releasing using Windows and Maven &gt;= 3.3.3, then there is an issue that requires a small workaround.</p>
+</div>
+<div class="paragraph">
+<p>In Maven 3.3.3 the <code>mvn.bat</code> file was removed, replaced instead with <code>mvn.cmd</code>.
+However, <code>maven-archetype-plugin:2.4</code> only uses <code>mvn.bat</code>; this causes the <code>archetype:create-from-project</code> goal to fail.
+The fix is to simple: just copy <code>mvn.cmd</code> to <code>mvn.bat</code>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Switch to the directory containing the <code>simpleapp</code> example:</p>
@@ -2837,7 +2857,127 @@ mvn -D deploy=snapshot deploy</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_key-generation">9. Key Generation</h2>
+<h2 id="_cgcom_publishing-the-docs">9. Publishing the Docs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Isis' documentation (meaning the website and the users' guide, the reference guide and this contributors' guide) is written using <a href="http://www.methods.co.nz/asciidoc/">Asciidoc</a>, specifically the <a href="asciidoctor.org/">Asciidoctor</a> implementation.</p>
+</div>
+<div class="paragraph">
+<p>The website and guides are created by running build tools (documented below) which create the HTML version of the site and guides.
+You can therefore easily check the documentation before raising a pull request (as a contributor) or publishing the site (if a committer).</p>
+</div>
+<div class="paragraph">
+<p>For details of authoring/updating the documents and website, see the <a href="dg.html#_dg_asciidoc">developers' guide</a>.
+To help write the Asciidoc text itself, we provide some <a href="dg.html#_dg_asciidoc-templates">Asciidoc templates</a>.</p>
+</div>
+<div class="paragraph">
+<p>Publishing is performed by copying the generated HTML to a different git repository (<a href="https://git-wip-us.apache.org/repos/asf?p=isis-site.git">isis-site</a>).
+This is synced by ASF infrastructure over to <a href="http://isis.apache.org">isis.apache.org</a>.
+This can only be done by Apache Isis committers, and is discussed below.</p>
+</div>
+<div class="sect2">
+<h3 id="_one_time_setup">9.1. One-time setup</h3>
+<div class="paragraph">
+<p>The generated site is published by copying into the <code>content/</code> directory of the <a href="https://git-wip-us.apache.org/repos/asf/isis-site.git">isis-site git repo</a>. You therefore need to check this out this repo.</p>
+</div>
+<div class="paragraph">
+<p>The procedure assumes that two git repos (for <a href="https://git-wip-us.apache.org/repos/asf/isis.git">isis</a> itself and for isis-site) are checked out into the same parent directory, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/APACHE/
+    isis/                       # checkout of isis.git
+        adocs/
+            documentation/
+                README.adoc     # this file you are reading right now
+                ...
+    isis-site/                  # checkout of isis-site.git
+        content/                # the published website</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If this isn&#8217;t the case, then it is possible to override the relative directory by passing in a system property to the mvn goal; see below.</p>
+</div>
+<div class="paragraph">
+<p>You also need to know that ASF&#8217;s publishing script work from the 'asf-site' branch, NOT from the 'master' branch. Therefore, in the <code>isis.git</code> repo site:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout asf-site</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publishing_full_build">9.2. Publishing (full build)</h3>
+<div class="paragraph">
+<p>Back in the <code>adocs/documentation</code> directory of the main <code>isis-git.repo</code>, to copy the generated documents to the <code>isis-site.git</code> repo, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn clean package</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This deletes the entire content of <code>contents</code>, and replaces with the content under <code>target/site</code>.  It also fixes up line endings, standardizing on unix-style LFs.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have checked out the <code>isis-site.git</code> repo into some other directory (relative to <code>isis.site.git), then this can be overridden by specifying `-Disis-site.dir=&#8230;&#8203;</code> when calling <code>mvn</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To copy and to also commit the generated documents to the <code>isis-site.git</code> repo , run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh publish.sh &quot;ISIS-nnnn: a custom commit message&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Behind the scenes this just calls <code>mvn clean install -Dmessage=&#8230;&#8203;</code>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also possible to omit the message, in which case <code>publish.sh</code> will reuse the most recent commit message from the main <code>isis.git</code> repo.</p>
+</div>
+<div class="paragraph">
+<p>Pushing the commits (in the <code>isis-site.git</code> directory, of course) will publishing the changes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git push</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Double check at <a href="http://isis.apache.org">isis.apache.org</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publishing_partial_build">9.3. Publishing (partial build)</h3>
+<div class="paragraph">
+<p>If none of the guides have been changed, and if you have run the full rebuild recently, then you can skip the generation of PDFs using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dskip.pdf -D&quot;ISIS-nnnn: a custom commit message&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>clean</code> goal <strong>must not</strong> be included though (else all the guides will disappear from the site content).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_key-generation">10. Key Generation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order that a contributor can make a release it is necessary for them to have generated a key and had that key recognized by other members of the Apache Software Foundation.</p>
@@ -2846,7 +2986,7 @@ mvn -D deploy=snapshot deploy</code></pre>
 <p>For further background information on this topic, see the <a href="http://www.apache.org/dev/release-signing.html">release signing page</a> and the <a href="http://www.apache.org/dev/openpgp.html#generate-key">openpgp page</a> on the Apache wiki.</p>
 </div>
 <div class="sect2">
-<h3 id="_install_and_configure_gpg">9.1. Install and Configure gpg</h3>
+<h3 id="_install_and_configure_gpg">10.1. Install and Configure gpg</h3>
 <div class="paragraph">
 <p>Download and install GnuPG (gpg), version 1.4.10 or higher.</p>
 </div>
@@ -2862,7 +3002,7 @@ default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB
 </div>
 </div>
 <div class="sect2">
-<h3 id="_key_generation">9.2. Key Generation</h3>
+<h3 id="_key_generation">10.2. Key Generation</h3>
 <div class="paragraph">
 <p>The Apache Software Foundation requires that keys are signed with a key (or subkey) based on RSA 4096 bits. To do this:</p>
 </div>
@@ -3041,7 +3181,7 @@ gpg&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_subkey_generation">9.3. Subkey Generation</h3>
+<h3 id="_subkey_generation">10.3. Subkey Generation</h3>
 <div class="paragraph">
 <p>It&#8217;s recommended to use a subkey with an expiry date to sign releases, rather than your main, non-expiring key. If a subkey is present, then gpg will use it for signing in preference to the main key.</p>
 </div>
@@ -3154,7 +3294,7 @@ gpg&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generate_a_revocation_certificate">9.4. Generate a Revocation Certificate</h3>
+<h3 id="_generate_a_revocation_certificate">10.4. Generate a Revocation Certificate</h3>
 <div class="paragraph">
 <p>It&#8217;s good practice to generate a number of revocation certificates so that the key can be revoked if it happens to be compromised. See the <a href="http://www.apache.org/dev/openpgp.html#revocation-certs">gpg page</a> on the Apache wiki for more background on this topic.</p>
 </div>
@@ -3257,7 +3397,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_publish_key">9.5. Publish Key</h3>
+<h3 id="_publish_key">10.5. Publish Key</h3>
 <div class="paragraph">
 <p>It is also necessary to publish your key. There are several places where this should be done. In most cases, you&#8217;ll need the "armored" &quot; (ie ASCII) representation of your key. This can be generated using:</p>
 </div>
@@ -3281,7 +3421,7 @@ your machine might store the data and make it available to others!</code></pre>
 <p>The output from this command includes a line beginning "Key fingerprint", followed by a (space delimited) 40 character hexadecimal fingerprint. The last 8 characters should be the same as the key id (<code>nnnnnnnn</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_a_public_key_server">9.5.1. Publish to a public key server</h4>
+<h4 id="_publish_to_a_public_key_server">10.5.1. Publish to a public key server</h4>
 <div class="paragraph">
 <p>To a publish your key to a public key server (eg the MIT key server hosted at <a href="http://pgp.mit.edu">http://pgp.mit.edu</a>), use the procedure below. Public key servers synchronize with each other, so publishing to one key server should be sufficient. For background reading on this, see the <a href="http://www.apache.org/dev/release-signing.html#keyserver-upload">release signing page</a> on the Apache wiki, and the <a href="http://maven.apache.org/developers/release/pmc-gpg-keys.html">gpg key page</a> on the Maven wiki.</p>
 </div>
@@ -3310,13 +3450,13 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_your_apache_home_directory">9.5.2. Publish to your Apache home directory</h4>
+<h4 id="_publish_to_your_apache_home_directory">10.5.2. Publish to your Apache home directory</h4>
 <div class="paragraph">
 <p>The armored representation of your public key should be uploaded to your home directory on <code>people.apache.org</code>, and renamed as <code>.pgpkey</code>. Make sure this is readable by all.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_publish_to_your_apache_html_home_directory">9.5.3. Publish to your Apache HTML home directory</h4>
+<h4 id="_publish_to_your_apache_html_home_directory">10.5.3. Publish to your Apache HTML home directory</h4>
 <div class="paragraph">
 <p>The armored representation of your public key should be uploaded to your <code>public_html</code> home directory on <code>people.apache.org</code>, named <code>nnnnnnnn.asc</code>. Make sure this is readable by all.</p>
 </div>
@@ -3341,7 +3481,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_foaf">9.5.4. FOAF</h4>
+<h4 id="_foaf">10.5.4. FOAF</h4>
 <div class="paragraph">
 <p>First, check out the committers/info directory:</p>
 </div>
@@ -3439,7 +3579,7 @@ your machine might store the data and make it available to others!</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_save_to_code_keys_code">9.5.5. Save to <code>KEYS</code></h4>
+<h4 id="_save_to_code_keys_code">10.5.5. Save to <code>KEYS</code></h4>
 <div class="paragraph">
 <p>The armored representation of the public key should be saved to Apache Isis' <code>KEYS</code> file, <a href="http://www.apache.org/dist/isis/KEYS">http://www.apache.org/dist/isis/KEYS</a> (that is, in the ASF distribution directory for Apache Isis).</p>
 </div>
@@ -3468,20 +3608,20 @@ gpg --armor --export nnnnnnnn &gt;&gt;KEYS</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_id_apache_org">9.5.6. id.apache.org</h4>
+<h4 id="_id_apache_org">10.5.6. id.apache.org</h4>
 <div class="paragraph">
 <p>Log onto <code>id.apache.org</code> and ensure that the finger print of your public key is correct.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_attend_key_signing_party_apache_web_of_trust">9.6. Attend Key Signing Party (Apache web of trust)</h3>
+<h3 id="_attend_key_signing_party_apache_web_of_trust">10.6. Attend Key Signing Party (Apache web of trust)</h3>
 <div class="paragraph">
 <p>It is strongly advised that the contributor attend a key signing party at an Apache event, in order that other Apache committers/members can in person verify their identity against the key. The process for this is described <a href="http://www.apache.org/dev/release-signing.html#key-signing-party">here</a> and <a href="http://wiki.apache.org/apachecon/PgpKeySigning">here</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_update_maven_settings_file_code_m2_settings_xml_code">9.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</h3>
+<h3 id="_update_maven_settings_file_code_m2_settings_xml_code">10.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</h3>
 <div class="paragraph">
 <p>The Maven release plugin will automatically sign the release, however it is necessary to update the <code>~/.m2/settings.xml</code> file with your GPG acronym passphrase in order that it can use your secret key. This is defined under a profile so that it is activated only when we perform a release (as defined by <code>[org,apache:apache]</code> parent POM.</p>
 </div>
@@ -3525,13 +3665,13 @@ gpg --armor --export nnnnnnnn &gt;&gt;KEYS</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_release-process-prereqs">10. Appendix: Release Prereqs</h2>
+<h2 id="_cgcom_release-process-prereqs">11. Appendix: Release Prereqs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section (appendix) describes the prerequisites for the <a href="#_cgcom_release-process">release process</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_configure_toolchains_plugin">10.1. Configure toolchains plugin</h3>
+<h3 id="_configure_toolchains_plugin">11.1. Configure toolchains plugin</h3>
 <div class="paragraph">
 <p>Apache Isis releases are built using Java 7, enforced using the maven toolchains plugin.  Ensure that Java 7 is
 installed and the toolchains plugin is configured, as described in the
@@ -3539,7 +3679,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_public_private_key">10.2. Public/private key</h3>
+<h3 id="_public_private_key">11.2. Public/private key</h3>
 <div class="paragraph">
 <p>The most important configuration you require is to set up public/private key pair. This is used by the <code>maven-release-plugin</code> to sign the code artifacts. See the page on <a href="#_cgcom_key-generation">key generation</a> for more details.</p>
 </div>
@@ -3562,7 +3702,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven_code_settings_xml_code">10.3. Maven <code>settings.xml</code></h3>
+<h3 id="_maven_code_settings_xml_code">11.3. Maven <code>settings.xml</code></h3>
 <div class="paragraph">
 <p>During the release process the <code>maven-deploy-plugin</code> uploads the generated artifacts to a staging repo on the <a href="http://repository.apache.org">Apache repository manager</a>. This requires your Apache LDAP credentials to be specified in your <code>~/.m2/settings.xml</code> file:</p>
 </div>
@@ -3624,15 +3764,15 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_policies">11. Policies</h2>
+<h2 id="_cgcom_policies">12. Policies</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter pulls together various policy documents relating to the development of Apache Isis'.</p>
 </div>
 <div class="sect2">
-<h3 id="_cgcom_versioning-policy">11.1. Versioning Policy</h3>
+<h3 id="_cgcom_versioning-policy">12.1. Versioning Policy</h3>
 <div class="sect3">
-<h4 id="_semantic_versioning">11.1.1. Semantic Versioning</h4>
+<h4 id="_semantic_versioning">12.1.1. Semantic Versioning</h4>
 <div class="paragraph">
 <p>Starting from v1.0.0, Apache Isis has adopted <a href="http://semver.org">semantic versioning</a> for its versioning policy.</p>
 </div>
@@ -3657,7 +3797,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_version_ranges">11.1.2. Version ranges</h4>
+<h4 id="_version_ranges">12.1.2. Version ranges</h4>
 <div class="paragraph">
 <p>Version ranges may not be used.  If necessary, end-users can use <code>&lt;dependencyManagement</code> elements to have combine components built against different versions of core.</p>
 </div>
@@ -3670,7 +3810,7 @@ installed and the toolchains plugin is configured, as described in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cgcom_policies_git-policy">11.2. Git Policy</h3>
+<h3 id="_cgcom_policies_git-policy">12.2. Git Policy</h3>
 <div class="paragraph">
 <p>These notes recommend how contributors should work with git. To understand these notes, the only real concepts that you need to grok are:</p>
 </div>
@@ -3707,7 +3847,7 @@ installed and the toolchains plugin is configured, as described in the
 <p>And, of course, there is loads of good advice on <a href="http://stackoverflow.com/questions/tagged/git">stackoverflow.com</a></p>
 </div>
 <div class="sect3">
-<h4 id="_workflow">11.2.1. Workflow</h4>
+<h4 id="_workflow">12.2.1. Workflow</h4>
 <div class="paragraph">
 <p>There are many ways of using Git, but the Apache Isis committers have adopted the following workflow:</p>
 </div>
@@ -3769,7 +3909,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_commit_message">11.2.2. Commit message</h4>
+<h4 id="_commit_message">12.2.2. Commit message</h4>
 <div class="paragraph">
 <p>The minimum we expect in a commit messages is:</p>
 </div>
@@ -3793,7 +3933,7 @@ git push origin --delete ISIS-999</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cgcom_pmc-notes">12. Appendix: PMC</h2>
+<h2 id="_cgcom_pmc-notes">13. Appendix: PMC</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Every ASF project has a Project Management Committee, or PMC.
@@ -3807,7 +3947,7 @@ More information about PMCs can be found <a href="http://www.apache.org/dev/pmc.
 <p>This page contains some general notes on maintenance activities required by PMC members.</p>
 </div>
 <div class="sect2">
-<h3 id="_prereqs">12.1. Prereqs</h3>
+<h3 id="_prereqs">13.1. Prereqs</h3>
 <div class="paragraph">
 <p>To complete the procedures documented here, you&#8217;ll need <code>ssh</code> access to <code>minotaur.apache.org</code>.
 For example:</p>
@@ -3836,7 +3976,7 @@ For example:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_new_committer_pmc_member">12.2. New Committer/PMC member</h3>
+<h3 id="_new_committer_pmc_member">13.2. New Committer/PMC member</h3>
 <div class="paragraph">
 <p>Currently we don&#8217;t distinguish between committers and PMC members: every committer is automatically invited to also be a member of the PMC.</p>
 </div>
@@ -3844,7 +3984,7 @@ For example:</p>
 <p>Further notes on the steps for new PMC members can be found <a href="http://www.apache.org/dev/pmc.html#newpmc">here</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_start_a_vote_thread_on_private">12.2.1. Start a vote thread on private@</h4>
+<h4 id="_start_a_vote_thread_on_private">13.2.1. Start a vote thread on private@</h4>
 <div class="paragraph">
 <p>First, send a [VOTE] email to <code>private@isis.apache.org</code>, making the case for the new committer to join.</p>
 </div>
@@ -3894,7 +4034,7 @@ http://www.timeanddate.com/countdown/to?year=YYYY&amp;month=MM&amp;day=DD</code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_close_the_vote_announce_results">12.2.2. Close the vote, announce results</h4>
+<h4 id="_close_the_vote_announce_results">13.2.2. Close the vote, announce results</h4>
 <div class="paragraph">
 <p>After the 7 days has expired, close the vote thread.</p>
 </div>
@@ -3951,7 +4091,7 @@ I'll announce to users@ and dev@ by separate thread.</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_icla_obtain_new_account">12.2.3. ICLA, obtain new account</h4>
+<h4 id="_icla_obtain_new_account">13.2.3. ICLA, obtain new account</h4>
 <div class="paragraph">
 <p>If required (that is, if the committer is not already a committer for a different ASF project),
 then ask them to complete an ICLA.
@@ -3962,7 +4102,7 @@ As a result of this, they should also get an @apache.org user name.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_the_code_isis_code_unix_group">12.2.4. Update the <code>isis</code> unix group</h4>
+<h4 id="_update_the_code_isis_code_unix_group">13.2.4. Update the <code>isis</code> unix group</h4>
 <div class="paragraph">
 <p>All committers must be added to the <code>isis</code> UNIX group.
 This will give them commit access to the Apache Isis git repo.</p>
@@ -3993,7 +4133,7 @@ This will give them commit access to the Apache Isis git repo.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_the_ldap_committee_if_a_pmc_member">12.2.5. Update the LDAP committee (if a PMC member)</h4>
+<h4 id="_update_the_ldap_committee_if_a_pmc_member">13.2.5. Update the LDAP committee (if a PMC member)</h4>
 <div class="paragraph">
 <p>(Assuming that the new committer is a PMC member), also add them as to the PMC committee.
 This takes two steps:</p>
@@ -4037,7 +4177,7 @@ This takes two steps:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_notify_the_asf_board_and_private_mailing_list">12.2.6. Notify the ASF board and private mailing list</h4>
+<h4 id="_notify_the_asf_board_and_private_mailing_list">13.2.6. Notify the ASF board and private mailing list</h4>
 <div class="paragraph">
 <p>Send a <code>[NOTICE]</code> email to <code>board@apache.org</code> and also to <code>private@isis.apache.org</code></p>
 </div>
@@ -4097,13 +4237,13 @@ The committee-info.txt file has been updated, as have the LDAP groups (modify_un
 </div>
 </div>
 <div class="sect3">
-<h4 id="_update_project_metadata">12.2.7. Update project metadata</h4>
+<h4 id="_update_project_metadata">13.2.7. Update project metadata</h4>
 <div class="paragraph">
 <p>Update the <code>STATUS</code> file (in the root directory of the Apache Isis git repo) with the new committer details.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_announce_to_the_world">12.2.8. Announce to the world</h4>
+<h4 id="_announce_to_the_world">13.2.8. Announce to the world</h4>
 <div class="paragraph">
 <p>Send an <code>[ANNOUNCE]</code> email TO <code>users@isis.apache.org</code> and to <code>dev@isis.apache.org</code>.</p>
 </div>
@@ -4154,7 +4294,7 @@ Apache Isis PMC Chair</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_removing_a_committer">12.3. Removing a committer</h3>
+<h3 id="_removing_a_committer">13.3. Removing a committer</h3>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -4350,65 +4490,72 @@ modify_committee.pl isis --remove joebloggs</code></pre>
 </li>
 </ul>
 </li>
-<li><a href="#_cgcom_key-generation">9. Key Generation</a>
+<li><a href="#_cgcom_publishing-the-docs">9. Publishing the Docs</a>
 <ul class="sectlevel2">
-<li><a href="#_install_and_configure_gpg">9.1. Install and Configure gpg</a></li>
-<li><a href="#_key_generation">9.2. Key Generation</a></li>
-<li><a href="#_subkey_generation">9.3. Subkey Generation</a></li>
-<li><a href="#_generate_a_revocation_certificate">9.4. Generate a Revocation Certificate</a></li>
-<li><a href="#_publish_key">9.5. Publish Key</a>
-<ul class="sectlevel3">
-<li><a href="#_publish_to_a_public_key_server">9.5.1. Publish to a public key server</a></li>
-<li><a href="#_publish_to_your_apache_home_directory">9.5.2. Publish to your Apache home directory</a></li>
-<li><a href="#_publish_to_your_apache_html_home_directory">9.5.3. Publish to your Apache HTML home directory</a></li>
-<li><a href="#_foaf">9.5.4. FOAF</a></li>
-<li><a href="#_save_to_code_keys_code">9.5.5. Save to <code>KEYS</code></a></li>
-<li><a href="#_id_apache_org">9.5.6. id.apache.org</a></li>
+<li><a href="#_one_time_setup">9.1. One-time setup</a></li>
+<li><a href="#_publishing_full_build">9.2. Publishing (full build)</a></li>
+<li><a href="#_publishing_partial_build">9.3. Publishing (partial build)</a></li>
 </ul>
 </li>
-<li><a href="#_attend_key_signing_party_apache_web_of_trust">9.6. Attend Key Signing Party (Apache web of trust)</a></li>
-<li><a href="#_update_maven_settings_file_code_m2_settings_xml_code">9.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</a></li>
-</ul>
-</li>
-<li><a href="#_cgcom_release-process-prereqs">10. Appendix: Release Prereqs</a>
+<li><a href="#_cgcom_key-generation">10. Key Generation</a>
 <ul class="sectlevel2">
-<li><a href="#_configure_toolchains_plugin">10.1. Configure toolchains plugin</a></li>
-<li><a href="#_public_private_key">10.2. Public/private key</a></li>
-<li><a href="#_maven_code_settings_xml_code">10.3. Maven <code>settings.xml</code></a></li>
+<li><a href="#_install_and_configure_gpg">10.1. Install and Configure gpg</a></li>
+<li><a href="#_key_generation">10.2. Key Generation</a></li>
+<li><a href="#_subkey_generation">10.3. Subkey Generation</a></li>
+<li><a href="#_generate_a_revocation_certificate">10.4. Generate a Revocation Certificate</a></li>
+<li><a href="#_publish_key">10.5. Publish Key</a>
+<ul class="sectlevel3">
+<li><a href="#_publish_to_a_public_key_server">10.5.1. Publish to a public key server</a></li>
+<li><a href="#_publish_to_your_apache_home_directory">10.5.2. Publish to your Apache home directory</a></li>
+<li><a href="#_publish_to_your_apache_html_home_directory">10.5.3. Publish to your Apache HTML home directory</a></li>
+<li><a href="#_foaf">10.5.4. FOAF</a></li>
+<li><a href="#_save_to_code_keys_code">10.5.5. Save to <code>KEYS</code></a></li>
+<li><a href="#_id_apache_org">10.5.6. id.apache.org</a></li>
 </ul>
 </li>
-<li><a href="#_cgcom_policies">11. Policies</a>
+<li><a href="#_attend_key_signing_party_apache_web_of_trust">10.6. Attend Key Signing Party (Apache web of trust)</a></li>
+<li><a href="#_update_maven_settings_file_code_m2_settings_xml_code">10.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_release-process-prereqs">11. Appendix: Release Prereqs</a>
 <ul class="sectlevel2">
-<li><a href="#_cgcom_versioning-policy">11.1. Versioning Policy</a>
-<ul class="sectlevel3">
-<li><a href="#_semantic_versioning">11.1.1. Semantic Versioning</a></li>
-<li><a href="#_version_ranges">11.1.2. Version ranges</a></li>
+<li><a href="#_configure_toolchains_plugin">11.1. Configure toolchains plugin</a></li>
+<li><a href="#_public_private_key">11.2. Public/private key</a></li>
+<li><a href="#_maven_code_settings_xml_code">11.3. Maven <code>settings.xml</code></a></li>
 </ul>
 </li>
-<li><a href="#_cgcom_policies_git-policy">11.2. Git Policy</a>
-<ul class="sectlevel3">
-<li><a href="#_workflow">11.2.1. Workflow</a></li>
-<li><a href="#_commit_message">11.2.2. Commit message</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#_cgcom_pmc-notes">12. Appendix: PMC</a>
+<li><a href="#_cgcom_policies">12. Policies</a>
 <ul class="sectlevel2">
-<li><a href="#_prereqs">12.1. Prereqs</a></li>
-<li><a href="#_new_committer_pmc_member">12.2. New Committer/PMC member</a>
+<li><a href="#_cgcom_versioning-policy">12.1. Versioning Policy</a>
 <ul class="sectlevel3">
-<li><a href="#_start_a_vote_thread_on_private">12.2.1. Start a vote thread on private@</a></li>
-<li><a href="#_close_the_vote_announce_results">12.2.2. Close the vote, announce results</a></li>
-<li><a href="#_icla_obtain_new_account">12.2.3. ICLA, obtain new account</a></li>
-<li><a href="#_update_the_code_isis_code_unix_group">12.2.4. Update the <code>isis</code> unix group</a></li>
-<li><a href="#_update_the_ldap_committee_if_a_pmc_member">12.2.5. Update the LDAP committee (if a PMC member)</a></li>
-<li><a href="#_notify_the_asf_board_and_private_mailing_list">12.2.6. Notify the ASF board and private mailing list</a></li>
-<li><a href="#_update_project_metadata">12.2.7. Update project metadata</a></li>
-<li><a href="#_announce_to_the_world">12.2.8. Announce to the world</a></li>
+<li><a href="#_semantic_versioning">12.1.1. Semantic Versioning</a></li>
+<li><a href="#_version_ranges">12.1.2. Version ranges</a></li>
 </ul>
 </li>
-<li><a href="#_removing_a_committer">12.3. Removing a committer</a></li>
+<li><a href="#_cgcom_policies_git-policy">12.2. Git Policy</a>
+<ul class="sectlevel3">
+<li><a href="#_workflow">12.2.1. Workflow</a></li>
+<li><a href="#_commit_message">12.2.2. Commit message</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_cgcom_pmc-notes">13. Appendix: PMC</a>
+<ul class="sectlevel2">
+<li><a href="#_prereqs">13.1. Prereqs</a></li>
+<li><a href="#_new_committer_pmc_member">13.2. New Committer/PMC member</a>
+<ul class="sectlevel3">
+<li><a href="#_start_a_vote_thread_on_private">13.2.1. Start a vote thread on private@</a></li>
+<li><a href="#_close_the_vote_announce_results">13.2.2. Close the vote, announce results</a></li>
+<li><a href="#_icla_obtain_new_account">13.2.3. ICLA, obtain new account</a></li>
+<li><a href="#_update_the_code_isis_code_unix_group">13.2.4. Update the <code>isis</code> unix group</a></li>
+<li><a href="#_update_the_ldap_committee_if_a_pmc_member">13.2.5. Update the LDAP committee (if a PMC member)</a></li>
+<li><a href="#_notify_the_asf_board_and_private_mailing_list">13.2.6. Notify the ASF board and private mailing list</a></li>
+<li><a href="#_update_project_metadata">13.2.7. Update project metadata</a></li>
+<li><a href="#_announce_to_the_world">13.2.8. Announce to the world</a></li>
+</ul>
+</li>
+<li><a href="#_removing_a_committer">13.3. Removing a committer</a></li>
 </ul>
 </li>
 </ul>
