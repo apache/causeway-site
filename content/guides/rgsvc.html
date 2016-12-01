@@ -7066,6 +7066,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="paragraph">
 <p>The <code>UserService</code> allows the domain object to obtain the identity of the user interacting with said object.</p>
 </div>
+<div class="paragraph">
+<p>If <a href="#_rgsvc_api_SudoService"><code>SudoService</code></a> has been used to temporarily override the user and/or roles, then this service will report the overridden values instead.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -9200,11 +9203,11 @@ primary benefit (apart from decoupling responsibilities) is that it ensures that
 <div class="sect2">
 <h3 id="_rgsvc_api_SudoService">9.4. <code>SudoService</code></h3>
 <div class="paragraph">
-<p>The <code>SudoService</code> allows the current user reported by the <code>DomainObjectContainer</code> to be temporarily changed to some
-other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="ugtst.html#_ugtst_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p>
+<p>The <code>SudoService</code> allows the current user reported by the <a href="#_rgsvc_api_UserService"><code>UserService</code></a>  to be temporarily changed to some other user.
+This is useful both for <a href="ugtst.html#_ugtst_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="ugtst.html#_ugtst_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_17">9.4.1. API &amp; Implementation</h4>
+<h4 id="_api_8">9.4.1. API</h4>
 <div class="paragraph">
 <p>The API provided by the service is:</p>
 </div>
@@ -9224,14 +9227,45 @@ other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-suppor
 </div>
 <div class="paragraph">
 <p>which will run the provided block of code (a <code>Runnable</code> or a <code>Callable</code>) in a way such that calls to
-<code>DomainObjectContainer#getUser()</code> will return the specified user (and roles, if specified)</p>
+<code>UserService#getUser()</code> will return the specified user (and roles, if specified)</p>
 </div>
+<div class="paragraph">
+<p>As of <code>1.13.2-SNAPSHOT</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if roles are not specified, then the roles of the current user are preserved.</p>
+</li>
+<li>
+<p>the current user/role reported by the internal <a href="rgfis.html#_rgfis_spi_AuthenticationSessionProvider"><code>AuthenticationSessionProvider</code></a> will also return the specified user/roles.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note however that this the "effective user" does not propagate through to the <a href="ugsec.html">Shiro security mechanism</a>, which will continue to be evaluated according to the permissions of the current user.
+See the <a href="#_rgsvc_api_SudoService_ACCESS-ALL-ROLE"><code>ACCESS-ALL-ROLE</code></a> below for details of how to circumvent this.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementation_28">9.4.2. Implementation</h4>
 <div class="paragraph">
 <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.sudo.SudoServiceDefault</code>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage_14">9.4.2. Usage</h4>
+<h4 id="_usage_14">9.4.3. Usage</h4>
 <div class="paragraph">
 <p>A good example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> which uses the <code>SudoService</code> in a fixture script to set up <code>ToDoItem</code> objects:</p>
 </div>
@@ -9250,9 +9284,86 @@ other user. This is useful both for <a href="ugtst.html#_ugtst_integ-test-suppor
 }</code></pre>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_rgsvc_api_SudoService_ACCESS-ALL-ROLE">ACCESS_ALL_ROLE" (<code>1.13.2-SNAPSHOT</code>)</h5>
+<div class="paragraph">
+<p>When <code>sudo(&#8230;&#8203;)</code> is called the "effective user" is reported by both <a href="#_rgsvc_api_UserService"><code>UserService</code></a> and (as of <code>1.13.2-SNAPSHOT</code>) by <a href="rgfis.html#_rgfis_spi_AuthenticationSessionProvider"><code>AuthenticationSessionProvider</code></a>, but does not propagate through to the <a href="ugsec.html">Shiro security mechanism</a>.
+These continue to be evaluated according to the permissions of the current user.</p>
+</div>
+<div class="paragraph">
+<p>This can be a problem in certain use cases.
+For example if running a fixture script (which uses the <a href="#_rgsvc_api_WrapperFactory"><code>WrapperFactory</code></a>) from within an implementation of <a href="#_rgsvc_spi_UserRegistrationService"><code>UserRegistrationService</code></a>, this is likely to result in <code>HiddenException</code>s being thrown because there is no effective user.</p>
+</div>
+<div class="paragraph">
+<p>In such cases, permission checking can simply be disabled by specifying <code>SudoService.ACCESS_ALL_ROLE</code> as one of the roles.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="type">void</span> execute(<span class="directive">final</span> ExecutionContext ec) {
+    ...
+    sudoService.sudo(getUsername(), <span class="predefined-type">Arrays</span>.asList(SudoService.ACCESS_ALL_ROLE),
+            <span class="keyword">new</span> <span class="predefined-type">Runnable</span>() {
+                <span class="annotation">@Override</span>
+                <span class="directive">public</span> <span class="type">void</span> run() {
+                    wrap(toDoItem).completed();
+                }
+            });
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the future this service may be used more deeply, eg to propagate permissions through to the Shiro security mechanism also.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_registering_the_service_27">9.4.3. Registering the Service</h4>
+<h4 id="_spi_code_1_13_2_snapshot_code">9.4.4. SPI (<code>1.13.2-SNAPSHOT</code>)</h4>
+<div class="paragraph">
+<p>The <code>SudoService.Spi</code> service (<code>1.13.2-SNAPSHOT</code>) allows implementations of <code>SudoService</code> to notify other services/components that the effective user and roles are different.
+The default implementation of <a href="#_rgsvc_api_UserService"><code>UserService</code></a> has been refactored to leverage this SPI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">SudoService</span> {
+    ...
+    interface Spi {
+        <span class="type">void</span> runAs(<span class="predefined-type">String</span> username, <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; roles);        <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="type">void</span> releaseRunAs();                                    <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Called by <code>SudoService#sudo(&#8230;&#8203;)</code>, prior to invoking its <code>Runnable</code> or <code>Callable</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Called by <code>SudoService#sudo(&#8230;&#8203;)</code>, after its <code>Runnable</code> or <code>Callable</code> has been invoked.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The names of these methods were chosen based on <a href="href:https://shiro.apache.org/static/1.2.6/apidocs/org/apache/shiro/subject/Subject.html#runAs-org.apache.shiro.subject.PrincipalCollection-">similar names within Shiro</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_registering_the_service_27">9.4.5. Registering the Service</h4>
 <div class="paragraph">
 <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
 <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
@@ -9289,7 +9400,7 @@ different users of the system.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_8">9.5.1. API</h4>
+<h4 id="_api_9">9.5.1. API</h4>
 <div class="paragraph">
 <p>The API of this service:</p>
 </div>
@@ -9315,7 +9426,7 @@ different users of the system.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_28">9.5.2. Implementation</h4>
+<h4 id="_implementation_29">9.5.2. Implementation</h4>
 <div class="paragraph">
 <p>The framework provides a default implementation of this service: <code>SwitchUserServiceImpl</code> in <code>isis-core-runtime</code></p>
 </div>
@@ -9759,7 +9870,7 @@ ObjectStore to provide a number of counters relating to numbers of object loaded
 the <code>PublishedObjects</code> class.</p>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_18">10.2.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_17">10.2.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API of the service is:</p>
 </div>
@@ -9835,7 +9946,7 @@ so no further configuration is required.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_implementation_19">10.3.1. API &amp; Implementation</h4>
+<h4 id="_api_implementation_18">10.3.1. API &amp; Implementation</h4>
 <div class="paragraph">
 <p>The API defined by <code>QueryResultsCache</code> is:</p>
 </div>
@@ -9984,7 +10095,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </table>
 </div>
 <div class="sect3">
-<h4 id="_api_9">10.4.1. API</h4>
+<h4 id="_api_10">10.4.1. API</h4>
 <div class="paragraph">
 <p>The API of <code>RepositoryService</code> is:</p>
 </div>
@@ -10298,7 +10409,7 @@ collection would not containing the given product:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_29">10.4.3. Implementation</h4>
+<h4 id="_implementation_30">10.4.3. Implementation</h4>
 <div class="paragraph">
 <p>The core framework provides a default implementation of this service (<code>o.a.i.core.metamodel.services.repository.RepositoryServiceDefault</code>).</p>
 </div>
@@ -10702,7 +10813,7 @@ transactions within a single interaction.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_30">11.2.2. Implementation</h4>
+<h4 id="_implementation_31">11.2.2. Implementation</h4>
 <div class="paragraph">
 <p>The most full-featured available implementation is the (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' Audit module</a>.  This creates an audit records for each changed property (ie every time that <code>AuditingService3#audit(&#8230;&#8203;)</code> is called.  The implementation is <code>org.isisaddons.module.audit.dom.AuditingService</code>.</p>
 </div>
@@ -10814,7 +10925,7 @@ implementing a <a href="ugbtb.html#_ugbtb_decoupling_vetoing-visibility">vetoing
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_31">11.3.2. Implementation</h4>
+<h4 id="_implementation_32">11.3.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an implementation (<code>org.isisaddons.module.publishing.dom.eventserializer.RestfulObjectsSpecEventSerializer</code>) that represents the event payload using the representation defined by the <a href="http://restfulobjects.org">Restful Objects spec</a> of (transient) objects, grafting on the metadata as additional JSON nodes.</p>
 </div>
@@ -11154,7 +11265,7 @@ invocation/property edit causing the current event to be raised using
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_32">11.5.2. Implementation</h4>
+<h4 id="_implementation_33">11.5.2. Implementation</h4>
 <div class="paragraph">
 <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishing">Isis addons' publishing</a> module provides an
 implementation (<code>org.isisaddons.module.publishing.dom.PublishingService</code>) that persists each
@@ -11415,7 +11526,7 @@ current event to be raised using <a href="#_rgsvc_api_InteractionContext"><code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_33">11.6.2. Implementation</h4>
+<h4 id="_implementation_34">11.6.2. Implementation</h4>
 <div class="paragraph">
 <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p>
 </div>
@@ -11581,7 +11692,7 @@ to implement a subclass and register.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementation_34">12.1.2. Implementation</h4>
+<h4 id="_implementation_35">12.1.2. Implementation</h4>
 <div class="paragraph">
 <p>Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p>
 </div>
@@ -12130,15 +12241,21 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_SudoService">9.4. <code>SudoService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_17">9.4.1. API &amp; Implementation</a></li>
-<li><a href="#_usage_14">9.4.2. Usage</a></li>
-<li><a href="#_registering_the_service_27">9.4.3. Registering the Service</a></li>
+<li><a href="#_api_8">9.4.1. API</a></li>
+<li><a href="#_implementation_28">9.4.2. Implementation</a></li>
+<li><a href="#_usage_14">9.4.3. Usage</a>
+<ul class="sectlevel4">
+<li><a href="#_rgsvc_api_SudoService_ACCESS-ALL-ROLE">ACCESS_ALL_ROLE" (<code>1.13.2-SNAPSHOT</code>)</a></li>
+</ul>
+</li>
+<li><a href="#_spi_code_1_13_2_snapshot_code">9.4.4. SPI (<code>1.13.2-SNAPSHOT</code>)</a></li>
+<li><a href="#_registering_the_service_27">9.4.5. Registering the Service</a></li>
 </ul>
 </li>
 <li><a href="#_rgsvc_api_SwitchUserService">9.5. <code>SwitchUserService</code> (deprecated)</a>
 <ul class="sectlevel3">
-<li><a href="#_api_8">9.5.1. API</a></li>
-<li><a href="#_implementation_28">9.5.2. Implementation</a></li>
+<li><a href="#_api_9">9.5.1. API</a></li>
+<li><a href="#_implementation_29">9.5.2. Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -12157,14 +12274,14 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_MetricsService">10.2. <code>MetricsService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_18">10.2.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_17">10.2.1. API &amp; Implementation</a></li>
 <li><a href="#_registering_the_service_28">10.2.2. Registering the Service</a></li>
 <li><a href="#_related_services_26">10.2.3. Related Services</a></li>
 </ul>
 </li>
 <li><a href="#_rgsvc_api_QueryResultsCache">10.3. <code>QueryResultsCache</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_implementation_19">10.3.1. API &amp; Implementation</a></li>
+<li><a href="#_api_implementation_18">10.3.1. API &amp; Implementation</a></li>
 <li><a href="#_usage_15">10.3.2. Usage</a></li>
 <li><a href="#_registering_the_service_29">10.3.3. Registering the Service</a></li>
 <li><a href="#_related_services_27">10.3.4. Related Services</a></li>
@@ -12172,7 +12289,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </li>
 <li><a href="#_rgsvc_api_RepositoryService">10.4. <code>RepositoryService</code></a>
 <ul class="sectlevel3">
-<li><a href="#_api_9">10.4.1. API</a></li>
+<li><a href="#_api_10">10.4.1. API</a></li>
 <li><a href="#_usage_16">10.4.2. Usage</a>
 <ul class="sectlevel4">
 <li><a href="#_persist">Persist</a></li>
@@ -12180,7 +12297,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_query_and_code_xxxmatches_code">Query and <code>xxxMatches(&#8230;&#8203;)</code></a></li>
 </ul>
 </li>
-<li><a href="#_implementation_29">10.4.3. Implementation</a>
+<li><a href="#_implementation_30">10.4.3. Implementation</a>
 <ul class="sectlevel4">
 <li><a href="#__disabling_auto_flush">(Disabling) Auto-flush</a></li>
 </ul>
@@ -12205,7 +12322,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_spi_AuditingService">11.2. <code>AuditingService3</code> (deprecated)</a>
 <ul class="sectlevel3">
 <li><a href="#_spi_20">11.2.1. SPI</a></li>
-<li><a href="#_implementation_30">11.2.2. Implementation</a></li>
+<li><a href="#_implementation_31">11.2.2. Implementation</a></li>
 <li><a href="#_usage_18">11.2.3. Usage</a></li>
 <li><a href="#_registering_the_services_20">11.2.4. Registering the Services</a></li>
 <li><a href="#_related_services_30">11.2.5. Related Services</a></li>
@@ -12214,7 +12331,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_spi_EventSerializer">11.3. <code>EventSerializer</code> (deprecated)</a>
 <ul class="sectlevel3">
 <li><a href="#_spi_21">11.3.1. SPI</a></li>
-<li><a href="#_implementation_31">11.3.2. Implementation</a></li>
+<li><a href="#_implementation_32">11.3.2. Implementation</a></li>
 <li><a href="#_registering_the_services_21">11.3.3. Registering the Services</a></li>
 <li><a href="#_related_services_31">11.3.4. Related Services</a></li>
 </ul>
@@ -12231,7 +12348,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_spi_PublishingService">11.5. <code>PublishingService</code> (deprecated)</a>
 <ul class="sectlevel3">
 <li><a href="#_spi_23">11.5.1. SPI</a></li>
-<li><a href="#_implementation_32">11.5.2. Implementation</a></li>
+<li><a href="#_implementation_33">11.5.2. Implementation</a></li>
 <li><a href="#_usage_20">11.5.3. Usage</a></li>
 <li><a href="#_registering_the_services_23">11.5.4. Registering the Services</a></li>
 <li><a href="#_related_services_33">11.5.5. Related Services</a></li>
@@ -12241,7 +12358,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_spi_UserRegistrationService">11.6. <code>UserRegistrationService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_24">11.6.1. SPI</a></li>
-<li><a href="#_implementation_33">11.6.2. Implementation</a></li>
+<li><a href="#_implementation_34">11.6.2. Implementation</a></li>
 <li><a href="#_registering_the_services_24">11.6.3. Registering the Services</a></li>
 <li><a href="#_related_services_34">11.6.4. Related Services</a></li>
 </ul>
@@ -12253,7 +12370,7 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <li><a href="#_rgsvc_spi_ClassDiscoveryService">12.1. <code>ClassDiscoveryService</code></a>
 <ul class="sectlevel3">
 <li><a href="#_spi_25">12.1.1. SPI</a></li>
-<li><a href="#_implementation_34">12.1.2. Implementation</a></li>
+<li><a href="#_implementation_35">12.1.2. Implementation</a></li>
 <li><a href="#_usage_21">12.1.3. Usage</a></li>
 <li><a href="#_registering_the_services_25">12.1.4. Registering the Services</a></li>
 </ul>

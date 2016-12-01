@@ -1661,56 +1661,235 @@ need to tweak it to support other RDBMS'.  Any implementation must implement <co
 <div class="sect2">
 <h3 id="_ugbtb_decoupling_mixins">3.2. Mixins</h3>
 <div class="paragraph">
-<p>A mixin object allows one class to contribute behaviour - actions, (derived) properties and
-(derived) collections - to another domain object, either a domain entity or view model.</p>
+<p>A mixin object allows one class to contribute behaviour - actions, (derived) properties and (derived) collections - to another domain object, either a domain entity or view model.</p>
 </div>
 <div class="paragraph">
-<p>Some programming languages use the term "trait" instead of mixin, and some languages (such as AspectJ) define their own
-syntax for defining such constructs.  In Apache Isis a mixin is very similar to a domain service, however it also
-defines a single 1-arg constructor that defines the type of the domain objects that it contributes to.</p>
+<p>Some programming languages use the term "trait" instead of mixin, and some languages (such as AspectJ) define their own syntax for defining such constructs.
+In Apache Isis a mixin is very similar to a domain service, however it also defines a single 1-arg constructor that defines the type of the domain objects that it contributes to.</p>
 </div>
 <div class="paragraph">
-<p>Why do this?  The main reason is to allow the app to be decoupled, so that it doesn&#8217;t degrade into the proverbial
-<a href="http://www.laputan.org/mud/mud.html#BigBallOfMud">"big ball of mud"</a>.  Mixins (and contributions) allow dependency
-to be inverted, so that the dependencies between modules can be kept acyclic and under control.</p>
+<p>Why do this?
+Two reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The main reason is to allow the app to be decoupled, so that it doesn&#8217;t degrade into the proverbial <a href="http://www.laputan.org/mud/mud.html#BigBallOfMud">"big ball of mud"</a>.
+Mixins (and contributions) allow dependency to be inverted, so that the dependencies between modules can be kept acyclic and under control.</p>
+</li>
+<li>
+<p>However, there is another reason: mixins are also a convenient mechanism for grouping functionality even for a concrete type, helping to rationalize about the dependency between the data and the behaviour.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Both use cases are discussed below.</p>
+</div>
+<div class="paragraph">
+<p>Syntactically, a mixin is defined using either the <a href="rgant.html#_rgant_Mixin"><code>@Mixin</code></a> annotation or using <a href="rgant.html#_rgant_DomainObject_nature"><code>@DomainObject#nature()</code></a> attribute (specifying a nature of <code>Nature.MIXIN</code>).</p>
 </div>
 <div class="sect3">
-<h4 id="_example">3.2.1. Example</h4>
+<h4 id="_contributed_collection">3.2.1. Contributed Collection</h4>
 <div class="paragraph">
-<p>This is probably best explained by way of an example.  Suppose we have the <code>Customer</code> domain object which implements
-a <code>DocumentHolder</code> interface:</p>
+<p>The example below shows how to contribute a collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> <span class="directive">implements</span> DocumentHolder {
-    ...
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolderDocuments</span> {
+
+    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
+    <span class="directive">public</span> DocumentHolderDocuments(DocumentHolder holder) { <span class="local-variable">this</span>.holder = holder; }
+
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)                         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@CollectionLayout</span>(render = RenderType.EAGERLY)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() {                         <i class="conum" data-value="3"></i><b>(3)</b>
+        ...
+    }
+    <span class="directive">public</span> <span class="type">boolean</span> hideDocuments() { ... }                      <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>required; actions that have side-effects cannot be contributed as collections</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>required; otherwise the mixin will default to being rendered as an action</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>must accept no arguments.
+The mixin is a collection rather than a property because the return type is a collection, not a scalar.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>supporting methods follow the usual naming conventions.
+(That said, in the case of collections, because the collection is derived/read-only, the only supporting method that is relevant is <code>hideXxx()</code>).</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>We could then imagine a mixin that would contribute behaviour to list, add and remove the <code>Document</code>s for this holder:</p>
+<p>The above will result in a contributed collection for all types that implement/extend from <code>DocumentHolder</code> (so is probably for a mixin across modules).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contributed_property">3.2.2. Contributed Property</h4>
+<div class="paragraph">
+<p>Contributed properties are defined similarly, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>                                                          <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolderMostRecentDocument</span> {
+
     <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
-    <span class="directive">public</span> DocumentHolder_documents(DocumentHolder holder) {    <i class="conum" data-value="2"></i><b>(2)</b>
-        <span class="local-variable">this</span>.holder = holder;
+    <span class="directive">public</span> DocumentHolderDocuments(DocumentHolder holder) { <span class="local-variable">this</span>.holder = holder; }
+
+    <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)                         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="predefined-type">Document</span>&gt; mostRecentDocument() {                     <i class="conum" data-value="3"></i><b>(3)</b>
+        ...
     }
+    <span class="directive">public</span> <span class="type">boolean</span> hideMostRecentDocument() { ... }             <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>required; actions that have side-effects cannot be contributed as collections</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>required; otherwise the mixin will default to being rendered as an action</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>must accept no arguments.
+The mixin is a property rather than a collection because the return type is a scalar.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>supporting methods follow the usual naming conventions.
+(That said, in the case of properties, because the property is derived/read-only, the only supporting method that is relevant is <code>hideXxx()</code>).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contributed_action">3.2.3. Contributed Action</h4>
+<div class="paragraph">
+<p>Contributed properties are defined similarly, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolderAddDocument</span> {
+
+    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
+    <span class="directive">public</span> DocumentHolderDocuments(DocumentHolder holder) { <span class="local-variable">this</span>.holder = holder; }
+
+    <span class="annotation">@Action</span>()
+    <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ACTION)          <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="predefined-type">Document</span>&gt; addDocument(<span class="predefined-type">Document</span> doc) {
+        ...
+    }
+    <span class="directive">public</span> <span class="type">boolean</span> hideAddDocument() { ... }                    <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>recommended</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>supporting methods follow the usual naming conventions.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inferred_name">3.2.4. Inferred Name</h4>
+<div class="paragraph">
+<p>Where the mixin follows the naming convention <code>SomeType_mixinName</code> then the method name can be abbreviated to "$$".
+The mixin name is everything after the last '_'.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
+
+    <span class="directive">private</span> <span class="directive">final</span> DocumentHolder holder;
+    <span class="directive">public</span> DocumentHolder_documents(DocumentHolder holder) { <span class="local-variable">this</span>.holder = holder; }
+
     <span class="annotation">@Action</span>(semantics=SemanticsOf.SAFE)
     <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ASSOCIATION)
     <span class="annotation">@CollectionLayout</span>(render = RenderType.EAGERLY)
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() {
-        ...                                                     <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; <span class="error">$</span><span class="error">$</span>() {                                    <i class="conum" data-value="1"></i><b>(1)</b>
+        ...
     }
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
-    <span class="directive">public</span> DocumentHolder add(<span class="predefined-type">Document</span> document) {
-        ...                                                     <i class="conum" data-value="4"></i><b>(4)</b>
-    }
-    <span class="annotation">@Action</span>(semantics=SemanticsOf.IDEMPOTENT)
-    <span class="directive">public</span> DocumentHolder remove(<span class="predefined-type">Document</span> document) {
-        ...                                                     <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">public</span> <span class="type">boolean</span> hide<span class="error">$</span><span class="error">$</span>() { ... }                                 <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>using "$$" as the reserved method name</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>supporting methods as usual</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As of <code>1.13.2-SNAPSHOT</code>, "$" is also recognized as a separator between the mixin type and mixin name.
+This is useful for mixins implemented as nested static types, discussed below.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_as_nested_static_classes">3.2.5. As Nested Static Classes</h4>
+<div class="paragraph">
+<p>As noted in the introduction, while mixins were originally introduced as a means of allowing contributions from one module to the types of another module, they are also a convenient mechanism for grouping functionality/behaviour against a concrete type.
+All the methods and supporting methods end up in a single construct, and the dependency between that functionality and the rest of the object is made more explicit.</p>
+</div>
+<div class="paragraph">
+<p>When using mixins in this fashion, it is idiomatic to write the mixin as a nested static class, using the naming convention described above to reduce duplication.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+
+    <span class="annotation">@Mixin</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">_placeOrder</span> {                                            <i class="conum" data-value="1"></i><b>(1)</b>
+
+        <span class="directive">private</span> <span class="directive">final</span> Customer customer;
+        <span class="directive">public</span> documents(Customer customer) { <span class="local-variable">this</span>.customer = customer; }       <i class="conum" data-value="2"></i><b>(2)</b>
+
+        <span class="annotation">@Action</span>
+        <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ACTION)
+        <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Order&gt; <span class="error">$</span><span class="error">$</span>(Product p, <span class="type">int</span> quantity) {                        <i class="conum" data-value="3"></i><b>(3)</b>
+            ...
+        }
+        <span class="directive">public</span> <span class="type">boolean</span> hide<span class="error">$</span><span class="error">$</span>() { ... }                                         <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="directive">public</span> <span class="predefined-type">String</span> validate0<span class="error">$</span><span class="error">$</span>(Product p) { ...  }
     }
 }</code></pre>
 </div>
@@ -1719,105 +1898,73 @@ a <code>DocumentHolder</code> interface:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>alternatively can use <code>@DomainObject(nature=Nature.MIXIN)</code></td>
+<td>must start with an "_" (the effective name of the class is <code>Customer$_placeOrder</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>constructor indicates the type that is contributed to</td>
+<td>typically contributed to concrete class</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>implementation could, for example, use the (non-ASF)
-<a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module.</td>
+<td>using the "$$" reserved name</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>implementation would probably delegate to an injected repository to (ultimately) insert data into some table</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>implementation would probably delegate to an injected repository to (ultimately) delete data from some table</td>
+<td>supporting methods as usual</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The above example also omits any supporting methods, eg <code>hideXxx()</code>, <code>disableXxx()</code>, <code>validateXxx()</code>, etc.</p>
+<p>As of <code>1.13.2-SNAPSHOT</code>, the leading "_" can be omitted because "$" is also recognized as an identifier.
+Moreover, the mixin class can be capitalized if desired.
+Thus:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+
+    <span class="annotation">@Mixin</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">PlaceOrder</span> {                                            <i class="conum" data-value="1"></i><b>(1)</b>
+
+        <span class="directive">private</span> <span class="directive">final</span> Customer customer;
+        <span class="directive">public</span> documents(Customer customer) { <span class="local-variable">this</span>.customer = customer; }       <i class="conum" data-value="2"></i><b>(2)</b>
+
+        <span class="annotation">@Action</span>
+        <span class="annotation">@ActionLayout</span>(contributed = Contributed.AS_ACTION)
+        <span class="directive">public</span> <span class="predefined-type">List</span>&lt;Order&gt; <span class="error">$</span><span class="error">$</span>(Product p, <span class="type">int</span> quantity) {                        <i class="conum" data-value="3"></i><b>(3)</b>
+            ...
+        }
+        <span class="directive">public</span> <span class="type">boolean</span> hide<span class="error">$</span><span class="error">$</span>() { ... }                                         <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="directive">public</span> <span class="predefined-type">String</span> validate0<span class="error">$</span><span class="error">$</span>(Product p) { ...  }
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>In the user interface the "documents" collection, the "add" and the "delete" actions will appear to be part of
-<code>Customer</code>.  In essence the framework constructs a composite UI from the parts of multiple objects.</p>
+<p>In other words, all of the following are allowed (in <code>1.13.2-SNAPSHOT</code>):</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>public static class Documents { &#8230;&#8203; }</code></p>
+</li>
+<li>
+<p><code>public static class documents { &#8230;&#8203; }</code></p>
+</li>
+<li>
+<p><code>public static class _Documents { &#8230;&#8203; }</code></p>
+</li>
+<li>
+<p><code>public static class _documents { &#8230;&#8203; }</code></p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>The (non-ASF) <a href="http://github.com/incodehq/incode-module-note">Incode note</a> and
-<a href="http://github.com/incodehq/incode-module-commchannel">Incode commchannel</a> modules are real-world examples that use this
-technique throughout.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>(As of <code>1.13.2-SNAPSHOT</code>), the reserved method name "$$" can also be changed using <a href="rgant.html#_rgant_Mixin_method"><code>@Mixin#method()</code></a> or <a href="rgant.html#_rgant_DomainObject_mixinMethod"><code>@DomainObject#mixinMethod()</code></a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_contributing_a_single_member">3.2.2. Contributing a single member</h4>
-<div class="paragraph">
-<p>The mixin can contribute as much or as little behaviour as makes sense.  For example, in the example above it might be
-that <code>Document</code>s are created through some other mechanism (eg scanned) and are never deleted.  In that case, the
-mixin might be simply:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; documents() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For the case where there is only a single member being contributed, the special name "__" (that is, two underscores)
-can be used instead.  In this case, the contributee member&#8217;s name will be inferred from the mixin&#8217;s class name.  If the
-class name itself contains an underscore, then the last part of the class name will be used.</p>
-</div>
-<div class="paragraph">
-<p>Thus, for a mixin whose class name is <code>DocumentHolder_documents</code>, the effective member name is <code>documents</code>.  We could
-therefore rewrite the mixin as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The benefit of this is marginal unless there are supporting methods, in which case the removal of boilerplate is welcome:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Mixin</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DocumentHolder_documents</span> {
-    ..
-    public <span class="predefined-type">List</span>&lt;<span class="predefined-type">Document</span>&gt; __() { ... }
-    <span class="directive">public</span> <span class="type">boolean</span> hide__() { ... }
-    <span class="directive">public</span> <span class="predefined-type">String</span> disable__() { ... }
-    ...
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_programmatic_usage">3.2.3. Programmatic usage</h4>
+<h4 id="_programmatic_usage">3.2.6. Programmatic usage</h4>
 <div class="paragraph">
 <p>When a domain object is rendered, the framework will automatically instantiate all required mixins and delegate to them
 dynamically.  If writing integration tests or fixtures, or (sometimes) just regular domain logic, then you may need to
@@ -1840,7 +1987,7 @@ method.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_other_reasons_to_use_mixins">3.2.4. Other reasons to use mixins</h4>
+<h4 id="_other_reasons_to_use_mixins">3.2.7. Other reasons to use mixins</h4>
 <div class="paragraph">
 <p>In the introduction to this topic we mentioned that mixins are most useful for ensuring that the domain app remains
 decoupled.  This applies to the case where the contributee (eg <code>Customer</code>, being mixed into) is in one module, while
@@ -1872,7 +2019,7 @@ object as it is rendered.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_related_reading">3.2.5. Related reading</h4>
+<h4 id="_related_reading">3.2.8. Related reading</h4>
 <div class="paragraph">
 <p>Mixins are an implementation of the <a href="http://www.artima.com/articles/dci_vision.html">DCI architecture</a> architecture, as formulated and described by <a href="https://en.wikipedia.org/wiki/Trygve_Reenskaug">Trygve Reenskaug</a> and <a href="https://en.wikipedia.org/wiki/Jim_Coplien">Jim Coplien</a>.  Reenskaug was the inventor of the MVC pattern (and also the external
 examiner for Richard Pawson&#8217;s PhD thesis), while Coplien has a long history in object-orientation, C++ and patterns.</p>
@@ -1987,7 +2134,7 @@ singletons, whereas mixins are instantiated as required (by the framework) and t
 </div>
 </div>
 <div class="sect3">
-<h4 id="_contributed_action">3.3.2. Contributed Action</h4>
+<h4 id="_contributed_action_2">3.3.2. Contributed Action</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2002,7 +2149,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_contributed_property">3.3.3. Contributed Property</h4>
+<h4 id="_contributed_property_2">3.3.3. Contributed Property</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2017,7 +2164,7 @@ TODO
 </div>
 </div>
 <div class="sect3">
-<h4 id="_contributed_collection">3.3.4. Contributed Collection</h4>
+<h4 id="_contributed_collection_2">3.3.4. Contributed Collection</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5507,19 +5654,22 @@ the default ones of <code>isis.properties</code> et al):</p>
 </li>
 <li><a href="#_ugbtb_decoupling_mixins">3.2. Mixins</a>
 <ul class="sectlevel3">
-<li><a href="#_example">3.2.1. Example</a></li>
-<li><a href="#_contributing_a_single_member">3.2.2. Contributing a single member</a></li>
-<li><a href="#_programmatic_usage">3.2.3. Programmatic usage</a></li>
-<li><a href="#_other_reasons_to_use_mixins">3.2.4. Other reasons to use mixins</a></li>
-<li><a href="#_related_reading">3.2.5. Related reading</a></li>
+<li><a href="#_contributed_collection">3.2.1. Contributed Collection</a></li>
+<li><a href="#_contributed_property">3.2.2. Contributed Property</a></li>
+<li><a href="#_contributed_action">3.2.3. Contributed Action</a></li>
+<li><a href="#_inferred_name">3.2.4. Inferred Name</a></li>
+<li><a href="#_as_nested_static_classes">3.2.5. As Nested Static Classes</a></li>
+<li><a href="#_programmatic_usage">3.2.6. Programmatic usage</a></li>
+<li><a href="#_other_reasons_to_use_mixins">3.2.7. Other reasons to use mixins</a></li>
+<li><a href="#_related_reading">3.2.8. Related reading</a></li>
 </ul>
 </li>
 <li><a href="#_ugbtb_decoupling_contributions">3.3. Contributions</a>
 <ul class="sectlevel3">
 <li><a href="#_syntax">3.3.1. Syntax</a></li>
-<li><a href="#_contributed_action">3.3.2. Contributed Action</a></li>
-<li><a href="#_contributed_property">3.3.3. Contributed Property</a></li>
-<li><a href="#_contributed_collection">3.3.4. Contributed Collection</a></li>
+<li><a href="#_contributed_action_2">3.3.2. Contributed Action</a></li>
+<li><a href="#_contributed_property_2">3.3.3. Contributed Property</a></li>
+<li><a href="#_contributed_collection_2">3.3.4. Contributed Collection</a></li>
 </ul>
 </li>
 <li><a href="#_ugbtb_decoupling_vetoing-visibility">3.4. Vetoing Visibility</a></li>
