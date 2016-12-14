@@ -1274,15 +1274,19 @@ env | grep ISIS | sort</code></pre>
 <span class="tag">&lt;/properties&gt;</span></code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Check for and fix any missing license header notices:</p>
+<p>Previously at this point we used to check for and fix any missing license header notices; however it doesn&#8217;t make sense for the archetype to include the Apache rat-plugin, so this has been removed.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o &amp;&amp; \
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done || \
-for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Finally, double check that the app</p>
@@ -1314,9 +1318,7 @@ for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
 <p>can be run using the mvn jetty plugin:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">pushd webapp
-mvn jetty:run
-popd</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre>
 </div>
 </div>
 </li>
@@ -1427,9 +1429,8 @@ mvn archetype:generate  \
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">cd myapp
-mvn clean install
-cd webapp
-mvn jetty:run                  # runs as mvn jetty plugin</code></pre>
+mvn clean install -o
+mvn -pl webapp jetty:run              # runs as mvn jetty plugin</code></pre>
 </div>
 </div>
 </div>
