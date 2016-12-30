@@ -530,7 +530,8 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_tg_tutorials_pet-clinic">2. Pet Clinic</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is a step-by-step tutorial to build up a simple "petclinic" application, starting from the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.  It was originally written by Jeroen van der Wal.</p>
+<p>This is a step-by-step tutorial to build up a simple "petclinic" application, starting from the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.
+It was originally written by Jeroen van der Wal.</p>
 </div>
 <div class="paragraph">
 <p>It consists of just three domain classes (<a href="http://yuml.me/edit/3db2078c">http://yuml.me/3db2078c</a>):</p>
@@ -546,24 +547,24 @@ table.CodeRay td.code>pre{padding:0}
 <div class="ulist">
 <ul>
 <li>
-<p>register a Pet</p>
+<p>register a <code>Pet</code></p>
 </li>
 <li>
-<p>register an Owner</p>
+<p>register an <code>Owner</code></p>
 </li>
 <li>
-<p>maintain a Pet&#8217;s details</p>
+<p>maintain a <code>Pet</code>'s details</p>
 </li>
 <li>
-<p>check in a Pet to visit the clinic</p>
+<p>check in a <code>Pet</code> to visit the clinic</p>
 </li>
 <li>
-<p>enter a diagnosis</p>
+<p>enter a <code>Diagnosis</code></p>
+</li>
+<li>
+<p>check out a <code>Pet</code> after visiting the clinic</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>check out a Pet to visit the clinic</p>
 </div>
 <div class="paragraph">
 <p>Either follow along or check out the tags from the corresponding <a href="https://github.com/danhaywood/isis-app-petclinic">github repo</a>.</p>
@@ -604,19 +605,9 @@ table.CodeRay td.code>pre{padding:0}
 <pre class="CodeRay highlight"><code data-lang="bash">git checkout https://github.com/danhaywood/isis-app-petclinic/commit/249abe476797438d83faa12ff88365da2c362451</code></pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>This tutorial was developed against Apache Isis 1.8.0-SNAPSHOT.  Since then 1.8.0 has been released, so simply replace "1.8.0-SNAPSHOT" for "1.8.0" wherever it appears in the <code>pom.xml</code> files.</p>
+<p>Do note that the tutorial was originally developed against Apache Isis 1.8.0-SNAPSHOT; replace "1.8.0-SNAPSHOT" for the any version from 1.8.0 up to 1.13.1.
+(The structure of Apache Isis archetype changed in 1.13.2).</p>
 </div>
 </td>
 </tr>
@@ -630,13 +621,27 @@ table.CodeRay td.code>pre{padding:0}
 <pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simpleapp-archetype \
-    -D archetypeVersion=1.13.2 \
+    -D archetypeVersion=1.13.1 \
     -D groupId=com.mycompany \
     -D artifactId=petclinic \
     -D version=1.0-SNAPSHOT \
     -D archetypeRepository=http://repository-estatio.forge.cloudbees.com/snapshot/ \
     -B</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can use 1.13.2 (or later) version of the archetype if you wish, however be aware that the structure of the solution repo (mentioned above) will be different from the structure for applications generated from 1.13.2.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This will generate the app in a <code>petclinic</code> directory. Move the contents back:</p>
@@ -659,26 +664,27 @@ rmdir petclinic</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once that&#8217;s built then run using:</p>
+<p>You can run using the mvn-jetty-plugin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn antrun:run -P self-host</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A splash screen should appear offering to start up the app. Go ahead and start; the web browser should be opened at <a href="http://localhost:8080">http://localhost:8080</a></p>
+<p>You can then browser to <a href="http://localhost:8080">http://localhost:8080</a></p>
 </div>
 <div class="paragraph">
-<p>Alternatively, you can run using the mvn-jetty-plugin:</p>
+<p>If using 1.13.2 or later, then you can also use the <a href="https://github.com/danhaywood/java-mavenmixin-jettyconsole/blob/master/README.adoc">jetty-console</a> plugin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn jetty:run</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install -Dmavenmixin-jettyconsole
+mvn -pl webapp antrun:run -Dmavenmixin-jettyconsole</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will accomplish the same thing, though the webapp is mounted at a slightly different URL</p>
+<p>This packages the app as a standalone JAR, and then runs using the AntRun plugin.</p>
 </div>
 </div>
 <div class="sect2">
