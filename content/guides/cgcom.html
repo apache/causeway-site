@@ -1309,7 +1309,10 @@ env | grep ISIS | sort</code></pre>
 <p>mainClass=<code>org.apache.isis.WebServer</code></p>
 </li>
 <li>
-<p>args=<code>-m domainapp.app.DomainAppAppManifestWithFixtures</code></p>
+<p>args=<code>-m domainapp.application.manifest.DomainAppAppManifestWithFixtures</code></p>
+</li>
+<li>
+<p>run before: <code>mvn -f pom-jdo-enhance-all.xml datanucleus:enhance -o</code> in the root module</p>
 </li>
 </ul>
 </div>
@@ -1318,7 +1321,19 @@ env | grep ISIS | sort</code></pre>
 <p>can be run using the mvn jetty plugin:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
+=======</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>can be packaged and run using the mvn jetty-console plugin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dmavenmixin-jettyconsole
+mvn antrun:run -Dmavenmixin-jettyconsole
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; Stashed changes</code></pre>
 </div>
 </div>
 </li>
@@ -1339,6 +1354,15 @@ tail -f ../logs/catalina.out</code></pre>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">sh shutdown.sh
 popd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>can be packaged and run using Docker:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package -Dmavenmixin-docker -D docker-plugin.imageName=test/simpleapp
+docker run -p 8080:8080 -d --name simpleapp test/simpleapp</code></pre>
 </div>
 </div>
 </li>
