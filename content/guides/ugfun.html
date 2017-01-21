@@ -2335,8 +2335,7 @@ mvn clean install</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cd webapp
-mvn jetty:run</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2344,8 +2343,7 @@ mvn jetty:run</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">cd webapp
-mvn jetty:run -D jetty.port=9090</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run -D jetty.port=9090</code></pre>
 </div>
 </div>
 </div>
@@ -2773,13 +2771,17 @@ mvn jetty:run -D jetty.port=9090</code></pre>
 <div class="sect2">
 <h3 id="_ugfun_how-tos_class-structure">4.1. Class Structure</h3>
 <div class="paragraph">
-<p>Apache Isis works by building a metamodel of the domain objects: entities, <a href="ugbtb.html#_ugbtb_view-models">view model</a>s and services.  The class members of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
+<p>Apache Isis works by building a metamodel of the domain objects: entities, <a href="ugbtb.html#_ugbtb_view-models">view model</a>s and services.
+The class methods of both entities and view models represent both state&#8201;&#8212;&#8201;(single-valued) properties and (multi-valued) collections&#8201;&#8212;&#8201;and behaviour&#8201;&#8212;&#8201;actions.  The class members of domain services is simpler: just behaviour, ie actions.</p>
 </div>
 <div class="paragraph">
-<p>In the automatically generated UI a property is rendered as a field.  This can be either of a value type (a string, number, date, boolean etc) or can be a reference to another entity.  A collection is generally rendered as a table.</p>
+<p>In the automatically generated UI a property is rendered as a field.
+This can be either of a value type (a string, number, date, boolean etc) or can be a reference to another entity.
+A collection is generally rendered as a table.</p>
 </div>
 <div class="paragraph">
-<p>In order for Apache Isis to build its metamodel the domain objects must follow some conventions: what we call the <em>Apache Isis Programming Model</em>.  This is just an extension of the pojo / JavaBean standard of yesteryear: properties and collections are getters/setters, while actions are simply any remaining <code>public</code> methods.</p>
+<p>In order for Apache Isis to build its metamodel the domain objects must follow some conventions: what we call the <em>Apache Isis Programming Model</em>.
+This is just an extension of the pojo / JavaBean standard of yesteryear: properties and collections are getters/setters, while actions are simply any remaining <code>public</code> methods.</p>
 </div>
 <div class="paragraph">
 <p>Additional metamodel semantics are inferred both imperatively from <em>supporting methods</em> and declaratively from annotations.</p>
@@ -2795,7 +2797,8 @@ mvn jetty:run -D jetty.port=9090</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In fact, the Apache Isis programming model is extensible; you can teach Apache Isis new programming conventions and you can remove existing ones; ultimately they amount to syntax.   The only real fundamental that can&#8217;t be changed is the notion that objects consist of properties, collections and actions.</p>
+<p>In fact, the Apache Isis programming model is extensible; you can teach Apache Isis new programming conventions and you can remove existing ones; ultimately they amount to syntax.
+The only real fundamental that can&#8217;t be changed is the notion that objects consist of properties, collections and actions.</p>
 </div>
 <div class="paragraph">
 <p>You can learn more about extending Apache Isis programming model <a href="ugbtb.html#_ugbtb_programming-model">here</a>.</p>
@@ -2806,84 +2809,348 @@ mvn jetty:run -D jetty.port=9090</code></pre>
 </div>
 <div class="sect3">
 <h4 id="_ugfun_how-tos_class-structure_class-definition">4.1.1. Class Definition</h4>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>Apache Isis supports recognises three main types of domain classes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>domain entities - domain objects persisted to the database using JDO/DataNucleus; for example <code>Customer</code></p>
+</li>
+<li>
+<p>domain services - generally singletons, automatically injected, and providing various functionality; for example <code>CustomerRepository</code></p>
+</li>
+<li>
+<p>view models - domain objects that are a projection of some state held by the database, in support a particular use case; for example <code>CustomerDashboard</code> (to pull together commonly accessed information about a customer).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Domain classes are generally recognized using annotations.
+Apache Isis defines its own set of annotations, while entities are annotated using JDO/DataNucleus (though XML can also be used if required).
+JAXB can also be used for view models.
+Apache Isis recognizes some of the JDO and JAXB annotations and infers domain semantics from these annotations.</p>
+</div>
+<div class="paragraph">
+<p>You can generally recognize an Apache Isis domain class because it will be probably be annotated using <code>@DomainObject</code> and <code>@DomainService</code>.
+The framework also defines supplementary annotations, <code>@DomainObjectLayout</code> and <code>@DomainServiceLayout</code>.
+These provide hints relating to the layout of the domain object in the user interface.
+(Alternatively, these UI hints can be defined in a supplementary <a href="#_ugfun_object-layout"><code>.layout.xml</code></a> file.</p>
+</div>
+<div class="paragraph">
+<p>We use Maven modules as a way to group related domain objects together; we can then reason about all the classes in that module as a single unit.
+By convention there will be a single top-level package corresponding to the module.</p>
+</div>
+<div class="paragraph">
+<p>For example, the (non-ASF) <a href="https://github.com/incodehq/incode-module-document">Document module</a> (part of the <a href="http://catalog.incode.org">Incode Catalog</a>) has a top-level package of <code>org.incode.module.document</code>.
+Within the module there may be various subpackages, but its the module defines the namespace.</p>
+</div>
+<div class="paragraph">
+<p>In the same way that the Java module act as a namespace for domain objects, it&#8217;s good practice to map domain entities to their own (database) schemas.</p>
+</div>
+<div class="sect4">
+<h5 id="_ugfun_how-tos_class-structure_class-definition_entities">Entities</h5>
+<div class="paragraph">
+<p>Entities are persistent domain objects.
+Their persistence is handled by JDO/DataNucleus, which means that it will generally be decorated with both DataNucleus and Apache Isis annotations.
+The following is typical:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(                                      <i class="conum" data-value="1"></i><b>(1)</b>
+        identityType=IdentityType.DATASTORE,                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        schema = <span class="string"><span class="delimiter">&quot;</span><span class="content">simple</span><span class="delimiter">&quot;</span></span>,                                                      <i class="conum" data-value="3"></i><b>(3)</b>
+        table = <span class="string"><span class="delimiter">&quot;</span><span class="content">SimpleObject</span><span class="delimiter">&quot;</span></span>
+)
+<span class="annotation">@javax</span>.jdo.annotations.DatastoreIdentity(                                       <i class="conum" data-value="4"></i><b>(4)</b>
+        strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
+        column=<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>
+)
+<span class="annotation">@javax</span>.jdo.annotations.Version(                                                 <i class="conum" data-value="5"></i><b>(5)</b>
+        strategy= VersionStrategy.DATE_TIME,
+        column=<span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>
+)
+<span class="annotation">@javax</span>.jdo.annotations.Queries({
+        <span class="annotation">@javax</span>.jdo.annotations.Query(                                           <i class="conum" data-value="6"></i><b>(6)</b>
+                name = <span class="string"><span class="delimiter">&quot;</span><span class="content">findByName</span><span class="delimiter">&quot;</span></span>,
+                value = <span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT </span><span class="delimiter">&quot;</span></span>
+                        + <span class="string"><span class="delimiter">&quot;</span><span class="content">FROM domainapp.modules.simple.dom.impl.SimpleObject </span><span class="delimiter">&quot;</span></span>
+                        + <span class="string"><span class="delimiter">&quot;</span><span class="content">WHERE name.indexOf(:name) &gt;= 0 </span><span class="delimiter">&quot;</span></span>)
+})
+<span class="annotation">@javax</span>.jdo.annotations.Unique(name=<span class="string"><span class="delimiter">&quot;</span><span class="content">SimpleObject_name_UNQ</span><span class="delimiter">&quot;</span></span>, members = {<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>}) <i class="conum" data-value="7"></i><b>(7)</b>
+<span class="annotation">@DomainObject</span>(                                                                  <i class="conum" data-value="8"></i><b>(8)</b>
+        objectType = <span class="string"><span class="delimiter">&quot;</span><span class="content">simple.SimpleObject</span><span class="delimiter">&quot;</span></span>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObject</span>
+             <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;SimpleObject&gt; {                              <i class="conum" data-value="9"></i><b>(9)</b>
+
+    <span class="directive">public</span> SimpleObject(<span class="directive">final</span> <span class="predefined-type">String</span> name) {                                    <i class="conum" data-value="10"></i><b>(10)</b>
+        setName(name);
+    }
+
+    ...
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+        <span class="keyword">return</span> ObjectContracts.toString(<span class="local-variable">this</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>);                          <i class="conum" data-value="11"></i><b>(11)</b>
+    }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">int</span> compareTo(<span class="directive">final</span> SimpleObject other) {
+        <span class="keyword">return</span> ObjectContracts.compare(<span class="local-variable">this</span>, other, <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>);                    <i class="conum" data-value="9"></i><b>(9)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>@PersistenceCapable</code> annotation indicates that this is an entity to DataNucleus.
+The DataNucleus enhancer acts on the bytecode of compiled entities, injecting lazy loading and dirty object tracking functionality.
+Enhanced entities end up also implementing the <code>javax.jdo.spi.PersistenceCapable</code> interface.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Indicates how identifiers for the entity are handled.
+Using <code>DATASTORE</code> means that a DataNucleus is responsible for assigning the value (rather than the application).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specifies the RDBMS database schema and table name for this entity will reside.
+The schema should correspond with the module in which the entity resides.
+The table will default to the entity name if omitted.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>For entities that are using <code>DATASTORE</code> identity, indicates how the id will be assigned.
+A common strategy is to allow the database to assign the id, for example using an identity column or a sequence.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>@Version</code> annotation is useful for optimistic locking; the strategy indicates what to store in the <code>version</code> column.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The <code>@Query</code> annotation (usually several of them, nested within a <code>@Queries</code> annotation) defines queries using JDOQL.
+DataNucleus provides several APIs for defining queries, including entirely programmatic and type-safe APIs; but JDOQL is very similar to SQL and so easily learnt.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>DataNucleus will automatically add a unique index to the primary surrogate id (discussed above), but additional alternative keys can be defined using the <code>@Unique</code> annotation.
+In the example above, the "name" property is assumed to be unique.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The <code>@DomainObject</code> annotation identifies the domain object to Apache Isis (not DataNucleus).
+It isn&#8217;t necessary to include this annotation&#8201;&#8212;&#8201;at least, not for entities&#8201;&#8212;&#8201;but it is nevertheless recommended.
+In particular, its strongly recommended that the <code>objectType</code> (which acts like an alias to the concrete domain class) is specified; note that it corresponds to the schema/table for DataNucleus' <code>@PersistenceCapable</code> annotation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Although not required, we strongly recommend that all entities are naturally <code>Comparable</code>.
+This then allows parent/child relationships to be defined using <code>SortedSet</code>s; RDBMS after all are set-oriented.
+The <code>ObjectContracts</code> utility class provided by Apache Isis makes it easy to implement the <code>compareTo()</code> method, but you can also just use an IDE to generate an implementation or roll your own.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Chances are that some of the properties of the entity will be mandatory, for example any properties that represent an alternate unique key to the entity.
+In regular Java programming we would represent this using a constructor that defines these mandatory properties, and in Apache Isis/DataNucleus we can likewise define such a constructor.
+When DataNucleus rehydrates domain entities from the database at runtime, it actually requires a no-arg constructor (it then sets all state reflectively).
+However, there is no need to provide such a no-arg constructor; it is added by the enhancer process.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>The <code>ObjectContracts</code> utility class also provides assistance for <code>toString()</code>, useful when debugging in an IDE.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ugfun_how-tos_class-structure_class-definition_domain-services">Domain Services</h5>
+<div class="paragraph">
+<p>Domain services are generally singletons that are automatically injected into other domain services.
+A very common usage is as a repository (to find/locate existing entities) or as a factory (to create new instances of entities).
+But services can also be exposed in the UI as top-level menus; and services are also used as a bridge to access technical resources (eg rendering a document object as a PDF).</p>
+</div>
+<div class="paragraph">
+<p>The Apache Isis framework itself also provides a large number of number of domain services, catalogued in the <a href="rgsvc.html">Domain Services Reference Guide</a>.
+Some of these are APIs (intended to be called by your application&#8217;s own domain objects) and some are SPIs (implemented by your application and called by the framework, customising the way it works).</p>
+</div>
+<div class="paragraph">
+<p>The following is a typical menu service:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(                                                 <i class="conum" data-value="1"></i><b>(1)</b>
+        nature = NatureOfService.VIEW_MENU_ONLY
+)
+<span class="annotation">@DomainServiceLayout</span>(                                           <i class="conum" data-value="2"></i><b>(2)</b>
+        named = <span class="string"><span class="delimiter">&quot;</span><span class="content">Simple Objects</span><span class="delimiter">&quot;</span></span>,
+        menuOrder = <span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectMenu</span> {
+
+    ...
+
+    <span class="annotation">@Action</span>(semantics = SemanticsOf.SAFE)
+    <span class="annotation">@ActionLayout</span>(bookmarking = BookmarkPolicy.AS_ROOT)
+    <span class="annotation">@MemberOrder</span>(sequence = <span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;SimpleObject&gt; findByName(                       <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">&quot;</span><span class="content">Name</span><span class="delimiter">&quot;</span></span>)
+            <span class="directive">final</span> <span class="predefined-type">String</span> name
+    ) {
+        <span class="keyword">return</span> simpleObjectRepository.findByName(name);
+    }
+
+    <span class="annotation">@javax</span>.inject.Inject
+    SimpleObjectRepository simpleObjectRepository;              <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The (Apache Isis) <code>@DomainService</code> annotation is used to identify the class as a domain service.
+Apache Isis scans the classpath looking for classes with this annotation, so there very little configuration other than to tell the framework which packages to scan underneath.
+The <code>VIEW_MENU_ONLY</code> nature indicates that this service&#8217;s actions should be exposed as menu items.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The (Apache Isis) <code>@DomainServiceLayout</code> annotation provides UI hints.
+In the example above the menu is named "Simple Objects" (otherwise it would have defaulted to "Simple Object Menu", based on the class name, while the <code>menuOrder</code> attribute determines the order of the menu with respect to other menu services.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>findByName</code> method is annotated with various Apache Isis annotations (<code>@Action</code>, <code>@ActionLayout</code> and <code>@MemberOrder</code>) and is itself rendered in the UI as a "Find By Name" menu item underneath the "Simple Objects" menu.
+The implementation delegates to an <code>SimpleObjectRepository</code> service, which is injected.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>javax.inject.Inject</code> annotation instructs Apache Isis framework to inject the <code>SimpleObjectRepository</code> service into this domain object.
+The framework can inject into not just other domain services but will also automatically into domain entities and view models.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ugfun_how-tos_class-structure_class-definition_view-models">View Models</h5>
+<div class="paragraph">
+<p><a href="ugbtb.html#_ugbtb_view-models">View model</a>s are similar to entities in that (unlike domain services) there can be many instances of any given type; but they differ from entities in that they are not persisted into a database.
+Instead they are recreated dynamically by serializing their state, ultimately into the URL itself.</p>
+</div>
+<div class="paragraph">
+<p>A common use case for view models is to support a business process.
+For example, in an invoicing application there could be an <code>InvoiceRun</code> view model, which lists all the invoices due to be paid (each month, say) and provides actions to allow those invoices to be processed.</p>
+</div>
+<div class="paragraph">
+<p>Another use case is for a view model to act as a proxy for an entity that is managed in an external system.
+For example, a <code>Content</code> view model could represent a PDF that has been scanned and is held within a separate Content Management system.</p>
+</div>
+<div class="paragraph">
+<p>A third use case is to define DTOs that act as a stable projection of one or more underlying entities.
+Apache Isis' <a href="#ugvro.adoc">Restful Objects</a> viewer provides a REST API that then allows REST clients to query the application using these DTOs; useful for integration scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Apache Isis offers several ways to implement view models, but the most flexible/powerful is to annotate the class using JAXB annotations.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">invoiceRun</span><span class="delimiter">&quot;</span></span>)    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@XmlType</span>(
+        propOrder = {                   <i class="conum" data-value="2"></i><b>(2)</b>
+            ...
+        }
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">InvoiceRun</span> {
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The JAXB <code>@XmlRootElement</code> annotation indicates this is a view model to Apache Isis, which then uses JAXB to serialize the state of the view model between interactions</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>All properties of the view model must be listed using the <code>XmlType#propOrder</code> attribute.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Classes are defined both to Isis and (if an entity) also to JDO/DataNucleus.</p>
+<p>Use JAXB elements such as <code>@XmlElement</code> for properties and the combination of <code>@XmlElementWrapper</code> and <code>@XmlElement</code> for collections.
+Properties can be ignored (for serialization) using <code>@XmlTransient</code>.</p>
 </div>
-<div class="paragraph">
-<p>We use Java packages as a way to group related domain objects together; the package name forms a namespace. We can then reason about all the classes in that package/namespace as a single unit.</p>
-</div>
-<div class="paragraph">
-<p>In the same way that Java packages act as a namespace for domain objects, it&#8217;s good practice to map domain entities to their own (database) schemas.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For more on this topic, see the topic discussing modules and <a href="ugbtb.html#_ugbtb_decoupling">decoupling</a>.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_ugfun_how-tos_class-structure_properties">4.1.2. Property</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>A property is an instance variable of a domain object, of a scalar type, that holds some state about either a <a href="#_ugfun_how-tos_class-structure_class-definition_entities">domain entity</a> or a <a href="#_ugfun_how-tos_class-structure_class-definition_view-models">view model</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example, a <code>Customer</code>'s <code>firstName</code> would be a property, as would their <code>accountCreationDate</code> that they created their account.
+All properties have at least a "getter" method, and most properties have also a "setter" method (meaning that they are immutable).
+Properties that do <em>not</em> have a setter method are derived properties, and so are not persisted.</p>
+</div>
+<div class="paragraph">
+<p>Formally speaking, a property is simply a regular JavaBean getter, returning a scalar value recognized by the framework.
+Most properties (those that are editable/modifiable) will also have a setter and (if persisted) a backing instance field.
+And most properties will also have a number of annotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Apache Isis defines its own set own <code>@Property</code> annotation for capturing domain semantics.
+It also provides a <code>@PropertyLayout</code> for UI hints (though the information in this annotation may instead be provided by a supplementary <a href="#_ugfun_object-layout"><code>.layout.xml</code></a> file</p>
+</li>
+<li>
+<p>the properties of domain entities are often annotated with the JDO/DataNucleus <code>@javax.jdo.annotations.Column</code> annotation.
+For property references, there may be other annotations to indicate whether the reference is bidirectional.
+It&#8217;s also possible (using annotations) to define a link table to hold foreign key columns.</p>
+</li>
+<li>
+<p>for the properties of view models, then JAXB annotations such as <code>@javax.xml.bind.annotation.XmlElement</code> will be present</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Apache Isis recognises some of these annotations for JDO/DataNucleus and JAXB and infers some domain semantics from them (for example, the maximum allowable length of a string property).</p>
+</div>
+<div class="paragraph">
+<p>Since writing getter and setter methods adds quite a bit of boilerplate, it&#8217;s common to use <a href="https://projectlombok.org/">Project Lombok</a> to code generate these methods at compile time (using Java&#8217;s annotation processor) simply by adding the <code>@lombok.Getter</code> and <code>@lombok.Setter</code> annotations to the field.
+The <a href="guides/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> uses this approach.</p>
 </div>
 <div class="sect4">
 <h5 id="_value_vs_reference_types">Value vs Reference Types</h5>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Properties can be either a value types (strings, int, date and so on) or be a reference to another object (for example, an <code>Order</code> referencing the <code>Customer</code> that placed it).</p>
 </div>
 <div class="paragraph">
-<p>The annotations for mapping value types tend to be different for properties vs action parameters, because JDO annotations are only valid on properties.  The table in the <a href="#_ugfun_how-tos_class-structure_properties-vs-parameters">Properties vs Parameters</a> section provides a handy reference of each.</p>
+<p>It&#8217;s ok for a <a href="#_ugfun_how-tos_class-structure_class-definition_entities">domain entity</a> to reference another domain entity, and for a <a href="#_ugfun_how-tos_class-structure_class-definition_view-models">view model</a> to reference both view model and domain entities.
+However, it isn&#8217;t valid for a domain entity to hold a persisted reference to view model (DataNucleus will not know how to persist that view model).</p>
+</div>
+<div class="paragraph">
+<p>For domain entities, the annotations for mapping value types tend to be different for properties vs action parameters, because JDO annotations are only valid on properties.
+The table in the <a href="#_ugfun_how-tos_class-structure_properties-vs-parameters">Properties vs Parameters</a> section provides a handy reference of each.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_optional_properties">Optional Properties</h5>
 <div class="paragraph">
-<p>JDO/DataNucleus' default is that a property is assumed to be mandatory if it is a primitive type (eg <code>int</code>, <code>boolean</code>), but optional if a reference type (eg <code>String</code>, <code>BigDecimal</code> etc).  To override optionality in JDO/DataNucleus the <code>@Column(allowsNull="&#8230;&#8203;")</code> annotations is used.</p>
+<p>(For domain entities) JDO/DataNucleus' default is that a property is assumed to be mandatory if it is a primitive type (eg <code>int</code>, <code>boolean</code>), but optional if a reference type (eg <code>String</code>, <code>BigDecimal</code> etc).
+To override optionality in JDO/DataNucleus the <code>@Column(allowsNull="&#8230;&#8203;")</code> annotations is used.</p>
 </div>
 <div class="paragraph">
-<p>Apache Isis on the other hand assumes that all properties (and action parameters, for that matter) are mandatory, not optional.  These defaults can also be overridden using Apache Isis' own annotations, specifically <code>@Property(optionality=&#8230;&#8203;)</code>.</p>
+<p>Apache Isis on the other hand assumes that all properties (and action parameters, for that matter) are mandatory, not optional.
+These defaults can also be overridden using Apache Isis' own annotations, specifically <code>@Property(optionality=&#8230;&#8203;)</code>, or (because it&#8217;s much less verbose) using <code>@javax.annotation.Nullable</code>.</p>
 </div>
 <div class="paragraph">
-<p>These different defaults can lead to incompatibilities between the two frameworks.  To counteract that, Apache Isis also recognizes and honours JDO&#8217;s <code>@Column(allowsNull=&#8230;&#8203;)</code>.</p>
+<p>These different defaults can lead to incompatibilities between the two frameworks.
+To counteract that, Apache Isis also recognizes and honours JDO&#8217;s <code>@Column(allowsNull=&#8230;&#8203;)</code>.</p>
 </div>
 <div class="paragraph">
 <p>For example, rather than:</p>
@@ -2891,10 +3158,9 @@ TODO
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">private</span> LocalDate date;
 <span class="annotation">@Property</span>(optionality=Optionality.OPTIONAL)
-<span class="directive">public</span> LocalDate getDate() { ... }
-<span class="directive">public</span> <span class="type">void</span> setDate(LocalDate d) { ... }</code></pre>
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> LocalDate date;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2902,28 +3168,96 @@ TODO
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> LocalDate date;
-<span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> LocalDate getDate() { ... }
-<span class="directive">public</span> <span class="type">void</span> setDate(LocalDate d) { ... }</code></pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> LocalDate date;</code></pre>
 </div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>With JDO/DataNucleus it&#8217;s valid for the <code>@Column</code> annotation to be placed on either the field or the getter.  Apache Isis (currently) only looks for annotations on the getter.  We therefore recommend that you always place <code>@Column</code> on the gettter.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>In all cases the framework will search for any incompatibilities in optionality (whether specified explicitly or defaulted implicitly) between Isis' defaults and DataNucleus, and refuse to boot if any are found (fail fast).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_editable_properties">Editable Properties</h5>
+<div class="paragraph">
+<p>Apache Isis provides the capability to allow individual properties to be modified.
+This is specified using the <code>@Property(editing=&#8230;&#8203;)</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Property</span>(editing = Editing.ENABLED)
+<span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+<span class="directive">private</span> <span class="predefined-type">String</span> notes;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If this is omitted then whether editing is enabled or disabled is defined globally, in the <code>isis.properties</code> configuration file; see <a href="rgcfg.html#_rgcfg_configuring-core_isis-objects-editing">reference configuration guide</a> for further details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ignoring_properties">Ignoring Properties</h5>
+<div class="paragraph">
+<p>By default Apache Isis will automatically render all properties in the <a href="#ugvw.adoc">UI</a> or in the <a href="#ugvro.adoc">REST API</a>.
+To get Apache Isis to ignore a property (exclude it from its metamodel), annotate the getter using <code>@Programmatic</code>.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, you can tell JDO/DataNucleus to ignore a property using the <code>@javax.jdo.annotations.NotPersistent</code> annotation.
+This is independent of Apache Isis; in other words that property will still be rendered in the UI (unless also annotated with <code>@Programmatic</code>).</p>
+</div>
+<div class="paragraph">
+<p>For view models, you can tell JAXB to ignore a property using the <code>@javax.xml.bind.annotation.XmlTransient</code> annotation.
+Again, this is independent of Apache Isis.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_derived_properties">Derived Properties</h5>
+<div class="paragraph">
+<p>Derived properties are those with a getter but no setter.
+Provided that the property has not been annotated with <code>@Programmatic</code>, these will still be rendered in the UI, but they will be read-only (not editable) and their state will not be persisted.</p>
+</div>
+<div class="paragraph">
+<p>Subtly different, it is also possible to have non-persisted but still editable properties.
+In this case you will need a getter and a setter, but with the getter annotated using <code>@NotPersistent</code>.
+The implementation of these getters and setters will most likely persist state using other properties (which might be hidden from view using <code>@Programmatic</code>).</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.NotPersistent
+<span class="annotation">@Property</span>(editing=Editing.ENABLED)
+<span class="directive">public</span> <span class="predefined-type">String</span> getAddress() { <span class="keyword">return</span> addressService.toAddress( getLatLong() ); }             <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">void</span> setAddress(<span class="predefined-type">String</span> address) { setLatLong(addressService.toLatLong(address)); }
+
+<span class="annotation">@javax</span>.jdo.annotations.Column
+<span class="directive">private</span> <span class="predefined-type">String</span> latLong;
+<span class="annotation">@Programmatic</span>
+<span class="directive">public</span> <span class="predefined-type">String</span> getLatLong() { <span class="keyword">return</span> latLong; }                                              <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="directive">public</span> <span class="type">void</span> setLatLong(<span class="predefined-type">String</span> latLong) { <span class="local-variable">this</span>.latLong = latLong; }
+
+<span class="annotation">@javax</span>.inject.Inject
+AddressService addressService;                                                              <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the representation of the address, in human readable form, eg "10 Downing Street, London, UK"</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the lat/long representation of the address, eg "51.503363;-0.127625"</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>an injected service that can convert to/from address and latLong.</td>
+</tr>
+</table>
 </div>
 <div class="sect5">
 <h6 id="_handling_mandatory_properties_in_subtypes">Handling Mandatory Properties in Subtypes</h6>
@@ -2965,11 +3299,10 @@ TODO
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.SUPER_TABLE)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubtype</span> <span class="directive">extends</span> SomeSuperType {
-    <span class="directive">private</span> LocalDate date;
     <span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
     <span class="annotation">@Property</span>(optionality=Optionality.MANDATORY)
-    <span class="directive">public</span> LocalDate getDate() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setDate(LocalDate d) { ... }
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+    <span class="directive">private</span> LocalDate date;
 }</code></pre>
 </div>
 </div>
@@ -2981,64 +3314,61 @@ TODO
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <code>@Property(optionality=&#8230;&#8203;)</code> annotation is equivalent to the older but still supported <code>@Optional</code> annotation and <code>@Mandatory</code> annotations. Its benefit is that it lumps together all Apache Isis' property metadata in a single annotation.  Its downside is that it is rather verbose if the only semantic that needs to be specified&#8201;&#8212;&#8201;as is often the case&#8201;&#8212;&#8201;is optionality.</p>
+<p>The <code>@Property(optionality=&#8230;&#8203;)</code> annotation is equivalent to the older but still supported <code>@Optional</code> annotation and <code>@Mandatory</code> annotations.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_mapping_code_string_code_s_length">Mapping <code>String</code>s (Length)</h5>
 <div class="paragraph">
-<p>An alternative way to achieve this is to leave the JDO annotation on the field (where it is invisible to Apache Isis), and rely on Isis' default, eg:</p>
+<p>By default JDO/DataNucleus will map string properties to a <code>VARCHAR(255)</code>.
+To limit the length, use the <code>@Column(length=&#8230;&#8203;)</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.SUPER_TABLE)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubtype</span> <span class="directive">extends</span> SomeSuperType {
-    <span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
-    <span class="directive">private</span> LocalDate date;
-    <span class="comment">// mandatory in Apache Isis by default</span>
-    <span class="directive">public</span> LocalDate getDate() { }
-    <span class="directive">public</span> <span class="type">void</span> setDate(LocalDate d) { }
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Column(length=<span class="integer">50</span>)
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> <span class="predefined-type">String</span> firstName</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We recommend the former mapping, though, using <code>@Property(optionality=Optionality.MANDATORY)</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="__code_string_code_s_length"><code>String</code>s (Length)</h5>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
+<p>This is a good example of a case where Apache Isis infers domain semantics from the JDO annotation.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Mapping JODA Dates</h5>
+<h5 id="_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Mapping JODA Date</h5>
 <div class="paragraph">
 <p>Isis' JDO objectstore bundles DataNucleus' <a href="http://www.datanucleus.org/documentation/products/plugins.html">built-in support</a> for Joda <code>LocalDate</code> and <code>LocalDateTime</code> datatypes, meaning that entity properties of these types will be persisted as appropriate data types in the database tables.</p>
 </div>
 <div class="paragraph">
-<p>It is, however, necessary to annotate your properties with <code>@javax.jdo.annotations.Persistent</code>, otherwise the data won&#8217;t actually be persisted. See the <a href="http://db.apache.org/jdo/field_types.html">JDO docs</a> for more details on this.</p>
+<p>It is, however, necessary to annotate your properties with <code>@javax.jdo.annotations.Persistent</code>, otherwise the data won&#8217;t actually be persisted.
+See the <a href="http://db.apache.org/jdo/field_types.html">JDO docs</a> for more details on this.</p>
 </div>
 <div class="paragraph">
-<p>Moreover, these datatypes are <em>not</em> in the default fetch group, meaning that JDO/DataNucleus will perform an additional <code>SELECT</code> query for each attribute. To avoid this extra query, the annotation should indicate that the property is in the default fetch group.</p>
+<p>Moreover, these datatypes are <em>not</em> in the default fetch group, meaning that JDO/DataNucleus will perform an additional <code>SELECT</code> query for each attribute.
+To avoid this extra query, the annotation should indicate that the property is in the default fetch group.</p>
 </div>
 <div class="paragraph">
 <p>For example, the <code>ToDoItem</code> (in the <a href="https://github.com/isisaddons/isis-app-todoapp">todoapp example app</a> (not ASF)) defines the <code>dueBy</code> property as follows:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Persistent(defaultFetchGroup=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+<span class="directive">private</span> LocalDate dueBy;</code></pre>
+</div>
+</div>
 </div>
 <div class="sect4">
-<h5 id="__code_bigdecimal_code_s_precision"><code>BigDecimal</code>s (Precision)</h5>
+<h5 id="_mapping_code_bigdecimal_code_s_precision">Mapping <code>BigDecimal</code>s (Precision)</h5>
 <div class="paragraph">
 <p>Working with <code>java.math.BigDecimal</code> properties takes a little care due to scale/precision issues.</p>
 </div>
@@ -3047,13 +3377,8 @@ TODO
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">BigDecimal</span> impact;
-<span class="directive">public</span> <span class="predefined-type">BigDecimal</span> getImpact() {
-    <span class="keyword">return</span> impact;
-}
-<span class="directive">public</span> <span class="type">void</span> setImpact(<span class="directive">final</span> <span class="predefined-type">BigDecimal</span> impact) {
-    <span class="local-variable">this</span>.impact = impact;
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> <span class="predefined-type">BigDecimal</span> impact;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3076,13 +3401,8 @@ TODO
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Column(scale=<span class="integer">2</span>)
-<span class="directive">private</span> <span class="predefined-type">BigDecimal</span> impact;
-<span class="directive">public</span> <span class="predefined-type">BigDecimal</span> getImpact() {
-    <span class="keyword">return</span> impact;
-}
-<span class="directive">public</span> <span class="type">void</span> setImpact(<span class="directive">final</span> <span class="predefined-type">BigDecimal</span> impact) {
-    <span class="local-variable">this</span>.impact = impact;
-}</code></pre>
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> <span class="predefined-type">BigDecimal</span> impact;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3093,17 +3413,18 @@ TODO
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mapping_blobs_and_clobs">Mapping Blobs and Clobs</h5>
+<h5 id="_mapping_code_blob_code_s_and_code_clob_code_s">Mapping <code>Blob</code>s and <code>Clob</code>s</h5>
 <div class="paragraph">
 <p>Apache Isis configures JDO/DataNucleus so that the properties of type <code>org.apache.isis.applib.value.Blob</code> and <code>org.apache.isis.applib.value.Clob</code> can also be persisted.</p>
 </div>
 <div class="paragraph">
-<p>As for <a href="#_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Joda dates</a>, this requires the <code>@javax.jdo.annotations.Persistent</code> annotation. However, whereas for dates one would always expect this value to be retrieved eagerly, for blobs and clobs it is not so clear cut.</p>
+<p>As for <a href="#_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Joda dates</a>, this requires the <code>@javax.jdo.annotations.Persistent</code> annotation.
+However, whereas for dates one would always expect this value to be retrieved eagerly, for blobs and clobs it is not so clear cut.</p>
 </div>
 <div class="sect5">
-<h6 id="_mapping_blobs">Mapping Blobs</h6>
+<h6 id="_mapping_code_blob_code_s">Mapping <code>Blob</code>s</h6>
 <div class="paragraph">
-<p>For example, in the <code>ToDoItem</code> class (of the <a href="https://github.com/isisaddons/isis-app-todoapp/blob/61b8114a8e01dbb3c380b31cf09eaed456407570/dom/src/main/java/todoapp/dom/module/todoitem/ToDoItem.java#L475">todoapp example app</a> (non-ASF) the <code>attachment</code> property is as follows:</p>
+<p>For example, in the <code>ToDoItem</code> class (of the <a href="https://github.com/isisaddons/isis-app-todoapp/blob/0333852ddd18ad67e3356fccf805aa442246790d/dom/src/main/java/todoapp/dom/todoitem/ToDoItem.java#L442">todoapp example app</a> (non-ASF) the <code>attachment</code> property is as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3112,20 +3433,16 @@ TODO
     <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">attachment_mimetype</span><span class="delimiter">&quot;</span></span>),
     <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">attachment_bytes</span><span class="delimiter">&quot;</span></span>, jdbcType=<span class="string"><span class="delimiter">&quot;</span><span class="content">BLOB</span><span class="delimiter">&quot;</span></span>, sqlType = <span class="string"><span class="delimiter">&quot;</span><span class="content">LONGVARBINARY</span><span class="delimiter">&quot;</span></span>)
 })
-<span class="directive">private</span> <span class="predefined-type">Blob</span> attachment;
 <span class="annotation">@Property</span>(
         optionality = Optionality.OPTIONAL
 )
-<span class="directive">public</span> <span class="predefined-type">Blob</span> getAttachment() {
-    <span class="keyword">return</span> attachment;
-}
-<span class="directive">public</span> <span class="type">void</span> setAttachment(<span class="directive">final</span> <span class="predefined-type">Blob</span> attachment) {
-    <span class="local-variable">this</span>.attachment = attachment;
-}</code></pre>
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> <span class="predefined-type">Blob</span> attachment;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The three <code>@javax.jdo.annotations.Column</code> annotations are required because the mapping classes that Apache Isis provides (<a href="https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisBlobMapping.java#L59">IsisBlobMapping</a> and <a href="https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisClobMapping.java#L59">IsisClobMapping</a>) map to 3 columns. (It is not an error to omit these <code>@Column</code> annotations, but without them the names of the table columns are simply suffixed <code>_0</code>, <code>_1</code>, <code>_2</code> etc.</p>
+<p>The three <code>@javax.jdo.annotations.Column</code> annotations are required because the mapping classes that Apache Isis provides (<a href="https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisBlobMapping.java#L59">IsisBlobMapping</a> and <a href="https://github.com/apache/isis/blob/isis-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/isis/objectstore/jdo/datanucleus/valuetypes/IsisClobMapping.java#L59">IsisClobMapping</a>) map to 3 columns.
+(It is not an error to omit these <code>@Column</code> annotations, but without them the names of the table columns are simply suffixed <code>_0</code>, <code>_1</code>, <code>_2</code> etc.</p>
 </div>
 <div class="paragraph">
 <p>If the <code>Blob</code> is mandatory, then use:</p>
@@ -3139,16 +3456,11 @@ TODO
                                   jdbcType=<span class="string"><span class="delimiter">&quot;</span><span class="content">BLOB</span><span class="delimiter">&quot;</span></span>, sqlType = <span class="string"><span class="delimiter">&quot;</span><span class="content">LONGVARBINARY</span><span class="delimiter">&quot;</span></span>,
                                   allowsNull=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
 })
-<span class="directive">private</span> <span class="predefined-type">Blob</span> attachment;
 <span class="annotation">@Property</span>(
     optionality = Optionality.MANDATORY
 )
-<span class="directive">public</span> <span class="predefined-type">Blob</span> getAttachment() {
-<span class="keyword">return</span> attachment;
-}
-<span class="directive">public</span> <span class="type">void</span> setAttachment(<span class="directive">final</span> <span class="predefined-type">Blob</span> attachment) {
-<span class="local-variable">this</span>.attachment = attachment;
-}</code></pre>
+<span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+<span class="directive">private</span> <span class="predefined-type">Blob</span> attachment;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3159,7 +3471,8 @@ TODO
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If specifying a <code>sqlType</code> of "LONGVARBINARY" does not work, try instead "BLOB".  There can be differences in behaviour between JDBC drivers.</p>
+<p>If specifying a <code>sqlType</code> of "LONGVARBINARY" does not work, try instead "BLOB".
+There can be differences in behaviour between JDBC drivers.</p>
 </div>
 </td>
 </tr>
@@ -3167,7 +3480,7 @@ TODO
 </div>
 </div>
 <div class="sect5">
-<h6 id="_mapping_clobs">Mapping Clobs</h6>
+<h6 id="_mapping_code_clob_code_s">Mapping <code>Clob</code>s</h6>
 <div class="paragraph">
 <p>Mapping <code>Clob`s works in a very similar way, but the `jdbcType</code> and <code>sqlType</code> attributes will, respectively, be <code>CLOB</code> and <code>LONGVARCHAR</code>:</p>
 </div>
@@ -3209,7 +3522,8 @@ TODO
 <div class="sect5">
 <h6 id="_mapping_to_varbinary_or_varchar">Mapping to VARBINARY or VARCHAR</h6>
 <div class="paragraph">
-<p>Instead of mapping to a sqlType of <code>LONGVARBINARY</code> (or perhaps <code>BLOB</code>), you might instead decide to map to a <code>VARBINARY</code>.  The difference is whether the binary data is held "on-row" or as a pointer "off-row"; with a <code>VARBINARY</code> the data is held on-row and so you will need to specify a length.</p>
+<p>Instead of mapping to a sqlType of <code>LONGVARBINARY</code> (or perhaps <code>BLOB</code>), you might instead decide to map to a <code>VARBINARY</code>.
+The difference is whether the binary data is held "on-row" or as a pointer "off-row"; with a <code>VARBINARY</code> the data is held on-row and so you will need to specify a length.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -3235,6 +3549,134 @@ TODO
 </div>
 <div class="sect3">
 <h4 id="_ugfun_how-tos_class-structure_collections">4.1.3. Collections</h4>
+<div class="paragraph">
+<p>A collection is an instance variable of a domain object, of a collection type that holds references to other domain objects.
+For example, a <code>Customer</code> may have a collection of <code>Order</code>s).</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s ok for a <a href="#_ugfun_how-tos_class-structure_class-definition_entities">domain entity</a> to reference another domain entity, and for a <a href="#_ugfun_how-tos_class-structure_class-definition_view-models">view model</a> to reference both view model and domain entities.
+However, it isn&#8217;t valid for a domain entity to hold a persisted reference to view model (DataNucleus will not know how to persist that view model).</p>
+</div>
+<div class="paragraph">
+<p>Formally speaking, a collection is simply a regular JavaBean getter, returning a collection type (subtype of <code>java.util.Collection</code>).
+Most collections (those that are modifiable) will also have a setter and (if persisted) a backing instance field.
+And collections properties will also have a number of annotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Apache Isis defines its own set own <code>@Collection</code> annotation for capturing domain semantics.
+It also provides a <code>@CollectionLayout</code> for UI hints (though the information in this annotation may instead be provided by a supplementary <a href="#_ugfun_object-layout"><code>.layout.xml</code></a> file</p>
+</li>
+<li>
+<p>the collections of domain entities are often annotated with various JDO/DataNucleus annotations, most notable <code>javax.jdo.annotations.Persistent</code>.
+This and other annotations can be used to specify if the association is bidirectional, and whether to define a link table or not to hold foreign key columns.</p>
+</li>
+<li>
+<p>for the collections of view models, then JAXB annotations such as <code>@javax.xml.bind.annotation.XmlElementWrapper</code> and <code>@javax.xml.bind.annotation.XmlElement</code> will be present</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Apache Isis recognises some of these annotations for JDO/DataNucleus and JAXB and infers some domain semantics from them (for example, the maximum allowable length of a string property).</p>
+</div>
+<div class="paragraph">
+<p>Unlike <a href="#_ugfun_how-tos_class-structure_properties">properties</a>, the framework (at least, the <a href="#ugvw.adoc">Wicket viewer</a>) does not allow collections to be "edited".
+Instead, <a href="#_ugfun_how-tos_class-structure_actions">action</a>s can be written that will modify the contents of the collection as a side-effect.
+For example, a <code>placeOrder(&#8230;&#8203;)</code> action will likely add to an <code>Order</code> to the <code>Customer#orders</code> collection.</p>
+</div>
+<div class="paragraph">
+<p>Since writing getter and setter methods adds quite a bit of boilerplate, it&#8217;s common to use <a href="https://projectlombok.org/">Project Lombok</a> to code generate these methods at compile time (using Java&#8217;s annotation processor) simply by adding the <code>@lombok.Getter</code> and <code>@lombok.Setter</code> annotations to the field.</p>
+</div>
+<div class="sect4">
+<h5 id="_value_vs_reference_types_2">Value vs Reference Types</h5>
+<div class="paragraph">
+<p>Apache Isis can (currently) only provide a UI for collections of references.
+While you can use DataNucleus to persist collections/arrays of value types, such properties must be annotated as <code>@Programmatic</code> so that they are ignored by Apache Isis.</p>
+</div>
+<div class="paragraph">
+<p>If you want to visualize an array of value types in Apache Isis, then one option is to wrap value in a view model, as explained <a href="#_ugfun_how-tos_simulating-collections-of-values">elsewhere</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_one_to_many_collections">One-to-many collections</h5>
+<div class="paragraph">
+<p>Bidirectional one-to-many collections are one of the most common collection types.
+In the parent object, the collection can be defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ParentObject</span>
+        <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;ParentObject&gt;{
+
+    <span class="annotation">@javax</span>.jdo.annotations.Persistent(
+        mappedBy = <span class="string"><span class="delimiter">&quot;</span><span class="content">parent</span><span class="delimiter">&quot;</span></span>,                                                <i class="conum" data-value="1"></i><b>(1)</b>
+        dependentElement = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>                                          <i class="conum" data-value="2"></i><b>(2)</b>
+    )
+    <span class="annotation">@Collection</span>                                                             <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+    <span class="directive">private</span> <span class="predefined-type">SortedSet</span>&lt;ChildObject&gt; children = <span class="keyword">new</span> <span class="predefined-type">TreeSet</span>&lt;ChildObject&gt;();   <i class="conum" data-value="4"></i><b>(4)</b>
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>indicates a bidirectional association; the foreign key pointing back to the <code>Parent</code> will be in the table for <code>ChildObject</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>disable cascade delete</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>(not actually required in this case, because no attributes are set, but acts as a useful reminder that this collection will be rendered in the UI by Apache Isis)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>uses a <code>SortedSet</code> (as opposed to some other collection type; discussion below)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>while in the child object you will have:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ChildObject</span>
+        <span class="directive">implements</span> <span class="predefined-type">Comparable</span>&lt;ChildObject&gt; {    <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="annotation">@javax</span>.jdo.annotations.Column(
+        allowsNull = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>                    <i class="conum" data-value="2"></i><b>(2)</b>
+    )
+    <span class="annotation">@Property</span>(editing = Editing.DISABLED)       <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+    <span class="directive">private</span> ParentObject parent;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>implements <code>Comparable</code> because is mapped using a <code>SortedSet</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>mandatory; every child must reference its parent</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>cannot be edited directly</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Generally speaking you should use <code>SortedSet</code> for collection types (as opposed to <code>Set</code>, <code>List</code> or <code>Collection</code>).
+JDO/Datanucleus does support the mapping of these other types, but RDBMS are set-oriented, so using this type introduces the least friction.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3242,33 +3684,14 @@ TODO
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-TODO
+<div class="paragraph">
+<p>JDO/DataNucleus does also support <code>java.util.Map</code> as a collection type, but this is not supported by Apache Isis.
+If you do use this collection type, then annotate the getter with <code>@Programmatic</code> so that it is ignored by the Apache Isis framework.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>While Apache Isis support collections of references, the framework (currently) does not support collections of values. That is, it isn&#8217;t possible to define a collection of type <code>Set&lt;String&gt;</code>.</p>
-</div>
-<div class="paragraph">
-<p>Or, actually, you can, because that is a valid mapping supported by JDO/DataNucleus .  However, Apache Isis has no default visualization.</p>
-</div>
-<div class="paragraph">
-<p>One workaround is to mark the collection as <a href="rgant.html#_rgant-Programmatic"><code>@Programmatic</code></a>.  This ensures that the collection is ignored by Apache Isis.</p>
-</div>
-<div class="paragraph">
-<p>Another workaround is to wrap each value in a view model, as explained in this <a href="#_ugfun_how-tos_simulating-collections-of-values">tip</a>.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
@@ -3318,7 +3741,7 @@ TODO
 </table>
 </div>
 <div class="sect4">
-<h5 id="__code_string_code_s_length_2"><code>String</code>s (Length)</h5>
+<h5 id="__code_string_code_s_length"><code>String</code>s (Length)</h5>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3333,7 +3756,7 @@ TODO
 </div>
 </div>
 <div class="sect4">
-<h5 id="__code_bigdecimal_code_s_precision_2"><code>BigDecimal</code>s (Precision)</h5>
+<h5 id="__code_bigdecimal_code_s_precision"><code>BigDecimal</code>s (Precision)</h5>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3512,27 +3935,6 @@ TODO
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="_ugfun_how-tos_class-structure_ignoring-methods">4.1.8. Ignoring Methods</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Sometimes you want to define a <code>public</code> method on a domain object that is not intended to be rendered in Apache Isis' UI.</p>
-</div>
-<div class="paragraph">
-<p>To exclude such methods, use the <a href="rgant.html#_rgant-Programmatic"><code>@Programmatic</code></a> annotation.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -7441,23 +7843,37 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 <ul class="sectlevel2">
 <li><a href="#_ugfun_how-tos_class-structure">4.1. Class Structure</a>
 <ul class="sectlevel3">
-<li><a href="#_ugfun_how-tos_class-structure_class-definition">4.1.1. Class Definition</a></li>
+<li><a href="#_ugfun_how-tos_class-structure_class-definition">4.1.1. Class Definition</a>
+<ul class="sectlevel4">
+<li><a href="#_ugfun_how-tos_class-structure_class-definition_entities">Entities</a></li>
+<li><a href="#_ugfun_how-tos_class-structure_class-definition_domain-services">Domain Services</a></li>
+<li><a href="#_ugfun_how-tos_class-structure_class-definition_view-models">View Models</a></li>
+</ul>
+</li>
 <li><a href="#_ugfun_how-tos_class-structure_properties">4.1.2. Property</a>
 <ul class="sectlevel4">
 <li><a href="#_value_vs_reference_types">Value vs Reference Types</a></li>
 <li><a href="#_optional_properties">Optional Properties</a></li>
-<li><a href="#__code_string_code_s_length"><code>String</code>s (Length)</a></li>
-<li><a href="#_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Mapping JODA Dates</a></li>
-<li><a href="#__code_bigdecimal_code_s_precision"><code>BigDecimal</code>s (Precision)</a></li>
-<li><a href="#_mapping_blobs_and_clobs">Mapping Blobs and Clobs</a></li>
+<li><a href="#_editable_properties">Editable Properties</a></li>
+<li><a href="#_ignoring_properties">Ignoring Properties</a></li>
+<li><a href="#_derived_properties">Derived Properties</a></li>
+<li><a href="#_mapping_code_string_code_s_length">Mapping <code>String</code>s (Length)</a></li>
+<li><a href="#_ugfun_how-tos_class-structure_properties_mapping-joda-dates">Mapping JODA Date</a></li>
+<li><a href="#_mapping_code_bigdecimal_code_s_precision">Mapping <code>BigDecimal</code>s (Precision)</a></li>
+<li><a href="#_mapping_code_blob_code_s_and_code_clob_code_s">Mapping <code>Blob</code>s and <code>Clob</code>s</a></li>
 </ul>
 </li>
-<li><a href="#_ugfun_how-tos_class-structure_collections">4.1.3. Collections</a></li>
+<li><a href="#_ugfun_how-tos_class-structure_collections">4.1.3. Collections</a>
+<ul class="sectlevel4">
+<li><a href="#_value_vs_reference_types_2">Value vs Reference Types</a></li>
+<li><a href="#_one_to_many_collections">One-to-many collections</a></li>
+</ul>
+</li>
 <li><a href="#_ugfun_how-tos_class-structure_actions">4.1.4. Actions</a></li>
 <li><a href="#_ugfun_how-tos_class-structure_action-parameters">4.1.5. Action Parameters</a>
 <ul class="sectlevel4">
-<li><a href="#__code_string_code_s_length_2"><code>String</code>s (Length)</a></li>
-<li><a href="#__code_bigdecimal_code_s_precision_2"><code>BigDecimal</code>s (Precision)</a></li>
+<li><a href="#__code_string_code_s_length"><code>String</code>s (Length)</a></li>
+<li><a href="#__code_bigdecimal_code_s_precision"><code>BigDecimal</code>s (Precision)</a></li>
 <li><a href="#_optional">Optional</a></li>
 </ul>
 </li>
@@ -7469,7 +7885,6 @@ example the <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp 
 </ul>
 </li>
 <li><a href="#_ugfun_how-tos_class-structure_properties-vs-parameters">4.1.7. Properties vs Parameters</a></li>
-<li><a href="#_ugfun_how-tos_class-structure_ignoring-methods">4.1.8. Ignoring Methods</a></li>
 </ul>
 </li>
 <li><a href="#_ugfun_how-tos_ui-hints">4.2. UI Hints</a>

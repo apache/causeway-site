@@ -7530,7 +7530,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>The <code>EmailService</code> provides the ability to send HTML emails, with attachments, to one or more recipients.</p>
 </div>
 <div class="paragraph">
-<p>Apache Isis provides a default implementation to send emails using an external SMTP provider.  Note that this must be configured (using a number of configuration properties) before it can be used.  The that sends email as an HTML message, using an external SMTP provider.</p>
+<p>Apache Isis provides a default implementation to send emails using an external SMTP provider.
+Note that this must be configured (using a number of configuration properties) before it can be used.
+The that sends email as an HTML message, using an external SMTP provider.</p>
 </div>
 <div class="sect3">
 <h4 id="_api_implementation_11">7.3.1. API &amp; Implementation</h4>
@@ -7553,7 +7555,8 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>is the main API to send the email (and optional attachments). Will return <code>false</code> if failed to send</td>
+<td>is the main API to send the email (and optional attachments).
+Will return <code>false</code> if failed to send</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -7565,7 +7568,8 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>indicates whether the implementation was configured and initialized correctly.  If this returns <code>false</code> then any attempt to call <code>send(&#8230;&#8203;)</code> will fail.</td>
+<td>indicates whether the implementation was configured and initialized correctly.
+If this returns <code>false</code> then any attempt to call <code>send(&#8230;&#8203;)</code> will fail.</td>
 </tr>
 </table>
 </div>
@@ -7608,7 +7612,8 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>These configuration properties can be specified either in <code>isis.properties</code> or in an <a href="ugbtb.html#_ugbtb_deployment_externalized-configuration">external configuration file</a>.</p>
 </div>
 <div class="paragraph">
-<p>If prototyping (that is, running the app using <code>org.apache.isis.WebServer</code>), the configuration properties can also be specified as system properties. For example, if you create a test email account on gmail, you can configure the service using:</p>
+<p>If prototyping (that is, running the app using <code>org.apache.isis.WebServer</code>), the configuration properties can also be specified as system properties.
+For example, if you create a test email account on gmail, you can configure the service using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7618,6 +7623,50 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="paragraph">
 <p>where "xxx" is the gmail user account and "yyy" is its password</p>
 </div>
+<div class="paragraph">
+<p>In addition (as of <code>1.13.3-SNAPSHOT</code>), the following properties can be set:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isis.service.email.throwExceptionOnFail</code><br></p>
+<div class="paragraph">
+<p>Whether to throw an exception if there the email cannot be sent (probably because of some misconfiguration).
+This behaviour is (now) the default; the old behaviour (of just returning <code>false</code> from the <code>send()</code> method) can be re-enabled by setting this property to <code>false</code>.</p>
+</div>
+</li>
+<li>
+<p><code>isis.service.email.override.to</code><br></p>
+<div class="paragraph">
+<p>Intended to simplify testing, if specified then the email&#8217;s <code>to</code> address will be that specified (rather than the email address(es) passed in as an argument to <code>EmailService#send(&#8230;&#8203;)</code>).</p>
+</div>
+</li>
+<li>
+<p><code>isis.service.email.override.cc</code><br></p>
+<div class="paragraph">
+<p>Similarly, to override the <code>cc</code> email address.</p>
+</div>
+</li>
+<li>
+<p><code>isis.service.email.override.to</code><br></p>
+<div class="paragraph">
+<p>Similarly, to override the <code>bcc</code> email address.</p>
+</div>
+</li>
+<li>
+<p><code>isis.service.email.socketTimeout</code><br></p>
+<div class="paragraph">
+<p>The socket timeout, defaulting to 2000ms.</p>
+</div>
+</li>
+<li>
+<p><code>isis.service.email.socketConnectionTimeout</code><br></p>
+<div class="paragraph">
+<p>The socket connection timeout, defaulting to 2000ms.</p>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_alternative_implementations_3">7.3.3. Alternative Implementations</h4>
@@ -7625,7 +7674,9 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>If you wish to write an alternative implementation, be aware that it should process the message body as HTML (as opposed to plain text or any other format).</p>
 </div>
 <div class="paragraph">
-<p>Also, note that (unlike most Apache Isis domain services) the implementation is also instantiated and injected by Google Guice. This is because <code>EmailService</code> is used as part of the <a href="ugvw.html#_ugvw_features_user-registration">user registration</a> functionality and is used by Wicket pages that are accessed outside of the usual Apache Isis runtime. This implies a couple of additional constraints:</p>
+<p>Also, note that (unlike most Apache Isis domain services) the implementation is also instantiated and injected by Google Guice.
+This is because <code>EmailService</code> is used as part of the <a href="ugvw.html#_ugvw_features_user-registration">user registration</a> functionality and is used by Wicket pages that are accessed outside of the usual Apache Isis runtime.
+This implies a couple of additional constraints:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -7633,7 +7684,8 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <p>first, implementation class should also be annotated with <code>@com.google.inject.Singleton</code></p>
 </li>
 <li>
-<p>second, there may not be any Apache Isis session running. (If necessary, one can be created on the fly using <code>IsisContext.doInSession(&#8230;&#8203;)</code>)</p>
+<p>second, there may not be any Apache Isis session running.
+(If necessary, one can be created on the fly using <code>IsisContext.doInSession(&#8230;&#8203;)</code>)</p>
 </li>
 </ul>
 </div>
@@ -7644,15 +7696,10 @@ in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this 
 <div class="sect3">
 <h4 id="_registering_the_services_16">7.3.4. Registering the Services</h4>
 <div class="paragraph">
-<p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the
-<code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core
-implementation of <code>EmailService</code> service is automatically registered and injected (it is annotated with
-<code>@DomainService</code>) so no further configuration is required.</p>
+<p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core implementation of <code>EmailService</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p>
 </div>
 <div class="paragraph">
-<p>To use an alternative implementation, use
-<a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained
-in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p>
+<p>To use an alternative implementation, use <a href="rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="#_rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p>
 </div>
 </div>
 <div class="sect3">
