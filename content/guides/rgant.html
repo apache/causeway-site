@@ -1107,7 +1107,8 @@ For use with <code>@ViewModel</code>. If specifying view models using <code>@Dom
 <div class="sect2">
 <h3 id="_rgant_aaa_deprecated">2.5. Deprecated Annotations</h3>
 <div class="paragraph">
-<p>As Apache Isis has evolved and grown, we found ourselves adding more and more annotations; but most of these related to either an object type (entity, view model, service) or an object member (property, collection, action).  Over time it became harder and harder for end programmers to discover these new features.</p>
+<p>As Apache Isis has evolved and grown, we found ourselves adding more and more annotations; but most of these related to either an object type (entity, view model, service) or an object member (property, collection, action).
+Over time it became harder and harder for end programmers to discover these new features.</p>
 </div>
 <div class="paragraph">
 <p>Accordingly, (in v1.8.0) we decided to unify the semantics into the main (core) annotations listed <a href="#_rgant-aaa_main">above</a>.</p>
@@ -1365,7 +1366,8 @@ For domain service, use <a href="#_rgant-DomainService_nature"><code>@DomainServ
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Immutable</code></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>An object&#8217;s state cannot be changed (properties cannot be edited, collections cannot be added to or removed from). Actions can still be invoked.</p>
+<p>An object&#8217;s state cannot be changed (properties cannot be edited, collections cannot be added to or removed from).
+Actions can still be invoked.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p><a href="#_rgant-DomainObject_editing"><code>@DomainObject#editing()</code></a></p>
@@ -1453,7 +1455,8 @@ For domain service, use <a href="#_rgant-DomainService_nature"><code>@DomainServ
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@NotContributed</code></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Indicates that a domain service action is not rendered as an action on the (entity) types of its parameters. For 1-arg query-only actions, controls whether the domain service action is rendered as a property or collection on the entity type of its parameter.</p>
+<p>Indicates that a domain service action is not rendered as an action on the (entity) types of its parameters.
+For 1-arg query-only actions, controls whether the domain service action is rendered as a property or collection on the entity type of its parameter.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Use <a href="#_rgant-DomainService_nature"><code>@DomainService#nature()</code></a> to specify whether any of the actions in a domain service should appear in the menu bars (applies at type level, not action level).
@@ -1488,7 +1491,8 @@ For individual actions, use <a href="#_rgant-ActionLayout_contributedAs"><code>@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ObjectType</code></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>For constructing the external identifier (URI) of an entity instance (part of its URL in both Wicket viewer and Restful Objects viewer). Also part of the toString representation of bookmarks, if using the Bookmark Service</p>
+<p>For constructing the external identifier (URI) of an entity instance (part of its URL in both Wicket viewer and Restful Objects viewer).
+Also part of the toString representation of bookmarks, if using the Bookmark Service</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p><a href="#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a></p>
@@ -4982,15 +4986,24 @@ can be used instead, eg:</p>
 </table>
 </div>
 <div class="paragraph">
-<p>The object type is used internally by Apache Isis to generate a string representation of an objects identity (the <code>Oid</code>).  This can appear in several contexts, including:</p>
+<p>This value is used internally to generate a string representation of an objects identity (the <code>Oid</code>).
+This can appear in several contexts, including:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>as the value of <code>o.a.i.applib.services.bookmark.Bookmark#getObjectType()</code></p>
+<p>as the value of <code>Bookmark#getObjectType()</code> and in the <code>toString()</code> value of <code>Bookmark</code>
+(see <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>and thus in the "table-of-two-halves" pattern, as per (non-ASF) <a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>in the <code>toString()</code> value of <code>Bookmark</code></p>
+<p>in the serialization of <code>OidDto</code> in the <a href="rgcms.html#_rgcms_schema-cmd">command</a> and <a href="rgcms.html#_rgcms_schema-ixn">interaction</a> schemas</p>
 </li>
 <li>
 <p>in the URLs of the <a href="ugvro.html">RestfulObjects viewer</a></p>
@@ -5003,6 +5016,8 @@ can be used instead, eg:</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_examples_2">9.1. Examples</h3>
 <div class="paragraph">
 <p>For example:</p>
 </div>
@@ -5017,8 +5032,31 @@ can be used instead, eg:</p>
 <div class="paragraph">
 <p>has an object type of <code>custmgmt.Customer</code>.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_precedence">9.2. Precedence</h3>
 <div class="paragraph">
-<p>If the object type has not been specified, then Apache Isis will use the fully qualified class name of the entity.</p>
+<p>The rules of precedence for determining a domain object&#8217;s object type are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#_rgant_Discriminator"><code>@Discriminator</code></a></p>
+</li>
+<li>
+<p><code>@DomainObject#objectType</code></p>
+</li>
+<li>
+<p><a href="#_rgant_PersistenceCapable"><code>@PersistenceCapable</code></a>, if at least the <code>schema</code> attribute is defined. <br></p>
+<div class="paragraph">
+<p>If both <code>schema</code> and <code>table</code> are defined, then the value is &#8220;schema.table&#8221;.
+If only <code>schema</code> is defined, then the value is &#8220;schema.className&#8221;.</p>
+</div>
+</li>
+<li>
+<p>Fully qualified class name of the entity.</p>
+</li>
+</ol>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -5028,16 +5066,11 @@ can be used instead, eg:</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This might be obvious, but to make explicit: we recommend that you use namespaces of some form or other.</p>
+<p>This might be obvious, but to make explicit: we recommend that you always specify an object type for your domain objects.</p>
 </div>
 <div class="paragraph">
-<p>If the object type has not been specified (by either this annotation, or by <a href="#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a>, or by Apache Isis' own <a href="#_rgant-DomainObject_objectType"><code>@DomainObject#objectType()</code></a> annotation/attribute), then (as noted above) Apache Isis will use the fully qualified class name of the entity.</p>
-</div>
-<div class="paragraph">
-<p>However, chances are that the fully qualified class name is liable to change over time, for example if the code is refactored or (more fundamentally) if your company/organization reorganizes/renames itself/is acquired.</p>
-</div>
-<div class="paragraph">
-<p>We therefore strongly recommend that you specify an object type for all entities, one way or another.  Specifying <code>@Discriminator</code> will override <code>@PersistenceCapable</code>, which overrides <code>@DomainObject#objectType()</code>.  Using <code>@PersistenceCapable#schema()</code> is probably the best choice in most cases.</p>
+<p>Otherwise, if you refactor your code (change class name or move package), then any externally held references to the OID of the object will break.
+At best this will require a data migration in the database; at worst it could cause external clients accessing data through the <a href="ugvro.html">Restful Objects</a> viewer to break.</p>
 </div>
 </td>
 </tr>
@@ -5056,6 +5089,7 @@ can be used instead, eg:</p>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -6196,15 +6230,24 @@ then no event will be posted.</p>
 <p>The <code>objectType()</code> attribute is used to provide a unique alias for the object&#8217;s class name.</p>
 </div>
 <div class="paragraph">
-<p>This value is used internally to generate a string representation of an objects identity (the <code>Oid</code>).  This can appear in several contexts, including:</p>
+<p>This value is used internally to generate a string representation of an objects identity (the <code>Oid</code>).
+This can appear in several contexts, including:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>as the value of <code>o.a.i.applib.services.bookmark.Bookmark#getObjectType()</code></p>
+<p>as the value of <code>Bookmark#getObjectType()</code> and in the <code>toString()</code> value of <code>Bookmark</code>
+(see <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>and thus in the "table-of-two-halves" pattern, as per (non-ASF) <a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>in the <code>toString()</code> value of <code>Bookmark</code></p>
+<p>in the serialization of <code>OidDto</code> in the <a href="rgcms.html#_rgcms_schema-cmd">command</a> and <a href="rgcms.html#_rgcms_schema-ixn">interaction</a> schemas</p>
 </li>
 <li>
 <p>in the URLs of the <a href="ugvro.html">RestfulObjects viewer</a></p>
@@ -6217,21 +6260,46 @@ then no event will be posted.</p>
 </li>
 </ul>
 </div>
+<div class="sect3">
+<h4 id="_examples_3">10.11.1. Examples</h4>
 <div class="paragraph">
 <p>For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(
-    objectType=<span class="string"><span class="delimiter">&quot;</span><span class="content">ORD</span><span class="delimiter">&quot;</span></span>
+    objectType=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders.Order</span><span class="delimiter">&quot;</span></span>
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
     ...
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_precedence_2">10.11.2. Precedence</h4>
 <div class="paragraph">
-<p>If the object type has not been specified, then Apache Isis will use the fully qualified class name of the entity.</p>
+<p>The rules of precedence are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#_rgant_Discriminator"><code>@Discriminator</code></a></p>
+</li>
+<li>
+<p><code>@DomainObject#objectType</code>, or <a href="#_rgant_aaa_deprecated"><code>@ObjectType</code></a> (deprecated)</p>
+</li>
+<li>
+<p><a href="#_rgant_PersistenceCapable"><code>@PersistenceCapable</code></a>, if at least the <code>schema</code> attribute is defined. <br></p>
+<div class="paragraph">
+<p>If both <code>schema</code> and <code>table</code> are defined, then the value is &#8220;schema.table&#8221;.
+If only <code>schema</code> is defined, then the value is &#8220;schema.className&#8221;.</p>
+</div>
+</li>
+<li>
+<p>Fully qualified class name of the entity.</p>
+</li>
+</ol>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -6241,13 +6309,11 @@ then no event will be posted.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This might be obvious, but to make explicit: we recommend that you use namespaces of some form or other for object types.</p>
+<p>This might be obvious, but to make explicit: we recommend that you always specify an object type for your domain objects.</p>
 </div>
 <div class="paragraph">
-<p>As noted above, if the object type has not been specified, then Apache Isis will use the fully qualified class name of the entity.  However, this is liable to change over time, for example if the code is refactored or (more fundamentally) if your company/organization reorganizes/renames itself/is acquired.</p>
-</div>
-<div class="paragraph">
-<p>We therefore strongly recommend that you specify an object type for all entities, either using <code>objectType()</code> or using the JDO <a href="#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a> (with a <code>schema()</code> attribute) or <a href="#_rgant-Discriminator"><code>@Discriminator</code></a> annotations.  Specifying <code>@Discriminator</code> will override <code>@PersistenceCapable</code>, which in turn overrides <code>objectType()</code>.  Using <code>@PersistenceCapable#schema()</code> is probably the best choice in most cases.</p>
+<p>Otherwise, if you refactor your code (change class name or move package), then any externally held references to the OID of the object will break.
+At best this will require a data migration in the database; at worst it could cause external clients accessing data through the <a href="ugvro.html">Restful Objects</a> viewer to break.</p>
 </div>
 </td>
 </tr>
@@ -6261,11 +6327,13 @@ then no event will be posted.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the object type is not unique across all domain classes then the framework will fail-fast and fail to boot.  An error message will be printed in the log to help you determine which classes have duplicate object tyoes.</p>
+<p>If the object type is not unique across all domain classes then the framework will fail-fast and fail to boot.
+An error message will be printed in the log to help you determine which classes have duplicate object tyoes.</p>
 </div>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -7677,6 +7745,16 @@ discovered automatically on the CLASSPATH.</p>
 </div></div></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-DomainService_objectType"><code>objectType()</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>(<code>1.14.0-SNAPSHOT</code>) equivalent to <a href="#_rgant_DomainObject_objectType"><code>@DomainObject#objectType()</code></a>, specifies the objectType of the service.</p>
+</div>
+<div class="paragraph">
+<p>The instanceId for services is always "1".</p>
+</div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_rgant-DomainService_repositoryFor"><code>repositoryFor()</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
@@ -7839,7 +7917,102 @@ discovered automatically on the CLASSPATH.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rgant-DomainService_repositoryFor">12.2. <code>repositoryFor()</code></h3>
+<h3 id="_rgant-DomainService_objectType">12.2. <code>objectType()</code> (<code>1.14.0-SNAPSHOT</code>)</h3>
+<div class="paragraph">
+<p>The <code>objectType()</code> attribute is used to provide a unique alias for the domain service&#8217;s class name.</p>
+</div>
+<div class="paragraph">
+<p>This value is used internally to generate a string representation of an service identity (the <code>Oid</code>).
+This can appear in several contexts, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>as the value of <code>Bookmark#getObjectType()</code> and in the <code>toString()</code> value of <code>Bookmark</code>
+(see <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>)</p>
+</li>
+<li>
+<p>in the serialization of <code>OidDto</code> in the <a href="rgcms.html#_rgcms_schema-cmd">command</a> and <a href="rgcms.html#_rgcms_schema-ixn">interaction</a> schemas</p>
+</li>
+<li>
+<p>in the URLs of the <a href="ugvro.html">RestfulObjects viewer</a></p>
+</li>
+<li>
+<p>in the URLs of the <a href="ugvw.html">Wicket viewer</a> (specifically, for bookmarked actions)</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_example">12.2.1. Example</h4>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    objectType=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders.OrderMenu</span><span class="delimiter">&quot;</span></span>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">OrderMenu</span> {
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_precedence_3">12.2.2. Precedence</h4>
+<div class="paragraph">
+<p>The rules of precedence are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>@DomainService#objectType</code></p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_methods_reserved_getId"><code>getId()</code></a></p>
+</li>
+<li>
+<p>The fully qualified class name.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This might be obvious, but to make explicit: we recommend that you always specify an object type for your domain services.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise, if you refactor your code (change class name or move package), then any externally held references to the OID of the service will break.
+At best this will require a data migration in the database; at worst it could cause external clients accessing data through the <a href="ugvro.html">Restful Objects</a> viewer to break.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the object type is not unique across all domain classes then the framework will fail-fast and fail to boot.
+An error message will be printed in the log to help you determine which classes have duplicate object tyoes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rgant-DomainService_repositoryFor">12.3. <code>repositoryFor()</code></h3>
 <div class="paragraph">
 <p>The <code>repositoryFor()</code> attribute is intended for domain services (probably with a <a href="#_rgant-DomainService_nature"><code>nature=DOMAIN</code></a>) that are intended to act as repositories for domain entities.</p>
 </div>
@@ -9549,15 +9722,24 @@ declaration.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>The object type is used internally by Apache Isis to generate a string representation of an objects identity (the <code>Oid</code>).  This can appear in several contexts, including:</p>
+<p>This value is used internally to generate a string representation of an objects identity (the <code>Oid</code>).
+This can appear in several contexts, including:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>as the value of <code>o.a.i.applib.services.bookmark.Bookmark#getObjectType()</code></p>
+<p>as the value of <code>Bookmark#getObjectType()</code> and in the <code>toString()</code> value of <code>Bookmark</code>
+(see <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>and thus in the "table-of-two-halves" pattern, as per (non-ASF) <a href="http://github.com/isisaddons/isis-module-poly">Isis addons' poly</a> module</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>in the <code>toString()</code> value of <code>Bookmark</code></p>
+<p>in the serialization of <code>OidDto</code> in the <a href="rgcms.html#_rgcms_schema-cmd">command</a> and <a href="rgcms.html#_rgcms_schema-ixn">interaction</a> schemas</p>
 </li>
 <li>
 <p>in the URLs of the <a href="ugvro.html">RestfulObjects viewer</a></p>
@@ -9571,8 +9753,11 @@ declaration.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>The actual format of the object type used by Apache Isis for the concatenation of <code>schema()</code> and <code>@PersistenceCapable#table()</code>.  If the <code>table()</code> is not present, then the class' simple name is used instead.</p>
+<p>The actual format of the object type used by Apache Isis for the concatenation of <code>schema()</code> and <code>@PersistenceCapable#table()</code>.
+If the <code>table()</code> is not present, then the class' simple name is used instead.</p>
 </div>
+<div class="sect2">
+<h3 id="_examples_4">25.1. Examples</h3>
 <div class="paragraph">
 <p>For example:</p>
 </div>
@@ -9612,8 +9797,31 @@ declaration.</p>
 <div class="paragraph">
 <p>does <em>not</em> correspond to an object type, because the <code>schema()</code> attribute is missing.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_precedence_4">25.2. Precedence</h3>
 <div class="paragraph">
-<p>If the object type has not been specified, then Apache Isis will use the fully qualified class name of the entity.</p>
+<p>The rules of precedence for determining a domain object&#8217;s object type are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#_rgant_Discriminator"><code>@Discriminator</code></a></p>
+</li>
+<li>
+<p><code>@DomainObject#objectType</code></p>
+</li>
+<li>
+<p><a href="#_rgant_PersistenceCapable"><code>@PersistenceCapable</code></a>, if at least the <code>schema</code> attribute is defined. <br></p>
+<div class="paragraph">
+<p>If both <code>schema</code> and <code>table</code> are defined, then the value is &#8220;schema.table&#8221;.
+If only <code>schema</code> is defined, then the value is &#8220;schema.className&#8221;.</p>
+</div>
+</li>
+<li>
+<p>Fully qualified class name of the entity.</p>
+</li>
+</ol>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -9623,19 +9831,11 @@ declaration.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This might be obvious, but to make explicit: we recommend that you use namespaces of some form or other.</p>
+<p>This might be obvious, but to make explicit: we recommend that you always specify an object type for your domain objects.</p>
 </div>
 <div class="paragraph">
-<p>If the object type has not been specified (by either this annotation, or by <a href="#_rgant-Discriminator"><code>@Discriminator</code></a>, or by Apache Isis' own <a href="#_rgant-ObjectType"><code>@DomainObject#objectType()</code></a> annotation/attribute), then (as noted above) Apache Isis will use the fully qualified class name of the entity.</p>
-</div>
-<div class="paragraph">
-<p>However, chances are that the fully qualified class name is liable to change over time, for example if the code is refactored or (more fundamentally) if your company/organization reorganizes/renames itself/is acquired.</p>
-</div>
-<div class="paragraph">
-<p>Isis' recognition of <code>@PersistenceCapable#schema()</code> makes namespacing of object types comparatively trivial, and moreover aligns the namespacing with the way in which the tables in the database are namespaced by the database schema.</p>
-</div>
-<div class="paragraph">
-<p>We therefore strongly recommend that you specify an object type for all entities, one way or another.  Using <code>@PersistenceCapable#schema()</code> is probably the best choice in most cases.</p>
+<p>Otherwise, if you refactor your code (change class name or move package), then any externally held references to the OID of the object will break.
+At best this will require a data migration in the database; at worst it could cause external clients accessing data through the <a href="ugvro.html">Restful Objects</a> viewer to break.</p>
 </div>
 </td>
 </tr>
@@ -9654,6 +9854,7 @@ declaration.</p>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -11624,6 +11825,23 @@ represented in the URL). As such, view models are immutable.</p>
 * view models cannot hold collections other view models (simple properties <em>are</em> supported, though)
 * collections (of either view models or entities) are ignored.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>@ViewModel</code> does not allow the objectType to be specified, meaning (as of <code>1.14.0-SNAPSHOT</code>) that it is incompatible with the metamodel validation check ennabled by the <a href="rgcfg.html#_rgcfg_configuring-core_metamodel-validation"><code>explicitObjectType</code></a> configuration property.</p>
+</div>
+<div class="paragraph">
+<p>Instead, use <a href="#_rgant_DomainObject_nature"><code>@DomainObject#nature()</code></a> with <code>Nature.VIEW_MODEL</code>, and specify <a href="#_rgant_DomainObject_objectType"><code>@DomainObject#objectType()</code></a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -12045,7 +12263,7 @@ implementation (eg which maps XML strings to a GUID, say) can be configured usin
 </table>
 </div>
 <div class="sect2">
-<h3 id="_example">37.1. Example</h3>
+<h3 id="_example_2">37.1. Example</h3>
 <div class="paragraph">
 <p>This example is taken from the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>:</p>
 </div>
@@ -12208,7 +12426,12 @@ in the user guide.</p>
 </ul>
 </li>
 <li><a href="#_rgant-Digits">8. <code>@Digits</code> (<code>javax</code>)</a></li>
-<li><a href="#_rgant-Discriminator">9. <code>@Discriminator</code> (<code>javax.jdo</code>)</a></li>
+<li><a href="#_rgant-Discriminator">9. <code>@Discriminator</code> (<code>javax.jdo</code>)</a>
+<ul class="sectlevel2">
+<li><a href="#_examples_2">9.1. Examples</a></li>
+<li><a href="#_precedence">9.2. Precedence</a></li>
+</ul>
+</li>
 <li><a href="#_rgant-DomainObject">10. <code>@DomainObject</code></a>
 <ul class="sectlevel2">
 <li><a href="#_rgant-DomainObject_auditing">10.1. <code>auditing()</code></a></li>
@@ -12245,7 +12468,12 @@ in the user guide.</p>
 <li><a href="#_default_doop_and_noop_events_6">10.10.2. Default, Doop and Noop events</a></li>
 </ul>
 </li>
-<li><a href="#_rgant-DomainObject_objectType">10.11. <code>objectType()</code></a></li>
+<li><a href="#_rgant-DomainObject_objectType">10.11. <code>objectType()</code></a>
+<ul class="sectlevel3">
+<li><a href="#_examples_3">10.11.1. Examples</a></li>
+<li><a href="#_precedence_2">10.11.2. Precedence</a></li>
+</ul>
+</li>
 <li><a href="#_rgant-DomainObject_publishing">10.12. <code>publishing()</code></a>
 <ul class="sectlevel3">
 <li><a href="#__code_publishingpayloadfactory_code_2">10.12.1. <code>publishingPayloadFactory()</code></a></li>
@@ -12306,7 +12534,13 @@ in the user guide.</p>
 <li><a href="#_rgant-DomainService">12. <code>@DomainService</code></a>
 <ul class="sectlevel2">
 <li><a href="#_rgant-DomainService_nature">12.1. <code>nature()</code></a></li>
-<li><a href="#_rgant-DomainService_repositoryFor">12.2. <code>repositoryFor()</code></a></li>
+<li><a href="#_rgant-DomainService_objectType">12.2. <code>objectType()</code> (<code>1.14.0-SNAPSHOT</code>)</a>
+<ul class="sectlevel3">
+<li><a href="#_example">12.2.1. Example</a></li>
+<li><a href="#_precedence_3">12.2.2. Precedence</a></li>
+</ul>
+</li>
+<li><a href="#_rgant-DomainService_repositoryFor">12.3. <code>repositoryFor()</code></a></li>
 </ul>
 </li>
 <li><a href="#_rgant-DomainServiceLayout">13. <code>@DomainServiceLayout</code></a>
@@ -12355,7 +12589,12 @@ in the user guide.</p>
 <li><a href="#_rgant-ParameterLayout_typicalLength">24.7. <code>typicalLength()</code></a></li>
 </ul>
 </li>
-<li><a href="#_rgant-PersistenceCapable">25. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</a></li>
+<li><a href="#_rgant-PersistenceCapable">25. <code>@PersistenceCapable</code> (<code>javax.jdo</code>)</a>
+<ul class="sectlevel2">
+<li><a href="#_examples_4">25.1. Examples</a></li>
+<li><a href="#_precedence_4">25.2. Precedence</a></li>
+</ul>
+</li>
 <li><a href="#_rgant-PostConstruct">26. <code>@PostConstruct</code> (<code>javax</code>)</a></li>
 <li><a href="#_rgant-PreDestroy">27. <code>@PreDestroy</code> (<code>javax</code>)</a></li>
 <li><a href="#_rgant-PrimaryKey">28. <code>@PrimaryKey</code> (<code>javax.jdo</code>)</a></li>
@@ -12420,7 +12659,7 @@ in the user guide.</p>
 <li><a href="#_rgant-XmlJavaTypeAdapter">36. <code>@XmlJavaTypeAdapter</code> (<code>jaxb</code>)</a></li>
 <li><a href="#_rgant-XmlRootElement">37. <code>@XmlRootElement</code> (<code>jaxb</code>)</a>
 <ul class="sectlevel2">
-<li><a href="#_example">37.1. Example</a></li>
+<li><a href="#_example_2">37.1. Example</a></li>
 <li><a href="#_see_also">37.2. See also</a></li>
 </ul>
 </li>

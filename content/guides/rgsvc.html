@@ -5523,6 +5523,20 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 <div class="paragraph">
 <p>The <code>ConfigurationService</code> allows domain objects to read the configuration properties aggregated from the various <a href="rgcfg.html#_rgcfg_configuration-files">configuration files</a>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Only configuration properties with the prefix "application" are be exposed.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5584,10 +5598,10 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
     <span class="annotation">@Programmatic</span>
     <span class="annotation">@PostConstruct</span>
     <span class="directive">public</span> <span class="type">void</span> init() {
-        <span class="local-variable">this</span>.oauthConsumerKey = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">tweetservice.oauth.consumerKey</span><span class="delimiter">&quot;</span></span>);
-        <span class="local-variable">this</span>.oauthConsumerSecret = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">tweetservice.oauth.consumerSecret</span><span class="delimiter">&quot;</span></span>);
-        <span class="local-variable">this</span>.oauthAccessToken = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">tweetservice.oauth.accessToken</span><span class="delimiter">&quot;</span></span>);
-        <span class="local-variable">this</span>.oauthAccessTokenSecret = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">tweetservice.oauth.accessTokenSecret</span><span class="delimiter">&quot;</span></span>);
+        <span class="local-variable">this</span>.oauthConsumerKey = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">application.tweetservice.oauth.consumerKey</span><span class="delimiter">&quot;</span></span>);
+        <span class="local-variable">this</span>.oauthConsumerSecret = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">application.tweetservice.oauth.consumerSecret</span><span class="delimiter">&quot;</span></span>);
+        <span class="local-variable">this</span>.oauthAccessToken = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">application.tweetservice.oauth.accessToken</span><span class="delimiter">&quot;</span></span>);
+        <span class="local-variable">this</span>.oauthAccessTokenSecret = configurationService.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">application.tweetservice.oauth.accessTokenSecret</span><span class="delimiter">&quot;</span></span>);
     }
     ...
     <span class="annotation">@Inject</span>
@@ -5603,7 +5617,8 @@ instead subclass from <code>o.a.i.applib.clock.Clock</code> singleton (as descri
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If you <em>do</em> have a domain service that needs to access properties, then note that an alternative is to define a <a href="rgant.html#_rgant-PostConstruct"><code>@PostConstruct</code></a> method and pass in a <code>Map&lt;String,String&gt;</code> of properties.  The two techniques are almost identical; it&#8217;s mostly a matter of taste.</p>
+<p>If you <em>do</em> have a domain service that needs to access Isis properties, then an alternative is to define a <a href="rgant.html#_rgant-PostConstruct"><code>@PostConstruct</code></a> method and pass in a <code>Map&lt;String,String&gt;</code> of properties.
+This is provided all properties, not just those with the 'application' prefix.</p>
 </div>
 </td>
 </tr>
@@ -7624,7 +7639,7 @@ For example, if you create a test email account on gmail, you can configure the 
 <p>where "xxx" is the gmail user account and "yyy" is its password</p>
 </div>
 <div class="paragraph">
-<p>In addition (as of <code>1.13.3-SNAPSHOT</code>), the following properties can be set:</p>
+<p>In addition (as of <code>1.14.0-SNAPSHOT</code>), the following properties can be set:</p>
 </div>
 <div class="ulist">
 <ul>

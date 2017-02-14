@@ -1436,7 +1436,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <div class="sect3">
 <h4 id="_rgcms_methods_prefixes_disable">2.1.6. <code>disable&#8230;&#8203;()</code></h4>
 <div class="paragraph">
-<p>The <code>disable&#8230;&#8203;()</code> supporting method is called for properties, collections and actions.  It allows the modification of the property/collection to be vetoed (ie made read-only) and to prevent the invocation of the action ("grey it out").</p>
+<p>The <code>disable&#8230;&#8203;()</code> supporting method is called for properties, collections and actions.
+It allows the modification of the property/collection to be vetoed (ie made read-only) and to prevent the invocation of the action ("grey it out").</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1456,23 +1457,33 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <p>Typically modification/invocation is vetoed based on the state of the domain object being interacted with, though it could be any reason at all (eg the current date/time of the interaction, or the state of some other related data such as stock levels, or the identity of the calling user).</p>
 </div>
 <div class="paragraph">
-<p>The reason for vetoing a modification/invocation is normally returned as a string.  However, Apache Isis' <a href="ugbtb.html#_ugbtb_i18n">i18n support</a> extends this so that reasons can be internationalized.</p>
+<p>The reason for vetoing a modification/invocation is normally returned as a string.
+However, Apache Isis' <a href="ugbtb.html#_ugbtb_i18n">i18n support</a> extends this so that reasons can be internationalized.</p>
 </div>
-<div class="sect4">
-<h5 id="_actions">Actions</h5>
 <div class="paragraph">
-<p>For an action the signature of the supporting method is:</p>
+<p>The signature of the supporting method is simply:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> disableXxx(...) { ... }</code></pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> disableXxx() { ... }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where the returned string is the reason the action invocation is vetoed (or <code>null</code> if not vetoed), and the supporting method takes the same parameter types as the action itself.</p>
+<p>where the returned string is the reason the property cannot be edited, or the action invoked.</p>
 </div>
 <div class="paragraph">
-<p>For example:</p>
+<p>For i18n, the supporting method returns a <code>TranslatableString</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> TranslatableString disableXxx() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The returned string is then automatically translated to the locale of the current user.</p>
+</div>
+<div class="paragraph">
+<p>For example, to disable an action:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1485,10 +1496,7 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
             <span class="directive">final</span> <span class="type">int</span> quantity) {
         ...
     }
-    <span class="directive">public</span> <span class="predefined-type">String</span> disablePlaceOrder(
-            <span class="directive">final</span> Product product,
-            <span class="directive">final</span> <span class="type">int</span> quantity
-            ) {
+    <span class="directive">public</span> <span class="predefined-type">String</span> disablePlaceOrder() {
         <span class="keyword">return</span> isBlacklisted()
                     ? <span class="string"><span class="delimiter">&quot;</span><span class="content">Blacklisted customers cannot place orders</span><span class="delimiter">&quot;</span></span>
                     : <span class="predefined-constant">null</span>;
@@ -1497,22 +1505,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 }</code></pre>
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_properties_and_collections">Properties and Collections</h5>
 <div class="paragraph">
-<p>For both properties and collections the signature of the supporting method is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> disableXxx() { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the returned string is the reason the modification is vetoed (or <code>null</code> if not vetoed).</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
+<p>Or, to disable a property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1530,6 +1524,23 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the case of actions, the framework will also search for supporting method that has the exact same parameter types as the action itself.
+(As of <code>1.14.0-SNAPSHOT</code>) enabling <code>isis.reflector.validator.noParamsOnly</code> configuration property switches this off, so that the framework will only search for supporting method with no parameters.</p>
+</div>
+<div class="paragraph">
+<p>Note that enabling this configuration property in effect means that <a href="#_rgcms_classes_mixins">mixins</a> must be used instead of <a href="ugbtb.html#_ugbtb_decoupling_contributions">contributed services</a> (because contributed actions are the one case where the value of a parameter to a supporting method may be non-null).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -1553,23 +1564,14 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <div class="sect3">
 <h4 id="_rgcms_methods_prefixes_hide">2.1.8. <code>hide&#8230;&#8203;()</code></h4>
 <div class="paragraph">
-<p>The <code>hide&#8230;&#8203;()</code> supporting method is called for properties, collections and actions.  It allows the property/collection to be completely hidden from view.</p>
+<p>The <code>hide&#8230;&#8203;()</code> supporting method is called for properties, collections and actions.
+It allows the property/collection to be completely hidden from view.</p>
 </div>
 <div class="paragraph">
 <p>It&#8217;s comparatively rare for properties or collections to be imperatively hidden from view, but actions are sometimes hidden or shown visible (as opposed to being just <a href="#_rgcms_methods_prefixes_disable">disabled</a>, ie greyed out).</p>
 </div>
-<div class="sect4">
-<h5 id="_actions_2">Actions</h5>
 <div class="paragraph">
-<p>For an action the signature of the supporting method is either:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> hideXxx(...) { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where the supporting method takes the same parameter types as the action itself, or more simply:</p>
+<p>The signature of the supporting method is simply:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1577,10 +1579,10 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 </div>
 <div class="paragraph">
-<p>with no parameters at all.  Returning <code>true</code> will hide the action, returning <code>false</code> leaves it visible.</p>
+<p>Returning <code>true</code> will hide the property, collection or action, returning <code>false</code> leaves it visible.</p>
 </div>
 <div class="paragraph">
-<p>For example:</p>
+<p>For example, to hide an action:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1600,22 +1602,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 }</code></pre>
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_properties_and_collections_2">Properties and Collections</h5>
 <div class="paragraph">
-<p>For both properties and collections the signature of the supporting method is:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> hideXxx() { ... }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>where returning <code>true</code> will hide the property/collection, returning <code>false</code> leaves it visible.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
+<p>Or, to hide a property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1631,6 +1619,23 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the case of actions, the framework will also search for supporting method that has the exact same parameter types as the action itself.
+(As of <code>1.14.0-SNAPSHOT</code>) enabling <code>isis.reflector.validator.noParamsOnly</code> configuration property switches this off, so that the framework will only search for supporting method with no parameters.</p>
+</div>
+<div class="paragraph">
+<p>Note that enabling this configuration property in effect means that <a href="#_rgcms_classes_mixins">mixins</a> must be used instead of <a href="ugbtb.html#_ugbtb_decoupling_contributions">contributed services</a> (because contributed actions are the one case where the value of a parameter to a supporting method may be non-null).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -1742,10 +1747,12 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <div class="sect3">
 <h4 id="_rgcms_methods_prefixes_validate">2.1.12. <code>validate&#8230;&#8203;()</code></h4>
 <div class="paragraph">
-<p>The <code>validate&#8230;&#8203;()</code> supporting method is called for properties, actions and action parameters.  It allows the proposed new value for a property to be rejected, or the proposed argument of an action parameter to be rejected, or to reject a whole set of action arguments for an actio invocation.</p>
+<p>The <code>validate&#8230;&#8203;()</code> supporting method is called for properties, actions and action parameters.
+It allows the proposed new value for a property to be rejected, or the proposed argument of an action parameter to be rejected, or to reject a whole set of action arguments for an actio invocation.</p>
 </div>
 <div class="paragraph">
-<p>The reason for vetoing a modification/invocation is normally returned as a string.  However, Apache Isis' <a href="ugbtb.html#_ugbtb_i18n">i18n support</a> extends this so that reasons can be internationalized if required.</p>
+<p>The reason for vetoing a modification/invocation is normally returned as a string.
+However, Apache Isis' <a href="ugbtb.html#_ugbtb_i18n">i18n support</a> extends this so that reasons can be internationalized if required.</p>
 </div>
 <div class="sect4">
 <h5 id="_action_parameter">Action Parameter</h5>
@@ -1759,6 +1766,17 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 <div class="paragraph">
 <p>where the returned string is the reason why the argument is rejected (or <code>null</code> if not vetoed).</p>
+</div>
+<div class="paragraph">
+<p>For i18n, the supporting method returns a <code>TranslatableString</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> TranslatableString validateNXxx(T proposed) { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The returned string is then automatically translated to the locale of the current user.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -1786,7 +1804,8 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <div class="sect4">
 <h5 id="_action_parameter_set">Action Parameter Set</h5>
 <div class="paragraph">
-<p>In addition to validating a single single action argument, it is also possible to validate a complete set of action arguments.  The signature is:</p>
+<p>In addition to validating a single single action argument, it is also possible to validate a complete set of action arguments.
+The signature is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1795,6 +1814,14 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 <div class="paragraph">
 <p>where the returned string is the reason why the argument is rejected (or <code>null</code> if not vetoed), and the supporting method takes the same parameter types as the action itself.</p>
+</div>
+<div class="paragraph">
+<p>For i18n, the supporting method returns a <code>TranslatableString</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> TranslatableString validateXxx(...) { ... }</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -1832,6 +1859,14 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </div>
 <div class="paragraph">
 <p>where the returned string is the reason the modification is vetoed (or <code>null</code> if not vetoed).</p>
+</div>
+<div class="paragraph">
+<p>For i18n, the supporting method returns a <code>TranslatableString</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> TranslatableString validateXxx(T proposed) { ... }</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>For example:</p>
@@ -2190,13 +2225,61 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 <div class="sect3">
 <h4 id="_rgcms_methods_reserved_getId">2.2.3. <code>getId()</code></h4>
 <div class="paragraph">
-<p>The <code>getId()</code> method applies only to domain services, and allows a unique identifer to be provided for that service.</p>
+<p>The <code>getId()</code> method applies only to domain services, and is used to provide a unique alias for the domain service&#8217;s class name.</p>
 </div>
 <div class="paragraph">
-<p>This identifier corresponds in many ways to the <a href="rgant.html#_rgant-DomainObject_objectType"><code>objectType()</code></a> attribute for domain objects; it is used as an internal identifier but also appears in URLs within the <a href="ugvro.html">RestfulObjects viewer</a>'s REST API.</p>
+<p>This value is used internally to generate a string representation of an service identity (the <code>Oid</code>).
+This can appear in several contexts, including:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>as the value of <code>Bookmark#getObjectType()</code> and in the <code>toString()</code> value of <code>Bookmark</code>
+(see <a href="rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>)</p>
+</li>
+<li>
+<p>in the serialization of <code>OidDto</code> in the <a href="#_rgcms_schema-cmd">command</a> and <a href="#_rgcms_schema-ixn">interaction</a> schemas</p>
+</li>
+<li>
+<p>in the URLs of the <a href="ugvro.html">RestfulObjects viewer</a></p>
+</li>
+<li>
+<p>in the URLs of the <a href="ugvw.html">Wicket viewer</a> (specifically, for bookmarked actions)</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_example">Example</h5>
 <div class="paragraph">
-<p>If the identifier is omitted, the services fully qualified class name is used.</p>
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">OrderMenu</span> {
+    ...
+    public <span class="predefined-type">String</span> getId() { <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">orders.OrderMenu</span><span class="delimiter">&quot;</span></span>; }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_precedence">Precedence</h5>
+<div class="paragraph">
+<p>The rules of precedence are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="rgant.html#_rgant_DomainService_objectType"><code>@DomainService#objectType()</code></a></p>
+</li>
+<li>
+<p><a href="#_rgcms_methods_reserved_getId"><code>getId()</code></a></p>
+</li>
+<li>
+<p>The fully qualified class name.</p>
+</li>
+</ol>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2206,11 +2289,31 @@ RemoveFrom&#8230;&#8203;()</code></a></p></td>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Unlike domain objects, where the use of an object type is strongly encouraged (eg using <a href="rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a>), it matters much less if an id is specified for domain services.  The principle benefit is shorter URLs in the REST API.</p>
+<p>This might be obvious, but to make explicit: we recommend that you always specify an object type for your domain services.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise, if you refactor your code (change class name or move package), then any externally held references to the OID of the service will break.
+At best this will require a data migration in the database; at worst it could cause external clients accessing data through the <a href="ugvro.html">Restful Objects</a> viewer to break.</p>
 </div>
 </td>
 </tr>
 </table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the object type is not unique across all domain classes then the framework will fail-fast and fail to boot.
+An error message will be printed in the log to help you determine which classes have duplicate object tyoes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -7011,19 +7114,9 @@ the <a href="#_rgcms_schema_cmd">"cmd"</a> and <a href="#_rgcms_schema_ixn">"ixn
 <li><a href="#_properties_3">Properties</a></li>
 </ul>
 </li>
-<li><a href="#_rgcms_methods_prefixes_disable">2.1.6. <code>disable&#8230;&#8203;()</code></a>
-<ul class="sectlevel4">
-<li><a href="#_actions">Actions</a></li>
-<li><a href="#_properties_and_collections">Properties and Collections</a></li>
-</ul>
-</li>
+<li><a href="#_rgcms_methods_prefixes_disable">2.1.6. <code>disable&#8230;&#8203;()</code></a></li>
 <li><a href="#_rgcms_methods_prefixes_get">2.1.7. <code>get&#8230;&#8203;()</code></a></li>
-<li><a href="#_rgcms_methods_prefixes_hide">2.1.8. <code>hide&#8230;&#8203;()</code></a>
-<ul class="sectlevel4">
-<li><a href="#_actions_2">Actions</a></li>
-<li><a href="#_properties_and_collections_2">Properties and Collections</a></li>
-</ul>
-</li>
+<li><a href="#_rgcms_methods_prefixes_hide">2.1.8. <code>hide&#8230;&#8203;()</code></a></li>
 <li><a href="#_rgcms_methods_prefixes_modify">2.1.9. <code>modify&#8230;&#8203;()</code></a></li>
 <li><a href="#_rgcms_methods_prefixes_removeFrom">2.1.10. <code>removeFrom&#8230;&#8203;()</code></a></li>
 <li><a href="#_rgcms_methods_prefixes_set">2.1.11. <code>set&#8230;&#8203;()</code></a></li>
@@ -7046,7 +7139,12 @@ the <a href="#_rgcms_schema_cmd">"cmd"</a> and <a href="#_rgcms_schema_ixn">"ixn
 <li><a href="#_alternatives_2">Alternatives</a></li>
 </ul>
 </li>
-<li><a href="#_rgcms_methods_reserved_getId">2.2.3. <code>getId()</code></a></li>
+<li><a href="#_rgcms_methods_reserved_getId">2.2.3. <code>getId()</code></a>
+<ul class="sectlevel4">
+<li><a href="#_example">Example</a></li>
+<li><a href="#_precedence">Precedence</a></li>
+</ul>
+</li>
 <li><a href="#_rgcms_methods_reserved_hide">2.2.4. <code>hide()</code></a>
 <ul class="sectlevel4">
 <li><a href="#_alternatives_3">Alternatives</a></li>
