@@ -2487,7 +2487,7 @@ git push</code></pre>
 <p>Once the Apache Isis release is available, all of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> should also be released.</p>
 </div>
 <div class="paragraph">
-<p>Using this <a href="https://gist.github.com/danhaywood/ff17946ee05652402cfb">gist</a> to invoke operations across all (or selected) addons:</p>
+<p>Using this <a href="https://gist.github.com/danhaywood/21b5b885433fd8bc440da3fab88c91cb">gist</a> to invoke operations across all (or selected) addons:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2523,10 +2523,70 @@ git push</code></pre>
 </div>
 </li>
 <li>
-<p>release to mvn central (contains a sanity check before hand that everything compiles):<br></p>
+<p>release the metamodel/module/wicket modules to mvn central (contains a sanity check before hand that everything compiles):<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons/isis-[mw] sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>update its dependency on Apache Isis to reference the next SNAPSHOT version:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons sh bumpver_isis.sh &quot;1.15.0-SNAPSHOT&quot;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_release_incode_catalog_modules">5.14. Release Incode Catalog Modules</h3>
+<div class="paragraph">
+<p>Similarly, all of the (non-ASF) <a href="http://catalog.incode.org">Incode Catalog</a> modules should also be released.</p>
+</div>
+<div class="paragraph">
+<p>Using this <a href="https://gist.github.com/danhaywood/21b5b885433fd8bc440da3fab88c91cb">gist</a> to invoke operations across all (or selected) addons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>update its dependency on Apache Isis to reference the newly released version:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode- bumpver_isis.sh 1.14.0</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>update the README for each repository</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace 1.14.0-SNAPSHOT with 1.15.0-SNAPSHOT</p>
+</li>
+<li>
+<p>replace 1.13.0          with 1.14.0</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>update the "Change Log" section</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>release the <code>incode-module-???</code> modules to mvn central (contains a sanity check before hand that everything compiles):<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-[a-w] sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
 </div>
 </div>
 </li>
@@ -4511,6 +4571,7 @@ modify_committee.pl isis --remove joebloggs</code></pre>
 <li><a href="#_code_formatting">5.11. Code formatting</a></li>
 <li><a href="#_push_changes">5.12. Push changes</a></li>
 <li><a href="#_release_isis_addons">5.13. Release Isis Addons</a></li>
+<li><a href="#_release_incode_catalog_modules">5.14. Release Incode Catalog Modules</a></li>
 </ul>
 </li>
 <li><a href="#_cgcom_post-release-unsuccessful">6. Post Release (Unsuccessful)</a>
