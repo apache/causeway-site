@@ -506,37 +506,67 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_migration-notes_1.13.0-to-1.14.0">From v1.13.x to 1.14.0</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_rename_of_isis_viewer_wicket_artifacts">Rename of isis-viewer-wicket artifacts</h3>
+<h3 id="_new_metamodel_validations">New metamodel validations</h3>
 <div class="paragraph">
-<p>The <code>&lt;groupId&gt;</code> and <code>&lt;artifactId&gt;</code> of the <a href="ugvw.html">Wicket viewer</a> have been made consistent with other artifacts:</p>
+<p>This release defines a number of metamodel validations.
+These can be enabled or disabled using configuration properties:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the <code>&lt;groupId&gt;</code> has been changed from <code>org.apache.isis.viewer</code> to <code>org.apache.isis.core</code></p>
-</li>
-<li>
-<p>the <code>&lt;artifactId&gt;</code> has been changed from <code>isis-viewer-wicket-???</code> to <code>isis-core-viewer-wicket-???</code></p>
+<p><code>isis.reflector.validator.explicitObjectType</code><br></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>For example:</p>
+<p>Whether to check that the class has an object type explicitly specified somehow.
+This is strongly recommended, but is disabled by default to prevent migration issues.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.viewer<span class="tag">&lt;/groupId&gt;</span>
-<span class="tag">&lt;artifactId&gt;</span>isis-viewer-wicket-applib<span class="tag">&lt;/artifactId&gt;</span></code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isis.reflector.validator.jdoqlFromClause</code><br></p>
+<div class="paragraph">
+<p>Whether to check that the class name in JDOQL <code>FROM</code> clause matches or is a supertype of the class on which it is annotated.
+This is enabled by default.</p>
 </div>
+</li>
+<li>
+<p><code>isis.reflector.validator.jdoqlVariablesClause</code><br></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>has been renamed to:</p>
+<p>Whether to check that the class name in JDOQL <code>VARIABLES</code> clause is a recognized class.
+This is enabled by default.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.core<span class="tag">&lt;/groupId&gt;</span>
-<span class="tag">&lt;artifactId&gt;</span>isis-core-viewer-wicket-applib<span class="tag">&lt;/artifactId&gt;</span></code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isis.reflector.validator.mixinsOnly</code><br></p>
+<div class="paragraph">
+<p>This is disabled by default; if enabled, this configuration property will treat any contributed service as invalid; instead use mixins (as a simpler/less confusing programming model).</p>
 </div>
+</li>
+<li>
+<p><code>isis.reflector.validator.noParamsOnly</code><br></p>
+<div class="paragraph">
+<p>When searching for  <a href="rgcms.html#_rgcms_methods_prefixes_disable"><code>disableXxx()</code></a> or <a href="rgcms.html#_rgcms_methods_prefixes_hide"><code>hideXxx()</code></a> supporting methods, whether to search only for the no-param version (or also for supporting methods that match the parameter types of the action).<br></p>
+</div>
+<div class="paragraph">
+<p>This is disabled by default; if enabled then this makes for a simpler programming model.</p>
+</div>
+</li>
+<li>
+<p><code>isis.reflector.validator.serviceActionsOnly</code><br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Domain services are stateless (at least conceptually) and so should not have any properties or collections; any that are defined will not be rendered by the viewers.<br></p>
+</div>
+<div class="paragraph">
+<p>This is disabled by default; if enabled, then this ensure that domain services only declare actions and so makes for a simpler programming model.</p>
 </div>
 </div>
 </div>
@@ -2448,7 +2478,7 @@ into the new <code>org.isisaddons.module.settings:isis-module-settings-dom</code
                 <ul class="sectlevel1">
 <li><a href="#_migration-notes_1.13.0-to-1.14.0">From v1.13.x to 1.14.0</a>
 <ul class="sectlevel2">
-<li><a href="#_rename_of_isis_viewer_wicket_artifacts">Rename of isis-viewer-wicket artifacts</a></li>
+<li><a href="#_new_metamodel_validations">New metamodel validations</a></li>
 </ul>
 </li>
 <li><a href="#_migration-notes_1.12.0-to-1.13.0">From v1.12.x to 1.13.0</a>
