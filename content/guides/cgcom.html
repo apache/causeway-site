@@ -2482,7 +2482,79 @@ git push</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_release_isis_addons">5.13. Release Isis Addons</h3>
+<h3 id="_cgcom_post-release-successful_release-non-asf-modules">5.13. Release (non-ASF) Modules</h3>
+<div class="paragraph">
+<p>There are two libraries of modules, both non-ASF but open source, that should be released.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://isisaddons.org">Isis Addons</a> - modules addressing technical concerns</p>
+</li>
+<li>
+<p><a href="http://catalog.incodehq.org">Incode Catalog</a> - modules for various generic business subdomains</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These each use a common parent, <code>org.incode:incode-parent</code>.
+This must be released first, then both set of modules afterwards.</p>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_post-release-successful_release-non-asf-modules_prereqs">5.13.1. Prereqs</h4>
+<div class="paragraph">
+<p>Save this <a href="https://gist.github.com/danhaywood/e80daf6d25f5c1fb1093effba85d088a">gist</a> as <code>last_modified.sh</code> in an appropriate parent directory of both sets of repos.</p>
+</div>
+<div class="paragraph">
+<p>For example, if the isisaddons modules are cloned to <code>/c/github/isisaddons/isis-module-xxx</code> and the incode catalog modules are cloned to <code>/c/github/incodehq/incode-module-xxx</code>, then save in <code>/c/github</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_post-release-successful_release-non-asf-modules_incode-parent">5.13.2. Release <code>incode-parent</code></h4>
+<div class="paragraph">
+<p>The <code>org.incode:incode-parent</code> Maven module is used as a parent for both sets of modules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open up <code>pom.xml</code>, and manually edit <code>&lt;isis.version&gt;</code> property to the latest release</p>
+</li>
+<li>
+<p>update the README</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace 1.14.0-SNAPSHOT with 1.15.0-SNAPSHOT</p>
+</li>
+<li>
+<p>replace 1.13.0          with 1.14.0</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>update the "Change Log" section</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Release using:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; &quot;this is not really my password&quot;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_post-release-successful_release-non-asf-modules_isisaddons">5.13.3. Release Isis Addons</h4>
 <div class="paragraph">
 <p>Once the Apache Isis release is available, all of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> should also be released.</p>
 </div>
@@ -2495,23 +2567,50 @@ git push</code></pre>
 <p>update its dependency on Apache Isis to reference the newly released version:<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons bumpver_isis.sh 1.14.0</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons sh bumpver_isis.sh 1.14.0</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>and use:<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons git diff HEAD^ HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and:<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons git status --branch --porcelain</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to review changes made.</p>
 </div>
 </li>
 <li>
-<p>update the README for each repository</p>
+<p>update the README for each repository.</p>
 <div class="ulist">
 <ul>
+<li>
+<p>if using Windows, then:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">&quot;C:\Program Files (x86)\Notepad++\notepad++.exe&quot; isisaddons/isis-m*/README.adoc  isisaddons/isis-w*/README.adoc</code></pre>
+</div>
+</div>
+</li>
 <li>
 <p>replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
 <div class="ulist">
 <ul>
 <li>
-<p>replace 1.14.0-SNAPSHOT with 1.15.0-SNAPSHOT</p>
+<p>replace <code>1.14.0</code> with <code>1.15.0</code></p>
 </li>
 <li>
-<p>replace 1.13.0          with 1.14.0</p>
+<p>replace <code>1.13.0</code> with <code>1.14.0</code> as necessary (pretty much everywhere apart from the "Change Log")</p>
 </li>
 </ul>
 </div>
@@ -2531,18 +2630,40 @@ git push</code></pre>
 </div>
 </li>
 <li>
-<p>update its dependency on Apache Isis to reference the next SNAPSHOT version:<br></p>
+<p>In the parent directory where the <code>last_modified.sh</code> script has been saved (see <a href="#_cgcom_post-release-successful_release-non-asf-modules_prereqs">above</a>), use to check that all modules were released successfully:<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons sh bumpver_isis.sh &quot;1.15.0-SNAPSHOT&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons/isis-[mw] sh ../../last-modified.sh 1.14.0</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Wait at least 10 minutes to check; sync&#8217;ing to Maven central from the Sonatype OSS repository isn&#8217;t instaneous.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Assuming everything did get published ok, then push branch and tag:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons/isis-[mw] &quot;git push origin master &amp;&amp; git push origin 1.14.0&quot;</code></pre>
 </div>
 </div>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_release_incode_catalog_modules">5.14. Release Incode Catalog Modules</h3>
+<div class="sect3">
+<h4 id="_cgcom_post-release-successful_release-non-asf-modules_incode-catalog">5.13.4. Release Incode Catalog Modules</h4>
 <div class="paragraph">
 <p>Similarly, all of the (non-ASF) <a href="http://catalog.incode.org">Incode Catalog</a> modules should also be released.</p>
 </div>
@@ -2555,23 +2676,31 @@ git push</code></pre>
 <p>update its dependency on Apache Isis to reference the newly released version:<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode- bumpver_isis.sh 1.14.0</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-module sh bumpver_isis.sh 1.14.0</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>update the README for each repository</p>
+<p>update the README for each repository.<br></p>
+<div class="paragraph">
+<p>eg if using Windows, then:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">&quot;C:\Program Files (x86)\Notepad++\notepad++.exe&quot; incodehq/incode-*/README.adoc</code></pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
+<p>Replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
 <div class="ulist">
 <ul>
 <li>
-<p>replace 1.14.0-SNAPSHOT with 1.15.0-SNAPSHOT</p>
+<p>replace <code>1.14.0</code> with <code>1.15.0</code></p>
 </li>
 <li>
-<p>replace 1.13.0          with 1.14.0</p>
+<p>replace <code>1.13.0</code> with <code>1.14.0</code> as necessary (pretty much everywhere apart from the "Change Log")</p>
 </li>
 </ul>
 </div>
@@ -2583,22 +2712,132 @@ git push</code></pre>
 </div>
 </li>
 <li>
+<p>update cross-module dependencies<br></p>
+<div class="paragraph">
+<p>Some of the incode catalog modules depend on isisaddons modules, and also on each other.<br></p>
+</div>
+<div class="paragraph">
+<p>eg if using Windows, then:<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">&quot;C:\Program Files (x86)\Notepad++\notepad++.exe&quot; incodehq/incode-module*/pom.xml  incodehq/incode-module-*/dom/pom.xml incodehq/incode-module-*/module/pom.xml</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See <a href="#_cgcom_post-release-successful_release-non-asf-modules_incode-catalog_cross-module-dependencies">below</a> for a list of the dependencies to update.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>If necessary, adjust the <code>_repos.txt</code> file (used by <code>foreach</code> function) so that repositories are released in the correct sequence (with respect to their mutual dependencies).
+For example, <code>incode-module-base</code> must be released prior to <code>incode-module-alias</code>.</p>
+</li>
+<li>
 <p>release the <code>incode-module-???</code> modules to mvn central (contains a sanity check before hand that everything compiles):<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-[a-w] sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-module-[a-w] sh release.sh &quot;1.14.0&quot; &quot;1.15.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>update its dependency on Apache Isis to reference the next SNAPSHOT version:<br></p>
+<p>In the parent directory where the <code>last_modified.sh</code> script has been saved (see <a href="#_cgcom_post-release-successful_release-non-asf-modules_prereqs">above</a>), use to check that all modules were released successfully:<br></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">foreach -g isisaddons sh bumpver_isis.sh &quot;1.15.0-SNAPSHOT&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-module-[a-w] sh ../../last-modified.sh 1.14.0</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Wait at least 10 minutes to check; sync&#8217;ing to Maven central from the Sonatype OSS repository isn&#8217;t instaneous.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Assuming everything did get published ok, then push branch and tag:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">foreach -g incodehq/incode-module-[a-w] &quot;git push origin master &amp;&amp; git push origin 1.14.0&quot;</code></pre>
 </div>
 </div>
 </li>
 </ul>
+</div>
+<div class="sect4">
+<h5 id="_cgcom_post-release-successful_release-non-asf-modules_incode-catalog_cross-module-dependencies">Cross-module dependencies</h5>
+<div class="paragraph">
+<p>As of v1.14.0, the list of dependencies that needed to be updated (across all modules) were:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;isis-module-fakedata.version&gt;1.14.0&lt;/isis-module-fakedata.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;isis-module-freemarker.version&gt;1.14.0&lt;/isis-module-freemarker.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;isis-wicket-fullcalendar2-cpt.version&gt;1.14.0&lt;/isis-wicket-fullcalendar2-cpt.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;isis-wicket-gmap3-cpt.version&gt;1.14.0&lt;/isis-wicket-gmap3-cpt.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;isis-module-poly.version&gt;1.14.0&lt;/isis-module-poly.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;isis-module-security.version&gt;1.14.0&lt;/isis-module-security.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-base.version&gt;1.14.0&lt;/incode-module-base.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-fixturesupport.version&gt;1.14.0&lt;/incode-module-fixturesupport.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-unittestsupport.version&gt;1.14.0&lt;/incode-module-unittestsupport.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-integtestsupport.version&gt;1.14.0&lt;/incode-module-integtestsupport.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-country.version&gt;1.14.0&lt;/incode-module-country.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-document.version&gt;1.14.0&lt;/incode-module-document.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-docrendering-freemarker.version&gt;1.14.0&lt;/incode-module-docrendering-freemarker.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-docrendering-stringinterpolator.version&gt;1.14.0&lt;/incode-module-docrendering-stringinterpolator.version&gt;</code></p>
+</li>
+<li>
+<p><code>&lt;incode-module-docrendering-xdocreport.version&gt;1.14.0&lt;/incode-module-docrendering-xdocreport.version&gt;</code></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -4570,8 +4809,18 @@ modify_committee.pl isis --remove joebloggs</code></pre>
 </li>
 <li><a href="#_code_formatting">5.11. Code formatting</a></li>
 <li><a href="#_push_changes">5.12. Push changes</a></li>
-<li><a href="#_release_isis_addons">5.13. Release Isis Addons</a></li>
-<li><a href="#_release_incode_catalog_modules">5.14. Release Incode Catalog Modules</a></li>
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules">5.13. Release (non-ASF) Modules</a>
+<ul class="sectlevel3">
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules_prereqs">5.13.1. Prereqs</a></li>
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules_incode-parent">5.13.2. Release <code>incode-parent</code></a></li>
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules_isisaddons">5.13.3. Release Isis Addons</a></li>
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules_incode-catalog">5.13.4. Release Incode Catalog Modules</a>
+<ul class="sectlevel4">
+<li><a href="#_cgcom_post-release-successful_release-non-asf-modules_incode-catalog_cross-module-dependencies">Cross-module dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_cgcom_post-release-unsuccessful">6. Post Release (Unsuccessful)</a>
