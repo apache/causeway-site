@@ -35,8 +35,6 @@ function truncateWords(str, words) {
 
 const optionParams = [
     {name: 'index-dir', alias: 'd', type: String, defaultOption: true},
-    {name: 'url-root', alias: 'r', type: String, defaultOption: "http://localhost:8000"},
-    {name: 'ignore', alias: 'i', type: String, multiple: true},
     {name: 'output', alias: 'o', type: String, defaultValue: './index.json'},
     {name: 'version', alias: 'v', type: Boolean},
     {name: 'verbose', alias: 'V', type: Boolean},
@@ -48,7 +46,7 @@ const options = optionParser(optionParams);
 if (options.help) {
     console.log(SCRIPT_NAME + ' - ' + DESCRIPTION + '\n');
     console.log(
-        'Usage: ' + SCRIPT_NAME + ' INDEX-DIR [--url-root http://localhost:8000 --ignore FILE1 FILE2 --output OUT-FILE --verbose]'
+        'Usage: ' + SCRIPT_NAME + ' INDEX-DIR [ --output OUT-FILE --verbose]'
     );
     process.exit();
 }
@@ -64,8 +62,6 @@ function padLeft(str, char, length) {
     else
         return '';
 }
-
-// Ignore non-html files.
 
 // find all unique file extensions in bash using:
 // for a in `find content -type f -print `; do filename=`basename $a`; fileext=${filename##*.}; echo "$fileext"; done  | sort -u
@@ -109,11 +105,10 @@ var index = el(function () {
     this.setRef('id')
 });
 
-if (options.ignore) {
-    ignore = ignore.concat(options.ignore);
-}
 
-recursive(options['index-dir'], ignore, function (err, files) {
+var indexDir = options['index-dir'];
+
+recursive(indexDir, ignore, function (err, files) {
     if (err) {
         console.log(err);
         return;
@@ -162,7 +157,7 @@ recursive(options['index-dir'], ignore, function (err, files) {
                 id: docId
             };
 
-/*
+    /*
             if (options.verbose) {
                 console.log("  " + padLeft(sectionId, ' ', 40) + ": " + sectionTitle);
                 //console.log("  sectionTitle      : " + sectionTitle);
@@ -172,32 +167,36 @@ recursive(options['index-dir'], ignore, function (err, files) {
                 //console.log("  sectionBodyText   : " + sectionBodyText);
                 //console.log("")
             }
-*/
+    */
 
             index.addDoc(doc);
         });
 
-    };
+    }
+
+    // Serialise and write the index.
+    var out = index.toJSON();
+
+    /*
+    // Remove the body field from the documentStore to decrease the size of the index.
+    for (var id in out.documentStore.docs) {
+        delete out.documentStore.docs[id].body;
+    }
+    */
+
+
+    if (options.verbose) {
+        console.log("Serialising to: " + options.output)
+    }
+
+    fs.writeFileSync(options.output, JSON.stringify(out), 'utf-8');
+
+
+    if (options.verbose) {
+        console.log('done');
+    }
+
+    process.exit();
+
 });
 
-// Serialise and write the index.
-var out = index.toJSON();
-
-/*
-// Remove the body field from the documentStore to decrease the size of the index.
-for (var id in out.documentStore.docs) {
-    delete out.documentStore.docs[id].body;
-}
-*/
-
-
-if (options.verbose) {
-    console.log("Serialising to: " + options.output)
-}
-
-fs.writeFileSync(options.output, JSON.stringify(out), 'utf-8');
-
-
-if (options.verbose) {
-    console.log('done');
-}
