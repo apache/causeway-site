@@ -173,6 +173,7 @@ recursive(options['index-dir'], ignore, function (err, files) {
                 //console.log("")
             }
 */
+
             index.addDoc(doc);
         });
 
@@ -194,7 +195,7 @@ if (options.verbose) {
     console.log("Serialising to: " + options.output)
 }
 
-// fs.writeFileSync(options.output, JSON.stringify(out), 'utf-8');
+fs.writeFileSync(options.output, JSON.stringify(out), 'utf-8');
 
 
 if (options.verbose) {
