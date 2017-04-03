@@ -1,23 +1,33 @@
-$('#hello-world').submit(function(ev) {
+$('#search-form').submit(function(ev) {
     ev.preventDefault(); // to stop the form from submitting
     /* Validations go here */
 
-    var searchField = $('#searchfield');
+    var searchField = $('#search-field');
     var searchText = searchField.val()
 
 
     $.getJSON('/elasticlunr/index.json', function (data) {
 
         var index = elasticlunr.Index.load(data);
-        var searchResults = index.search(searchText);
+        var searchResults = index.search(searchText 
+        /*,{
+            fields: {
+                title: {boost: 3},
+                description: {boost: 2},
+                body: {boost: 1}
+        }}
+        */
+        );
 
         $('#search-results').empty();
         if(searchResults.length === 0) {
 
-            $('#search-results').append("<br/>No matches found for '" + searchText + "'<br/><br/>");
+            if(searchText) {
+                $('#search-results').append("<br/>No matches found for '" + searchText + "'<br/><br/>");
+            }
 
         } else {
-            for (var i = 0; i < searchResults.length; i++) {
+            for (var i = 0; i < Math.min(searchResults.length, 20); i++) {
 
                 var searchResult = searchResults[i];
                 var ref = searchResult['ref'];
@@ -46,6 +56,6 @@ $('#hello-world').submit(function(ev) {
 });
 
 $(document).ready(function(){
-    var searchField = $('#searchfield');
+    var searchField = $('#search-field');
     $(searchField).focus();
 });

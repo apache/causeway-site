@@ -26,6 +26,10 @@ function hashString(str) {
     return parseInt(hex_digest.slice(0, 8), 16);
 }
 
+function mkdirp(directory) {
+    fs.existsSync(directory) || fs.mkdirSync(directory);
+}
+
 /**
  * Truncates a string to a maximum number of words.
  */
@@ -118,7 +122,7 @@ recursive(indexDir, ignore, function (err, files) {
         var html = fs.readFileSync(file, 'utf-8');
         
         file = file.replace(/\\/g, '/');
-        file = file.replace(new RegExp('^' + options['index-dir']), '');
+        file = file.replace(new RegExp('^' + options['index-dir']), '/');
 
         if (options.verbose) {
             console.log("")
@@ -203,7 +207,11 @@ recursive(indexDir, ignore, function (err, files) {
         console.log("Serialising to: " + options.output)
     }
 
-    fs.writeFileSync(options.output, JSON.stringify(out), 'utf-8');
+    var outputFile = options.output;
+    var outputFileParse = path.parse(outputFile);
+
+    mkdirp(outputFileParse.dir)
+    fs.writeFileSync(outputFile, JSON.stringify(out), 'utf-8');
 
 
     if (options.verbose) {
