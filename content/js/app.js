@@ -27,9 +27,11 @@ $('#hello-world').submit(function(ev) {
                 var title = doc.title;
                 var description = doc.description;
                 var url = doc.url;
+                var score = searchResult['score'];
+                var percentScore = score.toFixed(2);
 
                 if(description) {
-                    $('#search-results').append("<br/><a href='" + url + "'>" + title + "</a><br/><p>" + description + "</p>");
+                    $('#search-results').append("<br/><span class='searchLink'><a href='" + url + "'>" + title + " <span class='searchScore'>" + percentScore + "</span>" + "</a></span><p class='searchDescription'>" + description + "</p>");
                 }
             };
         }
@@ -43,3 +45,7 @@ $('#hello-world').submit(function(ev) {
     $(searchField).val('');
 });
 
+$(document).ready(function(){
+    var searchField = $('#searchfield');
+    $(searchField).focus();
+});
