@@ -122,7 +122,7 @@ recursive(indexDir, ignore, function (err, files) {
         var html = fs.readFileSync(file, 'utf-8');
         
         file = file.replace(/\\/g, '/');
-        file = file.replace(new RegExp('^' + options['index-dir']), '/');
+        file = file.replace(new RegExp('^' + options['index-dir']), '');
 
         if (options.verbose) {
             console.log("")
