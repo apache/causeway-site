@@ -627,7 +627,7 @@
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The server will use the <a href="rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> to attempt to transform the domain object into the requested <code>x-ro-domain-type</code>. The whole process is discussed in more detail in the <a href="#_ugvro_architecture">architecture</a> chapter.</p> 
+           <p>The server will use the <a href="../rgsvc/rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> to attempt to transform the domain object into the requested <code>x-ro-domain-type</code>. The whole process is discussed in more detail in the <a href="../ugvro/ugvro.html#_ugvro_architecture">architecture</a> chapter.</p> 
           </div> 
          </div> 
          <div class="sect4"> 
@@ -636,14 +636,14 @@
            <p>The representations defined by the RO spec are very rich and enable complex client-side applications to be built. However, their sophistication can be an impediment to their use if one wishes to write a simple app using third-party components that expect to consume much simpler representations. Examples of such tools are <a href="http://angular-ui.github.io/bootstrap/">Angular Bootstrap</a>, <a href="http://vitalets.github.io/angular-xeditable/">Angular XEditable</a>, <a href="https://github.com/mgcrea/angular-strap">Angular Strap</a>.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>This support is discussed further in the <a href="#_ugvro_simplified-representations">simplified representations</a> chapter.</p> 
+           <p>This support is discussed further in the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">simplified representations</a> chapter.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect3"> 
          <h4 id="___ugvro_ro-spec_extensions_minimizing-round-trips">2.4.2. Minimizing Round-trips (34.4)</h4> 
          <div class="paragraph"> 
-          <p>The Restful Objects viewer supports the <code>x-ro-follow-links</code> query parameter in a way very similar to that suggested in the RO spec, the main point being to avoid the "N+1" problem of too many (slow) network calls. For example, using this feature one can load a grid of data in a single call. (That said, the <a href="#_ugvro_simplified-representations">simplified representations</a> supported by Restful Objects viewer also support this use case, albeit in way that deviates from the RO spec).</p> 
+          <p>The Restful Objects viewer supports the <code>x-ro-follow-links</code> query parameter in a way very similar to that suggested in the RO spec, the main point being to avoid the "N+1" problem of too many (slow) network calls. For example, using this feature one can load a grid of data in a single call. (That said, the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">simplified representations</a> supported by Restful Objects viewer also support this use case, albeit in way that deviates from the RO spec).</p> 
          </div> 
          <div class="paragraph"> 
           <p>This <a href="https://www.youtube.com/watch?v=hSKnqqBQ7Zo">screencast</a> demonstrates the Restful Object viewer’s support for <code>x-ro-follow-links</code> parameter, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-kitchensink">Isis addons' kitchensink</a> app as the example, This app contains three entities, <code>Grandparent</code>, <code>Parent</code> and <code>Child</code> that define a hierarchy of 1:m relationships.</p> 
@@ -705,7 +705,7 @@
       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_architecture.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
       <div class="sectionbody"> 
        <div class="paragraph"> 
-        <p>The <a href="#">RestfulObjects viewer</a> implements the <a href="http://restfulobjects.org">Restful Object spec</a>, meaning that it defines a well-defined set of endpoint URLs as resources, and generates a well-defined set of (JSON) representations when these resources are accessed.</p> 
+        <p>The <a href="../ugvro/ugvro.html">RestfulObjects viewer</a> implements the <a href="http://restfulobjects.org">Restful Object spec</a>, meaning that it defines a well-defined set of endpoint URLs as resources, and generates a well-defined set of (JSON) representations when these resources are accessed.</p> 
        </div> 
        <div class="paragraph"> 
         <p>By default, the Restful Objects viewer will automatically handle requests and return representations according to the RO spec. However, its internal architecture provides several hooks for content negotiation, thereby allowing the generated representation to be influenced using the standard HTTP <code>Accept</code> header. In response, the server uses the <code>Content-Type</code> header which the client can use to know how to process the returned representation.</p> 
@@ -714,21 +714,21 @@
         <ul> 
          <li> <p><code>RepresentationService</code><br></p> 
           <div class="paragraph"> 
-           <p>The <a href="rgfis.html#_rgfis_spi_RepresentationService"><code>RepresentationService</code></a> is an SPI domain service (plugin-point) that allows an arbitrary representation to be generated for any of the resources defined in the RO spec.<br></p> 
+           <p>The <a href="../rgfis/rgfis.html#_rgfis_spi_RepresentationService"><code>RepresentationService</code></a> is an SPI domain service (plugin-point) that allows an arbitrary representation to be generated for any of the resources defined in the RO spec.<br></p> 
           </div> 
           <div class="paragraph"> 
            <p>Normally this SPI service need not be replaced, because the default implementation (<code>RepresentationServiceContentNegotiator</code>) simply uses the HTTP <code>Accept</code> header and delegates onto another service, the (slightly misnamed) <code>ContentNegotiationService</code>, to actually generate the representation. There can be multiple implementations of the <code>ContentNegotiationService</code> and the content negotiator will delegate to each in turn until one is able to handle the request (per the chain of responsibliity pattern).</p> 
           </div> </li> 
          <li> <p><code>ContentNegotiationService</code><br></p> 
           <div class="paragraph"> 
-           <p>As noted above, there can be multiple implementations of the <a href="rgfis.html#_rgfis_spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>, each one handling a particular HTTP <code>Accept</code> header. If the implementation does not recognize the value of the header, if can simply return <code>null</code>.<br></p> 
+           <p>As noted above, there can be multiple implementations of the <a href="../rgfis/rgfis.html#_rgfis_spi_ContentNegotiationService"><code>ContentNegotiationService</code></a>, each one handling a particular HTTP <code>Accept</code> header. If the implementation does not recognize the value of the header, if can simply return <code>null</code>.<br></p> 
           </div> 
           <div class="paragraph"> 
-           <p>The framework provides a number of implementations; an implementation that handles the <a href="#_ugvro_simplified-representations">simplified representation</a> of the Apache Isis profile; an implementation that provides support for the <code>x-ro-domain-type</code> parameter, and a default/fallback implementation that returns the representations defined by the RO spec.</p> 
+           <p>The framework provides a number of implementations; an implementation that handles the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">simplified representation</a> of the Apache Isis profile; an implementation that provides support for the <code>x-ro-domain-type</code> parameter, and a default/fallback implementation that returns the representations defined by the RO spec.</p> 
           </div> </li> 
          <li> <p><code>ContentMappingService</code><br></p> 
           <div class="paragraph"> 
-           <p>The <a href="rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> is used by the implementation of <code>ContentNegotationService</code> that recognizes the <code>x-ro-domain-type</code>, its role being to transform a domain object (usually an entity) into some other form (usually a DTO), as specified by the <code>x-ro-domain-type</code> parameter. There can be many such implementations, each handling a different target domain type.</p> 
+           <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_spi_ContentMappingService"><code>ContentMappingService</code></a> is used by the implementation of <code>ContentNegotationService</code> that recognizes the <code>x-ro-domain-type</code>, its role being to transform a domain object (usually an entity) into some other form (usually a DTO), as specified by the <code>x-ro-domain-type</code> parameter. There can be many such implementations, each handling a different target domain type.</p> 
           </div> </li> 
         </ul> 
        </div> 
@@ -753,10 +753,11 @@
         <p>The representations defined by the RO spec are very rich and enable complex client-side applications to be built. However, their sophistication can be an impediment to their use if one wishes to write a simple app using third-party components that expect to consume much simpler representations. Examples of such tools are <a href="http://angular-ui.github.io/bootstrap/">Angular Bootstrap</a>, <a href="http://vitalets.github.io/angular-xeditable/">Angular XEditable</a>, <a href="https://github.com/mgcrea/angular-strap">Angular Strap</a>.</p> 
        </div> 
        <div class="paragraph"> 
-        <p>As of <code>1.11.0</code>, Apache Isis provides support for its own simplified representation for the most commonly-used representations. This is implemented using the <code>ContentNegotiationService</code> described in the <a href="#_ugvro_architecture">architecture</a> chapter.</p> 
+        <p>As of <code>1.11.0</code>, Apache Isis provides support for its own simplified representation for the most commonly-used representations. This is implemented using the <code>ContentNegotiationService</code> described in the <a href="../ugvro/ugvro.html#_ugvro_architecture">architecture</a> chapter.</p> 
        </div> 
        <div class="sect2"> 
-        <h3 id="__ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</h3> 
+        <h3 id="_ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_apache-isis-profile.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>The RO spec uses the standard <code>Accept</code> header for content negotiation, and defines its own "profile" for the standard representations; these take the form:</p> 
         </div> 
@@ -787,7 +788,8 @@
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="__ugvro_simplified-representations_domain-object">4.2. Domain Object</h3> 
+        <h3 id="_ugvro_simplified-representations_domain-object">4.2. Domain Object</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_domain-object.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>If a domain object resource (section 14) is accessed with the Apache Isis profile, the resultant representation is a JSON object with simple key/value pairs for each property.</p> 
         </div> 
@@ -898,7 +900,8 @@
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="__ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</h3> 
+        <h3 id="_ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_object-collection.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>If a domain object collection (section 17) is accessed with this profile, then the resultant representation is as an array of elements of key/value for each referenced object, and again each element the containing the key/value pairs of the properties of that object (a grid, again).<br></p> 
         </div> 
@@ -1000,14 +1003,15 @@
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="__ugvro_simplified-representations_action-invocation">4.4. Action Invocation</h3> 
+        <h3 id="_ugvro_simplified-representations_action-invocation">4.4. Action Invocation</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_action-invocation.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>When an action is invoked, it can return a domain object, a list, a scalar, or return nothing.</p> 
         </div> 
         <div class="sect3"> 
          <h4 id="_returning_an_object">4.4.1. Returning an Object</h4> 
          <div class="paragraph"> 
-          <p>If the action returned an object, then the domain object representation described <a href="#__ugvro_simplified-representations_domain-object">above</a> is returned.</p> 
+          <p>If the action returned an object, then the domain object representation described <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_domain-object">above</a> is returned.</p> 
          </div> 
          <div class="paragraph"> 
           <p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing this resource:</p> 
@@ -1060,7 +1064,7 @@
         <div class="sect3"> 
          <h4 id="_returning_a_list">4.4.2. Returning a List</h4> 
          <div class="paragraph"> 
-          <p>On the other hand if the action returned a list (a "standalone" collection, then an array representation is returned. This is very similar to that returned by a <a href="#__ugvro_simplified-representations_object-collection">(parented) object collection</a>, though with a slightly different <code>Content-Type</code> to distinguish.</p> 
+          <p>On the other hand if the action returned a list (a "standalone" collection, then an array representation is returned. This is very similar to that returned by a <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_object-collection">(parented) object collection</a>, though with a slightly different <code>Content-Type</code> to distinguish.</p> 
          </div> 
          <div class="paragraph"> 
           <p>For example, using the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>, accessing this resource:</p> 
@@ -1129,7 +1133,7 @@
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="__ugvro_simplified-representations_other-representations">4.5. Supporting other Representations</h3> 
+        <h3 id="__ugvro_simplified-representations_other-representations">4.5. Other Representations</h3> 
         <div class="paragraph"> 
          <p>Sometimes though you may want to extend or change the representations generated. This might be because you want to write a RESTful client that uses a particular library (say a Javascript library or web components) that can only handle representations in a certain form.</p> 
         </div> 
@@ -1169,8 +1173,18 @@
           </tbody>
          </table> 
         </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugvro_simplified-representations_configuration-properties">4.6. Global Config Props (Deprecated)</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_configuration-properties.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
-         <p>Unresolved directive in _ugvro_simplified-representations.adoc - include::__ugvro_simplified-representations_configuration-properties.adoc[leveloffset=+1]</p> 
+         <p>If all that is required is a very simple representations (of objects), you can configure the Restful Objects viewer to provide a simplified output, then this can be done with a number of (global) configuration properties.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>These configuration properties pre-date the support, introduced in <code>1.11.0</code>, for the Apache Isis profile, and are limited by the fact that they are global configuration settings, so cannot be influenced on a request-by-request basis (as is the case with the <code>Accept</code> header used for the Apache Isis profile). They have therefore been deprecated, and may be removed in the future.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Details can be found in <a href="../ugvro/ugvro.html#__ugvro_configuration-properties_deprecated">here</a>.</p> 
         </div> 
        </div> 
       </div> 
@@ -1215,7 +1229,7 @@
              </div>
             </div></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock">A mechanism for reducing the number of round-trips by eagerly rendering collections; discussed <a href="#___ugvro_ro-spec_extensions_minimizing-round-trips_honor-ui-hints">here</a>.</p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock">A mechanism for reducing the number of round-trips by eagerly rendering collections; discussed <a href="../ugvro/ugvro.html#___ugvro_ro-spec_extensions_minimizing-round-trips_honor-ui-hints">here</a>.</p></td> 
           </tr> 
           <tr> 
            <td class="tableblock halign-left valign-top">
@@ -1225,7 +1239,7 @@
              </div>
             </div></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to strictly enforce the <code>Accept</code> header checking for the default RO-spec representations (by the <code>ContentNegotiationServiceForRestfulObjectsV1_0</code> service). Will otherwise accept anything. <br> </p><p class="tableblock">This is convenient because it allows the <code>Accept</code> header to be set to that of the <a href="#_ugvro_simplified-representations">Apache Isis profile</a> for all resources, rather than simply the handful of resources that supported that profile.</p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to strictly enforce the <code>Accept</code> header checking for the default RO-spec representations (by the <code>ContentNegotiationServiceForRestfulObjectsV1_0</code> service). Will otherwise accept anything. <br> </p><p class="tableblock">This is convenient because it allows the <code>Accept</code> header to be set to that of the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">Apache Isis profile</a> for all resources, rather than simply the handful of resources that supported that profile.</p></td> 
           </tr> 
          </tbody> 
         </table> 
@@ -1326,7 +1340,7 @@
              </div>
             </div></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock">See <a href="#__ugvro_simplified-representations_configuration-properties_object-property-values-only">discussion</a> below.</p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock">See <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_configuration-properties_object-property-values-only">discussion</a> below.</p></td> 
           </tr> 
          </tbody> 
         </table> 
@@ -1350,7 +1364,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
             <td class="content"> 
              <div class="paragraph"> 
-              <p>If these configuration settings are set in conjunction with using the <a href="#__ugvro_simplified-representations_apache-isis-profile">Apache Isis profile</a>, then the special <code>$$ro</code> property in the representations with reflect these settings.</p> 
+              <p>If these configuration settings are set in conjunction with using the <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_apache-isis-profile">Apache Isis profile</a>, then the special <code>$$ro</code> property in the representations with reflect these settings.</p> 
              </div> </td> 
            </tr> 
           </tbody>
@@ -1415,19 +1429,37 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
       <div class="sectionbody"> 
        <div class="paragraph"> 
+        <p>This chapter provides some solutions for problems we’ve encountered ourselves or have been raised on the Apache Isis mailing lists.</p> 
+       </div> 
+       <div class="paragraph"> 
+        <p>See also hints-n-tips chapters in the:</p> 
+       </div> 
+       <div class="ulist"> 
+        <ul> 
+         <li> <p>the <a href="../dg/dg.html#_dg_hints-and-tips">Developers'</a> guide</p> </li> 
+         <li> <p>the <a href="../ugvw/ugvw.html#_ugvw_hints-and-tips">Wicket viewer</a> guide</p> </li> 
+         <li> <p>the <a href="../ugvro/ugvro.html#_ugvro_hints-and-tips">Restful Objects viewer</a> guide (this chapter)</p> </li> 
+         <li> <p>the <a href="../ugodn/ugodn.html#_ugodn_hints-and-tips">Datanucleus ObjectStore</a> guide</p> </li> 
+         <li> <p>the <a href="../ugsec/ugsec.html#_ugsec_hints-and-tips">Security</a> guide</p> </li> 
+         <li> <p>the <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips">Beyond the Basics</a> guide.</p> </li> 
+        </ul> 
+       </div> 
+       <div class="paragraph"> 
         <p>Since the Restful Objects viewer is designed for computer programs to interact with (rather than human beings), it can be a little difficult to explore and generally "grok" how it works.</p> 
        </div> 
        <div class="paragraph"> 
         <p>This section provides a few hints-and-tips to help you on your way.</p> 
        </div> 
        <div class="sect2"> 
-        <h3 id="_using_chrome_tools">6.1. Using Chrome Tools</h3> 
+        <h3 id="_ugvro_hints-and-tips_using-chrome-devtools">6.1. Using Chrome Dev Tools</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_using-chrome-devtools.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>This <a href="https://www.youtube.com/watch?v=_-TOvVYWCHc">screencast</a> shows how to explore the Restful API using Chrome plugins/extensions, and how we use them to write end-2-end (TCK) tests for the Restful Objects viewer.</p> 
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="_angular_tips">6.2. Angular Tips</h3> 
+        <h3 id="_ugvro_hints-and-tips_angular-tips">6.2. Angular Tips</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_angular-tips.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
          <p>The hypermedia API exposed by Apache Isis' Restful Objects viewer is intended be support both bespoke custom-written viewers as well as generic viewers. Indeed, we expect most clients consuming the API will be bespoke, not generic.</p> 
         </div> 
@@ -1499,9 +1531,44 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
         </div> 
        </div> 
        <div class="sect2"> 
-        <h3 id="_pretty_printing">6.3. Pretty printing</h3> 
+        <h3 id="_ugvro_hints-and-tips_pretty-printing">6.3. Pretty printing</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_pretty-printing.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
         <div class="paragraph"> 
-         <p>The JSON representations generated by the Restful Objects viewer are in compact form if the <a href="rgcfg.html#_rgcfg_deployment-types">deployment type</a> is SERVER (ie production), but will automatically be "pretty printed" (in other words indented) if the deployment type is PROTOTYPE.</p> 
+         <p>The JSON representations generated by the Restful Objects viewer are in compact form if the <a href="../rgcfg/rgcfg.html#_rgcfg_deployment-types">deployment type</a> is SERVER (ie production), but will automatically be "pretty printed" (in other words indented) if the deployment type is PROTOTYPE.</p> 
+        </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugvro_hints-and-tips_restful-image-property">6.4. How parse images in RO viewer?</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_restful-image-property.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>From this <a href="http://markmail.org/message/4kcu7sml4ufdsah3">thread</a> on the Apache Isis users mailing list:</p> 
+        </div> 
+        <div class="ulist"> 
+         <ul> 
+          <li> <p><em>I am trying to display an image in a JavaScript client app, the image comes from an Isis RO web service as a string, but it won’t show. Is there something I should do to change the message?</em></p> </li> 
+         </ul> 
+        </div> 
+        <div class="paragraph"> 
+         <p>The RO viewer returns the image as a string, in the form:</p> 
+        </div> 
+        <div class="literalblock"> 
+         <div class="content"> 
+          <pre>"Tacos.jpg:image/jpeg:/9j//4AAQSkZJRgABAQEAlgCWAAD/  ...."</pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This is in the form:</p> 
+        </div> 
+        <div class="literalblock"> 
+         <div class="content"> 
+          <pre>(filename):(mime type):(binary data in base64)</pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This is basically the <a href="../rgcms/rgcms.html#_rgcms_classes_value-types_Blob"><code>Blob</code></a> value type, in string form.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>To use, split the parts then format the mime type and base64 data correctly before using as source in an <code>&lt;img&gt;</code> tag.</p> 
         </div> 
        </div> 
       </div> 
@@ -1541,16 +1608,17 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
        <li><a href="#_ugvro_architecture">3. Architecture</a></li> 
        <li><a href="#_ugvro_simplified-representations">4. Simplified Representations</a> 
         <ul class="sectlevel2"> 
-         <li><a href="#__ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</a></li> 
-         <li><a href="#__ugvro_simplified-representations_domain-object">4.2. Domain Object</a></li> 
-         <li><a href="#__ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</a></li> 
-         <li><a href="#__ugvro_simplified-representations_action-invocation">4.4. Action Invocation</a> 
+         <li><a href="#_ugvro_simplified-representations_apache-isis-profile">4.1. The Apache Isis "Profile"</a></li> 
+         <li><a href="#_ugvro_simplified-representations_domain-object">4.2. Domain Object</a></li> 
+         <li><a href="#_ugvro_simplified-representations_object-collection">4.3. Domain Object Collection</a></li> 
+         <li><a href="#_ugvro_simplified-representations_action-invocation">4.4. Action Invocation</a> 
           <ul class="sectlevel3"> 
            <li><a href="#_returning_an_object">4.4.1. Returning an Object</a></li> 
            <li><a href="#_returning_a_list">4.4.2. Returning a List</a></li> 
            <li><a href="#_returning_scalar_nothing">4.4.3. Returning Scalar/Nothing</a></li> 
           </ul> </li> 
-         <li><a href="#__ugvro_simplified-representations_other-representations">4.5. Supporting other Representations</a></li> 
+         <li><a href="#__ugvro_simplified-representations_other-representations">4.5. Other Representations</a></li> 
+         <li><a href="#_ugvro_simplified-representations_configuration-properties">4.6. Global Config Props (Deprecated)</a></li> 
         </ul> </li> 
        <li><a href="#_ugvro_configuration-properties">5. Configuration Properties</a> 
         <ul class="sectlevel2"> 
@@ -1559,13 +1627,14 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
         </ul> </li> 
        <li><a href="#_ugvro_hints-and-tips">6. Hints and Tips</a> 
         <ul class="sectlevel2"> 
-         <li><a href="#_using_chrome_tools">6.1. Using Chrome Tools</a></li> 
-         <li><a href="#_angular_tips">6.2. Angular Tips</a> 
+         <li><a href="#_ugvro_hints-and-tips_using-chrome-devtools">6.1. Using Chrome Dev Tools</a></li> 
+         <li><a href="#_ugvro_hints-and-tips_angular-tips">6.2. Angular Tips</a> 
           <ul class="sectlevel3"> 
            <li><a href="#_invoking_a_get_link_eg_invoking_a_query_action">6.2.1. Invoking a GET link (eg invoking a query action)</a></li> 
            <li><a href="#_invoking_a_put_or_post_link">6.2.2. Invoking a PUT or POST link</a></li> 
           </ul> </li> 
-         <li><a href="#_pretty_printing">6.3. Pretty printing</a></li> 
+         <li><a href="#_ugvro_hints-and-tips_pretty-printing">6.3. Pretty printing</a></li> 
+         <li><a href="#_ugvro_hints-and-tips_restful-image-property">6.4. How parse images in RO viewer?</a></li> 
         </ul> </li> 
       </ul> 
      </div> 

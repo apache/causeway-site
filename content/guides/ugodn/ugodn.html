@@ -448,10 +448,10 @@
         <p>Apache Isis programmatically configures DataNucleus; any Apache Isis properties with the prefix <code>isis.persistor.datanucleus.impl</code> are passed through directly to the JDO/DataNucleus objectstore (with the prefix stripped off, of course).</p> 
        </div> 
        <div class="paragraph"> 
-        <p>DataNucleus will for itself also and read the <code>META-INF/persistence.xml</code>; at a minimum this defines the name of the "persistence unit". n theory it could also hold mappings, though in Apache Isis we tend to use annotations instead.</p> 
+        <p>DataNucleus will for itself also and read the <code>META-INF/persistence.xml</code>; at a minimum this defines the name of the "persistence unit". In theory it could also hold mappings, though in Apache Isis we tend to use annotations instead.</p> 
        </div> 
        <div class="paragraph"> 
-        <p>Furthermore, DataNucleus will search for various other XML mapping files, eg <code>mappings.jdo</code>. A full list can be found <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata.html">here</a>. The metadata in these XML can be used to override the annotations of annotated entities; see <a href="ugbtb.html#_ugbtb_other-techniques_overriding-jdo-annotations">Overriding JDO Annotatons</a> for further discussion.</p> 
+        <p>Furthermore, DataNucleus will search for various other XML mapping files, eg <code>mappings.jdo</code>. A full list can be found <a href="http://www.datanucleus.org/products/datanucleus/jdo/metadata.html">here</a>. The metadata in these XML can be used to override the annotations of annotated entities; see <a href="../ugbtb/ugbtb.html#_ugbtb_other-techniques_overriding-jdo-annotations">Overriding JDO Annotatons</a> for further discussion.</p> 
        </div> 
        <div class="sect2"> 
         <h3 id="_ugodn_configuring_properties">2.1. Configuration Properties</h3>
@@ -504,10 +504,10 @@
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>that specifies the entities early rather than allow DataNucleus to find the entities lazily. Further <a href="#_ugodn_configuring_eagerly-registering-entities">discussion below</a>.</p> 
+               <p>that specifies the entities early rather than allow DataNucleus to find the entities lazily. Further <a href="../ugodn/ugodn.html#_ugodn_configuring_eagerly-registering-entities">discussion below</a>.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>This property is IGNORED if the <a href="rgcfg.html#_rgcfg_configuring-components"><code>isis.appManifest</code></a> configuration property is specified, or if an <a href="rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
+               <p>This property is IGNORED if the <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-components"><code>isis.appManifest</code></a> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -570,7 +570,7 @@
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>We recommend this setting is disabled. <br> Further <a href="#_ugodn_configuring_disabling-persistence-by-reachability">discussion below</a>.</p> 
+               <p>We recommend this setting is disabled. <br> Further <a href="../ugodn/ugodn.html#_ugodn_configuring_disabling-persistence-by-reachability">discussion below</a>.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -581,15 +581,42 @@
        <div class="sect2"> 
         <h3 id="_ugodn_configuring_persistence-xml">2.2. <code>persistence.xml</code></h3>
         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_configuring_persistence-xml.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
-        <div class="admonitionblock note"> 
+        <div class="paragraph"> 
+         <p>DataNucleus will for itself also and read the <code>META-INF/persistence.xml</code>. In theory it can hold mappings and even connection strings. However, with Apache Isis we tend to use annotations instead and externalize connection strings. so its definition is extremely simply, specifying just the name of the "persistence unit".</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Here’s the one provided by the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="tag">&lt;persistence</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://java.sun.com/xml/ns/persistence</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd</span><span class="delimiter">"</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">"</span><span class="content">1.0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;persistence-unit</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">simple</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;/persistence-unit&gt;</span>
+<span class="tag">&lt;/persistence&gt;</span></code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Normally all one needs to do is to change the <code>persistence-unit</code> name.</p> 
+        </div> 
+        <div class="admonitionblock tip"> 
          <table> 
           <tbody>
            <tr> 
-            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-            <td class="content"> TODO </td> 
+            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>If you use Eclipse IDE on Windows then <a href="../dg/dg.html#__dg_ide_eclipse_workaround-for-path-limits">note the importance</a> of the <code>persistence.xml</code> file to make DataNucleus enhancer work correctly.</p> 
+             </div> </td> 
            </tr> 
           </tbody>
          </table> 
+        </div> 
+        <div class="paragraph"> 
+         <p>See <a href="http://www.datanucleus.org/products/datanucleus/jdo/persistence.html#persistenceunit">DataNucleus' documentation</a> on <code>persistence.xml</code> to learn more.</p> 
         </div> 
        </div> 
        <div class="sect2"> 
@@ -609,12 +636,12 @@
         </div> 
         <div class="ulist"> 
          <ul> 
-          <li> <p>as of 1.9.0 the recommended (and simpler) approach is to specify an <a href="rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>, either as a <a href="rgcfg.html#_rgcfg_configuring-components"><code>isis.appManifest</code></a> configuration property or programmatically.</p> </li> 
+          <li> <p>as of 1.9.0 the recommended (and simpler) approach is to specify an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>, either as a <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-components"><code>isis.appManifest</code></a> configuration property or programmatically.</p> </li> 
           <li> <p>for earlier versions the <code>isis.persistor.datanucleus.RegisterEntities.packagePrefix</code> configuration property can be specified. To bootstrap as a webapp this is usually specified in <code>persistor_datanucleus.properties</code>. (This is also supported in 1.9.0 if no <code>AppManifest</code> is specified. For integration testing this can be specified programatically.</p> </li> 
          </ul> 
         </div> 
         <div class="paragraph"> 
-         <p>Further discussion on specifying the package(s) in integration testing (for either approach) can be found in the <a href="ugtst.html#_ugtst_integ-test-support_bootstrapping">user guide</a>.</p> 
+         <p>Further discussion on specifying the package(s) in integration testing (for either approach) can be found in the <a href="../ugtst/ugtst.html#_ugtst_integ-test-support_bootstrapping">user guide</a>.</p> 
         </div> 
        </div> 
        <div class="sect2"> 
@@ -640,7 +667,7 @@
          </table> 
         </div> 
         <div class="paragraph"> 
-         <p>One scenario in particular where this performance issues can arise is if your entities implement the <code>java.lang.Comparable</code> interface, and you have used Apache Isis' <a href="rgcms.html#_rgcms_classes_utility_ObjectContracts"><code>ObjectContracts</code></a> utility class. The issue here is that <code>ObjectContracts</code> implementation can cause DataNucleus to recursively rehydrate a larger number of associated entities. (More detail below).</p> 
+         <p>One scenario in particular where this performance issues can arise is if your entities implement the <code>java.lang.Comparable</code> interface, and you have used Apache Isis' <a href="../rgcms/rgcms.html#_rgcms_classes_utility_ObjectContracts"><code>ObjectContracts</code></a> utility class. The issue here is that <code>ObjectContracts</code> implementation can cause DataNucleus to recursively rehydrate a larger number of associated entities. (More detail below).</p> 
         </div> 
         <div class="paragraph"> 
          <p>We therefore recommend that you disable persistence-by-reachability by adding the following to <code>persistor_datanucleus.properties</code>:</p> 
@@ -651,7 +678,7 @@
          </div> 
         </div> 
         <div class="paragraph"> 
-         <p>This change has been made to the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a></p> 
+         <p>This change has been made to the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a></p> 
         </div> 
         <div class="paragraph"> 
          <p>If you do disable this feature, then you will (of course) need to ensure that you explicitly persist all entities using the <code>DomainObjectContainer#persist(.)</code> or <code>DomainObjectContainer#persistIfNotAlready(.)</code> methods.</p> 
@@ -1259,50 +1286,125 @@ isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword=</code></pre
          </div> 
         </div> 
        </div> 
+       <div class="sect2"> 
+        <h3 id="_ugodn_jdo-mappings_mandatory-properties-in-subtypes">3.2. Mandatory Properties in Subtypes</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_jdo-mappings_mandatory-properties-in-subtypes.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>If you have a hierarchy of classes then you need to decide which inheritance strategy to use.</p> 
+        </div> 
+        <div class="ulist"> 
+         <ul> 
+          <li> <p>"table per hierarchy", or "rollup" (<code>InheritanceStrategy.SUPERCLASS_TABLE</code>)<br></p> 
+           <div class="paragraph"> 
+            <p>whereby a single table corresponds to the superclass, and also holds the properties of the subtype (or subtypes) being rolled up</p> 
+           </div> </li> 
+          <li> <p>"table per class" (<code>InheritanceStrategy.NEW_TABLE</code>)<br></p> 
+           <div class="paragraph"> 
+            <p>whereby there is a table for both superclass and subclass, in 1:1 correspondence</p> 
+           </div> </li> 
+          <li> <p>"rolldown" (<code>InheritanceStrategy.SUBCLASS_TABLE</code>)<br></p> 
+           <div class="paragraph"> 
+            <p>whereby a single table holds the properties of the subtype, and also holds the properties of its supertype</p> 
+           </div> </li> 
+         </ul> 
+        </div> 
+        <div class="paragraph"> 
+         <p>In the first "rollup" case, we can have a situation where - logically speaking - the property is mandatory in the subtype - but it must be mapped as nullable in the database because it is n/a for any other subtypes that are rolled up.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>In this situation we must tell JDO that the column is optional, but to Apache Isis we want to enforce it being mandatory. This can be done using the <code>@Property(optionality=Optionality.MANDATORY)</code> annotation.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>For example:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.SUPER_TABLE)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubtype</span> <span class="directive">extends</span> SomeSuperType {
+    <span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull=<span class="string"><span class="delimiter">"</span><span class="content">true</span><span class="delimiter">"</span></span>)
+    <span class="annotation">@Property</span>(optionality=Optionality.MANDATORY)
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+    <span class="directive">private</span> LocalDate date;
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="admonitionblock tip"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>The <code>@Property(optionality=…​)</code> annotation is equivalent to the older but still supported <code>@Optional</code> annotation and <code>@Mandatory</code> annotations.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugodn_jdo-mappings_mapping-to-a-view">3.3. Mapping to a View</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_jdo-mappings_mapping-to-a-view.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>JDO/DataNucleus supports the ability to map the entity that is mapped to a view rather than a database table. Moreover, DataNucleus itself can create/maintain this view.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>One use case for this is to support use cases which act upon aggregate information. An <a href="https://github.com/estatio/estatio/blob/b77d0b03ec86463227ba90f8341299066ddba69f/estatioapp/module/lease/dom/src/main/java/org/estatio/dom/lease/invoicing/viewmodel/InvoiceSummaryForPropertyDueDateStatus.java#L57">example</a> is in the (non-ASF) <a href="http://github.com/estatio/estatio">Estatio</a> application, which uses a view to define an "invoice run": a representatoin of all pending invoices to be sent out for a particular shopping centre. (Note that example also shows the entity as being "non-durable", but if the view is read/write then — I think — that this isn’t necessary required).</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>For more on this topic, see the <a href="http://www.datanucleus.org/products/datanucleus/jdo/mapping.html#schema_rdbms_views">DataNucleus documentation</a>.</p> 
+        </div> 
+       </div> 
       </div> 
      </div> 
      <div class="sect1"> 
-      <h2 id="_ugodn_overriding-jdo-annotations">4. Overriding JDO Annotations</h2>
-      <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_overriding-jdo-annotations.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+      <h2 id="_ugodn_db-schemas">4. Database Schemas</h2>
+      <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_db-schemas.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
       <div class="sectionbody"> 
        <div class="paragraph"> 
-        <p>The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by reading both annotations on the class and also by searching for metadata in XML files. The metadata in the XML files takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.</p> 
+        <p>In the same way that Java packages act as a namespace for domain objects, it’s good practice to map domain entities to their own (database) schemas.</p> 
        </div> 
        <div class="paragraph"> 
-        <p>For example, as of 1.9.0 the various <a href="http://www.isisaddons.org">Isis addons</a> modules (not ASF) use schemas for each entity. For example, the <code>AuditEntry</code> entity in the <a href="http://github.com/isisaddons/isis-module-audit">audit module</a> is annotated as:</p> 
+        <p>As of 1.9.0, all the <a href="http://www.isisaddons.org">Isis Addons</a> (non-ASF) modules do this. For example:</p> 
        </div> 
        <div class="listingblock"> 
         <div class="content"> 
-         <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
-        schema = <span class="string"><span class="delimiter">"</span><span class="content">IsisAddonsAudit</span><span class="delimiter">"</span></span>,
-        table=<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> {
+         <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
+        schema = <span class="string"><span class="delimiter">"</span><span class="content">isissecurity</span><span class="delimiter">"</span></span>,
+        table = <span class="string"><span class="delimiter">"</span><span class="content">ApplicationUser</span><span class="delimiter">"</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ApplicationUser</span> ... { ... }</code></pre> 
+        </div> 
+       </div> 
+       <div class="paragraph"> 
+        <p>results in a <code>CREATE TABLE</code> statement of:</p> 
+       </div> 
+       <div class="listingblock"> 
+        <div class="content"> 
+         <pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isissecurity.<span class="string"><span class="delimiter">"</span><span class="content">ApplicationUser</span><span class="delimiter">"</span></span> (
     ...
-}</code></pre> 
+)</code></pre> 
         </div> 
        </div> 
        <div class="paragraph"> 
-        <p>This will map the <code>AuditEntry</code> class to a table <code>"IsisAddonsAudit"."AuditEntry"</code>; that is using a custom schema to own the object.</p> 
-       </div> 
-       <div class="paragraph"> 
-        <p>Suppose though that for whatever reason we didn’t want to use a custom schema but would rather use the default. We can override the above annotation using a <code>package.jdo</code> file, for example:</p> 
+        <p>while:</p> 
        </div> 
        <div class="listingblock"> 
         <div class="content"> 
-         <pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
-<span class="tag">&lt;jdo</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span><span class="delimiter">"</span></span>
-    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">"</span></span>
-    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span> <span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo_3_0.xsd</span><span class="delimiter">"</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">"</span><span class="content">3.0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;package</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">org.isisaddons.module.audit.dom</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span> <span class="attribute-name">schema</span>=<span class="string"><span class="delimiter">"</span><span class="content">PUBLIC</span><span class="delimiter">"</span></span> <span class="attribute-name">table</span>=<span class="string"><span class="delimiter">"</span><span class="content">IsisAddonsAuditEntry</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;/class&gt;</span>
-    <span class="tag">&lt;/package&gt;</span>
-<span class="tag">&lt;/jdo&gt;</span></code></pre> 
+         <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable( ...
+        schema = <span class="string"><span class="delimiter">"</span><span class="content">isisaudit</span><span class="delimiter">"</span></span>,
+        table=<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> ... { ... }</code></pre> 
         </div> 
        </div> 
        <div class="paragraph"> 
-        <p>This file should be placed can be placed in <code>src/main/java/META-INF</code> within your application’s <code>dom</code> module.</p> 
+        <p>similarly results in:</p> 
+       </div> 
+       <div class="listingblock"> 
+        <div class="content"> 
+         <pre class="CodeRay highlight"><code data-lang="sql"><span class="class">CREATE</span> <span class="type">TABLE</span> isisaudit.<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span> (
+    ...
+)</code></pre> 
+        </div> 
        </div> 
        <div class="admonitionblock tip"> 
         <table> 
@@ -1311,66 +1413,312 @@ isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword=</code></pre
            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
            <td class="content"> 
             <div class="paragraph"> 
-             <p>You can use a mixin action on <a href="rgcms.html#_rgcms_classes_mixins_Persistable"><code>Persistable</code></a> mixin to download the JDO class metadata in XML form.</p> 
+             <p>If for some reason you don’t want to use schemas (though we strongly recommend that you do), then note that you can override the <code>@PersistenceCapable</code> annotation by providing XML metadata (the <code>mappings.jdo</code> file). See the section on <a href="../ugodn/ugodn.html#_ugodn_configuring">configuring DataNucleus Overriding Annotations</a> for more details.</p> 
             </div> </td> 
           </tr> 
          </tbody>
         </table> 
        </div> 
-       <div class="admonitionblock note"> 
-        <table> 
-         <tbody>
-          <tr> 
-           <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-           <td class="content"> 
-            <div class="ulist"> 
-             <ul> 
-              <li> <p>The same approach should work for any other JDO metadata, but some experimentation might be required.+</p> 
-               <div class="paragraph"> 
-                <p>For example, in writing up the above example we found that writing <code>schema=""</code> (in an attempt to say, "use the default schema for this table") actually caused the original annotation value to be used instead.</p> 
-               </div> </li> 
-              <li> <p>Forcing the schema to "PUBLIC" (as in the above example) works, but it isn’t ideal because the name "PUBLIC" is not vendor-neutral (it works for HSQLDB, but MS SQL Server uses "dbo" as its default).</p> </li> 
-              <li> <p>As of 1.9.0 Apache Isis will automatically (attempt) to create the owning schema for a given table if it does not exist. This behaviour can be customized, as described in the section on <a href="#_ugbtb_decoupling_db-schemas">using modules</a>.</p> </li> 
-              <li> <p>You may need to override the entire class metadata rather than individual elements; the mixin mentioned above can help here.</p> </li> 
-             </ul> 
-            </div> </td> 
-          </tr> 
-         </tbody>
-        </table> 
+       <div class="sect2"> 
+        <h3 id="_listener_to_create_schema">4.1. Listener to create schema</h3> 
+        <div class="paragraph"> 
+         <p>JDO/DataNucleus does not automatically create these schema objects, but it <em>does</em> provide a listener callback API on the initialization of each class into the JDO metamodel.</p> 
+        </div> 
+        <div class="admonitionblock tip"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>Actually, the above statement isn’t quite true. In DN 3.2.x (as used by Apache Isis up to v1.8.0) there was no support for schemas. As of Apache Isis 1.9.0 and DN 4.0 there is now support. But we implemented this feature initially against DN 3.2.x, and it still works, so for now we’ve decided to leave it in.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Therefore Apache Isis attaches a listener, <code>CreateSchemaObjectFromClassMetadata</code>, that checks for the schema’s existence, and creates the schema if required.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>The guts of its implementation is:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CreateSchemaObjectFromClassMetadata</span>
+        <span class="directive">implements</span> MetaDataListener,
+                   DataNucleusPropertiesAware {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> loaded(<span class="directive">final</span> AbstractClassMetaData cmd) { ... }
+
+    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToCheck(<span class="directive">final</span> AbstractClassMetaData cmd) {
+        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
+        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(
+            <span class="string"><span class="delimiter">"</span><span class="content">SELECT count(*) FROM INFORMATION_SCHEMA.SCHEMATA where SCHEMA_NAME = '%s'</span><span class="delimiter">"</span></span>, schemaName);
+    }
+    <span class="directive">protected</span> <span class="predefined-type">String</span> buildSqlToExec(<span class="directive">final</span> AbstractClassMetaData cmd) {
+        <span class="directive">final</span> <span class="predefined-type">String</span> schemaName = schemaNameFor(cmd);
+        <span class="keyword">return</span> <span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">"</span><span class="content">CREATE SCHEMA </span><span class="char">\"</span><span class="content">%s</span><span class="char">\"</span><span class="delimiter">"</span></span>, schemaName);
+    }
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>where <code>MetaDataListener</code> is the DataNucleus listener API:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaDataListener</span> {
+    <span class="type">void</span> loaded(AbstractClassMetaData cmd);
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Although not formal API, the default <code>CreateSchemaObjectFromClassMetadata</code> has been designed to be easily overrideable if you need to tweak it to support other RDBMS'. Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>:</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>The implementation provided has has been tested for HSQLDB, PostgreSQL and MS SQL Server, and is used automatically unless an alternative implementation is specified (as described in the section below).</p> 
+        </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_alternative_implementation">4.2. Alternative implementation</h3> 
+        <div class="paragraph"> 
+         <p>An alternative implementation can be registered and used through the following configuration property:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="ini">isis.persistor.datanucleus.classMetadataLoadedListener=\
+        org.apache.isis.objectstore.jdo.datanucleus.CreateSchemaObjectFromClassMetadata</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Because this pertains to the JDO Objectstore we suggest you put this configuration property in <code>WEB-INF/persistor_datanucleus.properties</code>; but putting it in <code>isis.properties</code> will also work.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Any implementation must implement <code>org.datanucleus.metadata.MetaDataListener</code>. In many cases simply subclassing from <code>CreateSchemaObjectFromClassMetadata</code> and overriding <code>buildSqlToCheck(…​)</code> and <code>buildSqlToExec(…​)</code> should suffice.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>If you <em>do</em> need more control, your implementation can also optionally implement <code>org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPropertiesAware</code>:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">DataNucleusPropertiesAware</span> {
+    <span class="directive">public</span> <span class="type">void</span> setDataNucleusProperties(<span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; properties);
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This provides access to the properties passed through to JDO/DataNucleus.</p> 
+        </div> 
+        <div class="admonitionblock important"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>If you do extend Apache Isis' <code>CreateSchemaObjectFromClassMetadata</code> class for some other database, please <a href="https://issues.apache.org/jira/browse/ISIS">contribute back</a> your improvements.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
        </div> 
       </div> 
      </div> 
      <div class="sect1"> 
-      <h2 id="_ugodn_java8">5. Java8</h2>
-      <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_java8.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+      <h2 id="_ugodn_hints-and-tips">5. Hints and Tips</h2>
+      <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
       <div class="sectionbody"> 
        <div class="paragraph"> 
-        <p>DataNucleus 4.x supports Java 7, but can also be used with Java 8, eg for streams support against collections managed by DataNucleus.</p> 
+        <p>This chapter provides some solutions for problems we’ve encountered ourselves or have been raised on the Apache Isis mailing lists.</p> 
        </div> 
        <div class="paragraph"> 
-        <p>Just include within <code>&lt;dependencies&gt;</code> of your <code>dom</code> module’s <code>pom.xml</code>:</p> 
+        <p>See also hints-n-tips chapters in the:</p> 
        </div> 
-       <div class="listingblock"> 
-        <div class="content"> 
-         <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+       <div class="ulist"> 
+        <ul> 
+         <li> <p>the <a href="../dg/dg.html#_dg_hints-and-tips">Developers'</a> guide</p> </li> 
+         <li> <p>the <a href="../ugvw/ugvw.html#_ugvw_hints-and-tips">Wicket viewer</a> guide</p> </li> 
+         <li> <p>the <a href="../ugvro/ugvro.html#_ugvro_hints-and-tips">Restful Objects viewer</a> guide</p> </li> 
+         <li> <p>the <a href="../ugodn/ugodn.html#_ugodn_hints-and-tips">Datanucleus ObjectStore</a> guide (this chapter)</p> </li> 
+         <li> <p>the <a href="../ugsec/ugsec.html#_ugsec_hints-and-tips">Security</a> guide</p> </li> 
+         <li> <p>the <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips">Beyond the Basics</a> guide.</p> </li> 
+        </ul> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugodn_hints-and-tips_overriding-jdo-annotations">5.1. Overriding JDO Annotations</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_overriding-jdo-annotations.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>The JDO Objectstore (or rather, the underlying DataNucleus implementation) builds its own persistence metamodel by reading both annotations on the class and also by searching for metadata in XML files. The metadata in the XML files takes precedence over the annotations, and so can be used to override metadata that is "hard-coded" in annotations.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>For example, as of 1.9.0 the various <a href="http://www.isisaddons.org">Isis addons</a> modules (not ASF) use schemas for each entity. For example, the <code>AuditEntry</code> entity in the <a href="http://github.com/isisaddons/isis-module-audit">audit module</a> is annotated as:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(
+        identityType=IdentityType.DATASTORE,
+        schema = <span class="string"><span class="delimiter">"</span><span class="content">IsisAddonsAudit</span><span class="delimiter">"</span></span>,
+        table=<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">AuditEntry</span> {
+    ...
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This will map the <code>AuditEntry</code> class to a table <code>"IsisAddonsAudit"."AuditEntry"</code>; that is using a custom schema to own the object.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Suppose though that for whatever reason we didn’t want to use a custom schema but would rather use the default. We can override the above annotation using a <code>package.jdo</code> file, for example:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="tag">&lt;jdo</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo</span> <span class="content">http://xmlns.jcp.org/xml/ns/jdo/jdo_3_0.xsd</span><span class="delimiter">"</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">"</span><span class="content">3.0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;package</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">org.isisaddons.module.audit.dom</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">AuditEntry</span><span class="delimiter">"</span></span> <span class="attribute-name">schema</span>=<span class="string"><span class="delimiter">"</span><span class="content">PUBLIC</span><span class="delimiter">"</span></span> <span class="attribute-name">table</span>=<span class="string"><span class="delimiter">"</span><span class="content">IsisAddonsAuditEntry</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;/class&gt;</span>
+    <span class="tag">&lt;/package&gt;</span>
+<span class="tag">&lt;/jdo&gt;</span></code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This file should be placed can be placed in <code>src/main/java/META-INF</code> within your application’s <code>dom</code> module.</p> 
+        </div> 
+        <div class="admonitionblock tip"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>You can use a mixin action on <a href="../rgcms/rgcms.html#_rgcms_classes_mixins_Persistable"><code>Persistable</code></a> mixin to download the JDO class metadata in XML form.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+        <div class="admonitionblock note"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+            <td class="content"> 
+             <div class="ulist"> 
+              <ul> 
+               <li> <p>The same approach should work for any other JDO metadata, but some experimentation might be required.+</p> 
+                <div class="paragraph"> 
+                 <p>For example, in writing up the above example we found that writing <code>schema=""</code> (in an attempt to say, "use the default schema for this table") actually caused the original annotation value to be used instead.</p> 
+                </div> </li> 
+               <li> <p>Forcing the schema to "PUBLIC" (as in the above example) works, but it isn’t ideal because the name "PUBLIC" is not vendor-neutral (it works for HSQLDB, but MS SQL Server uses "dbo" as its default).</p> </li> 
+               <li> <p>As of 1.9.0 Apache Isis will automatically (attempt) to create the owning schema for a given table if it does not exist. This behaviour can be customized, as described in the section on <a href="../ugbtb/ugbtb.html#_ugodn_db-schemas">using modules</a>.</p> </li> 
+               <li> <p>You may need to override the entire class metadata rather than individual elements; the mixin mentioned above can help here.</p> </li> 
+              </ul> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugodn_hints-and-tips_subtype-entity-not-fully-populated">5.2. Subtype not fully populated</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_subtype-entity-not-fully-populated.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>Taken from <a href="http://markmail.org/message/ovgai56uqgfgnrx7">this thread</a> on the Apache Isis users mailing list…​</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>If it seems that Apache Isis (or rather DataNucleus) isn’t fully populating domain entities (ie leaving some properties as <code>null</code>), then check that your actions are not accessing the fields directly. Use getters instead.</p> 
+        </div> 
+        <div class="admonitionblock warning"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>Properties of domain entities should always be accessed using getters. The only code that should access to fields should be the getters themselves.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Why so? Because DataNucleus will potentially lazy load some properties, but to do this it needs to know that the field is being requested. This is the purpose of the enhancement phase: the bytecode of the original getter method is actually wrapped in code that does the lazy loading checking. But hitting the field directly means that the lazy loading code does not run.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This error can be subtle: sometimes "incorrect" code that accesses the fields will seem to work. But that will be because the field has been populated already, for whatever reason.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>One case where you will find the issue highlighted is for subtype tables that have been mapped using an inheritance strategy of <code>NEW_TABLE</code>, eg:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable
+<span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SupertypeEntity</span> {
+    ...
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>and then:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable
+<span class="annotation">@javax</span>.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SubtypeEntity</span> <span class="directive">extends</span> SupertypeEntity {
+    ...
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>This will generate two tables in the database, with the primary key of the supertype table propagated as a foreign key (also primary key) of the subtype table (sometimes called "table per type" strategy). This means that DataNucleus might retrieve data from only the supertype table, and the lazily load the subtype fields only as required. This is preferable to doing a left outer join from the super- to the subtype tables to retrieve data that might not be needed.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>On the other hand, if the <code>SUPERCLASS_TABLE</code> strategy (aka "table per hierarchy" or roll-up) or the <code>SUBCLASS_TABLE</code> strategy (roll-down) was used, then the problem is less likely to occur because DataNucleus would obtain all the data for any given instance from a single table.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Final note: references to other objects (either scalar references or in collections) in particular require that getters rather than fields to be used to obtain them: it’s hopefully obvious that DataNucleus (like all ORMs) should not and will not resolve such references (otherwise, where to stop…​ and the whole database would be loaded into memory).</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>In summary, there’s just one rule: <strong>always use the getters, never the fields</strong>.</p> 
+        </div> 
+       </div> 
+       <div class="sect2"> 
+        <h3 id="_ugodn_hints-and-tips_java8">5.3. Java8</h3>
+        <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_java8.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+        <div class="paragraph"> 
+         <p>DataNucleus 4.x supports Java 7, but can also be used with Java 8, eg for streams support against collections managed by DataNucleus.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Just include within <code>&lt;dependencies&gt;</code> of your <code>dom</code> module’s <code>pom.xml</code>:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>org.datanucleus<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>datanucleus-java8<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;version&gt;</span>4.2.0-release<span class="tag">&lt;/version&gt;</span>t
 <span class="tag">&lt;/dependency&gt;</span></code></pre> 
+         </div> 
         </div> 
-       </div> 
-       <div class="admonitionblock note"> 
-        <table> 
-         <tbody>
-          <tr> 
-           <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-           <td class="content"> 
-            <div class="paragraph"> 
-             <p>The DataNucleus website includes a <a href="http://www.datanucleus.org/products/accessplatform/compatibility.html">page</a> listing version compatibility of these extensions vis-a-vis the core DataNucleus platform.</p> 
-            </div> </td> 
-          </tr> 
-         </tbody>
-        </table> 
+        <div class="admonitionblock note"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>The DataNucleus website includes a <a href="http://www.datanucleus.org/products/accessplatform/compatibility.html">page</a> listing version compatibility of these extensions vis-a-vis the core DataNucleus platform.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
        </div> 
       </div> 
      </div> 
@@ -1415,9 +1763,20 @@ isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword=</code></pre
            <li><a href="#_optional_no_code_join_code">3.1.2. Optional, no <code>@Join</code></a></li> 
            <li><a href="#_with_code_join_code">3.1.3. With <code>@Join</code></a></li> 
           </ul> </li> 
+         <li><a href="#_ugodn_jdo-mappings_mandatory-properties-in-subtypes">3.2. Mandatory Properties in Subtypes</a></li> 
+         <li><a href="#_ugodn_jdo-mappings_mapping-to-a-view">3.3. Mapping to a View</a></li> 
         </ul> </li> 
-       <li><a href="#_ugodn_overriding-jdo-annotations">4. Overriding JDO Annotations</a></li> 
-       <li><a href="#_ugodn_java8">5. Java8</a></li> 
+       <li><a href="#_ugodn_db-schemas">4. Database Schemas</a> 
+        <ul class="sectlevel2"> 
+         <li><a href="#_listener_to_create_schema">4.1. Listener to create schema</a></li> 
+         <li><a href="#_alternative_implementation">4.2. Alternative implementation</a></li> 
+        </ul> </li> 
+       <li><a href="#_ugodn_hints-and-tips">5. Hints and Tips</a> 
+        <ul class="sectlevel2"> 
+         <li><a href="#_ugodn_hints-and-tips_overriding-jdo-annotations">5.1. Overriding JDO Annotations</a></li> 
+         <li><a href="#_ugodn_hints-and-tips_subtype-entity-not-fully-populated">5.2. Subtype not fully populated</a></li> 
+         <li><a href="#_ugodn_hints-and-tips_java8">5.3. Java8</a></li> 
+        </ul> </li> 
       </ul> 
      </div> 
     </div> 
