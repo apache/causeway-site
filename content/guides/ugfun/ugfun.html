@@ -4430,7 +4430,7 @@ ProductRepository productRepository;</code></pre>
            <p>It wouldn’t make sense to serialize out the state of a persistent entity (even more so when the view model is also being used as a DTO). However, the identity of the underlying entity can be well defined; Apache Isis defines the <a href="../rgcms/rgcms.html#_rgcms_schema-common">common schema</a> which defines the <code>&lt;oid-dto&gt;</code> element (and corresponding <code>OidDto</code> class): the object’s type and its identifier. This is basically a formal XML equivalent to the <code>Bookmark</code> object obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>There is only one requirement to make this work: every referenced domain entity must be annotated with <a href="../rgant/rgant.html#_rgant-XmlJavaTypeAdapter"><code>@XmlJavaTypeAdapter</code></a>, specifying the framework-provided <code>PersistentEntityAdapter.class</code>. And this class is similar to the <a href="../rgsvc/rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>: it knows how to create an <code>OidDto</code> from an object reference.</p> 
+           <p>There is only one requirement to make this work: every referenced domain entity must be annotated with <a href="../rgant/rgant.html#_rgant-XmlJavaTypeAdapter"><code>@XmlJavaTypeAdapter</code></a>, specifying the framework-provided <code>PersistentEntityAdapter</code>. And this class is similar to the <a href="../rgsvc/rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a>: it knows how to create an <code>OidDto</code> from an object reference.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Thus, in our view model we can legitimately write:</p> 
@@ -4476,6 +4476,171 @@ ProductRepository productRepository;</code></pre>
           </div> 
           <div class="paragraph"> 
            <p>This capability is particularly useful when the JAXB view model is being used as a <a href="../ugfun/ugfun.html#_ugfun_programming-model_view-models_dto">DTO</a>.</p> 
+          </div> 
+         </div> 
+         <div class="sect4"> 
+          <h5 id="_ugfun_programming-model_view-models_jaxb_joda-datatypes">JODA Time Datatypes</h5>
+          <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugfun/_ugfun_programming-model_view-models_jaxb_joda-datatypes.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+          <div class="paragraph"> 
+           <p>If your JAXB view model contains fields using the JODA datatypes (<code>LocalDate</code> and so on), then <code>@XmlJavaTypeAdapter</code> additional annotations in order to "teach" JAXB how to serialize out the state.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>As of <code>1.15.0-SNAPSHOT</code>, you use adapters provided in the Apache Isis applib. For example:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">categorizeIncomingInvoice</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlType</span>(
+        propOrder = {
+                ...
+                <span class="string"><span class="delimiter">"</span><span class="content">dateReceived</span><span class="delimiter">"</span></span>,
+                ...
+        }
+)
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">IncomingInvoiceViewModel</span> <span class="directive">extends</span> IncomingOrderAndInvoiceViewModel {
+
+    <span class="annotation">@XmlJavaTypeAdapter</span>(JodaLocalDateStringAdapter.ForJaxb.class)
+    <span class="directive">private</span> LocalDate dateReceived;
+
+    ...
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The full list of adapter classes are:</p> 
+          </div> 
+          <table class="tableblock frame-all grid-all spread"> 
+           <caption class="title">
+            Table 2. JAXB adapters
+           </caption> 
+           <colgroup> 
+            <col style="width: 33.3333%;"> 
+            <col style="width: 66.6667%;"> 
+           </colgroup> 
+           <thead> 
+            <tr> 
+             <th class="tableblock halign-left valign-top">JODA datatype</th> 
+             <th class="tableblock halign-left valign-top">Adapter</th> 
+            </tr> 
+           </thead> 
+           <tbody> 
+            <tr> 
+             <td class="tableblock halign-left valign-top" rowspan="2">
+              <div>
+               <div class="paragraph"> 
+                <p><code>org.joda.time.DateTime</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaDateTimeStringAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaDateTimeXMLGregorianCalendarAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top" rowspan="2">
+              <div>
+               <div class="paragraph"> 
+                <p><code>org.joda.time.LocalDate</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalDateStringAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalDateXMLGregorianCalendarAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top" rowspan="2">
+              <div>
+               <div class="paragraph"> 
+                <p><code>org.joda.time.LocalDateTime</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalDateTimeStringAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalDateTimeXMLGregorianCalendarAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top" rowspan="2">
+              <div>
+               <div class="paragraph"> 
+                <p><code>org.joda.time.LocalTime</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalTimeStringAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JodaLocalTimeXMLGregorianCalendarAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>java.sql.Timestamp</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>JavaSqlTimestampXmlGregorianCalendarAdapter.ForJaxb</code></p> 
+               </div>
+              </div></td> 
+            </tr> 
+           </tbody> 
+          </table> 
+          <div class="admonitionblock tip"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>If you want to roll-your-own, take a look at <a href="http://blog.bdoughan.com/2011/05/jaxb-and-joda-time-dates-and-times.html">this blog post</a>.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
          </div> 
         </div> 
@@ -4957,7 +5122,7 @@ public <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 2. View model programming model
+           Table 3. View model programming model
           </caption> 
           <colgroup> 
            <col style="width: 14.2857%;"> 
@@ -6018,7 +6183,7 @@ public <span class="type">class</span> <span class="class">ToDoItemV1_1</span> <
         </div> 
         <table class="tableblock frame-all grid-all spread"> 
          <caption class="title">
-          Table 3. Names and descriptions
+          Table 4. Names and descriptions
          </caption> 
          <colgroup> 
           <col style="width: 33.3333%;"> 
@@ -7449,6 +7614,7 @@ repositoryService.remove(customer);</code></pre>
            <li><a href="#_ugfun_programming-model_view-models_jaxb">5.8.1. JAXB View Models</a> 
             <ul class="sectlevel4"> 
              <li><a href="#_ugfun_programming-model_view-models_jaxb_referencing-domain-entities">Referencing Domain Entities</a></li> 
+             <li><a href="#_ugfun_programming-model_view-models_jaxb_joda-datatypes">JODA Time Datatypes</a></li> 
             </ul> </li> 
            <li><a href="#_ugfun_programming-model_view-models_dto">5.8.2. DTOs</a> 
             <ul class="sectlevel4"> 
