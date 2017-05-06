@@ -1535,17 +1535,15 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
          <p>The framework provides default implementations for many of the <a href="../rgsvc/rgsvc.html">domain services</a>. This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>The trick is to use the <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p> 
+         <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_api_LocaleProvider"><code>LocaleProvider</code></a>. The trick is to use the <a href="../rgant/rgant.html#_rgant-DomainService_menuOrder"><code>@DomainService#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p> 
         </div> 
         <div class="paragraph"> 
-         <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_api_LocaleProvider"><code>LocaleProvider</code></a>. Here’s how:</p> 
+         <p>Here’s how:</p> 
         </div> 
         <div class="listingblock"> 
          <div class="content"> 
           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
-        nature = NatureOfService.DOMAIN
-)
-<span class="annotation">@DomainServiceLayout</span>(
+        nature = NatureOfService.DOMAIN,
         menuOrder = <span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span>                             <i class="conum" data-value="1"></i><b>(1)</b>
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
@@ -1567,11 +1565,70 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
          </table> 
         </div> 
         <div class="paragraph"> 
-         <p>It’s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy if using <code>1.10.0</code> or later:</p> 
+         <p>The framework uses the value of the <code>menuOrder</code> attribute to determine priority; lowest number wins.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Thus, if a single instance is to be injected, eg:</p> 
         </div> 
         <div class="listingblock"> 
          <div class="content"> 
-          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.inject.Inject
+LocalProvider localeProvider;</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>then the custom implementation will be used in preference to the framework’s default implementation.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>If multiple instances are injected, eg:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.inject.Inject
+<span class="predefined-type">List</span>&lt;LocalProvider&gt; localeProviders;</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>then all implementations will be present in the list, ordered by priority; your custom implementation will be first in the list.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>As of <code>1.15.0-SNAPSHOT</code>, there is no need to specify the <code>menuOrder</code> attribute: its default value is now set to a lower value (specifically: <code>Integer.MAX_VALUE - 100</code>). Thus, the code simplifies to:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
+        <span class="keyword">return</span> ...
+    }
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="admonitionblock note"> 
+         <table> 
+          <tbody>
+           <tr> 
+            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+            <td class="content"> 
+             <div class="paragraph"> 
+              <p>It is also possible to use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute, rather than <a href="../rgant/rgant.html#_rgant-DomainService_menuOrder"><code>@DomainService#menuOrder()</code></a>. The general convention is to use the former only for services that are rendered in the UI, the latter for programmatic services.</p> 
+             </div> 
+             <div class="paragraph"> 
+              <p>If both attributes are present, then the value of <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> is used.</p> 
+             </div> </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div> 
+        <div class="sect3"> 
+         <h4 id="_decorating_existing_implementations">4.2.1. Decorating existing implementations</h4> 
+         <div class="paragraph"> 
+          <p>It’s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
         nature = NatureOfService.DOMAIN
 )
 <span class="annotation">@DomainServiceLayout</span>(
@@ -1592,33 +1649,34 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
     <span class="annotation">@Inject</span>
     <span class="predefined-type">List</span>&lt;LocaleProvider&gt; localeProviders;                                                           <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre> 
+          </div> 
          </div> 
-        </div> 
-        <div class="colist arabic"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td><i class="conum" data-value="1"></i><b>1</b></td> 
-            <td>takes precedence over the default implementation when injected elsewhere.</td> 
-           </tr> 
-           <tr> 
-            <td><i class="conum" data-value="2"></i><b>2</b></td> 
-            <td>this implementation merely delegates to the default implementation</td> 
-           </tr> 
-           <tr> 
-            <td><i class="conum" data-value="3"></i><b>3</b></td> 
-            <td>lazily populated</td> 
-           </tr> 
-           <tr> 
-            <td><i class="conum" data-value="4"></i><b>4</b></td> 
-            <td>delegate to the first implementation that isn’t <em>this</em> implementation (else infinite loop!)</td> 
-           </tr> 
-           <tr> 
-            <td><i class="conum" data-value="5"></i><b>5</b></td> 
-            <td>Injects all implementations, including this implemenation</td> 
-           </tr> 
-          </tbody>
-         </table> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>takes precedence over the default implementation when injected elsewhere.</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>this implementation merely delegates to the default implementation</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>lazily populated</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="4"></i><b>4</b></td> 
+             <td>delegate to the first implementation that isn’t <em>this</em> implementation (else infinite loop!)</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="5"></i><b>5</b></td> 
+             <td>Injects all implementations, including this implemenation</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
         </div> 
        </div> 
        <div class="sect2"> 
@@ -4200,7 +4258,10 @@ export ISIS_OPTS="isis.appManifest=domainapp.app.DomainAppAppManifestWithFixture
            <li><a href="#_using_action_semantics">4.1.1. Using action semantics</a></li> 
            <li><a href="#_using_a_checkbox">4.1.2. Using a checkbox</a></li> 
           </ul> </li> 
-         <li><a href="#_ugbtb_hints-and-tips_replacing-default-service-implementations">4.2. Overriding Default Service Implns</a></li> 
+         <li><a href="#_ugbtb_hints-and-tips_replacing-default-service-implementations">4.2. Overriding Default Service Implns</a> 
+          <ul class="sectlevel3"> 
+           <li><a href="#_decorating_existing_implementations">4.2.1. Decorating existing implementations</a></li> 
+          </ul> </li> 
          <li><a href="#_ugbtb_hints-and-tips_vetoing-visibility">4.3. Vetoing Visibility</a></li> 
          <li><a href="#_ugbtb_hints-and-tips_transactions-and-errors">4.4. Transactions and Errors</a> 
           <ul class="sectlevel3"> 
