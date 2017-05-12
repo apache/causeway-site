@@ -49,14 +49,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet"> 
   <link href="../../css/bootstrap-toc/0.4.1/bootstrap-toc.min.css" rel="stylesheet"> 
   <link href="../../css/asciidoctor/foundation.css" rel="stylesheet"> 
-  <!--
-    <link href="../../css/datanucleus_theme.css" rel="stylesheet"/>
-    --> 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> 
-  <link href="css/slick/1.5.0/slick.css" rel="stylesheet"> 
-  <link href="css/slick/1.5.0/slick-theme.css" rel="stylesheet"> 
+  <link href="../../css/slick/1.5.0/slick.css" rel="stylesheet"> 
+  <link href="../../css/slick/1.5.0/slick-theme.css" rel="stylesheet"> 
   <link href="../../css/search-panel/search-panel.css" rel="stylesheet"> 
   <link href="../../css/header-links/header-links.css" rel="stylesheet"> 
+  <link href="../../css/sticky-header/sticky-header.css" rel="stylesheet"> 
   <link href="../../css/customisations.css" rel="stylesheet"> 
   <!-- Coderay syntax formatter --> 
   <style type="text/css">
@@ -162,7 +160,7 @@ table.CodeRay td.code>pre{padding:0}
    html
   </div> 
   <!-- Navbar --> 
-  <nav class="navbar navbar-default navbar-fixed-top"> 
+  <nav class="navbar navbar-default navbar-static-top header"> 
    <div class="container"> 
     <div class="navbar-header"> 
      <!-- Three line menu button for use on mobile screens --> 
@@ -253,7 +251,16 @@ table.CodeRay td.code>pre{padding:0}
       <h1>Security</h1> 
      </div> 
      <div id="doc-content">
-      <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc&quot;" style="float: right; font-size: small; padding: 6px;  "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+      <div class="btn-group" style="float: right; font-size: small; padding: 6px;  ">
+       <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+       <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+       <ul class="dropdown-menu">
+        <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+        <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+        <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+        <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/ugsec.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+       </ul>
+      </div> 
       <div class="sect1"> 
        <h2 id="__ugsec">1. Security</h2> 
        <div class="sectionbody"> 
@@ -344,10 +351,10 @@ table.CodeRay td.code>pre{padding:0}
                <p>A further aspect of security is auditing: recording what data was modified by which user.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>Apache Isis provides the <a href="../rgsvc/rgsvc.html#_rgsvc_api_InteractionContext"><code>InteractionContext</code></a> can be used to track the actions being invoked, and the <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuditerService"><code>AuditerService</code></a> captures what data was modified as a result (auditing). When <code>Interaction</code>s are persisted (eg by way of (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module) this provides excellent traceability. The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module provides an implementation of the <code>AuditerService</code>.</p> 
+               <p>Apache Isis provides the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> can be used to track the actions being invoked, and the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditerService"><code>AuditerService</code></a> captures what data was modified as a result (auditing). When <code>Interaction</code>s are persisted (eg by way of (non-ASF) <a href="http://github.com/isisaddons/isis-module-publishmq">Isis addons' publishmq</a> module) this provides excellent traceability. The (non-ASF) <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' audit</a> module provides an implementation of the <code>AuditerService</code>.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>For earlier versions of the framework the <a href="../rgsvc/rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> can be used to capture actions, while the (deprecated) <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a> used to capture data modified.</p> 
+               <p>For earlier versions of the framework the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> can be used to capture actions, while the (deprecated) <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditingService"><code>AuditingService</code></a> used to capture data modified.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -358,7 +365,16 @@ table.CodeRay td.code>pre{padding:0}
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_configuring-isis-to-use-shiro">2. Configuring to use Shiro</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_configuring-isis-to-use-shiro.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
          <p>Apache Isis' security mechanism is configurable, specifying an <code>Authenticator</code> and an <code>Authorizor</code> (non-public) APIs. The Shiro security mechanism is an integration wih Apache Shiro that implements both interfaces.</p> 
@@ -479,11 +495,29 @@ isis.authorization=shiro</code></pre>
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_shiro-realm-implementations">3. Shiro Realm Implementations</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="sect2"> 
          <h3 id="_ugsec_shiro-realm-implementations_ini-realm">3.1. Shiro Ini Realm</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_ini-realm.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>Probably the simplest realm to use is Shiro’s built-in <code>IniRealm</code>, which reads from the (same) <code>WEB-INF/shiro.ini</code> file.</p> 
          </div> 
@@ -670,7 +704,16 @@ realm1.resourcePath=classpath:webapp/realm1.ini <i class="conum" data-value="2">
         </div> 
         <div class="sect2"> 
          <h3 id="_ugsec_shiro-realm-implementations_isis-ldap-realm">3.2. Isis Ldap Realm</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isis-ldap-realm.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>Isis ships with an implementation of <a href="http://shiro.apache.org">Apache Shiro</a>'s <code>Realm</code> class that allows user authentication and authorization to be performed against an LDAP server.</p> 
          </div> 
@@ -879,7 +922,16 @@ admin_role = *</code></pre>
         </div> 
         <div class="sect2"> 
          <h3 id="_ugsec_shiro-realm-implementations_isisaddons-security-module-realm">3.3. Security Module Realm</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_isisaddons-security-module-realm.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>The <a href="https://github.com/isisaddons/isis-module-security">Isis Addons' security module</a> (not ASF) provides a complete security subdomain for users, roles, permissions; all are persisted as domain entities.</p> 
          </div> 
@@ -920,7 +972,16 @@ admin_role = *</code></pre>
         </div> 
         <div class="sect2"> 
          <h3 id="_ugsec_shiro-realm-implementations_jdbc-realm">3.4. Shiro JDBC Realm</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-realm-implementations_jdbc-realm.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>There is nothing to stop you from using some other <code>Realm</code> implementation (or indeed writing one yourself). For example, you could use Shiro’s own JDBC realm that loads user/password details from a database.</p> 
          </div> 
@@ -1111,7 +1172,16 @@ jdbcRealm.credentialsMatcher = $pm                               <i class="conum
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_shiro-isis-enhanced-wildcard-permission">4. Enhanced Wildcard Permission</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_shiro-isis-enhanced-wildcard-permission.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
          <p>If using the text-based <a href="../ugsec/ugsec.html#_ugsec_shiro-realm-implementations_ini-realm"><code>IniRealm</code></a> or <a href="../ugsec/ugsec.html#_ugsec_shiro-realm-implementations_isis-ldap-realm">Isis' LDAP realm</a>, then note that Shiro also allows the string representation of the permissions to be mapped (resolved) to alternative <code>Permission</code> instances. Apache Isis provides its own <code>IsisPermission</code> which introduces the concept of a "veto".</p> 
@@ -1191,7 +1261,16 @@ myRealm.permissionResolver = $permissionResolver  <i class="conum" data-value="1
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_hints-and-tips">5. Hints and Tips</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
          <p>This chapter provides some solutions for problems we’ve encountered ourselves or have been raised on the Apache Isis mailing lists.</p> 
@@ -1211,7 +1290,16 @@ myRealm.permissionResolver = $permissionResolver  <i class="conum" data-value="1
         </div> 
         <div class="sect2"> 
          <h3 id="_ugsec_hints-and-tips_configuring-isis-to-use-bypass">5.1. Bypassing security</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_configuring-isis-to-use-bypass.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>The bypass security component consists of an implementation of both the <code>AuthenticationManager</code> and <code>AuthorizationManager</code> APIs, and are intended for prototyping use only.</p> 
          </div> 
@@ -1238,7 +1326,16 @@ isis.authorization=bypass</code></pre>
         </div> 
         <div class="sect2"> 
          <h3 id="_ugsec_hints-and-tips_shiro-caching">5.2. Caching and other Shiro Features</h3>
-         <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
          <div class="paragraph"> 
           <p>We don’t want to repeat the entire <a href="http://shiro.apache.org/documentation.html">Shiro documentation set</a> here, but we should flag a number of otherof other features that are worth checking out.</p> 
          </div> 
@@ -1274,7 +1371,16 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_api-for-applications">6. API for Applications</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_api-for-applications.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
          <p>Generally speaking your domain objects (or more generally your application) should be agnostic of the user/roles that are interacting with them; applying security permissions is the responsibility of the framework.</p> 
@@ -1285,7 +1391,7 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
         <div class="sect2"> 
          <h3 id="__code_domainobjectcontainer_code_api">6.1. <code>DomainObjectContainer</code> API</h3> 
          <div class="paragraph"> 
-          <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a> service exposes the following API:</p> 
+          <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a> service exposes the following API:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -1351,7 +1457,16 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
       </div> 
       <div class="sect1"> 
        <h2 id="_ugsec_usage-by-isis-viewers">7. Usage by Apache Isis' Viewers</h2>
-       <button type="button" class="button secondary" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc&quot;" style="float: right; font-size: small; padding: 6px; margin-top: -55px; "><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button> 
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_usage-by-isis-viewers.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
          <p>By and large the security mechanisms within Isis are transparent to the rest of the framework (the <a href="../ugvw/ugvw.html">Wicket Viewer</a> and <a href="../ugvro/ugvro.html">Restful Objects viewer</a>, and the overall <a href="../rgcfg/rgcfg.html#_rgcfg">runtime</a>).</p> 
@@ -1428,7 +1543,7 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>User registration is only available if the <a href="../rgsvc/rgsvc.html#_rgsvc_spi_UserRegistrationService"><code>UserRegistrationService</code></a> is configured; this is used by the framework to actually create new instances of the user as accessed by the corresponding (Shiro) realm.</p> 
+           <p>User registration is only available if the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_UserRegistrationService"><code>UserRegistrationService</code></a> is configured; this is used by the framework to actually create new instances of the user as accessed by the corresponding (Shiro) realm.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Because Shiro realms are pluggable, the Apache Isis framework does not provide default implementations of this service. However, if you are using the <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module (non-ASF), then this module <em>does</em> provide an implementation (that, as you might expect, creates new "user" domain entities).</p> 
@@ -1668,6 +1783,7 @@ userRegistrationService.registerUser(userDetails);</code></pre>
   <script src="../../js/jqueryui/1.11.4/jquery-ui.min.js"></script> 
   <script src="../../js/slick/1.5.0/slick.min.js"></script> 
   <script src="../../js/elasticlunr/elasticlunr.min.js"></script> 
+  <script src="../../js/sticky-header/sticky-header.js"></script> 
   <script src="../../js/search-panel/search-panel.js"></script> 
   <script src="../../js/header-link/header-link.js"></script> 
   <script src="../../js/toc-scroll/toc-scroll.js"></script>  
