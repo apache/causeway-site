@@ -190,6 +190,9 @@ table.CodeRay td.code>pre{padding:0}
         <li><a href="../.././guides/rgcms/rgcms.html">Classes, Methods and Schema</a></li> 
         <li><a href="../.././guides/rgmvn/rgmvn.html">Maven plugin</a></li> 
         <li><a href="../.././guides/rgfis/rgfis.html">Framework Internal Services</a></li> 
+        <li role="separator" class="divider"></li> 
+        <li class="dropdown-header">Javadoc</li> 
+        <li><a href="http://javadoc.io/doc/org.apache.isis.core/isis-core-applib">Applib</a></li> 
        </ul> </li> 
       <li class="dropdown  hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Downloads<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
@@ -3990,7 +3993,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_TransactionService">4.9. <code>TransactionService</code></h3>
+         <h3 id="_rgsvc_application-layer-api_TransactionService">4.9. <code>TransactionService2</code> (<code>1.15.0-SNAPSHOT</code>)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_TransactionService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4002,7 +4005,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>TransactionService</code> provides a small number of methods to allow domain objects to influence user transactions.</p> 
+          <p>The <code>TransactionService2</code> (<code>1.15.0-SNAPSHOT</code>) provides a small number of methods to allow domain objects to influence user transactions.</p> 
          </div> 
          <div class="admonitionblock note"> 
           <table> 
@@ -4020,14 +4023,15 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="_api_3">4.9.1. API</h4> 
           <div class="paragraph"> 
-           <p>The API of <code>TransactionService</code> is:</p> 
+           <p>The API of <code>TransactionService2</code> is:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TransactionService</span> {
-    Transaction currentTransaction();   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="type">void</span> nextTransaction();             <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> flushTransaction();            <i class="conum" data-value="3"></i><b>(3)</b>
+    Transaction currentTransaction();       <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">void</span> nextTransaction();                 <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> flushTransaction();                <i class="conum" data-value="3"></i><b>(3)</b>
+    TransactionState getTransactionState(); <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -4045,6 +4049,48 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
               <td>If the user interaction creates/persists an object or deletes an object (eg using the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_RepositoryService"><code>RepositoryService</code></a>'s <code>persist()</code> or <code>delete()</code> methods), then the framework actually queues up the work and only performs the persistence command either at the end of the transaction or immediately prior to the next query. Performing a flush will cause any pending calls to be performed immediately.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>the state of the current or most recently completed transaction.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Here <code>TransactionState</code> is an enum defined as:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">enum</span> TransactionState {
+    NONE,       <i class="conum" data-value="1"></i><b>(1)</b>
+    IN_PROGRESS,    <i class="conum" data-value="2"></i><b>(2)</b>
+    MUST_ABORT,     <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="comment">/** COMMITTED, <i class="conum" data-value="4"></i><b>(4)</b> ABORTED; <i class="conum" data-value="5"></i><b>(5)</b> }</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>No transaction exists.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>Started, still in progress. May flush, commit or abort.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>Started, but has hit an exception. May not flush or commit, can only abort.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>Completed, having successfully committed. May not flush or abort or commit.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>Completed, having aborted. Again, may not flush or abort or commit.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -4119,7 +4165,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="_implementation_18">4.9.2. Implementation</h4> 
           <div class="paragraph"> 
-           <p>The core framework provides a default implementation of this service (<code>o.a.i.core.metamodel.services.xactn.TransactionServiceInternalDefault</code>).</p> 
+           <p>The core framework provides a default implementation of this service, <code>o.a.i.core.metamodel.services.xactn.TransactionServiceInternalDefault</code> (renamed to <code>TransactionServiceDefault</code> in <code>1.15.0-SNAPSHOT</code>).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
