@@ -12335,6 +12335,19 @@ container.persist(cust);</code></pre>
              </div>
             </div></td> 
           </tr> 
+          <tr> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgant/rgant.html#_rgant-PropertyLayout_unchanging"><code>unchanging()</code></a></p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code>, <code>true</code><br> (<code>false</code>)</p></td> 
+           <td class="tableblock halign-left valign-top">
+            <div>
+             <div class="paragraph"> 
+              <p>(<code>1.15.0-SNAPSHOT</code>) indicates that the value held by the property never changes over time (even if other properties of the object do change).</p> 
+             </div> 
+             <div class="paragraph"> 
+              <p>Used as a hint to the viewer not to redraw the property if possible after an AJAX update.</p> 
+             </div>
+            </div></td> 
+          </tr> 
          </tbody> 
         </table> 
         <div class="paragraph"> 
@@ -12941,6 +12954,55 @@ container.persist(cust);</code></pre>
             </tr> 
            </tbody>
           </table> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgant-PropertyLayout_unchanging">31.9. <code>unchanging()</code> (<code>1.15.0-SNAPSHOT</code>)</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-PropertyLayout_unchanging.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-PropertyLayout_unchanging.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-PropertyLayout_unchanging.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-PropertyLayout_unchanging.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-PropertyLayout_unchanging.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The <code>unchanging()</code> attribute is used to indicate that the value held by the property never changes over time, even when other properties of the object do change.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Setting this attribute to <code>true</code> is used as a hint to the viewer to not redraw the property after an AJAX update of some other property/ies of the object have changed. This is primarily for performance, eg can improve the user experience when rendering PDFs/blobs.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Note that for this to work, the viewer will also ensure that none of the property’s parent component (such as a tab group panel) are re-rendered.</p> 
+         </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>Design note: we considered implementing this an "immutable" flag on the <a href="#_rgant_Property"><code>@Property</code></a> annotation (because this flag is typically appropriate for immutable/unchanging properties of a domain object). However, we decided not to do that, on the basis that it might be interpreted as having a deeper impact within the framework than simply a hint for rendering.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>For example:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Document</span> {
+    <span class="annotation">@PropertyLayout</span>(
+        unchanging=<span class="predefined-constant">true</span>
+    )
+    <span class="directive">public</span> <span class="predefined-type">Blob</span> getBlob(){ ... }
+    <span class="directive">public</span> <span class="type">void</span> setBlob(<span class="predefined-type">Blob</span> blob) { ... }
+}</code></pre> 
+          </div> 
          </div> 
         </div> 
        </div> 
