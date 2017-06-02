@@ -1330,19 +1330,26 @@ table.CodeRay td.code>pre{padding:0}
           <p>Metadata providing UI hints can be specified either <a href="../ugvw/ugvw.html#_ugvw_layout_annotation-based">using annotations</a>, or using an <code>Xxx.layout.xml</code> file (where <code>Xxx</code> is the entity or view model object to be rendered).</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Using a file-based layout has the huge benefit that the layout can be updated without requiring a recompile of the code and redeploy of the app. Many developers also find it easier to rationalize about layout when all the hints are collated together in a single place (rather than scattered across the class members as annotations).</p> 
+          <p>File-based layouts offer a number of benefits:</p> 
          </div> 
-         <div class="paragraph"> 
-          <p>Another benefit of file-based layout is that UI hints can be provided for <a href="../ugfun/ugfun.html#_ugfun_how-tos_contributed-members">contributed associations and actions</a> that are synthesised at runtime.</p> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>Probably most significantly, the layout can be updated without requiring a recompile of the code and redeploy of the app; fine-tuning the layout with your end users is easy to do</p> </li> 
+           <li> <p>Many developers also find it easier to rationalize about layout when all the hints are collated together in a single place (rather than scattered across the class members as annotations).</p> </li> 
+           <li> <p>UI hints can be provided for <a href="../ugfun/ugfun.html#_ugfun_how-tos_contributed-members">contributed associations and actions</a> that are synthesised at runtime.</p> </li> 
+          </ul> 
          </div> 
          <div class="paragraph"> 
           <p>It is also possible to download an initial <code>.layout.xml</code> - capturing any existing layout metadata - using the <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_LayoutService"><code>LayoutService</code></a> (exposed on the prototyping menu) or using a <a href="../rgcms/rgcms.html#_rgcms_classes_mixins_Object">mixin action</a> contributed to every domain object.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The main downsides of using file-based layouts are a lack of typesafety (a typo will result in the metadata not being picked up for the element) and syntactic fragility (an invalid XML document will result in no metadata for the entire class).</p> 
+          <p>There are some downsides, though:</p> 
          </div> 
-         <div class="paragraph"> 
-          <p>Also, file-based layouts have no notion of inheritance, whereas the dewey-decimal format <code>@MemberOrder</code> annotation allows the metadata of the subclass its superclasses to fit together relatively seamlessly.</p> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>file-based layouts are not type: a typo will result in the metadata not being picked up for the element. They also suffer from syntactic fragility: an invalid XML document will result in no metadata for the entire class.</p> </li> 
+           <li> <p>there is no notion of inheritance, so a <code>.layout.xml</code> is required for all concrete classes and also for any abstract classes (if used as a collection type) In contrast, the dewey-decimal format <code>@MemberOrder</code> annotation allows the metadata of the subclass its superclasses to fit together relatively seamlessly.</p> </li> 
+          </ul> 
          </div> 
          <div class="paragraph"> 
           <p>The <code>Xxx.layout.xml</code> file is just the serialized form of a <a href="../rgcms/rgcms.html#_rgcms_classes_layout"><code>Grid</code></a> layout class defined within Apache Isis' applib. These are JAXB-annotated classes with corresponding XSD schemas; the upshot of that is that IDEs such as IntelliJ and Eclipse can provide "intellisense", making iteasy to author such layout files.</p> 
@@ -1502,6 +1509,22 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
            <div class="paragraph"> 
             <p>Note also the <code>unreferencedProperties</code> attribute for the fieldset; this topic is discussed in more detail <a href="../ugfun/ugfun.html#__ugvw_layout_file-based_unreferenced">below</a>.</p> 
+           </div> 
+           <div class="admonitionblock note"> 
+            <table> 
+             <tbody>
+              <tr> 
+               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+               <td class="content"> 
+                <div class="paragraph"> 
+                 <p>As of <code>1.15.0-SNAPSHOT</code>, the <code>&lt;fieldset&gt;</code>'s "name" attribute is optional. If omitted, then the title panel is suppressed, freeing more real estate.</p> 
+                </div> 
+                <div class="paragraph"> 
+                 <p>Do be aware though that if there are any actions that have been placed on the fieldset’s panel, then these <em>will <strong>not</strong> be displayed</em>.</p> 
+                </div> </td> 
+              </tr> 
+             </tbody>
+            </table> 
            </div> 
           </div> 
           <div class="sect4"> 
@@ -2280,7 +2303,7 @@ table.CodeRay td.code>pre{padding:0}
              </div>
             </div></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dialog</code>,<code>inline</code><br> (<code>inline</code>)</p></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock">(<code>1.15.0-SNAPSHOT</code>) whether the prompt for editing a domain object property or invoking an action (associated with a property) is shown inline within the property’s form, or instead shown in a modal dialog box. Can be overridden on a property-by-property basis using <a href="../rgant/rgant.html#_rgant-PropertyLayout_promptStyle"><code>@Property#promptStyle()</code></a>) or <a href="../rgant/rgant.html#_rgant-ActionLayout_promptStyle"><code>@Action#promptStyle()</code></a>).</p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock">(<code>1.15.0-SNAPSHOT</code>) whether the prompt for editing a domain object property or invoking an action (associated with a property) is shown inline within the property’s form, or instead shown in a modal dialog box. Can be overridden on a property-by-property basis using <a href="../rgant/rgant.html#_rgant-PropertyLayout_promptStyle"><code>@Property#promptStyle()</code></a>) or <a href="../rgant/rgant.html#_rgant-ActionLayout_promptStyle"><code>@Action#promptStyle()</code></a>). </p><p class="tableblock">Note that <code>inline_as_edit</code> does not make sense for a configuration property default, and will instead be interpreted as <code>inline</code>.</p></td> 
           </tr> 
           <tr> 
            <td class="tableblock halign-left valign-top">
