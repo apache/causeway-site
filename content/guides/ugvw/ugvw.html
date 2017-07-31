@@ -4291,6 +4291,62 @@ public WebRequest newWebRequest(HttpServletRequest servletRequest, String filter
           </ul> 
          </div> 
         </div> 
+        <div class="sect2"> 
+         <h3 id="_ugvw_hints-and-tips_svg-support">7.3. SVG Support</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_hints-and-tips_svg-support.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_hints-and-tips_svg-support.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_hints-and-tips_svg-support.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_hints-and-tips_svg-support.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_hints-and-tips_svg-support.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>(As per <a href="https://issues.apache.org/jira/browse/ISIS-1604">ISIS-1604</a>), SVG images can be used:</p> 
+         </div> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>as Logo in the upper left corner (Wicket Menubar)</p> </li> 
+           <li> <p>on the Login Page (<code>login.html</code>)</p> </li> 
+           <li> <p>as favicon (<code>image/svg+xml</code>, cf. <a href="https://issues.apache.org/jira/browse/ISIS-1115">ISIS-1115</a>)</p> </li> 
+          </ul> 
+         </div> 
+         <div class="paragraph"> 
+          <p>However, SVGs are not, by default, displayed on the welcome page. SVGs can be attached as <code>Blob</code>s, but they are displayed as bitmaps (by means of the Batik rasterizer) and do not scale. The rasterizer (of course) can not deal with animations (cf. attachment).</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>To fix this, you can add the following dependencies:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.twelvemonkeys.imageio<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>imageio-batik<span class="tag">&lt;/artifactId&gt;</span> <span class="comment">&lt;!-- svg --&gt;</span>
+    <span class="tag">&lt;version&gt;</span>3.3.2<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span>
+<span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.twelvemonkeys.imageio<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>imageio-batik<span class="tag">&lt;/artifactId&gt;</span> <span class="comment">&lt;!-- svg --&gt;</span>
+    <span class="tag">&lt;version&gt;</span>3.3.2<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;type&gt;</span>test-jar<span class="tag">&lt;/type&gt;</span>
+    <span class="tag">&lt;scope&gt;</span>test<span class="tag">&lt;/scope&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span>
+<span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.apache.xmlgraphics<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>batik-transcoder<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.8<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>However, <strong>please note</strong> that these dependencies have high CVE values, and so may constitute a security risk.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Further discussion on <a href="https://lists.apache.org/thread.html/68f16dd0306a8101c1cde06e5e6309b8d1b81b388a1f59e123cfc2f3@%3Cusers.isis.apache.org%3E">this mailing list thread</a>.</p> 
+         </div> 
+        </div> 
        </div> 
       </div> 
       <div class="sect1"> 
