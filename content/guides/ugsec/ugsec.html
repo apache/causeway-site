@@ -1325,7 +1325,140 @@ isis.authorization=bypass</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugsec_hints-and-tips_shiro-caching">5.2. Caching and other Shiro Features</h3>
+         <h3 id="_ugsec_hints-and-tips_run-as">5.2. Run-as</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_run-as.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_run-as.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_run-as.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_run-as.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_run-as.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>This hint shows how to temporarily change the current user as reported by Shiro. This can be useful to support "Run As", for example.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The heavy lifting is done in <code>ShiroService</code>:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ShiroService</span> {
+
+    <span class="directive">public</span> <span class="type">void</span> runAs(<span class="predefined-type">String</span> userName) {
+        SimplePrincipalCollection principals =
+            <span class="keyword">new</span> SimplePrincipalCollection(userName, <span class="string"><span class="delimiter">"</span><span class="content">jdbcRealm</span><span class="delimiter">"</span></span>);                       <i class="conum" data-value="1"></i><b>(1)</b>
+        getSubject().runAs(principals);
+    }
+
+    <span class="directive">public</span> <span class="predefined-type">String</span> releaseRunAs() {
+        <span class="directive">final</span> PrincipalCollection principals = getSubject().releaseRunAs();
+        <span class="predefined-type">String</span> username = (<span class="predefined-type">String</span>)principals.asList().get(<span class="integer">0</span>);
+        <span class="keyword">return</span> username;
+    }
+
+    <span class="directive">public</span> <span class="predefined-type">String</span> getUsername() {                                                       <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="predefined-type">String</span> principalAsString = ((<span class="predefined-type">String</span>)getSubject().getPrincipal());
+        <span class="keyword">return</span> principalAsString.toLowerCase();
+    }
+
+    <span class="directive">public</span> <span class="predefined-type">String</span> getRealUsername() {                                                   <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="keyword">return</span> userService.getUser().getName().toLowerCase();
+    }
+
+    <span class="directive">public</span> <span class="type">boolean</span> isRunAs() {
+        <span class="keyword">return</span> getSubject().isRunAs();
+    }
+
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">Subject</span> getSubject() {
+        <span class="keyword">return</span> org.apache.shiro.SecurityUtils.getSubject();
+    }
+
+    <span class="annotation">@Inject</span>
+    <span class="directive">private</span> UserService userService;
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>"jdbcRealm" is realm as configured in Shiro config (shiro.ini). Might want to look this up from <code>ConfigurationService</code>.</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>The username of the currently logged in user (by which permissions are determined). This could be the user name the real user is running as.</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>The username of the real currently logged in user.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This could be exposed in the UI using a simple <code>RunAsService</code>, for example:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.VIEW_MENU_ONLY)
+<span class="annotation">@DomainServiceLayout</span>(menuBar = DomainServiceLayout.MenuBar.TERTIARY)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RunAsService</span> {
+
+    <span class="directive">public</span> Dashboard runAs(User user) {
+        shiroService.runAs(user.getUsername());
+        <span class="keyword">return</span> dashboardService.openDashboard();                    <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;User&gt; choices0RunAs() {
+        <span class="keyword">return</span> ...                                                  <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+    <span class="directive">public</span> <span class="type">boolean</span> hideRunAs() {
+        <span class="keyword">return</span> shiroService.isRunAs();
+    }
+
+
+
+    <span class="directive">public</span> User releaseRunAs() {
+        <span class="predefined-type">String</span> username = shiroService.releaseRunAs();
+        <span class="keyword">return</span> usersRepository.findByUsername(username);
+    }
+    <span class="directive">public</span> <span class="type">boolean</span> hideReleaseRunAs() {
+        <span class="keyword">return</span> !shiroService.isRunAs();
+    }
+
+
+    <span class="annotation">@Inject</span>
+    <span class="directive">private</span> ShiroService shiroService;
+    <span class="annotation">@Inject</span>
+    <span class="directive">private</span> UsersRepository usersRepository;
+    <span class="annotation">@Inject</span>
+    <span class="directive">private</span> DashboardService dashboardService;                      <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>go to the home page (application-specific)</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>return a list of users to run as</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Credits: adapted from <a href="https://gist.github.com/erikdehair/efa3005440ca982cca41ebe5347e82d8">this gist</a>.</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugsec_hints-and-tips_shiro-caching">5.3. Caching and other Shiro Features</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugsec/_ugsec_hints-and-tips_shiro-caching.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1340,7 +1473,7 @@ isis.authorization=bypass</code></pre>
           <p>We don’t want to repeat the entire <a href="http://shiro.apache.org/documentation.html">Shiro documentation set</a> here, but we should flag a number of otherof other features that are worth checking out.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_caching">5.2.1. Caching</h4> 
+          <h4 id="_caching">5.3.1. Caching</h4> 
           <div class="paragraph"> 
            <p>To ensure that security operations does not impede performance, Shiro supports caching. For example, this sets up a simple memory-based cache manager:</p> 
           </div> 
@@ -1355,7 +1488,7 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_further_reading">5.2.2. Further Reading</h4> 
+          <h4 id="_further_reading">5.3.2. Further Reading</h4> 
           <div class="ulist"> 
            <ul> 
             <li> <p>Shiro’s documentation page can be found <a href="http://shiro.apache.org/documentation.html">here</a>.</p> </li> 
