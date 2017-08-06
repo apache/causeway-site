@@ -3112,8 +3112,21 @@ table.CodeRay td.code>pre{padding:0}
          <div class="paragraph"> 
           <p>This section describes how to implement the <code>AppManifest</code> interface to bootstrap both an Apache Isis web application, and also its integration tests.</p> 
          </div> 
+         <div class="admonitionblock tip"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>(As of <code>1.15.0-SNAPSHOT</code>), the framework-provided <code>AppManifestAbstract</code> and <code>AppManifestAbstract.Builder</code> make it easy to write <code>AppManifest</code> that can be used both to bootstrap the application "proper", and to be tweaked for use within integration tests.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
          <div class="sect3"> 
-          <h4 id="_api">3.1.1. API</h4> 
+          <h4 id="__rgcms_classes_AppManifest-bootstrapping_api">3.1.1. API</h4> 
           <div class="paragraph"> 
            <p>The <code>AppManifest</code> interface allows the constituent parts of an application to be defined programmatically, most specifically the packages that contain domain services and/or persistent entities. Its API is defined as:</p> 
           </div> 
@@ -3163,7 +3176,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The following sections describe each of these methods in a little more detail.</p> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getmodules_code"><code>getModules()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getModules"><code>getModules()</code></h5> 
            <div class="paragraph"> 
             <p>The most significant method (the only one which must return a non-<code>null</code> value) is the <code>getModules()</code> method. Each module is identified by a class; the framework simply uses that class' package as the root to search for domain services (annotated with <a href="../rgant/rgant.html#_rgant-DomainService"><code>@DomainService</code></a>) and entities (annotated with <a href="../rgant/rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a>). Generally there is one such module class per Maven module.</p> 
            </div> 
@@ -3212,7 +3225,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getadditionalservices_code"><code>getAdditionalServices()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getAdditionalServices"><code>getAdditionalServices()</code></h5> 
            <div class="paragraph"> 
             <p>We normally we recommend that services are defined exclusively through <code>getModules()</code>, and that this method should therefore return an empty list. However, there are certain use cases where the a service must be explicitly specified either because the service required does not (for whatever reason) have a <a href="../rgant/rgant.html#_rgant-DomainService"><code>@DomainService</code></a> annotation.</p> 
            </div> 
@@ -3234,7 +3247,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getauthenticationmechanism_code"><code>getAuthenticationMechanism()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getAuthenticationMechanism"><code>getAuthenticationMechanism()</code></h5> 
            <div class="paragraph"> 
             <p>If non-<code>null</code>, this method specifies the authentication mechanism to use. The valid values are currently <code>"shiro"</code> or <code>"bypass"</code>. If null is returned then the value of the <code>isis.authentication</code> configuration property (in <code>isis.properties</code> file) is used instead.</p> 
            </div> 
@@ -3256,7 +3269,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getauthorizationmechanism_code"><code>getAuthorizationMechanism()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getAuthorizationMechanism"><code>getAuthorizationMechanism()</code></h5> 
            <div class="paragraph"> 
             <p>If non-<code>null</code>, this method specifies the authorization mechanism to use. The valid values are currently <code>"shiro"</code> or <code>"bypass"</code>. If null is returned then the value of the <code>isis.authorization</code> configuration property (in <code>isis.properties</code> file) is used instead.</p> 
            </div> 
@@ -3278,7 +3291,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getfixtures_code"><code>getFixtures()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getFixtures"><code>getFixtures()</code></h5> 
            <div class="paragraph"> 
             <p>If non-<code>null</code>, this method specifies the fixture script(s) to be run on startup. This is particularly useful when developing or demoing while using an in-memory database.</p> 
            </div> 
@@ -3298,7 +3311,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="sect4"> 
-           <h5 id="__code_getconfigurationproperties_code"><code>getConfigurationProperties()</code></h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_api_getConfigurationProperties"><code>getConfigurationProperties()</code></h5> 
            <div class="paragraph"> 
             <p>This method allow arbitrary other configuration properties to be overridden. One common use case is in conjunction with the <code>getFixtures()</code> method, discussed above:</p> 
            </div> 
@@ -3315,7 +3328,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_bootstrapping">3.1.2. Bootstrapping</h4> 
+          <h4 id="__rgcms_classes_AppManifest-bootstrapping_bootstrapping">3.1.2. Bootstrapping</h4> 
           <div class="paragraph"> 
            <p>One of the primary goals of the <code>AppManifest</code> is to unify the bootstrapping of both integration tests and the webapp. This requires that the integration tests and webapp can both reference the implementation.</p> 
           </div> 
@@ -3328,26 +3341,90 @@ table.CodeRay td.code>pre{padding:0}
           <div class="paragraph"> 
            <p>What then remains is to update the bootstrapping code itself.</p> 
           </div> 
+          <div class="paragraph"> 
+           <p>There are several different contexts in which the framework needs to be bootstrapped:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>the first is as a "regular" webapp (using the <a href="../ugvw/ugvw.html">Wicket viewer</a>). Here the <code>AppManifest</code> just needs to be specified as a configuration property, usually done using the <code>WEB-INF/isis.properties</code> configuration file:<br></p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="ini">isis.appManifest=domainapp.app.MyAppAppManifest</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>the second is also as a webapp, but from within the context of the IDE.<br></p> 
+             <div class="paragraph"> 
+              <p>Here, it’s common to use the <code>org.apache.isis.WebServer</code> class to launch your application from the <a href="../ugbtb/ugbtb.html#_ugbtb_deployment_cmd-line">command line</a>. This allows the <code>AppManifest</code> to be specified using the <code>-m</code> (or <code>--manifest</code>) flag:<br></p> 
+             </div> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="ini">java org.apache.isis.WebServer -m com.mycompany.myapp.MyAppAppManifestWithFixtures</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>the third case is within an integration test.<br></p> 
+             <div class="paragraph"> 
+              <p>The code to boostrap an integration test is shown in the <a href="../ugtst/ugtst.html#_ugtst_integ-test-support_bootstrapping">testing guide</a>, but once again an <code>AppManifest</code> is required.</p> 
+             </div> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>In some cases an integration test uses the exact same <code>AppManifest</code> as the regular webapp. Sometimes though it is necessary to "tweak" the <code>AppManifest</code>:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>it might use additional services, such as services to mock out external dependencies, or to provide fake data</p> </li> 
+            <li> <p>it might override certain configuration properties, eg to run against an in-memory HSQLDB database.</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The next section describes some helper classes that (as of <code>1.15.0-SNAPSHOT</code>) the framework provides to help achieve this.</p> 
+          </div> 
           <div class="sect4"> 
-           <h5 id="_integration_tests">Integration Tests</h5> 
+           <h5 id="__rgcms_classes_AppManifest-bootstrapping_bootstrapping_AppManifestAbstract">AppManifestAbstract (<code>1.15.0-SNAPSHOT</code>)</h5> 
            <div class="paragraph"> 
-            <p>A <code>AppManifest.Util</code> helper class provides a number of static methods that can be used to set up configuration properties appropriate for integration testing (eg run using an in-memory database). This allows the responsibility of returning the configuration properties to belong exlusively to the <code>AppManifest</code>.</p> 
+            <p>(As of <code>1.15.0-SNAPSHOT</code>), the <code>AppManifestAbstract</code> and its associated builder (<code>AppManifestAbstract.Builder</code>) make it easy to bootstrap the application both as a webapp and also as an integration test.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>There are three such static methods:</p> 
+            <p>Rather than implement <code>AppManifest</code> interface directly, instead your application subclasses from <code>AppManifestAbstract</code>. This takes an instance of a <code>AppManifestAbstract.Builder</code> in its constructor; the builder is what allows for variation between environments.</p> 
+           </div> 
+           <div class="paragraph"> 
+            <p>Moreover, these classes recognise that configuration properties fall into two broad classes:</p> 
+           </div> 
+           <div class="ulist"> 
+            <ul> 
+             <li> <p>those that are fixed and do not change between environments.<br></p> 
+              <div class="paragraph"> 
+               <p>In other words these describe how the application chooses to configure the framework itself, eg global disable of editing of properties, or enabling of auditing.</p> 
+              </div> </li> 
+             <li> <p>those that change between environments.<br></p> 
+              <div class="paragraph"> 
+               <p>The classic example here is the JDBC URL.</p> 
+              </div> </li> 
+            </ul> 
+           </div> 
+           <div class="paragraph"> 
+            <p>For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s <code>AppManifest</code> is defined as:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AppManifest</span> {
-  ...
-  public <span class="directive">static</span> <span class="type">class</span> <span class="class">Util</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withJavaxJdoRunInMemoryProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withDataNucleusProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }           <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withIsisIntegTestProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }         <i class="conum" data-value="3"></i><b>(3)</b>
-  }
+             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">extends</span> AppManifestAbstract {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder.forModules(
+                    SimpleModuleDomSubmodule.class,                         <i class="conum" data-value="1"></i><b>(1)</b>
+                    DomainAppApplicationModuleFixtureSubmodule.class,
+                    DomainAppApplicationModuleServicesSubmodule.class
+            )
+            .withConfigurationPropertiesFile(DomainAppAppManifest.class,    <i class="conum" data-value="2"></i><b>(2)</b>
+                    <span class="string"><span class="delimiter">"</span><span class="content">isis.properties</span><span class="delimiter">"</span></span>,
+                    <span class="string"><span class="delimiter">"</span><span class="content">authentication_shiro.properties</span><span class="delimiter">"</span></span>,
+                    <span class="string"><span class="delimiter">"</span><span class="content">persistor_datanucleus.properties</span><span class="delimiter">"</span></span>,
+                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_restfulobjects.properties</span><span class="delimiter">"</span></span>,
+                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_wicket.properties</span><span class="delimiter">"</span></span>
+            ).withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);                                   <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="directive">public</span> DomainAppAppManifest() {
+        <span class="local-variable">super</span>(BUILDER);                                                     <i class="conum" data-value="4"></i><b>(4)</b>
+    }
 }</code></pre> 
             </div> 
            </div> 
@@ -3356,110 +3433,59 @@ table.CodeRay td.code>pre{padding:0}
              <tbody>
               <tr> 
                <td><i class="conum" data-value="1"></i><b>1</b></td> 
-               <td>sets up the <code>javax.jdo.option.Connection*</code> properties so as to run against an in-memory instance of HSQLDB</td> 
+               <td>the modules that make up the application; corresponds to <code>AppManifest#getModules()</code></td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="2"></i><b>2</b></td> 
-               <td>sets up DataNucleus to automatically create the databse schema, as well as a number of other standard properties (disable persistence by reachability, support mixed case identifiers, disable level 2 cache)</td> 
+               <td>the (non-changing with environment) set of configuration properties, loaded relative to the manifest itself; corresponds to <code>AppManifest#getConfigurationProperties()</code></td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="3"></i><b>3</b></td> 
-               <td>sets up standard properties for the Apache Isis framework, most specifically to enable fixtures to be installed.</td> 
+               <td>override of components; correponds to both <code>AppManifest#getAuthenticationMechanism()</code> and <code>AppManifest#getAuthorizationMechanism()</code></td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="4"></i><b>4</b></td> 
+               <td>Pass the builder up to the superclass.</td> 
               </tr> 
              </tbody>
             </table> 
            </div> 
            <div class="paragraph"> 
-            <p>For example, the bootstrapping code for the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> looks something like:</p> 
+            <p>If the integration tests requires no tweaking, then the <code>AppManifest</code> can be used directly, for example:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
-        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
-        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
-            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
-                    .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(<span class="keyword">new</span> DomainAppAppManifest() {
-                        <span class="annotation">@Override</span>
-                        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
-                            <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map = Maps.newHashMap();
-                            <span class="predefined-type">Util</span>.withJavaxJdoRunInMemoryProperties(map);
-                            <span class="predefined-type">Util</span>.withDataNucleusProperties(map);
-                            <span class="predefined-type">Util</span>.withIsisIntegTestProperties(map);
-                            <span class="keyword">return</span> map;
-                        }
-                    })
-                    .build();
-            isft.setUpSystem();
-            IsisSystemForTest.set(isft);
-        }
+             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTestAbstract</span> <span class="directive">extends</span> IntegrationTestAbstract2 {
+    <span class="annotation">@BeforeClass</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initSystem() {
+        bootstrapUsing(<span class="keyword">new</span> DomainAppAppManifest());
     }
 }</code></pre> 
             </div> 
            </div> 
            <div class="paragraph"> 
-            <p>Previously the <code>IsisConfigurationJdoIntegTests</code> (subclass of <code>IsisConfiguration</code>) was provided to set up these configuration properties. This class is still supported, but is deprecated.</p> 
+            <p>On the other hand, if tweaking is required then exposing the builder as a <code>public static</code> field makes this easy to do:</p> 
            </div> 
-          </div> 
-          <div class="sect4"> 
-           <h5 id="_webapps">Webapps</h5> 
-           <div class="paragraph"> 
-            <p>To bootstrap an Apache Isis webapp (using the <a href="../ugvw/ugvw.html">Wicket viewer</a>), there are two choices:</p> 
-           </div> 
-           <div class="ulist"> 
-            <ul> 
-             <li> <p>either specify the <code>AppManifest</code> by overriding the <code>IsisWicketApplication#newWicketModule()</code>, eg:<br></p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
-<span class="directive">protected</span> Module newIsisWicketModule() {
-    <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
-    ...
-    final Module overrides = <span class="keyword">new</span> AbstractModule() {
-        <span class="annotation">@Override</span>
-        <span class="directive">protected</span> <span class="type">void</span> configure() {
-            ...
-            bind(AppManifest.class).toInstance(<span class="keyword">new</span> MyAppAppManifest());
-        }
-    };
-    <span class="keyword">return</span> Modules.override(isisDefaults).with(overrides);
+           <div class="listingblock"> 
+            <div class="content"> 
+             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTestAbstract</span> <span class="directive">extends</span> IntegrationTestAbstract2 {
+    <span class="annotation">@BeforeClass</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initSystem() {
+        bootstrapUsing(DomainAppAppManifest.BUILDER
+                            .withAdditionalModules(...)
+                            .withAdditionalServices(...)
+                            .withConfigurationPropertiesFile(<span class="string"><span class="delimiter">"</span><span class="content">...</span><span class="delimiter">"</span></span>)
+                            .withConfigurationProperty(<span class="string"><span class="delimiter">"</span><span class="content">...</span><span class="delimiter">"</span></span>,<span class="string"><span class="delimiter">"</span><span class="content">...</span><span class="delimiter">"</span></span>)
+                            .build()
+        );
+    }
 }</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>alternatively update <code>isis.properties</code>, using the <code>isis.appManifest</code> key to specify the <code>AppManifest</code> implementation, eg:<br></p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="ini">isis.appManifest=domainapp.app.MyAppAppManifest</code></pre> 
-               </div> 
-              </div> </li> 
-            </ul> 
-           </div> 
-           <div class="paragraph"> 
-            <p>The first (programmatic) approach takes precedence over the second approach (configuration properties).</p> 
-           </div> 
-           <div class="admonitionblock tip"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-               <td class="content"> 
-                <div class="paragraph"> 
-                 <p>If you use the <code>org.apache.isis.WebServer</code> class to launch your application from the <a href="../ugbtb/ugbtb.html#_ugbtb_deployment_cmd-line">command line</a>, then note that you can specify the <code>AppManifest</code> using the <code>-m</code> (or <code>--manifest</code>) flag:</p> 
-                </div> 
-                <div class="listingblock"> 
-                 <div class="content"> 
-                  <pre class="CodeRay highlight"><code data-lang="ini">java org.apache.isis.WebServer -m com.mycompany.myapp.MyAppAppManifestWithFixtures</code></pre> 
-                 </div> 
-                </div> </td> 
-              </tr> 
-             </tbody>
-            </table> 
+            </div> 
            </div> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_subsidiary_goals">3.1.3. Subsidiary Goals</h4> 
+          <h4 id="__rgcms_classes_AppManifest-bootstrapping_subsidiary-goals">3.1.3. Subsidiary Goals</h4> 
           <div class="paragraph"> 
            <p>There are a number of subsidiary goals of the <code>AppManifest</code> class (though not all of these are fully implemented):</p> 
           </div> 
@@ -3931,7 +3957,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The main purpose of the class is to define the protocol by which subscribers can influence an interaction (eg hide a collection, disable a property, validate action arguments). It class also provides a simple mechanism to allow adhoc sharing of user data between different phases.</p> 
           </div> 
           <div class="sect4"> 
-           <h5 id="_api_2">API</h5> 
+           <h5 id="_api">API</h5> 
            <div class="paragraph"> 
             <p>The API of the class is:</p> 
            </div> 
@@ -4073,7 +4099,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object’s action.</p> 
           </div> 
           <div class="sect4"> 
-           <h5 id="_api_3">API</h5> 
+           <h5 id="_api_2">API</h5> 
            <div class="paragraph"> 
             <p>The API of the class is:</p> 
            </div> 
@@ -4164,7 +4190,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object’s collection.</p> 
           </div> 
           <div class="sect4"> 
-           <h5 id="_api_4">API</h5> 
+           <h5 id="_api_3">API</h5> 
            <div class="paragraph"> 
             <p>The API of the class is:</p> 
            </div> 
@@ -4270,7 +4296,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The class itself is instantiated automatically by the framework whenever interacting with a rendered object’s property.</p> 
           </div> 
           <div class="sect4"> 
-           <h5 id="_api_5">API</h5> 
+           <h5 id="_api_4">API</h5> 
            <div class="paragraph"> 
             <p>The API of the class is:</p> 
            </div> 

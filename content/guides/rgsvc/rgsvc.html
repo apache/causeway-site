@@ -1939,7 +1939,63 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_presentation-layer-spi_TableColumnOrderService">3.11. <code>TableColumnOrderService</code></h3>
+         <h3 id="_rgsvc_presentation-layer-spi_SessionLoggingService">3.11. <code>SessionLoggingService</code></h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_SessionLoggingService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_SessionLoggingService.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_SessionLoggingService.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_SessionLoggingService.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_SessionLoggingService.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The <code>SessionLoggingService</code> defines an SPI to keep track of (typically: to log) the current sessions that are using the application.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_spi_11">3.11.1. SPI</h4> 
+          <div class="paragraph"> 
+           <p>The SPI defined by this service is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">SessionLoggingService</span> {
+    <span class="directive">public</span> <span class="type">enum</span> <span class="predefined-type">Type</span> { LOGIN, LOGOUT }
+    <span class="directive">public</span> <span class="type">enum</span> CausedBy { USER, SESSION_EXPIRATION, RESTART }
+
+    <span class="type">void</span> log(
+        <span class="predefined-type">Type</span> type,
+        <span class="predefined-type">String</span> username,
+        <span class="predefined-type">Date</span> date,
+        CausedBy causedBy,
+        <span class="predefined-type">String</span> sessionId);  <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>an internal identifier (the JVM hashCode of the Wicket session).</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_implementations_2">3.11.2. Implementations</h4> 
+          <div class="paragraph"> 
+           <p>The framework provides an implementation, <code>SessionLoggingService.Stderr</code> that just prints out to standard error. This is not registered by default, but can be easily registered manually (in <code>1.15.0-SNAPSHOT</code>) using <code>AppManifestAbstract.Builder#withAdditionalServices(…​)</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The (non-ASF) <a href="http://github.com/isisaddons/isis-module-sessionlogger">Sessionlogger module</a> provides an implementation that logs each session as a JDO entity.</p> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgsvc_presentation-layer-spi_TableColumnOrderService">3.12. <code>TableColumnOrderService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_TableColumnOrderService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1954,7 +2010,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>The <code>TableColumnOrderService</code> provides the ability to reorder (or suppress) columns in both parented- and standalone tables.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_11">3.11.1. SPI</h4> 
+          <h4 id="_spi_12">3.12.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by this service is:</p> 
           </div> 
@@ -1991,20 +2047,20 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_10">3.11.2. Implementation</h4> 
+          <h4 id="_implementation_10">3.12.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The framework provides a fallback implementation of this service, namely <code>TableColumnOrderService.Default</code>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_services_8">3.11.3. Registering the Services</h4> 
+          <h4 id="_registering_the_services_8">3.12.3. Registering the Services</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), then the default implementation of <code>TableColumnOrderService</code> is automatically registered and injected, and no further configuration is required.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_presentation-layer-spi_TranslationService">3.12. <code>TranslationService</code></h3>
+         <h3 id="_rgsvc_presentation-layer-spi_TranslationService">3.13. <code>TranslationService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_TranslationService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2032,7 +2088,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_12">3.12.1. SPI</h4> 
+          <h4 id="_spi_13">3.13.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by this service is:</p> 
           </div> 
@@ -2078,7 +2134,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_11">3.12.2. Implementation</h4> 
+          <h4 id="_implementation_11">3.13.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The Apache Isis framework provides a default implementation (<code>TranslationServicePo</code>) that uses the GNU <code>.pot</code> and <code>.po</code> files for translations. It relies on the <code>LocaleProvider</code> service (to return the <code>Locale</code> of the current user) and also the <code>TranslationsResolver</code> service (to read existing translations).</p> 
           </div> 
@@ -2090,7 +2146,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_services_9">3.12.3. Registering the Services</h4> 
+          <h4 id="_registering_the_services_9">3.13.3. Registering the Services</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core implementation of <code>TranslationService</code> service (along with the supporting menu service) are automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
@@ -2102,20 +2158,20 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_metadata-api_LayoutService_related-mixins-and-menus">3.12.4. Related Menus</h4> 
+          <h4 id="__rgsvc_metadata-api_LayoutService_related-mixins-and-menus">3.13.4. Related Menus</h4> 
           <div class="paragraph"> 
            <p>The <code>TranslationServicePoMenu</code> menu exposes the <code>TranslationServicePo</code> service’s <code>toPot()</code> method so that all translations can be downloaded as a single file.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_9">3.12.5. Related Services</h4> 
+          <h4 id="_related_services_9">3.13.5. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service works in conjunction with <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_LocaleProvider"><code>LocaleProvider</code></a> and <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_TranslationsResolver"><code>TranslationsResolver</code></a> in order to provide i18n support.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_presentation-layer-spi_TranslationsResolver">3.13. <code>TranslationsResolver</code></h3>
+         <h3 id="_rgsvc_presentation-layer-spi_TranslationsResolver">3.14. <code>TranslationsResolver</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_TranslationsResolver.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2146,7 +2202,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_13">3.13.1. SPI</h4> 
+          <h4 id="_spi_14">3.14.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by this service is:</p> 
           </div> 
@@ -2160,7 +2216,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_12">3.13.2. Implementation</h4> 
+          <h4 id="_implementation_12">3.14.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>Isis' <a href="../ugvw/ugvw.html">Wicket viewer</a> provides an implementation of this service (<code>TranslationsResolverWicket</code>) which leverages Apache Wicket APIs. This searches for translation files in the standard <code>WEB-INF/</code> directory.</p> 
           </div> 
@@ -2179,7 +2235,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_service_3">3.13.3. Registering the Service</h4> 
+          <h4 id="_registering_the_service_3">3.14.3. Registering the Service</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#<em>rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>), _and that the <a href="../ugvw/ugvw.html">Wicket viewer</a> is being used, then an implementation of <code>TranslationsResolver</code> is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
@@ -2188,14 +2244,14 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_10">3.13.4. Related Services</h4> 
+          <h4 id="_related_services_10">3.14.4. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service works in conjunction with <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_LocaleProvider"><code>LocaleProvider</code></a> and <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_TranslationService"><code>TranslationService</code></a> in order to provide i18n support.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_presentation-layer-spi_UrlEncodingService">3.14. <code>UrlEncodingService</code></h3>
+         <h3 id="_rgsvc_presentation-layer-spi_UrlEncodingService">3.15. <code>UrlEncodingService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_UrlEncodingService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2225,7 +2281,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>The framework provides a default implementation of this service, <code>UrlEncodingServiceUsingBaseEncoding</code> (also in the applib) that uses <code>base-64</code> encoding to <code>UTF-8</code> charset.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_14">3.14.1. SPI</h4> 
+          <h4 id="_spi_15">3.15.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -2255,7 +2311,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_13">3.14.2. Implementation</h4> 
+          <h4 id="_implementation_13">3.15.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The framework provides a default implementation (<code>UrlEncodingServiceUsingBaseEncoding</code>) that simply converts the string using base-64 encoding and UTF-8 character set. As already noted, be aware that the maximum length of a URL should not exceed 2083 characters. For large view models, there’s the possibility that this limit could be exceeded; in such cases register an alternative implementation of this service.</p> 
           </div> 
@@ -2265,7 +2321,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_presentation-layer-spi_UserProfileService">3.15. <code>UserProfileService</code></h3>
+         <h3 id="_rgsvc_presentation-layer-spi_UserProfileService">3.16. <code>UserProfileService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_UserProfileService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2283,7 +2339,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>Another use case is to allow the user to switch context in some fashion or other. This might be to emulate a sort of "sudo"-like function, or perhaps to focus on some particular set of data.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_15">3.15.1. SPI</h4> 
+          <h4 id="_spi_16">3.16.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -2313,7 +2369,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_14">3.15.2. Implementation</h4> 
+          <h4 id="_implementation_14">3.16.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>There is no default implementation of this service provided by the core Apache Isis framework.</p> 
           </div> 
@@ -4529,7 +4585,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <p>The persisting of commands is only half the story; there needs to be a separate process to read the commands and execute them. The abstract <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService_BackgroundCommandExecution"><code>BackgroundCommandExecution</code></a> provides a mechanism to execute such commands. This can be considered an API, albeit "internal" because the implementation relies on internals of the framework.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_16">5.1.1. SPI</h4> 
+          <h4 id="_spi_17">5.1.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI of the <code>BackgroundCommandService</code> is:</p> 
           </div> 
@@ -4724,7 +4780,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_17">5.2.2. SPI</h4> 
+          <h4 id="_spi_18">5.2.2. SPI</h4> 
           <div class="paragraph"> 
            <p>The <code>CommandService</code> service defines the following very simple API:</p> 
           </div> 
@@ -7185,7 +7241,7 @@ Scratchpad scratchpad;</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_2">7.2.3. Implementations</h4> 
+          <h4 id="_implementations_3">7.2.3. Implementations</h4> 
           <div class="paragraph"> 
            <p>The Wicket viewer core framework provides a default implementation of this API:</p> 
           </div> 
@@ -8856,7 +8912,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_18">9.3.1. SPI</h4> 
+          <h4 id="_spi_19">9.3.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -9034,7 +9090,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_19">9.4.4. SPI</h4> 
+          <h4 id="_spi_20">9.4.4. SPI</h4> 
           <div class="paragraph"> 
            <p>The <code>SudoService.Spi</code> service allows implementations of <code>SudoService</code> to notify other services/components that the effective user and roles are different. The default implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_UserService"><code>UserService</code></a> has been refactored to leverage this SPI.</p> 
           </div> 
@@ -9238,7 +9294,57 @@ repositoryService.persist(cust);</code></pre>
          </ul> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_persistence-layer-api_IsisJdoSupport">10.1. <code>IsisJdoSupport</code></h3>
+         <h3 id="_rgsvc_persistence-layer-api_HsqlDbManagerMenu">10.1. <code>HsqlDbManagerMenu</code></h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_HsqlDbManagerMenu.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_HsqlDbManagerMenu.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_HsqlDbManagerMenu.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_HsqlDbManagerMenu.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_HsqlDbManagerMenu.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The <code>HsqlDbManagerMenu</code> provides a single menu item to open up the HSQLDB manager. This is only enabled for prototyping, and if HSQLDB is detected in the underlying JDBC URL. The menu appears under the "Prototyping" menu.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_api_implementation_16">10.1.1. API &amp; Implementation</h4> 
+          <div class="paragraph"> 
+           <p>The API of the service is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">HsqlDbManagerMenu</span> {
+    <span class="directive">public</span> <span class="type">void</span> hsqlDbManager() { ... }
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Note that this launches the manager on the same host that the webapp runs, and so is only appropriate to use when running on <code>localhost</code>.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_disabling_hiding_the_menu">10.1.2. Disabling/hiding the menu</h4> 
+          <div class="paragraph"> 
+           <p>The menu can be hidden or disabled by subscribing to its domain event, eg:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=DOMAIN)
+<span class="directive">public</span> <span class="type">void</span> HideHsqlDbManagerMenu <span class="directive">extends</span> AbstractSubscriber {
+
+    <span class="annotation">@EventHandler</span> <span class="annotation">@Subscribe</span>
+    <span class="directive">public</span> <span class="type">void</span> on(HsqlDbManagerMenu.ActionDomainEvent ev) {
+        ev.hide();
+    }
+}</code></pre> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgsvc_persistence-layer-api_IsisJdoSupport">10.2. <code>IsisJdoSupport</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_IsisJdoSupport.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -9256,7 +9362,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The following sections discuss the functionality provided by the service, broken out into categories.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_executing-sql">10.1.1. Executing SQL</h4> 
+          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_executing-sql">10.2.1. Executing SQL</h4> 
           <div class="paragraph"> 
            <p>You can use the <code>IsisJdoSupportService</code> to perform arbitrary SQL SELECTs or UPDATEs:</p> 
           </div> 
@@ -9308,12 +9414,12 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_type-safe-jdoql-queries">10.1.2. Type-safe JDOQL Queries</h4> 
+          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_type-safe-jdoql-queries">10.2.2. Type-safe JDOQL Queries</h4> 
           <div class="paragraph"> 
            <p>DataNucleus provides an <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">extension to JDO</a>, so that JDOQL queries can be built up and executed using a set of type-safe classes.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The types in question for type safe queries are not the domain entities, but rather are companion "Q…​" query classes. These classes are generated dynamically by an <a href="https://www.jcp.org/en/jsr/detail?id=269">annotation processor</a> as a side-effect of compilation, one "Q…​" class for each of the <a href="../rgant/rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a> domain entity in your application. For example, a <code>ToDoItem</code> domain entity will give rise to a <code>QToDoItem</code> query class. These "Q…​" classes mirror the structure of domain entity, but expose properties that allow predicates to be built up for querying instances, as well as other functions in support of order by. group by and other clauses.</p> 
+           <p>The types in question for type safe queries are not the domain entities, but rather are companion "Q…​" query classes. These classes are generated dynamically by an <a href="https://www.jcp.org/en/jsr/detail?id=269">annotation processor</a> as a side-effect of compilation, one "Q…​" class for each of the <a href="../rgant/rgant.html#_rgant-PersistenceCapable"><code>@PersistenceCapable</code></a> domain entity in your application. For example, a <code>ToDoItem</code> domain entity will give rise to a <code>QToDoItem</code> query class. These "Q…​" classes mirror the structure of domain entity, but expose properties that allow predicates to be built up for querying instances, as well as other functions in support of order by, group by and other clauses.</p> 
           </div> 
           <div class="admonitionblock note"> 
            <table> 
@@ -9336,6 +9442,8 @@ repositoryService.persist(cust);</code></pre>
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">IsisJdoSupport</span> {
     <span class="annotation">@Programmatic</span>
     &lt;T&gt; <span class="predefined-type">List</span>&lt;T&gt; executeQuery(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; cls, <span class="directive">final</span> BooleanExpression be);
+    <span class="annotation">@Programmatic</span>
+    &lt;T&gt; T executeQueryUnique(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; cls, <span class="directive">final</span> BooleanExpression be);
     <span class="annotation">@Programmatic</span>
     &lt;T&gt; TypesafeQuery&lt;T&gt; newTypesafeQuery(<span class="predefined-type">Class</span>&lt;T&gt; cls);
     ...
@@ -9383,6 +9491,9 @@ repositoryService.persist(cust);</code></pre>
            </table> 
           </div> 
           <div class="paragraph"> 
+           <p>The <code>executeUniqueQuery(…​)</code> method (<code>1.15.0-SNAPSHOT</code>) is similar to <code>executeQuery(…​)</code>, however expects the query to return at most a single object, which it returns (or <code>null</code> if none).</p> 
+          </div> 
+          <div class="paragraph"> 
            <p>The <code>newTypesafeQuery(…​)</code> method is a lower-level API that allows a type safe query to be instantiated for most sophisticated querying, eg using group by or order by clauses. See the DataNucleus <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">documentation</a> for full details of using this.</p> 
           </div> 
           <div class="paragraph"> 
@@ -9400,7 +9511,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_fixture-support">10.1.3. Fixture support</h4> 
+          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_fixture-support">10.2.3. Fixture support</h4> 
           <div class="paragraph"> 
            <p>When writing <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">integration tests</a> you’ll usually need to tear down some/all mutable transactional data before each test. One way to do that is to use the <code>executeUpdate(…​)</code> method described <a href="../rgsvc/rgsvc.html#__rgsvc_persistence-layer-api_IsisJdoSupport_executing-sql">above</a>.</p> 
           </div> 
@@ -9448,7 +9559,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_reloading-entities">10.1.4. Reloading entities</h4> 
+          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_reloading-entities">10.2.4. Reloading entities</h4> 
           <div class="paragraph"> 
            <p>An <a href="http://www.datanucleus.org:15080/products/accessplatform_5_0/jdo/mapping.html#one_many_relations">(intentional) limitation</a> of JDO/DataNucleus is that persisting a child entity (in a 1:n bidirectional relationship) does not cause the parent’s collection to be updated.</p> 
           </div> 
@@ -9520,7 +9631,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_jdo-persistencemanager">10.1.5. JDO <code>PersistenceManager</code></h4> 
+          <h4 id="__rgsvc_persistence-layer-api_IsisJdoSupport_jdo-persistencemanager">10.2.5. JDO <code>PersistenceManager</code></h4> 
           <div class="paragraph"> 
            <p>The functionality provided by <code>IsisJdoSupport</code> focus only on the most common use cases. If you require more flexibility than this, eg for dynamically constructed queries, then you can use the service to access the underlying JDO <code>PersistenceManager</code> API:</p> 
           </div> 
@@ -9549,7 +9660,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_services_18">10.1.6. Registering the Services</h4> 
+          <h4 id="_registering_the_services_18">10.2.6. Registering the Services</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core implementation of <code>IsisJdoSupport</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
@@ -9559,7 +9670,7 @@ repositoryService.persist(cust);</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_persistence-layer-api_MetricsService">10.2. <code>MetricsService</code></h3>
+         <h3 id="_rgsvc_persistence-layer-api_MetricsService">10.3. <code>MetricsService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_MetricsService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -9577,7 +9688,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The service is used by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> domain service (to populate the DTO held by the <code>Interaction.Execution</code>) and also by the (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_PublishingServiceInternal"><code>PublishingServiceInternal</code></a> domain service (to populate the <code>PublishedObjects</code> class.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_16">10.2.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_17">10.3.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API of the service is:</p> 
           </div> 
@@ -9614,20 +9725,20 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_service_28">10.2.2. Registering the Service</h4> 
+          <h4 id="_registering_the_service_28">10.3.2. Registering the Service</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>MetricsService</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_26">10.2.3. Related Services</h4> 
+          <h4 id="_related_services_26">10.3.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> also captures the metrics gathered by the <code>MetricsService</code> and publishes them as part of the <code>PublishedObjects</code> class (part of its SPI).</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_persistence-layer-api_QueryResultsCache">10.3. <code>QueryResultsCache</code></h3>
+         <h3 id="_rgsvc_persistence-layer-api_QueryResultsCache">10.4. <code>QueryResultsCache</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_QueryResultsCache.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -9658,7 +9769,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_17">10.3.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_18">10.4.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>QueryResultsCache</code> is:</p> 
           </div> 
@@ -9700,7 +9811,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_15">10.3.2. Usage</h4> 
+          <h4 id="_usage_15">10.4.2. Usage</h4> 
           <div class="paragraph"> 
            <p>Suppose that there’s a <code>TaxService</code> that calculates tax on <code>Taxable</code> items, with respect to some <code>TaxType</code>, and for a given <code>LocalDate</code>. To calculate tax it must run a database query and then perform some additional calculations.</p> 
           </div> 
@@ -9763,7 +9874,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_service_29">10.3.3. Registering the Service</h4> 
+          <h4 id="_registering_the_service_29">10.4.3. Registering the Service</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core implementation of <code>QueryResultsCache</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
@@ -9772,14 +9883,14 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_27">10.3.4. Related Services</h4> 
+          <h4 id="_related_services_27">10.4.4. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_Scratchpad"><code>Scratchpad</code></a> service is also intended for actions that are called many times, allowing arbitrary information to be shared between them. Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the <a href="../rgant/rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a> annotation attribute set to <code>OBJECT_AND_COLLECTION</code> or <code>COLLECTION_ONLY</code>.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_persistence-layer-api_RepositoryService">10.4. <code>RepositoryService</code></h3>
+         <h3 id="_rgsvc_persistence-layer-api_RepositoryService">10.5. <code>RepositoryService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_persistence-layer-api_RepositoryService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -9813,7 +9924,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_10">10.4.1. API</h4> 
+          <h4 id="_api_10">10.5.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>RepositoryService</code> is:</p> 
           </div> 
@@ -9905,7 +10016,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_16">10.4.2. Usage</h4> 
+          <h4 id="_usage_16">10.5.2. Usage</h4> 
           <div class="paragraph"> 
            <p>This section briefly discusses how application code can use (some of) these APIs.</p> 
           </div> 
@@ -10130,7 +10241,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_30">10.4.3. Implementation</h4> 
+          <h4 id="_implementation_30">10.5.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.metamodel.services.repository.RepositoryServiceDefault</code>).</p> 
           </div> 
@@ -10161,7 +10272,7 @@ public static final String KEY_DISABLE_AUTOFLUSH = "isis.services.container.disa
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_registering_the_service_30">10.4.4. Registering the Service</h4> 
+          <h4 id="_registering_the_service_30">10.5.4. Registering the Service</h4> 
           <div class="paragraph"> 
            <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' core implementation of <code>RepositoryService</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
@@ -10170,7 +10281,7 @@ public static final String KEY_DISABLE_AUTOFLUSH = "isis.services.container.disa
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_28">10.4.5. Related Services</h4> 
+          <h4 id="_related_services_28">10.5.5. Related Services</h4> 
           <div class="paragraph"> 
            <p>the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a> is often used in conjunction with the <code>RepositoryService</code>, to instantiate domain objects before persisting.</p> 
           </div> 
@@ -10327,7 +10438,7 @@ public static final String KEY_DISABLE_AUTOFLUSH = "isis.services.container.disa
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_20">11.1.1. SPI</h4> 
+          <h4 id="_spi_21">11.1.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI for the service is:</p> 
           </div> 
@@ -10381,7 +10492,7 @@ public static final String KEY_DISABLE_AUTOFLUSH = "isis.services.container.disa
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_3">11.1.2. Implementations</h4> 
+          <h4 id="_implementations_4">11.1.2. Implementations</h4> 
           <div class="paragraph"> 
            <p>The framework allows multiple implementations of this service to be registered; all will be called. The framework provides one implementation of its own, <code>AuditerServiceLogging</code> (in <code>o.a.i.applib.services.audit</code> package); this logs simple messages to an SLF4J logger.</p> 
           </div> 
@@ -10484,7 +10595,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_21">11.2.1. SPI</h4> 
+          <h4 id="_spi_22">11.2.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI for the service is:</p> 
           </div> 
@@ -10581,7 +10692,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           <p>See <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a> for further discussion.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_22">11.3.1. SPI</h4> 
+          <h4 id="_spi_23">11.3.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by this service is:</p> 
           </div> 
@@ -10689,7 +10800,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           <p>Only actions/properties/domain objects annotated for publishing (using <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a>, <a href="../rgant/rgant.html#_rgant-Property_publishing"><code>@Property#publishing()</code></a> or <a href="../rgant/rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a>) are published.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_23">11.4.1. SPI</h4> 
+          <h4 id="_spi_24">11.4.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -10765,7 +10876,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_4">11.4.2. Implementations</h4> 
+          <h4 id="_implementations_5">11.4.2. Implementations</h4> 
           <div class="paragraph"> 
            <p>The framework allows multiple implementations of this service to be registered; all will be called. The framework provides one implementation of its own, <code>PublisherServiceLogging</code> (in <code>o.a.i.applib.services.publish</code> package); this logs "deep" serializations to an SLF4J logger.</p> 
           </div> 
@@ -10878,7 +10989,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_24">11.5.1. SPI</h4> 
+          <h4 id="_spi_25">11.5.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -11125,7 +11236,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_25">11.6.1. SPI</h4> 
+          <h4 id="_spi_26">11.6.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
@@ -11311,7 +11422,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           <p>This service is used by the <a href="../rgcms/rgcms.html#_rgcms_classes_super_FixtureScripts"><code>FixtureScripts</code></a> service to automatically locate any <a href="../rgcms/rgcms.html#_rgcms_classes_super_FixtureScript"><code>FixtureScript</code></a> implementations.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_spi_26">12.1.1. SPI</h4> 
+          <h4 id="_spi_27">12.1.1. SPI</h4> 
           <div class="paragraph"> 
            <p>The SPI defined by the service is:</p> 
           </div> 
