@@ -1776,7 +1776,7 @@ gpg --import /tmp/KEYS</code></pre>
         <div class="sect2"> 
          <h3 id="__cgcom_verifying-releases_verifying-source-artifacts">5.3. Verifying source artifacts</h3> 
          <div class="paragraph"> 
-          <p>You can either verify the source artifacts <a href="../cgcom/cgcom.html#<em>cgcom_verifying-releases_manual-procedure">manually</a>, or use a script that <a href="../cgcom/cgcom.html#</em>cgcom_verifying-releases_automated-procedure">automates</a> the steps.</p> 
+          <p>You can either verify the source artifacts <a href="../cgcom/cgcom.html#__cgcom_verifying-releases_manual-procedure">manually</a>, or use a script that <a href="../cgcom/cgcom.html#__cgcom_verifying-releases_automated-procedure">automates</a> the steps.</p> 
          </div> 
          <div class="sect3"> 
           <h4 id="__cgcom_verifying-releases_manual-procedure">5.3.1. Manual procedure</h4> 
@@ -1883,69 +1883,7 @@ cd ~/verify-isis-release</code></pre>
           <div class="sect4"> 
            <h5 id="_copy_script_to_local_machine">Copy script to local machine</h5> 
            <div class="paragraph"> 
-            <p>Copy the following script, save to <code>verify-isis-release.sh</code>:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
-# Instructions:
-# - Create an empty directory
-# - Put a urls.txt file in it containing a list of all the urls of the zip files
-# - Run this script
-_download(){
-    for fil in `cat urls.txt`
-    do
-       echo 'Downloading '$fil
-       curl  -L -O $fil
-       curl  -L -O $fil.asc
-    done
-}
-_verify(){
-    for zip in *.zip
-    do
-       echo 'Verifying '$zip
-       gpg --verify $zip.asc $zip
-    done
-}
-_unpack(){
-    echo 'Unpacking '
-    unzip -q '*.zip'
-}
-_build(){
-    echo 'Removing Apache Isis from local repo '$module
-    rm -rf ~/.m2/repository/org/apache/isis
-    COUNTER=0
-    for module in ./isis*/ ./*archetype*/
-    do
-       COUNTER=$[COUNTER+1]
-       if [ $COUNTER -eq 1 ]
-       then
-         cd $module
-         echo 'Building Core '$module
-         mvn clean install -o
-         cd ..
-       else
-         cd $module
-         echo 'Building archetype '$module
-         mvn clean install
-         cd ..
-       fi
-    done
-}
-# The work starts here
-_download
-_verify
-_unpack
-_build</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Make sure the script is executable:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code>chmod +x verify-isis-release.sh</code></pre> 
-            </div> 
+            <p>Download this <a href="https://gist.github.com/danhaywood/9b052f68ef56cfdbeb3eb1603c5f772a">gist</a>, save to <code>verify-isis-release.sh</code>.</p> 
            </div> 
           </div> 
           <div class="sect4"> 
@@ -1971,7 +1909,7 @@ http://repository.apache.org/content/repositories/orgapacheisis-1059/org/apache/
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">./verify-isis-release.sh</code></pre> 
+             <pre class="CodeRay highlight"><code data-lang="bash">sh verify-isis-release.sh</code></pre> 
             </div> 
            </div> 
            <div class="paragraph"> 
