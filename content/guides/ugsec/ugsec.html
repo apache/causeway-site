@@ -397,7 +397,10 @@ table.CodeRay td.code>pre{padding:0}
         <div class="sect2"> 
          <h3 id="_telling_apache_isis_to_use_shiro">2.1. Telling Apache Isis to use Shiro</h3> 
          <div class="paragraph"> 
-          <p>To tell Apache Isis to use Shiro, update the <code>WEB-INF/isis.properties</code> file:</p> 
+          <p>To tell Apache Isis to use Shiro, set the "isis.authentication" and "isis.authorisation" properties.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>One way to do this is by updating the <code>WEB-INF/isis.properties</code> file:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -406,11 +409,30 @@ isis.authorization=shiro</code></pre>
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>This installs the appropriate implementation (the <code>ShiroAuthenticatorOrAuthorizor</code> class) that use Shiro’s APIs to perform authentication and authorization:</p> 
+          <p>Alternatively (as of <code>1.15.0</code>) you can set them both programmatically from the <code>AppManifestAbstract.BUILDER</code> (see <a href="../rgcms/rgcms.html#__rgcms_classes_AppManifest-bootstrapping_bootstrapping_AppManifestAbstract">here</a>). For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld archetype</a> bootstraps using:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">HelloWorldAppManifest</span> <span class="directive">extends</span> AppManifestAbstract {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder
+            .forModules(HelloWorldModule.class)
+            .withConfigurationPropertiesFile(
+                HelloWorldAppManifest.class, <span class="string"><span class="delimiter">"</span><span class="content">isis.properties</span><span class="delimiter">"</span></span>)
+            .withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);
+
+    <span class="directive">public</span> HelloWorldAppManifest() {
+        <span class="local-variable">super</span>(BUILDER);
+    }
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Either way, this installs the appropriate implementation (the <code>ShiroAuthenticatorOrAuthorizor</code> class) that use Shiro’s APIs to perform authentication and authorization:</p> 
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-isis-to-use-shiro.png" alt="configure isis to use shiro" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-isis-to-use-shiro.png"><img src="images/security/security-apis-impl/configure-isis-to-use-shiro.png" alt="configure isis to use shiro" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -531,7 +553,7 @@ isis.authorization=shiro</code></pre>
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-shiro-to-use-ini-realm.PNG" alt="configure shiro to use ini realm" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-shiro-to-use-ini-realm.PNG"><img src="images/security/security-apis-impl/configure-shiro-to-use-ini-realm.PNG" alt="configure shiro to use ini realm" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -721,7 +743,7 @@ realm1.resourcePath=classpath:webapp/realm1.ini <i class="conum" data-value="2">
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-shiro-to-use-isis-ldap-realm.PNG" alt="configure shiro to use isis ldap realm" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-shiro-to-use-isis-ldap-realm.PNG"><img src="images/security/security-apis-impl/configure-shiro-to-use-isis-ldap-realm.PNG" alt="configure shiro to use isis ldap realm" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -885,7 +907,7 @@ admin_role = *</code></pre>
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <img src="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-partition.png" alt="ActiveDS LDAP Users"> 
+            <a class="image" href="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-partition.png"><img src="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-partition.png" alt="activeds ldap mojo partition"></a> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -893,7 +915,7 @@ admin_role = *</code></pre>
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <img src="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-root-dse.png" alt="ActiveDS LDAP Users"> 
+            <a class="image" href="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-root-dse.png"><img src="images/configuration/configuring-shiro/ldap/activeds-ldap-mojo-root-dse.png" alt="activeds ldap mojo root dse"></a> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -901,7 +923,7 @@ admin_role = *</code></pre>
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <img src="images/configuration/configuring-shiro/ldap/activeds-ldap-sasl-authentication.png" alt="ActiveDS LDAP Users"> 
+            <a class="image" href="images/configuration/configuring-shiro/ldap/activeds-ldap-sas"><img src="images/configuration/configuring-shiro/ldap/activeds-ldap-sasl-authentication.png" alt="activeds ldap sasl authentication"></a> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -909,7 +931,7 @@ admin_role = *</code></pre>
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <img src="images/configuration/configuring-shiro/ldap/activeds-ldap-users.png" alt="ActiveDS LDAP Users"> 
+            <a class="image" href="images/configuration/configuring-shiro/ldap/activeds-ldap-users.png"><img src="images/configuration/configuring-shiro/ldap/activeds-ldap-users.png" alt="activeds ldap users"></a> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -917,7 +939,7 @@ admin_role = *</code></pre>
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <img src="images/configuration/configuring-shiro/ldap/activeds-ldap-groups.png" alt="ActiveDS LDAP Users"> 
+            <a class="image" href="images/configuration/configuring-shiro/ldap/activeds-ldap-groups.png"><img src="images/configuration/configuring-shiro/ldap/activeds-ldap-groups.png" alt="activeds ldap groups"></a> 
            </div> 
           </div> 
          </div> 
@@ -948,7 +970,7 @@ admin_role = *</code></pre>
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm.PNG" alt="configure shiro to use isisaddons security module realm" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm.PNG"><img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm.PNG" alt="configure shiro to use isisaddons security module realm" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -962,7 +984,7 @@ admin_role = *</code></pre>
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm-with-delegate-realm.PNG" alt="configure shiro to use isisaddons security module realm with delegate realm" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm-with-delegate-realm.PNG"><img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm-with-delegate-realm.PNG" alt="configure shiro to use isisaddons security module realm with delegate realm" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -1005,7 +1027,7 @@ admin_role = *</code></pre>
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-shiro-to-use-custom-jdbc-realm.png" alt="configure shiro to use custom jdbc realm" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-shiro-to-use-custom-jdbc-realm.png"><img src="images/security/security-apis-impl/configure-shiro-to-use-custom-jdbc-realm.png" alt="configure shiro to use custom jdbc realm" width="600px"></a> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -1322,7 +1344,7 @@ isis.authorization=bypass</code></pre>
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
-           <img src="images/security/security-apis-impl/configure-isis-to-use-bypass.PNG" alt="configure isis to use bypass" width="600px"> 
+           <a class="image" href="images/security/security-apis-impl/configure-isis-to-use-bypass.PNG"><img src="images/security/security-apis-impl/configure-isis-to-use-bypass.PNG" alt="configure isis to use bypass" width="600px"></a> 
           </div> 
          </div> 
         </div> 
