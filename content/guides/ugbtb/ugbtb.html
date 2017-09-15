@@ -1847,7 +1847,214 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_simulating-collections-of-values">4.6. Collections of values</h3>
+         <h3 id="_ugbtb_hints-and-tips_view-model-instantiation">4.6. View Model Instantiation</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_view-model-instantiation.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_view-model-instantiation.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_view-model-instantiation.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_view-model-instantiation.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_view-model-instantiation.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>Vith view models, some care must be taken in how they are instantiated. Specifically, it’s important that the framework doesn’t "know" about the view model until its state is "sufficiently" populated to distinguish from other view models.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>In practical terms, this means that view models should be instantiated using a constructor, and then injecting services (if required) using the <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>ServiceRegistry</code></a> service:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java">CustomerViewModel viewModel = <span class="keyword">new</span> CustomerViewModel(<span class="string"><span class="delimiter">"</span><span class="content">Joe</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">Bloggs</span><span class="delimiter">"</span></span>);
+serviceRegistry.injectServicesInto(viewModel);</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>What will most likely <strong>fail</strong> is to use the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a>:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// DON'T DO THIS WITH VIEW MODELS</span>
+CustomerViewModel viewModel = factoryService.instantiate(CustomerViewModel.class);
+
+viewModel.setFirstName(<span class="string"><span class="delimiter">"</span><span class="content">Joe</span><span class="delimiter">"</span></span>);
+viewModel.setLastName(<span class="string"><span class="delimiter">"</span><span class="content">Bloggs</span><span class="delimiter">"</span></span>);
+serviceRegistry.injectServicesInto(viewModel);</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>That’s because the internal "OID" identifier that the framework creates to handle this view model will be incomplete. Although the framework can handle changes to the OID (when the corresponding view model’s state changes) once created, this isn’t the case during initial instantiation process.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_example">4.6.1. Example</h4> 
+          <div class="paragraph"> 
+           <p>To explain further, here’s an implementation using <code>FactoryService</code> that fails:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">yearSummary</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlType</span>( propOrder = { ... } )
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">YearSummary</span> {                                                  <i class="conum" data-value="1"></i><b>(1)</b>
+    ...
+    <span class="annotation">@XmlTransient</span>
+    <span class="annotation">@CollectionLayout</span>(defaultView = <span class="string"><span class="delimiter">"</span><span class="content">table</span><span class="delimiter">"</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; getAmountsPerOffice() {
+        <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; amountsPerOffice = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+
+        OfficeOptionViewModel office1 =                                     <i class="conum" data-value="2"></i><b>(2)</b>
+            factoryService.instantiate(OfficeOptionViewModel.class);
+        office1.setOffice(<span class="string"><span class="delimiter">"</span><span class="content">Amsterdam</span><span class="delimiter">"</span></span>);                                     <i class="conum" data-value="3"></i><b>(3)</b>
+        office1.setAmount(<span class="integer">200</span>);
+        amountsPerOffice.add(office1);
+
+        OfficeOptionViewModel office2 =                                     <i class="conum" data-value="2"></i><b>(2)</b>
+            factoryService.instantiate(OfficeOptionViewModel.class);
+        office2.setOffice(<span class="string"><span class="delimiter">"</span><span class="content">London</span><span class="delimiter">"</span></span>);                                        <i class="conum" data-value="3"></i><b>(3)</b>
+        office2.setAmount(<span class="integer">100</span>);
+        amountsPerOffice.add(office2);
+
+        <span class="keyword">return</span> amountsPerOffice;
+    }
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Parent view model</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>Using <code>FactoryService</code>, incorrectly.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>Hard-coded just for demo purposes</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This collection, is, confusing, rendered as:</p> 
+          </div> 
+          <div class="imageblock"> 
+           <div class="content"> 
+            <a class="image" href="images/hints-and-tips/view-model-fail.png"><img src="images/hints-and-tips/view-model-fail.png" alt="view model fail" width="800px"></a> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Even though the <code>amountsPerOffice</code> collection of view models is correctly populated, the framework/viewer maps these to their corresponding OIDs before they are rendered. Because the "Amsterdam" pojo and "London" pojo each mapped to the same OID, when fetching out the results the viewer obtains the London pojo both times.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The following implementation, on the other hand, succeeds:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">yearSummary</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlType</span>( propOrder = { ... } )
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">YearSummary</span> {
+    ...
+    <span class="annotation">@XmlTransient</span>
+    <span class="annotation">@CollectionLayout</span>(defaultView = <span class="string"><span class="delimiter">"</span><span class="content">table</span><span class="delimiter">"</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; getAmountsPerOffice() {
+        <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; amountsPerOffice = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+
+                OfficeOptionViewModel office1 = <span class="keyword">new</span> OfficeOptionViewModel(<span class="string"><span class="delimiter">"</span><span class="content">Amsterdam</span><span class="delimiter">"</span></span>, <span class="integer">200</span>);    <i class="conum" data-value="1"></i><b>(1)</b>
+                serviceRegistry.injectServicesInto(office1);
+                amountsPerOffice.add(office1);
+
+                OfficeOptionViewModel office2 = <span class="keyword">new</span> OfficeOptionViewModel(<span class="string"><span class="delimiter">"</span><span class="content">London</span><span class="delimiter">"</span></span>, <span class="integer">100</span>);       <i class="conum" data-value="1"></i><b>(1)</b>
+                serviceRegistry.injectServicesInto(office2);
+                amountsPerOffice.add(office2);
+
+        <span class="keyword">return</span> amountsPerOffice;
+    }
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Just instantiate with constructor. The framework "sees" the domain object when services are injected into it.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>As can be seen, this renders just fine:</p> 
+          </div> 
+          <div class="imageblock"> 
+           <div class="content"> 
+            <a class="image" href="images/hints-and-tips/view-model-success.png"><img src="images/hints-and-tips/view-model-success.png" alt="view model success" width="800px"></a> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To complicate matters a little, note though that following "incorrect" implementation using <code>FactoryService</code> does also work correctly:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">yearSummary</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlType</span>( propOrder = { ..., <span class="string"><span class="delimiter">"</span><span class="content">amountsPerOffice</span><span class="delimiter">"</span></span> } )                     <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">YearSummary</span> {
+        ...
+
+    void init() {
+        amountsPerOffice = calculateAmountsPerOffice();
+    }
+
+    <span class="annotation">@XmlElementWrapper</span>
+    <span class="annotation">@XmlElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">officeOption</span><span class="delimiter">"</span></span>)
+    <span class="annotation">@CollectionLayout</span>(defaultView = <span class="string"><span class="delimiter">"</span><span class="content">table</span><span class="delimiter">"</span></span>)
+    <span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+    <span class="directive">private</span> <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; amountsPerOffice = Lists.newArrayList();
+
+        <span class="annotation">@XmlTransient</span>
+    <span class="annotation">@CollectionLayout</span>(defaultView = <span class="string"><span class="delimiter">"</span><span class="content">table</span><span class="delimiter">"</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; calculateAmountsPerOffice() {
+        <span class="predefined-type">List</span>&lt;OfficeOptionViewModel&gt; amountsPerOffice = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+
+                OfficeOptionViewModel office1 = factoryService.instantiate(OfficeOptionViewModel.class);
+                office1.setOffice(<span class="string"><span class="delimiter">"</span><span class="content">Amsterdam</span><span class="delimiter">"</span></span>);
+                office1.setAmount(<span class="integer">200</span>);
+
+                amountsPerOffice.add(office1);
+
+                OfficeOptionViewModel office2 = factoryService.instantiate(OfficeOptionViewModel.class);
+                office2.setOffice(<span class="string"><span class="delimiter">"</span><span class="content">London</span><span class="delimiter">"</span></span>);
+                office2.setAmount(<span class="integer">100</span>);
+
+                amountsPerOffice.add(office2);
+
+        <span class="keyword">return</span> amountsPerOffice;
+    }
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>"amountsPerOffice" is part of the state of the parent view model</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>In this case the <code>amountsPerOffice</code> collection is part of the state of the parent view model and so in this particular case everything works with either <code>FactoryService#instantiate</code> or using <code>ServiceRegistry</code>.</p> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugbtb_hints-and-tips_simulating-collections-of-values">4.7. Collections of values</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_simulating-collections-of-values.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1865,7 +2072,7 @@ LocalProvider localeProvider;</code></pre>
           <p>However, it is possible to simulate a bag of numbers using view models.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_view_model">4.6.1. View Model</h4> 
+          <h4 id="_view_model">4.7.1. View Model</h4> 
           <div class="admonitionblock note"> 
            <table> 
             <tbody>
@@ -1878,7 +2085,7 @@ LocalProvider localeProvider;</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_persistence_concerns">4.6.2. Persistence Concerns</h4> 
+          <h4 id="_persistence_concerns">4.7.2. Persistence Concerns</h4> 
           <div class="admonitionblock note"> 
            <table> 
             <tbody>
@@ -1892,7 +2099,7 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_how-to-handle-void-and-null-results">4.7. How to handle void/null results</h3>
+         <h3 id="_ugbtb_hints-and-tips_how-to-handle-void-and-null-results">4.8. How to handle void/null results</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_how-to-handle-void-and-null-results.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2006,7 +2213,7 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_multi-tenancy">4.8. Multi-tenancy</h3>
+         <h3 id="_ugbtb_hints-and-tips_multi-tenancy">4.9. Multi-tenancy</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_multi-tenancy.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2025,7 +2232,7 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_subclass-properties-in-tables">4.9. Subclass properties in tables</h3>
+         <h3 id="_ugbtb_hints-and-tips_subclass-properties-in-tables">4.10. Subclass properties in tables</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_subclass-properties-in-tables.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2091,7 +2298,7 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_pushing-changes">4.10. Pushing Changes (deprecated)</h3>
+         <h3 id="_ugbtb_hints-and-tips_pushing-changes">4.11. Pushing Changes (deprecated)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_pushing-changes.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2116,7 +2323,7 @@ LocalProvider localeProvider;</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_when_a_property_is_changed">4.10.1. When a property is changed</h4> 
+          <h4 id="_when_a_property_is_changed">4.11.1. When a property is changed</h4> 
           <div class="paragraph"> 
            <p>If you want to invoke functionality whenever a property is changed by the user, then you can create a supporting <code>modifyXxx()</code> method and include the functionality within that. The syntax is:</p> 
           </div> 
@@ -2188,7 +2395,7 @@ LocalProvider localeProvider;</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_when_a_collection_is_modified">4.10.2. When a collection is modified</h4> 
+          <h4 id="_when_a_collection_is_modified">4.11.2. When a collection is modified</h4> 
           <div class="paragraph"> 
            <p>A collection may have a corresponding <code>addToXxx()</code> and/or <code>removeFromXxx()</code> method. If present, and direct manipulation of the contents of the connection has not been disabled (see ?), then they will be called (instead of adding/removing an object directly to the collection returned by the accessor).</p> 
           </div> 
@@ -2275,7 +2482,7 @@ LocalProvider localeProvider;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugbtb_hints-and-tips_how-to-implement-a-spellchecker">4.11. How to implement a spellchecker?</h3>
+         <h3 id="_ugbtb_hints-and-tips_how-to-implement-a-spellchecker">4.12. How to implement a spellchecker?</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_hints-and-tips_how-to-implement-a-spellchecker.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
