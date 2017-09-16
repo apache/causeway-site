@@ -6605,6 +6605,22 @@ WrapperFactory wrapperFactory;</code></pre>
            </tbody>
           </table> 
          </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>On the other hand, view models defined in this way do have some limitations; see <a href="#_rgant-ViewModel"><code>@ViewModel</code></a> for further discussion.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>These limitations do <em>not</em> apply to <a href="../ugfun/ugfun.html#_ugfun_programming-model_view-models_jaxb">JAXB</a> view models. If you are using view models heavily, you may wish to restrict yourself to just the JAXB flavour.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
         </div> 
         <div class="sect2"> 
          <h3 id="_rgant-DomainObject_persistedLifecycleEvent">10.9. persistedLifecycleEvent()</h3>
@@ -13180,10 +13196,10 @@ container.persist(cust);</code></pre>
        </div> 
        <div class="sectionbody"> 
         <div class="paragraph"> 
-         <p>The <code>@ViewModel</code> annotation, applied to a class, is the simplest way to indicate that the class is a view model.</p> 
+         <p>The <code>@ViewModel</code> annotation, applied to a class, indicates that the class is a view model. It’s a synonym for using <code>@DomainObject(nature=VIEW_MODEL)</code>.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>View models are not persisted to the database, instead their state is encoded within their identity (ultimately represented in the URL). As such, view models are immutable.</p> 
+         <p>View models are not persisted to the database, instead their state is encoded within their identity (ultimately represented in the URL).</p> 
         </div> 
         <div class="paragraph"> 
          <p>For example:</p> 
@@ -13191,24 +13207,25 @@ container.persist(cust);</code></pre>
         <div class="listingblock"> 
          <div class="content"> 
           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ViewModel</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MyViewModel</span> {
-    <span class="directive">public</span> MyViewModel() {}   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CustomerViewModel</span> {
+    <span class="directive">public</span> CustomerViewModel() {}
+    <span class="directive">public</span> CustomerViewModel(<span class="predefined-type">String</span> firstName, <span class="type">int</span> lastName) {
+        <span class="local-variable">this</span>.firstName = firstName;
+        <span class="local-variable">this</span>.lastName = lastName;
+    }
     ...
 }</code></pre> 
          </div> 
         </div> 
-        <div class="colist arabic"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td><i class="conum" data-value="1"></i><b>1</b></td> 
-            <td>must have a no-arg constructor for subsequent "recreation" by the framework.</td> 
-           </tr> 
-          </tbody>
-         </table> 
-        </div> 
         <div class="paragraph"> 
-         <p>To instantiate a view model, you can either instantiate directly using its constructor, or indirectly using <code>DomainObjectContainer#newTransientInstance()</code>. If you use the former, also programmatically call <code>DomainObjectContainer#injectServicesInto(…​)</code> to ensure that any dependencies are injected into the service.</p> 
+         <p>Although there are several ways to instantiate a view model, we recommend that they are instantiated using an N-arg constructor that initializes all relevant state. The <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>ServiceRegistry</code></a> can then be used to inject dependencies into the view model. For example:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java">Customer cust = ...
+CustomerViewModel vm = <span class="keyword">new</span> CustomerViewModel(cust.getFirstName(),cust.getLastName());
+serviceRegistry.injectServicesInto(vm);</code></pre> 
+         </div> 
         </div> 
         <div class="admonitionblock tip"> 
          <table> 
@@ -13217,11 +13234,14 @@ container.persist(cust);</code></pre>
             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
             <td class="content"> 
              <div class="paragraph"> 
-              <p>Note that there is a <code>DomainObjectContainer#newViewModelInstance(.)</code>; this is for view models that implement <code>ViewModel</code> interface and can be safely ignored.</p> 
+              <p>See this <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips_view-model-instantiation">tip</a> for further discussion about instantiating view models.</p> 
              </div> </td> 
            </tr> 
           </tbody>
          </table> 
+        </div> 
+        <div class="paragraph"> 
+         <p>View models must have a no-arg constructor; this is used internally by the framework for subsequent "recreation".</p> 
         </div> 
         <div class="paragraph"> 
          <p>The view model’s memento will be derived from the value of the view model object’s properties. Any <a href="../rgant/rgant.html#<em>rgant-Property_notPersisted"><code>@Property#notPersisted()</code></a> properties will be excluded from the memento, as will any <a href="../rgant/rgant.html#_rgant-Programmatic"><code>@Programmatic</code></a> properties. Properties that are merely <a href="../rgant/rgant.html#_rgant-Property_hidden">hidden</a> _are included in the memento.</p> 
@@ -13230,13 +13250,23 @@ container.persist(cust);</code></pre>
          <p>Only properties supported by the configured <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_MementoService"><code>MementoService</code></a> can be used. The default implementation supports all the value types and persisted entities.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>(As of 1.8.0) there are some limitations: * view models cannot hold collections other view models (simple properties <em>are</em> supported, though) * collections (of either view models or entities) are ignored.</p> 
+         <p>View models, as defined by <code>@ViewModel</code> (or <code>@DomainObject(nature=VIEW_MODEL)</code> for that matter) have some limitations:</p> 
         </div> 
-        <div class="admonitionblock warning"> 
+        <div class="ulist"> 
+         <ul> 
+          <li> <p>view models cannot hold collections other view models (simple properties <em>are</em> supported, though)</p> </li> 
+          <li> <p>collections (of either view models or entities) are ignored.</p> </li> 
+          <li> <p>not every data type is supported,</p> </li> 
+         </ul> 
+        </div> 
+        <div class="paragraph"> 
+         <p>However, these limitations do <em>not</em> apply to <a href="../ugfun/ugfun.html#_ugfun_programming-model_view-models_jaxb">JAXB</a> view models. If you are using view models heavily, you may wish to restrict yourself to just the JAXB flavour.</p> 
+        </div> 
+        <div class="admonitionblock note"> 
          <table> 
           <tbody>
            <tr> 
-            <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
+            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
             <td class="content"> 
              <div class="paragraph"> 
               <p>The <code>@ViewModel</code> does not allow the objectType to be specified, meaning that it is incompatible with the metamodel validation check ennabled by the <a href="../rgcfg/rgcfg.html#__rgcfg_configuring-core_metamodel-validation"><code>explicitObjectType</code></a> configuration property.</p> 
