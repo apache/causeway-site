@@ -1751,6 +1751,160 @@ isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword=</code></pre
           </table> 
          </div> 
         </div> 
+        <div class="sect2"> 
+         <h3 id="_ugodn_hints-and-tips_diagnosing-n-plus-1">5.4. Diagnosing n+1 Issues</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_diagnosing-n-plus-1.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_diagnosing-n-plus-1.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_diagnosing-n-plus-1.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_diagnosing-n-plus-1.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_diagnosing-n-plus-1.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>(As of DN 4.1) set a break point in <code>FetchRequest#execute(…​)</code>:</p> 
+         </div> 
+         <div class="imageblock"> 
+          <div class="content"> 
+           <a class="image" href="images/hints-n-tips/diagnosing-n-plus-1.png"><img src="images/hints-n-tips/diagnosing-n-plus-1.png" alt="diagnosing n plus 1" width="800px"></a> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The "Variables" pane will tell you which field(s) are being loaded, and the stack trace should help explain why the field is required.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>For example, it may be that an object is being loaded in a table and the initial query did not eagerly load that field. In such a case, consider using fetch groups in the initial repository query to bring the required data into memory with just one SQL call. See <a href="ugodb.html#_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups">this hint/tip</a> for further details.</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups">5.5. Typesafe Queries and Fetch-groups</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugodn/_ugodn_hints-and-tips_typesafe-queries-and-fetchgroups.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>Fetch groups provide a means to hint to DataNucleus that it should perform a SQL join when querying. A common use case is to avoid the <a href="#_ugodn_hints-and-tips_diagnosing-n-plus-1">n+1</a> issue.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>(So far as I could ascertain) it isn’t possible to specify fetch group hints using JDOQL, but it is possible to specify them using the programmatic API or using typesafe queries.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>For example, here’s a JDOQL query:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Query</span>(
+                name = <span class="string"><span class="delimiter">"</span><span class="content">findCompletedOrLaterWithItemsByReportedDate</span><span class="delimiter">"</span></span>, language = <span class="string"><span class="delimiter">"</span><span class="content">JDOQL</span><span class="delimiter">"</span></span>,
+                value = <span class="string"><span class="delimiter">"</span><span class="content">SELECT </span><span class="delimiter">"</span></span>
+                                + <span class="string"><span class="delimiter">"</span><span class="content">FROM org.estatio.capex.dom.invoice.IncomingInvoice </span><span class="delimiter">"</span></span>
+                                + <span class="string"><span class="delimiter">"</span><span class="content">WHERE items.contains(ii) </span><span class="delimiter">"</span></span>
+                                + <span class="string"><span class="delimiter">"</span><span class="content"> &amp;&amp; (ii.reportedDate == :reportedDate) </span><span class="delimiter">"</span></span>
+                                + <span class="string"><span class="delimiter">"</span><span class="content"> &amp;&amp; (approvalState != 'NEW' &amp;&amp; approvalState != 'DISCARDED') </span><span class="delimiter">"</span></span>
+                                + <span class="string"><span class="delimiter">"</span><span class="content">VARIABLES org.estatio.capex.dom.invoice.IncomingInvoiceItem ii </span><span class="delimiter">"</span></span>
+),
+<span class="directive">public</span> <span class="type">class</span> <span class="class">IncomingInvoice</span> ... { ... }</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>which normally would be used from a repository:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;IncomingInvoice&gt; findCompletedOrLaterWithItemsByReportedDate(
+        <span class="directive">final</span> LocalDate reportedDate) {
+    <span class="keyword">return</span> repositoryService.allMatches(
+            <span class="keyword">new</span> QueryDefault&lt;&gt;(
+                    IncomingInvoice.class,
+                    <span class="string"><span class="delimiter">"</span><span class="content">findCompletedOrLaterWithItemsByReportedDate</span><span class="delimiter">"</span></span>,
+                    <span class="string"><span class="delimiter">"</span><span class="content">reportedDate</span><span class="delimiter">"</span></span>, reportedDate));
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This can be re-written as a type-safe query as follows:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;IncomingInvoice&gt; findCompletedOrLaterWithItemsByReportedDate(<span class="directive">final</span> LocalDate reportedDate) {
+
+    <span class="directive">final</span> QIncomingInvoice ii = QIncomingInvoice.candidate();
+    <span class="directive">final</span> QIncomingInvoiceItem iii = QIncomingInvoiceItem.variable(<span class="string"><span class="delimiter">"</span><span class="content">iii</span><span class="delimiter">"</span></span>);
+
+    <span class="directive">final</span> TypesafeQuery&lt;IncomingInvoice&gt; q =
+        isisJdoSupport.newTypesafeQuery(IncomingInvoice.class);
+
+    q.filter(
+            ii.items.contains(iii)
+        .and(iii.reportedDate.eq(reportedDate))
+        .and(ii.approvalState.ne(IncomingInvoiceApprovalState.NEW))
+        .and(ii.approvalState.ne(IncomingInvoiceApprovalState.DISCARDED)));
+    <span class="directive">final</span> <span class="predefined-type">List</span>&lt;IncomingInvoice&gt; incomingInvoices = Lists.newArrayList(q.executeList());
+    q.closeAll();
+    <span class="keyword">return</span> incomingInvoices;
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Now the <code>IncomingInvoice</code> has four fields that require eager loading. This can be specified by defining a named fetch group:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@FetchGroup</span>(
+        name=<span class="string"><span class="delimiter">"</span><span class="content">seller_buyer_property_bankAccount</span><span class="delimiter">"</span></span>,
+        members={
+                <span class="annotation">@Persistent</span>(name=<span class="string"><span class="delimiter">"</span><span class="content">seller</span><span class="delimiter">"</span></span>),
+                <span class="annotation">@Persistent</span>(name=<span class="string"><span class="delimiter">"</span><span class="content">buyer</span><span class="delimiter">"</span></span>),
+                <span class="annotation">@Persistent</span>(name=<span class="string"><span class="delimiter">"</span><span class="content">property</span><span class="delimiter">"</span></span>),
+                <span class="annotation">@Persistent</span>(name=<span class="string"><span class="delimiter">"</span><span class="content">bankAccount</span><span class="delimiter">"</span></span>)
+        })
+<span class="directive">public</span> <span class="type">class</span> <span class="class">IncomingInvoice</span> ... { ... }</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This fetch group can then be used in the query using <code>q.getFetchPlan().addGroup(…​)</code>. Putting this all together, we get:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;IncomingInvoice&gt; findCompletedOrLaterWithItemsByReportedDate(<span class="directive">final</span> LocalDate reportedDate) {
+
+    <span class="directive">final</span> QIncomingInvoice ii = QIncomingInvoice.candidate();
+    <span class="directive">final</span> QIncomingInvoiceItem iii = QIncomingInvoiceItem.variable(<span class="string"><span class="delimiter">"</span><span class="content">iii</span><span class="delimiter">"</span></span>);
+
+    <span class="directive">final</span> TypesafeQuery&lt;IncomingInvoice&gt; q =
+        isisJdoSupport.newTypesafeQuery(IncomingInvoice.class);
+
+    q.getFetchPlan().addGroup(<span class="string"><span class="delimiter">"</span><span class="content">seller_buyer_property_bankAccount</span><span class="delimiter">"</span></span>);     <i class="conum" data-value="1"></i><b>(1)</b>
+
+    q.filter(
+            ii.items.contains(iii)
+        .and(iii.reportedDate.eq(reportedDate))
+        .and(ii.approvalState.ne(IncomingInvoiceApprovalState.NEW))
+        .and(ii.approvalState.ne(IncomingInvoiceApprovalState.DISCARDED)));
+    <span class="directive">final</span> <span class="predefined-type">List</span>&lt;IncomingInvoice&gt; incomingInvoices = Lists.newArrayList(q.executeList());
+    q.closeAll();
+    <span class="keyword">return</span> incomingInvoices;
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>specify the fetch group to use.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+        </div> 
        </div> 
       </div> 
      </div> 
