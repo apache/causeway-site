@@ -1485,7 +1485,7 @@ gradle -t --offline -b liveReload.gradle &amp;</code></pre>
             <p>DataNucleus' enhancer uses the domain object model’s own classpath to reference DataNucleus JARs. So, even though your domain objects are unlikely to depend on DataNucleus, these references must still be present.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>See the earlier section on <a href="../ugfun/ugfun.html#_ugfun_getting-started_datanucleus-enhancer">DataNucleus enhancer</a> for details of the contents of the <code>pom.xml</code>. Chances are it is already set up from running the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld</a> or the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a> archetype.</p> 
+            <p>See the section in <a href="#_dg_hints-and-tips_datanucleus-enhancer">DataNucleus enhancer</a> for details of the contents of the <code>pom.xml</code>. Chances are it is already set up from running the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld</a> or the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a> archetype.</p> 
            </div> 
            <div class="paragraph"> 
             <p>Then, tell DataNucleus to use the project classpath:</p> 
@@ -1640,7 +1640,95 @@ gradle -t --offline -b liveReload.gradle &amp;</code></pre>
          </ul> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_dg_hints-and-tips_enabling-logging">3.1. Enabling Logging</h3>
+         <h3 id="_dg_hints-and-tips_datanucleus-enhancer">3.1. Datanucleus Enhancer</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_datanucleus-enhancer.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_datanucleus-enhancer.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_datanucleus-enhancer.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_datanucleus-enhancer.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_datanucleus-enhancer.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p><a href="http://www.datanucleus.org/">DataNucleus</a> is the reference implementation of the JDO (Java data objects) spec, and Apache Isis integrates with DataNucleus as its persistence layer. Datanucleus is a very powerful library, allowing domain entities to be mapped not only to relational database tables, but also to NoSQL stores such as <a href="http://neo4j.com/">Neo4J</a>, <a href="http://www.mongodb.org/">MongoDB</a> and <a href="http://cassandra.apache.org/">Apache Cassandra</a>.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>With such power comes a little bit of complexity to the development environment: all domain entities must be enhanced through the DataNucleus enhancer.</p> 
+         </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>Bytecode enhancement is actually a requirement of the JDO spec; the process is described in outline <a href="http://db.apache.org/jdo/enhancement.html">here</a>.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>What this means is that the enhancer — available as both a Maven plugin and as an Eclipse plugin — must, one way or another, be integrated into your development environment.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>If working from the Maven command line, JDO enhancement is done using the <code>maven-datanucleus-plugin</code>.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Both the <a href="ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld</a> and <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a> Maven archetypes generate applications that have this plugin pre-configured.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_meta_inf_persistence_xml">3.1.1. META-INF/persistence.xml</h4> 
+          <div class="paragraph"> 
+           <p>It’s also a good idea to ensure that every domain module(s) containing entities has a JDO <code>META-INF/persistence.xml</code> file:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="tag">&lt;persistence</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://java.sun.com/xml/ns/persistence</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd</span><span class="delimiter">"</span></span> <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">"</span><span class="content">1.0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;persistence-unit</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">simple</span><span class="delimiter">"</span></span><span class="tag">&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tag">&lt;/persistence-unit&gt;</span>
+<span class="tag">&lt;/persistence&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>change as required; typically is the name of the domain module.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Again, the applications generated by both the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld</a> and <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">Simpleapp</a> Maven archetypes do this.</p> 
+          </div> 
+          <div class="admonitionblock warning"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>If running on Windows, then there’s a good chance you’ll hit the <a href="http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath">maximum path length limit</a>. In this case the <code>persistence.xml</code> file is mandatory rather than optional.</p> 
+               </div> 
+               <div class="paragraph"> 
+                <p>This file is also required if you are using developing in Eclipse and relying on the DataNucleus plugin for Eclipse rather than the DataNucleus plugin for Maven. More information can be found <a href="../dg/dg.html#_dg_ide_eclipse">here</a>.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_dg_hints-and-tips_enabling-logging">3.2. Enabling Logging</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_enabling-logging.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1695,7 +1783,7 @@ gradle -t --offline -b liveReload.gradle &amp;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_dg_hints-and-tips_enhance-only">3.2. Enhance only (IntelliJ)</h3>
+         <h3 id="_dg_hints-and-tips_enhance-only">3.3. Enhance only (IntelliJ)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_enhance-only.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1742,7 +1830,7 @@ gradle -t --offline -b liveReload.gradle &amp;</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_dg_hints-and-tips_how-run-fixtures-on-app-startup">3.3. How run fixtures on startup?</h3>
+         <h3 id="_dg_hints-and-tips_how-run-fixtures-on-app-startup">3.4. How run fixtures on startup?</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/dg/_dg_hints-and-tips_how-run-fixtures-on-app-startup.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
