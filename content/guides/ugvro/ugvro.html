@@ -1857,6 +1857,93 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           <p>To use, split the parts then format the mime type and base64 data correctly before using as source in an <code>&lt;img&gt;</code> tag.</p> 
          </div> 
         </div> 
+        <div class="sect2"> 
+         <h3 id="_ugvro_hints-and-tips_view-model-as-parameter">7.5. View Model as Parameter</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>As discussed <a href="https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E">on the mailing list</a>.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_query">7.5.1. Query</h4> 
+          <div class="paragraph"> 
+           <p>I must provide a REST service accepting more complex view model as input parameter.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>My view model parameter would look like</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>(
+    nature = Nature.VIEW_MODEL,
+    objectType = <span class="string"><span class="delimiter">"</span><span class="content">OfferTemplateFilter</span><span class="delimiter">"</span></span>
+)
+<span class="annotation">@XmlRootElement</span>(name = <span class="string"><span class="delimiter">"</span><span class="content">OfferTemplateFilter</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="annotation">@Getter</span> <span class="annotation">@Setter</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">OfferTemplateFilter</span> {
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; selectedDeviceManufacturer = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; selectedDeviceSizes = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>My REST domain service would be someting like</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
+    nature = NatureOfService.VIEW_REST_ONLY,
+    objectType = <span class="string"><span class="delimiter">"</span><span class="content">OfferRestService</span><span class="delimiter">"</span></span>
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">OfferRestService</span> {
+
+    <span class="annotation">@Action</span>(semantics = SemanticsOf.IDEMPOTENT)
+    <span class="directive">public</span> OfferTemplateSelectorForCustomer
+        offerSelectorForCustomer(
+            <span class="directive">final</span> <span class="predefined-type">String</span> subscriberNumber,
+            <span class="directive">final</span> OfferTemplateFilter filter) {
+        <span class="keyword">return</span> offerSelectorRepository.create(subscriberNumber, filter);
+    }
+    ...
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>I’m wondering how this could be achieved without custom rest service. Ideally the service consumer would post a kind of JSON structure where my view model OfferTemplateFilter would be created?</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_possible_answer">7.5.2. Possible Answer…​</h4> 
+          <div class="paragraph"> 
+           <p>Rather than try to "upload" the <code>OfferTemplateFilter</code> view model as a parameter, instead treat it as a resource.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>That is:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>have a new service to create an instance of the filter, and then</p> </li> 
+            <li> <p>update this filter (adding/removing from its two collections).</p> </li> 
+            <li> <p>When done, pass a reference to the filter to the original REST service, as a regular reference.</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Obviously the URL passed in the last step will be rather long and messy, but that’s not a problem per-se.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p><a href="https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E" class="bare">https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E</a></p> 
+          </div> 
+         </div> 
+        </div> 
        </div> 
       </div> 
      </div> 
