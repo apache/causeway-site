@@ -692,22 +692,38 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;mnu:menuBars</span> <span class="attribute-name">xmlns:mnu</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/applib/layout/menus</span><span class="delimiter">"</span></span> <span class="attribute-name">xmlns:lnk</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/applib/layout/links</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-  <span class="tag">&lt;mnu:primary&gt;</span>
-    <span class="tag">&lt;mnu:menu&gt;</span>
-      <span class="tag">&lt;mnu:named&gt;</span>Hello World Objects<span class="tag">&lt;/mnu:named&gt;</span>
-      <span class="tag">&lt;mnu:section&gt;</span>
-        <span class="tag">&lt;mnu:action</span> <span class="attribute-name">oid</span>=<span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects:1</span><span class="delimiter">"</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">"</span><span class="content">create</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-          <span class="tag">&lt;mnu:named&gt;</span>Create<span class="tag">&lt;/mnu:named&gt;</span>
-        <span class="tag">&lt;/mnu:action&gt;</span>
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;mb3:menuBars</span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">"</span><span class="content">...</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:cpt</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/applib/layout/component</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:lnk</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/applib/layout/links</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:mb3</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/applib/layout/menubars/bootstrap3</span><span class="delimiter">"</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;mb3:primary&gt;</span>
+        <span class="tag">&lt;mb3:menu&gt;</span>
+            <span class="tag">&lt;mb3:named&gt;</span>Hello World Objects<span class="tag">&lt;/mb3:named&gt;</span>
+            <span class="tag">&lt;mb3:section&gt;</span>
+                <span class="tag">&lt;mb3:serviceAction</span> <span class="attribute-name">objectType</span>=<span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects</span><span class="delimiter">"</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">"</span><span class="content">create</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+                    <span class="tag">&lt;cpt:named&gt;</span>Create<span class="tag">&lt;/cpt:named&gt;</span>
+                <span class="tag">&lt;/mb3:serviceAction&gt;</span>
+                ...
+            <span class="tag">&lt;/mb3:section&gt;</span>
+        <span class="tag">&lt;/mb3:menu&gt;</span>
+        <span class="tag">&lt;mb3:menu</span> <span class="attribute-name">unreferencedActions</span>=<span class="string"><span class="delimiter">"</span><span class="content">true</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;mb3:named&gt;</span>Other<span class="tag">&lt;/mb3:named&gt;</span>
+        <span class="tag">&lt;/mb3:menu&gt;</span>
         ...
-      <span class="tag">&lt;/mnu:section&gt;</span>
-      ...
-    <span class="tag">&lt;/mnu:menu&gt;</span>
-  <span class="tag">&lt;/mnu:primary&gt;</span>
-  ...
-<span class="tag">&lt;/mnu:menuBars&gt;</span></code></pre> 
+    <span class="tag">&lt;/mb3:primary&gt;</span>
+    <span class="tag">&lt;mb3:secondary&gt;</span>
+        ...
+    <span class="tag">&lt;/mb3:secondary&gt;</span>
+    <span class="tag">&lt;mb3:tertiary&gt;</span>
+        ...
+    <span class="tag">&lt;/mb3:tertiary&gt;</span>
+<span class="tag">&lt;/mb3:menuBars&gt;</span></code></pre> 
           </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Note that exactly one <code>&lt;mb3:menu&gt;</code> must have the <code>unreferencedActions</code> flag set. Any service actions that are not explicitly listed will be added to this menu.</p> 
          </div> 
          <div class="paragraph"> 
           <p>The representation returned by home page resource (section 5.2 of the RO spec v1.0) has been extended to provide a link to this resource:</p> 
@@ -729,23 +745,23 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>The representation returned by the <code>/menuBars</code> resource (assuming an HTTP header of <code>Accept: applicatoin/xml</code>) is a superset of the <code>menu.layout.xml</code>; each action also includes a <code>link</code> to the corresponding Restful Objects resource:</p> 
+          <p>The representation returned by the <code>/menuBars</code> resource (assuming an HTTP header of <code>Accept: application/xml</code>) is a superset of the <code>menu.layout.xml</code>; each action also includes a <code>link</code> to the corresponding Restful Objects resource:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;mnu:action</span> <span class="attribute-name">oid</span>=<span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects:1</span><span class="delimiter">"</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">"</span><span class="content">create</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
-  <span class="tag">&lt;mnu:named&gt;</span>Create<span class="tag">&lt;/mnu:named&gt;</span>
-  <span class="tag">&lt;mnu:link&gt;</span>
-    <span class="tag">&lt;lnk:rel&gt;</span>urn:org.restfulobjects:rels/action<span class="tag">&lt;/lnk:rel&gt;</span>
-    <span class="tag">&lt;lnk:method&gt;</span>GET<span class="tag">&lt;/lnk:method&gt;</span>
-    <span class="tag">&lt;lnk:href&gt;</span>
-      http://localhost:8080/restful/objects/helloworld.HelloWorldObjects/1/actions/create
-    <span class="tag">&lt;/lnk:href&gt;</span>
-    <span class="tag">&lt;lnk:type&gt;</span>
-      application/json;profile="urn:org.restfulobjects:repr-types/object-action"
-    <span class="tag">&lt;/lnk:type&gt;</span>
-  <span class="tag">&lt;/mnu:link&gt;</span>
-<span class="tag">&lt;/mnu:action&gt;</span></code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;mb3:serviceAction</span> <span class="attribute-name">objectType</span>=<span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects</span><span class="delimiter">"</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">"</span><span class="content">create</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;cpt:named&gt;</span>Create<span class="tag">&lt;/cpt:named&gt;</span>
+    <span class="tag">&lt;cpt:link&gt;</span>
+      <span class="tag">&lt;lnk:rel&gt;</span>urn:org.restfulobjects:rels/action<span class="tag">&lt;/lnk:rel&gt;</span>
+        <span class="tag">&lt;lnk:method&gt;</span>GET<span class="tag">&lt;/lnk:method&gt;</span>
+        <span class="tag">&lt;lnk:href&gt;</span>
+          http://localhost:8080/restful/objects/helloworld.HelloWorldObjects/1/actions/create
+        <span class="tag">&lt;/lnk:href&gt;</span>
+        <span class="tag">&lt;lnk:type&gt;</span>
+          application/json;profile="urn:org.restfulobjects:repr-types/object-action"
+        <span class="tag">&lt;/lnk:type&gt;</span>
+  <span class="tag">&lt;/cpt:link&gt;</span>
+<span class="tag">&lt;/mb3:serviceAction&gt;</span></code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -753,17 +769,17 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="json"><span class="key"><span class="delimiter">"</span><span class="content">action</span><span class="delimiter">"</span></span>: [
+           <pre class="CodeRay highlight"><code data-lang="json"><span class="key"><span class="delimiter">"</span><span class="content">serviceAction</span><span class="delimiter">"</span></span>: [
 {
-  <span class="key"><span class="delimiter">"</span><span class="content">oid</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects:1</span><span class="delimiter">"</span></span>,
+  <span class="key"><span class="delimiter">"</span><span class="content">objectType</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">helloworld.HelloWorldObjects</span><span class="delimiter">"</span></span>,
   <span class="key"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">create</span><span class="delimiter">"</span></span>,
   <span class="key"><span class="delimiter">"</span><span class="content">named</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">Create</span><span class="delimiter">"</span></span>,
   <span class="key"><span class="delimiter">"</span><span class="content">link</span><span class="delimiter">"</span></span>: {
     <span class="key"><span class="delimiter">"</span><span class="content">rel</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">urn:org.restfulobjects:rels/action</span><span class="delimiter">"</span></span>,
     <span class="key"><span class="delimiter">"</span><span class="content">method</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">GET</span><span class="delimiter">"</span></span>,
     <span class="key"><span class="delimiter">"</span><span class="content">href</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">http://localhost:8080/restful/objects/helloworld.HelloWorldObjects/1/actions/create</span><span class="delimiter">"</span></span>,
-    <span class="key"><span class="delimiter">"</span><span class="content">type</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">application/json;profile='urn:org.restfulobjects:repr-types/object-action'</span><span class="delimiter">"</span></span>
-   }
+    <span class="key"><span class="delimiter">"</span><span class="content">type</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">application/json;profile=</span><span class="char">\"</span><span class="content">urn:org.restfulobjects:repr-types/object-action</span><span class="char">\"</span><span class="delimiter">"</span></span>
+  }
 }</code></pre> 
           </div> 
          </div> 
