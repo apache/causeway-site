@@ -4213,7 +4213,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_TransactionService">4.10. <code>TransactionService2</code></h3>
+         <h3 id="_rgsvc_application-layer-api_TransactionService">4.10. <code>TransactionService3</code> (<code>1.16.0-SNAPSHOT</code>)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_TransactionService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4225,7 +4225,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>TransactionService2</code> provides a small number of methods to allow domain objects to influence user transactions.</p> 
+          <p>The <code>TransactionService3</code> (<code>1.16.0-SNAPSHOT</code>) provides a small number of methods to allow domain objects to influence user transactions.</p> 
          </div> 
          <div class="admonitionblock note"> 
           <table> 
@@ -4243,15 +4243,16 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="_api_3">4.10.1. API</h4> 
           <div class="paragraph"> 
-           <p>The API of <code>TransactionService2</code> is:</p> 
+           <p>The API of <code>TransactionService3</code> is:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TransactionService</span> {
-    Transaction currentTransaction();       <i class="conum" data-value="1"></i><b>(1)</b>
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TransactionService3</span> {
+    Transaction2 currentTransaction();      <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="type">void</span> nextTransaction();                 <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> flushTransaction();                <i class="conum" data-value="3"></i><b>(3)</b>
-    TransactionState getTransactionState(); <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="type">void</span> nextTransaction(<span class="predefined-type">Policy</span> policy);    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="type">void</span> flushTransaction();                <i class="conum" data-value="4"></i><b>(4)</b>
+    TransactionState getTransactionState(); <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -4268,10 +4269,14 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
              </tr> 
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>If the user interaction creates/persists an object or deletes an object (eg using the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_RepositoryService"><code>RepositoryService</code></a>'s <code>persist()</code> or <code>delete()</code> methods), then the framework actually queues up the work and only performs the persistence command either at the end of the transaction or immediately prior to the next query. Performing a flush will cause any pending calls to be performed immediately.</td> 
+              <td>overload of nextTransaction() that provides more control on the action to be performed if the current transaction has been marked for abort only</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>If the user interaction creates/persists an object or deletes an object (eg using the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_RepositoryService"><code>RepositoryService</code></a>'s <code>persist()</code> or <code>delete()</code> methods), then the framework actually queues up the work and only performs the persistence command either at the end of the transaction or immediately prior to the next query. Performing a flush will cause any pending calls to be performed immediately.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
               <td>the state of the current or most recently completed transaction.</td> 
              </tr> 
             </tbody>
@@ -4283,10 +4288,12 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">enum</span> TransactionState {
-    NONE,       <i class="conum" data-value="1"></i><b>(1)</b>
+    NONE,           <i class="conum" data-value="1"></i><b>(1)</b>
     IN_PROGRESS,    <i class="conum" data-value="2"></i><b>(2)</b>
     MUST_ABORT,     <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="comment">/** COMMITTED, <i class="conum" data-value="4"></i><b>(4)</b> ABORTED; <i class="conum" data-value="5"></i><b>(5)</b> }</span></code></pre> 
+    COMMITTED,      <i class="conum" data-value="4"></i><b>(4)</b>
+    ABORTED;        <i class="conum" data-value="5"></i><b>(5)</b>
+}</code></pre> 
            </div> 
           </div> 
           <div class="colist arabic"> 
@@ -4316,18 +4323,30 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>nextTransaction()</code> is also used by the <a href="../ugvw/ugvw.html">Wicket viewer</a>'s support for bulk actions; each action is invoked in its own transaction.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The <code>Transaction</code> object - as obtained by <code>currentTransaction()</code> method, above - is a minimal wrapper around the underlying database transaction. Its API is:</p> 
+           <p>As noted above, <code>nextTransaction()</code> can be useful for actions used to perform data migration, say, or for large fixture scripts. It is also used by the <a href="../ugvw/ugvw.html">Wicket viewer</a>'s support for bulk actions; each action is invoked in its own transaction. An overload of this method takes a <code>Policy</code> enum, defined as:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Transaction</span> {
-    <span class="predefined-type">UUID</span> getTransactionId();            <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="type">int</span> getSequence();                  <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> flush();                       <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="type">void</span> clearAbortCause();             <i class="conum" data-value="4"></i><b>(4)</b>
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">enum</span> <span class="predefined-type">Policy</span> {
+    UNLESS_MARKED_FOR_ABORT,
+    ALWAYS
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>If the current transaction has been marked for abort, then the <code>Policy.UNLESS_MARKED_FOR_ABORT</code> will escalate to a runtime exception, that is, will fail fast. Specifying <code>Policy.ALWAYS</code> is provided for use by integration tests so that they can continue on with the test teardown even if the test caused an issue.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <code>Transaction2</code> object - as obtained by <code>currentTransaction()</code> method, above - is a minimal wrapper around the underlying database transaction. Its API is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">Transaction2</span> {
+    <span class="predefined-type">UUID</span> getTransactionId();                    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="type">int</span> getSequence();                          <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> flush();                               <i class="conum" data-value="3"></i><b>(3)</b>
+    TransactionState getTransactionState();     <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="type">void</span> clearAbortCause();                     <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -4348,7 +4367,11 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
              </tr> 
              <tr> 
               <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td>If the cause has been rendered higher up in the stack, then clear the cause so that it won’t be picked up and rendered elsewhere.</td> 
+              <td>The state of this transaction (same as <code>TransactionService#getTransactionState()</code>).</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>(For framework use only) If the cause has been rendered higher up in the stack, then clear the cause so that it won’t be picked up and rendered elsewhere.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -9616,7 +9639,7 @@ repositoryService.persist(cust);</code></pre>
               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>Most IDEs (including IntelliJ and Eclipse) enable annotation processing by default, as does Maven. The DataNucleus' <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">documentation</a> offers some guidance on confirming that APT is enabled.</p> 
+                <p>The IntelliJ IDE automatically enables annotation processing by default, as does Maven. Using Eclipse IDE you may need to configure annotation processing manually; see the <a href="../dg/dg.html#__dg_ide_eclipse_enable-annotation-processing">Developers' Guide</a>. The DataNucleus' <a href="http://www.datanucleus.org/products/accessplatform_4_0/jdo/jdoql_typesafe.html">documentation</a> offers some guidance on confirming that APT is enabled.</p> 
                </div> </td> 
              </tr> 
             </tbody>
