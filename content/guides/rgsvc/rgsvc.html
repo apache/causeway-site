@@ -9648,7 +9648,9 @@ repositoryService.persist(cust);</code></pre>
     &lt;T&gt; T uniqueMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                      <i class="conum" data-value="10"></i><b>(10)</b>
     &lt;T&gt; T uniqueMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                 <i class="conum" data-value="11"></i><b>(11)</b>
 
+    <span class="annotation">@Deprecated</span>
     &lt;T&gt; T firstMatch(<span class="predefined-type">Query</span>&lt;T&gt; query);                                                       <i class="conum" data-value="12"></i><b>(12)</b>
+    <span class="annotation">@Deprecated</span>
     &lt;T&gt; T firstMatch(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType, <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;T&gt; predicate);                  <i class="conum" data-value="13"></i><b>(13)</b>
 }</code></pre> 
            </div> 
@@ -9686,7 +9688,7 @@ repositoryService.persist(cust);</code></pre>
              </tr> 
              <tr> 
               <td><i class="conum" data-value="8"></i><b>8</b></td> 
-              <td>all persistence instances matching the specified <code>Query</code>. Query itself is an Isis abstraction on top of JDO/DataNucleus' Query API. <strong>This is the primary API used for querying</strong></td> 
+              <td>all persistence instances matching the specified <code>Query</code>. <code>Query</code> itself is an Isis abstraction on top of JDO/DataNucleus' Query API. <strong>This is the primary API used for querying</strong></td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="9"></i><b>9</b></td> 
@@ -9702,11 +9704,11 @@ repositoryService.persist(cust);</code></pre>
              </tr> 
              <tr> 
               <td><i class="conum" data-value="12"></i><b>12</b></td> 
-              <td>Returns the first instance that matches the supplied query. If no instance is found then <code>null `will be returned. No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(…​)</code>.</td> 
+              <td>(Deprecated as of <code>1.16.0-SNAPSHOT</code>) Returns the first instance that matches the supplied query. If no instance is found then <code>null `will be returned. No exception is thrown if more than one matches, so this is less strict that `uniqueMatch(…​)</code>.</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="13"></i><b>13</b></td> 
-              <td>As the previous, but with client-side filtering using a <code>Predicate</code>. Only really intended for prototyping.</td> 
+              <td>(Deprecated as of <code>1.16.0-SNAPSHOT</code>) As the previous, but with client-side filtering using a <code>Predicate</code>. Only really intended for prototyping.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -9951,23 +9953,7 @@ repositoryService.persist(cust);</code></pre>
             <p>Normally any queries are automatically preceded by flushing pending commands to persist or remove objects.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>This key allows this behaviour to be disabled.</p> 
-           </div> 
-           <div class="literalblock"> 
-            <div class="content"> 
-             <pre> *
- * &lt;p&gt;
- *     Originally introduced as part of ISIS-1134 (fixing memory leaks in the objectstore)
- *     where it was found that the autoflush behaviour was causing a (now unrepeatable)
- *     data integrity error (see &lt;a href="https://issues.apache.org/jira/browse/ISIS-1134?focusedCommentId=14500638&amp;page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-14500638"&gt;ISIS-1134 comment&lt;/a&gt;, in the isis-module-security.
- *     However, that this could be circumvented by removing the call to flush().
- *     We don't want to break existing apps that might rely on this behaviour, on the
- *     other hand we want to fix the memory leak.  Adding this configuration property
- *     seems the most prudent way forward.
- * &lt;/p&gt;
- */
-public static final String KEY_DISABLE_AUTOFLUSH = "isis.services.container.disableAutoFlush";</pre> 
-            </div> 
+            <p>This property <code>isis.services.container.disableAutoFlush</code> allows this behaviour to be disabled.</p> 
            </div> 
           </div> 
          </div> 
