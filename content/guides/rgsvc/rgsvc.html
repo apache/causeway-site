@@ -800,8 +800,137 @@ table.CodeRay td.code>pre{padding:0}
           <div class="paragraph"> 
            <p>The <a href="../ugvw/ugvw.html">Wicket viewer</a> provides an implementation of this service, <code>o.a.i.viewer.wicket.viewer.services.BookmarkUiServiceWicket</code>.</p> 
           </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgsvc_presentation-api_DeepLinkService">3.3. <code>DeepLinkService</code></h3> 
+         <div class="paragraph"> 
+          <p>The <code>DeepLinkService</code> provides the ability to obtain a <code>java.net.URI</code> that links to a representation of any (persisted) domain entity or view model.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>A typical use case is to generate a clickable link for rendering in an email, PDF, tweet or other communication.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_api_implementation_3">3.3.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
-           <p>Unresolved directive in _rgsvc_presentation-layer-api.adoc - include::_rgsvc_presentation-api_DeepLinkService.adoc[leveloffset=+1] Unresolved directive in _rgsvc_presentation-layer-api.adoc - include::_rgsvc_presentation-api_GuiceBeanProvider.adoc[leveloffset=+1]</p> 
+           <p>The API defined by <code>DeepLinkService</code> is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">DeepLinkService</span> {
+    <span class="predefined-type">URI</span> deepLinkFor(<span class="predefined-type">Object</span> domainObject); <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Creates a URI that can be used to obtain a representation of the provided domain object in one of the Apache Isis viewers.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <a href="../ugvw/ugvw.html">Wicket viewer</a> provides an implementation of this service <code>o.a.i.viewer.wicket.viewer.services.DeepLinkServiceWicket</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For the <a href="../ugvro/ugvro.html">RestfulObjects viewer</a>, a URL can be constructed according to the <a href="http://www.restfulobjects.org">Restful Objects spec</a> in conjunction with a <code>Bookmark</code> obtained via the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService"><code>BookmarkService</code></a>.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_usage_within_the_framework">3.3.2. Usage within the framework</h4> 
+          <div class="paragraph"> 
+           <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_EmailNotificationService"><code>EmailNotificationService</code></a> uses this service in order to generate emails as part of <a href="../ugvw/ugvw.html#_ugvw_features_user-registration">user registration</a>.</p> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgsvc_presentation-api_GuiceBeanProvider">3.4. <code>GuiceBeanProvider</code></h3> 
+         <div class="paragraph"> 
+          <p>The <code>GuiceBeanProvider</code> domain service acts as a bridge between Apache Isis' <a href="../ugvw/ugvw.html">Wicket viewer</a> internal bootstrapping using <a href="https://github.com/google/guice">Google Guice</a>.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This service operates at a very low-level, and you are unlikely to have a need for it. It is used internally by the framework, in the default implementation of the <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-api_DeepLinkService"><code>DeepLinkService</code></a>.</p> 
+         </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>Currently Apache Isis uses a combination of Guice (within the Wicket viewer only) and a home-grown dependency injection framework. In future versions we intended to refactor the framework to use CDI throughout. At that time this service is likely to become redundant because we will allow any of the internal components of Apache Isis to be injected into your domain object code.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_api_implementation_4">3.4.1. API &amp; Implementation</h4> 
+          <div class="paragraph"> 
+           <p>The API defined by this service is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">GuiceBeanProvider</span> {
+    <span class="annotation">@Programmatic</span>
+    &lt;T&gt; T lookup(<span class="predefined-type">Class</span>&lt;T&gt; beanType);
+    <span class="annotation">@Programmatic</span>
+    &lt;T&gt; T lookup(<span class="predefined-type">Class</span>&lt;T&gt; beanType, <span class="directive">final</span> <span class="predefined-type">Annotation</span> qualifier);
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <a href="../ugvw/ugvw.html">Wicket viewer</a> this provides an implementation of this service.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_usage_2">3.4.2. Usage</h4> 
+          <div class="paragraph"> 
+           <p>Using the <a href="../ugvw/ugvw.html">Wicket viewer</a> requires subclassing of <code>IsisWicketApplication</code>. In the subclass it is commonplace to override <code>newIsisWicketModule()</code>, for example:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Module newIsisWicketModule() {
+    <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+    <span class="directive">final</span> Module overrides = <span class="keyword">new</span> AbstractModule() {
+        <span class="annotation">@Override</span>
+        <span class="directive">protected</span> <span class="type">void</span> configure() {
+            bind(<span class="predefined-type">String</span>.class).annotatedWith(Names.named(<span class="string"><span class="delimiter">"</span><span class="content">applicationName</span><span class="delimiter">"</span></span>))
+                              .toInstance(<span class="string"><span class="delimiter">"</span><span class="content">ToDo App</span><span class="delimiter">"</span></span>);
+            bind(<span class="predefined-type">String</span>.class).annotatedWith(Names.named(<span class="string"><span class="delimiter">"</span><span class="content">applicationCss</span><span class="delimiter">"</span></span>))
+                              .toInstance(<span class="string"><span class="delimiter">"</span><span class="content">css/application.css</span><span class="delimiter">"</span></span>);
+            bind(<span class="predefined-type">String</span>.class).annotatedWith(Names.named(<span class="string"><span class="delimiter">"</span><span class="content">applicationJs</span><span class="delimiter">"</span></span>))
+                              .toInstance(<span class="string"><span class="delimiter">"</span><span class="content">scripts/application.js</span><span class="delimiter">"</span></span>);
+            ...
+        }
+    };
+    <span class="keyword">return</span> Modules.override(isisDefaults).with(overrides);
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This "module" is in fact a Guice module, and so the <code>GuiceBeanProvider</code> service can be used to lookup any of the components bound into it.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For example:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SomeDomainObject</span> {
+    <span class="directive">private</span> <span class="predefined-type">String</span> lookupApplicationName() {
+        <span class="keyword">return</span> guiceBeanProvider.lookup(<span class="predefined-type">String</span>.class, Names.named(<span class="string"><span class="delimiter">"</span><span class="content">applicationName</span><span class="delimiter">"</span></span>));
+    }
+    <span class="annotation">@Inject</span>
+    GuiceBeanProvider guiceBeanProvider;
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>should return "ToDo App".</p> 
           </div> 
          </div> 
         </div> 
@@ -2812,7 +2941,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>When an action is invoked in this way, this service allows each object instance to "know where it is" in the collection; it acts a little like an iterator. In particular, an object can determine if it is the last object to be called, and so can perform special processing, eg to return a summary calculated result.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_3">5.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_5">5.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by the service is:</p> 
           </div> 
@@ -2854,7 +2983,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_2">5.1.2. Usage</h4> 
+          <h4 id="_usage_3">5.1.2. Usage</h4> 
           <div class="paragraph"> 
            <p>For actions that are void or that return null, Apache Isis will return to the list once executed. But for bulk actions that are non-void, Apache Isis will render the returned object/value from the last object invoked (and simply discards the object/value of all actions except the last).</p> 
           </div> 
@@ -2948,7 +3077,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>The persisting of commands is only half the story; there needs to be a separate process to read the commands and execute them. The <code>BackgroundCommandExecution</code> abstract class (discussed <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService_BackgroundCommandExecution">below</a>) provides infrastructure to do this; the concrete implementation of this class depends on the configured <code>BackgroundCommandService</code> (in order to query for the persisted (background) <code>Command</code>s.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_4">5.2.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_6">5.2.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API is:</p> 
           </div> 
@@ -2979,7 +3108,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_3">5.2.2. Usage</h4> 
+          <h4 id="_usage_4">5.2.2. Usage</h4> 
           <div class="paragraph"> 
            <p>Using the service is very straight-forward; wrap the target domain object using <code>BackgroundService#execute(…​)</code> and invoke the method on the object returned by that method.</p> 
           </div> 
@@ -3332,7 +3461,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_5">5.3.2. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_7">5.3.2. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The <code>CommandContext</code> request-scoped service defines the following very simple API:</p> 
           </div> 
@@ -3462,7 +3591,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_4">5.3.3. Usage</h4> 
+          <h4 id="_usage_5">5.3.3. Usage</h4> 
           <div class="paragraph"> 
            <p>The typical way to indicate that an action should be treated as a command is to annotate it with the <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p> 
           </div> 
@@ -3652,7 +3781,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </ul> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_6">5.5.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_8">5.5.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The public API of the service consists of several related classes:</p> 
           </div> 
@@ -4105,7 +4234,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_5">5.8.2. Usage</h4> 
+          <h4 id="_usage_6">5.8.2. Usage</h4> 
           <div class="paragraph"> 
            <p>By way of example, here’s some code based on a system for managing government benefits:</p> 
           </div> 
@@ -4473,7 +4602,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_6">5.10.2. Usage</h4> 
+          <h4 id="_usage_7">5.10.2. Usage</h4> 
           <div class="paragraph"> 
            <p>The caller will typically obtain the target object (eg from some repository) and then use the injected <code>WrapperFactory</code> to wrap it before interacting with it.</p> 
           </div> 
@@ -4795,7 +4924,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_7">6.1.4. Usage</h4> 
+          <h4 id="_usage_8">6.1.4. Usage</h4> 
           <div class="paragraph"> 
            <p>Background commands can be created either declaratively or imperatively.</p> 
           </div> 
@@ -4930,7 +5059,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_8">6.2.4. Usage</h4> 
+          <h4 id="_usage_9">6.2.4. Usage</h4> 
           <div class="paragraph"> 
            <p>The typical way to indicate that an action should be reified into a <code>Command</code> is by annotating the action using <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a>.</p> 
           </div> 
@@ -5221,7 +5350,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <p>Therefore it’s common to provide a domain service whose responsibility is to provide the current time. This service can be injected into any domain object (and can be mocked out for unit testing). Apache Isis provides such a facade through the <code>ClockService</code>.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_7">7.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_9">7.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>ClockService</code> is:</p> 
           </div> 
@@ -6679,7 +6808,7 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_9">7.5.2. Usage</h4> 
+          <h4 id="_usage_10">7.5.2. Usage</h4> 
           <div class="paragraph"> 
            <p>For example:</p> 
           </div> 
@@ -6724,7 +6853,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The <code>Scratchpad</code> (request-scoped) domain service allows objects to exchange information even if they do not directly call each other.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_8">7.6.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_10">7.6.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API of <code>Scratchpad</code> service is:</p> 
           </div> 
@@ -6746,7 +6875,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_10">7.6.2. Usage</h4> 
+          <h4 id="_usage_11">7.6.2. Usage</h4> 
           <div class="paragraph"> 
            <p>The most common use-case is for <a href="../rgant/rgant.html#_rgant-Action_invokeOn">bulk</a> actions that act upon multiple objects in a list. The (same) <code>Scratchpad</code> service is injected into each of these objects, and so they can use pass information.</p> 
           </div> 
@@ -7102,7 +7231,7 @@ Scratchpad scratchpad;</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_9">8.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_11">8.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>BookmarkService2</code> is:</p> 
           </div> 
@@ -7208,7 +7337,7 @@ Scratchpad scratchpad;</code></pre>
           <p>Apache Isis provides a default implementation to send emails using an external SMTP provider. Note that this must be configured (using a number of configuration properties) before it can be used. The that sends email as an HTML message, using an external SMTP provider.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_10">8.2.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_12">8.2.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API for the service is:</p> 
           </div> 
@@ -7411,7 +7540,7 @@ Scratchpad scratchpad;</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_within_the_framework">8.3.2. Usage within the framework</h4> 
+          <h4 id="_usage_within_the_framework_2">8.3.2. Usage within the framework</h4> 
           <div class="paragraph"> 
            <p>This service is provided as a convenience for applications, but is also used internally by the framework to <a href="../rgant/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>-annotated <a href="../ugfun/ugfun.html#_ugfun_building-blocks_types-of-domain-objects_view-models">view models</a>. The functionality to download XML and XSD schemas is also exposed in the UI through mixins to <a href="../rgcms/rgcms.html#_rgcms_classes_mixins_Dto"><code>Dto</code></a> interface.</p> 
           </div> 
@@ -7449,7 +7578,7 @@ Scratchpad scratchpad;</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_11">8.4.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_13">8.4.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>MementoService</code> is:</p> 
           </div> 
@@ -7514,7 +7643,7 @@ Scratchpad scratchpad;</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_11">8.4.2. Usage</h4> 
+          <h4 id="_usage_12">8.4.2. Usage</h4> 
           <div class="paragraph"> 
            <p>As noted in the introduction, a common use case for this service is in the implementation of the <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractViewModel"><code>ViewModel</code></a> interface.</p> 
           </div> 
@@ -7964,7 +8093,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_12">9.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_14">9.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by the service is:</p> 
           </div> 
@@ -8300,7 +8429,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_12">9.4.2. Usage</h4> 
+          <h4 id="_usage_13">9.4.2. Usage</h4> 
           <div class="paragraph"> 
            <p>The primary use case is to instantiate domain objects using a regular constructor ("new is the new new"), and then using the <code>#injectServicesInto(…​)</code> API to set up any dependencies.</p> 
           </div> 
@@ -8405,7 +8534,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_within_the_framework_2">9.5.2. Usage within the framework</h4> 
+          <h4 id="_usage_within_the_framework_3">9.5.2. Usage within the framework</h4> 
           <div class="paragraph"> 
            <p>This service is provided as a convenience for applications, it is not (currently) used by the framework itself.</p> 
           </div> 
@@ -8558,7 +8687,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The <code>ExecutionParametersService</code> is used by the framework simply to instantiate the <code>ExecutionParameters</code> object. The <code>ExecutionParameters</code> object in turn is responsible for parsing the string parameter passed when executing fixtures through the UI to the <a href="#_rgsvc_testing_FixtureScripts"><code>FixtureScripts</code></a> domain service.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_13">10.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_15">10.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API and implementation of this service is simply:</p> 
           </div> 
@@ -8592,7 +8721,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The default implementation of this service, <code>FixtureScriptsDefault</code>, uses the associated <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> to obtain a <code>FixtureScriptsSpecification</code>. This configures this service, for example telling it which package to search for <code>FixtureScript</code> classes, how to execute those classes, and hints that influence the UI.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_14">10.2.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_16">10.2.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API for the service is:</p> 
           </div> 
@@ -8766,7 +8895,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_13">10.4.3. Usage</h4> 
+          <h4 id="_usage_14">10.4.3. Usage</h4> 
           <div class="paragraph"> 
            <p>A good example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> which uses the <code>SudoService</code> in a fixture script to set up <code>ToDoItem</code> objects:</p> 
           </div> 
@@ -9033,7 +9162,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The <code>HsqlDbManagerMenu</code> provides a single menu item to open up the HSQLDB manager. This is only enabled for prototyping, and if HSQLDB is detected in the underlying JDBC URL. The menu appears under the "Prototyping" menu.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_15">11.1.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_17">11.1.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API of the service is:</p> 
           </div> 
@@ -9403,7 +9532,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The service is used by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> domain service (to populate the DTO held by the <code>Interaction.Execution</code>) and also by the (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_PublishingServiceInternal"><code>PublishingServiceInternal</code></a> domain service (to populate the <code>PublishedObjects</code> class.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_16">11.3.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_18">11.3.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API of the service is:</p> 
           </div> 
@@ -9478,7 +9607,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_17">11.4.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_19">11.4.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>QueryResultsCache</code> is:</p> 
           </div> 
@@ -9520,7 +9649,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_14">11.4.2. Usage</h4> 
+          <h4 id="_usage_15">11.4.2. Usage</h4> 
           <div class="paragraph"> 
            <p>Suppose that there’s a <code>TaxService</code> that calculates tax on <code>Taxable</code> items, with respect to some <code>TaxType</code>, and for a given <code>LocalDate</code>. To calculate tax it must run a database query and then perform some additional calculations.</p> 
           </div> 
@@ -9718,7 +9847,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_15">11.5.2. Usage</h4> 
+          <h4 id="_usage_16">11.5.2. Usage</h4> 
           <div class="paragraph"> 
            <p>This section briefly discusses how application code can use (some of) these APIs.</p> 
           </div> 
@@ -10203,7 +10332,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_16">12.1.3. Usage</h4> 
+          <h4 id="_usage_17">12.1.3. Usage</h4> 
           <div class="paragraph"> 
            <p>The typical way to indicate that an object should be audited is to annotate it with the <a href="../rgant/rgant.html#_rgant-DomainObject_auditing"><code>@DomainObject#auditing()</code></a> annotation.</p> 
           </div> 
@@ -10310,7 +10439,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_17">12.2.3. Usage</h4> 
+          <h4 id="_usage_18">12.2.3. Usage</h4> 
           <div class="paragraph"> 
            <p>The typical way to indicate that an object should be audited is to annotate it with the <a href="../rgant/rgant.html#_rgant-DomainObject_auditing"><code>@DomainObject#auditing()</code></a> annotation.</p> 
           </div> 
@@ -10562,7 +10691,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_18">12.4.3. Usage</h4> 
+          <h4 id="_usage_19">12.4.3. Usage</h4> 
           <div class="paragraph"> 
            <p>To indicate that an action invocation should be published, annotate it with the <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p> 
           </div> 
@@ -10714,7 +10843,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_19">12.5.3. Usage</h4> 
+          <h4 id="_usage_20">12.5.3. Usage</h4> 
           <div class="paragraph"> 
            <p>To indicate that an action invocation should be published, annotate it with the <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> annotation.</p> 
           </div> 
@@ -11112,7 +11241,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_20">13.1.3. Usage</h4> 
+          <h4 id="_usage_21">13.1.3. Usage</h4> 
           <div class="paragraph"> 
            <p>The usage will vary depending upon the conventions of the design. As of <code>1.9.0</code>, the usage of the service has been centralized such that the packages to be scanned are located from the <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>'s <code>#getModules()</code> method.</p> 
           </div> 
