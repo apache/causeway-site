@@ -179,7 +179,6 @@ table.CodeRay td.code>pre{padding:0}
         <li><a href="../../guides/ugfun/ugfun.html">Fundamentals</a></li> 
         <li><a href="../../guides/ugvw/ugvw.html">Wicket Viewer</a></li> 
         <li><a href="../../guides/ugvro/ugvro.html">Restful Objects Viewer</a></li> 
-        <li><a href="../../guides/ugodn/ugodn.html">DataNucleus Object Store</a></li> 
         <li><a href="../../guides/ugsec/ugsec.html">Security</a></li> 
         <li><a href="../../guides/ugtst/ugtst.html">Testing</a></li> 
         <li><a href="../../guides/ugbtb/ugbtb.html">Beyond the Basics</a></li> 
@@ -1798,7 +1797,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>Although the exact content of an OID should be considered opaque by domain objects, it is possible for domain objects to obtain OIDs. These are represented as <code>Bookmark`s, obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService">`BookmarkService</a></code>. Deep links meanwhile can be obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-api_DeepLinkService"><code>DeepLinkService</code></a>.</p> 
+           <p>Although the exact content of an OID should be considered opaque by domain objects, it is possible for domain objects to obtain OIDs. These are represented as <code>Bookmark`s, obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService">`BookmarkService</a></code>. Deep links meanwhile can be obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_DeepLinkService"><code>DeepLinkService</code></a>.</p> 
           </div> 
           <div class="paragraph"> 
            <p>OIDs can also be converted into XML format, useful for integration scenarios. The <a href="../rgcms/rgcms.html#_rgcms_schema-common">common schema</a> XSD defines the <code>oidDto</code> complex type for precisely this purpose.</p> 
@@ -2115,11 +2114,18 @@ table.CodeRay td.code>pre{padding:0}
          <div class="paragraph"> 
           <p>The bootstrapping of Apache Isis also relies on module classes. (Currently) the only role of these classes is to identify a fully qualified package name, for example <code>org.incode.modules.document</code>. The framework then performs classpath scanning across all such packages to locate any domain entities provided by that module (though some modules have no entities), all domain services provided by the module (every module is likely to define at least one), and also any fixture scripts provided by the module.</p> 
          </div> 
-         <div class="paragraph"> 
-          <p>In the same way that the Java module act as a namespace for domain objects, it’s good practice to map domain entities to their own (database) schemas.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>In previous versions a module class did not need to implement any specific interface; all the framework used was the package of the provided class. As of <code>1.16.0-SNAPSHOT</code> however, the <a href="../rgcms/rgcms.html#_rgcms_classes_Module"><code>Module</code></a> interface allows a module to specify its direct dependencies; from these all transitive dependencies are calculated. This should match the compile-time dependencies declared within Maven. The <code>Module</code> interface also allows a module to declare any configuration properties that should be contributed, as well as fixture scripts for reference data, and to tear down (for integration testing).</p> 
+         <div class="admonitionblock tip"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>In the same way that the Java module act as a namespace for domain objects, it’s good practice to map domain entities to their own (database) schemas.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
         </div> 
        </div> 
@@ -2812,16 +2818,6 @@ mvn clean install</code></pre>
         </ul>
        </div> 
        <div class="sectionbody"> 
-        <div class="admonitionblock note"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-            <td class="content"> this document has been updated for <code>1.16.0-SNAPSHOT</code>. </td> 
-           </tr> 
-          </tbody>
-         </table> 
-        </div> 
         <div class="paragraph"> 
          <p>The quickest way to get started building an application "for real" is to run the <code>simpleapp</code> archetype. Like the <a href="#_ugfun_getting-started_helloworld-archetype">helloworld archetype</a>, this too will generate a very simple one-class domain model (an entity called <code>SimpleObject</code> with a couple of properties).</p> 
         </div> 
@@ -2952,29 +2948,20 @@ mvn clean install</code></pre>
          <div class="sect3"> 
           <h4 id="_myapp_application">5.2.2. myapp-application</h4> 
           <div class="paragraph"> 
-           <p>The production classes for <code>myapp-application</code> module (in <code>src/main/java</code>) are:</p> 
+           <p>The <code>myapp-application</code> module has three main packages, the most important being <code>domainapp.application.manifest</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Classes for this package can be found under <code>src/main/java</code>:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
             <pre>domainapp/
 └── application/
-    ├── DomainAppApplicationModule.java
-    ├── fixture/
-    │   ├── DomainAppFixtureScriptsSpecificationProvider.java
-    │   └── scenarios/
-    │       └── DomainAppDemo.java
-    ├── manifest/
-    │   ├── DomainAppAppManifest.java
-    │   ├── DomainAppAppManifestBypassSecurity.java
-    │   ├── DomainAppAppManifestWithFixtures.java
-    │   ├── DomainAppAppManifestWithFixturesBypassSecurity.java
-    │   └── menubars.layout.xml
-    └── services
-        └── homepage
-            ├── HomePageService.java
-            ├── HomePageViewModel.java
-            ├── HomePageViewModel.layout.xml
-            └── HomePageViewModel.layout.png</pre> 
+    └── manifest/
+        ├── DomainAppAppManifest.java
+        ├── DomainAppAppManifestBypassSecurity.java
+        ├── DomainAppAppManifestWithFixtures.java
+        └── DomainAppAppManifestWithFixturesBypassSecurity.java</pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -2997,17 +2984,20 @@ mvn clean install</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">extends</span> AppManifestAbstract2 {
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">extends</span> AppManifestAbstract {
 
-    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder
-            .forModule(<span class="keyword">new</span> DomainAppApplicationModule())
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder.forModules(
+                    SimpleModuleDomSubmodule.class,
+                    DomainAppApplicationModuleFixtureSubmodule.class,
+                    DomainAppApplicationModuleServicesSubmodule.class
+            )
             .withConfigurationPropertiesFile(DomainAppAppManifest.class,
                     <span class="string"><span class="delimiter">"</span><span class="content">isis.properties</span><span class="delimiter">"</span></span>,
                     <span class="string"><span class="delimiter">"</span><span class="content">authentication_shiro.properties</span><span class="delimiter">"</span></span>,
                     <span class="string"><span class="delimiter">"</span><span class="content">persistor_datanucleus.properties</span><span class="delimiter">"</span></span>,
                     <span class="string"><span class="delimiter">"</span><span class="content">viewer_restfulobjects.properties</span><span class="delimiter">"</span></span>,
-                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_wicket.properties</span><span class="delimiter">"</span></span>)
-            .withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);
+                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_wicket.properties</span><span class="delimiter">"</span></span>
+            ).withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);
 
     <span class="directive">public</span> DomainAppAppManifest() {
         <span class="local-variable">super</span>(BUILDER);
@@ -3016,35 +3006,32 @@ mvn clean install</code></pre>
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The manifest uses the builder defined by <code>AppManifestAbstract2</code> and references a single top-level (Isis) module, namely <code>DomainAppApplicationModule</code>:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppApplicationModule</span> <span class="directive">extends</span> ModuleAbstract {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Module&gt; getDependencies() {
-        <span class="keyword">return</span> Sets.&lt;Module&gt;newHashSet(<span class="keyword">new</span> SimpleModule());
-    }
-}</code></pre> 
-           </div> 
+           <p>The manifest uses the builder defined by <code>AppManifestAbstract</code> and references 3 (Isis) modules. These are simply classes that identify packages to search for entities, domain services and fixtures; one defined in the <code>myapp-module-simple</code> module, and two package within the <code>myapp-application</code> module itself (for additional fixtures and services, namely the home page which we’ll discuss below).</p> 
           </div> 
           <div class="paragraph"> 
-           <p>where <code>SimpleModule</code> in defined in the <code>mypp-module-simple</code> module (below).</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The primary purpose of the module class is to identify packages and subpackages that the framework should scan for entities and domain services. The transitive dependencies between modules are automatically resolved. The net effect is that all the domain services and entities in this module as well as those modules referenced are included into the app.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Going back to the manifest, it also defines a number of static configuration files, all loaded from the classpath. Each file contains configuration setting for a different part of the runtime (<code>isis.properties</code> for the core framework, shiro for security, datanucleus for the objectstore, and the two viewers).</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The <code>menubars.layout.xml</code> file also resides in the same package as the manifest; this defines the menubar structure.</p> 
+           <p>The manifest also defines a number of static configuration files, all loaded from the classpath. Each file contains configuration setting for a different part of the runtime (<code>isis.properties</code> for the core framework, shiro for security, datanucleus for the objectstore, and the two viewers).</p> 
           </div> 
           <div class="paragraph"> 
            <p>There are also several variations on the app manifest; these can be used to bootstrap the application with fixtures, or disabling security.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>domainapp.application.services</code> package contains the <code>HomePageService</code> domain service. This simply has a single action annotated with <code>@HomePage</code>:</p> 
+           <p>The next package is <code>domainapp.application.services</code>:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre>domainapp/
+└── application/
+    └── services/
+        ├── DomainAppApplicationModuleServicesSubmodule.java
+        └── homepage/
+            ├── HomePageService.java
+            ├── HomePageViewModel.java
+            ├── HomePageViewModel.layout.xml
+            └── HomePageViewModel.png</pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <code>DomainAppApplicationModuleServicesSubmodule</code> class is referenced as a module within the app manifest, meaning that the <code>HomePageService</code> that sits in a subpackage underneath it is picked up automatically. This domain service simply has a single action annotated with <code>@HomePage</code>:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
@@ -3059,7 +3046,26 @@ mvn clean install</code></pre>
            <p>which returns the <code>HomePageViewModel</code> for use as the home page. The <code>HomePageViewModel</code> itself just renders a collection of <code>SimpleObject</code>s in a list (<code>HomePageViewModel.layout.xml</code> defines the UI layout).</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The final package in the application module is <code>domainapp.application.fixture</code>. The important class here is <code>DomainAppDemo</code>, a fixture script that can be used to setup the application with some dummy data. This is used in the app itself when running in prototype mode (against an in-memory database), and can also be used by integration tests.</p> 
+           <p>The final package in the application module is <code>domainapp.application.fixture</code>:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre>domainapp/
+└── application/
+    └── fixture/
+        ├── DomainAppApplicationModuleFixtureSubmodule.java
+        ├── DomainAppFixtureScriptsSpecificationProvider.java
+        ├── scenarios/
+        │   └── DomainAppDemo.java
+        └── teardown/
+            └── DomainAppTearDown.java</pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The important class here is <code>DomainAppDemo</code>, which is a fixture script that can be used to setup the application with some dummy data. This is used in the app itself when running in prototype mode (against an in-memory database), and can also be used by integration tests.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <code>DomainAppApplicationModuleFixtureSubmodule</code> is referenced by the app manifest, meaning that the framework knows to search for domain services and fixtures under its package.</p> 
           </div> 
           <div class="paragraph"> 
            <p>There is in fact also a domain service defined here, namely <code>DomainAppFixtureScriptsSpecificationProvider</code>. This is just used to configure the run fixture script menu item shown on the "Prototyping" menu.</p> 
@@ -3081,9 +3087,6 @@ mvn clean install</code></pre>
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Here the <code>BootstrappingGlue</code> glue class inherits from the framework’s <code>CukeGlueBootstrappingAbstract</code> class, and bootstraps using the <code>DomainAppApplicationModule</code> mentioned above.</p> 
-          </div> 
-          <div class="paragraph"> 
            <p>There is just one feature file: <code>SimpleObjectSpec_listAllAndCreate.feature</code>, which is pretty simple:</p> 
           </div> 
           <div class="listingblock"> 
@@ -3091,17 +3094,18 @@ mvn clean install</code></pre>
             <pre class="CodeRay highlight"><code data-lang="feature">@DomainAppDemo
 Feature: List and Create New Simple Objects
 
+  @integration
   Scenario: Existing simple objects can be listed and new ones created
-    Given there are initially 10 simple objects
+    Given there are initially 3 simple objects
     When  I create a new simple object
-    Then  there are 11 simple objects</code></pre> 
+    Then  there are 4 simple objects</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>@DomainAppDemo</code> annotation causes the <code>DomainAppDemo</code> fixture script to be run; this is the purpose of the <code>CatalogOfFixturesGlue</code> glue class.</p> 
+           <p>The <code>@DomainAppDemo</code> annotation causes the <code>DomainAppDemo</code> fixture script to be run; this sets up 3 objects. The "glue" defines both in the <code>myapp-application</code> module and in the <code>myapp-module-simple</code> module</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The specs themselves are run by the <code>RunIntegBddSpecs.java</code> class, which specifies which packages to search for "glue". This is just standard Cucumber bootstrapping.</p> 
+           <p>The tests themselves are run by the <code>RunIntegBddSpecs.java</code> class; this is standard Cucumber bootstrapping.</p> 
           </div> 
           <div class="paragraph"> 
            <p>The integration tests meanwhile are in <code>domainapp.application.integtests</code>:</p> 
@@ -3116,10 +3120,10 @@ Feature: List and Create New Simple Objects
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>Smoke_IntegTest</code> inherits <code>DomainAppIntegTestAbstract</code>, which in turn inherits from <code>IntegrationTestAbstract3</code> and uses the <code>DomainAppApplicationModule</code> previously discussed. Moreover, the <code>Smoke_IntegTest</code> uses the same <code>DomainAppDemo</code> fixture script. The application and the smoke tests therefore run with the exact same state, making debugging easy.</p> 
+           <p>The <code>Smoke_IntegTest</code> inherits <code>DomainAppIntegTestAbstract</code>, with the latter bootstrapping the framework using the <code>DomainAppAppManifest</code> already discussed that is used for running the application itself. Moreover, the <code>Smoke_IntegTest</code> uses the same <code>DomainAppDemo</code> fixture script. The application and the smoke tests therefore run with the exact same state, making debugging easy.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>With regard to the naming of these various BDD specs and integration tests, they follow the naming convention required by the (non-ASF) <a href="http://github.com/danhaywood/java-mavenmixin-surefire">"surefire" mavenmixin</a> that configures the maven surefire plugin.</p> 
+           <p>The BDD specs and integration tests are named according to the naming convention required by the "surefire" mavenmixin that configures the maven surefire plugin.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -3151,9 +3155,9 @@ Feature: List and Create New Simple Objects
             <pre>domainapp/
 └── modules/
     └── simple/
-        ├── SimpleModule.java
         ├── SimpleModuleManifest.java
         ├── dom/
+        │   ├── SimpleModuleDomSubmodule.java
         │   └── impl/
         │       ├── SimpleObject.java
         │       ├── SimpleObject.layout.xml
@@ -3161,45 +3165,39 @@ Feature: List and Create New Simple Objects
         │       ├── SimpleObjectMenu.java
         │       └── SimpleObjectRepository.java
         └── fixture/
-            ├── SimpleObject_persona.java
-            └── SimpleObjectBuilder.java
+            ├── SimpleModuleFixtureSubmodule.java
+            ├── scenario/
+            │   ├── CreateSimpleObjects.java
+            │   └── SimpleObjectData.java
+            └── teardown/
+                └── SimpleModuleTearDown.java
 META-INF/
 └── persistence.xml</pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>SimpleModule</code> is the (single) module class referenced from the previously discussed <code>DomainAppApplicationModule</code>, meaning that all the entities, domain services and fixtures within it are included within the application.</p> 
+           <p>Note once more that the module class (<code>SimpleModuleDomSubmodule</code>) is referenced in the app manifest class, meaning that all the entities, domain services and fixtures within it are included within the application. Speaking of which…​</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p><code>SimpleObject</code> is the (one-and-only) domain entity defined (with <code>SimpleObject.layout.xml</code> defines its layout in the UI). In contrast to the helloworld app, though, there are <em>two</em> associated domain services:</p> 
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p><code>SimpleObject</code> is the (one-and-only) domain entity defined (with <code>SimpleObject.layout.xml</code> defines its layout in the UI).</p> </li> 
-            <li> <p><code>SimpleObjects</code> domain service’s whos actions appear as menu items and which acts as a repository to create and find <code>SimpleObject</code>s.</p> </li> 
+            <li> <p><code>SimpleObjectMenu</code> domain service’s actions appear as menu items, to create and find <code>SimpleObject</code>s. This delegates in turn to:</p> </li> 
+            <li> <p><code>SimpleObjectRepository</code>, which is a repository domain service that actually does the fetching and creating in the database.</p> </li> 
            </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>SimpleModule</code> class also defines a teardown fixture, automatically called by integration tests.</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleModule</span> <span class="directive">extends</span> ModuleAbstract {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> FixtureScript getTeardownFixture() {
-        <span class="keyword">return</span> <span class="keyword">new</span> TeardownFixtureAbstract2() {
-            <span class="annotation">@Override</span>
-            <span class="directive">protected</span> <span class="type">void</span> execute(ExecutionContext ec) {
-                deleteFrom(SimpleObject.class);
-            }
-        };
-    }
-    ...
-}</code></pre> 
-           </div> 
+           <p>Splitting out domain services like this is quite common since it allows more flexibility with the menu structure.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>In the <code>fixture</code> subpackage is the <code>SimpleObject_persona</code> "persona" which uses the corresponding <code>SimpleObjectBuilder</code> builder script; further discussion on this pattern <a href="../ugtst/ugtst.html#_ugtst_fixture-scripts_api-and-usage_persona-and-builders">here</a>. These fixtures are also used by "local" integration tests, which reside under <code>src/test/java</code>.</p> 
+           <p>The module also defines its own manifest, <code>SimpleModuleManifest</code>. This is used to run Isis' own <a href="../rgmvn/rgmvn.html">maven plugin</a> to <a href="../rgmvn/rgmvn.html#_rgmvn_validate">validate</a> the domain object model (eg to detect orphaned supported methods).</p> 
           </div> 
           <div class="paragraph"> 
-           <p>There are also unit tests and "glue" for the BDD specs:</p> 
+           <p>Under <code>fixture.scenario</code> subpackage are fixture scripts that are used by integration tests and by the demo fixture script defined in the <code>myapp-application</code> module (discussed above).</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>These fixtures are also used by "local" integration tests, which reside under <code>src/test/java</code>. There are also unit tests and "glue" for the BDD specs:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
@@ -3223,10 +3221,7 @@ META-INF/
            <p>The simpleapp application has both "local" integration tests (defined within the <code>myapp-module-simple</code> module) and also "global" integration tests (the "smoke" tests in <code>myapp-application</code> module). There’s a role for both: local integration tests should fully exercise the module but may need to mock out collaborations between modules, while global integration tests exercise the whole application (but an over-reliance on these can cause test run times to bloat).</p> 
           </div> 
           <div class="paragraph"> 
-           <p>With regard to the naming of these various BDD specs and integration tests, they follow the naming convention required by the (non-ASF) <a href="http://github.com/danhaywood/java-mavenmixin-surefire">"surefire" mavenmixin</a> that configures the maven surefire plugin. Integration tests include the name "IntegTest", while unit tests contain merely "Test".</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The module also defines its own manifest, <code>SimpleModuleManifest</code>. This is used to run Isis' own <a href="../rgmvn/rgmvn.html">maven plugin</a> to <a href="../rgmvn/rgmvn.html#_rgmvn_validate">validate</a> the domain object model (eg to detect orphaned supported methods).</p> 
+           <p>The surefire mavenmixin plugin configured in the <code>pom.xml</code> establishes the convention that integration tests include the name "IntegTest", while unit tests contain merely "Test". The <code>SimpleModuleIntegTestAbstract</code> also uses the <code>SimpleAppManifest</code> (mentioned above) to define a "cut-down" version of the application that just bootstraps the simple module.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -3246,7 +3241,7 @@ META-INF/
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>DomainApplication</code> is required to bootstrap the Wicket viewer (it is configured in <code>WEB-INF/web.xml</code>, discussed below). Within <code>DomainApplication</code> is the bootstrapping of the Wicket viewer. Internally it uses Google Guice to configure various static resources served up by Wicket:</p> 
+           <p>The <code>DomainApplication</code> is required to bootstrap the Wicket viewer (it is configured in <code>WEB-INF/web.xml</code>). Internally it uses Google Guice to configure various static resources served up by Wicket:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
@@ -3289,33 +3284,7 @@ WEB-INF/
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Most important of these is <code>WEB-INF/web.xml</code>, which bootstraps both the Wicket viewer and the Restful Objects viewer (the REST API derived from the domain object model):</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="title">
-            web.xml
-           </div> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;web-app</span> <span class="attribute-name">...</span><span class="tag">&gt;</span>
-  ...
-  <span class="tag">&lt;filter&gt;</span>
-    <span class="tag">&lt;filter-name&gt;</span>WicketFilter<span class="tag">&lt;/filter-name&gt;</span>
-    <span class="tag">&lt;filter-class&gt;</span>org.apache.wicket.protocol.http.WicketFilter<span class="tag">&lt;/filter-class&gt;</span>
-    <span class="tag">&lt;init-param&gt;</span>
-      <span class="tag">&lt;param-name&gt;</span>applicationClassName<span class="tag">&lt;/param-name&gt;</span>
-      <span class="tag">&lt;param-value&gt;</span>domainapp.webapp.DomainApplication<span class="tag">&lt;/param-value&gt;</span>
-    <span class="tag">&lt;/init-param&gt;</span>
-  <span class="tag">&lt;/filter&gt;</span>
-  ...
-  <span class="tag">&lt;context-param&gt;</span>
-    <span class="tag">&lt;param-name&gt;</span>javax.ws.rs.Application<span class="tag">&lt;/param-name&gt;</span>
-    <span class="tag">&lt;param-value&gt;</span>
-      org.apache.isis.viewer.restfulobjects.server.RestfulObjectsApplication
-    <span class="tag">&lt;/param-value&gt;</span>
-  <span class="tag">&lt;/context-param&gt;</span>
-  ...
-<span class="tag">&lt;/web-app&gt;</span></code></pre> 
-           </div> 
+           <p>Most important of these is <code>WEB-INF/web.xml</code>, which bootstraps both the Wicket viewer and the Restful Objects viewer (the REST API derived from the domain object model).</p> 
           </div> 
           <div class="paragraph"> 
            <p>The <code>about/index.html</code> is the page shown at the root of the package, providing links to either the Wicket viewer or to the Swagger UI. In a production application this is usually replaced with a page that does an HTTP 302 redirect to the Wicket viewer.</p> 
@@ -8752,7 +8721,7 @@ repositoryService.remove(customer);</code></pre>
           <ul> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService"><code>BookmarkService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_MementoService"><code>MementoService</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_presentation-api_DeepLinkService"><code>DeepLinkService</code></a></p> </li> 
+           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_DeepLinkService"><code>DeepLinkService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_JaxbService"><code>JaxbService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_XmlSnapshotService"><code>XmlSnapshotService</code></a></p> </li> 
           </ul> 
@@ -8777,7 +8746,7 @@ repositoryService.remove(customer);</code></pre>
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-api_AcceptHeaderService"><code>AcceptHeaderService</code></a></p> </li> 
+           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_AcceptHeaderService"><code>AcceptHeaderService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_SwaggerService"><code>SwaggerService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_ContentMappingService"><code>ContentMappingService</code></a> (SPI)</p> </li> 
           </ul> 
@@ -8796,8 +8765,8 @@ repositoryService.remove(customer);</code></pre>
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScripts"><code>FixtureScripts</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_presentation-api_GuiceBeanProvider"><code>GuiceBeanProvider</code></a></p> </li> 
+           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a></p> </li> 
+           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_GuiceBeanProvider"><code>GuiceBeanProvider</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_testing_SudoService"><code>SudoService</code></a></p> </li> 
            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_TransactionService"><code>TransactionService</code></a></p> </li> 
           </ul> 
