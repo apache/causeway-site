@@ -1,0 +1,3541 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Wicket Viewer</title>
+
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one
+        or more contributor license agreements.  See the NOTICE file
+        distributed with this work for additional information
+        regarding copyright ownership.  The ASF licenses this file
+        to you under the Apache License, Version 2.0 (the
+        "License"); you may not use this file except in compliance
+        with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing,
+        software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+        KIND, either express or implied.  See the License for the
+        specific language governing permissions and limitations
+        under the License.
+    -->
+
+    <!-- No caching headers -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+
+
+    <!-- TODO: need to (re)instate CDN in the future (not using for now just so can develop off-line -->
+    <link href="../css/foundation/5.5.1/foundation.css" rel="stylesheet" />
+    <script src="../js/foundation/5.5.1/vendor/modernizr.js"></script>
+    <link href="../css/asciidoctor/colony.css" rel="stylesheet">
+    <link href="../css/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.css" rel="stylesheet" />
+    <![endif]-->
+
+
+
+    <style type="text/css">
+        pre code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre code > span:first-child {
+            margin-left: -5px;
+        }
+
+    <style>
+
+    <!--
+    <style type="text/css">
+        /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top;line-height:1.45}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+
+        pre.CodeRay code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre.CodeRay code > span:first-child {
+            margin-left: -5px;
+        }
+
+        .literalblock pre,
+        .listingblock pre:not(.highlight),
+        .listingblock pre[class="highlight"],
+        .listingblock pre[class^="highlight "],
+        .listingblock pre.CodeRay,
+        .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+        .sidebarblock .literalblock pre,
+        .sidebarblock .listingblock pre:not(.highlight),
+        .sidebarblock .listingblock pre[class="highlight"],
+        .sidebarblock .listingblock pre[class^="highlight "],
+        .sidebarblock .listingblock pre.CodeRay,
+        .sidebarblock .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+
+    <style>
+    -->
+
+    <style>
+    .github-fork-ribbon-wrapper.right {
+        position: fixed;
+    }
+    .github-fork-ribbon {
+        background: #090;
+    }
+    .github-fork-ribbon a:hover {
+        background:#0D0;
+        color:#fff;
+        font-size: 1.1em;
+    }
+    </style>
+
+    <style>
+        @media only screen and (min-width: 40.063em) {
+          .top-bar {
+            .contain-to-grid .top-bar {
+                max-width: 80rem;
+            }
+          }
+        }
+        .row {
+            max-width: 80rem;
+        }
+    </style>
+
+    <style>
+        .extended-quote,
+        .extended-quote-first {
+            margin-left: 40px;
+            margin-right: 40px;
+            font-style: italic;
+        }
+        .extended-quote-attribution {
+            text-align: right;
+            margin-right: 100px;
+            color: #10B061;
+        }
+
+        .extended-quote-first:before {
+            content: "\201c";
+            float: left;
+            font-size: 2.75em;
+            font-weight: bold;
+            line-height: 0.6em;
+            margin-left: -0.6em;
+            color: #003b6b;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+
+    <style>
+        body {
+          position: relative;
+        }
+
+        *:not(pre) a > code {
+            color: #210DDC;
+        }
+
+        *:not(pre) > code {
+            background-color: inherit;
+            border: none;
+            font-weight: normal;
+        }
+
+        body div#toc li,
+        body div#toc2 li {
+            list-style-type: none;
+        }
+
+        div#doc-content {
+            margin-top: 30px;
+        }
+
+        div.documentation-page table.frame-all {
+            border-left: none;
+            border-right: none;
+        }
+
+        body div#toc li.active-region:before,
+        body div#toc2 li.active-region:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li a.active,
+        body div#toc2 li a.active {
+            color: red;
+        }
+
+        body div#toc.toc,
+        body div#toc.toc2 {
+            position: fixed;
+            left: auto;
+            padding-top: 60px;
+            z-index: auto;
+            background-color: white;
+            border-left-color: #eee;
+            border-left-style: solid;
+            border-right: none;
+            min-height: 2000px;
+        }
+
+    </style>
+
+    <style>
+
+        @media only screen and (min-width: 768px) {
+          #toc.toc2 ul ul { margin-left: -10px; }
+        }
+
+
+        body div#toc .tocify-subheader ul {
+            margin-bottom: 0px;
+        }
+
+        body div#toc .tocify-subheader li {
+            font-size: 14px;
+        }
+        .tocify li.tocify-item, .tocify ul.tocify-item {
+            line-height: 24px;
+        }
+
+        body div#toc li.tocify-item.active:before,
+        body div#toc2 li.tocify-item.active:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li.tocify-item.active a,
+        body div#toc2 li.tocify-item.active a {
+            color: red;
+        }
+    </style>
+
+    <style>
+        footer {
+            margin-top: 1000px;
+        }
+    </style>
+
+    <style>
+        /* overriding colony.css stylesheet */
+        .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+           /*padding: 1.25em 1.5625em 1.125em 1.5625em;*/
+           padding: 0.3em 0.6em 0.25em 0.6em;
+        }
+        @media only screen and (min-width: 1280px)
+        #toc.toc2 {
+          /*width: 20em;*/
+          width: 25em;
+        }
+
+        #doc-content a {
+          color: #210DDC;
+        }
+
+        .top-bar h1 {
+            border-bottom: inherit;
+        }
+
+        h2 {
+          margin-top: 80px;
+        }
+        h3 {
+          margin-top: 40px;
+        }
+        h4,h5 {
+          margin-top: 30px;
+        }
+
+        .admonitionblock.tip > table td.content {
+            color: #10B061;
+        }
+        .admonitionblock.note > table td.content {
+            color: #B509AB;
+        }
+        .admonitionblock.important > table td.content {
+            color: #D5810A;
+        }
+
+        .admonitionblock .title {
+            font-size: larger;
+            font-style: italic;
+        }
+
+        .imageblock img {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        /* from http://ben.balter.com/2014/03/13/pages-anchor-links/ */
+        .header-link {
+          position: absolute;
+          left: -0.5em;
+          opacity: 0;
+
+          /*
+          -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+          -moz-transition: opacity 0.2s ease-in-out 0.1s;
+          -ms-transition: opacity 0.2s ease-in-out 0.1s;
+          */
+        }
+
+        h2:hover .header-link,
+        h3:hover .header-link,
+        h4:hover .header-link,
+        h5:hover .header-link,
+        h6:hover .header-link {
+          opacity: 1;
+        }
+    </style>
+
+    <style>
+        .top-bar
+        {
+            -webkit-transition-duration: .5s;
+            transition-duration: .5s;
+
+            -webkit-transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+
+        /*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+        */
+        .header--hidden
+        {
+            -webkit-transform: translateY( -100% );
+            -ms-transform: translateY( -100% );
+            transform: translateY( -100% );
+
+            transition-duration: .5s;
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+    </style>
+
+    <style>
+        #doc-content a.guide {
+            color: white;
+        }
+    </style>
+
+    <style>
+        .tocify {
+            margin-top: 80px;
+        }
+    </style>
+
+
+</script>
+
+</head>
+<body>
+
+<<div class="github-fork-ribbon-wrapper right" style="position: fixed;">
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/apache/isis#fork-destination-box">Fork me on GitHub</a>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="fixed contain-to-grid header">
+        <nav class="top-bar" data-topbar role="navigation" style="max-width: 80rem">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="/index.html">Apache Isis&trade;</a>
+                    </h1>
+                </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+                <ul class="right">
+
+                    <li class="has-form">
+                       <FORM class="searchbox navbar-form navbar-right" id="searchbox_012614087480249044419:dn-q5gtwxya" action="http://www.google.com/cse">
+                        <div class="row collapse">
+                            <input type="hidden" name="cx" value="012614087480249044419:dn-q5gtwxya">
+                            <INPUT type="hidden" name="cof" value="FORID:0">
+                            <INPUT class="form-control" name="q" type="text" placeholder="Search">
+                        </div>
+                    </FORM>
+                     </li>
+
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+
+                    <li><a href="/documentation.html">Documentation</a></li>
+                    <li><a href="/downloads.html">Downloads</a></li>
+                    <li><a href="/help.html">Help</a></li>
+                    <li><a href="/asf.html">@ASF</a></li>
+
+                </ul>
+
+            </section>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+
+    <div id="doc-content-left" class="large-9 medium-9 columns">
+
+
+        <div id="doc-content">
+          <div class="sect1">
+<h2 id="_ugvw">1. Wicket Viewer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Wicket Viewer automatically exposes an Apache Isis domain object model for use by end-users.  The viewer is
+implemented using <a href="http://wicket.apache.org">Apache Wicket</a>.</p>
+</div>
+<div class="paragraph">
+<p>This user guide discuss end-user features, configuration and customization of the Wicket viewer.</p>
+</div>
+<div class="paragraph">
+<p>It also discusses how to extend the viewer, and the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> wicket components.</p>
+</div>
+<div class="sect2">
+<h3 id="_other_guides">1.1. Other Guides</h3>
+<div class="paragraph">
+<p>Apache Isis documentation is broken out into a number of user and reference guides.</p>
+</div>
+<div class="paragraph">
+<p>The user guides available are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ugfun.html">Fundamentals</a></p>
+</li>
+<li>
+<p><a href="#">Wicket viewer</a> (this guide)</p>
+</li>
+<li>
+<p><a href="ugvro.html">Restful Objects viewer</a></p>
+</li>
+<li>
+<p><a href="ugsec.html">Security</a></p>
+</li>
+<li>
+<p><a href="ugtst.html">Testing</a></p>
+</li>
+<li>
+<p><a href="ugbtb.html">Beyond the Basics</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reference guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgant.html">Annotations</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html">Domain Services</a></p>
+</li>
+<li>
+<p><a href="rgcfg.html">Configuration Properties</a></p>
+</li>
+<li>
+<p><a href="rgcms.html">Classes, Methods and Schema</a></p>
+</li>
+<li>
+<p><a href="rgmvn.html">Apache Isis Maven plugin</a></p>
+</li>
+<li>
+<p><a href="rgfis.html">Framework Internal Services</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The remaining guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="dg.html">Developers' Guide</a> (how to set up a development environment
+for Apache Isis and contribute back to the project)</p>
+</li>
+<li>
+<p><a href="cgcom.html">Committers' Guide</a> (release procedures and related practices)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_features">2. Features/end-user usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section discusses features of the wicket viewer from the perspective of an end-user actually using your Isis application.</p>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_recent-pages">2.1. Recent pages (drop down)</h3>
+<div class="paragraph">
+<p>The Wicket viewer provides a recent pages drop-down that acts as a breadcrumb trail. Using it, the user can quickly open a recently accessed domain object.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots">2.1.1. Screenshots</h4>
+<div class="paragraph">
+<p>The following screenshot, taken from the <a href="https://github.com/estatio/estatio">Estatio</a> application, shows the recent pages drop-down after a number of pages have been accessed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/recent-pages/recent-pages.png"><img src="images/wicket-viewer/recent-pages/recent-pages.png" alt="recent pages" width="800px"></a>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that this screenshot show an earlier version of the <a href="#">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_domain_code">2.1.2. Domain Code</h4>
+<div class="paragraph">
+<p>The recent pages drop-down is automatically populated; no changes need to be made to the domain classes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_user_experience">2.1.3. User Experience</h4>
+<div class="paragraph">
+<p>Selecting the domain object from the list causes the viewer to automatically navigate to the page for the selected object.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_related_functionality">2.1.4. Related functionality</h4>
+<div class="paragraph">
+<p>The <a href="#_ugvw_features_bookmarked-pages">bookmarked pages</a> (sliding panel) also provides links to recently visited objects, but only those explicitly marked as <code>@DomainObject(bookmarking=&#8230;&#8203;)</code>.  The bookmarks panel also nests related objects together hierarchically (the recent pages drop-down does not).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration">2.1.5. Configuration</h4>
+<div class="paragraph">
+<p>The number of objects is hard-coded as 10; it cannot currently be configured.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_bookmarked-pages">2.2. Bookmarked pages</h3>
+<div class="paragraph">
+<p>The Wicket viewer supports the bookmarking of both domain objects and query-only (<a href="rgant.html#_rgant-Action_semantics">@Action(semantics=&#8230;&#8203;)</a>) actions.</p>
+</div>
+<div class="paragraph">
+<p>Domain objects, if bookmarkable, can be nested.</p>
+</div>
+<div class="paragraph">
+<p>Bookmarking is automatic; whenever a bookmarkable object/action is visited, then a bookmark is created. To avoid the number of bookmarks from indefinitely growing, bookmarks that have not been followed after a whle are automatically removed (an MRU/LRU algorithm). The number of bookmarks to preserve can be configured.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_2">2.2.1. Screenshots</h4>
+<div class="paragraph">
+<p>The following screenshot, taken from <a href="https://github.com/isisaddons/isis-app-todoapp">Isisaddons example todoapp</a> (not ASF) shows how the bookmarks are listed in a sliding panel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/bookmarked-pages/panel.png"><img src="images/wicket-viewer/bookmarked-pages/panel.png" alt="panel" width="800px"></a>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that these screenshots show an earlier version of the <a href="#">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note how the list contains both domain objects and an action ("not yet complete").</p>
+</div>
+<div class="paragraph">
+<p>Bookmarks can also form a hierarchy.  The following screenshot, also taken from the <a href="https://github.com/estatio/estatio">Estatio</a> application, shows a variety of different bookmarked objects with a nested structure:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/bookmarked-pages/panel-estatio.png"><img src="images/wicket-viewer/bookmarked-pages/panel-estatio.png" alt="panel estatio" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Some - like <code>Property</code>, <code>Lease</code> and <code>Party</code> - are root nodes. However, <code>LeaseItem</code> is bookmarkable as a child of <code>Lease</code>, and <code>LeaseTerm</code> is bookmarkable only as a child of <code>LeaseItem</code>. This parent/child relationship is reflected in the layout.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_domain_code_2">2.2.2. Domain Code</h4>
+<div class="paragraph">
+<p>To indicate a class is bookmarkable, use the <a href="rgant.html#_rgant-DomainObjectLayout">@DomainObjectLayout</a> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObjectLayout</span>(
+    bookmarking=BookmarkPolicy.AS_ROOT
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Lease</span> { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To indicate a class is bookmarkable but only as a child of some parent bookmark, specify the bookmark policy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObjectLayout</span>(
+    bookmarking=BookmarkPolicy.AS_CHILD
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">LeaseItem</span> { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To indicate that a safe (query only) action is bookmarkable, use the <a href="rgant.html#_rgant-ActionLayout">@ActionLayout</a> annotation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> ... {
+    <span class="annotation">@Action</span>(
+        semantics=SemanticsOf.SAFE
+    )
+    <span class="annotation">@ActionLayout</span>(
+         bookmarking=BookmarkPolicy.AS_ROOT
+     )
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; notYetComplete() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The BookmarkPolicy.AS_CHILD does not have a meaning for actions; if the <code>bookmarking</code> attribute is set to any other value, it will be ignored.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_user_experience_2">2.2.3. User Experience</h4>
+<div class="paragraph">
+<p>The sliding panel appears whenever the mouse pointer hovers over the thin blue tab (to the left of the top header region).</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, <code>alt+[</code> will toggle open/close the panel; it can also be closed using <code>Esc</code> key.</p>
+</div>
+<div class="sect4">
+<h5 id="_related_functionality_2">Related functionality</h5>
+<div class="paragraph">
+<p>The <a href="#_ugvw_features_recent-pages">Recent Pages</a> also lists recently visited pages, selected from a drop-down.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_2">2.2.4. Configuration</h4>
+<div class="paragraph">
+<p>By default, the bookmarked pages panel will show a maximum of 15 'root' pages. This can be overridden using a property (in <code>isis.properties</code>), for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.bookmarkedPages.maxSize=20</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_hints-and-copy-url">2.3. Hints and copy URL</h3>
+<div class="paragraph">
+<p>While the user can often copy the URL of a domain object directly from the browser&#8217;s address bar, the Wicket viewer also allows the URL of domain objects to be easily copied from a dialog.</p>
+</div>
+<div class="paragraph">
+<p>More interestingly, this URL can also contain hints capturing any sorting or page numbering, or hiding/viewing of collections.  End-users can therefore share these URLs as a form of deep linking into a particular view on a domain object.</p>
+</div>
+<div class="paragraph">
+<p>The copy URL and hinting is automatic.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_3">2.3.1. Screenshots</h4>
+<div class="paragraph">
+<p>The following screenshots are taken from the [Estatio](<a href="https://github.com/estatio/estatio" class="bare">https://github.com/estatio/estatio</a>) application.</p>
+</div>
+<div class="sect4">
+<h5 id="_copy_url">Copy URL</h5>
+<div class="paragraph">
+<p>This screenshot shows the copy URL button (top right):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/copy-link/010-copy-link-button.png"><img src="images/wicket-viewer/copy-link/010-copy-link-button.png" alt="010 copy link button" width="800px"></a>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that these screenshots show an earlier version of the <a href="#">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Clicking on this button brings up a dialog with the URL preselected:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/copy-link/020-copy-link-dialog.png"><img src="images/wicket-viewer/copy-link/020-copy-link-dialog.png" alt="020 copy link dialog" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>The URL in this case is something like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The user can copy the link (eg <code>ctrl+C</code>) into the clipboard, then hit <code>OK</code> or <code>Esc</code> to dismiss the dialog.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_hints">Hints</h5>
+<div class="paragraph">
+<p>Using the viewer the user can hide/show collection tables, can sort the tables by header columns:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/copy-link/030-hints.png"><img src="images/wicket-viewer/copy-link/030-hints.png" alt="030 hints" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, if the collection spans multiple pages, then the individual page can be selected.</p>
+</div>
+<div class="paragraph">
+<p>Once the view has been customised, the URL shown in the copy URL dialog is in an extended form:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/copy-link/040-copy-link-with-hints.png"><img src="images/wicket-viewer/copy-link/040-copy-link-with-hints.png" alt="040 copy link with hints" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>The URL in this case is something like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://localhost:8080/wicket/entity/org.estatio.dom.lease.Lease:0?hint-1:collectionContents-view=3&amp;hint-1:collectionContents:collectionContents-3:table-DESCENDING=value&amp;hint-1:collectionContents:collectionContents-3:table-pageNumber=0&amp;hint-2:collectionContents-view=0&amp;hint-2:collectionContents:collectionContents-2:table-pageNumber=0&amp;hint-3:collectionContents-view=2&amp;hint-3:collectionContents:collectionContents-2:table-pageNumber=0&amp;hint-4:collectionContents-view=3&amp;hint-4:collectionContents:collectionContents-3:table-ASCENDING=exerciseDate&amp;hint-4:collectionContents:collectionContents-3:table-pageNumber=0&amp;hint-5:collectionContents-view=0&amp;hint-5:collectionContents:collectionContents-3:table-pageNumber=0</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_copy_url_from_title">Copy URL from title</h5>
+<div class="paragraph">
+<p>When the user invokes an action on the object, the URL (necessarily) changes to indicate that the action was invoked.  This URL is specific to the user&#8217;s session and cannot be shared with others.</p>
+</div>
+<div class="paragraph">
+<p>A quick way for the user to grab a shareable URL is simply by clicking on the object&#8217;s title:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/copy-link/050-title-url.png"><img src="images/wicket-viewer/copy-link/050-title-url.png" alt="050 title url" width="800px"></a>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_user_experience_3">2.3.2. User Experience</h4>
+<div class="paragraph">
+<p>The copy URL dialog is typically obtained by clicking on the icon.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, <code>alt+]</code> will also open the dialog.  It can be closed with either <code>OK</code> or the <code>Esc</code> key.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_titles-in-tables">2.4. Titles in Tables</h3>
+<div class="paragraph">
+<p>Object titles can often be quite long if the intention is to uniquely identify the object.  While this is appropriate for the object view, it can be cumbersome within tables.</p>
+</div>
+<div class="paragraph">
+<p>If an object&#8217;s title is specified with from <code>@Title</code> annotation then the Wicket viewer will (for parented collections) automatically "contextualize" a title by excluding the part of the title corresponding to a reference to the owning (parent) object.</p>
+</div>
+<div class="paragraph">
+<p>In other words, suppose we have:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/how-tos/ui-hints/object-titles-and-icons/cust-order-product.png"><img src="images/how-tos/ui-hints/object-titles-and-icons/cust-order-product.png" alt="cust order product" width="579px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>so that <code>Customer</code> has a collection of `Order`s:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Order&gt; getOrders() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and <code>Product</code> also has a collection of `Order`s (please forgive the suspect domain modelling in this example (!)):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Product</span> {
+    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Order&gt; getOrders() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and where the <code>Order</code> class references both <code>Customer</code> and <code>Product</code>.</p>
+</div>
+<div class="paragraph">
+<p>The `Order&#8217;s might involve each of these:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
+    <span class="annotation">@Title</span>(sequence=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> Customer getCustomer() { ... }
+    <span class="annotation">@Title</span>(sequence=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> Product getProduct() { ... }
+    <span class="annotation">@Title</span>(sequence=<span class="string"><span class="delimiter">&quot;</span><span class="content">3</span><span class="delimiter">&quot;</span></span>)
+    <span class="directive">public</span> <span class="predefined-type">String</span> getOtherInfo() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, if we view a <code>Customer</code> with its collection of <code>Order`s, then in that parented collection&#8217;s table the customer&#8217;s property will be automatically excluded from the title of the `Order</code> (but it would show the product).  Conversely, if a <code>Product</code> is viewed then its collection of `Order`s would suppress product (but would show the customer).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is a close cousin of the <code>@PropertyLayout(hidden=Where.REFERENCES_PARENT)</code> annotation, which will cause the property itself to be hidden as a column in the table. An Isis idiom is therefore:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
+    <span class="annotation">@Title</span>(sequence=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>)
+    <span class="annotation">@PropertyLayout</span>(hidden=Where.REFERENCES_PARENT)
+    <span class="directive">public</span> Customer getCustomer() { ... }
+    ...
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above annotations mean that titles usually "just work", altering according to the context in which they are viewed.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to configure the Wicket viewer to <a href="#_ugvw_configuration-properties_abbreviating-titles">abbreviate titles or suppress them</a> completely.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_blob-attachments">2.5. File upload/download</h3>
+<div class="paragraph">
+<p>The Isis application library provides the <a href="rgcms.html#_rgcms_classes_value-types_Blob">Blob</a> value type (binary large objects) and also the <a href="rgcms.html#_rgcms_classes_value-types_Clob">Clob</a>
+value type (character large object), each of which also includes metadata about the data (specifically the filename and mime type).</p>
+</div>
+<div class="paragraph">
+<p>A class can define a property using either of these types, for example:</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_4">2.5.1. Screenshots</h4>
+<div class="paragraph">
+<p>The following screenshots are taken from the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp">todoapp</a> (not ASF):</p>
+</div>
+<div class="sect4">
+<h5 id="_view_mode_empty">View mode, empty</h5>
+<div class="paragraph">
+<p><code>Blob</code> field rendered as attachment (with no data):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/010-attachment-field.png"><img src="images/wicket-viewer/blob-attachments/010-attachment-field-940.png" alt="010 attachment field 940" width="800px"></a>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that these screenshots show an earlier version of the <a href="#">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_edit_mode">Edit mode</h5>
+<div class="paragraph">
+<p>Hit edit; 'choose file' button appears:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/020-edit-choose-file.png"><img src="images/wicket-viewer/blob-attachments/020-edit-choose-file-940.png" alt="020 edit choose file 940" width="800px"></a>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_choose_file">Choose file</h5>
+<div class="paragraph">
+<p>Choose file using the regular browser window:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/030-choose-file-using-browser.png"><img src="images/wicket-viewer/blob-attachments/030-choose-file-using-browser-520.png" alt="030 choose file using browser 520" width="520px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Chosen file is indicated:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/040-edit-chosen-file-indicated.png"><img src="images/wicket-viewer/blob-attachments/040-edit-chosen-file-indicated-940.png" alt="040 edit chosen file indicated 940" width="800px"></a>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_image_rendered">Image rendered</h5>
+<div class="paragraph">
+<p>Back in view mode (ie once hit OK) if the <code>Blob</code> is an image, then it is shown:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/050-ok-if-image-then-rendered.png"><img src="images/wicket-viewer/blob-attachments/050-ok-if-image-then-rendered-940.png" alt="050 ok if image then rendered 940" width="800px"></a>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_download">Download</h5>
+<div class="paragraph">
+<p><code>Blob</code> can be downloaded:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/060-download.png"><img src="images/wicket-viewer/blob-attachments/060-download-940.png" alt="060 download 940" width="800px"></a>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_clear">Clear</h5>
+<div class="paragraph">
+<p>Back in edit mode, can choose a different file or clear (assuming property is not mandatory):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/blob-attachments/070-edit-clear.png"><img src="images/wicket-viewer/blob-attachments/070-edit-clear-940.png" alt="070 edit clear 940" width="800px"></a>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_domain_code_3">2.5.2. Domain Code</h4>
+<div class="paragraph">
+<p>To define a <code>Blob</code>, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">Blob</span> attachment;
+<span class="annotation">@javax</span>.jdo.annotations.Persistent(defaultFetchGroup=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>)
+    <span class="annotation">@javax</span>.jdo.annotations.Persistent(defaultFetchGroup=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>, columns = {
+            <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">attachment_name</span><span class="delimiter">&quot;</span></span>),
+            <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">attachment_mimetype</span><span class="delimiter">&quot;</span></span>),
+            <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">attachment_bytes</span><span class="delimiter">&quot;</span></span>, jdbcType = <span class="string"><span class="delimiter">&quot;</span><span class="content">BLOB</span><span class="delimiter">&quot;</span></span>, sqlType = <span class="string"><span class="delimiter">&quot;</span><span class="content">BLOB</span><span class="delimiter">&quot;</span></span>)
+    })
+<span class="annotation">@Property</span>(
+        domainEvent = AttachmentDomainEvent.class,
+        optionality = Optionality.OPTIONAL
+)
+<span class="directive">public</span> <span class="predefined-type">Blob</span> getAttachment() { <span class="keyword">return</span> attachment; }
+<span class="directive">public</span> <span class="type">void</span> setAttachment(<span class="directive">final</span> <span class="predefined-type">Blob</span> attachment) { <span class="local-variable">this</span>.attachment = attachment; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To define a <code>Clob</code>, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">Clob</span> doc;
+<span class="annotation">@javax</span>.jdo.annotations.Persistent(defaultFetchGroup=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>, columns = {
+        <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">doc_name</span><span class="delimiter">&quot;</span></span>),
+        <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">doc_mimetype</span><span class="delimiter">&quot;</span></span>),
+        <span class="annotation">@javax</span>.jdo.annotations.Column(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">doc_chars</span><span class="delimiter">&quot;</span></span>, jdbcType = <span class="string"><span class="delimiter">&quot;</span><span class="content">CLOB</span><span class="delimiter">&quot;</span></span>, sqlType = <span class="string"><span class="delimiter">&quot;</span><span class="content">CLOB</span><span class="delimiter">&quot;</span></span>)
+})
+<span class="annotation">@Property</span>(
+        optionality = Optionality.OPTIONAL
+)
+<span class="directive">public</span> <span class="predefined-type">Clob</span> getDoc() { <span class="keyword">return</span> doc; }
+<span class="directive">public</span> <span class="type">void</span> setDoc(<span class="directive">final</span> <span class="predefined-type">Clob</span> doc) { <span class="local-variable">this</span>.doc = doc; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>Blob</code> and <code>Clob</code> types can also be used as parameters to actions.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_features_user-registration">2.6. User Registration</h3>
+<div class="paragraph">
+<p>The Wicket viewer provides the ability for users to sign-up by providing a valid email address:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>from the login page the user can instead follow a link to take them to a sign-up page, where they enter their email address.</p>
+</li>
+<li>
+<p>a verification email is sent using this service; the email includes a link back to the running application.</p>
+</li>
+<li>
+<p>the user then completes the registration process by choosing a user name and password.</p>
+</li>
+<li>
+<p>the Wicket viewer then creates an account for them and logs them in.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In a similar way, if the user has forgotten their password then they can request a reset link to be sent to their email, again by providing their email address.</p>
+</div>
+<div class="paragraph">
+<p>To support this the framework requires three services to be registered and configured:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <a href="rgsvc.html#_rgsvc_spi_UserRegistrationService">user registration service</a>, which provides an API to create the user account</p>
+</li>
+<li>
+<p>the <a href="rgsvc.html#_rgsvc_spi_EmailNotificationService">email notification service</a>, which provides an API for to send the verification emails</p>
+</li>
+<li>
+<p>the <a href="rgsvc.html#_rgsvc_api_EmailService">email service</a>, that is used by the email notification service to actually send the email.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Apache Isis core framework provides a default implementation of both the email notification service and the email service. If your application uses the <a href="https://github.com/isisaddons/isis-module-security">Isis addons security module</a> (not ASF) then an implementation is provided by that module; just add to the classpath. Otherwise you will need to provide your own implementation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is <em>no</em> default implementation of the user registration service in the core framework.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_5">2.6.1. Screenshots</h4>
+<div class="paragraph">
+<p>The user is presented with a login page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/login-page-default.png"><img src="images/wicket-viewer/user-registration/login-page-default.png" alt="login page default" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Navigate to the sign up page. Complete the page, and verify:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/sign-up-page.png"><img src="images/wicket-viewer/user-registration/sign-up-page.png" alt="sign up page" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Back to the login page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/sign-up-login-page-after-sign-up.png"><img src="images/wicket-viewer/user-registration/sign-up-login-page-after-sign-up.png" alt="sign up login page after sign up" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Email arrives, with link:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/sign-up-email-with-verification-link.png"><img src="images/wicket-viewer/user-registration/sign-up-email-with-verification-link.png" alt="sign up email with verification link" width="500px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Follow the link, complete the page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/sign-up-registration-page.png"><img src="images/wicket-viewer/user-registration/sign-up-registration-page.png" alt="sign up registration page" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Automatically logged in:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/user-registration/sign-up-after-registration.png"><img src="images/wicket-viewer/user-registration/sign-up-after-registration.png" alt="sign up after registration" width="800px"></a>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_3">2.6.2. Configuration</h4>
+<div class="paragraph">
+<p>There are two prerequisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>register an implementation of the <a href="rgsvc.html#_rgsvc_spi_UserRegistrationService">user registration service</a> (eg by using the <a href="https://github.com/isisaddons/isis-module-security">Isis addons security module</a>)</p>
+</li>
+<li>
+<p>configure the <a href="rgsvc.html#_rgsvc_api_EmailService">email service</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The latter is required if you are using the default email notification service and email service. If you are using your own alternative implementation of the email notification service then it may be omitted (and configure your own alternative implementation as required).</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to configure the Wicket viewer to suppress <a href="#_ugvw_configuration-properties_suppressing-sign-up">the sign-up page link</a> and/or the <a href="#_ugvw_configuration-properties_suppressing-password-reset">password reset page</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_configuration-properties">3. Configuration Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wicket configuration properties alter the way in which Apache Isis' Wicket viewer renders domain objects.  They are typically stored in <code>WEB-INF/viewer_wicket.properties</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To tell Apache Isis that the Wicket viewer is in use (and should therefore search for the <code>viewer_wicket.properties</code> file), add the following to <code>WEB-INF/web.xml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>isis.viewers<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>wicket<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you prefer you can place all configuration properties into <code>WEB-INF/isis.properties</code> (the configuration properties from all config files are merged together).</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Wicket Viewer Configuration Properties</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Value<br>
+(<em>default value</em>)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>ajaxDebugMode</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">whether the Wicket debug mode should be enabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>bookmarkedPages</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+ve int (<code><em>15</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of pages to bookmark</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>datePicker.maxDate</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ISO format date<br>
+(<code>2100-01-01T00:00:00.000Z</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(<code>1.13.0-SNAPSHOT</code>), specifies a maximum date after which dates may not be specified.
+</p><p class="tableblock">See <a href="http://eonasdan.github.io/bootstrap-datetimepicker/Options/#maxdate">datetimepicker reference docs</a> for
+further details.  The string must be in ISO date format (see <a href="https://github.com/moment/moment/issues/1407">here</a>
+for further details).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>datePicker.minDate</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ISO format date<br>
+(<code>1900-01-01T00:00:00.000Z</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(<code>1.13.0-SNAPSHOT</code>), specifies a minimum date before which dates may not be specified.
+</p><p class="tableblock">See <a href="http://eonasdan.github.io/bootstrap-datetimepicker/Options/#mindate">datetimepicker reference docs</a> for
+further details.  The string must be in ISO date format (see <a href="https://github.com/moment/moment/issues/1407">here</a>
+for further details).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>disableDependentChoiceAutoSelection</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For dependent choices, whether to automatically select the first dependent (eg subcategory) when the parameter on which it depends (category) changes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>disableModalDialogs</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No longer supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>liveReloadUrl</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(<code>1.13.0-SNAPSHOT</code>), specifies the URL if <a href="dg.html#_dg_ide_intellij_advanced_gradle-liveReload">live reload</a> is set up, eg:<br>
+</p><p class="tableblock"><code><a href="http://localhost:35729/livereload.js?snipver=1" class="bare">http://localhost:35729/livereload.js?snipver=1</a></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>maxTitleLengthInParentedTables</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+ve integer, (<code><em>12</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See discussion <a href="#_ugvw_configuration-properties_abbreviating-titles">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>maxTitleLengthInStandaloneTables</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+ve integer, (<code><em>12</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See discussion <a href="#_ugvw_configuration-properties_abbreviating-titles">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>maxTitleLengthInTables</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+ve integer, (<code><em>12</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See discussion <a href="#_ugvw_configuration-properties_abbreviating-titles">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>regularCase</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ignored for 1.8.0+; in earlier versions forced regular case rather than title case in the UI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>stripWicketTags</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>true</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to force Wicket tags to be stripped in prototype/development mode.  See discussion <a href="#_ugvw_configuration-properties_stripped-wicket-tags">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>suppressPasswordReset</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If user registration is enabled, whether to suppress the "password reset" link on the login page.  See discussion <a href="#_ugvw_configuration-properties_suppressing-password-reset">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>suppressRememberMe</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to suppress "remember me" checkbox on the login page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>suppressSignUp</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If user registration is enabled, whether to suppress the "sign up" link on the login page.  See discussion <a href="#_ugvw_configuration-properties_suppressing-sign-up">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>themes.enabled</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">comma separated list &#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; of bootswatch themes.  Only applies if <code>themes.showChooser</code>==<code>true</code>.  See discussion <a href="#_ugvw_configuration-properties_showing-theme-chooser">below</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>themes.showChooser</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to show chooser for Bootstrap themes.  See discussion <a href="#_ugvw_configuration-properties_showing-theme-chooser">below</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>isis.viewer.wicket.</code><br>
+<code>wicketSourcePlugin</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the Wicketsource plugin should be enabled; by default it is not enabled.
+</p><p class="tableblock">Prior to <code>1.12.0</code> this was enabled by default for prototyping (not production).  However it can significantly
+slow down rendering, hence the introduction of this configuration setting.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_abbreviating-titles">3.1. Abbreviating/suppressing titles in tables</h3>
+<div class="paragraph">
+<p>Objects whose title is overly long can be cumbersome in titles.  The Wicket viewer has a <a href="#_ugvw_features_titles-in-tables">mechanism to automatically shorten</a> the titles of objects specified using <code>@Title</code>.  As an alternative/in addition, the viewer can also be configured to simply truncate titles longer than a certain length.</p>
+</div>
+<div class="paragraph">
+<p>The properties themselves are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.maxTitleLengthInStandaloneTables=20
+isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you wish to use the same value in both cases, you can also specify just:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.maxTitleLengthInTables=15</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is used as a fallback if the more specific properties are not provided.</p>
+</div>
+<div class="paragraph">
+<p>If no properties are provided, then the Wicket viewer defaults to abbreviating titles to a length of <code>12</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_suppressing-remember-me">3.2. Suppressing 'remember me'</h3>
+<div class="paragraph">
+<p>The 'remember me' checkbox on the login page can be suppressed, if required, by setting a configuration flag.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_6">3.2.1. Screenshots</h4>
+<div class="paragraph">
+<p>With 'remember me' not suppressed (the default):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-remember-me/login-page-default.png"><img src="images/wicket-viewer/suppress-remember-me/login-page-default.png" alt="login page default" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>and with the checkbox suppressed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-remember-me/login-page-suppress-remember-me.png"><img src="images/wicket-viewer/suppress-remember-me/login-page-suppress-remember-me.png" alt="login page suppress remember me" width="300px"></a>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_4">3.2.2. Configuration</h4>
+<div class="paragraph">
+<p>To suppress the 'remember me' checkbox, add the following configuration flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.suppressRememberMe=true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_suppressing-sign-up">3.3. Suppressing 'sign up'</h3>
+<div class="paragraph">
+<p>If <a href="#_user_registration">user registration</a> has been configured, then the Wicket viewer allows the user to sign-up a new account and to reset their password from the login page.</p>
+</div>
+<div class="paragraph">
+<p>The 'sign up' link can be suppressed, if required, by setting a configuration flag.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_7">3.3.1. Screenshots</h4>
+<div class="paragraph">
+<p>With 'sign up' not suppressed (the default):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-sign-up/login-page-default.png"><img src="images/wicket-viewer/suppress-sign-up/login-page-default.png" alt="login page default" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>and with the link suppressed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-sign-up/login-page-suppress-sign-up.png"><img src="images/wicket-viewer/suppress-sign-up/login-page-suppress-sign-up.png" alt="login page suppress sign up" width="300px"></a>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_5">3.3.2. Configuration</h4>
+<div class="paragraph">
+<p>To suppress the 'sign up' link, add the following configuration flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.suppressSignUp=true</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_see_also">3.3.3. See also</h4>
+<div class="paragraph">
+<p>The <a href="#_ugvw_configuration-properties_suppressing-password-reset">password reset link</a> can be suppressed in a similar manner.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_suppressing-password-reset">3.4. Suppressing 'password reset'</h3>
+<div class="paragraph">
+<p>If <a href="#_user_registration">user registration</a> has been configured, then the Wicket viewer allows the user to sign-up a new account and to reset their password from the login page.</p>
+</div>
+<div class="paragraph">
+<p>The 'password reset' link can be suppressed, if required, by setting a configuration flag.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_8">3.4.1. Screenshots</h4>
+<div class="paragraph">
+<p>With 'password reset' not suppressed (the default):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-password-reset/login-page-default.png"><img src="images/wicket-viewer/suppress-password-reset/login-page-default.png" alt="login page default" width="300px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>and with the link suppressed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/suppress-password-reset/login-page-suppress-password-reset.png"><img src="images/wicket-viewer/suppress-password-reset/login-page-suppress-password-reset.png" alt="login page suppress password reset" width="300px"></a>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_6">3.4.2. Configuration</h4>
+<div class="paragraph">
+<p>To suppress the 'password reset' link, add the following configuration flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.suppressPasswordReset=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Typically this should be added to the <code>viewer_wicket.properties</code> file (in <code>WEB-INF</code>), though you can add to <code>isis.properties</code> if you wish.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_see_also_2">3.4.3. See also</h4>
+<div class="paragraph">
+<p>The <a href="#_ugvw_configuration-properties_suppressing-sign-up">sign up link</a> can be suppressed in a similar manner.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_stripped-wicket-tags">3.5. Stripped Wicket tags</h3>
+<div class="paragraph">
+<p>By default the Apache Isis Wicket viewer will always strip wicket tags. However, when running in prototype mode, this behaviour can be overridden using a configuration property:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.stripWicketTags=false</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In 1.7.0 and earlier, the behaviour is different; the Apache Isis Wicket viewer will preserve wicket tags when running in Apache Isis' prototype/development mode, but will still strip wicket tags in Apache Isis' server/deployment mode.</p>
+</div>
+<div class="paragraph">
+<p>We changed the behaviour in 1.8.0 because we found that Internet Explorer can be sensitive to the presence of Wicket tags.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_configuration-properties_showing-theme-chooser">3.6. Showing a theme chooser</h3>
+<div class="paragraph">
+<p>The Wicket viewer uses <a href="http://getbootstrap.com/">Bootstrap</a> styles and components (courtesy of the <a href="https://github.com/l0rdn1kk0n/wicket-bootstrap">Wicket Bootstrap</a> integration).</p>
+</div>
+<div class="paragraph">
+<p>Unless a <a href="#_ugvw_customisation_default-theme">default theme has been specified</a>, the viewer uses the default bootstrap theme. However,
+the viewer can also be configured to allow the end-user to switch theme to another theme, in particular one of those provided by <a href="http://bootswatch.com">bootswatch.com</a>.</p>
+</div>
+<div class="paragraph">
+<p>This is done using the following configuration property (in <code>WEB-INF/viewer_wicket.properties</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.themes.showChooser=true</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/theme-chooser/example-1.png"><img src="images/wicket-viewer/theme-chooser/example-1.png" alt="example 1" width="720px"></a>
+</div>
+<div class="title">Figure 1. Example 1</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/theme-chooser/example-2.png"><img src="images/wicket-viewer/theme-chooser/example-2.png" alt="example 2" width="720px"></a>
+</div>
+<div class="title">Figure 2. Example 2:</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to restrict the themes shown to some subset of those in bootswatch. This is done using a further
+property:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.wicket.themes.enabled=bootstrap-theme,Cosmo,Flatly,Darkly,Sandstone,United</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where the value is the list of themes (from <a href="http://bootswatch.com">bootswatch.com</a>) to be made available.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can also develop and install a custom themes (eg to fit your company&#8217;s look-n-feel/interface guidelines); see the <a href="#_ugvw_extending_custom-bootstrap-theme">Extending</a> chapter for further details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_request-parameters">4. Request Parameters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes features that are dependent on HTTP request parameters (<strong>not</strong> by setting configuration properties in <code>isis.properties</code>).</p>
+</div>
+<div class="sect2">
+<h3 id="_suppressing_header_and_footer_embedded_view">4.1. Suppressing Header and Footer (Embedded View)</h3>
+<div class="paragraph">
+<p>The Wicket viewer provides some support such that an Isis application can be embedded within a host webapp, for example within an iframe.</p>
+</div>
+<div class="paragraph">
+<p>Currently this support consists simply of being able to suppress the header and/or footer.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_9">4.1.1. Screenshots</h4>
+<div class="paragraph">
+<p>For example, the regular view is:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/embedded-view/regular.png"><img src="images/wicket-viewer/embedded-view/regular.png" alt="regular" width="720px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>With the header and footer both suppressed only the main content is shown:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/embedded-view/no-header-no-footer.png"><img src="images/wicket-viewer/embedded-view/no-header-no-footer.png" alt="no header no footer" width="720px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to suppress just the header, or just the footer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_parameters">4.1.2. Request parameters</h4>
+<div class="paragraph">
+<p>To suppress the header, add the following as a request parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.no.header</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and to suppress the header, add the following as a request parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.no.footer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">http://localhost:8080/wicket/entity/TODO:0?isis.no.header&amp;isis.no.footer</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_layout">5. Layout</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The wicket viewer has full support for the various methods of specifying the <a href="ugfun.html#_ugfun_object-layout">layout of objects</a>, either statically or dynamically.</p>
+</div>
+<div class="paragraph">
+<p>For more information, see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <a href="ugfun.html#_ugfun_object-layout">user guide fundamentals</a> (layout chapter);</p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_api_LayoutService"><code>LayoutService</code></a> (whose functionality is exposed on the prototyping menu as an action) and lso the a <a href="rgcms .html#_rgcms_classes_mixins_Object">mixin action</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html#_rgsvc_spi_GridService"><code>GridService</code></a> and its supporting services, <a href="rgsvc.html#_rgsvc_spi_GridLoaderService"><code>GridLoaderService</code></a> and <a href="rgsvc.html#_rgsvc_spi_GridSystemService"><code>GridSystemService</code></a></p>
+</li>
+<li>
+<p><a href="rgcms.html#_rgcms_classes_layout">grid layout classes</a>, defined in the Apache Isis applib</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_customisation">6. Customisation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ugvw_customisation_brand-logo">6.1. Brand logo</h3>
+<div class="paragraph">
+<p>By default the Wicket viewer will display the application name top-left in the header menu. This can be changed to
+display a png logo instead.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshots_10">6.1.1. Screenshots</h4>
+<div class="paragraph">
+<p>The screenshot below shows the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF) with a 'brand logo' image in its header:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/brand-logo/brand-logo.png"><img src="images/wicket-viewer/brand-logo/brand-logo.png" alt="brand logo" width="750px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>A custom brand logo (typically larger) can also be specified for the signin page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/brand-logo/brand-logo-signin.png"><img src="images/wicket-viewer/brand-logo/brand-logo-signin.png" alt="brand logo signin" width="750px"></a>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_7">6.1.2. Configuration</h4>
+<div class="paragraph">
+<p>In the application-specific subclass of <code>IsisWicketApplication</code>, bind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a string with name "brandLogoHeader" to the URL of a header image. A size of 160x40 works well.</p>
+</li>
+<li>
+<p>a string with name "brandLogoSignin" to the URL of a image for the sign-in page. A size of 400x100 works well.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Module newIsisWicketModule() {
+    <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+
+    <span class="directive">final</span> Module overrides = <span class="keyword">new</span> AbstractModule() {
+        <span class="annotation">@Override</span>
+        <span class="directive">protected</span> <span class="type">void</span> configure() {
+            ...
+            bind(<span class="predefined-type">String</span>.class).annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">brandLogoHeader</span><span class="delimiter">&quot;</span></span>))
+                              .toInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">/images/todoapp-logo-header.png</span><span class="delimiter">&quot;</span></span>);
+            bind(<span class="predefined-type">String</span>.class).annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">brandLogoSignin</span><span class="delimiter">&quot;</span></span>))
+                              .toInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">/images/todoapp-logo-signin.png</span><span class="delimiter">&quot;</span></span>);
+            ...
+        }
+    };
+
+    <span class="keyword">return</span> Modules.override(isisDefaults).with(overrides);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the logo is hosted locally, add to the relevant directory (eg <code>src/main/webapp/images</code>). It is also valid for the
+URL to be absolute.</p>
+</div>
+<div class="paragraph">
+<p>You may also wish to tweak the <a href="rgcfg.html#_rgcfg_application-specific_application-css"><code>application.css</code></a>. For example, a logo with height 40px works well with the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.navbar-brand</span> <span class="tag">img</span> {
+    <span class="key">margin-top</span>: <span class="float">-5px</span>;
+    <span class="key">margin-left</span>: <span class="float">5px</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_default-theme">6.2. Specifying a default theme</h3>
+<div class="paragraph">
+<p>The Apache Isis Wicket viewer uses <a href="http://getbootstrap.com/">Bootstrap</a> styles and components (courtesy of the <a href="https://github.com/l0rdn1kk0n/wicket-bootstrap">Wicket Bootstrap</a> integration).</p>
+</div>
+<div class="paragraph">
+<p>Unless specified otherwise, the viewer uses the default bootstrap theme. However, this can be changed by overriding <code>init()</code> in the application&#8217;s subclass of <code>IsisWicketApplication</code>. For example, to set the <a href="http://bootswatch.com/flatly/">bootswatch.com flatly</a> theme
+ as the default, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="type">void</span> init() {
+    <span class="local-variable">super</span>.init();
+    IBootstrapSettings settings = Bootstrap.getSettings();
+    settings.setThemeProvider(<span class="keyword">new</span> BootswatchThemeProvider(BootswatchTheme.Flatly));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you have developed a custom Bootstrap theme (as described <a href="#_ugvw_extending_custom-bootstrap-theme">here</a>) then this can also be specified using the <a href="https://github.com/l0rdn1kk0n/wicket-bootstrap/wiki/Themes">Wicket Bootstrap API</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_welcome-page">6.3. Welcome page</h3>
+<div class="paragraph">
+<p>It&#8217;s possible to customize the application name, welcome message and about message can also be customized. This is done by adjusting the Guice bindings (part of Apache Isis' bootstrapping) in your custom subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyAppApplication</span> <span class="directive">extends</span> IsisWicketApplication {
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> Module newIsisWicketModule() {
+        <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+        <span class="directive">final</span> Module myAppOverrides = <span class="keyword">new</span> AbstractModule() {
+            <span class="annotation">@Override</span>
+            <span class="directive">protected</span> <span class="type">void</span> configure() {
+                ...
+                bind(<span class="predefined-type">String</span>.class)
+                    .annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">applicationName</span><span class="delimiter">&quot;</span></span>))
+                     .toInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">My Wonderful App</span><span class="delimiter">&quot;</span></span>);
+                bind(<span class="predefined-type">String</span>.class)
+                    .annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">welcomeMessage</span><span class="delimiter">&quot;</span></span>))
+                    .toInstance(readLines(<span class="string"><span class="delimiter">&quot;</span><span class="content">welcome.html</span><span class="delimiter">&quot;</span></span>));         <i class="conum" data-value="1"></i><b>(1)</b>
+                bind(<span class="predefined-type">String</span>.class)
+                    .annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">aboutMessage</span><span class="delimiter">&quot;</span></span>))
+                    .toInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">My Wonderful App v1.0</span><span class="delimiter">&quot;</span></span>);
+                ...
+            }
+        };
+
+        <span class="keyword">return</span> Modules.override(isisDefaults).with(myAppOverrides);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the <code>welcome.html</code> file is resolved relative to <code>src/main/webapp</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_about-page">6.4. About page</h3>
+<div class="paragraph">
+<p>Isis' Wicket viewer has an About page that, by default, will provide a dump of the JARs that make up the webapp. This page will also show the manifest attributes of the WAR archive itself, if there are any. One of these attributes may also be used as the application version number.</p>
+</div>
+<div class="sect3">
+<h4 id="_screenshot">6.4.1. Screenshot</h4>
+<div class="paragraph">
+<p>Here&#8217;s what the About page looks like with this configuration added:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/wicket-viewer/about-page/about-page.png"><img src="images/wicket-viewer/about-page/about-page.png" alt="about page" width="800px"></a>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that this screenshot shows an earlier version of the <a href="#">Wicket viewer</a> UI (specifically, pre 1.8.0).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that the <code>Build-Time</code> attribute has been used as the version number. The Wicket viewer is hard-coded to search for specific attributes and use as the application version. In order, it searches for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Implementation-Version</code></p>
+</li>
+<li>
+<p><code>Build-Time</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If none of these are found, then no version is displayed.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_8">6.4.2. Configuration</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This configuration is included within the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_adding_attributes_to_the_war_s_manifest">Adding attributes to the WAR&#8217;s manifest</h5>
+<div class="paragraph">
+<p>Add the following to the webapp&#8217;s <code>pom.xml</code> (under <code>&lt;build&gt;/&lt;plugins&gt;</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.codehaus.mojo<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>build-helper-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.5<span class="tag">&lt;/version&gt;</span>
+      <span class="tag">&lt;executions&gt;</span>
+        <span class="tag">&lt;execution&gt;</span>
+          <span class="tag">&lt;phase&gt;</span>validate<span class="tag">&lt;/phase&gt;</span>
+          <span class="tag">&lt;goals&gt;</span>
+            <span class="tag">&lt;goal&gt;</span>maven-version<span class="tag">&lt;/goal&gt;</span>
+          <span class="tag">&lt;/goals&gt;</span>
+        <span class="tag">&lt;/execution&gt;</span>
+      <span class="tag">&lt;/executions&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span>
+
+<span class="tag">&lt;plugin&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>maven-war-plugin<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;configuration&gt;</span>
+        <span class="tag">&lt;archive&gt;</span>
+            <span class="tag">&lt;manifest&gt;</span>
+                <span class="tag">&lt;addDefaultImplementationEntries&gt;</span>true<span class="tag">&lt;/addDefaultImplementationEntries&gt;</span>
+            <span class="tag">&lt;/manifest&gt;</span>
+            <span class="tag">&lt;manifestEntries&gt;</span>
+                <span class="tag">&lt;Build-Time&gt;</span>${maven.build.timestamp}<span class="tag">&lt;/Build-Time&gt;</span>
+                <span class="tag">&lt;Build-Number&gt;</span>${buildNumber}<span class="tag">&lt;/Build-Number&gt;</span>
+                <span class="tag">&lt;Build-Host&gt;</span>${agent.name}<span class="tag">&lt;/Build-Host&gt;</span>
+                <span class="tag">&lt;Build-User&gt;</span>${user.name}<span class="tag">&lt;/Build-User&gt;</span>
+                <span class="tag">&lt;Build-Maven&gt;</span>Maven ${maven.version}<span class="tag">&lt;/Build-Maven&gt;</span>
+                <span class="tag">&lt;Build-Java&gt;</span>${java.version}<span class="tag">&lt;/Build-Java&gt;</span>
+                <span class="tag">&lt;Build-OS&gt;</span>${os.name}<span class="tag">&lt;/Build-OS&gt;</span>
+                <span class="tag">&lt;Build-Label&gt;</span>${project.version}<span class="tag">&lt;/Build-Label&gt;</span>
+            <span class="tag">&lt;/manifestEntries&gt;</span>
+        <span class="tag">&lt;/archive&gt;</span>
+    <span class="tag">&lt;/configuration&gt;</span>
+    <span class="tag">&lt;executions&gt;</span>
+        <span class="tag">&lt;execution&gt;</span>
+            <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+            <span class="tag">&lt;goals&gt;</span>
+                <span class="tag">&lt;goal&gt;</span>war<span class="tag">&lt;/goal&gt;</span>
+            <span class="tag">&lt;/goals&gt;</span>
+            <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;classifier&gt;</span>${env}<span class="tag">&lt;/classifier&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/execution&gt;</span>
+    <span class="tag">&lt;/executions&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you then build the webapp from the Maven command line (<code>mvn clean package</code>), then the WAR should contain a <code>META-INF/MANIFEST.MF</code> with those various attribute entries.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_exporting_the_attributes_into_the_app">Exporting the attributes into the app</h5>
+<div class="paragraph">
+<p>The manifest attributes are provided to the rest of the application by way of the Wicket viewer&#8217;s integration with Google Guice.</p>
+</div>
+<div class="paragraph">
+<p>In your subclass of <code>IsisWicketApplication</code>, there is a method <code>newIsisWicketModule()</code>. In this method you need to bind an <code>InputStream</code> that will read the manifest attributes. This is all boilerplate so you can just copy-n-paste:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Module newIsisWicketModule() {
+    ...
+    final Module simpleappOverrides = <span class="keyword">new</span> AbstractModule() {
+        <span class="annotation">@Override</span>
+        <span class="directive">protected</span> <span class="type">void</span> configure() {
+            ...
+            bind(<span class="predefined-type">InputStream</span>.class)
+                .annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">metaInfManifest</span><span class="delimiter">&quot;</span></span>))
+                .toProvider(Providers.of(
+                    getServletContext().getResourceAsStream(<span class="string"><span class="delimiter">&quot;</span><span class="content">/META-INF/MANIFEST.MF</span><span class="delimiter">&quot;</span></span>)));
+        }
+    };
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that you should be good to go!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_tweaking-css-classes">6.5. Tweaking CSS classes</h3>
+<div class="paragraph">
+<p>The HTML generated by the Wicket viewer include plenty of CSS classes so that you can easily target the required elements as required. For example, you could use CSS to suppress the entity&#8217;s icon alongside its title. This would be done using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.entityIconAndTitlePanel</span> <span class="tag">a</span> <span class="tag">img</span> {
+    <span class="key">display</span>: <span class="value">none</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These customizations should generally be added to <a href="rgcfg.html#_rgcfg_application-specific_application-css"><code>application.css</a></code>; this file is included by default in every webpage served up by the Wicket viewer.</p>
+</div>
+<div class="sect3">
+<h4 id="_individual_members">6.5.1. Individual members</h4>
+<div class="paragraph">
+<p>For example, the <code>ToDoItem</code> object of the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF) has a <code>notes</code> property. The HTML for this will be something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">property ToDoItem-notes</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">multiLineStringPanel scalarNameAndValueComponentType</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;label</span> <span class="attribute-name">for</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">id83</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">scalarName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Notes<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">scalarValue</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+           <span class="tag">&lt;textarea</span>
+              <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">middleColumn:memberGroup:1:properties:4:property:scalarIfRegular:scalarValue</span><span class="delimiter">&quot;</span></span>
+              <span class="attribute-name">disabled</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">disabled</span><span class="delimiter">&quot;</span></span>
+              <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">id83</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">rows</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">maxlength</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">400</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">125</span><span class="delimiter">&quot;</span></span>
+              <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+           <span class="tag">&lt;/textarea&gt;</span>
+         <span class="tag">&lt;span&gt;</span>
+      <span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="rgcfg.html#_rgcfg_application-specific_application-css"><code>application.css</code></a> file is the place to add application-specific styles. By way of an example, if (for some reason) we wanted to completely hide the notes value, we could do so using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="tag">div</span><span class="class">.ToDoItem-notes</span> <span class="tag">span</span><span class="class">.scalarValue</span> {
+    <span class="key">display</span>: <span class="value">none</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use a similar approach for collections and actions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_css_styles">6.5.2. Custom CSS styles</h4>
+<div class="paragraph">
+<p>The above technique works well if you know the class member to target, but you might instead want to apply a custom style to a set of members. For this, you can use the <code>@CssClass</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, in the <code>ToDoItem</code> class the following annotation (indicating that this is a key, important, property) :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@PropertyLayout</span>(cssClass=<span class="string"><span class="delimiter">&quot;</span><span class="content">x-myapp-highlight</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> LocalDate getDueBy() {
+    <span class="keyword">return</span> dueBy;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would generate the HTML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">property ToDoItem-dueBy x-myapp-highlight</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        ...
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This can then be targeted, for example using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="tag">div</span><span class="class">.x-myapp-highlight</span> <span class="tag">span</span><span class="class">.scalarName</span> {
+    <span class="key">color</span>: <span class="value">red</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note also that instead of using <code>@PropertyLayout(cssClass=&#8230;&#8203;)</code> annotation, you can also specify the CSS style using a <a href="ugfun.html#_ugfun_object-layout_dynamic">dynamic layout</a> JSON file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="string"><span class="delimiter">&quot;</span><span class="content">dueBy</span><span class="delimiter">&quot;</span></span>: {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">propertyLayout</span><span class="delimiter">&quot;</span></span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">cssClass</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">x-myapp-important</span><span class="delimiter">&quot;</span></span>
+    }
+},</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugvw_customisation_tweaking-css-classes_columns-in-tables">6.5.3. Table columns</h4>
+<div class="paragraph">
+<p>Sometimes you may want to apply styling to specific columns of tables.  For example, you might want to adjust width so that
+for certain properties have more (or less) room than they otherwise would; or you might want to hide the column
+completely.  This also applies to the initial icon/title column.</p>
+</div>
+<div class="paragraph">
+<p>There is also the issue of scoping:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You may wish the style to apply globally: that is, dependent on the type of entity being rendered in the table,
+irrespective of the page on which it is shown.</p>
+</li>
+<li>
+<p>Alternativel, you may wish to target the CSS for a table as rendered either as a parented collection (owned by some
+other entity) or rendered as a standarlone collection (the result of invoking an action).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In each of these cases the Wicket viewer adds CSS classes either to containing <code>div</code>s or to the <code>&lt;th&gt;</code> and <code>&lt;td&gt;</code>
+ elements of the table itself so that it can custom styles can be appropriately targetted.</p>
+</div>
+<div class="sect4">
+<h5 id="_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">Applying styles globally</h5>
+<div class="paragraph">
+<p>Every rendered collection containing a domain class will be wrapped in a <code>&lt;div&gt;</code> that lists that domain class (in CSS safe
+form).  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entityCollection com-mycompany-myapp-Customer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;table&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">firstName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">lastName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+            ...
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">firstName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">lastName</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+            ...
+        <span class="tag">&lt;/tr&gt;</span>
+        ...
+    <span class="tag">&lt;/table&gt;</span>
+    ...
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>lastName</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer</span> <span class="tag">th</span><span class="class">.lastName</span> {
+    <span class="key">width</span>: <span class="float">30%</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_parented_collections">Parented collections</h5>
+<div class="paragraph">
+<p>Parented collections will be wrapped in <code>&lt;div&gt;</code>s that identify both the entity type and also the collection Id.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entityPage com-mycompany-myapp-Customer</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>       <i class="conum" data-value="1"></i><b>(1)</b>
+    ...
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>                                    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;table&gt;</span>
+            <span class="tag">&lt;tr&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                ...
+            <span class="tag">&lt;/tr&gt;</span>
+            <span class="tag">&lt;tr&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                ...
+            <span class="tag">&lt;/tr&gt;</span>
+            ...
+        <span class="tag">&lt;/table&gt;</span>
+        ...
+    <span class="tag">&lt;/div&gt;</span>
+    ...
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the parent class identifier</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>the collection identifier. This element&#8217;s class also has the entity type within the collection (as <a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">discussed above</a>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>productRef</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer</span> <span class="tag">orders</span> <span class="tag">td</span><span class="class">.productRef</span> {
+    <span class="key">font-style</span>: <span class="value">italic</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_standalone_collections">Standalone collections</h5>
+<div class="paragraph">
+<p>Standalone collections will be wrapped in a <code>&lt;div&gt;</code> that identifies the action invoked.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standaloneCollectionPage</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com-mycompany-myapp-Customer_mostRecentOrders ...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>     <i class="conum" data-value="1"></i><b>(1)</b>
+        ...
+        <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">orders</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;table&gt;</span>
+                <span class="tag">&lt;tr&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    <span class="tag">&lt;th</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/th&gt;</span>
+                    ...
+                <span class="tag">&lt;/tr&gt;</span>
+                <span class="tag">&lt;tr&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">title-column</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">productRef</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    <span class="tag">&lt;td</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">quantity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>...<span class="tag">&lt;/td&gt;</span>
+                    ...
+                <span class="tag">&lt;/tr&gt;</span>
+                ...
+            <span class="tag">&lt;/table&gt;</span>
+            ...
+        <span class="tag">&lt;/div&gt;</span>
+        ...
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>action identifier.  This element&#8217;s class also identifies the entity type within the collection (as <a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">discussed above</a>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using this, the <code>quantity</code> property could be targeted using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="css"><span class="class">.com-mycompany-myapp-Customer_mostRecentOrders</span> <span class="tag">td</span><span class="class">.quantity</span> {
+    <span class="key">font-weight</span>: <span class="value">bold</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_cheap-n-cheerful-theme">6.6. Cheap-n-cheerful theme</h3>
+<div class="paragraph">
+<p>The application name (as defined in the <code>IsisWicketApplication</code> subclass) is also used (in sanitized form) as the CSS class in a <code>&lt;div&gt;</code> that wraps all the rendered content of every page.</p>
+</div>
+<div class="paragraph">
+<p>For example, if the application name is "ToDo App", then the <code>&lt;div&gt;</code> generated is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">todo-app</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    ...
+<span class="tag">&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can therefore use this CSS class as a way of building your own "theme" for the various elements of the wicket viewer pages.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Alternatively you could "do it properly" and create your <a href="#_ugvw_extending_custom-bootstrap-theme">own Bootstrap theme</a>, as described in the <a href="ugbtb.html">Extending</a> chapter.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_using-different-css-file">6.7. Using a different CSS file</h3>
+<div class="paragraph">
+<p>If for some reason you wanted to name the CSS file differently (eg <code>stylesheets/myapp.css</code>), then adjust the Guice bindings (part of Apache Isis' bootstrapping) in your custom subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyAppApplication</span> <span class="directive">extends</span> IsisWicketApplication {
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> Module newIsisWicketModule() {
+        <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+        <span class="directive">final</span> Module myAppOverrides = <span class="keyword">new</span> AbstractModule() {
+            <span class="annotation">@Override</span>
+            <span class="directive">protected</span> <span class="type">void</span> configure() {
+                ...
+                bind(<span class="predefined-type">String</span>.class)
+                    .annotatedWith(Names.named(<span class="string"><span class="delimiter">&quot;</span><span class="content">applicationCss</span><span class="delimiter">&quot;</span></span>))
+                    .toInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">stylesheets/myapp.css</span><span class="delimiter">&quot;</span></span>);
+                ...
+            }
+        };
+
+        <span class="keyword">return</span> Modules.override(isisDefaults).with(myAppOverrides);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As indicated above, this file is resolved relative to <code>src/main/webapp</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_custom-javascript">6.8. Custom Javascript</h3>
+<div class="paragraph">
+<p>The Wicket viewer ships with embedded JQuery, so this can be leveraged to perform arbitrary transformations of the rendered page (eg to run some arbitrary JQuery on page load).</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Just because something is possible, it doesn&#8217;t necessarily mean we encourage it.  Please be aware that there is no formal API for any custom javascript that you might implement to target; future versions of Apache Isis might break your code.</p>
+</div>
+<div class="paragraph">
+<p>If possible, consider using the <code>ComponentFactory</code> API described in the <a href="#_ugvw_extending">Extending</a> chapter.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To register your Javascript code, adjusting the Guice bindings (part of Apache Isis' bootstrapping) in your custom subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public class MyAppApplication extends IsisWicketApplication {
+    @Override
+    protected Module newIsisWicketModule() {
+        final Module isisDefaults = super.newIsisWicketModule();
+        final Module myAppOverrides = new AbstractModule() {
+            @Override
+            protected void configure() {
+                ...
+                bind(String.class)
+                    .annotatedWith(Names.named("applicationJs"))
+                    .toInstance("scripts/application.js");
+                ...
+            }
+        };
+        return Modules.override(isisDefaults).with(myAppOverrides);
+    }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Currently only one such <code>.js</code> file can be registered.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_customisation_auto-refresh">6.9. Auto-refresh page</h3>
+<div class="paragraph">
+<p>This requirement from the users mailing list:</p>
+</div>
+<div class="paragraph">
+<p><div class="extended-quote-first"><p>Suppose you want to build a monitoring application, eg for an electricity grid. Data is updated in the background (eg via the Restful Objects REST API).  What is needed is the ability to show an entity that includes a <a href="http://github.com/isisaddons/isis-wicket-gmap3">map</a>, and have it auto-refresh every 5 seconds or so.
+</p></div></p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s one (somewhat crude, but workable) way to accomplish this.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, update the domain object to return custom CSS:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyDomainObject</span> {
+    ...
+    public <span class="predefined-type">String</span> cssClass() {<span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">my-special-auto-updating-entity</span><span class="delimiter">&quot;</span></span>; }
+    ...
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Then, use javascript in <code>webapp/src/main/webapp/scripts/application.js</code> to reload:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="predefined">$</span>(<span class="keyword">function</span>() {
+    <span class="keyword">if</span> (<span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">.my-special-auto-updating-entity</span><span class="delimiter">&quot;</span></span>).length) {
+        setTimeout(<span class="keyword">function</span>() {document.location.reload();}, <span class="integer">5000</span>); <span class="comment">// 1000 is 5 sec</span>
+    }
+});</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_extending">7. Extending the Viewer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Wicket viewer allows you to customize the GUI in several (progressively more sophisticated) ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>by <a href="#_ugvw_customisation_tweaking-css-classes">tweaking the UI using CSS</a></p>
+</li>
+<li>
+<p>by <a href="#_ugvw_customisation_custom-javascript">tweaking the UI using Javascript</a></p>
+</li>
+<li>
+<p>by writing a <a href="#_ugvw_extending_custom-bootstrap-theme">custom bootstrap theme</a></p>
+</li>
+<li>
+<p>by <a href="#_ugvw_extending_replacing-page-elements">replacing elements of the page</a> using the <code>ComponentFactory</code> interface</p>
+</li>
+<li>
+<p>by implementing <a href="#_ugvw_extending_custom-pages">replacement page implementations</a> for the standard page types</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The first two of these options are discussed in the <a href="#">Wicket viewer</a> chapter.  This chapter describes the remaining "heavier-weight/more powerful" options.</p>
+</div>
+<div class="paragraph">
+<p>The chapter wraps up with a technique for prototyping, allowing user/passwords to be specified as query arguments.</p>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_extending_custom-bootstrap-theme">7.1. Custom Bootstrap theme</h3>
+<div class="paragraph">
+<p>The Apache Isis Wicket viewer uses <a href="http://getbootstrap.com/">Bootstrap</a> styles and components (courtesy of the <a href="https://github.com/l0rdn1kk0n/wicket-bootstrap">Wicket Bootstrap</a> integration).</p>
+</div>
+<div class="paragraph">
+<p>By default the viewer uses the default bootstrap theme. It is possible to configure the Wicket viewer to allow the user to <a href="#_ugvw_configuration-properties_showing-theme-chooser">select other themes</a> provided by <a href="http://bootswatch.com">bootswatch.com</a>, and if required one of these can be <a href="#_ugvw_customisation_default-theme">set as the default</a>.</p>
+</div>
+<div class="paragraph">
+<p>However, you may instead want to write your own custom theme, for example to fit your company&#8217;s look-n-feel/interface guidelines. This is done by implementing <a href="https://github.com/l0rdn1kk0n/wicket-bootstrap">Wicket Bootstrap</a>’s <code>de.agilecoders.wicket.core.settings.ITheme</code> class. This defines:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the name of the theme</p>
+</li>
+<li>
+<p>the resources it needs (the CSS and optional JS and/or fonts), and</p>
+</li>
+<li>
+<p>optional urls to load them from a Content Delivery Network (CDN).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To make use of the custom <code>ITheme</code> the application should register it by adding the following snippet in
+(your application&#8217;s subclass of) <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> init() {
+    ...
+    IBootstrapSettings settings = <span class="keyword">new</span> BootstrapSettings();
+    ThemeProvider themeProvider = <span class="keyword">new</span> SingleThemeProvider(<span class="keyword">new</span> MyTheme());
+    settings.setThemeProvider(themeProvider);
+    Bootstrap.install(getClass(), settings);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_extending_replacing-page-elements">7.2. Replacing page elements</h3>
+<div class="paragraph">
+<p>Replacing elements of the page is the most powerful general-purpose way to customize the look-n-feel of the viewer.  Examples at the (non-ASF) <a href="http://www.isisaddons.org">Isis Add-ons</a> include the <a href="http://github.com/isisaddons/isis-wicket-gmap3">gmap3</a> extension, the <a href="http://github.com/isisaddons/isis-wicket-fullcalendar2">calendar</a> extension, the <a href="http://github.com/isisaddons/isis-wicket-excel">excel download</a> and the <a href="http://github.com/isisaddons/isis-wicket-wickedcharts">wickedcharts</a> charting integration.</p>
+</div>
+<div class="paragraph">
+<p>The pages generated by Apache Isis' Wicket viewer are built up of numerous elements, from fine-grained widgets for property/parameter fields, to much larger components that take responsibility for rendering an entire entity entity, or a collection of entities. Under the covers these are all implementations of the the Apache Wicket <code>Component</code> API. The larger components delegate to the smaller, of course.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_the_viewer_selects_components">7.2.1. How the viewer selects components</h4>
+<div class="paragraph">
+<p>Components are created using Apache Isis' <code>ComponentFactory</code> interface, which are registered in turn through the <code>ComponentFactoryRegistrar</code> interface. Every component is categorizes by type (the <code>ComponentType</code> enum), and Apache Isis uses this to determine which <code>ComponentFactory</code> to use. For example, the <code>ComponentType.BOOKMARKED_PAGES</code> is used to locate the <code>ComponentFactory</code> that will build the bookmarked pages panel.</p>
+</div>
+<div class="paragraph">
+<p>Each factory is also handed a model (an implementation of <code>org.apache.wicket.IModel</code>) appropriate to its <code>ComponentType</code>; this holds the data to be rendered. For example, <code>ComponentType.BOOKMARKED_PAGES</code> is given a <code>BookmarkedPagesModel</code>, while <code>ComponentType.SCALAR_NAME_AND_VALUE</code> factories are provided a model of type of type <code>ScalarModel</code> .</p>
+</div>
+<div class="paragraph">
+<p>In some cases there are several factories for a given <code>ComponentType</code>; this is most notably the case for <code>ComponentType.SCALAR_NAME_AND_VALUE</code>. After doing a first pass selection of candidate factories by <code>ComponentType</code>, each factory is then asked if it <code>appliesTo(Model)</code>. This is an opportunity for the factory to check the model itself to see if the data within it is of the appropriate type.</p>
+</div>
+<div class="paragraph">
+<p>Thus, the <code>BooleanPanelFactory</code> checks that the <code>ScalarModel</code> holds a boolean, while the <code>JodaLocalDatePanelFactory</code> checks to see if it holds <code>org.joda.time.LocalDate</code>.</p>
+</div>
+<div class="paragraph">
+<p>There will typically be only one <code>ComponentFactory</code> capable of rendering a particular <code>ComponentType</code>/<code>ScalarModel</code> combination; at any rate, the framework stops as soon as one is found.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is one refinement to the above algorithm where multiple component factories might be used to render an object; this is discussed in <a href="#_ugvw_extending_replacing-page-elements_collections">Additional Views of Collections</a>, below.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_replace_a_component">7.2.2. How to replace a component</h4>
+<div class="paragraph">
+<p>This design (the <a href="http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">chain of responsibility</a> design pattern) makes it quite straightforward to change the rendering of any element of the page. For example, you might switch out Apache Isis' sliding bookmark panel and replace it with one that presents the bookmarks in some different fashion.</p>
+</div>
+<div class="paragraph">
+<p>First, you need to write a <code>ComponentFactory</code> and corresponding <code>Component</code>. The recommended approach is to start with the source of the <code>Component</code> you want to switch out. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyBookmarkedPagesPanelFactory</span> <span class="directive">extends</span> ComponentFactoryAbstract {
+    <span class="directive">public</span> MyBookmarkedPagesPanelFactory() {
+        <span class="local-variable">super</span>(ComponentType.BOOKMARKED_PAGES);
+    }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> ApplicationAdvice appliesTo(<span class="directive">final</span> IModel&lt;?&gt; model) {
+        <span class="keyword">return</span> appliesIf(model <span class="keyword">instanceof</span> BookmarkedPagesModel);
+    }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Component</span> createComponent(<span class="directive">final</span> <span class="predefined-type">String</span> id, <span class="directive">final</span> IModel&lt;?&gt; model) {
+        <span class="directive">final</span> BookmarkedPagesModel bookmarkedPagesModel = (BookmarkedPagesModel) model;
+        <span class="keyword">return</span> <span class="keyword">new</span> MyBookmarkedPagesPanel(id, bookmarkedPagesModel);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyBookmarkedPagesPanel</span>
+    <span class="directive">extends</span> PanelAbstract&lt;BookmarkedPagesModel&gt; {
+   ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here <code>PanelAbstract</code> ultimately inherits from <code>org.apache.wicket.Component</code>.
+Your new <code>Component</code> uses the information in the provided model (eg <code>BookmarkedPagesModel</code>) to know what to render.</p>
+</div>
+<div class="paragraph">
+<p>Next, you will require a custom implementation of the <code>ComponentFactoryRegistrar</code> that registers your custom <code>ComponentFactory</code> as a replacement:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyComponentFactoryRegistrar</span> <span class="directive">extends</span> ComponentFactoryRegistrarDefault {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> addComponentFactories(ComponentFactoryList componentFactories) {
+        <span class="local-variable">super</span>.addComponentFactories(componentFactories);
+        componentFactories.add(<span class="keyword">new</span> MyBookmarkedPagesPanelFactory());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will result in the new component being used instead of (that is, discovered prior to) Isis' default implementation.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Previously we suggested using "replace" rather than "add"; however this has unclear semantics for some component types; see <a href="https://issues.apache.org/jira/browse/ISIS-996">ISIS-996</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally (as for other customizations), you need to adjust the Guice bindings in your custom subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyAppApplication</span> <span class="directive">extends</span> IsisWicketApplication {
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> Module newIsisWicketModule() {
+        <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+        <span class="directive">final</span> Module myAppOverrides = <span class="keyword">new</span> AbstractModule() {
+            <span class="annotation">@Override</span>
+            <span class="directive">protected</span> <span class="type">void</span> configure() {
+                ...
+                bind(ComponentFactoryRegistrar.class)
+                    .to(MyComponentFactoryRegistrar.class);
+                ...
+            }
+        };
+
+        <span class="keyword">return</span> Modules.override(isisDefaults).with(myAppOverrides);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ugvw_extending_replacing-page-elements_collections">7.2.3. Additional Views of Collections</h4>
+<div class="paragraph">
+<p>As explained above, in most cases Apache Isis' Wicket viewer will search for the first <code>ComponentFactory</code> that can render an element, and use it. In the case of (either standalone or parented) collections, though, Apache Isis will show all available views.</p>
+</div>
+<div class="paragraph">
+<p>For example, out-of-the-box Apache Isis provides a table view, a summary view (totals/sums/averages of any data), and a collapsed view (for <code>@Render(LAZILY)</code> collections). These are selected by clicking on the toolbar by each collection.</p>
+</div>
+<div class="paragraph">
+<p>Additional views though could render the objects in the collection as a variety of ways. Indeed, some third-party implementations already exist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/isisaddons/isis-wicket-excel">excel integration</a> (collection as a downloadable excel spreadsheet)</p>
+</li>
+<li>
+<p><a href="https://github.com/isisaddons/isis-wicket-gmap3">google maps v3 integration</a> (render any objects with a location on a map)</p>
+</li>
+<li>
+<p><a href="https://github.com/isisaddons/isis-wicket-wickedcharts">wicked charts integration</a> (barchart of any data)</p>
+</li>
+<li>
+<p><a href="https://github.com/isisaddons/isis-wicket-fullcalendar2">full calendar integration</a> (render any objects with date properties on a calendar)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Registering these custom views is just a matter of adding the appropriate Maven module to the classpath. Apache Isis uses the JDK <code>ServiceLoader</code> API to automatically discover and register the <code>ComponentFactory</code> of each such component.</p>
+</div>
+<div class="paragraph">
+<p>If you want to write your own alternative component and auto-register, then include a file <code>META-INF/services/org.apache.isis.viewer.wicket.ui.ComponentFactory</code> whose contents is the fully-qualified class name of the custom <code>ComponentFactory</code> that you have written.</p>
+</div>
+<div class="paragraph">
+<p>Wicket itself has lots of components available at its <a href="http://wicketstuff.org">wicketstuff.org</a> companion website; you might find some of these useful for your own customizations.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_object_view_eg_dashboard">7.2.4. Custom object view (eg dashboard)</h4>
+<div class="paragraph">
+<p>One further use case in particular is worth highlighting; the rendering of an entire entity. Normally entities this is done using <code>EntityCombinedPanelFactory</code>, this being the first <code>ComponentFactory</code> for the <code>ComponentType.ENTITY</code> that is registered in Apache Isis default <code>ComponentFactoryRegistrarDefault</code>.</p>
+</div>
+<div class="paragraph">
+<p>You could, though, register your own <code>ComponentFactory</code> for entities that is targeted at a particular class of entity - some sort of object representing a dashboard, for example. It can use the <code>EntityModel</code> provided to it to determine the class of the entity, checking if it is of the appropriate type. Your custom factory should also be registered before the <code>EntityCombinedPanelFactory</code> so that it is checked prior to the default <code>EntityCombinedPanelFactory</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyComponentFactoryRegistrar</span> <span class="directive">extends</span> ComponentFactoryRegistrarDefault {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> addComponentFactories(ComponentFactoryList componentFactories) {
+        componentFactories.add(<span class="keyword">new</span> DashboardEntityFactory());
+        ...
+        super.addComponentFactories(componentFactories);
+        ...
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_extending_custom-pages">7.3. Custom pages</h3>
+<div class="paragraph">
+<p>In the vast majority of cases customization should be sufficient by <a href="#_ugvw_extending_replacing-page-elements">replacing elements of a page</a>. However, it is also possible to define an entirely new page for a given page type.</p>
+</div>
+<div class="paragraph">
+<p>Isis defines eight page types (see the <code>org.apache.isis.viewer.wicket.model.models.PageType</code> enum):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. PageType enum</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Page type</th>
+<th class="tableblock halign-left valign-top">Renders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SIGN_IN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial sign-in (aka login) page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SIGN_UP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sign-up page (if <a href="rgsvc.html#_rgsvc_spi_UserRegistrationService">user registration</a> is enabled).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SIGN_UP_VERIFY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sign-up verification page (if <a href="rgsvc.html#_rgsvc_spi_UserRegistrationService">user registration</a> is enabled; as accessed by link from verification email)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PASSWORD_RESET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password reset page (if enabled).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HOME</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The home page, displaying either the welcome message or dashboard</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ABOUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The about page, accessible from link top-right</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTITY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Renders a single entity or view model</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STANDALONE_COLLECTION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page rendered after invoking an action that returns a collection of entites</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VALUE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After invoking an action that returns a value type (though not URLs or Blob/Clobs, as these are handled appropriately automatically).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VOID_RETURN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After invoking an action that is <code>void</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTION_PROMPT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(No longer used).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>PageClassList</code> interface declares which class (subclass of <code>org.apache.wicket.Page</code> is used to render for each of these types.  For example, Apache Isis' <code>WicketSignInPage</code> renders the signin page.</p>
+</div>
+<div class="paragraph">
+<p>To specify a different page class, create a custom subclass of <code>PageClassList</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyPageClassList</span> <span class="directive">extends</span> PageClassListDefault {
+    <span class="directive">protected</span> <span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> Page&gt; getSignInPageClass() {
+        <span class="keyword">return</span> MySignInPage.class;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You then need to register your custom <code>PageClassList</code>.  This is done by adjusting the Guice bindings (part of Apache Isis' bootstrapping) in your custom subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyAppApplication</span> <span class="directive">extends</span> IsisWicketApplication {
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> Module newIsisWicketModule() {
+        <span class="directive">final</span> Module isisDefaults = <span class="local-variable">super</span>.newIsisWicketModule();
+        <span class="directive">final</span> Module myAppOverrides = <span class="keyword">new</span> AbstractModule() {
+            <span class="annotation">@Override</span>
+            <span class="directive">protected</span> <span class="type">void</span> configure() {
+                ...
+                bind(PageClassList.class).to(MyPageClassList.class);
+                ...
+            }
+        };
+        <span class="keyword">return</span> Modules.override(isisDefaults).with(myAppOverrides);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_extending_isis-addons-extensions">7.4. Isis Addons Extensions</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that Isis addons, while maintained by Apache Isis committers, are not part of the ASF.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugvw_extending_login-via-query-args-prototyping">7.5. Login via Query Args (for Prototyping)</h3>
+<div class="paragraph">
+<p>This section describes a (slightly hacky) way of allowing logins using query args, eg <a href="http://localhost:8080/?user=sven&amp;pass=pass">http://localhost:8080/?user=sven&amp;pass=pass</a>.  This might be useful while prototyping or demonstrating a scenario involving multiple different interacting users.</p>
+</div>
+<div class="paragraph">
+<p>Add the following code to your application&#8217;s subclass of <code>IsisWicketApplication</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">private final static boolean DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS = false;
+
+@Override
+public Session newSession(final Request request, final Response response) {
+    if(!DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS) {
+        return super.newSession(request, response);
+    }
+    // else demo mode
+    final AuthenticatedWebSessionForIsis s = (AuthenticatedWebSessionForIsis) super.newSession(request, response);
+    IRequestParameters requestParameters = request.getRequestParameters();
+    final org.apache.wicket.util.string.StringValue user = requestParameters.getParameterValue(&quot;user&quot;);
+    final org.apache.wicket.util.string.StringValue password = requestParameters.getParameterValue(&quot;pass&quot;);
+    s.signIn(user.toString(), password.toString());
+    return s;
+}
+
+@Override
+public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
+    if(!DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS) {
+        return super.newWebRequest(servletRequest, filterPath);
+    }
+    // else demo mode
+    try {
+        String uname = servletRequest.getParameter(&quot;user&quot;);
+        if (uname != null) {
+            servletRequest.getSession().invalidate();
+        }
+    } catch (Exception e) {
+    }
+    WebRequest request = super.newWebRequest(servletRequest, filterPath);
+    return request;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rather than using the static <code>DEMO_MODE_USING_CREDENTIALS_AS_QUERYARGS</code>, you might also explore using the feature toggle library provided by the (non-ASF) <a href="http://github.com/isisaddons/isis-module-togglz">Isis addons' togglz</a> module.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugvw_isis-addons">8. Isis Add-ons (not ASF)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The (non-ASF) <a href="http://www.isisaddons.org">Isis Addons</a> website provides a number of extensions to the Wicket viewer (leveraging the APIs described in <a href="#_ugvw_extending">Extending the Wicket viewer</a> section, later.  While you are free to fork and adapt any of them to your needs, they are also intended for use "out-of-the-box".</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that Isis addons, while maintained by Apache Isis committers, are not part of the ASF.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This short section gives an overview of their capabilities.  For full information, check out the README on their respective github repo.  Each wicket extension also includes a demo app so you can (a) see what the extension does and (b) see how to use it within your own code.</p>
+</div>
+<div class="sect2">
+<h3 id="_excel_download">8.1. Excel download</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fullcalendar2">8.2. Fullcalendar2</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gmap3">8.3. Gmap3</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wicked_charts">8.4. Wicked charts</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+TODO
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+        </div>
+
+        <footer>
+          <hr>
+          <p class="small">
+          Copyright &copy; 2010~2016 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          <br/>
+          Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
+          </p>
+        </footer>
+
+    </div>
+
+    <div id="doc-content-right" class="large-3 medium-3 xcolumns">
+        <div id="toc" class="toc2">
+            <div class="fallback-toc">
+                <ul class="sectlevel1">
+<li><a href="#_ugvw">1. Wicket Viewer</a>
+<ul class="sectlevel2">
+<li><a href="#_other_guides">1.1. Other Guides</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_features">2. Features/end-user usage</a>
+<ul class="sectlevel2">
+<li><a href="#_ugvw_features_recent-pages">2.1. Recent pages (drop down)</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots">2.1.1. Screenshots</a></li>
+<li><a href="#_domain_code">2.1.2. Domain Code</a></li>
+<li><a href="#_user_experience">2.1.3. User Experience</a></li>
+<li><a href="#_related_functionality">2.1.4. Related functionality</a></li>
+<li><a href="#_configuration">2.1.5. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_features_bookmarked-pages">2.2. Bookmarked pages</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_2">2.2.1. Screenshots</a></li>
+<li><a href="#_domain_code_2">2.2.2. Domain Code</a></li>
+<li><a href="#_user_experience_2">2.2.3. User Experience</a>
+<ul class="sectlevel4">
+<li><a href="#_related_functionality_2">Related functionality</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_2">2.2.4. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_features_hints-and-copy-url">2.3. Hints and copy URL</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_3">2.3.1. Screenshots</a>
+<ul class="sectlevel4">
+<li><a href="#_copy_url">Copy URL</a></li>
+<li><a href="#_hints">Hints</a></li>
+<li><a href="#_copy_url_from_title">Copy URL from title</a></li>
+</ul>
+</li>
+<li><a href="#_user_experience_3">2.3.2. User Experience</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_features_titles-in-tables">2.4. Titles in Tables</a></li>
+<li><a href="#_ugvw_features_blob-attachments">2.5. File upload/download</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_4">2.5.1. Screenshots</a>
+<ul class="sectlevel4">
+<li><a href="#_view_mode_empty">View mode, empty</a></li>
+<li><a href="#_edit_mode">Edit mode</a></li>
+<li><a href="#_choose_file">Choose file</a></li>
+<li><a href="#_image_rendered">Image rendered</a></li>
+<li><a href="#_download">Download</a></li>
+<li><a href="#_clear">Clear</a></li>
+</ul>
+</li>
+<li><a href="#_domain_code_3">2.5.2. Domain Code</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_features_user-registration">2.6. User Registration</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_5">2.6.1. Screenshots</a></li>
+<li><a href="#_configuration_3">2.6.2. Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugvw_configuration-properties">3. Configuration Properties</a>
+<ul class="sectlevel2">
+<li><a href="#_ugvw_configuration-properties_abbreviating-titles">3.1. Abbreviating/suppressing titles in tables</a></li>
+<li><a href="#_ugvw_configuration-properties_suppressing-remember-me">3.2. Suppressing 'remember me'</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_6">3.2.1. Screenshots</a></li>
+<li><a href="#_configuration_4">3.2.2. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_configuration-properties_suppressing-sign-up">3.3. Suppressing 'sign up'</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_7">3.3.1. Screenshots</a></li>
+<li><a href="#_configuration_5">3.3.2. Configuration</a></li>
+<li><a href="#_see_also">3.3.3. See also</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_configuration-properties_suppressing-password-reset">3.4. Suppressing 'password reset'</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_8">3.4.1. Screenshots</a></li>
+<li><a href="#_configuration_6">3.4.2. Configuration</a></li>
+<li><a href="#_see_also_2">3.4.3. See also</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_configuration-properties_stripped-wicket-tags">3.5. Stripped Wicket tags</a></li>
+<li><a href="#_ugvw_configuration-properties_showing-theme-chooser">3.6. Showing a theme chooser</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_request-parameters">4. Request Parameters</a>
+<ul class="sectlevel2">
+<li><a href="#_suppressing_header_and_footer_embedded_view">4.1. Suppressing Header and Footer (Embedded View)</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_9">4.1.1. Screenshots</a></li>
+<li><a href="#_request_parameters">4.1.2. Request parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugvw_layout">5. Layout</a></li>
+<li><a href="#_ugvw_customisation">6. Customisation</a>
+<ul class="sectlevel2">
+<li><a href="#_ugvw_customisation_brand-logo">6.1. Brand logo</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshots_10">6.1.1. Screenshots</a></li>
+<li><a href="#_configuration_7">6.1.2. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_customisation_default-theme">6.2. Specifying a default theme</a></li>
+<li><a href="#_ugvw_customisation_welcome-page">6.3. Welcome page</a></li>
+<li><a href="#_ugvw_customisation_about-page">6.4. About page</a>
+<ul class="sectlevel3">
+<li><a href="#_screenshot">6.4.1. Screenshot</a></li>
+<li><a href="#_configuration_8">6.4.2. Configuration</a>
+<ul class="sectlevel4">
+<li><a href="#_adding_attributes_to_the_war_s_manifest">Adding attributes to the WAR&#8217;s manifest</a></li>
+<li><a href="#_exporting_the_attributes_into_the_app">Exporting the attributes into the app</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugvw_customisation_tweaking-css-classes">6.5. Tweaking CSS classes</a>
+<ul class="sectlevel3">
+<li><a href="#_individual_members">6.5.1. Individual members</a></li>
+<li><a href="#_custom_css_styles">6.5.2. Custom CSS styles</a></li>
+<li><a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables">6.5.3. Table columns</a>
+<ul class="sectlevel4">
+<li><a href="#_ugvw_customisation_tweaking-css-classes_columns-in-tables_globally">Applying styles globally</a></li>
+<li><a href="#_parented_collections">Parented collections</a></li>
+<li><a href="#_standalone_collections">Standalone collections</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_ugvw_customisation_cheap-n-cheerful-theme">6.6. Cheap-n-cheerful theme</a></li>
+<li><a href="#_ugvw_customisation_using-different-css-file">6.7. Using a different CSS file</a></li>
+<li><a href="#_ugvw_customisation_custom-javascript">6.8. Custom Javascript</a></li>
+<li><a href="#_ugvw_customisation_auto-refresh">6.9. Auto-refresh page</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_extending">7. Extending the Viewer</a>
+<ul class="sectlevel2">
+<li><a href="#_ugvw_extending_custom-bootstrap-theme">7.1. Custom Bootstrap theme</a></li>
+<li><a href="#_ugvw_extending_replacing-page-elements">7.2. Replacing page elements</a>
+<ul class="sectlevel3">
+<li><a href="#_how_the_viewer_selects_components">7.2.1. How the viewer selects components</a></li>
+<li><a href="#_how_to_replace_a_component">7.2.2. How to replace a component</a></li>
+<li><a href="#_ugvw_extending_replacing-page-elements_collections">7.2.3. Additional Views of Collections</a></li>
+<li><a href="#_custom_object_view_eg_dashboard">7.2.4. Custom object view (eg dashboard)</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_extending_custom-pages">7.3. Custom pages</a></li>
+<li><a href="#_ugvw_extending_isis-addons-extensions">7.4. Isis Addons Extensions</a></li>
+<li><a href="#_ugvw_extending_login-via-query-args-prototyping">7.5. Login via Query Args (for Prototyping)</a></li>
+</ul>
+</li>
+<li><a href="#_ugvw_isis-addons">8. Isis Add-ons (not ASF)</a>
+<ul class="sectlevel2">
+<li><a href="#_excel_download">8.1. Excel download</a></li>
+<li><a href="#_fullcalendar2">8.2. Fullcalendar2</a></li>
+<li><a href="#_gmap3">8.3. Gmap3</a></li>
+<li><a href="#_wicked_charts">8.4. Wicked charts</a></li>
+</ul>
+</li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../js/foundation/5.5.1/vendor/jquery.js"></script>
+<script src="../js/foundation/5.5.1/foundation.min.js"></script>
+
+
+<link href="../css/jquery.tocify/1.9.0/jquery.tocify.css" rel="stylesheet">
+<script src="../js/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="../js/jquery.tocify/1.9.0/jquery.tocify.js"></script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#toc").tocify({
+            scrollTo: 50,
+            extendPage: true,
+            context: "#doc-content",
+            highlightOnScroll: true,
+            hashGenerator: "pretty",
+            hideEffect: "slideUp",
+            selectors: "h2,h3,h4,h5"
+        });
+        $(".fallback-toc").hide();
+    });
+</script>
+
+<script type="text/javascript">
+
+  /****
+
+      $(document).foundation();
+
+      $(document).ready(function(){
+        // Cache selectors
+        var lastId,
+            topMenu = $("div#toc ul"),
+            topMenuHeight = 100,
+
+            menuItems = topMenu.find("a"),
+            menuItemsHrefs = menuItems.map(function(){
+              var item = $($(this).attr("href"));
+              if (item.length) { return item; }
+            });
+
+        // Bind click handler to menu items to scroll animation
+        menuItems.click(function(e){
+          var href = $(this).attr("href"),
+              offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+          $('html, body').stop().animate({
+              scrollTop: offsetTop
+          }, 300);
+
+          e.preventDefault();
+        });
+
+        // Bind to scroll of window
+        $(  window ).scroll(function(){
+
+           // Get container scroll position
+           var fromTop = $(this).scrollTop()+topMenuHeight;
+
+           var cur = menuItemsHrefs.map(function(){
+             if ($(this).offset().top < fromTop)
+               return this;
+           });
+
+           // Get the id of the current element
+           cur = cur[cur.length-1];
+
+           var id = cur && cur.length ? cur[0].id : "";
+
+           if (lastId !== id && id) {
+               scrollTo(id);
+           }
+
+           window.history.pushState({}, "", window.location.origin + window.location.pathname + "#" + id);
+        });
+
+        scrollTo = function(id) {
+              lastId = id;
+
+              menuItems
+                .removeClass("active");
+
+              menuItems
+                .parents()
+                .removeClass("active-region");
+
+              menuItems
+                .parents("ul").hide();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .addClass("active");
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parent().children("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("li").addClass("active-region");
+
+        }
+      menuItems
+        .removeClass("active");
+
+      menuItems
+        .parents()
+        .removeClass("active-region");
+
+        var syncMenuItem;
+        if(window.location.hash!=="") {
+            var menuItemFor = $.grep(menuItems, function(e) {
+                return e.hash === window.location.hash;
+            });
+            console.log(menuItemFor);
+            if(menuItemFor.length === 1) {
+                syncMenuItem = menuItemFor[0];
+            }
+        }
+
+        if(!syncMenuItem){
+            syncMenuItem = menuItems[0];
+        }
+
+        $(syncMenuItem).click();
+
+      });
+
+    ***/
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    if("Documentation" === "Wicket Viewer") {
+        console.log( "processing 'Documentation'" );
+
+        $("#doc-content-left").removeClass("large-9").removeClass("medium-9").addClass("large-12").addClass("medium-12");
+        $("#doc-content-right").removeClass("large-3").removeClass("medium-3").hide();
+    }
+
+});
+
+</script>
+
+
+<script>
+
+$( document ).ready(function() {
+
+    (function() {
+      $(function() {
+        return $("#doc-content h2, #doc-content h3, #doc-content h4, #doc-content h5, #doc-content h6").each(function(i, el) {
+          var $el, icon, id;
+          $el = $(el);
+          id = $el.attr('id');
+          icon = '<i class="fa fa-link"></i>';
+          if (id) {
+            return $el.prepend($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
+          }
+        });
+      });
+    }).call(this);
+
+
+
+	/*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+	*/
+	;( function( $, window, document, undefined )
+	{
+		'use strict';
+
+		var elSelector		= '.header',
+			elClassHidden	= 'header--hidden',
+			throttleTimeout	= 500,
+			$element		= $( elSelector );
+
+		if( !$element.length ) return true;
+
+		var $window			= $( window ),
+			wHeight			= 0,
+			wScrollCurrent	= 0,
+			wScrollBefore	= 0,
+			wScrollDiff		= 0,
+			$document		= $( document ),
+			dHeight			= 0,
+
+			throttle = function( delay, fn )
+			{
+				var last, deferTimer;
+				return function()
+				{
+					var context = this, args = arguments, now = +new Date;
+					if( last && now < last + delay )
+					{
+						clearTimeout( deferTimer );
+						deferTimer = setTimeout( function(){ last = now; fn.apply( context, args ); }, delay );
+					}
+					else
+					{
+						last = now;
+						fn.apply( context, args );
+					}
+				};
+			};
+
+		$window.on( 'scroll', throttle( throttleTimeout, function()
+		{
+			dHeight			= $document.height();
+			wHeight			= $window.height();
+			wScrollCurrent	= $window.scrollTop();
+			wScrollDiff		= wScrollBefore - wScrollCurrent;
+
+			if( wScrollCurrent <= 0 ) // scrolled to the very top; element sticks to the top
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff > 0 && $element.hasClass( elClassHidden ) ) // scrolled up; element slides in
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff < 0 ) // scrolled down
+			{
+				if( wScrollCurrent + wHeight >= dHeight && $element.hasClass( elClassHidden ) ) // scrolled to the very bottom; element slides in
+					$element.removeClass( elClassHidden );
+
+				else // scrolled down; element slides out
+					$element.addClass( elClassHidden );
+			}
+
+			wScrollBefore = wScrollCurrent;
+		}));
+
+	})( jQuery, window, document );
+
+
+});
+</script>
+
+</body>
+</html>

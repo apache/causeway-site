@@ -1,0 +1,1889 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Apache Isis Maven plugin</title>
+
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one
+        or more contributor license agreements.  See the NOTICE file
+        distributed with this work for additional information
+        regarding copyright ownership.  The ASF licenses this file
+        to you under the Apache License, Version 2.0 (the
+        "License"); you may not use this file except in compliance
+        with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing,
+        software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+        KIND, either express or implied.  See the License for the
+        specific language governing permissions and limitations
+        under the License.
+    -->
+
+    <!-- No caching headers -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+
+
+    <!-- TODO: need to (re)instate CDN in the future (not using for now just so can develop off-line -->
+    <link href="../css/foundation/5.5.1/foundation.css" rel="stylesheet" />
+    <script src="../js/foundation/5.5.1/vendor/modernizr.js"></script>
+    <link href="../css/asciidoctor/colony.css" rel="stylesheet">
+    <link href="../css/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.css" rel="stylesheet" />
+    <![endif]-->
+
+
+
+    <style type="text/css">
+        pre code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre code > span:first-child {
+            margin-left: -5px;
+        }
+
+    <style>
+
+    <!--
+    <style type="text/css">
+        /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top;line-height:1.45}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+
+        pre.CodeRay code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre.CodeRay code > span:first-child {
+            margin-left: -5px;
+        }
+
+        .literalblock pre,
+        .listingblock pre:not(.highlight),
+        .listingblock pre[class="highlight"],
+        .listingblock pre[class^="highlight "],
+        .listingblock pre.CodeRay,
+        .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+        .sidebarblock .literalblock pre,
+        .sidebarblock .listingblock pre:not(.highlight),
+        .sidebarblock .listingblock pre[class="highlight"],
+        .sidebarblock .listingblock pre[class^="highlight "],
+        .sidebarblock .listingblock pre.CodeRay,
+        .sidebarblock .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+
+    <style>
+    -->
+
+    <style>
+    .github-fork-ribbon-wrapper.right {
+        position: fixed;
+    }
+    .github-fork-ribbon {
+        background: #090;
+    }
+    .github-fork-ribbon a:hover {
+        background:#0D0;
+        color:#fff;
+        font-size: 1.1em;
+    }
+    </style>
+
+    <style>
+        @media only screen and (min-width: 40.063em) {
+          .top-bar {
+            .contain-to-grid .top-bar {
+                max-width: 80rem;
+            }
+          }
+        }
+        .row {
+            max-width: 80rem;
+        }
+    </style>
+
+    <style>
+        .extended-quote,
+        .extended-quote-first {
+            margin-left: 40px;
+            margin-right: 40px;
+            font-style: italic;
+        }
+        .extended-quote-attribution {
+            text-align: right;
+            margin-right: 100px;
+            color: #10B061;
+        }
+
+        .extended-quote-first:before {
+            content: "\201c";
+            float: left;
+            font-size: 2.75em;
+            font-weight: bold;
+            line-height: 0.6em;
+            margin-left: -0.6em;
+            color: #003b6b;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+
+    <style>
+        body {
+          position: relative;
+        }
+
+        *:not(pre) a > code {
+            color: #210DDC;
+        }
+
+        *:not(pre) > code {
+            background-color: inherit;
+            border: none;
+            font-weight: normal;
+        }
+
+        body div#toc li,
+        body div#toc2 li {
+            list-style-type: none;
+        }
+
+        div#doc-content {
+            margin-top: 30px;
+        }
+
+        div.documentation-page table.frame-all {
+            border-left: none;
+            border-right: none;
+        }
+
+        body div#toc li.active-region:before,
+        body div#toc2 li.active-region:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li a.active,
+        body div#toc2 li a.active {
+            color: red;
+        }
+
+        body div#toc.toc,
+        body div#toc.toc2 {
+            position: fixed;
+            left: auto;
+            padding-top: 60px;
+            z-index: auto;
+            background-color: white;
+            border-left-color: #eee;
+            border-left-style: solid;
+            border-right: none;
+            min-height: 2000px;
+        }
+
+    </style>
+
+    <style>
+
+        @media only screen and (min-width: 768px) {
+          #toc.toc2 ul ul { margin-left: -10px; }
+        }
+
+
+        body div#toc .tocify-subheader ul {
+            margin-bottom: 0px;
+        }
+
+        body div#toc .tocify-subheader li {
+            font-size: 14px;
+        }
+        .tocify li.tocify-item, .tocify ul.tocify-item {
+            line-height: 24px;
+        }
+
+        body div#toc li.tocify-item.active:before,
+        body div#toc2 li.tocify-item.active:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li.tocify-item.active a,
+        body div#toc2 li.tocify-item.active a {
+            color: red;
+        }
+    </style>
+
+    <style>
+        footer {
+            margin-top: 1000px;
+        }
+    </style>
+
+    <style>
+        /* overriding colony.css stylesheet */
+        .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+           /*padding: 1.25em 1.5625em 1.125em 1.5625em;*/
+           padding: 0.3em 0.6em 0.25em 0.6em;
+        }
+        @media only screen and (min-width: 1280px)
+        #toc.toc2 {
+          /*width: 20em;*/
+          width: 25em;
+        }
+
+        #doc-content a {
+          color: #210DDC;
+        }
+
+        .top-bar h1 {
+            border-bottom: inherit;
+        }
+
+        h2 {
+          margin-top: 80px;
+        }
+        h3 {
+          margin-top: 40px;
+        }
+        h4,h5 {
+          margin-top: 30px;
+        }
+
+        .admonitionblock.tip > table td.content {
+            color: #10B061;
+        }
+        .admonitionblock.note > table td.content {
+            color: #B509AB;
+        }
+        .admonitionblock.important > table td.content {
+            color: #D5810A;
+        }
+
+        .admonitionblock .title {
+            font-size: larger;
+            font-style: italic;
+        }
+
+        .imageblock img {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        /* from http://ben.balter.com/2014/03/13/pages-anchor-links/ */
+        .header-link {
+          position: absolute;
+          left: -0.5em;
+          opacity: 0;
+
+          /*
+          -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+          -moz-transition: opacity 0.2s ease-in-out 0.1s;
+          -ms-transition: opacity 0.2s ease-in-out 0.1s;
+          */
+        }
+
+        h2:hover .header-link,
+        h3:hover .header-link,
+        h4:hover .header-link,
+        h5:hover .header-link,
+        h6:hover .header-link {
+          opacity: 1;
+        }
+    </style>
+
+    <style>
+        .top-bar
+        {
+            -webkit-transition-duration: .5s;
+            transition-duration: .5s;
+
+            -webkit-transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+
+        /*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+        */
+        .header--hidden
+        {
+            -webkit-transform: translateY( -100% );
+            -ms-transform: translateY( -100% );
+            transform: translateY( -100% );
+
+            transition-duration: .5s;
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+    </style>
+
+    <style>
+        #doc-content a.guide {
+            color: white;
+        }
+    </style>
+
+    <style>
+        .tocify {
+            margin-top: 80px;
+        }
+    </style>
+
+
+</script>
+
+</head>
+<body>
+
+<<div class="github-fork-ribbon-wrapper right" style="position: fixed;">
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/apache/isis#fork-destination-box">Fork me on GitHub</a>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="fixed contain-to-grid header">
+        <nav class="top-bar" data-topbar role="navigation" style="max-width: 80rem">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="/index.html">Apache Isis&trade;</a>
+                    </h1>
+                </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+                <ul class="right">
+
+                    <li class="has-form">
+                       <FORM class="searchbox navbar-form navbar-right" id="searchbox_012614087480249044419:dn-q5gtwxya" action="http://www.google.com/cse">
+                        <div class="row collapse">
+                            <input type="hidden" name="cx" value="012614087480249044419:dn-q5gtwxya">
+                            <INPUT type="hidden" name="cof" value="FORID:0">
+                            <INPUT class="form-control" name="q" type="text" placeholder="Search">
+                        </div>
+                    </FORM>
+                     </li>
+
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+
+                    <li><a href="/documentation.html">Documentation</a></li>
+                    <li><a href="/downloads.html">Downloads</a></li>
+                    <li><a href="/help.html">Help</a></li>
+                    <li><a href="/asf.html">@ASF</a></li>
+
+                </ul>
+
+            </section>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+
+    <div id="doc-content-left" class="large-9 medium-9 columns">
+
+
+        <div id="doc-content">
+          <div class="sect1">
+<h2 id="_rgmvn">1. Apache Isis Maven plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This reference guide describes the goals provided by Apache Isis' Maven plugin.</p>
+</div>
+<div class="sect2">
+<h3 id="_other_guides">1.1. Other Guides</h3>
+<div class="paragraph">
+<p>Apache Isis documentation is broken out into a number of user, reference and "supporting procedures" guides.</p>
+</div>
+<div class="paragraph">
+<p>The user guides available are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ugfun.html">Fundamentals</a></p>
+</li>
+<li>
+<p><a href="ugvw.html">Wicket viewer</a></p>
+</li>
+<li>
+<p><a href="ugvro.html">Restful Objects viewer</a></p>
+</li>
+<li>
+<p><a href="ugdno.html">DataNucleus object store</a></p>
+</li>
+<li>
+<p><a href="ugsec.html">Security</a></p>
+</li>
+<li>
+<p><a href="ugtst.html">Testing</a></p>
+</li>
+<li>
+<p><a href="ugbtb.html">Beyond the Basics</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reference guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgant.html">Annotations</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html">Domain Services</a></p>
+</li>
+<li>
+<p><a href="rgcfg.html">Configuration Properties</a></p>
+</li>
+<li>
+<p><a href="rgcms.html">Classes, Methods and Schema</a></p>
+</li>
+<li>
+<p><a href="#">Apache Isis Maven plugin</a> (this guide)</p>
+</li>
+<li>
+<p><a href="rgfis.html">Framework Internal Services</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The remaining guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="dg.html">Developers' Guide</a> (how to set up a development environment
+for Apache Isis and contribute back to the project)</p>
+</li>
+<li>
+<p><a href="cgcom.html">Committers' Guide</a> (release procedures and related practices)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rgmvn_intro">2. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Apache Isis Maven plugin defines three goals:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>validate</code><br></p>
+<div class="paragraph">
+<p>Use to verify at build time that the metamodel of an application is valid.  This runs the <code>MetaModelValidator</code> that is also run when the application is started up.</p>
+</div>
+</li>
+<li>
+<p><code>swagger</code><br></p>
+<div class="paragraph">
+<p>Uses the <a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> to generate <a href="http://swagger.io">Swagger</a> spec files that describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
+</div>
+</li>
+<li>
+<p><code>xsd</code><br></p>
+<div class="paragraph">
+<p>Uses the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to generate XSD schemas from any JAXB-annotated view models/DTOs.<br></p>
+</div>
+<div class="paragraph">
+<p>This is instead of and preferable to using the JAXB <a href="https://jaxb.java.net/2.2.4/docs/schemagen.html">schemagen</a> tool, because it uses the framework&#8217;s support (via <a href="rgant.html#_rgant-XmlJavaTypeAdapter"><code>@XmlJavaTypeAdapter</code></a>) to translate any references to domain objects into <code>OidDto</code>s (as defined by the Apache Isis <a href="rgcms.html#_rgcms_schema-common">common schema</a>).</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>validate</code> goal is by default bound to the <code>test</code> phase, and the <code>swagger</code> goal is by default bound to the <code>package</code> phase; both are typically of your application&#8217;s <code>dom</code> sub-module.  The <code>xsd</code> goal meanwhile defaults to the <code>generate-resources</code> phase, and this is generally used in a completely separate sub-module.  An example can be found in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app; the separate submodule that uses the <code>xsd</code> goal is (also) called <code>todoapp-xsd</code>.</p>
+</div>
+<div class="paragraph">
+<p>All of these goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a> to point the plugin at, so that
+it knows how to bootstrap an Isis runtime.  This is discussed below, followed by sections on configuring the two goals.</p>
+</div>
+<div class="sect2">
+<h3 id="_rgmvn_intro_app-manifest">2.1. <code>AppManifest</code></h3>
+<div class="paragraph">
+<p>As noted in the introduction, all the goals require an <a href="rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>
+to point the plugin at, so that it knows how to bootstrap an Isis runtime.</p>
+</div>
+<div class="paragraph">
+<p>This can be extremely minimal; it isn&#8217;t necessary to use the main <code>AppManifest</code> (in the <code>app</code> module) used to
+bootstrap the application, you can instead use a cut-down one.  This then allows the plugins to be run during the
+build of the <code>dom</code> module, rather than having to run in the context of the <code>integtest</code> module.</p>
+</div>
+<div class="paragraph">
+<p>For example, the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a>'s
+manifest is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
+...
+public <span class="type">class</span> <span class="class">DomainAppDomManifest</span> <span class="directive">implements</span> AppManifest {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
+        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
+                DomainAppDomainModule.class  <span class="comment">// domain (entities and repositories)</span>
+        );
+    }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getAdditionalServices() { <span class="keyword">return</span> <span class="predefined-type">Collections</span>.emptyList(); }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthenticationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getAuthorizationMechanism() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> FixtureScript&gt;&gt; getFixtures() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() { <span class="keyword">return</span> <span class="predefined-constant">null</span>; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>DomainAppDomainModule</code> simply identifies the package for the manifest to search under:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">domainapp.dom</span>;
+<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">DomainAppDomainModule</span> { }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The downside of using a minimal <code>AppManifest</code> in the <code>dom</code> module is that any contributed actions/associations will
+be ignored.</p>
+</div>
+<div class="paragraph">
+<p>We recommend the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>run the <code>validate</code> goal in the <code>dom</code> submodule; this will give early warning if there are any syntactic errors in the
+model, eg orphaned supporting methods</p>
+</li>
+<li>
+<p>run the <code>swagger</code> goal in the <code>integtest</code> submodule; this ensures that the generated Swagger spec files correctly
+include any contributed actions/associations.</p>
+</li>
+<li>
+<p>run the <code>xsd</code> plugin in a new <code>xsd</code> submodule; contributed actions are irrelevant for this particular goal; having a
+separate submodule allows the configuration of both the <code>xsd</code> goal (to generate the XSD schemas) and any other XSD-related configuration to be kept in a single place.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <a href="ug.html#_ug_getting-started_simpleapp-archetype">SimpleApp archetype</a> reflects these recommendations for
+the <code>validate</code> and <code>swagger</code> goals.  You can find an example of the <code>xsd</code> plugin in the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> application.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rgmvn_validate">3. <code>validate</code> goal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Apache Isis programming model requires that a number of naming conventions are followed.</p>
+</div>
+<div class="paragraph">
+<p>For example, the validator will detect any orphaned supporting methods (eg <code>hideXxx()</code>) if the corresponding property
+or action has been renamed or deleted but the supporting method was not also updated.  Another example is that a class
+cannot have a title specified both using <code>title()</code> method and also using <code>@Title</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>When running the application these are enforced by the <code>MetaModelValidator</code> component that detects these errors, failing fast.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of the <code>validate</code> goal of the <code>isis-maven-plugin</code> is to enforce these naming conventions at build time,
+typically enforced by way of a continuous integration server.</p>
+</div>
+<div class="paragraph">
+<p>The <code>validate</code> goal defines a single property:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The sections below explain how to configure the plugin within an app.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The instructions given here relate to <code>1.10.0</code>.   This goal was also released for <code>1.9.0</code>, but with a slightly
+different configuration; see the final section for differences.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="__code_dom_code_submodule">3.1. <code>dom</code> submodule</h3>
+<div class="paragraph">
+<p>Update the <code>pom.xml</code> (we recommend in your project&#8217;s <code>dom</code> module, and with a <a href="#_rgmvn_intro_app-manifest">minimal AppManifest</a>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>!skip.isis-validate<span class="tag">&lt;/name&gt;</span>                                            <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                      <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;appManifest&gt;</span>domainapp.dom.DomainAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>       <i class="conum" data-value="3"></i><b>(3)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>                          <i class="conum" data-value="4"></i><b>(4)</b>
+                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>                                       <i class="conum" data-value="5"></i><b>(5)</b>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the profile is active by default, though can be disabled using <code>-Dskip.isis-validate</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to <code>1.10.0</code> (or any later version)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the manifest discussed <a href="#_rgmvn_intro_app-manifest">previously</a>; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the <code>dom</code> module for the project; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>binds the plugin&#8217;s <code>validate</code> goal to the Maven <code>test</code> lifecycle phase (ie the goal will be called when <code>mvn test</code> is run).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_to_run">3.2. To run</h3>
+<div class="paragraph">
+<p>The plugin is activated by default, so is run simply using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will run any tests, and then also - because the plugin is activated by the <code>isis-validate</code> property and bound to the <code>test</code> phase, will run the plugin&#8217;s <code>validate</code> goal.</p>
+</div>
+<div class="paragraph">
+<p>If for any reason you want to disable the validation, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn test -Dskip.isis-validate</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_of_failure">3.3. Example of failure</h3>
+<div class="paragraph">
+<p>In the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp</a> application the <code>SimpleObject</code> defines an <code>updateName</code> action.  This has a supporting method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SimpleObject updateName( ... ) { ... }
+<span class="directive">public</span> <span class="predefined-type">String</span> default0UpdateName() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can introduce an error by misspelling the supporting method, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> default0XUpdateName() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running <code>mvn test</code> then generates this output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[error]
+[error]
+[error]
+[error] domainapp.dom.simple.SimpleObject#default0XUpdateName: has prefix default, is probably a supporting method for a property, collection or action.  If the method is intended to be an action, then rename and use @ActionLayout(named=&quot;...&quot;) or ignore completely using @Programmatic
+[error]
+[error]
+[error]
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] Simple App ......................................... SUCCESS [  0.087 s]
+[INFO] Simple App DOM ..................................... FAILURE [  4.182 s]
+[INFO] Simple App Fixtures ................................ SKIPPED
+[INFO] Simple App Application ............................. SKIPPED
+[INFO] Simple App Integration Tests ....................... SKIPPED
+[INFO] Simple App Webapp .................................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] ...
+[ERROR] Failed to execute goal org.apache.isis.tool:isis-maven-plugin:1.13.0:validate (default) on project simpleapp-dom: 1 problems found. -&gt; [Help 1]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If one were to attempt to run the application, the same error would appear in the log files on startup (and the application would not boot).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_validation_rules">3.4. Custom validation rules</h3>
+<div class="paragraph">
+<p>It is also possible to customize the validation, explained <a href="ugbtb.html#_ugbtb_programming-model_custom-validator">here</a>.  For example, you could enforce project-specific conventions by implementing a custom <code>MetaModelValidator</code>, and registering using a configuration property.</p>
+</div>
+<div class="paragraph">
+<p>To support this using <code>AppManifest`s, override its `getConfigurationProperties()</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">public class DomainAppDomManifest implements AppManifest {
+    ...
+    public Map&lt;String, String&gt; getConfigurationProperties() {
+        final Map&lt;String, String&gt; map = Maps.newTreeMap();
+        map.put(&quot;isis.reflector.validator&quot;,&quot;com.mycompany.myapp.MyMetaModelValidator&quot;);
+        return map;
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1_9_0_version">3.5. 1.9.0 version</h3>
+<div class="paragraph">
+<p>The <code>1.9.0</code> version of the plugin requires slightly different configuration.  Rather than using an <code>AppManifest</code>, instead the configuration directory containing <code>isis.properties</code> is specified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-validate<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;activeByDefault&gt;</span>false<span class="tag">&lt;/activeByDefault&gt;</span>                                        <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>1.9.0<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;isisConfigDir&gt;</span>../webapp/src/main/webapp/WEB-INF<span class="tag">&lt;/isisConfigDir&gt;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>org.apache.isis.example.application<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>1.9.0<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="comment">&lt;!-- workaround to avoid conflict with plexus-default --&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>test<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>validate<span class="tag">&lt;/goal&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>activated using the <code>-P</code> profile flag rather than a <code>-D</code> system property</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specify the <code>isisConfigDir</code> directory (containing the <code>isis.properties</code> file).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To use the <code>1.9.0</code> version, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn -P isis-validate test</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the <code>isisConfigDir</code> property was removed in <code>1.10.0</code>; only the <code>AppManifest</code> approach is supported.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rgmvn_swagger">4. <code>swagger</code> goal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>swagger</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc_api_SwaggerService"><code>SwaggerService</code></a> to
+generate <a href="http://swagger.io">Swagger</a> spec files to describe the public and/or private RESTful APIs exposed by the <a href="ugvro.html">RestfulObjects viewer</a>.</p>
+</div>
+<div class="paragraph">
+<p>These spec files, once generated, can then be used in the build pipeline to generate client-side stubs, typically using Swagger&#8217;s own <a href="https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen-maven-plugin">swagger-codegen-maven</a> plugin.</p>
+</div>
+<div class="paragraph">
+<p>The <code>swagger</code> goal defines the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
+</li>
+<li>
+<p><code>fileNamePrefix</code> - (optional) a prefix to the generated file names (is suffixed by the requested visibilities, see below).<br></p>
+<div class="paragraph">
+<p>Defaults to <code>swagger</code>.</p>
+</div>
+</li>
+<li>
+<p><code>visibilities</code> - (optional) list of required visibilities.<br></p>
+<div class="paragraph">
+<p>Defaults to [<code>PUBLIC</code>, <code>PRIVATE</code>] (meaning that two spec files will be created).</p>
+</div>
+</li>
+<li>
+<p><code>format</code> - (optional) which format to generate, either <code>JSON</code> or <code>YAML</code>.<br></p>
+<div class="paragraph">
+<p>Defaults to <code>JSON</code>.</p>
+</div>
+</li>
+<li>
+<p><code>output</code> - (optional) subdirectory under the <code>target</code> directory to generate the swagger spec files<br></p>
+<div class="paragraph">
+<p>Defaults to <code>generated-resources/isis-swagger</code></p>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="__code_integtest_code_submodule">4.1. <code>integtest</code> submodule</h3>
+<div class="paragraph">
+<p>Update the <code>pom.xml</code> (in your project&#8217;s <code>integtest</code> module):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-swagger<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>!skip.isis-swagger<span class="tag">&lt;/name&gt;</span>                                         <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>                                  <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;appManifest&gt;</span>domainapp.app.DomainAppAppManifest<span class="tag">&lt;/appManifest&gt;</span>   <i class="conum" data-value="3"></i><b>(3)</b>
+                    <span class="tag">&lt;visibilities&gt;</span>                                                  <i class="conum" data-value="4"></i><b>(4)</b>
+                        <span class="tag">&lt;visibility&gt;</span>PUBLIC<span class="tag">&lt;/visibility&gt;</span>
+                        <span class="tag">&lt;visibility&gt;</span>PRIVATE<span class="tag">&lt;/visibility&gt;</span>
+                    <span class="tag">&lt;/visibilities&gt;</span>
+                    <span class="tag">&lt;format&gt;</span>JSON<span class="tag">&lt;/format&gt;</span>                                           <i class="conum" data-value="5"></i><b>(5)</b>
+                    <span class="tag">&lt;fileNamePrefix&gt;</span>swagger<span class="tag">&lt;/fileNamePrefix&gt;</span>                        <i class="conum" data-value="5"></i><b>(5)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>simpleapp-dom<span class="tag">&lt;/artifactId&gt;</span>                      <i class="conum" data-value="6"></i><b>(6)</b>
+                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>swagger<span class="tag">&lt;/goal&gt;</span>                                    <i class="conum" data-value="7"></i><b>(7)</b>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the profile is active by default, though can be disabled using <code>-Dskip.isis-swagger</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to <code>1.11.0</code> (or any later version)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>the manifest discussed <a href="#_rgmvn_intro_app-manifest">previously</a>; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>the visibilities to create (one swagger spec file per visibility listed)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>which file format to generate the spec files as.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>the <code>dom</code> module for the project; adjust as required</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>binds the plugin&#8217;s <code>swagger</code> goal to the Maven <code>package</code> lifecycle phase (ie the goal will be called when <code>mvn package</code> is run).</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_to_run_2">4.2. To run</h3>
+<div class="paragraph">
+<p>The plugin is activated by default, so is run simply using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rgmvn_xsd">5. <code>xsd</code> goal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>xsd</code> goal of the <code>isis-maven-plugin</code> uses the <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> to
+generate XSD schemas from any JAXB-annotated <a href="ugbtb.html#_ugbtb_view-models">view model/DTOs</a>.</p>
+</div>
+<div class="paragraph">
+<p>This is instead of and preferable to using the JAXB <a href="https://jaxb.java.net/2.2.4/docs/schemagen.html">schemagen</a>
+tool, because it uses the framework&#8217;s support (via
+<a href="rgant.html#_rgant-XmlJavaTypeAdapter"><code>@XmlJavaTypeAdapter</code></a>) to translate any references to domain
+objects into <code>OidDto</code>s (as defined by the Apache Isis <a href="rgcms.html#_rgcms_schema-common">common schema</a>).</p>
+</div>
+<div class="paragraph">
+<p>The <code>xsd</code> goal defines the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>appManifest</code> - fully qualified class name for the app manifest used to bootstrap the application (see discussion above)</p>
+</li>
+<li>
+<p><code>jaxbClasses</code> - a list of <a href="rg.html#_ugbtb_view-models_jaxb">JAXB-annotated view model</a> classes;</p>
+</li>
+<li>
+<p><code>output</code> - (optional) subdirectory under the <code>target</code> directory to generate the XSDs<br></p>
+<div class="paragraph">
+<p>Defaults to <code>generated-resources/isis-xsd</code></p>
+</div>
+</li>
+<li>
+<p><code>separate</code> - (optional) whether to create separate directories for each JAXB-class.<br></p>
+<div class="paragraph">
+<p>Defaults to <code>false</code>.  Most DTO classes will reference one another or the <a href="rgcms.html#_rgcms_schema-common">common schema</a>.  Normally it&#8217;s fine to merge all these XSDs together.  This property, if set, results in each a separate directory for each generation of its XSD or XSDs.</p>
+</div>
+</li>
+<li>
+<p><code>commonSchemas</code> - (optional) whether to also generate the isis common schema(s).<br></p>
+<div class="paragraph">
+<p>Defaults to <code>false</code>; if set then the call to <a href="rgsvc.html#_rgsvc_api_JaxbService"><code>JaxbService</code></a> will set <code>IsisSchemas.INCLUDE</code> flag.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As a convenience to any (Java) consumers, the XSDs generated from the view models can then in turn be generated
+into DTOs.  The original view models and these DTOs are similar but not identical: while the view models can only be used
+within the Isis application (they may reference underlying domain entities) whereas the DTO classes generated from the
+XSDs can be used standalone, eg by a Java subscriber running on an ESB such as Apache Camel.</p>
+</div>
+<div class="paragraph">
+<p>The rest of this section explains how to configure a new <code>xsd</code> submodule that uses the <code>isis-maven-plugin</code> along with
+other standard plugins in order to generate both XSDs and DTOs.  The <code>pom.xml</code> described below uses Maven profiles
+to separate out these two responsibilities.</p>
+</div>
+<div class="sect2">
+<h3 id="_rgmvn_xsd">5.1. <code>xsd</code> submodule</h3>
+<div class="paragraph">
+<p>We recommend creating a new submodule that will perform the following build steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>run the <code>xsd</code> goal (in the <code>generate-resources</code> phase) to generate the XSDs from the specified view model/DTOs</p>
+</li>
+<li>
+<p>use the <a href="http://maven.apache.org/plugins/maven-assembly-plugin/">maven-assembly-plugin</a> to bundle the
+generated XSD files into a zip file.</p>
+</li>
+<li>
+<p>use the <code>xjc-gen</code> to generate corresponding DTO classes from the XSDs.<br></p>
+<div class="paragraph">
+<p>These are <em>not</em> the same as the original view models; they are provided as a convenience for subscribers to marshall XML documents into Java classes, but running as a standalone process (not part of the Isis app)</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These two main responsibilities can then be placed into separate Maven profiles, for better modularity.  The diagram
+below shows the overall design:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/maven-plugin/xsd-goal.png"><img src="images/maven-plugin/xsd-goal.png" alt="xsd goal" width="800px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, here is the <code>pom.xml</code> file for the (non-ASF)
+<a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> example app&#8217;s <code>todoapp-xsd</code> submodule.</p>
+</div>
+<div class="paragraph">
+<p>First, the usual boilerplate:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;project</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;modelVersion&gt;</span>4.0.0<span class="tag">&lt;/modelVersion&gt;</span>
+
+    <span class="tag">&lt;parent&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>org.isisaddons.app<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>todoapp<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>1.14.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;/parent&gt;</span>
+
+    <span class="tag">&lt;artifactId&gt;</span>todoapp-xsd<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;name&gt;</span>Isis Addons ToDoApp XSD<span class="tag">&lt;/name&gt;</span>
+
+    <span class="tag">&lt;dependencies&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>todoapp-app<span class="tag">&lt;/artifactId&gt;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/dependency&gt;</span>
+    <span class="tag">&lt;/dependencies&gt;</span>
+
+        <span class="tag">&lt;profiles&gt;</span>
+                <span class="tag">&lt;profile&gt;</span>
+                        <span class="tag">&lt;id&gt;</span>isis-xsd<span class="tag">&lt;/id&gt;</span>                       <i class="conum" data-value="2"></i><b>(2)</b>
+                        ...
+                <span class="tag">&lt;/profile&gt;</span>
+        <span class="tag">&lt;profile&gt;</span>
+            <span class="tag">&lt;id&gt;</span>xjc<span class="tag">&lt;/id&gt;</span>                            <i class="conum" data-value="3"></i><b>(3)</b>
+            ...
+        <span class="tag">&lt;/profile&gt;</span>
+        <span class="tag">&lt;/profiles&gt;</span>
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>depends on the rest of the application&#8217;s modules</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>XSD generation, to run the <code>xsd</code> goal and then assemble into a zip file; within a profile for modularity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>XJC generation, to run the <code>xjc</code> to generate Java DTO classes from XSDs; within a profile for modularity</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_xsd_profile">5.1.1. XSD profile</h4>
+<div class="paragraph">
+<p>The <code>isis-xsd</code> profile runs the <code>xsd</code> goal of the <code>isis-maven-plugin</code>; these are then zipped up by the assembly plugin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>isis-xsd<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>!skip.isis-xsd<span class="tag">&lt;/name&gt;</span>                                                             <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.apache.isis.tool<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>isis-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>${isis.version}<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;appManifest&gt;</span>todoapp.dom.ToDoAppDomManifest<span class="tag">&lt;/appManifest&gt;</span>                       <i class="conum" data-value="2"></i><b>(2)</b>
+                    <span class="tag">&lt;jaxbClasses&gt;</span>                                                                   <i class="conum" data-value="3"></i><b>(3)</b>
+                        <span class="tag">&lt;jaxbClass&gt;</span>todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto<span class="tag">&lt;/jaxbClass&gt;</span>
+                        <span class="tag">&lt;jaxbClass&gt;</span>todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto<span class="tag">&lt;/jaxbClass&gt;</span>
+                    <span class="tag">&lt;/jaxbClasses&gt;</span>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;dependencies&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>
+                        <span class="tag">&lt;groupId&gt;</span>${project.groupId}<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>todoapp-dom<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>${project.version}<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                    <span class="tag">&lt;dependency&gt;</span>                                                                    <i class="conum" data-value="4"></i><b>(4)</b>
+                        <span class="tag">&lt;groupId&gt;</span>com.google.guava<span class="tag">&lt;/groupId&gt;</span>
+                        <span class="tag">&lt;artifactId&gt;</span>guava<span class="tag">&lt;/artifactId&gt;</span>
+                        <span class="tag">&lt;version&gt;</span>16.0.1<span class="tag">&lt;/version&gt;</span>
+                    <span class="tag">&lt;/dependency&gt;</span>
+                <span class="tag">&lt;/dependencies&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>                                             <i class="conum" data-value="5"></i><b>(5)</b>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>xsd<span class="tag">&lt;/goal&gt;</span>                                                        <i class="conum" data-value="6"></i><b>(6)</b>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="tag">&lt;/artifactId&gt;</span>                                      <i class="conum" data-value="7"></i><b>(7)</b>
+                <span class="tag">&lt;version&gt;</span>2.5.3<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;descriptor&gt;</span>src/assembly/dep.xml<span class="tag">&lt;/descriptor&gt;</span>                                   <i class="conum" data-value="8"></i><b>(8)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;id&gt;</span>create-archive<span class="tag">&lt;/id&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>single<span class="tag">&lt;/goal&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>enabled <em>unless</em> <code>skip.isis-xsd</code> property specified</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specify the app manifest to bootstrap the Isis runtime within the maven plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>enumerate all JAXB-annotated view models</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>workaround to avoid conflict with plexus-default</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>by default is bound to <code>generate-resources</code>, but bind instead to <code>generate-sources</code> if also running the <code>xjc</code> profile: the XSD are an input to <code>xjc</code>, but it is bound by default to <code>generate-sources</code> and the <code>generate-sources</code> phase runs before the <code>generate-resources</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>run the <code>xsd</code> goal</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>define the assembly plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>assembles the XSD schemas into a zip file, as defined by the <code>dep.xml</code> file (see below).</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;assembly</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2</span><span class="delimiter">&quot;</span></span>
+          <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+          <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2</span>
+                              <span class="content">http://maven.apache.org/xsd/assembly-1.1.2.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;id&gt;</span>xsd<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;formats&gt;</span>
+        <span class="tag">&lt;format&gt;</span>zip<span class="tag">&lt;/format&gt;</span>
+    <span class="tag">&lt;/formats&gt;</span>
+    <span class="tag">&lt;fileSets&gt;</span>
+        <span class="tag">&lt;fileSet&gt;</span>
+            <span class="tag">&lt;directory&gt;</span>${project.build.directory}/generated-resources/isis-xsd<span class="tag">&lt;/directory&gt;</span>      <i class="conum" data-value="1"></i><b>(1)</b>
+            <span class="tag">&lt;outputDirectory&gt;</span>/<span class="tag">&lt;/outputDirectory&gt;</span>
+        <span class="tag">&lt;/fileSet&gt;</span>
+    <span class="tag">&lt;/fileSets&gt;</span>
+<span class="tag">&lt;/assembly&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>the location that the <code>xsd</code> goal writes to.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_xjc_profile">5.1.2. XJC profile</h4>
+<div class="paragraph">
+<p>The <code>xjc</code> profile reads the XSD generated by the <code>xsd</code> goal, and from it generates Java DTOs.  Note that this isn&#8217;t
+round-tripping: the original view model is only for use within the Isis app, whereas the DTO generated from the XSDs
+is for use in a standalone context, eg in a Java subscriber on an event bus.</p>
+</div>
+<div class="paragraph">
+<p>The <code>xjc</code> profile is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>xjc<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;activation&gt;</span>
+        <span class="tag">&lt;property&gt;</span>
+            <span class="tag">&lt;name&gt;</span>!skip.xjc<span class="tag">&lt;/name&gt;</span>                                                              <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;/property&gt;</span>
+    <span class="tag">&lt;/activation&gt;</span>
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.jvnet.jaxb2.maven2<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>maven-jaxb2-plugin<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>0.12.3<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;id&gt;</span>xjc-generate<span class="tag">&lt;/id&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>generate<span class="tag">&lt;/goal&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+                <span class="tag">&lt;configuration&gt;</span>
+                    <span class="tag">&lt;removeOldOutput&gt;</span>true<span class="tag">&lt;/removeOldOutput&gt;</span>
+                    <span class="tag">&lt;schemaDirectory&gt;</span>                                                           <i class="conum" data-value="2"></i><b>(2)</b>
+                        target/generated-resources/isis-xsd/viewmodels.app.todoapp/todoitem
+                    <span class="tag">&lt;/schemaDirectory&gt;</span>
+                    <span class="tag">&lt;schemaIncludes&gt;</span>                                                            <i class="conum" data-value="3"></i><b>(3)</b>
+                        <span class="tag">&lt;schemaInclude&gt;</span>v1_0/todoitem.xsd<span class="tag">&lt;/schemaInclude&gt;</span>
+                        <span class="tag">&lt;schemaInclude&gt;</span>v1_1/todoitem.xsd<span class="tag">&lt;/schemaInclude&gt;</span>
+                    <span class="tag">&lt;/schemaIncludes&gt;</span>
+                    <span class="tag">&lt;catalog&gt;</span>src/main/resources/catalog.xml<span class="tag">&lt;/catalog&gt;</span>                           <i class="conum" data-value="4"></i><b>(4)</b>
+                <span class="tag">&lt;/configuration&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.codehaus.mojo<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>build-helper-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>                              <i class="conum" data-value="5"></i><b>(5)</b>
+                <span class="tag">&lt;version&gt;</span>1.9.1<span class="tag">&lt;/version&gt;</span>
+                <span class="tag">&lt;executions&gt;</span>
+                    <span class="tag">&lt;execution&gt;</span>
+                        <span class="tag">&lt;id&gt;</span>add-source<span class="tag">&lt;/id&gt;</span>
+                        <span class="tag">&lt;phase&gt;</span>generate-sources<span class="tag">&lt;/phase&gt;</span>
+                        <span class="tag">&lt;goals&gt;</span>
+                            <span class="tag">&lt;goal&gt;</span>add-source<span class="tag">&lt;/goal&gt;</span>
+                        <span class="tag">&lt;/goals&gt;</span>
+                        <span class="tag">&lt;configuration&gt;</span>
+                            <span class="tag">&lt;sources&gt;</span>
+                                <span class="tag">&lt;source&gt;</span>target/generated-sources/xjc<span class="tag">&lt;/source&gt;</span>                   <i class="conum" data-value="6"></i><b>(6)</b>
+                            <span class="tag">&lt;/sources&gt;</span>
+                        <span class="tag">&lt;/configuration&gt;</span>
+                    <span class="tag">&lt;/execution&gt;</span>
+                <span class="tag">&lt;/executions&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+<span class="tag">&lt;/profile&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>enabled <em>unless</em> <code>skip.xjc</code> property specified</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>specifies the directory that the XSD schemas were generated to by the <code>isis-maven-plugin</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>specify each of the XSDs to be processed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>catalog file indicates the location of the referenced <a href="_rgcms_schema-common">common schema</a> XSDs.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>the <code>build-helper-maven-plugin</code> adds the Java source generated by the <code>xjc</code> plugin so that it can be compiled and
+packaged as any other code</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>the location that the <code>xjc</code> plugin generates its source code.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The referenced <code>catalog.xml</code> file instructs the <code>xjc</code> plugin how to resolve referenced schema locations.  Only a
+reference for the Apache Isis <a href="_rgcms_schema-common">common schema</a> is likely to be needed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="doctype">&lt;!DOCTYPE catalog
+            PUBLIC &quot;-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN&quot;
+            &quot;http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd&quot;&gt;</span>
+<span class="tag">&lt;catalog</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:oasis:names:tc:entity:xmlns:xml:catalog</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;public</span> <span class="attribute-name">publicId</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common</span><span class="delimiter">&quot;</span></span>
+            <span class="attribute-name">uri</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://isis.apache.org/schema/common/common.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>                             <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tag">&lt;/catalog&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>resolve the common schema from the Apache Isis website</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_to_run_3">5.2. To run</h3>
+<div class="paragraph">
+<p>The plugin is activated by default, so is run simply using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate the XSDs, the DTOs from the XSDs, and package up the XSDs into a ZIP file and the generated DTO
+class files into a regular JAR package.</p>
+</div>
+<div class="paragraph">
+<p>If for any reason you want to disable the generation of the DTOs, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package -Dskip.xjc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to disable the generation of both the XSDs and the DTOs, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn package -Dskip.xjc -Dskip.isis-xsd</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+        </div>
+
+        <footer>
+          <hr>
+          <p class="small">
+          Copyright &copy; 2010~2016 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          <br/>
+          Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
+          </p>
+        </footer>
+
+    </div>
+
+    <div id="doc-content-right" class="large-3 medium-3 xcolumns">
+        <div id="toc" class="toc2">
+            <div class="fallback-toc">
+                <ul class="sectlevel1">
+<li><a href="#_rgmvn">1. Apache Isis Maven plugin</a>
+<ul class="sectlevel2">
+<li><a href="#_other_guides">1.1. Other Guides</a></li>
+</ul>
+</li>
+<li><a href="#_rgmvn_intro">2. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_rgmvn_intro_app-manifest">2.1. <code>AppManifest</code></a></li>
+</ul>
+</li>
+<li><a href="#_rgmvn_validate">3. <code>validate</code> goal</a>
+<ul class="sectlevel2">
+<li><a href="#__code_dom_code_submodule">3.1. <code>dom</code> submodule</a></li>
+<li><a href="#_to_run">3.2. To run</a></li>
+<li><a href="#_example_of_failure">3.3. Example of failure</a></li>
+<li><a href="#_custom_validation_rules">3.4. Custom validation rules</a></li>
+<li><a href="#_1_9_0_version">3.5. 1.9.0 version</a></li>
+</ul>
+</li>
+<li><a href="#_rgmvn_swagger">4. <code>swagger</code> goal</a>
+<ul class="sectlevel2">
+<li><a href="#__code_integtest_code_submodule">4.1. <code>integtest</code> submodule</a></li>
+<li><a href="#_to_run_2">4.2. To run</a></li>
+</ul>
+</li>
+<li><a href="#_rgmvn_xsd">5. <code>xsd</code> goal</a>
+<ul class="sectlevel2">
+<li><a href="#_rgmvn_xsd">5.1. <code>xsd</code> submodule</a>
+<ul class="sectlevel3">
+<li><a href="#_xsd_profile">5.1.1. XSD profile</a></li>
+<li><a href="#_xjc_profile">5.1.2. XJC profile</a></li>
+</ul>
+</li>
+<li><a href="#_to_run_3">5.2. To run</a></li>
+</ul>
+</li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../../../js/foundation/5.5.1/vendor/jquery.js"></script>
+<script src="../../../js/foundation/5.5.1/foundation.min.js"></script>
+
+
+<link href="../../../css/jquery.tocify/1.9.0/jquery.tocify.css" rel="stylesheet">
+<script src="../../../js/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="../../../js/jquery.tocify/1.9.0/jquery.tocify.js"></script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#toc").tocify({
+            scrollTo: 50,
+            extendPage: true,
+            context: "#doc-content",
+            highlightOnScroll: true,
+            hashGenerator: "pretty",
+            hideEffect: "slideUp",
+            selectors: "h2,h3,h4,h5"
+        });
+        $(".fallback-toc").hide();
+    });
+</script>
+
+<script type="text/javascript">
+
+  /****
+
+      $(document).foundation();
+
+      $(document).ready(function(){
+        // Cache selectors
+        var lastId,
+            topMenu = $("div#toc ul"),
+            topMenuHeight = 100,
+
+            menuItems = topMenu.find("a"),
+            menuItemsHrefs = menuItems.map(function(){
+              var item = $($(this).attr("href"));
+              if (item.length) { return item; }
+            });
+
+        // Bind click handler to menu items to scroll animation
+        menuItems.click(function(e){
+          var href = $(this).attr("href"),
+              offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+          $('html, body').stop().animate({
+              scrollTop: offsetTop
+          }, 300);
+
+          e.preventDefault();
+        });
+
+        // Bind to scroll of window
+        $(  window ).scroll(function(){
+
+           // Get container scroll position
+           var fromTop = $(this).scrollTop()+topMenuHeight;
+
+           var cur = menuItemsHrefs.map(function(){
+             if ($(this).offset().top < fromTop)
+               return this;
+           });
+
+           // Get the id of the current element
+           cur = cur[cur.length-1];
+
+           var id = cur && cur.length ? cur[0].id : "";
+
+           if (lastId !== id && id) {
+               scrollTo(id);
+           }
+
+           window.history.pushState({}, "", window.location.origin + window.location.pathname + "#" + id);
+        });
+
+        scrollTo = function(id) {
+              lastId = id;
+
+              menuItems
+                .removeClass("active");
+
+              menuItems
+                .parents()
+                .removeClass("active-region");
+
+              menuItems
+                .parents("ul").hide();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .addClass("active");
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parent().children("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("li").addClass("active-region");
+
+        }
+      menuItems
+        .removeClass("active");
+
+      menuItems
+        .parents()
+        .removeClass("active-region");
+
+        var syncMenuItem;
+        if(window.location.hash!=="") {
+            var menuItemFor = $.grep(menuItems, function(e) {
+                return e.hash === window.location.hash;
+            });
+            console.log(menuItemFor);
+            if(menuItemFor.length === 1) {
+                syncMenuItem = menuItemFor[0];
+            }
+        }
+
+        if(!syncMenuItem){
+            syncMenuItem = menuItems[0];
+        }
+
+        $(syncMenuItem).click();
+
+      });
+
+    ***/
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    if("Documentation" === "Apache Isis Maven plugin") {
+        console.log( "processing 'Documentation'" );
+
+        $("#doc-content-left").removeClass("large-9").removeClass("medium-9").addClass("large-12").addClass("medium-12");
+        $("#doc-content-right").removeClass("large-3").removeClass("medium-3").hide();
+    }
+
+});
+
+</script>
+
+
+<script>
+
+$( document ).ready(function() {
+
+    (function() {
+      $(function() {
+        return $("#doc-content h2, #doc-content h3, #doc-content h4, #doc-content h5, #doc-content h6").each(function(i, el) {
+          var $el, icon, id;
+          $el = $(el);
+          id = $el.attr('id');
+          icon = '<i class="fa fa-link"></i>';
+          if (id) {
+            return $el.prepend($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
+          }
+        });
+      });
+    }).call(this);
+
+
+
+	/*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+	*/
+	;( function( $, window, document, undefined )
+	{
+		'use strict';
+
+		var elSelector		= '.header',
+			elClassHidden	= 'header--hidden',
+			throttleTimeout	= 500,
+			$element		= $( elSelector );
+
+		if( !$element.length ) return true;
+
+		var $window			= $( window ),
+			wHeight			= 0,
+			wScrollCurrent	= 0,
+			wScrollBefore	= 0,
+			wScrollDiff		= 0,
+			$document		= $( document ),
+			dHeight			= 0,
+
+			throttle = function( delay, fn )
+			{
+				var last, deferTimer;
+				return function()
+				{
+					var context = this, args = arguments, now = +new Date;
+					if( last && now < last + delay )
+					{
+						clearTimeout( deferTimer );
+						deferTimer = setTimeout( function(){ last = now; fn.apply( context, args ); }, delay );
+					}
+					else
+					{
+						last = now;
+						fn.apply( context, args );
+					}
+				};
+			};
+
+		$window.on( 'scroll', throttle( throttleTimeout, function()
+		{
+			dHeight			= $document.height();
+			wHeight			= $window.height();
+			wScrollCurrent	= $window.scrollTop();
+			wScrollDiff		= wScrollBefore - wScrollCurrent;
+
+			if( wScrollCurrent <= 0 ) // scrolled to the very top; element sticks to the top
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff > 0 && $element.hasClass( elClassHidden ) ) // scrolled up; element slides in
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff < 0 ) // scrolled down
+			{
+				if( wScrollCurrent + wHeight >= dHeight && $element.hasClass( elClassHidden ) ) // scrolled to the very bottom; element slides in
+					$element.removeClass( elClassHidden );
+
+				else // scrolled down; element slides out
+					$element.addClass( elClassHidden );
+			}
+
+			wScrollBefore = wScrollCurrent;
+		}));
+
+	})( jQuery, window, document );
+
+
+});
+</script>
+
+</body>
+</html>

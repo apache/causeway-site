@@ -1,0 +1,4171 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Committers' Guide</title>
+
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one
+        or more contributor license agreements.  See the NOTICE file
+        distributed with this work for additional information
+        regarding copyright ownership.  The ASF licenses this file
+        to you under the Apache License, Version 2.0 (the
+        "License"); you may not use this file except in compliance
+        with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing,
+        software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+        KIND, either express or implied.  See the License for the
+        specific language governing permissions and limitations
+        under the License.
+    -->
+
+    <!-- No caching headers -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+
+
+    <!-- TODO: need to (re)instate CDN in the future (not using for now just so can develop off-line -->
+    <link href="../css/foundation/5.5.1/foundation.css" rel="stylesheet" />
+    <script src="../js/foundation/5.5.1/vendor/modernizr.js"></script>
+    <link href="../css/asciidoctor/colony.css" rel="stylesheet">
+    <link href="../css/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.css" rel="stylesheet" />
+    <![endif]-->
+
+
+
+    <style type="text/css">
+        pre code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre code > span:first-child {
+            margin-left: -5px;
+        }
+
+    <style>
+
+    <!--
+    <style type="text/css">
+        /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top;line-height:1.45}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+
+        pre.CodeRay code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre.CodeRay code > span:first-child {
+            margin-left: -5px;
+        }
+
+        .literalblock pre,
+        .listingblock pre:not(.highlight),
+        .listingblock pre[class="highlight"],
+        .listingblock pre[class^="highlight "],
+        .listingblock pre.CodeRay,
+        .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+        .sidebarblock .literalblock pre,
+        .sidebarblock .listingblock pre:not(.highlight),
+        .sidebarblock .listingblock pre[class="highlight"],
+        .sidebarblock .listingblock pre[class^="highlight "],
+        .sidebarblock .listingblock pre.CodeRay,
+        .sidebarblock .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+
+    <style>
+    -->
+
+    <style>
+    .github-fork-ribbon-wrapper.right {
+        position: fixed;
+    }
+    .github-fork-ribbon {
+        background: #090;
+    }
+    .github-fork-ribbon a:hover {
+        background:#0D0;
+        color:#fff;
+        font-size: 1.1em;
+    }
+    </style>
+
+    <style>
+        @media only screen and (min-width: 40.063em) {
+          .top-bar {
+            .contain-to-grid .top-bar {
+                max-width: 80rem;
+            }
+          }
+        }
+        .row {
+            max-width: 80rem;
+        }
+    </style>
+
+    <style>
+        .extended-quote,
+        .extended-quote-first {
+            margin-left: 40px;
+            margin-right: 40px;
+            font-style: italic;
+        }
+        .extended-quote-attribution {
+            text-align: right;
+            margin-right: 100px;
+            color: #10B061;
+        }
+
+        .extended-quote-first:before {
+            content: "\201c";
+            float: left;
+            font-size: 2.75em;
+            font-weight: bold;
+            line-height: 0.6em;
+            margin-left: -0.6em;
+            color: #003b6b;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+
+    <style>
+        body {
+          position: relative;
+        }
+
+        *:not(pre) a > code {
+            color: #210DDC;
+        }
+
+        *:not(pre) > code {
+            background-color: inherit;
+            border: none;
+            font-weight: normal;
+        }
+
+        body div#toc li,
+        body div#toc2 li {
+            list-style-type: none;
+        }
+
+        div#doc-content {
+            margin-top: 30px;
+        }
+
+        div.documentation-page table.frame-all {
+            border-left: none;
+            border-right: none;
+        }
+
+        body div#toc li.active-region:before,
+        body div#toc2 li.active-region:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li a.active,
+        body div#toc2 li a.active {
+            color: red;
+        }
+
+        body div#toc.toc,
+        body div#toc.toc2 {
+            position: fixed;
+            left: auto;
+            padding-top: 60px;
+            z-index: auto;
+            background-color: white;
+            border-left-color: #eee;
+            border-left-style: solid;
+            border-right: none;
+            min-height: 2000px;
+        }
+
+    </style>
+
+    <style>
+
+        @media only screen and (min-width: 768px) {
+          #toc.toc2 ul ul { margin-left: -10px; }
+        }
+
+
+        body div#toc .tocify-subheader ul {
+            margin-bottom: 0px;
+        }
+
+        body div#toc .tocify-subheader li {
+            font-size: 14px;
+        }
+        .tocify li.tocify-item, .tocify ul.tocify-item {
+            line-height: 24px;
+        }
+
+        body div#toc li.tocify-item.active:before,
+        body div#toc2 li.tocify-item.active:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li.tocify-item.active a,
+        body div#toc2 li.tocify-item.active a {
+            color: red;
+        }
+    </style>
+
+    <style>
+        footer {
+            margin-top: 1000px;
+        }
+    </style>
+
+    <style>
+        /* overriding colony.css stylesheet */
+        .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+           /*padding: 1.25em 1.5625em 1.125em 1.5625em;*/
+           padding: 0.3em 0.6em 0.25em 0.6em;
+        }
+        @media only screen and (min-width: 1280px)
+        #toc.toc2 {
+          /*width: 20em;*/
+          width: 25em;
+        }
+
+        #doc-content a {
+          color: #210DDC;
+        }
+
+        .top-bar h1 {
+            border-bottom: inherit;
+        }
+
+        h2 {
+          margin-top: 80px;
+        }
+        h3 {
+          margin-top: 40px;
+        }
+        h4,h5 {
+          margin-top: 30px;
+        }
+
+        .admonitionblock.tip > table td.content {
+            color: #10B061;
+        }
+        .admonitionblock.note > table td.content {
+            color: #B509AB;
+        }
+        .admonitionblock.important > table td.content {
+            color: #D5810A;
+        }
+
+        .admonitionblock .title {
+            font-size: larger;
+            font-style: italic;
+        }
+
+        .imageblock img {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        /* from http://ben.balter.com/2014/03/13/pages-anchor-links/ */
+        .header-link {
+          position: absolute;
+          left: -0.5em;
+          opacity: 0;
+
+          /*
+          -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+          -moz-transition: opacity 0.2s ease-in-out 0.1s;
+          -ms-transition: opacity 0.2s ease-in-out 0.1s;
+          */
+        }
+
+        h2:hover .header-link,
+        h3:hover .header-link,
+        h4:hover .header-link,
+        h5:hover .header-link,
+        h6:hover .header-link {
+          opacity: 1;
+        }
+    </style>
+
+    <style>
+        .top-bar
+        {
+            -webkit-transition-duration: .5s;
+            transition-duration: .5s;
+
+            -webkit-transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+
+        /*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+        */
+        .header--hidden
+        {
+            -webkit-transform: translateY( -100% );
+            -ms-transform: translateY( -100% );
+            transform: translateY( -100% );
+
+            transition-duration: .5s;
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+    </style>
+
+    <style>
+        #doc-content a.guide {
+            color: white;
+        }
+    </style>
+
+    <style>
+        .tocify {
+            margin-top: 80px;
+        }
+    </style>
+
+
+</script>
+
+</head>
+<body>
+
+<<div class="github-fork-ribbon-wrapper right" style="position: fixed;">
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/apache/isis/fork">Fork me on GitHub</a>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="fixed contain-to-grid header">
+        <nav class="top-bar" data-topbar role="navigation" style="max-width: 80rem">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="/index.html">Apache Isis&trade;</a>
+                    </h1>
+                </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+                <ul class="right">
+
+                    <li class="has-form">
+                       <FORM class="searchbox navbar-form navbar-right" id="searchbox_012614087480249044419:dn-q5gtwxya" action="http://www.google.com/cse">
+                        <div class="row collapse">
+                            <input type="hidden" name="cx" value="012614087480249044419:dn-q5gtwxya">
+                            <INPUT type="hidden" name="cof" value="FORID:0">
+                            <INPUT class="form-control" name="q" type="text" placeholder="Search">
+                        </div>
+                    </FORM>
+                     </li>
+
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+
+                    <li><a href="/documentation.html">Documentation</a></li>
+                    <li><a href="/downloads.html">Downloads</a></li>
+                    <li><a href="/help.html">Help</a></li>
+                    <li><a href="/asf.html">@ASF</a></li>
+
+                </ul>
+
+            </section>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+
+    <div id="doc-content-left" class="large-9 medium-9 columns">
+
+
+        <div id="doc-content">
+          <div class="sect1">
+<h2 id="_cgcom">1. Committers' Guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This committers' guide is for committers of Apache Isis itself who want guidance on release process, publishing documents and other related procedures.</p>
+</div>
+<div class="sect2">
+<h3 id="_other_guides">1.1. Other Guides</h3>
+<div class="paragraph">
+<p>Apache Isis documentation is broken out into a number of user, reference and "supporting procedures" guides.</p>
+</div>
+<div class="paragraph">
+<p>The user guides available are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ugfun.html">Fundamentals</a></p>
+</li>
+<li>
+<p><a href="ugvw.html">Wicket viewer</a> (this guide)</p>
+</li>
+<li>
+<p><a href="ugvro.html">Restful Objects viewer</a></p>
+</li>
+<li>
+<p><a href="ugsec.html">Security</a></p>
+</li>
+<li>
+<p><a href="ugtst.html">Testing</a></p>
+</li>
+<li>
+<p><a href="ugbtb.html">Beyond the Basics</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reference guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgant.html">Annotations</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html">Domain Services</a></p>
+</li>
+<li>
+<p><a href="rgcfg.html">Configuration Properties</a></p>
+</li>
+<li>
+<p><a href="rgcms.html">Classes, Methods and Schema</a></p>
+</li>
+<li>
+<p><a href="rgmvn.html">Apache Isis Maven plugin</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The remaining guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="dg.html">Developers' Guide</a> (how to set up a development environment for Apache Isis and contribute back to the project)</p>
+</li>
+<li>
+<p><a href="#">Committers' Guide</a> (this guide)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This guide provides guidance for Apache Isis' own committers.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_merging-a-pull-request">2. Merging a Pull Request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The process for merging in github pull requests (so that they can be tested locally before committing) has been scripted in the <code>github-pr.sh</code> script.</p>
+</div>
+<div class="paragraph">
+<p>The script will merge the fork into a temporary branch, and then run a build.  Once you are happy, you can commit.</p>
+</div>
+<div class="paragraph">
+<p>The script requires <code>jq</code> to parse JSON; see the section below on installing pre-requisites.</p>
+</div>
+<div class="sect2">
+<h3 id="_process_and_usage">2.1. Process and Usage</h3>
+<div class="paragraph">
+<p>The overall process is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>locate/raise corresponding JIRA ticket, eg ISIS-1162</p>
+</li>
+<li>
+<p>checkout branch from which PR was forked (usually just 'master')</p>
+</li>
+<li>
+<p>merge PR into temporary branch using the <code>github-pr.sh</code> script</p>
+</li>
+<li>
+<p>test the change locally (run the app, rebuild, manual regression tests etc)</p>
+</li>
+<li>
+<p>if required, tidy up/refactor code as required</p>
+</li>
+<li>
+<p>merge temporary branch into mainline, and commit</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">github-pr.sh isis 1162 31</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isis</code> is the JIRA project and repo</p>
+</li>
+<li>
+<p><code>1162</code> is the JIRA ticket number</p>
+</li>
+<li>
+<p><code>31</code>   is the gthub PR issue number</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_transcript">2.2. Example transcript</h3>
+<div class="paragraph">
+<p>The listing below shows the steps taken by the script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ sh github-pr.sh isis 1162 31
+
+Found JIRA ticket
+Found github PR
+branch_name_local: master
+username         : sebadiaz
+repo_full_name   : sebadiaz/isis
+repo_clone_url   : https://github.com/sebadiaz/isis.git
+branch_name_fork : master
+
+merging into: ISIS-1162_pr-31
+
+Deleting branch 'ISIS-1162_pr-31'
+Deleted branch ISIS-1162_pr-31 (was bd2e3c2).
+Creating the branch ISIS-1162_pr-31
+Switched to a new branch 'ISIS-1162_pr-31'
+Pulling the changes from https://github.com/sebadiaz/isis.git master
+From https://github.com/sebadiaz/isis
+ * branch            master     -&gt; FETCH_HEAD
+Auto-merging core/pom.xml
+Merge made by the 'recursive' strategy.
+ core/pom.xml                                       |   3 +-
+ .../apache/isis/security/shiro/IsisLdapRealm.java  | 198 +++++++++++++++++++--
+ 2 files changed, 186 insertions(+), 15 deletions(-)
+
+Merged the PR; hit enter to build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build now commences.  Once done, the script continues:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">If build successful and happy to merge, execute:
+
+git checkout master &amp;&amp; git merge --no-ff ISIS-1162_pr-31 &amp;&amp; git branch -d ISIS-1162_pr-31</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The screenshot belows shows the history we end up with:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/committers/github-pr-history.png"><img src="images/committers/github-pr-history.png" alt="github pr history"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>This shows the fork being merged into the temporary branch ("ISIS-1162_pr-31"), then some further tidy-up, and finally the merging of the temporary branch into mainline.</p>
+</div>
+<div class="paragraph">
+<p>Note that there is no rebasing in this model.  This is intentional: when the merged branch is pushed, github will automatically close the original pull request.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">2.3. Prerequisites</h3>
+<div class="paragraph">
+<p>The script uses 'jq' to parse JSON.  To install:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>on Linux:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">aptitude install jq</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>on MacOS:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">brew install jq</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>on Windows:<br></p>
+<div class="paragraph">
+<p>Download exe from <a href="http://stedolan.github.io/jq/download/">website</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_cutting-a-release">3. Cutting a Release</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The release process consists of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the release manager cutting the release (documented below)</p>
+</li>
+<li>
+<p>Members of the Apache Isis PMC <a href="#_cgcom_verifying-releases">verifying</a> and voting on the release</p>
+</li>
+<li>
+<p>the release manager performing post-release tasks, for either a <a href="#_cgcom_post-release-successful">successful</a> or an <a href="#_cgcom_post-release-unsuccessful">unsuccessful</a> vote.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Apache Isis itself consists of two separately releasable modules; relative to the <a href="https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=tree">source code root</a> there are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>core</code></p>
+</li>
+<li>
+<p><code>component/example/archetypes/simpleapp</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section details the process for formally releasing Isis modules.  It describes the process for both <code>core</code> and then the archetype.  The subsequent sections describe how other committers can <a href="#_cgcom_verifying-releases">verify a release</a> and how the release manager can then perform <a href="#_cgcom_post-release">post-release</a> activities and set up for the next development iteration.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ve not performed a release before, then note that there are some configuration <a href="#_cgcom_release-process-prereqs">prerequisites</a> that must be configured first.  In particular, you&#8217;ll need signed public/private keys, and the ASF Nexus staging repo inlocal <code>~/.m2/settings.xml</code> file.</p>
+</div>
+<div class="paragraph">
+<p>These release notes using bash command line tools.  They should work on Linux and MacOS; for Windows, use mSysGit.</p>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_obtain-consensus">3.1. Obtain Consensus</h3>
+<div class="paragraph">
+<p>Before releasing <code>core</code>, ensure there is consensus on the <a href="../support.html">dev mailing list</a> that this is the right time for a release. The discussion should include confirming the version number to be used, and to confirm content.</p>
+</div>
+<div class="paragraph">
+<p>These discussions should also confirm the version number of the module being released. This should be in line with our <a href="#_cgcom_versioning-policy">semantic versioning policy</a>.</p>
+</div>
+<div class="paragraph">
+<p>Make sure you have a JIRA ticket open against which to perform all commits.  In most cases a JIRA ticket will have been created at the beginning of the previous release cycle.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_set-environment-variables">3.2. Set environment variables</h3>
+<div class="paragraph">
+<p>We use environment variables to parameterize as many of the steps as possible.  For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd core
+export ISISTMP=/c/tmp                               <i class="conum" data-value="1"></i><b>(1)</b>
+export ISISDEV=1.14.0-SNAPSHOT
+export ISISREL=1.13.0
+export ISISRC=RC1
+export ISISBRANCH=release-$ISISREL-$ISISRC
+export ISISJIRA=ISIS-9999                           <i class="conum" data-value="2"></i><b>(2)</b>
+export CATALINA_HOME=/c/java/apache-tomcat-8.0.30   <i class="conum" data-value="3"></i><b>(3)</b>
+
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adjust by platform</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>set to an "umbrella" ticket for all release activities.  (One should exist already, <a href="#_cgcom_post-release-successful_update-jira_create-new-jira">created at</a> the beginning of the development cycle now completing).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>adjust as required (Tomcat is used to smoke test the simpleapp archetype)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Obviously, alter <code>$ISISDEV</code> and <code>$ISISREL</code> as required, and bump <code>$ISISRC</code> for re-releasing following an <a href="#_cgcom_post-release-unsuccessful">unsuccessful</a> releases.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the branch name is <strong>not</strong> the same any of the eventual tag names (eg <code>isis-1.13.0</code> or <code>simpleapp-archetype-1.13.0</code>).</p>
+</div>
+<div class="paragraph">
+<p>If they did have the same name, then what would happen is that the <code>maven-release-plugin</code> would checkout the (HEAD of the) branch and thus upload a SNAPSHOT to the snapshot repository.  What it should of course do is checkout the tag and then upload that to the release staging repository.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_pull-down-code-to-release">3.3. Pull down code to release</h3>
+<div class="paragraph">
+<p>Set the HEAD of your local git repo to the commit to be released.  This will usually be the tip of the origin&#8217;s <code>master</code> branch.  Then, create a release branch for the version number being released; eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout master
+git pull --ff-only
+git checkout -b $ISISBRANCH</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All release preparation is done locally; if we are successful, this branch will be merged back into master.</p>
+</div>
+<div class="paragraph">
+<p>Double check that the version number of the parent pom should reflect the branch name that you are now on (with a <code>-SNAPSHOT</code> suffix).  his will normally have been done already during earlier development; but confirm that it has been updated. If it has not, make the change.</p>
+</div>
+<div class="paragraph">
+<p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on.  For example, if releasing version <code>1.13.0</code>, the POM should read:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.core<span class="tag">&lt;/groupId&gt;</span>
+<span class="tag">&lt;artifactId&gt;</span>isis<span class="tag">&lt;/artifactId&gt;</span>
+<span class="tag">&lt;version&gt;</span>1.13.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, check that there are no snapshot dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">grep SNAPSHOT `/bin/find . -name pom.xml | grep -v target | grep -v mothball | sort`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The only mention of <code>SNAPSHOT</code> should be for the Isis modules about to be released.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Obviously, don&#8217;t update Apache Isis' <code>SNAPSHOT</code> references; these get updated by the <code>mvn release:prepare</code> command we run later.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_releasing-core">3.4. Releasing Core</h3>
+<div class="paragraph">
+<p>First, we release <code>core</code>.  Switch to the appropriate directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd core</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_set-environment-variables">3.4.1. Set environment variables</h4>
+<div class="paragraph">
+<p>Set additional environment variables for the core "artifact":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export ISISART=isis
+export ISISCOR=&quot;Y&quot;
+
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_license-headers">3.4.2. License headers</h4>
+<div class="paragraph">
+<p>The Apache Release Audit Tool <code>RAT</code> (from the <a href="http://creadur.apache.org">Apache Creadur</a> project) checks for missing license header files. The parent <code>pom.xml</code> of each releasable module specifies the RAT Maven plugin, with a number of custom exclusions.</p>
+</div>
+<div class="paragraph">
+<p>To run the RAT tool, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o &amp;&amp; \
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done || \
+for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>rat.numUnapprovedLicenses</code> property is set to a high figure, temporarily overriding the default value of 0. This will allow the command to run over all submodules, rather than failing after the first one.   The command writes out a <code>target\rat.txt</code> for each submodule.  missing license notes are indicated using the key <code>!???</code>.  The <code>for</code> command collates all the errors.</p>
+</div>
+<div class="paragraph">
+<p>Investigate and fix any reported violations, typically by either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>adding genuinely missing license headers from Java (or other) source files, or</p>
+</li>
+<li>
+<p>updating the <code>&lt;excludes&gt;</code> element for the <code>apache-rat-plugin</code> plugin to ignore test files, log files and any other non-source code files</p>
+</li>
+<li>
+<p>also look to remove any stale <code>&lt;exclude&gt;</code> entries</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To add missing headers, use the groovy script <code>addmissinglicenses.groovy</code> (in the <code>scripts</code> directory) to automatically insert missing headers for certain file types. The actual files checked are those with extensions specified in the line <code>def fileEndings = [&quot;.java&quot;, &quot;.htm&quot;]</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">groovy ../scripts/addmissinglicenses.groovy -x</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(If the <code>-x</code> is omitted then the script is run in "dry run" mode).  Once you&#8217;ve fixed all issues, confirm once more that <code>apache-rat-plugin</code> no longer reports any license violations, this time leaving the <code>rat.numUnapprovedLicenses</code> property to its default, 0:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=0 -o &amp;&amp; \
+for a in `find . -name rat.txt -print`; do grep '!???' $a; done</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_missing-license-check">3.4.3. Missing License Check</h4>
+<div class="paragraph">
+<p>Although Apache Isis has no dependencies on artifacts with incompatible licenses, the POMs for some of these dependencies (in the Maven central repo) do not necessarily contain the required license information. Without appropriate additional configuration, this would result in the generated <code>DEPENDENCIES</code> file and generated Maven site indicating dependencies as having "unknown" licenses.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately, Maven allows the missing information to be provided by configuring the <code>maven-remote-resources-plugin</code>. This is stored in the <code>src/main/appended-resources/supplemental-models.xml</code> file, relative to the root of each releasable module.</p>
+</div>
+<div class="paragraph">
+<p>To capture the missing license information, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn license:download-licenses &amp;&amp; \
+groovy ../scripts/checkmissinglicenses.groovy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Maven plugin creates a <code>license.xml</code> file in the <code>target/generated-resources</code> directory of each module.  The script then searches for these <code>licenses.xml</code> files, and compares them against the contents of the <code>supplemental-models.xml</code> file.</p>
+</div>
+<div class="paragraph">
+<p>For example, the output could be something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">licenses to add to supplemental-models.xml:
+
+[org.slf4j, slf4j-api, 1.5.7]
+[org.codehaus.groovy, groovy-all, 1.7.2]
+
+licenses to remove from supplemental-models.xml (are spurious):
+
+[org.slf4j, slf4j-api, 1.5.2]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If any missing entries are listed or are spurious, then update <code>supplemental-models.xml</code> and try again.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_commit-changes">3.4.4. Commit changes</h4>
+<div class="paragraph">
+<p>Commit any changes from the preceding steps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git commit -am &quot;$ISISJIRA: updates to pom.xml etc for release&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_sanity-check">3.4.5. Sanity check</h4>
+<div class="paragraph">
+<p>Perform one last sanity check on the codebase.  Delete all Isis artifacts from your local Maven repo, then build using the <code>-o</code> offline flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">rm -rf ~/.m2/repository/org/apache/isis
+mvn clean install -o</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_release-prepare-dry-run">3.4.6. Release prepare "dry run"</h4>
+<div class="paragraph">
+<p>Most of the work is done using the <code>mvn release:prepare</code> goal.  Since this makes a lot of changes, we run it first in "dry run" mode; only if that works do we run the goal for real.</p>
+</div>
+<div class="paragraph">
+<p>Run the dry-run as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D dryRun=true \
+    -DreleaseVersion=$ISISREL \
+    -Dtag=$ISISART-$ISISREL \
+    -DdevelopmentVersion=$ISISDEV</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may be prompted for the gpg passphrase.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Experiments in using <code>--batch-mode -Dgpg.passphrase=&quot;&#8230;&#8203;&quot;</code> to fully automate this didn&#8217;t work; for more info, see <a href="http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html">here</a> (maven release plugin docs) and <a href="http://maven.apache.org/maven-release/maven-release-plugin/examples/non-interactive-release.html">here</a> (maven gpg plugin docs).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_release-prepare-proper">3.4.7. Release prepare "proper"</h4>
+<div class="paragraph">
+<p>Assuming this completes successfully, re-run the command, but without the <code>dryRun</code> flag and specifying <code>resume=false</code> (to ignore the generated <code>release.properties</code> file that gets generated as a side-effect of using <code>git</code>). You can also set the <code>skipTests</code> flag since they would have been run during the previous dry run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D resume=false -DskipTests=true \
+        -DreleaseVersion=$ISISREL \
+        -Dtag=$ISISART-$ISISREL \
+        -DdevelopmentVersion=$ISISDEV</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If there are any snags at this stage, then explicitly delete the generated <code>release.properties</code> file first before trying again.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_post-prepare-sanity-check">3.4.8. Post-prepare sanity check</h4>
+<div class="paragraph">
+<p>You should end up with artifacts in your local repo with the new version (eg <code>1.13.0</code>).  This is a good time to do some quick sanity checks; nothing has yet been uploaded:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>unzip the source-release ZIP and check it builds.</p>
+</li>
+<li>
+<p>Inspect the <code>DEPENDENCIES</code> file, and check it looks correct.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These steps can be performed using the following script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>rm -rf $ISISTMP/$ISISART-$ISISREL
+mkdir $ISISTMP/$ISISART-$ISISREL
+
+if [ "$ISISCOR" == "Y" ]; then
+    ZIPDIR="$M2_REPO/repository/org/apache/isis/core/$ISISART/$ISISREL"
+else
+    ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISART/$ISISREL"
+fi
+echo "cp \"$ZIPDIR/$ISISART-$ISISREL-source-release.zip\" $ISISTMP/$ISISART-$ISISREL/."
+cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
+
+pushd $ISISTMP/$ISISART-$ISISREL
+unzip $ISISART-$ISISREL-source-release.zip
+
+cd $ISISART-$ISISREL
+mvn clean install
+
+cat DEPENDENCIES
+
+popd</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-core_release-perform-upload">3.4.9. Release perform (Upload)</h4>
+<div class="paragraph">
+<p>Once the release has been built locally, it should be uploaded for voting. This is done by deploying the Maven artifacts to a staging directory (this includes the source release ZIP file which will be voted upon).</p>
+</div>
+<div class="paragraph">
+<p>The Apache staging repository runs on Nexus server, hosted at <a href="https://repository.apache.org">repository.apache.org</a>. The process of uploading will create a staging repository that is associated with the host (IP address) performing the release. Once the repository is staged, the newly created staging repository is "closed" in order to make it available to others.</p>
+</div>
+<div class="paragraph">
+<p>Use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn release:perform -P apache-release \
+    -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The custom <code>workingDirectory</code> prevents file path issues if releasing on Windows.  The command checks out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">...
+[INFO] --- maven-release-plugin:2.3.2:perform (default-cli) @ isis ---
+[INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
+re
+[INFO] Checking out the project to perform the release ...
+[INFO] Executing: cmd.exe /X /C &quot;git clone --branch release-1.13.0 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout&quot;
+[INFO] Working directory: C:\APACHE\isis-git-rw\core\target
+[INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
+[INFO] Checking out the project to perform the release ...
+[INFO] Executing: cmd.exe /X /C &quot;git clone --branch release-1.13.0 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout&quot;
+[INFO] Working directory: C:\APACHE\isis-git-rw\core\target
+[INFO] Executing: cmd.exe /X /C &quot;git ls-remote file:///C:\APACHE\isis-git-rw&quot;
+[INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
+[INFO] Executing: cmd.exe /X /C &quot;git fetch file:///C:\APACHE\isis-git-rw&quot;
+[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
+[INFO] Executing: cmd.exe /X /C &quot;git checkout release-1.13.0&quot;
+[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
+[INFO] Executing: cmd.exe /X /C &quot;git ls-files&quot;
+[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
+[INFO] Invoking perform goals in directory C:\APACHE\isis-git-rw\core\target\checkout\core
+[INFO] Executing goals 'deploy'...
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may (again) be prompted for gpg passphrase.  All being well this command will complete successfully. Given that it is uploading code artifacts, it could take a while to complete.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_releasing-the-archetype">3.5. Releasing the Archetype</h3>
+<div class="paragraph">
+<p>Apache Isis archetypes are reverse engineered from example applications. Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p>
+</div>
+<div class="paragraph">
+<p>Switch to the directory containing the <code>simpleapp</code> example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd ../example/application/simpleapp</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_setup-environment-variables">3.5.1. Setup environment variables</h4>
+<div class="paragraph">
+<p>Set additional environment variables for the <code>simpleapp-archetype</code> artifact:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export ISISART=simpleapp-archetype
+export ISISPAR=$ISISREL                 <i class="conum" data-value="1"></i><b>(1)</b>
+
+export ISISCPT=$(echo $ISISART | cut -d- -f2)
+export ISISCPN=$(echo $ISISART | cut -d- -f1)
+
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>$ISISPAR</code> is the version of the Apache Isis core that will act as the archetype&#8217;s parent. Usually this is the same as <code>$ISISREL</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_check-the-example-app">3.5.2. Check the example app</h4>
+<div class="paragraph">
+<p>Update the parent <code>pom.xml</code> to reference the <em>released</em> version of Apache Isis core, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
+    <span class="tag">&lt;isis.version&gt;</span>1.13.0<span class="tag">&lt;/isis.version&gt;</span>
+    ...
+<span class="tag">&lt;/properties&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Check for and fix any missing license header notices:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=50 -o &amp;&amp; \
+for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done || \
+for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, double check that the app</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>builds:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>can be run from an IDE</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mainClass=<code>org.apache.isis.WebServer</code></p>
+</li>
+<li>
+<p>args=<code>-m domainapp.app.DomainAppAppManifestWithFixtures</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>can be run using the mvn jetty plugin:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">pushd webapp
+mvn jetty:run
+popd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>can be deployed as a WAR</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cp webapp/target/simpleapp.war $CATALINA_HOME/webapps/ROOT.war</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Check the about page and confirm built against non-SNAPSHOT versions of the Apache Isis jars.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_create-the-archetype">3.5.3. Create the archetype</h4>
+<div class="paragraph">
+<p>Make sure you are in the correct directory and environment variables are correct.</p>
+</div>
+<div class="paragraph">
+<p>To recreate the <strong>simpleapp</strong> archetype:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd example/application/simpleapp
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, run the script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh ../../../scripts/recreate-archetype.sh $ISISJIRA</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The script automatically commits changes; if you wish use <code>git log</code> and
+<code>git diff</code> (or a tool such as SourceTree) to review changes made.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_release-prepare">3.5.4. Release prepare</h4>
+<div class="paragraph">
+<p>Switch to the <strong>archetype</strong> directory and execute the <code>release:prepare</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>cd ../../../example/archetype/$ISISCPN
+rm -rf $ISISTMP/checkout
+mvn release:prepare -P apache-release \
+                -DreleaseVersion=$ISISREL \
+                -DdevelopmentVersion=$ISISDEV \
+                -Dtag=$ISISART-$ISISREL</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_post-prepare-sanity-check">3.5.5. Post-prepare sanity check</h4>
+<div class="paragraph">
+<p>This is a good point to test the archetype; nothing has yet been uploaded.</p>
+</div>
+<div class="paragraph">
+<p><em>In a different session</em>, create a new app from the archetype.  First set up environment variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp    # or as required
+export ISISCPN=simpleapp
+env | grep ISIS | sort</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then generate a new app from the archetype:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">rm -rf $ISISTMP/test-$ISISCPN
+
+mkdir $ISISTMP/test-$ISISCPN
+cd $ISISTMP/test-$ISISCPN
+mvn archetype:generate  \
+    -D archetypeCatalog=local \
+    -D groupId=com.mycompany \
+    -D artifactId=myapp \
+    -D archetypeGroupId=org.apache.isis.archetype \
+    -D archetypeArtifactId=$ISISCPN-archetype</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build the newly generated app and test:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd myapp
+mvn clean install
+cd webapp
+mvn jetty:run                  # runs as mvn jetty plugin</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_releasing-the-archetype_release-perform-upload">3.5.6. Release Perform (upload)</h4>
+<div class="paragraph">
+<p>Back in the original session (in the <strong>archetype</strong> directory, <code>example/archetype/$ISISCPN</code>), execute <code>release:perform</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>mvn release:perform -P apache-release \
+                -DworkingDirectory=$ISISTMP/checkout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will upload the artifacts to the ASF Nexus repository.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_check-close-staging-repo">3.6. Check/Close Staging Repo</h3>
+<div class="paragraph">
+<p>The <code>mvn release:perform</code> commands will have put release artifacts for both <code>core</code> and the <code>simpleapp</code> archetype into a newly created staging repository on the ASF Nexus repository server.</p>
+</div>
+<div class="paragraph">
+<p>Log onto <a href="http://repository.apache.org">repository.apache.org</a> (using your ASF LDAP account):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-0.png"><img src="images/release-process/nexus-staging-0.png" alt="nexus staging 0" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>And then check that the release has been staged (select <code>staging repositories</code> from left-hand side):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-1.png"><img src="images/release-process/nexus-staging-1.png" alt="nexus staging 1" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>If nothing appears in a staging repo you should stop here and work out why.</p>
+</div>
+<div class="paragraph">
+<p>Assuming that the repo has been populated, make a note of its repo id; this is needed for the voting thread. In the screenshot above the id is <code>org.apache.isis-008</code>.</p>
+</div>
+<div class="paragraph">
+<p>After checking that the staging repository contains the artifacts that you expect you should close the staging repository. This will make it available so that people can check the release.</p>
+</div>
+<div class="paragraph">
+<p>Press the Close button and complete the dialog:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-2.png"><img src="images/release-process/nexus-staging-2.png" alt="nexus staging 2" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Nexus should start the process of closing the repository.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-2a.png"><img src="images/release-process/nexus-staging-2a.png" alt="nexus staging 2a" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>All being well, the close should (eventually) complete successfully (keep hitting refresh):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-3.png"><img src="images/release-process/nexus-staging-3.png" alt="nexus staging 3" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>The Nexus repository manager will also email you with confirmation of a successful close.</p>
+</div>
+<div class="paragraph">
+<p>If Nexus has problems with the key signature, however, then the close will be aborted:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-staging-4.png"><img src="images/release-process/nexus-staging-4.png" alt="nexus staging 4" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Use <code>gpg --keyserver hkp://pgp.mit.edu --recv-keys nnnnnnnn</code> to confirm that the key is available.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Unfortunately, Nexus does not seem to allow subkeys to be used for signing. See <a href="#_cgcom_key-generation">Key Generation</a> for more details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_push-branches">3.7. Push branches</h3>
+<div class="paragraph">
+<p>Push the release branch to origin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git push -u origin $ISISBRANCH</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and also push tags for both core and the archetype:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>git push origin refs/tags/isis-$ISISREL:refs/tags/isis-$ISISREL-$ISISRC
+git push origin refs/tags/simpleapp-archetype-$ISISREL:refs/tags/simpleapp-archetype-$ISISREL-$ISISRC
+git fetch</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The remote tag isn&#8217;t visible locally but can be seen <a href="https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=summary">online</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_cutting-a-release_voting">3.8. Voting</h3>
+<div class="paragraph">
+<p>Once the artifacts have been uploaded, you can call a vote.</p>
+</div>
+<div class="paragraph">
+<p>In all cases, votes last for 72 hours and require a +3 (binding) vote from members.</p>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_cutting-a-release_voting-start-voting-thread">3.8.1. Start voting thread on <a href="mailto:&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g">&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g</a></h4>
+<div class="paragraph">
+<p>The following boilerplate is for a release of the Apache Isis Core. Adapt as required:</p>
+</div>
+<div class="paragraph">
+<p>Use the following subject, eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 1.13.0 RC1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And use the following body:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">I've cut a release for Apache Isis Core and the simpleapp archetype:
+
+* Core 1.13.0
+* SimpleApp Archetype 1.13.0
+
+The source code artifacts have been uploaded to staging repositories on repository.apache.org:
+
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.13.0/isis-1.13.0-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.13.0/simpleapp-archetype-1.13.0-source-release.zip
+
+For each zip there is a corresponding signature file (append .asc to the zip's url).
+
+In the source code repo the code has been tagged as isis-1.13.0-RC1 and simpleapp-archetype-1.13.0-RC1; see https://git-wip-us.apache.org/repos/asf?p=isis.git
+
+For instructions on how to verify the release (build from binaries and/or use in Maven directly), see http://isis.apache.org/guides/cgcom.html#_cgcom_verifying-releases
+
+Please verify the release and cast your vote.  The vote will be open for a minimum of 72 hours.
+
+[ ] +1
+[ ]  0
+[ ] -1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember to update:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the version number (1.13.0 or whatever)</p>
+</li>
+<li>
+<p>the release candidate number (<code>RC1</code> or whatever)</p>
+</li>
+<li>
+<p>the repository id, as provided by Nexus earlier (<code>orgapacheisis-10xx</code> or whatever)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that the email also references the procedure for other committers to <a href="#_cgcom_verifying-releases">verify the release</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_verifying-releases">4. Verifying a Release</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The release process consists of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the release manager <a href="#_cgcom_cutting-a-release">cutting the release</a></p>
+</li>
+<li>
+<p>members of the Apache Isis PMC verifying and voting on the release (documented below)</p>
+</li>
+<li>
+<p>the release manager performing post-release tasks, for either a <a href="#_cgcom_post-release-successful">successful</a> or an <a href="#_cgcom_post-release-unsuccessful">unsuccessful</a> vote.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section describes some guidance on what a voter (members of the Apache Isis PMC and anyone else who wishes) is expected to do before casting their vote in order to verify a release.</p>
+</div>
+<div class="sect2">
+<h3 id="_background">4.1. Background</h3>
+<div class="paragraph">
+<p>Whenever a release manager announces a vote on a release (as per the <a href="#_cgcom_release-process">release process</a>) on the <a href="../support.html">dev mailing list</a>, it is the responsibility of the project&#8217;s PMC to cast their vote on the release.  Anyone else can also vote, but only members of the Apache Isis PMC&#8217;s vote are binding.</p>
+</div>
+<div class="paragraph">
+<p>Per this <a href="http://www.apache.org/dev/release.html">ASF documentation</a>, the legal requirements for an ASF release are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a source zip file + corresponding signature (signed by the release manager, which is in the ASF web of trust and in our KEYS file)</p>
+</li>
+<li>
+<p>all source files have the Apache license (this is ensured by the running of the rat plugin prior to release; you could run it on the unzipped source)</p>
+</li>
+<li>
+<p>all dependencies are appropriately licensed; see the <code>DEPENDENCIES</code> file which is automatically generated from the POMs plus the supplemental-models.xml file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that the binaries are <em>not</em> an ASF release, they merely exist on the Maven central repo as a convenience. That said, you might also want to verify the release by pulling the binaries from the Maven staging repository. Details of how to do this are also documented below.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites_2">4.2. Prerequisites</h3>
+<div class="paragraph">
+<p>To verify the source ZIP files, you will need to have imported the public keys used for signing Apache Isis releases. These can be downloaded from the root of the Apache Isis source tree.</p>
+</div>
+<div class="paragraph">
+<p>Since the Apache Isis source is mirrored on github.com, you can just use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">curl http://www.apache.org/dist/isis/KEYS &gt; /tmp/KEYS
+gpg --import /tmp/KEYS</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, we will be rebuilding Isis from source.  Therefore delete all Isis artifacts from your local Maven repo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">rm -rf ~/.m2/repository/org/apache/isis</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verifying_source_artifacts">4.3. Verifying source artifacts</h3>
+<div class="paragraph">
+<p>You can either verify the source artifacts <a href="#_cgcom_verifying-releases_manual-procedure">manuall</a>, or use a script that <a href="#_cgcom_verifying-releases_automated-procedure">automates</a> the steps.</p>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_verifying-releases_manual-procedure">4.3.1. Manual procedure</h4>
+<div class="paragraph">
+<p>The following section describes the steps to perform to manually verify a release.</p>
+</div>
+<div class="sect4">
+<h5 id="_download_the_artifacts">Download the artifacts</h5>
+<div class="paragraph">
+<p>Download both the ZIP and .ASC files from the location specified in the voting email. To verify that the signature is correct, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">gpg --verify isis-x.y.z.zip.asc isis-x.y.z.zip</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_building_source_artifacts">Building source artifacts</h5>
+<div class="paragraph">
+<p>Assuming the ZIP file verifies, it should be unpacked, and then the artifact built from source.</p>
+</div>
+<div class="paragraph">
+<p>To build Apache Isis core, first download any dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>mvn dependency:go-offline</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Check that no Isis artifacts have yet been downloaded, ie there is no <code>~/.m2/org/repository/org/apache/isis</code> directory. If there are, it could indicate that the release being verified incorrectly references previous versions of Apache Isis</p>
+</div>
+<div class="paragraph">
+<p>Assuming all is ok, build using the <code>-o</code> offline flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>mvn clean install -o</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Confirm that the versions of the Isis artifacts now cached in your local repository are correct.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_verifying_binary_artifacts">Verifying binary artifacts</h5>
+<div class="paragraph">
+<p>You can verify the binary releases by configuring your local Maven install to point to the Maven staging repository (or repositories) and then using them, eg to run the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype1</a> and running the resultant app.</p>
+</div>
+<div class="paragraph">
+<p>Configuring your local Maven install amounts to updating the <code>~/.m2/settings.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profiles&gt;</span>
+    <span class="tag">&lt;profile&gt;</span>
+        <span class="tag">&lt;id&gt;</span>verify-isis<span class="tag">&lt;/id&gt;</span>
+        <span class="tag">&lt;repositories&gt;</span>
+            <span class="tag">&lt;repository&gt;</span>
+                <span class="tag">&lt;id&gt;</span>isis-core-staging<span class="tag">&lt;/id&gt;</span>
+                <span class="tag">&lt;name&gt;</span>Isis Core Staging<span class="tag">&lt;/name&gt;</span>
+                <span class="tag">&lt;releases&gt;</span>
+                    <span class="tag">&lt;enabled&gt;</span>true<span class="tag">&lt;/enabled&gt;</span>
+                    <span class="tag">&lt;updatePolicy&gt;</span>always<span class="tag">&lt;/updatePolicy&gt;</span>
+                    <span class="tag">&lt;checksumPolicy&gt;</span>warn<span class="tag">&lt;/checksumPolicy&gt;</span>
+                <span class="tag">&lt;/releases&gt;</span>
+                <span class="tag">&lt;url&gt;</span>http://repository.apache.org/content/repositories/orgapacheisis-10xx<span class="tag">&lt;/url&gt;</span>
+                <span class="tag">&lt;layout&gt;</span>default<span class="tag">&lt;/layout&gt;</span>
+            <span class="tag">&lt;/repository&gt;</span>
+            ...
+        <span class="tag">&lt;/repositories&gt;</span>
+    <span class="tag">&lt;/profile&gt;</span>
+    ...
+<span class="tag">&lt;/profiles&gt;</span>
+<span class="tag">&lt;activeProfiles&gt;</span>
+    <span class="tag">&lt;activeProfile&gt;</span>verify-isis<span class="tag">&lt;/activeProfile&gt;</span>
+    ...
+<span class="tag">&lt;/activeProfiles&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where the repository URL is as provided in the VOTE email. If there is more than one repository (as is sometimes the case if multiple components have been released), then repeat the &lt;repository&gt; section for each.</p>
+</div>
+<div class="paragraph">
+<p>Once the vote has completed, the staging repositories will be removed and so you should deactive the profile (comment out the <code>&lt;activeProfile&gt;</code> element). If you forget to deactive the profile, there should be no adverse effects; Maven will just spend unnecessary cycles attempting to hit a non-existent repo.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cgcom_verifying-releases_automated-procedure">4.3.2. Automated procedure</h4>
+<div class="paragraph">
+<p>To save some time in verifying an Apache Isis release we&#8217;ve assembled a script to automate the process. The script is tested on Mac OSX and Linux. Windows users can use Cygwin or <a href="http://msysgit.github.io/">msysgit</a>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s <em>recommended</em> that you start this process in an empty directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mkdir ~/verify-isis-release
+cd ~/verify-isis-release</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_copy_script_to_local_machine">Copy script to local machine</h5>
+<div class="paragraph">
+<p>Copy the following script, save to <code>verify-isis-release.sh</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+# Instructions:
+# -Create an empty directory
+# -Put a .txt file in it containing a list of all the urls of the zip files
+# -Run this script
+# TODO: enhance this script so it will stop when something is broken
+_download(){
+    for fil in `cat *.txt`
+    do
+       echo 'Downloading '$fil
+       curl  -L -O $fil
+       curl  -L -O $fil.asc
+    done
+}
+_verify(){
+    for zip in *.zip
+    do
+       echo 'Verifying '$zip
+       gpg --verify $zip.asc $zip
+    done
+}
+_unpack(){
+    echo 'Unpacking '
+    unzip -q '*.zip'
+}
+_build(){
+    echo 'Removing Apache Isis from local repo '$module
+    rm -rf ~/.m2/repository/org/apache/isis
+    COUNTER=0
+    for module in ./*/
+    do
+       COUNTER=$[COUNTER+1]
+       if [ $COUNTER -eq 1 ]
+       then
+         cd $module
+         echo 'Building Core '$module
+         mvn clean install -o
+         cd ..
+       else
+         cd $module
+         echo 'Building Module '$module
+         mvn clean install
+         cd ..
+       fi
+    done
+}
+# The work starts here
+_download
+_verify
+_unpack
+_build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Make sure the script is executable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>chmod +x verify-isis-release.sh</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The script could be enhanced in many ways, feel free to contribute improvements!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_create_an_input_file">Create an input file</h5>
+<div class="paragraph">
+<p>The input file is a plain <code>.txt</code> file containing all urls to the packages to be verified. Here&#8217;s a sample of the release of Apache Isis 1.8.0:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>https://repository.apache.org/content/repositories/orgapacheisis-063/org/apache/isis/core/isis/1.8.0/isis-1.8.0-source-release.zip
+https://repository.apache.org/content/repositories/orgapacheisis-065/org/apache/isis/archetype/simpleapp-archetype/1.8.0/simpleapp-archetype-1.8.0-source-release.zip</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The actual list of packages to be verified will be provided through the mailing list.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_execute_the_script">Execute the script</h5>
+<div class="paragraph">
+<p>Execute&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">./verify-isis-release.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>... and get yourself a cup of coffee.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_verifying-releases_creadur">4.4. (Optional) Creadur Tools</h3>
+<div class="paragraph">
+<p>The <a href="http://creadur.apache.org">Apache Creadur</a> project exists to provide a set of tools to ensure compliance with Apache&#8217;s licensing standards.</p>
+</div>
+<div class="paragraph">
+<p>The main release auditing tool, <a href="http://creadur.apache.org/rat">Apache RAT</a> is used in the <a href="#_cgcom_cutting-a-release">release process</a>.</p>
+</div>
+<div class="paragraph">
+<p>Creadur&#8217;s remaining tools - <a href="http://creadur.apache.org/tentacles/">Tentacles</a> and <a href="http://creadur.apache.org/whisker/">Whisker</a> - are to support the verification process.</p>
+</div>
+<div class="paragraph">
+<p>For example, Tentacles generates a report called <code>archives.html</code>. This lists all of the top-level binaires, their <code>LICENSE</code> and <code>NOTICE</code> files and any <code>LICENSE</code> and <code>NOTICE</code> files of any binaries they may contain.</p>
+</div>
+<div class="paragraph">
+<p>Validation of the output at this point is all still manual. Things to check include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>any binaries that contain no LICENSE and NOTICE files</p>
+</li>
+<li>
+<p>any binaries that contain more than one LICENSE or NOTICE file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In this report, each binary will have three links listed after its name '(licenses, notices, contents)'</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_the_archetype">4.5. Test the archetype</h3>
+<div class="paragraph">
+<p>Assuming that everything builds ok, then test the archetypes (adjust version as necessary):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:generate  \
+    -D archetypeGroupId=org.apache.isis.archetype \
+    -D archetypeArtifactId=simpleapp-archetype \
+    -D groupId=com.mycompany \
+    -D artifactId=myapp \
+    -D version=1.0-SNAPSHOT \
+    -B \
+    -o \
+    -D archetypeVersion=1.13.0   # adjust version as necessary
+
+cd myapp
+mvn clean install -o
+cd webapp
+mvn jetty:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If it runs up ok, then it&#8217;s time to <a href="#_cgcom_verifying-releases">vote</a>!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_casting_a_vote">4.6. Casting a Vote</h3>
+<div class="paragraph">
+<p>When you have made the above checks (and any other checks you think may be relevant), cast your vote by replying to the email thread on the mailing list.</p>
+</div>
+<div class="paragraph">
+<p>If you are casting <code>-1</code>, please provide details of the problem(s) you have found.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_post-release-successful">5. Post Release (Successful)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The release process consists of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the release manager <a href="#_cgcom_cutting-a-release">cutting the release</a></p>
+</li>
+<li>
+<p>members of the Apache Isis PMC <a href="#_cgcom_verifying-releases">verifying</a> and voting on the release</p>
+</li>
+<li>
+<p>the release manager performing post-release tasks, for either a successful or an <a href="#_cgcom_post-release-unsuccessful">unsuccessful</a> vote (former documented below)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For a vote to succeed, there must be +3 votes from PMC members, and the vote must have been open at least 72 hours.  If there are not +3 votes after this time then it is perfectly permissible to keep the vote open longer.</p>
+</div>
+<div class="paragraph">
+<p>This section describes the steps to perform if the vote has been successful.</p>
+</div>
+<div class="sect2">
+<h3 id="_inform_dev_ml">5.1. Inform dev ML</h3>
+<div class="paragraph">
+<p>Post the results to the <code>dev@isis.a.o</code> mailing list:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.13.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>using the body (alter last line as appropriate):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">The vote has completed with the following result :
+
+  +1 (binding): &lt;i&gt;list of names&lt;/i&gt;
+  +1 (non binding): &lt;i&gt;list of names&lt;/i&gt;
+
+  -1 (binding): &lt;i&gt;list of names&lt;/i&gt;
+  -1 (non binding): &lt;i&gt;list of names&lt;/i&gt;
+
+The vote is SUCCESSFUL.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_tags">5.2. Update tags</h3>
+<div class="paragraph">
+<p>Replace the <code>-RCn</code> tag with another without the qualifier.</p>
+</div>
+<div class="paragraph">
+<p>You can do this using the <code>scripts/promoterctag.sh</code> script; for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-1.13.0 RC1
+sh scripts/promoterctag.sh simpleapp-archetype-1.13.0 RC1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This script pushes the tag under <code>refs/tags/rel</code>.  As per Apache policy (communicated on 10th Jan 2016 to Apache PMCs),
+this path is 'protected' and is unmodifiable (guaranteeing the provenance that the ASF needs for releases).</p>
+</div>
+<div class="paragraph">
+<p>Then, continue onto the next section for the steps to promote and announce the release.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_release_to_maven_central">5.3. Release to Maven Central</h3>
+<div class="paragraph">
+<p>From the <a href="http://repository.apache.org">ASF Nexus repository</a>, select the staging repository and select 'release' from the top menu.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="images/release-process/nexus-release-1.png"><img src="images/release-process/nexus-release-1.png" alt="nexus release 1" width="600px"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>This moves the release artifacts into an Apache releases repository; from there they will be automatically moved to the Maven repository.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_release_source_zip">5.4. Release Source Zip</h3>
+<div class="paragraph">
+<p>As described in the <a href="http://www.apache.org/dev/release-publishing.html#distribution_dist">Apache documentation</a>, each Apache TLP has a <code>release/TLP-name</code> directory in the distribution Subversion repository at <a href="https://dist.apache.org/repos/dist">https://dist.apache.org/repos/dist</a>. Once a release vote passes, the release manager should <code>svn add</code> the artifacts (plus signature and hash files) into this location. The release is then automatically pushed to <a href="http://www.apache.org/dist/">http://www.apache.org/dist/</a> by <code>svnpubsub</code>. Only the most recent release of each supported release line should be contained here, old versions should be deleted.</p>
+</div>
+<div class="paragraph">
+<p>Each project is responsible for the structure of its directory. The directory structure of Apache Isis reflects the directory structure in our git source code repo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>isis/
+  core/
+  example/
+    archetype/
+      simpleapp/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If necessary, checkout this directory structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">svn co https://dist.apache.org/repos/dist/release/isis isis-dist</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, add the new release into the appropriate directory, and delete any previous release.  The <code>upd.sh</code> script can be used to automate this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">old_ver=$1
+new_ver=$2
+
+
+# constants
+repo_root=https://repository.apache.org/content/repositories/releases/org/apache/isis
+
+zip=&quot;source-release.zip&quot;
+asc=&quot;$zip.asc&quot;
+md5=&quot;$zip.md5&quot;
+
+
+#
+# isis-core
+#
+type=&quot;core&quot;
+fullname=&quot;isis&quot;
+pushd isis-core
+
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
+svn add $fullname-$new_ver-$asc
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
+svn add $fullname-$new_ver-$md5
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
+svn add $fullname-$new_ver-$zip
+
+svn delete $fullname-$old_ver-$asc
+svn delete $fullname-$old_ver-$md5
+svn delete $fullname-$old_ver-$zip
+
+popd
+
+
+#
+# simpleapp-archetype
+#
+type=&quot;archetype&quot;
+fullname=&quot;simpleapp-archetype&quot;
+pushd $type/$fullname
+
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$md5
+svn add $fullname-$new_ver-$md5
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$asc
+svn add $fullname-$new_ver-$asc
+curl -O $repo_root/$type/$fullname/$new_ver/$fullname-$new_ver-$zip
+svn add $fullname-$new_ver-$zip
+
+svn delete $fullname-$old_ver-$md5
+svn delete $fullname-$old_ver-$asc
+svn delete $fullname-$old_ver-$zip
+
+popd</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh upd.sh 1.12.1 1.13.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The script downloads the artifacts from the Nexus release repository, adds the artifacts to subversion and deletes the previous version.</p>
+</div>
+<div class="paragraph">
+<p>Double check that the files are correct; there is sometimes a small delay in the files becoming available in the release repository.  It should be sufficient to check just the <code>md5</code> or <code>.asc</code> files that these look valid (aren&#8217;t HTML 404 error pages):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">vi `find . -name *.md5`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming all is good, commit the changes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>svn commit -m "publishing isis source releases to dist.apache.org"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the files are invalid, then revert using <code>svn revert . --recursive</code> and try again in a little while.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_jira">5.5. Update JIRA</h3>
+<div class="sect3">
+<h4 id="_generate_release_notes">5.5.1. Generate Release Notes</h4>
+<div class="paragraph">
+<p>From the root directory, generate the release notes for the current release, in Asciidoc format; eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 1.13.0 &gt; /tmp/1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_close_tickets">5.5.2. Close tickets</h4>
+<div class="paragraph">
+<p>Close all JIRA tickets for the release, or moved to future releases if not yet addressed. Any tickets that were partially implemented should be closed, and new tickets created for the functionality on the ticket not yet implemented.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mark_the_version_as_released">5.5.3. Mark the version as released</h4>
+<div class="paragraph">
+<p>In JIRA, go to the <a href="https://issues.apache.org/jira/plugins/servlet/project-config/ISIS/versions">administration section</a> for the Apache Isis project and update the version as being released.</p>
+</div>
+<div class="paragraph">
+<p>In the <a href="https://issues.apache.org/jira/secure/RapidBoard.jspa?rapidView=87">Kanban view</a> this will have the effect of marking all tickets as released (clearing the "done" column).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_create_new_jira">5.5.4. Create new JIRA</h4>
+<div class="paragraph">
+<p>Create a new JIRA ticket as a catch-all for the <em>next</em> release.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update_the_asf_reporter_website">5.5.5. Update the ASF Reporter website</h4>
+<div class="paragraph">
+<p>Log the new release in the <a href="https://reporter.apache.org/addrelease.html?isis">ASF Reporter website</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_website">5.6. Update website</h3>
+<div class="paragraph">
+<p>Update the Apache Isis (asciidoc) website:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Paste in the JIRA-generated release notes generated above, adding to top of <code>adocs/documentation/src/main/asciidoc/release-notes.adoc</code>.  Also add a summary line for the release.</p>
+</li>
+<li>
+<p>Search for any <code>-SNAPSHOT</code> suffices, and remove</p>
+</li>
+<li>
+<p>Search these release procedures, and update any hard-coded reference to the release to the next release (so when they are followed next time the text will be correct).</p>
+</li>
+<li>
+<p>Update the <a href="../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p>
+</li>
+<li>
+<p>Update any pages (<code>.adoc</code>, <code>.md</code>, <code>.html</code> etc) that describe how to run the archetype, and ensure they reference the correct version.<br></p>
+<div class="paragraph">
+<p>A search for <code>archetypeGroupId=org.apache.isis.archetype</code> should find these pages.</p>
+</div>
+</li>
+<li>
+<p>update the <a href="../doap_isis.rdf">DOAP RDF</a> file (which provides a machine-parseable description of the project) should also be updated with details of the new release. Validate using the <a href="http://www.w3.org/RDF/Validator/">W3C RDF Validator</a> service.<br></p>
+<div class="paragraph">
+<p>For more information on DOAP files, see these <a href="http://projects.apache.org/doap.html">Apache policy docs</a>.</p>
+</div>
+</li>
+<li>
+<p>Update the <a href="https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=STATUS;hb=HEAD">STATUS</a> file (in root of Apache Isis' source) should be updated with details of the new release.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t forget to commit the <code>.adoc</code> changes and publish to the isis-site repo.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_announce_the_release">5.7. Announce the release</h3>
+<div class="paragraph">
+<p>Announce the release to <a href="mailto:users@isis.apache.org">users mailing list</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example, for a release of Apache Isis Core, use the following subject:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[ANN] Apache Isis version 1.13.0 Released</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And use the following body (summarizing the main points as required):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis v1.13.0.
+
+New features in this release include:
+* ...
+
+Full release notes are available on the Apache Isis website at [1].  Please also read the migration notes [2].
+
+You can access this release directly from the Maven central repo [3], or download the release and build it from
+source [4].
+
+Enjoy!
+
+--The Apache Isis team
+
+[1] http://isis.apache.org/release-notes.html#r1.13.0
+[2] http://isis.apache.org/migration-notes.html#_migration-notes_1.12.0-to-1.13.0
+[3] http://search.maven.org
+[4] http://isis.apache.org/downloads.html</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blog_post">5.8. Blog post</h3>
+<div class="paragraph">
+<p><a href="https://blogs.apache.org/roller-ui/login.rol">Log onto</a> the <a href="http://blogs.apache.org/isis/">Apache blog</a> and create a new post. Copy-n-paste the above mailing list announcement should suffice.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_merge_in_release_branch">5.9. Merge in release branch</h3>
+<div class="paragraph">
+<p>Because we release from a branch, the changes made in the branch (changes to <code>pom.xml</code> made by the <code>maven-release-plugin</code>, or any manual edits) should be merged back from the release branch back into the <code>master</code> branch:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout master                           # update master with latest
+git pull
+git merge release-1.13.0-RC1                  # merge branch onto master
+git branch -d release-1.13.0-RC1              # branch no longer needed
+git push origin --delete release-1.13.0-RC1   # remote branch no longer needed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, update the simpleapp&#8217;s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>1.14.0-SNAPSHOT</code>)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_dependencies">5.10. Update dependencies</h3>
+<div class="paragraph">
+<p>With the release complete, now is a good time to bump versions of dependencies (so that there is a full release cycle to identify any possible issues).</p>
+</div>
+<div class="paragraph">
+<p>You will probably want to create a new JIRA ticket for these updates (or if minor then use the "catch-all" JIRA ticket raised earlier for the next release).</p>
+</div>
+<div class="sect3">
+<h4 id="_update_parent_of_core">5.10.1. Update parent of Core</h4>
+<div class="paragraph">
+<p>Check (via <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache%22%20a%3A%22apache%22">search.maven.org</a>) whether there is a newer version of the Apache parent <code>org.apache:apache</code>.</p>
+</div>
+<div class="paragraph">
+<p>If there is, update the <code>&lt;version&gt;</code> in the <code>&lt;parent&gt;</code> element in the parent POM to match the newer version:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;parent&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.apache<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>apache<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>NN<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;relativePath</span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/parent&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>NN</code> is the updated version number.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update_plugin_versions">5.10.2. Update plugin versions</h4>
+<div class="paragraph">
+<p>The <code>maven-versions-plugin</code> should be used to determine if there are newer versions of any of the plugins used to build Apache Isis. Since this goes off to the internet, it may take a minute or two to run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn versions:display-plugin-updates &gt; /tmp/foo
+grep &quot;\-&gt;&quot; /tmp/foo | /bin/sort -u</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Review the generated output and make updates as you see fit. (However, if updating, please check by searching for known issues with newer versions).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_update_dependency_versions">5.10.3. Update dependency versions</h4>
+<div class="paragraph">
+<p>The <code>maven-versions-plugin</code> should be used to determine if there are newer versions of any of Isis' dependencies. Since this goes off to the internet, it may take a minute or two to run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn versions:display-dependency-updates &gt; /tmp/foo
+grep &quot;\-&gt;&quot; /tmp/foo | /bin/sort -u</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Update any of the dependencies that are out-of-date. That said, do note that some dependencies may show up with a new dependency, when in fact the dependency is for an old, badly named version. Also, there may be new dependencies that you do not wish to move to, eg release candidates or milestones.</p>
+</div>
+<div class="paragraph">
+<p>For example, here is a report showing both of these cases:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[INFO]   asm:asm ..................................... 3.3.1 -&gt; 20041228.180559
+[INFO]   commons-httpclient:commons-httpclient .......... 3.1 -&gt; 3.1-jbossorg-1
+[INFO]   commons-logging:commons-logging ......... 1.1.1 -&gt; 99.0-does-not-exist
+[INFO]   dom4j:dom4j ................................. 1.6.1 -&gt; 20040902.021138
+[INFO]   org.datanucleus:datanucleus-api-jdo ................ 3.1.2 -&gt; 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-core ................... 3.1.2 -&gt; 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-jodatime ............... 3.1.1 -&gt; 3.2.0-m1
+[INFO]   org.datanucleus:datanucleus-rdbms .................. 3.1.2 -&gt; 3.2.0-m1
+[INFO]   org.easymock:easymock ................................... 2.5.2 -&gt; 3.1
+[INFO]   org.jboss.resteasy:resteasy-jaxrs ............. 2.3.1.GA -&gt; 3.0-beta-1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For these artifacts you will need to search <a href="http://search.maven.org">Maven central repo</a> directly yourself to confirm there are no newer dependencies not shown in this list.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_formatting">5.11. Code formatting</h3>
+<div class="paragraph">
+<p>This is also a good time to make source code has been cleaned up and formatted according to the Apache Isis and ASF conventions. Use <a href="resources/Apache-code-style-formatting.xml">this</a> Eclipse template and <a href="resources/isis.importorder">this</a> import order.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_push_changes">5.12. Push changes</h3>
+<div class="paragraph">
+<p>Finally, push the changes up to origin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git fetch    # check no new commits on origin/master
+git push</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_release_isis_addons">5.13. Release Isis Addons</h3>
+<div class="paragraph">
+<p>Once the Apache Isis release is available, all of the (non-ASF) <a href="http://isisaddons.org">Isis Addons</a> should also be released.</p>
+</div>
+<div class="paragraph">
+<p>Using this <a href="https://gist.github.com/danhaywood/ff17946ee05652402cfb">gist</a> to invoke operations across all (or selected) addons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>update its dependency on Apache Isis to reference the newly released version:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh forsub.sh sh bumpver_isis.sh 1.13.0</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>update the README for each repository</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace each version with next (ie the "How to Configure/Use" section, and the "Release to Maven Central" section at the end):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>replace 1.13.0-SNAPSHOT with 1.14.0-SNAPSHOT</p>
+</li>
+<li>
+<p>replace 1.12.0          with 1.13.0</p>
+</li>
+<li>
+<p>replace 1.11.0          with 1.12.0</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>update the "Change Log" section</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>release to mvn central (contains a sanity check before hand that everything compiles):<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh forsub.sh sh release.sh &quot;1.13.0&quot; &quot;1.14.0-SNAPSHOT&quot; &quot;dan@haywood-associates.co.uk&quot; \&quot;this is not really my password\&quot;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>update its dependency on Apache Isis to reference the next SNAPSHOT version:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">sh forsub.sh sh bumpver_isis.sh &quot;1.14.0-SNAPSHOT&quot;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_post-release-unsuccessful">6. Post Release (Unsuccessful)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The release process consists of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the release manager <a href="#_cgcom_cutting-a-release">cutting the release</a></p>
+</li>
+<li>
+<p>members of the Apache Isis PMC <a href="#_cgcom_verifying-releases">verifying</a> and voting on the release</p>
+</li>
+<li>
+<p>the release manager performing post-release tasks, for either a <a href="#_cgcom_post-release-successful">successful</a> or an unsuccessful vote (latter documented below).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the vote did not succeed (did not achieve +3 votes after 72 hours and/or is unlikely to do so), then the vote should be closed and the following steps performed.</p>
+</div>
+<div class="paragraph">
+<p>Note that a release manager may also decide to cancel a vote before 72 hours has elapsed (for example if an error is quickly discovered).</p>
+</div>
+<div class="sect2">
+<h3 id="_inform_dev_ml_2">6.1. Inform dev ML</h3>
+<div class="paragraph">
+<p>Post the results to the <code>dev@isis.a.o</code> mailing list.</p>
+</div>
+<div class="paragraph">
+<p>For example, use the following subject for a vote on Apache Isis Core:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.13.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>using the body (alter last line as appropriate):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">The vote has completed with the following result :
+
+  +1 (binding): _list of names_
+  +1 (non binding): _list of names_
+
+  -1 (binding): _list of names_
+  -1 (non binding): _list of names_
+
+The vote is UNSUCCESSFUL.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tidy_up_branches">6.2. Tidy up branches</h3>
+<div class="paragraph">
+<p>Tidy up remote branches in the git repo:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>delete the remote branch, for example:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin release-1.13.0-RC1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>delete the remote origin server&#8217;s tags, for example:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin isis-1.13.0-RC1
+git push --delete origin simpleapp-archetype-1.13.0-RC1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>delete the tags that were created locally, for example:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git tag -d isis-1.13.0
+git tag -d isis-1.13.0-RC1
+git tag -d simpleapp-archetype-1.13.0
+git tag -d simpleapp-archetype-1.13.0-RC1</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tidy_up_the_nexus_repo">6.3. Tidy up the Nexus repo</h3>
+<div class="paragraph">
+<p>Drop staging repositories:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>drop the staging repository in <a href="http://repository.apache.org">Nexus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reset">6.4. Reset</h3>
+<div class="paragraph">
+<p>Finally, rewind the release branch to prior to the previous release candidate, and continue from there.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_release-process-for-snapshots">7. Snapshot Releases</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Isis consists of a number of separately releasable modules; see the main <a href="release-process.html">release process</a> documentation for full details. All the non-core components depend on the <code>core</code>, and use the <code>core&#8217;s parent `pom.xml</code> as their parent pom.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Unless otherwise stated, you should assume that the steps described here are performed in the base directory of the module being released.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites_3">7.1. Prerequisites</h3>
+<div class="paragraph">
+<p>Before you start, make sure you&#8217;ve defined the snapshots repo in your local <code>~/.m2/settings.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;settings&gt;</span>
+  <span class="tag">&lt;servers&gt;</span>
+    <span class="comment">&lt;!-- To publish a snapshot of some part of Maven --&gt;</span>
+    <span class="tag">&lt;server&gt;</span>
+      <span class="tag">&lt;id&gt;</span>apache.snapshots.https<span class="tag">&lt;/id&gt;</span>
+      <span class="tag">&lt;username&gt;</span>xxxxxxx<span class="tag">&lt;/username&gt;</span>
+      <span class="tag">&lt;password&gt;</span>yyyyyyy<span class="tag">&lt;/password&gt;</span>
+    <span class="tag">&lt;/server&gt;</span>
+    ...
+  <span class="tag">&lt;/servers&gt;</span>
+  ...
+<span class="tag">&lt;/settings&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>xxxxxxx</code> and <code>yyyyyyy</code> are your Apache LDAP username and password. For more information, see these <a href="http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env">ASF docs</a>.</p>
+</div>
+<div class="paragraph">
+<p>{note
+It is also possible to configure to use <code>.ssh</code> secure keys, and thereby avoid hardcoding your Apache LDAP password into your <code>.m2/settings.xml</code> file. A description of how to do this can be found, for example, <a href="http://bval.apache.org/release-setup.html">here</a>.
+}</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sanity_check">7.2. Sanity Check</h3>
+<div class="paragraph">
+<p>Before deploying the snapshot, perform a quick sanity check.</p>
+</div>
+<div class="paragraph">
+<p>First, delete all Isis artifacts from your local Maven repo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">rm -rf ~/.m2/repository/org/apache/isis</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, check that the framework builds ok:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">cd core
+mvn clean install -o</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Confirm that the versions of the Isis artifacts now cached in your local repository are correct (both those pulled down from Maven central repo, as well as those of the component built locally).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy">7.3. Deploy</h3>
+<div class="paragraph">
+<p>Deploy the framework using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bsah">cd core
+mvn -D deploy=snapshot deploy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will deploy all the modules that make up a release.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Expect this to take about 10 minutes, give or take.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To confirm that they are present, browse to Apache&#8217;s <a href="https://repository.apache.org">Nexus repository manager</a> and search for "isis".</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_key-generation">8. Key Generation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order that a contributor can make a release it is necessary for them to have generated a key and had that key recognized by other members of the Apache Software Foundation.</p>
+</div>
+<div class="paragraph">
+<p>For further background information on this topic, see the <a href="http://www.apache.org/dev/release-signing.html">release signing page</a> and the <a href="http://www.apache.org/dev/openpgp.html#generate-key">openpgp page</a> on the Apache wiki.</p>
+</div>
+<div class="sect2">
+<h3 id="_install_and_configure_gpg">8.1. Install and Configure gpg</h3>
+<div class="paragraph">
+<p>Download and install GnuPG (gpg), version 1.4.10 or higher.</p>
+</div>
+<div class="paragraph">
+<p>Then, edit <code>~/.gnupg/gpg.conf</code> (on Windows, the file to edit is <code>C:\Users\xxx\AppData\Roaming\gnupg\gpg.conf</code>) so that the default is to generate a strong key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">personal-digest-preferences SHA512
+cert-digest-algo SHA512
+default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_key_generation">8.2. Key Generation</h3>
+<div class="paragraph">
+<p>The Apache Software Foundation requires that keys are signed with a key (or subkey) based on RSA 4096 bits. To do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --gen-key
+gpg (GnuPG) 1.4.11; Copyright (C) 2010 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify RSA key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Your selection? 1
+
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify key length as 4096 bits:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+
+Please specify how long the key should be valid.
+         0 = key does not expire
+      &lt;n&gt;  = key expires in n days
+      &lt;n&gt;w = key expires in n weeks
+      &lt;n&gt;m = key expires in n months
+      &lt;n&gt;y = key expires in n years
+Key is valid for? (0)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify key as non-expiring:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+
+You need a user ID to identify your key; the software constructs the user ID
+from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) &lt;heinrichh@duesseldorf.de&gt;"
+
+Real name:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Enter your name, email and comment:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>use your apache.org email</p>
+</li>
+<li>
+<p>the comment should be "CODE SIGNING KEY"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Real name: Xxx Xxxxxxxxx
+Email address: <a href="mailto:&#x78;&#120;&#120;&#64;&#97;&#x70;&#97;&#99;&#104;&#x65;&#46;&#111;&#x72;&#103;">&#x78;&#120;&#120;&#64;&#97;&#x70;&#97;&#99;&#104;&#x65;&#46;&#111;&#x72;&#103;</a>
+Comment: CODE SIGNING KEY
+You selected this USER-ID:
+ "Xxx Xxxxxxxxx (CODE SIGNING KEY) <a href="mailto:&#x78;&#x78;&#x78;&#x40;&#97;&#x70;&#97;&#99;h&#101;&#x2e;&#x6f;r&#x67;">&#x78;&#x78;&#x78;&#x40;&#97;&#x70;&#97;&#99;h&#101;&#x2e;&#x6f;r&#x67;</a>"</p>
+</div>
+<div class="paragraph">
+<p>Change (N)ame, &#169;omment, (E)mail or (O)kay/(Q)uit? O</p>
+</div>
+<div class="paragraph">
+<p>You need a Passphrase to protect your secret key.
+Enter passphrase:</p>
+</div>
+<div class="paragraph">
+<p>Provide a passphrase to secure your key.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Enter passphrase:
+Repeat passphrase:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GPG will goes on to generate your key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+...+++++
+.........................+++++
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+....+++++
+...+++++
+gpg: key nnnnnnnn marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+pub   4096R/nnnnnnnn yyyy-mm-dd
+      Key fingerprint = xxxx xxxx xxxx xxxx xxxx  xxxx xxxx xxxx xxxx xxxx
+uid                  Xxx Xxxxxx &lt;xxx@apache.org&gt;
+sub   4096R/kkkkkkkk yyyy-mm-dd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The public key with id nnnnnnnn should now be stored in <code>~/.gnupg/pubring.pgp</code> (on Windows 7, this is in <code>c:/Users/xxx/AppData/Roaming/gnupg/pubring.pgp</code>).</p>
+</div>
+<div class="paragraph">
+<p>To confirm the key has been generated, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --list-keys --fingerprint</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key Id is the one true way to identify the key, and is also the last 8 digits of the fingerprint. The corresponding secret key for id <code>nnnnnnnn</code> is stored in <code>~/.gnupg/secring.pgp</code> (on Windows 7, this is in <code>c:/Users/xxx/AppData/Roaming/gnupg/secring.pgp</code>).</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also worth confirming the key has the correct preference of algorithms (reflecting the initial configuration we did earlier). For this, enter the gpg shell for your new key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --edit-key nnnnnnnnn
+&gt;gpg</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>nnnnnnnn</code> is your key id. Now, use the 'showpref' subcommand to list details:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>gpg&gt; showpref
+[ultimate] (1). Xxx Xxxxxxxx (CODE SIGNING KEY) &lt;xxx@apache.org&gt;
+     Cipher: AES256, AES192, AES, CAST5, 3DES
+     Digest: SHA512, SHA384, SHA256, SHA224, SHA1
+     Compression: ZLIB, BZIP2, ZIP, Uncompressed
+     Features: MDC, Keyserver no-modify
+
+gpg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Digest line should list SHA-512 first and SHA-1 last. If it doesn&#8217;t, use the "setpref" command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>setpref SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, remember to take a backup of your key and the keyring (ie, backup the <code>.gnupg</code> directory and its contents).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_subkey_generation">8.3. Subkey Generation</h3>
+<div class="paragraph">
+<p>It&#8217;s recommended to use a subkey with an expiry date to sign releases, rather than your main, non-expiring key. If a subkey is present, then gpg will use it for signing in preference to the main key.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>After (binary) release artifacts are created, they are deployed to the ASF&#8217;s Nexus staging repository. However, Nexus seems unable to retrieve a subkey from the public key server. Until we find a fix/workaround for this, all releases should be signed just with a regular non-expiring main key.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To create a subkey Enter the gpg shell using (the identifier of) your main key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>gpg --edit-key xxxxxxxx
+gpg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Type 'addkey' to create a subkey, and enter your passphrase for the main key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>gpg&gt; addkey
+Key is protected.
+[enter your secret passphrase]
+
+You need a passphrase to unlock the secret key for
+user: "Dan Haywood (CODE SIGNING KEY) &lt;danhaywood@apache.org&gt;"
+4096-bit RSA key, ID xxxxxxxx, created 2011-02-01
+
+Please select what kind of key you want:
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (5) Elgamal (encrypt only)
+   (6) RSA (encrypt only)
+Your selection?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Select (6) to choose an RSA key for encryption:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It would seem that Nexus repository manager does not recognize RSA subkeys with an 'S&#8217;ign usage; see this discussion on a mailing list and this issue on Sonatype&#8217;s JIRA</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Your selection? 6
+
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+
+Requested keysize is 4096 bits
+
+Please specify how long the key should be valid.
+         0 = key does not expire
+      &lt;n&gt;  = key expires in n days
+      &lt;n&gt;w = key expires in n weeks
+      &lt;n&gt;m = key expires in n months
+      &lt;n&gt;y = key expires in n years
+Key is valid for?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify that the key is valid for 1 year:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Key is valid for? (0) 1y
+
+Key expires at yy/MM/dd hh:mm:ss
+Is this correct? (y/N) y
+Really create? (y/N) y
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+...+++++
+.+++++
+
+pub  4096R/xxxxxxxx  created: yyyy-mm-dd  expires: never       usage: SC
+                     trust: ultimate      validity: ultimate
+sub  4096R/xxxxxxxx  created: yyyy-mm-dd  expires: yyYY-mm-dd  usage: E
+[ultimate] (1). Dan Haywood (CODE SIGNING KEY) &lt;danhaywood@apache.org&gt;
+
+gpg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Quit the gpg shell; you now have a subkey.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generate_a_revocation_certificate">8.4. Generate a Revocation Certificate</h3>
+<div class="paragraph">
+<p>It&#8217;s good practice to generate a number of revocation certificates so that the key can be revoked if it happens to be compromised. See the <a href="http://www.apache.org/dev/openpgp.html#revocation-certs">gpg page</a> on the Apache wiki for more background on this topic.</p>
+</div>
+<div class="paragraph">
+<p>First, generate a "no reason specified" key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --output revoke-nnnnnnnn-0.asc --armor --gen-revoke nnnnnnnn
+
+sec  4096R/nnnnnnnn yyyy-mm-dd Xxx Xxxxxxx (CODE SIGNING KEY) &lt;xx@apache.org&gt;
+Create a revocation certificate for this key? (y/N) Y
+
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here)
+Your decision?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Select 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Your decision? 0
+
+Enter an optional description; end it with an empty line:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Provide a description:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>&gt; Generic certificate to revoke key, generated at time of key creation.
+&gt;
+Reason for revocation: No reason specified
+Generic certificate to revoke key, generated at time of key creation.
+Is this okay? (y/N)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Confirm this is ok.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>Is this okay? y
+
+You need a passphrase to unlock the secret key for
+user: "Xxx Xxxxxxx (CODE SIGNING KEY) &lt;xxx@apache.org&gt;"
+4096-bit RSA key, ID nnnnnnnn, created yyyy-mm-dd
+
+Enter passphrase:
+&lt;/pre&gt;
+
+Enter a passphrase:
+
+&lt;pre&gt;
+Enter passphrase:
+Revocation certificate created.
+
+Please move it to a medium which you can hide away; if Mallory gets
+access to this certificate he can use it to make your key unusable.
+It is smart to print this certificate and store it away, just in case
+your media become unreadable.  But have some caution:  The print system of
+your machine might store the data and make it available to others!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file <code>revoke-nnnnnnnn-0.asc</code> should be created: Then, backup this file.</p>
+</div>
+<div class="paragraph">
+<p>Now repeat the process to create two further revocation certificates:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">gpg --output revoke-nnnnnnnn-1.asc --armor --gen-revoke nnnnnnnn</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify reason as "1 = Key has been compromised"</p>
+</div>
+<div class="paragraph">
+<p>and:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">gpg --output revoke-nnnnnnnn-3.asc --armor --gen-revoke nnnnnnnn</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specify reason as "3 = Key is no longer used"</p>
+</div>
+<div class="paragraph">
+<p>Backup these files also.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publish_key">8.5. Publish Key</h3>
+<div class="paragraph">
+<p>It is also necessary to publish your key. There are several places where this should be done. In most cases, you&#8217;ll need the "armored" &quot; (ie ASCII) representation of your key. This can be generated using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --armor --export nnnnnnnn &gt; nnnnnnnn.asc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>nnnnnnnn</code> is the id of your public key.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll also need the fingerprint of your key. This can be generated using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --fingerprint nnnnnnnn</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output from this command includes a line beginning "Key fingerprint", followed by a (space delimited) 40 character hexadecimal fingerprint. The last 8 characters should be the same as the key id (<code>nnnnnnnn</code>).</p>
+</div>
+<div class="sect3">
+<h4 id="_publish_to_a_public_key_server">8.5.1. Publish to a public key server</h4>
+<div class="paragraph">
+<p>To a publish your key to a public key server (eg the MIT key server hosted at <a href="http://pgp.mit.edu">http://pgp.mit.edu</a>), use the procedure below. Public key servers synchronize with each other, so publishing to one key server should be sufficient. For background reading on this, see the <a href="http://www.apache.org/dev/release-signing.html#keyserver-upload">release signing page</a> on the Apache wiki, and the <a href="http://maven.apache.org/developers/release/pmc-gpg-keys.html">gpg key page</a> on the Maven wiki.</p>
+</div>
+<div class="paragraph">
+<p>To send the key up to the key server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>$ gpg --send-keys --keyserver pgp.mit.edu nnnnnnnn</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>nnnnnnnn</code> is the key Id.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can browse to the <a href="http://pgp.mit.edu/">MIT key server</a> and paste in the armored representation of your key.</p>
+</div>
+<div class="paragraph">
+<p>Confirm the key has been added by browsing to submitting the following URL:</p>
+</div>
+<div class="paragraph">
+<p><code><a href="http://pgp.mit.edu:11371/pks/lookup?search=0xnnnnnnnnn&amp;op=vindex" class="bare">http://pgp.mit.edu:11371/pks/lookup?search=0xnnnnnnnnn&amp;op=vindex</a></code></p>
+</div>
+<div class="paragraph">
+<p>again, where <code>nnnnnnnn</code> is the key Id.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_publish_to_your_apache_home_directory">8.5.2. Publish to your Apache home directory</h4>
+<div class="paragraph">
+<p>The armored representation of your public key should be uploaded to your home directory on <code>people.apache.org</code>, and renamed as <code>.pgpkey</code>. Make sure this is readable by all.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_publish_to_your_apache_html_home_directory">8.5.3. Publish to your Apache HTML home directory</h4>
+<div class="paragraph">
+<p>The armored representation of your public key should be uploaded to your <code>public_html</code> home directory on <code>people.apache.org</code>, named <code>nnnnnnnn.asc</code>. Make sure this is readable by all.</p>
+</div>
+<div class="paragraph">
+<p>Check the file is accessible by browsing to:</p>
+</div>
+<div class="paragraph">
+<p><code><a href="http://people.apache.org/~xxxxxxxx/nnnnnnnn.asc" class="bare">http://people.apache.org/~xxxxxxxx/nnnnnnnn.asc</a></code></p>
+</div>
+<div class="paragraph">
+<p>where</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxxxxxxx</code> is your apache LDAP user name</p>
+</li>
+<li>
+<p><code>nnnnnnnn</code> is your public key id.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_foaf">8.5.4. FOAF</h4>
+<div class="paragraph">
+<p>First, check out the committers/info directory:</p>
+</div>
+<div class="paragraph">
+<p>Go to Apache <a href="http://people.apache.org/foaf/foafamatic.html">FOAF-a-matic</a> web page to generate the FOAF file text (we copy this text out in a minute):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>enter ASF LDAP user name</p>
+</li>
+<li>
+<p>enter First name, Last name</p>
+</li>
+<li>
+<p>for PGP key fingerprints, add Key</p>
+</li>
+<li>
+<p>paste in the key id</p>
+</li>
+<li>
+<p>paste in the fingerprint</p>
+</li>
+<li>
+<p>press "Create"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the box below, you should have a FOAF file, something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;rdf:RDF</span>
+      <span class="attribute-name">xmlns:rdf</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/1999/02/22-rdf-syntax-ns#</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:rdfs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2000/01/rdf-schema#</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:foaf</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.com/foaf/0.1/</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:geo</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2003/01/geo/wgs84_pos#</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:pm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.web-semantics.org/ns/pm#</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:wot</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.com/wot/0.1/</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:rss</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://purl.org/rss/1.0/</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:dc</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://purl.org/dc/elements/1.1/</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:ical</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2002/12/cal/ical#</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">xmlns:doap</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://usefulinc.com/ns/doap#</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;foaf:Person</span> <span class="attribute-name">rdf:ID</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">danhaywood</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;foaf:name&gt;</span>Xxx Xxxxxxxx<span class="tag">&lt;/foaf:name&gt;</span>
+    <span class="tag">&lt;foaf:givenname&gt;</span>Xxx<span class="tag">&lt;/foaf:givenname&gt;</span>
+    <span class="tag">&lt;foaf:family_name&gt;</span>Xxxxxxxx<span class="tag">&lt;/foaf:family_name&gt;</span>
+    <span class="tag">&lt;wot:hasKey&gt;</span>
+      <span class="tag">&lt;wot:PubKey&gt;</span>
+        <span class="tag">&lt;wot:fingerprint&gt;</span>nnnn nnnn nnnn nnnn nnnn  nnnn nnnn nnnn nnnn nnnn<span class="tag">&lt;/wot:fingerprint&gt;</span>
+        <span class="tag">&lt;wot:hex_id&gt;</span>nnnnnnnn<span class="tag">&lt;/wot:hex_id&gt;</span>
+      <span class="tag">&lt;/wot:PubKey&gt;</span>
+    <span class="tag">&lt;/wot:hasKey&gt;</span>
+  <span class="tag">&lt;/foaf:Person&gt;</span>
+<span class="tag">&lt;/rdf:RDF&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(If you are creating the FOAF file for the first time, you may want to add additional details).</p>
+</div>
+<div class="paragraph">
+<p>From this, copy out the <code>wot:key</code>, and paste into your FDF file in <code>committers/info</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;wot:hasKey&gt;</span>
+  <span class="tag">&lt;wot:PubKey&gt;</span>
+    <span class="tag">&lt;wot:fingerprint&gt;</span>nnnn nnnn nnnn nnnn nnnn  nnnn nnnn nnnn nnnn nnnn<span class="tag">&lt;/wot:fingerprint&gt;</span>
+    <span class="tag">&lt;wot:hex_id&gt;</span>nnnnnnnn<span class="tag">&lt;/wot:hex_id&gt;</span>
+  <span class="tag">&lt;/wot:PubKey&gt;</span>
+<span class="tag">&lt;/wot:hasKey&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, manually add in a <code>&lt;wot:pubkeyAddress&gt;</code> element within <code>&lt;wot:PubKey&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;wot:hasKey&gt;</span>
+  <span class="tag">&lt;wot:PubKey&gt;</span>
+    <span class="tag">&lt;wot:fingerprint&gt;</span>nnnn nnnn nnnn nnnn nnnn  nnnn nnnn nnnn nnnn nnnn<span class="tag">&lt;/wot:fingerprint&gt;</span>
+    <span class="tag">&lt;wot:hex_id&gt;</span>nnnnnnnn<span class="tag">&lt;/wot:hex_id&gt;</span>
+    <span class="tag">&lt;wot:pubkeyAddress</span> <span class="attribute-name">rdf:resource</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://people.apache.org/~username/nnnnnnnn.asc/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/wot:PubKey&gt;</span>
+<span class="tag">&lt;/wot:hasKey&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ie, referencing your publically exported public key</p>
+</div>
+<div class="paragraph">
+<p>Finally, commit your changes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_save_to_code_keys_code">8.5.5. Save to <code>KEYS</code></h4>
+<div class="paragraph">
+<p>The armored representation of the public key should be saved to Apache Isis' <code>KEYS</code> file, <a href="http://www.apache.org/dist/isis/KEYS">http://www.apache.org/dist/isis/KEYS</a> (that is, in the ASF distribution directory for Apache Isis).</p>
+</div>
+<div class="paragraph">
+<p>First, in a new directory, checkout this file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>svn -N co https://svn.apache.org/repos/asf/isis/ .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should bring down the <code>KEYS</code> file.</p>
+</div>
+<div class="paragraph">
+<p>Then, export your signature and armored representation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>gpg --list-sigs nnnnnnnn &gt;&gt;KEYS
+gpg --armor --export nnnnnnnn &gt;&gt;KEYS</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then commit.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_id_apache_org">8.5.6. id.apache.org</h4>
+<div class="paragraph">
+<p>Log onto <code>id.apache.org</code> and ensure that the finger print of your public key is correct.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_attend_key_signing_party_apache_web_of_trust">8.6. Attend Key Signing Party (Apache web of trust)</h3>
+<div class="paragraph">
+<p>It is strongly advised that the contributor attend a key signing party at an Apache event, in order that other Apache committers/members can in person verify their identity against the key. The process for this is described <a href="http://www.apache.org/dev/release-signing.html#key-signing-party">here</a> and <a href="http://wiki.apache.org/apachecon/PgpKeySigning">here</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_maven_settings_file_code_m2_settings_xml_code">8.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</h3>
+<div class="paragraph">
+<p>The Maven release plugin will automatically sign the release, however it is necessary to update the <code>~/.m2/settings.xml</code> file with your GPG acronym passphrase in order that it can use your secret key. This is defined under a profile so that it is activated only when we perform a release (as defined by <code>[org,apache:apache]</code> parent POM.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, make the following edits:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;settings&gt;</span>
+  ...
+  <span class="tag">&lt;profiles&gt;</span>
+    <span class="tag">&lt;profile&gt;</span>
+      <span class="tag">&lt;id&gt;</span>apache-release<span class="tag">&lt;/id&gt;</span>
+      <span class="tag">&lt;properties&gt;</span>
+        <span class="tag">&lt;gpg.passphrase&gt;</span>xxx xxx xxx xxx xxx xxx xxx<span class="tag">&lt;/gpg.passphrase&gt;</span>
+      <span class="tag">&lt;/properties&gt;</span>
+    <span class="tag">&lt;/profile&gt;</span>
+  <span class="tag">&lt;/profiles&gt;</span>
+<span class="tag">&lt;/settings&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, to allow the release plugin to tag SVN changes, you must either add in your LDAP username/password or configure <code>.ssh</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;settings&gt;</span>
+  ...
+  <span class="tag">&lt;servers&gt;</span>
+    ...
+    <span class="tag">&lt;server&gt;</span>
+      <span class="tag">&lt;id&gt;</span>apache.releases.https<span class="tag">&lt;/id&gt;</span>
+      <span class="tag">&lt;username&gt;</span>xxxx<span class="tag">&lt;/username&gt;</span>
+      <span class="tag">&lt;password&gt;</span>xxxx<span class="tag">&lt;/password&gt;</span>
+    <span class="tag">&lt;/server&gt;</span>
+  <span class="tag">&lt;/servers&gt;</span>
+<span class="tag">&lt;/settings&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_release-process-prereqs">9. Appendix: Release Prereqs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section (appendix) describes the prerequisites for the <a href="#_cgcom_release-process">release process</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_configure_toolchains_plugin">9.1. Configure toolchains plugin</h3>
+<div class="paragraph">
+<p>Apache Isis releases are built using Java 7, enforced using the maven toolchains plugin.  Ensure that Java 7 is
+installed and the toolchains plugin is configured, as described in the
+<a href="#_dg_building-isis_configure-maven-toolchains-plugin">contributors' guide</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_public_private_key">9.2. Public/private key</h3>
+<div class="paragraph">
+<p>The most important configuration you require is to set up public/private key pair. This is used by the <code>maven-release-plugin</code> to sign the code artifacts. See the page on <a href="#_cgcom_key-generation">key generation</a> for more details.</p>
+</div>
+<div class="paragraph">
+<p>In order to prepare the release, you&#8217;ll (need to) have a <code>~/.gnupg</code> directory with the relevant files (<code>gpg.conf</code>, <code>pubring.gpg</code>, <code>secring.gpg</code> etc), and have <code>gpg</code> on your operating system PATH.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If on Windows, the equivalent directory is <code>c:\users\xxx\appdata\roaming\gnupg</code>. For <code>gpg</code>, use either <a href="http://cygwin.com">cygwin.com</a> or <a href="http://www.gpg4win.org">gpg4win.org</a>. Note also that the mSysGit version of <code>gpg</code> (as provided by GitHub&#8217;s bash client) is not compatible with that provided by cygwin; move it to one side and check that <code>gpg.exe</code> being used is that from gpg4win.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_maven_code_settings_xml_code">9.3. Maven <code>settings.xml</code></h3>
+<div class="paragraph">
+<p>During the release process the <code>maven-deploy-plugin</code> uploads the generated artifacts to a staging repo on the <a href="http://repository.apache.org">Apache repository manager</a>. This requires your Apache LDAP credentials to be specified in your <code>~/.m2/settings.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;settings&gt;</span>
+  <span class="tag">&lt;servers&gt;</span>
+    <span class="tag">&lt;server&gt;</span>
+      <span class="tag">&lt;id&gt;</span>apache.releases.https<span class="tag">&lt;/id&gt;</span>
+      <span class="tag">&lt;username&gt;</span>xxxxxxx<span class="tag">&lt;/username&gt;</span>
+      <span class="tag">&lt;password&gt;</span>yyyyyyy<span class="tag">&lt;/password&gt;</span>
+    <span class="tag">&lt;/server&gt;</span>
+    ...
+  <span class="tag">&lt;/servers&gt;</span>
+  ...
+<span class="tag">&lt;/settings&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>xxxxxxx</code> and <code>yyyyyyy</code> are your Apache LDAP username and password. For more information, see these <a href="http://www.apache.org/dev/publishing-maven-artifacts.html#dev-env">ASF docs</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is also possible to configure to use <code>.ssh</code> secure keys, and thereby avoid hardcoding your Apache LDAP password into your <code>.m2/settings.xml</code> file. A description of how to do this can be found, for example, <a href="http://bval.apache.org/release-setup.html">here</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Also, set up keyphrase for <code>gpg</code>; this avoids being prompted during release:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;profiles&gt;</span>
+  <span class="tag">&lt;profile&gt;</span>
+    <span class="tag">&lt;id&gt;</span>gpg<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;properties&gt;</span>
+      <span class="tag">&lt;gpg.executable&gt;</span>gpg2<span class="tag">&lt;/gpg.executable&gt;</span>
+      <span class="tag">&lt;gpg.passphrase&gt;</span>this is not really my passphrase<span class="tag">&lt;/gpg.passphrase&gt;</span>
+    <span class="tag">&lt;/properties&gt;</span>
+  <span class="tag">&lt;/profile&gt;</span>
+  ...
+<span class="tag">&lt;/profiles&gt;</span>
+
+<span class="tag">&lt;activeProfiles&gt;</span>
+  <span class="tag">&lt;activeProfile&gt;</span>gpg<span class="tag">&lt;/activeProfile&gt;</span>
+  ...
+<span class="tag">&lt;/activeProfiles&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_policies">10. Policies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter pulls together various policy documents relating to the development of Apache Isis'.</p>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_versioning-policy">10.1. Versioning Policy</h3>
+<div class="sect3">
+<h4 id="_semantic_versioning">10.1.1. Semantic Versioning</h4>
+<div class="paragraph">
+<p>Starting from v1.0.0, Apache Isis has adopted <a href="http://semver.org">semantic versioning</a> for its versioning policy.</p>
+</div>
+<div class="paragraph">
+<p>Version numbers are in the form <code>x.y.z</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>x is bumped up whenever there a breaking API change</p>
+</li>
+<li>
+<p>y is bumped up whenever there is a new feature that does not break API</p>
+</li>
+<li>
+<p>z is bumped up for minor bug fixes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This scheme would be adopted for both core and components.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_version_ranges">10.1.2. Version ranges</h4>
+<div class="paragraph">
+<p>Version ranges may not be used.  If necessary, end-users can use <code>&lt;dependencyManagement</code> elements to have combine components built against different versions of core.</p>
+</div>
+<div class="paragraph">
+<p>That said, this can introduce instability and so generally we recommend that end-users configure the <code>maven-enforcer-plugin</code> and its <a href="http://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html">DependencyConvergence</a> rule.  This will help avoid "jar hell" (components having conflicting dependencies of core).</p>
+</div>
+<div class="paragraph">
+<p>If there is a conflict, we would ask that end-users engage with Apache Isis committers to have an updated version of the component(s) pushed out.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cgcom_policies_git-policy">10.2. Git Policy</h3>
+<div class="paragraph">
+<p>These notes recommend how contributors should work with git. To understand these notes, the only real concepts that you need to grok are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>git commits form an acyclic graph, with each commit pointing to its parent commit (or commit<strong>s</strong>, if a merge)</p>
+</li>
+<li>
+<p>a branch is merely a pointer to one of these commits; git calls the main branch <code>master</code></p>
+</li>
+<li>
+<p>git commits happen in two steps: first they are added to the index (also called the staging area), then they are committed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more background reading, see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://git-scm.com/book">Pro Git</a> book (free in electronic form)</p>
+</li>
+<li>
+<p><a href="https://github.s3.amazonaws.com/media/book.pdf">Git community book</a></p>
+</li>
+<li>
+<p><a href="http://git-scm.com/2011/07/11/reset.html">git reset demystified</a> - differentiating the working directory vs index/staging area</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>And, of course, there is loads of good advice on <a href="http://stackoverflow.com/questions/tagged/git">stackoverflow.com</a></p>
+</div>
+<div class="sect3">
+<h4 id="_workflow">10.2.1. Workflow</h4>
+<div class="paragraph">
+<p>There are many ways of using Git, but the Apache Isis committers have adopted the following workflow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>create a topic branch for a feature<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout -b ISIS-999</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>periodically, push the branch to origin (for safekeeping):<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git push origin ISIS-999</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>rebase</code> the topic branch periodically on master.<br></p>
+<div class="paragraph">
+<p>How often you do this will depend on whether you are collaborating with others on the feature.  You need to ensure that your co-worker has no outstanding work before you do this; otherwise it&#8217;ll create merge conflict hell for them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout master
+git pull
+git checkout ISIS-999
+git rebase master
+git push origin ISIS-999 --force</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>when feature is complete, rebase once more (as above), then switch to master and perform a <code>merge --no-ff</code>:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git checkout master
+git merge --no-ff ISIS-999</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>finally, remove the branch<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git branch -d ISIS-999
+git push origin --delete ISIS-999</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This way of working gives us the full history on the branch as to what the thought processes were for the feature, but only a single commit on to <code>master</code> to see the ultimate impact of the changes (acting a bit like a summary).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_commit_message">10.2.2. Commit message</h4>
+<div class="paragraph">
+<p>The minimum we expect in a commit messages is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">ISIS-nnn: brief summary here
+
+- optionally, longer details
+- should be written here
+- in bullet points</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>ISIS-nnn</code> is a ticket raised in our <a href="https://issues.apache.org/jira/browse/ISIS">JIRA issue tracker</a>.</p>
+</div>
+<div class="paragraph">
+<p>For non-committers we typically expect more detail again; see the <a href="dg.html#_dg_contributing">contributing</a> page for the longer format recommended for contributors to use.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cgcom_pmc-notes">11. Appendix: PMC</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every ASF project has a Project Management Committee, or PMC.  This committee is ultimately responsible for the long-term management of the framework.  More information about PMCs can be found <a href="http://www.apache.org/dev/pmc.html">here</a></p>
+</div>
+<div class="paragraph">
+<p>In Apache Isis, every committer is a member of the PMC.</p>
+</div>
+<div class="paragraph">
+<p>This page contains some general notes on maintenance activities required by PMC members.</p>
+</div>
+<div class="sect2">
+<h3 id="_accessing_code_people_apache_org_code">11.1. Accessing <code>people.apache.org</code></h3>
+<div class="paragraph">
+<p>Must be accessed via ssh.</p>
+</div>
+<div class="paragraph">
+<p>eg:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">ssh danhaywood@people.apache.org</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and when prompted, provide passphrase for private key&#8230;&#8203; though I&#8217;ve forgotten what I did to set this up in the first place, though :-(</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ldap_access_unix_groups">11.2. LDAP Access (UNIX groups)</h3>
+<div class="paragraph">
+<p>Whenever we get a new committer, the ASF LDAP entries must be maintained to grant access to our repos and various other 'karma'.</p>
+</div>
+<div class="paragraph">
+<p>Log onto <code>people.apache.org</code>, then use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>list_unix_group.pl isis</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to list committers</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>list_committee.pl isis</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to list the PMC committee members (in Apache Isis, every committer should be on the PMC committee)</p>
+</div>
+<div class="paragraph">
+<p>To change membership of either the committers or the PMC, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>modify_unix_group.pl isis --add joebloggs
+modify_unix_group.pl isis --remove joebloggs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>modify_committee.pl gump --add joebloggs
+modify_committee.pl gump --remove joebloggs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>respectively.</p>
+</div>
+<div class="paragraph">
+<p>Further details are in <a href="http://www.apache.org/dev/pmc.html#SVNaccess">these ASF docs</a>. (They talk about SVN access, but really it is LDAP access).</p>
+</div>
+</div>
+</div>
+</div>
+        </div>
+
+        <footer>
+          <hr>
+          <p class="small">
+          Copyright &copy; 2010~2016 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          <br/>
+          Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
+          </p>
+        </footer>
+
+    </div>
+
+    <div id="doc-content-right" class="large-3 medium-3 xcolumns">
+        <div id="toc" class="toc2">
+            <div class="fallback-toc">
+                <ul class="sectlevel1">
+<li><a href="#_cgcom">1. Committers' Guide</a>
+<ul class="sectlevel2">
+<li><a href="#_other_guides">1.1. Other Guides</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_merging-a-pull-request">2. Merging a Pull Request</a>
+<ul class="sectlevel2">
+<li><a href="#_process_and_usage">2.1. Process and Usage</a></li>
+<li><a href="#_example_transcript">2.2. Example transcript</a></li>
+<li><a href="#_prerequisites">2.3. Prerequisites</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_cutting-a-release">3. Cutting a Release</a>
+<ul class="sectlevel2">
+<li><a href="#_cgcom_cutting-a-release_obtain-consensus">3.1. Obtain Consensus</a></li>
+<li><a href="#_cgcom_cutting-a-release_set-environment-variables">3.2. Set environment variables</a></li>
+<li><a href="#_cgcom_cutting-a-release_pull-down-code-to-release">3.3. Pull down code to release</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core">3.4. Releasing Core</a>
+<ul class="sectlevel3">
+<li><a href="#_cgcom_cutting-a-release_releasing-core_set-environment-variables">3.4.1. Set environment variables</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_license-headers">3.4.2. License headers</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_missing-license-check">3.4.3. Missing License Check</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_commit-changes">3.4.4. Commit changes</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_sanity-check">3.4.5. Sanity check</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_release-prepare-dry-run">3.4.6. Release prepare "dry run"</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_release-prepare-proper">3.4.7. Release prepare "proper"</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_post-prepare-sanity-check">3.4.8. Post-prepare sanity check</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-core_release-perform-upload">3.4.9. Release perform (Upload)</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype">3.5. Releasing the Archetype</a>
+<ul class="sectlevel3">
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_setup-environment-variables">3.5.1. Setup environment variables</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_check-the-example-app">3.5.2. Check the example app</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_create-the-archetype">3.5.3. Create the archetype</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_release-prepare">3.5.4. Release prepare</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_post-prepare-sanity-check">3.5.5. Post-prepare sanity check</a></li>
+<li><a href="#_cgcom_cutting-a-release_releasing-the-archetype_release-perform-upload">3.5.6. Release Perform (upload)</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_cutting-a-release_check-close-staging-repo">3.6. Check/Close Staging Repo</a></li>
+<li><a href="#_cgcom_cutting-a-release_push-branches">3.7. Push branches</a></li>
+<li><a href="#_cgcom_cutting-a-release_voting">3.8. Voting</a>
+<ul class="sectlevel3">
+<li><a href="#_cgcom_cutting-a-release_voting-start-voting-thread">3.8.1. Start voting thread on <a href="mailto:&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g">&#100;e&#118;&#x40;&#x69;&#x73;&#x69;&#115;&#x2e;&#x61;p&#97;&#x63;&#104;e&#46;&#111;&#114;g</a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_cgcom_verifying-releases">4. Verifying a Release</a>
+<ul class="sectlevel2">
+<li><a href="#_background">4.1. Background</a></li>
+<li><a href="#_prerequisites_2">4.2. Prerequisites</a></li>
+<li><a href="#_verifying_source_artifacts">4.3. Verifying source artifacts</a>
+<ul class="sectlevel3">
+<li><a href="#_cgcom_verifying-releases_manual-procedure">4.3.1. Manual procedure</a>
+<ul class="sectlevel4">
+<li><a href="#_download_the_artifacts">Download the artifacts</a></li>
+<li><a href="#_building_source_artifacts">Building source artifacts</a></li>
+<li><a href="#_verifying_binary_artifacts">Verifying binary artifacts</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_verifying-releases_automated-procedure">4.3.2. Automated procedure</a>
+<ul class="sectlevel4">
+<li><a href="#_copy_script_to_local_machine">Copy script to local machine</a></li>
+<li><a href="#_create_an_input_file">Create an input file</a></li>
+<li><a href="#_execute_the_script">Execute the script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_cgcom_verifying-releases_creadur">4.4. (Optional) Creadur Tools</a></li>
+<li><a href="#_test_the_archetype">4.5. Test the archetype</a></li>
+<li><a href="#_casting_a_vote">4.6. Casting a Vote</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_post-release-successful">5. Post Release (Successful)</a>
+<ul class="sectlevel2">
+<li><a href="#_inform_dev_ml">5.1. Inform dev ML</a></li>
+<li><a href="#_update_tags">5.2. Update tags</a></li>
+<li><a href="#_release_to_maven_central">5.3. Release to Maven Central</a></li>
+<li><a href="#_release_source_zip">5.4. Release Source Zip</a></li>
+<li><a href="#_update_jira">5.5. Update JIRA</a>
+<ul class="sectlevel3">
+<li><a href="#_generate_release_notes">5.5.1. Generate Release Notes</a></li>
+<li><a href="#_close_tickets">5.5.2. Close tickets</a></li>
+<li><a href="#_mark_the_version_as_released">5.5.3. Mark the version as released</a></li>
+<li><a href="#_create_new_jira">5.5.4. Create new JIRA</a></li>
+<li><a href="#_update_the_asf_reporter_website">5.5.5. Update the ASF Reporter website</a></li>
+</ul>
+</li>
+<li><a href="#_update_website">5.6. Update website</a></li>
+<li><a href="#_announce_the_release">5.7. Announce the release</a></li>
+<li><a href="#_blog_post">5.8. Blog post</a></li>
+<li><a href="#_merge_in_release_branch">5.9. Merge in release branch</a></li>
+<li><a href="#_update_dependencies">5.10. Update dependencies</a>
+<ul class="sectlevel3">
+<li><a href="#_update_parent_of_core">5.10.1. Update parent of Core</a></li>
+<li><a href="#_update_plugin_versions">5.10.2. Update plugin versions</a></li>
+<li><a href="#_update_dependency_versions">5.10.3. Update dependency versions</a></li>
+</ul>
+</li>
+<li><a href="#_code_formatting">5.11. Code formatting</a></li>
+<li><a href="#_push_changes">5.12. Push changes</a></li>
+<li><a href="#_release_isis_addons">5.13. Release Isis Addons</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_post-release-unsuccessful">6. Post Release (Unsuccessful)</a>
+<ul class="sectlevel2">
+<li><a href="#_inform_dev_ml_2">6.1. Inform dev ML</a></li>
+<li><a href="#_tidy_up_branches">6.2. Tidy up branches</a></li>
+<li><a href="#_tidy_up_the_nexus_repo">6.3. Tidy up the Nexus repo</a></li>
+<li><a href="#_reset">6.4. Reset</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_release-process-for-snapshots">7. Snapshot Releases</a>
+<ul class="sectlevel2">
+<li><a href="#_prerequisites_3">7.1. Prerequisites</a></li>
+<li><a href="#_sanity_check">7.2. Sanity Check</a></li>
+<li><a href="#_deploy">7.3. Deploy</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_key-generation">8. Key Generation</a>
+<ul class="sectlevel2">
+<li><a href="#_install_and_configure_gpg">8.1. Install and Configure gpg</a></li>
+<li><a href="#_key_generation">8.2. Key Generation</a></li>
+<li><a href="#_subkey_generation">8.3. Subkey Generation</a></li>
+<li><a href="#_generate_a_revocation_certificate">8.4. Generate a Revocation Certificate</a></li>
+<li><a href="#_publish_key">8.5. Publish Key</a>
+<ul class="sectlevel3">
+<li><a href="#_publish_to_a_public_key_server">8.5.1. Publish to a public key server</a></li>
+<li><a href="#_publish_to_your_apache_home_directory">8.5.2. Publish to your Apache home directory</a></li>
+<li><a href="#_publish_to_your_apache_html_home_directory">8.5.3. Publish to your Apache HTML home directory</a></li>
+<li><a href="#_foaf">8.5.4. FOAF</a></li>
+<li><a href="#_save_to_code_keys_code">8.5.5. Save to <code>KEYS</code></a></li>
+<li><a href="#_id_apache_org">8.5.6. id.apache.org</a></li>
+</ul>
+</li>
+<li><a href="#_attend_key_signing_party_apache_web_of_trust">8.6. Attend Key Signing Party (Apache web of trust)</a></li>
+<li><a href="#_update_maven_settings_file_code_m2_settings_xml_code">8.7. Update Maven Settings file (<code>~/.m2/settings.xml</code>)</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_release-process-prereqs">9. Appendix: Release Prereqs</a>
+<ul class="sectlevel2">
+<li><a href="#_configure_toolchains_plugin">9.1. Configure toolchains plugin</a></li>
+<li><a href="#_public_private_key">9.2. Public/private key</a></li>
+<li><a href="#_maven_code_settings_xml_code">9.3. Maven <code>settings.xml</code></a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_policies">10. Policies</a>
+<ul class="sectlevel2">
+<li><a href="#_cgcom_versioning-policy">10.1. Versioning Policy</a>
+<ul class="sectlevel3">
+<li><a href="#_semantic_versioning">10.1.1. Semantic Versioning</a></li>
+<li><a href="#_version_ranges">10.1.2. Version ranges</a></li>
+</ul>
+</li>
+<li><a href="#_cgcom_policies_git-policy">10.2. Git Policy</a>
+<ul class="sectlevel3">
+<li><a href="#_workflow">10.2.1. Workflow</a></li>
+<li><a href="#_commit_message">10.2.2. Commit message</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_cgcom_pmc-notes">11. Appendix: PMC</a>
+<ul class="sectlevel2">
+<li><a href="#_accessing_code_people_apache_org_code">11.1. Accessing <code>people.apache.org</code></a></li>
+<li><a href="#_ldap_access_unix_groups">11.2. LDAP Access (UNIX groups)</a></li>
+</ul>
+</li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../js/foundation/5.5.1/vendor/jquery.js"></script>
+<script src="../js/foundation/5.5.1/foundation.min.js"></script>
+
+
+<link href="../css/jquery.tocify/1.9.0/jquery.tocify.css" rel="stylesheet">
+<script src="../js/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="../js/jquery.tocify/1.9.0/jquery.tocify.js"></script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#toc").tocify({
+            scrollTo: 50,
+            extendPage: true,
+            context: "#doc-content",
+            highlightOnScroll: true,
+            hashGenerator: "pretty",
+            hideEffect: "slideUp",
+            selectors: "h2,h3,h4,h5"
+        });
+        $(".fallback-toc").hide();
+    });
+</script>
+
+<script type="text/javascript">
+
+  /****
+
+      $(document).foundation();
+
+      $(document).ready(function(){
+        // Cache selectors
+        var lastId,
+            topMenu = $("div#toc ul"),
+            topMenuHeight = 100,
+
+            menuItems = topMenu.find("a"),
+            menuItemsHrefs = menuItems.map(function(){
+              var item = $($(this).attr("href"));
+              if (item.length) { return item; }
+            });
+
+        // Bind click handler to menu items to scroll animation
+        menuItems.click(function(e){
+          var href = $(this).attr("href"),
+              offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+          $('html, body').stop().animate({
+              scrollTop: offsetTop
+          }, 300);
+
+          e.preventDefault();
+        });
+
+        // Bind to scroll of window
+        $(  window ).scroll(function(){
+
+           // Get container scroll position
+           var fromTop = $(this).scrollTop()+topMenuHeight;
+
+           var cur = menuItemsHrefs.map(function(){
+             if ($(this).offset().top < fromTop)
+               return this;
+           });
+
+           // Get the id of the current element
+           cur = cur[cur.length-1];
+
+           var id = cur && cur.length ? cur[0].id : "";
+
+           if (lastId !== id && id) {
+               scrollTo(id);
+           }
+
+           window.history.pushState({}, "", window.location.origin + window.location.pathname + "#" + id);
+        });
+
+        scrollTo = function(id) {
+              lastId = id;
+
+              menuItems
+                .removeClass("active");
+
+              menuItems
+                .parents()
+                .removeClass("active-region");
+
+              menuItems
+                .parents("ul").hide();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .addClass("active");
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parent().children("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("li").addClass("active-region");
+
+        }
+      menuItems
+        .removeClass("active");
+
+      menuItems
+        .parents()
+        .removeClass("active-region");
+
+        var syncMenuItem;
+        if(window.location.hash!=="") {
+            var menuItemFor = $.grep(menuItems, function(e) {
+                return e.hash === window.location.hash;
+            });
+            console.log(menuItemFor);
+            if(menuItemFor.length === 1) {
+                syncMenuItem = menuItemFor[0];
+            }
+        }
+
+        if(!syncMenuItem){
+            syncMenuItem = menuItems[0];
+        }
+
+        $(syncMenuItem).click();
+
+      });
+
+    ***/
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    if("Documentation" === "Committers' Guide") {
+        console.log( "processing 'Documentation'" );
+
+        $("#doc-content-left").removeClass("large-9").removeClass("medium-9").addClass("large-12").addClass("medium-12");
+        $("#doc-content-right").removeClass("large-3").removeClass("medium-3").hide();
+    }
+
+});
+
+</script>
+
+
+<script>
+
+$( document ).ready(function() {
+
+    (function() {
+      $(function() {
+        return $("#doc-content h2, #doc-content h3, #doc-content h4, #doc-content h5, #doc-content h6").each(function(i, el) {
+          var $el, icon, id;
+          $el = $(el);
+          id = $el.attr('id');
+          icon = '<i class="fa fa-link"></i>';
+          if (id) {
+            return $el.prepend($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
+          }
+        });
+      });
+    }).call(this);
+
+
+
+	/*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+	*/
+	;( function( $, window, document, undefined )
+	{
+		'use strict';
+
+		var elSelector		= '.header',
+			elClassHidden	= 'header--hidden',
+			throttleTimeout	= 500,
+			$element		= $( elSelector );
+
+		if( !$element.length ) return true;
+
+		var $window			= $( window ),
+			wHeight			= 0,
+			wScrollCurrent	= 0,
+			wScrollBefore	= 0,
+			wScrollDiff		= 0,
+			$document		= $( document ),
+			dHeight			= 0,
+
+			throttle = function( delay, fn )
+			{
+				var last, deferTimer;
+				return function()
+				{
+					var context = this, args = arguments, now = +new Date;
+					if( last && now < last + delay )
+					{
+						clearTimeout( deferTimer );
+						deferTimer = setTimeout( function(){ last = now; fn.apply( context, args ); }, delay );
+					}
+					else
+					{
+						last = now;
+						fn.apply( context, args );
+					}
+				};
+			};
+
+		$window.on( 'scroll', throttle( throttleTimeout, function()
+		{
+			dHeight			= $document.height();
+			wHeight			= $window.height();
+			wScrollCurrent	= $window.scrollTop();
+			wScrollDiff		= wScrollBefore - wScrollCurrent;
+
+			if( wScrollCurrent <= 0 ) // scrolled to the very top; element sticks to the top
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff > 0 && $element.hasClass( elClassHidden ) ) // scrolled up; element slides in
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff < 0 ) // scrolled down
+			{
+				if( wScrollCurrent + wHeight >= dHeight && $element.hasClass( elClassHidden ) ) // scrolled to the very bottom; element slides in
+					$element.removeClass( elClassHidden );
+
+				else // scrolled down; element slides out
+					$element.addClass( elClassHidden );
+			}
+
+			wScrollBefore = wScrollCurrent;
+		}));
+
+	})( jQuery, window, document );
+
+
+});
+</script>
+
+</body>
+</html>

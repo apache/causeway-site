@@ -1,0 +1,2212 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Security</title>
+
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one
+        or more contributor license agreements.  See the NOTICE file
+        distributed with this work for additional information
+        regarding copyright ownership.  The ASF licenses this file
+        to you under the Apache License, Version 2.0 (the
+        "License"); you may not use this file except in compliance
+        with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing,
+        software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+        KIND, either express or implied.  See the License for the
+        specific language governing permissions and limitations
+        under the License.
+    -->
+
+    <!-- No caching headers -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+
+
+    <!-- TODO: need to (re)instate CDN in the future (not using for now just so can develop off-line -->
+    <link href="../css/foundation/5.5.1/foundation.css" rel="stylesheet" />
+    <script src="../js/foundation/5.5.1/vendor/modernizr.js"></script>
+    <link href="../css/asciidoctor/colony.css" rel="stylesheet">
+    <link href="../css/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <link href="../css/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.css" rel="stylesheet" />
+    <![endif]-->
+
+
+
+    <style type="text/css">
+        pre code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre code > span:first-child {
+            margin-left: -5px;
+        }
+
+    <style>
+
+    <!--
+    <style type="text/css">
+        /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{font-weight: normal}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#00}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+
+        pre.CodeRay code {
+            background-color: inherit;
+            border-style: none;
+        }
+
+        pre.CodeRay code > span:first-child {
+            margin-left: -5px;
+        }
+
+        .literalblock pre,
+        .listingblock pre:not(.highlight),
+        .listingblock pre[class="highlight"],
+        .listingblock pre[class^="highlight "],
+        .listingblock pre.CodeRay,
+        .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+        .sidebarblock .literalblock pre,
+        .sidebarblock .listingblock pre:not(.highlight),
+        .sidebarblock .listingblock pre[class="highlight"],
+        .sidebarblock .listingblock pre[class^="highlight "],
+        .sidebarblock .listingblock pre.CodeRay,
+        .sidebarblock .listingblock pre.prettyprint {
+            background: rgb(253, 250, 246);
+         }
+
+    <style>
+    -->
+
+    <style>
+    .github-fork-ribbon-wrapper.right {
+        position: fixed;
+    }
+    .github-fork-ribbon {
+        background: #090;
+    }
+    .github-fork-ribbon a:hover {
+        background:#0D0;
+        color:#fff;
+        font-size: 1.1em;
+    }
+    </style>
+
+    <style>
+        @media only screen and (min-width: 40.063em) {
+          .top-bar {
+            .contain-to-grid .top-bar {
+                max-width: 80rem;
+            }
+          }
+        }
+        .row {
+            max-width: 80rem;
+        }
+    </style>
+
+    <style>
+        .extended-quote,
+        .extended-quote-first {
+            margin-left: 40px;
+            margin-right: 40px;
+            font-style: italic;
+        }
+        .extended-quote-attribution {
+            text-align: right;
+            margin-right: 100px;
+            color: #10B061;
+        }
+
+        .extended-quote-first:before {
+            content: "\201c";
+            float: left;
+            font-size: 2.75em;
+            font-weight: bold;
+            line-height: 0.6em;
+            margin-left: -0.6em;
+            color: #003b6b;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+
+    <style>
+        body {
+          position: relative;
+        }
+
+        *:not(pre) a > code {
+            color: #210DDC;
+        }
+
+        *:not(pre) > code {
+            background-color: inherit;
+            border: none;
+            font-weight: normal;
+        }
+
+        body div#toc li,
+        body div#toc2 li {
+            list-style-type: none;
+        }
+
+        div#doc-content {
+            margin-top: 30px;
+        }
+
+        div.documentation-page table.frame-all {
+            border-left: none;
+            border-right: none;
+        }
+
+        body div#toc li.active-region:before,
+        body div#toc2 li.active-region:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li a.active,
+        body div#toc2 li a.active {
+            color: red;
+        }
+
+        body div#toc.toc,
+        body div#toc.toc2 {
+            position: fixed;
+            left: auto;
+            padding-top: 60px;
+            z-index: auto;
+            background-color: white;
+            border-left-color: #eee;
+            border-left-style: solid;
+            border-right: none;
+            min-height: 2000px;
+        }
+
+    </style>
+
+    <style>
+
+        @media only screen and (min-width: 768px) {
+          #toc.toc2 ul ul { margin-left: -10px; }
+        }
+
+
+        body div#toc .tocify-subheader ul {
+            margin-bottom: 0px;
+        }
+
+        body div#toc .tocify-subheader li {
+            font-size: 14px;
+        }
+        .tocify li.tocify-item, .tocify ul.tocify-item {
+            line-height: 24px;
+        }
+
+        body div#toc li.tocify-item.active:before,
+        body div#toc2 li.tocify-item.active:before {
+            content: "\00BB \0020";
+            margin-left: -12px;
+        }
+
+        body div#toc li.tocify-item.active a,
+        body div#toc2 li.tocify-item.active a {
+            color: red;
+        }
+    </style>
+
+    <style>
+        footer {
+            margin-top: 1000px;
+        }
+    </style>
+
+    <style>
+        /* overriding colony.css stylesheet */
+        .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+           /*padding: 1.25em 1.5625em 1.125em 1.5625em;*/
+           padding: 0.3em 0.6em 0.25em 0.6em;
+        }
+        @media only screen and (min-width: 1280px)
+        #toc.toc2 {
+          /*width: 20em;*/
+          width: 25em;
+        }
+
+        #doc-content a {
+          color: #210DDC;
+        }
+
+        .top-bar h1 {
+            border-bottom: inherit;
+        }
+
+        h2 {
+          margin-top: 80px;
+        }
+        h3 {
+          margin-top: 40px;
+        }
+        h4,h5 {
+          margin-top: 30px;
+        }
+
+        .admonitionblock.tip > table td.content {
+            color: #10B061;
+        }
+        .admonitionblock.note > table td.content {
+            color: #B509AB;
+        }
+        .admonitionblock.important > table td.content {
+            color: #D5810A;
+        }
+
+        .admonitionblock .title {
+            font-size: larger;
+            font-style: italic;
+        }
+
+        .imageblock img {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        /* from http://ben.balter.com/2014/03/13/pages-anchor-links/ */
+        .header-link {
+          position: absolute;
+          left: -0.5em;
+          opacity: 0;
+
+          /*
+          -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+          -moz-transition: opacity 0.2s ease-in-out 0.1s;
+          -ms-transition: opacity 0.2s ease-in-out 0.1s;
+          */
+        }
+
+        h2:hover .header-link,
+        h3:hover .header-link,
+        h4:hover .header-link,
+        h5:hover .header-link,
+        h6:hover .header-link {
+          opacity: 1;
+        }
+    </style>
+
+    <style>
+        .top-bar
+        {
+            -webkit-transition-duration: .5s;
+            transition-duration: .5s;
+
+            -webkit-transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+
+        /*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+        */
+        .header--hidden
+        {
+            -webkit-transform: translateY( -100% );
+            -ms-transform: translateY( -100% );
+            transform: translateY( -100% );
+
+            transition-duration: .5s;
+            transition-timing-function: cubic-bezier( 0.215, 0.610, 0.355, 1.000 );
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+        }
+    </style>
+
+    <style>
+        #doc-content a.guide {
+            color: white;
+        }
+    </style>
+
+    <style>
+        .tocify {
+            margin-top: 80px;
+        }
+    </style>
+
+
+</script>
+
+</head>
+<body>
+
+<<div class="github-fork-ribbon-wrapper right" style="position: fixed;">
+    <div class="github-fork-ribbon">
+        <a href="https://github.com/apache/isis/fork">Fork me on GitHub</a>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="fixed contain-to-grid header">
+        <nav class="top-bar" data-topbar role="navigation" style="max-width: 80rem">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="/index.html">Apache Isis&trade;</a>
+                    </h1>
+                </li>
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+                <ul class="right">
+
+                    <li class="has-form">
+                       <FORM class="searchbox navbar-form navbar-right" id="searchbox_012614087480249044419:dn-q5gtwxya" action="http://www.google.com/cse">
+                        <div class="row collapse">
+                            <input type="hidden" name="cx" value="012614087480249044419:dn-q5gtwxya">
+                            <INPUT type="hidden" name="cof" value="FORID:0">
+                            <INPUT class="form-control" name="q" type="text" placeholder="Search">
+                        </div>
+                    </FORM>
+                     </li>
+
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+
+                    <li><a href="/documentation.html">Documentation</a></li>
+                    <li><a href="/downloads.html">Downloads</a></li>
+                    <li><a href="/help.html">Help</a></li>
+                    <li><a href="/asf.html">@ASF</a></li>
+
+                </ul>
+
+            </section>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+
+    <div id="doc-content-left" class="large-9 medium-9 columns">
+
+
+        <div id="doc-content">
+          <div class="sect1">
+<h2 id="_ugsec">1. Security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide describes the authentication and authorization features available to secure your Apache Isis application.</p>
+</div>
+<div class="sect2">
+<h3 id="_other_guides">1.1. Other Guides</h3>
+<div class="paragraph">
+<p>Apache Isis documentation is broken out into a number of user, reference and "supporting procedures" guides.</p>
+</div>
+<div class="paragraph">
+<p>The user guides available are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ugfun.html">Fundamentals</a></p>
+</li>
+<li>
+<p><a href="ugvw.html">Wicket viewer</a></p>
+</li>
+<li>
+<p><a href="ugvro.html">Restful Objects viewer</a></p>
+</li>
+<li>
+<p><a href="#">Security</a> (this guide)</p>
+</li>
+<li>
+<p><a href="ugtst.html">Testing</a></p>
+</li>
+<li>
+<p><a href="ugbtb.html">Beyond the Basics</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reference guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rgant.html">Annotations</a></p>
+</li>
+<li>
+<p><a href="rgsvc.html">Domain Services</a></p>
+</li>
+<li>
+<p><a href="rgcfg.html">Configuration Properties</a></p>
+</li>
+<li>
+<p><a href="rgcms.html">Classes, Methods and Schema</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The "supporting procedures" guides are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cgcon.html">Contributors' Guide</a> (how to set up a development environment
+for Apache Isis and contribute back to the project)</p>
+</li>
+<li>
+<p><a href="cgcom.html">Committers' Guide</a> (release procedures and related practices)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology">1.2. Terminology</h3>
+<div class="paragraph">
+<p>Apache Isis has built-in support for authentication and authorization:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>By "authentication" we mean logging into the application using some credentials, typically a username and password.  Authentication also means looking up the set of roles to which a user belongs.</p>
+</li>
+<li>
+<p>By "authorization" we mean permissions: granting roles to have access to features (object member) of the app.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Isis has two levels of permissions.  <em>Read</em> permission means that the user can view the object member; it will be rendered in the UI.  An action with only read permission will be shown disabled ("greyed out".  <em>Write</em> permission means that the object member can be changed.  For actions this means that they can be invoked.</p>
+</div>
+<div class="paragraph">
+<p>Isis provides an API for both authentication and authorization, and provides an implementation that integrates with <a href="http://shiro.apache.org">Apache Shiro</a>.  Shiro in turn uses the concept of a <em>realm</em> as a source for both authentication and optionally authorization.</p>
+</div>
+<div class="paragraph">
+<p>Shiro ships with a simple text-based realm&#8201;&#8212;&#8201;the <code>IniRealm</code>&#8201;&#8212;&#8201;which reads users (and password), user roles and role permissions from the <code>WEB-INF/shiro.ini</code> file.  The <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> is configured to use this realm.</p>
+</div>
+<div class="paragraph">
+<p>Shiro also ships with an implementation of an LDAP-based realm; LDAP is often used to manage user/passwords and corresponding user groups.  Apache Isis in turn extends this with its <code>IsisLdapRealm</code>, which provides more flexibility for both group/role and role/permissions management.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the (non-ASF) <a href="http://www.isisaddons.org">Isis Addons</a> provides the <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module, which also provides an implementation of the Shiro <code>Realm</code> API.  However, the security module also represents users, roles and permissions as domain objects, allowing them to be administered through Apache Isis itself.  Moreover, the security module can optionally delegate password management to a subsidiary (delegate) realm (usually LDAP as discussed above).</p>
+</div>
+<div class="paragraph">
+<p>In addition to Apache Isis' Shiro-based implementation of its authentication and authorization APIs, Isis also provides a "bypass" implementation, useful for quick-n-dirty prototyping when you want to in effect disable (bypass) security completely.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">What about auditing?</div>
+<div class="paragraph">
+<p>A further aspect of security is auditing: recording what data was modified by which user.   Apache Isis does define two service APIs&#8201;&#8212;&#8201;<a href="rgsvc.html#_rgsvc_spi_CommandService"><code>CommandService</code></a> and <a href="rgsvc.html#_rgsvc_spi_AuditingService"><code>AuditingService</code></a>&#8201;&#8212;&#8201;that provide hooks to track which actions (commands) are invoked, and what data was modified as a result (auditing).</p>
+</div>
+<div class="paragraph">
+<p>Isis does not itself provide any in-built implementations of these APIs, but there are implementations within (non-ASF) <a href="http://www.isisaddons.org">Isis Addons</a>, namely the <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module and the <a href="http://github.com/isisaddons/isis-module-audit">Isis addons' auditing</a> module.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_configuring-isis-to-use-shiro">2. Configuring Apache Isis to use Shiro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Isis' security mechanism is configurable, specifying an <code>Authenticator</code> and an <code>Authorizor</code> (non-public) APIs.  The Shiro security mechanism is an integration wih Apache Shiro that implements both interfaces.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> is pre-configured to use Apache Shiro, so much of what follows is set up already.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_telling_apache_isis_to_use_shiro">2.1. Telling Apache Isis to use Shiro</h3>
+<div class="paragraph">
+<p>To tell Apache Isis to use Shiro, update the <code>WEB-INF/isis.properties</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.authentication=shiro
+isis.authorization=shiro</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This installs the appropriate implementation (the <code>ShiroAuthenticatorOrAuthorizor</code> class) that use Shiro&#8217;s APIs to perform authentication and authorization:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-isis-to-use-shiro.png" alt="configure isis to use shiro" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>The figure above doesn&#8217;t tell the whole story; we haven&#8217;t yet seen how Shiro itself is configured to use realms.  The <code>ShiroAuthenticatorOrAuthorizor</code> is in essence the glue between the Apache Isis runtime and Shiro.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bootstrapping_shiro">2.2. Bootstrapping Shiro</h3>
+<div class="paragraph">
+<p>The Shiro environment (in essence, thread-locals holding the security credentials) needs to be bootstrapped using the following settings in the <code>WEB-INF/web.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;listener&gt;</span>
+    <span class="tag">&lt;listener-class&gt;</span>org.apache.shiro.web.env.EnvironmentLoaderListener<span class="tag">&lt;/listener-class&gt;</span>
+<span class="tag">&lt;/listener&gt;</span>
+<span class="tag">&lt;filter&gt;</span>
+    <span class="tag">&lt;filter-name&gt;</span>ShiroFilter<span class="tag">&lt;/filter-name&gt;</span>
+    <span class="tag">&lt;filter-class&gt;</span>org.apache.shiro.web.servlet.ShiroFilter<span class="tag">&lt;/filter-class&gt;</span>
+<span class="tag">&lt;/filter&gt;</span>
+<span class="tag">&lt;filter-mapping&gt;</span>
+    <span class="tag">&lt;filter-name&gt;</span>ShiroFilter<span class="tag">&lt;/filter-name&gt;</span>
+    <span class="tag">&lt;url-pattern&gt;</span>/*<span class="tag">&lt;/url-pattern&gt;</span>
+<span class="tag">&lt;/filter-mapping&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Based on this Shiro will then read <code>WEB-INF/shiro.ini</code> file to configure its Realm definitions for authentication and authorization.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__code_web_inf_shiro_ini_code">2.3. <code>WEB-INF/shiro.ini</code></h3>
+<div class="paragraph">
+<p>The <code>shiro.ini</code> file is used to specify the realm(s) that Shiro will delegate to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">securityManager.realms = $realmName</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Shiro&#8217;s ini file supports a "poor-man&#8217;s" dependency injection (<a href="https://shiro.apache.org/configuration.html">their words</a>), and so <code>$realmName</code> in the above example is a reference to a realm defined elsewhere in <code>shiro.ini</code>.  The subsequent sections describe the specifics for thevarious realm implementations available to you.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also possible to configure Shiro to support multiple realms.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">securityManager.realms = $realm1,$realm2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can learn more about Shiro realms in the <a href="http://shiro.apache.org/realm.html">Shiro documentation</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_shiro-ini-realm">3. Shiro Ini Realm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Probably the simplest realm to use is Shiro&#8217;s built-in <code>IniRealm</code>, which reads from the (same) <code>WEB-INF/shiro.ini</code> file.</p>
+</div>
+<div class="paragraph">
+<p>This is suitable for prototyping, but isn&#8217;t intended for production use, if only because user/password credentials are stored in plain text.  Nevertheless, it&#8217;s a good starting point.  The app generated by the <a href="ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> is configured to use this realm.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below shows the Isis and components involved:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-shiro-to-use-ini-realm.PNG" alt="configure shiro to use ini realm" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>The realm is responsible for validating the user credentials, and then creates a Shiro <a href="http://shiro.apache.org/static/latest/apidocs/org/apache/shiro/subject/Subject.html"><code>Subject</code></a> which represents the user (for the current request).  Apache Isis <code>Authenticator</code> component then interacts with the <code>Subject</code> in order to check permissions.</p>
+</div>
+<div class="sect2">
+<h3 id="_shiro_configuration">3.1. Shiro Configuration</h3>
+<div class="paragraph">
+<p>To use the built-in <code>IniRealm</code>, we add the following to <code>WEB-INF/shiro.ini</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">securityManager.realms = $iniRealm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Unlike other realms) there is no need to "define" <code>$iniRealm</code>; it is automatically available to us.</p>
+</div>
+<div class="paragraph">
+<p>Specifying <code>$iniRealm</code> means that the usernames/passwords, roles and permissions are read from the <code>shiro.ini</code> file itself.  Specifically:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the users/passwords and their roles from the <code>[users]</code> sections;</p>
+</li>
+<li>
+<p>the roles are mapped to permissions in the <code>[roles]</code> section.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The format of these is described below.</p>
+</div>
+<div class="sect3">
+<h4 id="__code_users_code_section">3.1.1. <code>[users]</code> section</h4>
+<div class="paragraph">
+<p>This section lists users, passwords and their roles.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">sven = pass, admin_role
+dick = pass, user_role, analysis_role, self-install_role
+bob  = pass, user_role, self-install_role</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first value is the password (eg "pass", the remaining values are the role(s).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__code_roles_code_section">3.1.2. <code>[roles]</code> section</h4>
+<div class="paragraph">
+<p>This section lists roles and their corresponding permissions.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">user_role = *:ToDoItems:*:*,\
+            *:ToDoItem:*:*,\
+            *:ToDoAppDashboard:*:*
+analysis_role = *:ToDoItemAnalysis:*:*,\
+            *:ToDoItemsByCategoryViewModel:*:*,\
+            *:ToDoItemsByDateRangeViewModel:*:*
+self-install_role = *:ToDoItemsFixturesService:install:*
+admin_role = *</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The value is a comma-separated list of permissions for the role.  The format is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">packageName:className:memberName:r,w</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>memberName</code> is the property, collection or action name.</p>
+</li>
+<li>
+<p><code>r</code> indicates that the member is visible</p>
+</li>
+<li>
+<p><code>w</code> indicates that the member is usable (editable or invokable)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and where each of the parts of the permission string can be wildcarded using <code>*</code>.</p>
+</div>
+<div class="paragraph">
+<p>Because these are wildcards, a '*' can be used at any level. Additionally, missing levels assume wildcards.</p>
+</div>
+<div class="paragraph">
+<p>Thus:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">com.mycompany.myapp:Customer:firstName:r,w   # view or edit customer's firstName
+com.mycompany.myapp:Customer:lastName:r      # view customer's lastName only
+com.mycompany.myapp:Customer:placeOrder:*    # view and invoke placeOrder action
+com.mycompany.myapp:Customer:placeOrder      # ditto
+com.mycompany.myapp:Customer:*:r             # view all customer class members
+com.mycompany.myapp:*:*:r                    # view-only access for all classes in myapp package
+com.mycompany.myapp:*:*:*                    # view/edit for all classes in myapp package
+com.mycompany.myapp:*:*                      # ditto
+com.mycompany.myapp:*                        # ditto
+com.mycompany.myapp                          # ditto
+*                                            # view/edit access to everything</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The format of the permissions string is configurable in Shiro, and Apache Isis uses this to provide an extended wildcard format, described <a href="#_ugsec_shiro-isis-enhanced-wildcard-permission">here</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_externalized_inirealm">3.2. Externalized IniRealm</h3>
+<div class="paragraph">
+<p>There&#8217;s no requirement for all users/roles to be defined in the <code>shiro.ini</code> file.  Instead, a realm can be defined that loads its users/roles from some other resource.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">$realm1=org.apache.shiro.realm.text.IniRealm <i class="conum" data-value="1"></i><b>(1)</b>
+realm1.resourcePath=classpath:webapp/realm1.ini <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>happens to (coincidentally) be the <a href="http://shiro.apache.org/static/latest/apidocs/org/apache/shiro/realm/text/IniRealm.html">same implementation</a> as Shiro&#8217;s built-in $iniRealm</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>in this case load the users/roles from the <code>src/main/resources/webapp/realm1.ini</code> file.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that a URL could be provided as the <code>resourcePath</code>, so a centralized config file could be used.  Even so, the</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If configured this way then the <code>[users]</code> and <code>[roles]</code> sections of <code>shiro.ini</code> become unused. Instead, the corresponding sections from for <code>realm1.ini</code> are used instead.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_shiro-isis-ldap-realm">4. Isis Ldap Realm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Isis ships with an implementation of <a href="http://shiro.apache.org">Apache Shiro</a>'s <code>Realm</code> class that allows user authentication and authorization to be performed against an LDAP server.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-shiro-to-use-isis-ldap-realm.PNG" alt="configure shiro to use isis ldap realm" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>The LDAP database stores the user/passwords and user groups, while the <code>shiro.ini</code> file is used to map the LDAP groups to roles, and to map the roles to permissions.</p>
+</div>
+<div class="sect2">
+<h3 id="_shiro_configuration_2">4.1. Shiro Configuration</h3>
+<div class="paragraph">
+<p>To use LDAP involves telling Shiro how to instantiate the realm.  This bootstrapping info lives in the <code>WEB-INF/shiro.ini</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">contextFactory = org.apache.isis.security.shiro.IsisLdapContextFactory
+contextFactory.url = ldap://localhost:10389
+contextFactory.systemUsername = uid=admin,ou=system        <i class="conum" data-value="1"></i><b>(1)</b>
+contextFactory.systemPassword = secret
+contextFactory.authenticationMechanism = CRAM-MD5          <i class="conum" data-value="2"></i><b>(2)</b>
+contextFactory.systemAuthenticationMechanism = simple
+
+ldapRealm = org.apache.isis.security.shiro.IsisLdapRealm   <i class="conum" data-value="3"></i><b>(3)</b>
+ldapRealm.contextFactory = $contextFactory
+
+ldapRealm.searchBase = ou=groups,o=mojo                    <i class="conum" data-value="4"></i><b>(4)</b>
+ldapRealm.groupObjectClass = groupOfUniqueNames            <i class="conum" data-value="5"></i><b>(5)</b>
+ldapRealm.uniqueMemberAttribute = uniqueMember             <i class="conum" data-value="6"></i><b>(6)</b>
+ldapRealm.uniqueMemberAttributeValueTemplate = uid={0}
+
+# optional mapping from physical groups to logical application roles
+ldapRealm.rolesByGroup = \                                 <i class="conum" data-value="7"></i><b>(7)</b>
+    LDN_USERS: user_role,\
+    NYK_USERS: user_role,\
+    HKG_USERS: user_role,\
+    GLOBAL_ADMIN: admin_role,\
+    DEMOS: self-install_role
+
+ldapRealm.permissionsByRole=\                              <i class="conum" data-value="8"></i><b>(8)</b>
+   user_role = *:ToDoItemsJdo:*:*,\
+               *:ToDoItem:*:*; \
+   self-install_role = *:ToDoItemsFixturesService:install:* ; \
+   admin_role = *
+
+securityManager.realms = $ldapRealm</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>user accounts are searched using a dedicated service account</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>SASL (CRAM-MD5) authentication is used for this authentication</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Apache Isis' implementation of the LDAP realm.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>groups are searched under <code>ou=groups,o=mojo</code> (where <code>mojo</code> is the company name)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>each group has an LDAP objectClass of <code>groupOfUniqueNames</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>each group has a vector attribute of <code>uniqueMember</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>groups looked up from LDAP can optionally be mapped to logical roles; otherwise groups are used as role names directly</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>roles are mapped in turn to permissions</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The value of <code>uniqueMember</code> is in the form <code>uid=xxx</code>, with <code>xxx</code> being the uid of the user
+* users searched under <code>ou=system</code>
+* users have, at minimum, a <code>uid</code> attribute and a password
+* the users credentials are used to verify their user/password</p>
+</div>
+<div class="paragraph">
+<p>The above configuration has been tested against <a href="http://directory.apache.org/apacheds/">ApacheDS</a>, v1.5.7. This can be administered using <a href="http://directory.apache.org/studio/">Apache Directory Studio</a>, v1.5.3.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Shiro Realm Mappings</div>
+<div class="paragraph">
+<p>When configuring role based permission mapping, there can only be one of these entries per realm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">realm.groupToRolesMappings = ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">realm.roleToPermissionsMappings = ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This forces you to put everything on one line for each of the above.  This is, unfortunately, a Shiro "feature".  And if you repeat the entries above then it&#8217;s "last one wins".)</p>
+</div>
+<div class="paragraph">
+<p>To make the configuration maintainable, use "\" to separate the mappings onto separate lines in the file.  Use this technique for both group to roles mapping and role to permission mapping. If you use the '&#39; after the "," that separates the key:value pairs it is more readable.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_externalizing_role_perms">4.2. Externalizing role perms</h3>
+<div class="paragraph">
+<p>As an alternative to injecting the <code>permissionsByRole</code> property, the role/permission mapping can alternatively be specified by injecting a resource path:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">ldapRealm.resourcePath=classpath:webapp/myroles.ini</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>myroles.ini</code> is in <code>src/main/resources/webapp</code>, and takes the form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">[roles]
+user_role = *:ToDoItemsJdo:*:*,\
+            *:ToDoItem:*:*
+self-install_role = *:ToDoItemsFixturesService:install:*
+admin_role = *</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This separation of the role/mapping can be useful if Shiro is configured to support multiple realms (eg an LdapRealm based one and also an TextRealm)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_active_ds_ldap_tutorial">4.3. Active DS LDAP tutorial</h3>
+<div class="paragraph">
+<p>The screenshots below show how to setup LDAP accounts in ApacheDS using the Apache Directory Studio.</p>
+</div>
+<div class="paragraph">
+<p>The setup here was initially based on <a href="http://krams915.blogspot.co.uk/2011/01/ldap-apache-directory-studio-basic.html">this tutorial</a>, however we have moved the user accounts so that they are defined in a separate LDAP node.</p>
+</div>
+<div class="paragraph">
+<p>To start, create a partition in order to hold the mojo node (holding the groups):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//configuration/configuring-shiro/ldap/activeds-ldap-mojo-partition.png" alt="ActiveDS LDAP Users">
+</div>
+</div>
+<div class="paragraph">
+<p>Create the <code>ou=groups,o=mojo</code> hierarchy:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//configuration/configuring-shiro/ldap/activeds-ldap-mojo-root-dse.png" alt="ActiveDS LDAP Users">
+</div>
+</div>
+<div class="paragraph">
+<p>Configure SASL authentication. This means that the checking of user/password is done implicitly by virtue of Apache Isis connecting to LDAP using these credentials:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//configuration/configuring-shiro/ldap/activeds-ldap-sasl-authentication.png" alt="ActiveDS LDAP Users">
+</div>
+</div>
+<div class="paragraph">
+<p>In order for SASL to work, it seems to be necessary to put users under <code>o=system</code>. (This is why the setup is slightly different than the tutorial mentioned above):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//configuration/configuring-shiro/ldap/activeds-ldap-users.png" alt="ActiveDS LDAP Users">
+</div>
+</div>
+<div class="paragraph">
+<p>Configure the users into the groups:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images//configuration/configuring-shiro/ldap/activeds-ldap-groups.png" alt="ActiveDS LDAP Users">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_shiro-isisaddons-security-module-realm">5. Security Module Realm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="https://github.com/isisaddons/isis-module-security">Isis Addons' security module</a> (not ASF) provides a complete
+security subdomain for users, roles, permissions; all are persisted as domain entities.</p>
+</div>
+<div class="paragraph">
+<p>What that means, of course, that they can also be administered through your Isis application.  Moreover, the set of permissions (to features) is derived completely from your application&#8217;s metamodel; in essence the permissions are "type-safe".</p>
+</div>
+<div class="paragraph">
+<p>In order to play along, the module includes a Shiro realm, which fits in as follows:</p>
+</div>
+<div class="paragraph">
+<p>The general configuration is as follows:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm.PNG" alt="configure shiro to use isisaddons security module realm" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>where the <code>IsisModuleSecurityRealm</code> realm is the implementation provided by the module.</p>
+</div>
+<div class="paragraph">
+<p>In the configuration above user passwords are stored in the database.  The module uses <a href="http://www.mindrot.org/projects/jBCrypt/">jBCrypt</a> so that passwords are only stored in a (one-way) encrypted form in the database.</p>
+</div>
+<div class="paragraph">
+<p>The security module also supports a slightly more sophisticated configuration.  Most organizations use LDAP for user credentials, and maintaining two separate user accounts would be less than ideal.  The <code>IsisModuleSecurityRealm</code> can therefore be configured with a subsidiary "delegate" realm that is responsible for performing the primary authentication of the user; if that passes then a user is created (as a domain entity) automatically.
+In most cases this delegate realm will be the LDAP realm, and so the architecture becomes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-shiro-to-use-isisaddons-security-module-realm-with-delegate-realm.PNG" alt="configure shiro to use isisaddons security module realm with delegate realm" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>The security module has many more features than are described here, all of which are described in the module&#8217;s <a href="https://github.com/isisaddons/isis-module-security">README</a>.  The README also explains in detail how to configure an existing app to use this module.</p>
+</div>
+<div class="paragraph">
+<p>You can also look at the Isisaddons <a href="https://github.com/isisaddons/isis-app-todoapp">todoapp example</a> (not ASF), which is preconfigured to use the security module.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_shiro-jdbc-realm">6. Shiro JDBC Realm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is nothing to stop you from using some other <code>Realm</code> implementation (or indeed writing one yourself).  For example, you could use Shiro&#8217;s own JDBC realm that loads user/password details from a database.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are happy to use a database then we strongly recommend you use the <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module instead of a vanilla JDBC; it is far more sophisticated and moreover gives you the ability to administer the system from within your Isis application.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you go down this route, then the architecture is as follows:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-shiro-to-use-custom-jdbc-realm.png" alt="configure shiro to use custom jdbc realm" width="600px">
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s quite a lot of configuration required (in <code>WEB-INF/shiro.ini</code>) to set up a JDBC realm, so we&#8217;ll break it out into sections.</p>
+</div>
+<div class="paragraph">
+<p>First, we need to set up the connection to JDBC:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">jdbcRealm=org.apache.shiro.realm.jdbc.JdbcRealm        <i class="conum" data-value="1"></i><b>(1)</b>
+
+jof = org.apache.shiro.jndi.JndiObjectFactory          <i class="conum" data-value="2"></i><b>(2)</b>
+jof.resourceName = jdbc/postgres                       <i class="conum" data-value="3"></i><b>(3)</b>
+jof.requiredType = javax.sql.DataSource
+jof.resourceRef = true
+
+jdbcRealm.dataSource = $jof                            <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>instantiate the JDBC realm</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>instantiate factory object to lookup DataSource from servlet container</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>name of the datasource (as configured in <code>web.xml</code>)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>instruct JDBC realm to obtain datasource from the JNDI</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We next need to tell the realm how to query the database.  Shiro supports any schema; what matters is the input search argument and the output results.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">jdbcRealm.authenticationQuery =         \              <i class="conum" data-value="1"></i><b>(1)</b>
+        select password                 \
+          from users                    \
+         where username = ?
+
+jdbcRealm.userRolesQuery =              \              <i class="conum" data-value="2"></i><b>(2)</b>
+        select r.label                  \
+          from users_roles ur           \
+    inner join roles r                  \
+            on ur.role_id = r.id        \
+         where user_id = (              \
+            select id                   \
+             from users                 \
+            where username = ?);        \
+
+jdbcRealm.permissionsQuery=             \               <i class="conum" data-value="3"></i><b>(3)</b>
+        select p.permission             \
+          from roles_permissions rp     \
+    inner join permissions p            \
+            on rp.permission_id = p.id  \
+         where rp.role_id = (           \
+            select id                   \
+             from roles                 \
+            where label = ?);
+
+jdbcRealm.permissionsLookupEnabled=true                 <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>query to find password for user</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>query to find roles for user</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>query to find permissions for role</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>enable permissions lookup</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>permissionsLookupEnabled</code> is very important, otherwise Shiro just returns an empty list of permissions and your users will have no access to any features(!).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We also should ensure that the passwords are not stored as plain-text:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">dps = org.apache.shiro.authc.credential.DefaultPasswordService   <i class="conum" data-value="1"></i><b>(1)</b>
+pm = org.apache.shiro.authc.credential.PasswordMatcher           <i class="conum" data-value="2"></i><b>(2)</b>
+pm.passwordService = $dps
+jdbcRealm.credentialsMatcher = $pm                               <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>mechanism to encrypts password</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>service to match passwords</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>instruct JDBC realm to use password matching service when authenticating</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>And finally we need to tell Shiro to use the realm, in the usual fashion:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">securityManager.realms = $jdbcRealm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using the above configuration you will also need to setup a <code>DataSource</code>.  The details vary by servlet container, for example this is <a href="https://tomcat.apache.org/tomcat-8.0-doc/jndi-datasource-examples-howto.html">how to do the setup on Tomcat 8.0</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The name of the <code>DataSource</code> can also vary by servlet container; see for example <a href="http://stackoverflow.com/questions/17441019/how-to-configure-jdbcrealm-to-obtain-its-datasource-from-jndi/23784702#23784702">this StackOverflow answer</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_shiro-isis-enhanced-wildcard-permission">7. Enhanced Wildcard Permission</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If using the text-based <a href="#_ugsec_shiro-ini-realm"><code>IniRealm</code></a> or <a href="#_ugsec_shiro-isis-ldap-realm">Isis' LDAP realm</a>, then note that Shiro also allows the string representation of the permissions to be mapped (resolved) to alternative <code>Permission</code> instances.  Apache Isis provides its own <code>IsisPermission</code> which introduces the concept of a "veto".</p>
+</div>
+<div class="paragraph">
+<p>A vetoing permission is one that prevents access to a feature, rather than grants it.  This is useful in some situations where most users have access to most features, and only a small number of features are particularly sensitive.  The configuration can therefore be set up to grant fairly broad-brush permissions and then veto permission for the sensitive features for those users that do not have access.</p>
+</div>
+<div class="paragraph">
+<p>The string representation of the <code>IsisPermission</code> uses the following format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">([!]?)([^/]+)[/](.+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the optional <code>!</code> prefix indicates this permission is a vetoing permission</p>
+</li>
+<li>
+<p>the optional <code>xxx/</code> prefix is a permission group that scopes any vetoing permissions</p>
+</li>
+<li>
+<p>the remainder of the string is the permission (possibly wildcarded, with :rw as optional suffix)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">user_role   = !reg/org.estatio.api,\
+              !reg/org.estatio.webapp.services.admin,\
+              reg/* ; \
+api_role    = org.estatio.api ;\
+admin_role = adm/*</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>sets up:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <code>user_role</code> with access to all permissions except those in <code>org.estatio.api</code> and <code>org.estatio.webapp.services.admin</code></p>
+</li>
+<li>
+<p>the <code>api_role</code> with access to all permissions in <code>org.estatio.api</code></p>
+</li>
+<li>
+<p>the <code>admin_role</code> with access to everything.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The permission group concept is required to scope the applicability of any veto permission. This is probably best explained by an example.  Suppose that a user has both <code>admin_role</code> and <code>user_role</code>; we would want the <code>admin_role</code> to trump the vetos of the <code>user_role</code>, in other words to give the user access to everything.</p>
+</div>
+<div class="paragraph">
+<p>Because of the permission groups, the two "!reg/...+""" vetos in user_role only veto out selected permissions granted by the "reg/<strong>" permissions, but they do not veto the permissions granted by a different scope, namely "adm/</strong>+".</p>
+</div>
+<div class="paragraph">
+<p>The net effect is therefore what we would want: that a user with both <code>admin_role</code> and <code>user_role</code> would have access to everything, irrespective of those two veto permissions of the <code>user_role</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, the Apache Isis permission resolver is specified in <code>WEB-INF/shiro.ini</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">permissionResolver = org.apache.isis.security.shiro.authorization.IsisPermissionResolver
+myRealm.permissionResolver = $permissionResolver  <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>myRealm</code> is the handle to the configured realm, eg <code>$iniRealm</code> or <code>$isisLdapRealm</code> etc.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_configuring-isis-to-use-bypass">8. Bypassing security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The bypass security component consists of an implementation of both the <code>AuthenticationManager</code> and <code>AuthorizationManager</code> APIs, and are intended for prototyping use only.</p>
+</div>
+<div class="paragraph">
+<p>The authentication manager allows access with any credentials (in a sense, "bypassing" authentication), while the authorization manager provides access to all class members (in a sense, "bypassing" authorization).</p>
+</div>
+<div class="paragraph">
+<p>To tell Apache Isis to bypass security, just update the <code>WEB-INF/isis.properties</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">isis.authentication=bypass
+isis.authorization=bypass</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This installs the appropriate no-op implementations for both authentication and authorization:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security/security-apis-impl/configure-isis-to-use-bypass.PNG" alt="configure isis to use bypass" width="600px">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_api-for-applications">9. API for Applications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generally speaking your domain objects (or more generally your application) should be agnostic of the user/roles that are interacting with them; applying security permissions is the responsibility of the framework.</p>
+</div>
+<div class="paragraph">
+<p>Still, on very rare occasion you may have a need, in which case you can either use Apache Isis' <code>DomainObjectContainer</code> API or you can reach further down the stack and use the JEE Servlet API.</p>
+</div>
+<div class="sect2">
+<h3 id="__code_domainobjectcontainer_code_api">9.1. <code>DomainObjectContainer</code> API</h3>
+<div class="paragraph">
+<p>The <a href="rgsvc.html#_rgsvc_api_DomainObjectContainer"><code>DomainObjectContainer</code></a> service exposes the following API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">final</span> UserMemento user = container.getUser();
+<span class="directive">final</span> <span class="predefined-type">List</span>&lt;RoleMemento&gt; roles = user.getRoles();
+<span class="keyword">for</span> (RoleMemento role : roles) {
+    <span class="predefined-type">String</span> roleName = role.getName();
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each role&#8217;s <code>name</code> property encodes both the realm that provided the role, and the role identity itself.</p>
+</div>
+<div class="paragraph">
+<p>For example, in the simpleapp, if logging in as <code>dick</code> with the following entries for <code>realm1</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ini">dick = pass, user_role, analysis_role, self-install_role</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then this corresponds to the roles "realm1:user_role", "realm1:self-install_role" and "realm1:analysis_role".</p>
+</div>
+<div class="paragraph">
+<p>If using the Wicket viewer, then note there will also be another role which is used internally (namely "org.apache.isis.viewer.wicket.roles.USER").</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_servlet_api">9.2. Servlet API</h3>
+<div class="paragraph">
+<p>On occasion you may find it necessary to reach below Isis and to the underlying servlet API.  For example, the <a href="http://github.com/isisaddons/isis-module-togglz">Isis addons' togglz</a> module (non-ASF) has a requirement to do this in order to expose its embedded togglz web console.  (</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you do need to access the servlet API and are running within the context of Wicket viewer, the <a href="http://github.com/isisaddons/isis-module-servletapi">Isis addons' servletapi</a> module can provide access to the <code>HttpServletRequest</code>, <code>HttpServletResponse</code> and <code>ServletContext</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In this situation, you can still obtain some information about the user and its roles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Principal</span> principal = httpServletRequest.getPrincipal();
+<span class="predefined-type">String</span> username = principal.getName();
+<span class="type">boolean</span> analyst = httpServletRequest.isUserInRole(<span class="string"><span class="delimiter">&quot;</span><span class="content">analysis_role</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, it isn&#8217;t possible to obtain any role permissions for the user.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugsec_usage-by-isis-viewers">10. Usage by Apache Isis' Viewers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By and large the security mechanisms within Isis are transparent to the rest of the framework (the <a href="ugvw.html">Wicket Viewer</a> and <a href="ugvro.html">Restful Objects viewer</a>, and the overall <a href="rgcfg.html#_rgcfg">runtime</a>).</p>
+</div>
+<div class="paragraph">
+<p>That said, it is the responsibility of the viewers to ensure that there is a viewers to ensure that for each request there is a valid user session present.  The sections below explain how this works.</p>
+</div>
+<div class="sect2">
+<h3 id="_wicket_viewer">10.1. Wicket Viewer</h3>
+<div class="paragraph">
+<p>The <a href="ugvw.html">Wicket viewer</a> defines a relatively small number of pages (by which we mean subclasses of <a href="http://ci.apache.org/projects/wicket/apidocs/6.0.x/org/apache/wicket/markup/html/WebPage.html"><code>org.apache.wicket.markup.html.WebPage</code></a>):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>about page</p>
+</li>
+<li>
+<p>action prompt page</p>
+</li>
+<li>
+<p>entity page</p>
+</li>
+<li>
+<p>error page</p>
+</li>
+<li>
+<p>home page</p>
+</li>
+<li>
+<p>standalone collection page</p>
+</li>
+<li>
+<p>value page</p>
+</li>
+<li>
+<p>void return page</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All of these (except about page) are annotated with the Wicket annotation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@AuthorizeInstantiation</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.isis.viewer.wicket.roles.USER</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which means that they can only be accessed by a user with an authenticated session that has this special, reserved role.  If not, Wicket will automatically redirect the user to the sign-in page.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The sign-in page to render is pluggable; see <a href="ugvw.html#_ugvw_extending_custom-pages">extensions chapter</a> for details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the sign-in page the viewer calls to the Isis Authenticator API, and obtains back a user/role.  It also adds in its special reserved role (per the annotation above) and then continues on to whichever page the user was attempting to access (usually the home page).</p>
+</div>
+<div class="paragraph">
+<p>And that&#8217;s really all there is to it.  When the viewer renders a domain object it queries the Apache Isis metamodel, and suppresses from the view any object members (properties, actions etc) that are invisible.  These may be invisible because the user has no (read ) permission, or they may be invisible because of domain object logic (eg a <code>hideXxx()</code> method).  The viewer neither knows nor cares.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, for those object members that <em>are</em> visible, the viewer also checks if they are enabled or disabled.  Again, an object member will be disabled if the user does not have (write) permission, or it could be disabled because of domain object logic (eg a <code>disableXxx()</code> method).</p>
+</div>
+<div class="sect3">
+<h4 id="_user_registration">10.1.1. User-registration</h4>
+<div class="paragraph">
+<p>As well as providing a sign-in screen, the Wicket viewer also provides the ability for <a href="#_user_registration">users to self-register</a>.  By and large this operates outside of Apache Isis' security mechanisms; indeed the various pages (sign-up, sign-up verification, password reset) are all rendered <em>without</em> there being any current user session.  These pages all "reach inside" Apache Isis framework using a mechanism similar to <a href="ugbtb.html#_ugbtb_headless-access">Headless access</a> in order to actually do their stuff.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The sign-in verification page to render is pluggable; see <a href="ugvw.html#_ugvw_extending_custom-pages">extensions chapter</a> for details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>User registration is only available if the <a href="rgsvc.html#_rgsvc_spi_UserRegistrationService"><code>UserRegistrationService</code></a> is configured; this is used by the framework to actually create new instances of the user as accessed by the corresponding (Shiro) realm.</p>
+</div>
+<div class="paragraph">
+<p>Because Shiro realms are pluggable, the Apache Isis framework does not provide default implementations of this service.  However, if you are using the <a href="http://github.com/isisaddons/isis-module-security">Isis addons' security</a> module (non-ASF), then this module <em>does</em> provide an implementation (that, as you might expect, creates new "user" domain entities).</p>
+</div>
+<div class="paragraph">
+<p>If you are using an LDAP realm and want to enable user-self registration then you&#8217;ll need to write your own implementation of this service.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restful_objects_viewer">10.2. Restful Objects Viewer</h3>
+<div class="paragraph">
+<p>Unlike the Wicket viewer, the <a href="ugvro.html">Restful Objects viewer</a> does <strong>not</strong> provide any sort of login page; rather it provides a pluggable authentication strategy, delegated to by the <code>IsisSessionFilter</code> filter defined in <code>web.xml</code>.  The authentication strategy is responsible for ensuring that a session is available for the REST resource.</p>
+</div>
+<div class="paragraph">
+<p>The API of <code>AuthenticationSessionStrategy</code> is simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.apache.isis.core.webapp.auth</span>;
+...
+public <span class="type">interface</span> <span class="class">AuthenticationSessionStrategy</span> {
+    AuthenticationSession lookupValid(     <i class="conum" data-value="1"></i><b>(1)</b>
+        ServletRequest servletRequest,
+        ServletResponse servletResponse);
+    <span class="type">void</span> bind(                             <i class="conum" data-value="2"></i><b>(2)</b>
+        ServletRequest servletRequest,
+        ServletResponse servletResponse,
+        AuthenticationSession authSession);
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>returns a valid <code>AuthenticationSession</code> for the specified request, response</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>binds (associates the provided <code>AuthenticationSession</code>) to the request and response</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here <code>AuthenticationSession</code> is Apache Isis' internal API that represents a signed-on user.</p>
+</div>
+<div class="paragraph">
+<p>The framework provides a number of simple strategies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AuthenticationSessionStrategyBasicAuth</code> implements the HTTP basic auth protocol (the pop-up dialog box shown by the web browser)</p>
+</li>
+<li>
+<p><code>AuthenticationSessionStrategyHeader</code> that simply reads the user identity from an HTTP header</p>
+</li>
+<li>
+<p><code>AuthenticationSessionStrategyTrusted</code> that always logs in with a special "exploration" user</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As you can see, none of these should be considered production-quality.</p>
+</div>
+<div class="paragraph">
+<p>The strategy is configured in <code>web.xml</code>; for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;filter&gt;</span>
+    <span class="tag">&lt;filter-name&gt;</span>IsisSessionFilterForRestfulObjects<span class="tag">&lt;/filter-name&gt;</span>
+    <span class="tag">&lt;filter-class&gt;</span>org.apache.isis.core.webapp.IsisSessionFilter<span class="tag">&lt;/filter-class&gt;</span>
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>authenticationSessionStrategy<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>                                           <i class="conum" data-value="1"></i><b>(1)</b>
+    org.apache.isis.viewer.restfulobjects.server.authentication.AuthenticationSessionStrategyBasicAuth
+        <span class="tag">&lt;/param-value&gt;</span>
+    <span class="tag">&lt;/init-param&gt;</span>
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>whenNoSession<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>auto<span class="tag">&lt;/param-value&gt;</span>                         <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tag">&lt;/init-param&gt;</span>
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>passThru<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>/restful/swagger<span class="tag">&lt;/param-value&gt;</span>             <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tag">&lt;/init-param&gt;</span>
+<span class="tag">&lt;/filter&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>configure basic auth strategy</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>what to do if no session was found; we use <code>auto</code> so as to issue a 401 status code with basic authentication challenge if the request originated from a web browser.  (Prior to <code>1.11.0</code> this parameter was set either to <code>basicAuthChallenge</code> (which works when requested from web browser) or to <code>unauthorized</code> (which works when requested from a suitably coded custom Javascript app).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>which paths are allowed to be accessed directly, without a session.  The <code>/restful/swagger</code> path provides access to the SwaggerResource that dynamically generates swagger spec files from the Apache Isis metamodel.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above filter must then be chained before the servlet that actually handles the REST requests:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;filter-mapping&gt;</span>
+    <span class="tag">&lt;filter-name&gt;</span>IsisSessionFilterForRestfulObjects<span class="tag">&lt;/filter-name&gt;</span>
+    <span class="tag">&lt;servlet-name&gt;</span>RestfulObjectsRestEasyDispatcher<span class="tag">&lt;/servlet-name&gt;</span>
+<span class="tag">&lt;/filter-mapping&gt;</span>
+...
+<span class="tag">&lt;servlet&gt;</span>
+    <span class="tag">&lt;servlet-name&gt;</span>RestfulObjectsRestEasyDispatcher<span class="tag">&lt;/servlet-name&gt;</span>
+    <span class="tag">&lt;servlet-class&gt;</span>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher<span class="tag">&lt;/servlet-class&gt;</span>
+<span class="tag">&lt;/servlet&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The above <code>web.xml</code> fragments do <em>not</em> constitute the full configuration for the Restful Objects viewer, just those parts that pertain to security.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_user_registration_2">10.2.1. User-registration</h4>
+<div class="paragraph">
+<p>Isis currently does not have any out-of-the-box support for user-registration for applications using only the Restful viewer.  However, in principal the pieces do exist to put together a solution.</p>
+</div>
+<div class="paragraph">
+<p>The general idea is similar to the design of the Wicket viewer; define some subsidiary resources that can operate <em>without</em> a user session in place, and which "reach into" the framework using headless access in order to setup the user.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An alternative approach, possibly less work and overall of more value, would be to implement <code>AuthenticationSessionStrategy</code> for oAuth, in other words allow users to use their existing Google or Facebook account.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following steps sketch out the solution in a little more detail:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Define some new Restful resources (cf <a href="https://github.com/apache/isis/blob/master/core/viewer-restfulobjects-server/src/main/java/org/apache/isis/viewer/restfulobjects/server/resources/DomainObjectResourceServerside.java"><code>DomainServiceResourceServerside</code></a> that correspond to sign-up/register page, eg <code>SignupResource</code><br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/signup</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SignupResource</span> {
+    ...
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a new subclass of <code>RestfulObjectsApplication</code>, eg "CustomRestfulObjectsApplication" and register your resources<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CustomRestfulObjectsApplication</span> <span class="directive">extends</span> RestfulObjectsApplication {
+    <span class="directive">public</span> CustomRestfulObjectsApplication() {
+        addClass(SignupResource.class);
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Register your application class in <code>web.xml</code> instead of the default:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+    <span class="tag">&lt;param-name&gt;</span>javax.ws.rs.Application<span class="tag">&lt;/param-name&gt;</span>
+    <span class="tag">&lt;param-value&gt;</span>com.mycompany.myapp.CustomRestfulObjectsApplication<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So far this is just standard javax.rs stuff.</p>
+</div>
+<div class="paragraph">
+<p>Next, we need to ensure that a client can hit your new resource <strong>with</strong> the Apache Isis runtime in place, but without there being an Apache Isis session.  For that&#8230;&#8203;.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>create a subclass of the <code>AuthenticationSessionStrategy</code> that automatically returns a dummy session if the resource being accessed is "/restful/signup", say. <br></p>
+<div class="paragraph">
+<p>You could do this by subclassing <code>AuthenticationSessionStrategyBasicAuth</code>, but then using code from <code>AuthenticationSessionStrategyBasicAuth</code> to return an "exploration" (or better, "signup") session if accessing the "/restful/signup" resource.</p>
+</div>
+</li>
+<li>
+<p>in the <code>SignUpResource</code> resource, you can then do a lookup of the <code>UserRegistrationService</code> in order to allow the user to be created:<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">final</span> UserRegistrationService userRegistrationService =
+    IsisContext.getPersistenceSession().getServicesInjector().lookupService(UserRegistrationService.class);
+userRegistrationService.registerUser(userDetails);</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Obviously the methods exposed by the <code>SignupResource</code> are up to you; ultimately they need to be able to gather information to populate the <code>UserDetails</code> object as passed to the <code>UserRegistrationService</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+        </div>
+
+        <footer>
+          <hr>
+          <p class="small">
+          Copyright &copy; 2010~2015 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0.
+          <br/>
+          Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation.
+          </p>
+        </footer>
+
+    </div>
+
+    <div id="doc-content-right" class="large-3 medium-3 xcolumns">
+        <div id="toc" class="toc2">
+            <div class="fallback-toc">
+                <ul class="sectlevel1">
+<li><a href="#_ugsec">1. Security</a>
+<ul class="sectlevel2">
+<li><a href="#_other_guides">1.1. Other Guides</a></li>
+<li><a href="#_terminology">1.2. Terminology</a></li>
+</ul>
+</li>
+<li><a href="#_ugsec_configuring-isis-to-use-shiro">2. Configuring Apache Isis to use Shiro</a>
+<ul class="sectlevel2">
+<li><a href="#_telling_apache_isis_to_use_shiro">2.1. Telling Apache Isis to use Shiro</a></li>
+<li><a href="#_bootstrapping_shiro">2.2. Bootstrapping Shiro</a></li>
+<li><a href="#__code_web_inf_shiro_ini_code">2.3. <code>WEB-INF/shiro.ini</code></a></li>
+</ul>
+</li>
+<li><a href="#_ugsec_shiro-ini-realm">3. Shiro Ini Realm</a>
+<ul class="sectlevel2">
+<li><a href="#_shiro_configuration">3.1. Shiro Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#__code_users_code_section">3.1.1. <code>[users]</code> section</a></li>
+<li><a href="#__code_roles_code_section">3.1.2. <code>[roles]</code> section</a></li>
+</ul>
+</li>
+<li><a href="#_externalized_inirealm">3.2. Externalized IniRealm</a></li>
+</ul>
+</li>
+<li><a href="#_ugsec_shiro-isis-ldap-realm">4. Isis Ldap Realm</a>
+<ul class="sectlevel2">
+<li><a href="#_shiro_configuration_2">4.1. Shiro Configuration</a></li>
+<li><a href="#_externalizing_role_perms">4.2. Externalizing role perms</a></li>
+<li><a href="#_active_ds_ldap_tutorial">4.3. Active DS LDAP tutorial</a></li>
+</ul>
+</li>
+<li><a href="#_ugsec_shiro-isisaddons-security-module-realm">5. Security Module Realm</a></li>
+<li><a href="#_ugsec_shiro-jdbc-realm">6. Shiro JDBC Realm</a></li>
+<li><a href="#_ugsec_shiro-isis-enhanced-wildcard-permission">7. Enhanced Wildcard Permission</a></li>
+<li><a href="#_ugsec_configuring-isis-to-use-bypass">8. Bypassing security</a></li>
+<li><a href="#_ugsec_api-for-applications">9. API for Applications</a>
+<ul class="sectlevel2">
+<li><a href="#__code_domainobjectcontainer_code_api">9.1. <code>DomainObjectContainer</code> API</a></li>
+<li><a href="#_servlet_api">9.2. Servlet API</a></li>
+</ul>
+</li>
+<li><a href="#_ugsec_usage-by-isis-viewers">10. Usage by Apache Isis' Viewers</a>
+<ul class="sectlevel2">
+<li><a href="#_wicket_viewer">10.1. Wicket Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_user_registration">10.1.1. User-registration</a></li>
+</ul>
+</li>
+<li><a href="#_restful_objects_viewer">10.2. Restful Objects Viewer</a>
+<ul class="sectlevel3">
+<li><a href="#_user_registration_2">10.2.1. User-registration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../js/foundation/5.5.1/vendor/jquery.js"></script>
+<script src="../js/foundation/5.5.1/foundation.min.js"></script>
+
+
+<link href="../css/jquery.tocify/1.9.0/jquery.tocify.css" rel="stylesheet">
+<script src="../js/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="../js/jquery.tocify/1.9.0/jquery.tocify.js"></script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#toc").tocify({
+            scrollTo: 50,
+            extendPage: true,
+            context: "#doc-content",
+            highlightOnScroll: true,
+            hashGenerator: "pretty",
+            hideEffect: "slideUp",
+            selectors: "h2,h3,h4,h5"
+        });
+        $(".fallback-toc").hide();
+    });
+</script>
+
+<script type="text/javascript">
+
+  /****
+
+      $(document).foundation();
+
+      $(document).ready(function(){
+        // Cache selectors
+        var lastId,
+            topMenu = $("div#toc ul"),
+            topMenuHeight = 100,
+
+            menuItems = topMenu.find("a"),
+            menuItemsHrefs = menuItems.map(function(){
+              var item = $($(this).attr("href"));
+              if (item.length) { return item; }
+            });
+
+        // Bind click handler to menu items to scroll animation
+        menuItems.click(function(e){
+          var href = $(this).attr("href"),
+              offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+          $('html, body').stop().animate({
+              scrollTop: offsetTop
+          }, 300);
+
+          e.preventDefault();
+        });
+
+        // Bind to scroll of window
+        $(  window ).scroll(function(){
+
+           // Get container scroll position
+           var fromTop = $(this).scrollTop()+topMenuHeight;
+
+           var cur = menuItemsHrefs.map(function(){
+             if ($(this).offset().top < fromTop)
+               return this;
+           });
+
+           // Get the id of the current element
+           cur = cur[cur.length-1];
+
+           var id = cur && cur.length ? cur[0].id : "";
+
+           if (lastId !== id && id) {
+               scrollTo(id);
+           }
+
+           window.history.pushState({}, "", window.location.origin + window.location.pathname + "#" + id);
+        });
+
+        scrollTo = function(id) {
+              lastId = id;
+
+              menuItems
+                .removeClass("active");
+
+              menuItems
+                .parents()
+                .removeClass("active-region");
+
+              menuItems
+                .parents("ul").hide();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .addClass("active");
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parent().children("ul").show();
+
+              menuItems
+                .filter("[href=#"+id+"]")
+                .parents("li").addClass("active-region");
+
+        }
+      menuItems
+        .removeClass("active");
+
+      menuItems
+        .parents()
+        .removeClass("active-region");
+
+        var syncMenuItem;
+        if(window.location.hash!=="") {
+            var menuItemFor = $.grep(menuItems, function(e) {
+                return e.hash === window.location.hash;
+            });
+            console.log(menuItemFor);
+            if(menuItemFor.length === 1) {
+                syncMenuItem = menuItemFor[0];
+            }
+        }
+
+        if(!syncMenuItem){
+            syncMenuItem = menuItems[0];
+        }
+
+        $(syncMenuItem).click();
+
+      });
+
+    ***/
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    if("Documentation" === "Security") {
+        console.log( "processing 'Documentation'" );
+
+        $("#doc-content-left").removeClass("large-9").removeClass("medium-9").addClass("large-12").addClass("medium-12");
+        $("#doc-content-right").removeClass("large-3").removeClass("medium-3").hide();
+    }
+
+});
+
+</script>
+
+
+<script>
+
+$( document ).ready(function() {
+
+    (function() {
+      $(function() {
+        return $("#doc-content h2, #doc-content h3, #doc-content h4, #doc-content h5, #doc-content h6").each(function(i, el) {
+          var $el, icon, id;
+          $el = $(el);
+          id = $el.attr('id');
+          icon = '<i class="fa fa-link"></i>';
+          if (id) {
+            return $el.prepend($("<a />").addClass("header-link").attr("href", "#" + id).html(icon));
+          }
+        });
+      });
+    }).call(this);
+
+
+
+	/*
+        http://osvaldas.info/auto-hide-sticky-header
+        MIT license
+	*/
+	;( function( $, window, document, undefined )
+	{
+		'use strict';
+
+		var elSelector		= '.header',
+			elClassHidden	= 'header--hidden',
+			throttleTimeout	= 500,
+			$element		= $( elSelector );
+
+		if( !$element.length ) return true;
+
+		var $window			= $( window ),
+			wHeight			= 0,
+			wScrollCurrent	= 0,
+			wScrollBefore	= 0,
+			wScrollDiff		= 0,
+			$document		= $( document ),
+			dHeight			= 0,
+
+			throttle = function( delay, fn )
+			{
+				var last, deferTimer;
+				return function()
+				{
+					var context = this, args = arguments, now = +new Date;
+					if( last && now < last + delay )
+					{
+						clearTimeout( deferTimer );
+						deferTimer = setTimeout( function(){ last = now; fn.apply( context, args ); }, delay );
+					}
+					else
+					{
+						last = now;
+						fn.apply( context, args );
+					}
+				};
+			};
+
+		$window.on( 'scroll', throttle( throttleTimeout, function()
+		{
+			dHeight			= $document.height();
+			wHeight			= $window.height();
+			wScrollCurrent	= $window.scrollTop();
+			wScrollDiff		= wScrollBefore - wScrollCurrent;
+
+			if( wScrollCurrent <= 0 ) // scrolled to the very top; element sticks to the top
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff > 0 && $element.hasClass( elClassHidden ) ) // scrolled up; element slides in
+				$element.removeClass( elClassHidden );
+
+			else if( wScrollDiff < 0 ) // scrolled down
+			{
+				if( wScrollCurrent + wHeight >= dHeight && $element.hasClass( elClassHidden ) ) // scrolled to the very bottom; element slides in
+					$element.removeClass( elClassHidden );
+
+				else // scrolled down; element slides out
+					$element.addClass( elClassHidden );
+			}
+
+			wScrollBefore = wScrollCurrent;
+		}));
+
+	})( jQuery, window, document );
+
+
+});
+</script>
+
+</body>
+</html>
