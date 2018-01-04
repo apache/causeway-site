@@ -1503,8 +1503,7 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(
-        nature = NatureOfService.DOMAIN,
-        menuOrder = <span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span>                             <i class="conum" data-value="1"></i><b>(1)</b>
+        nature = NatureOfService.DOMAIN
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
     <span class="annotation">@Override</span>
@@ -1514,18 +1513,11 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
 }</code></pre> 
           </div> 
          </div> 
-         <div class="colist arabic"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td><i class="conum" data-value="1"></i><b>1</b></td> 
-             <td>takes precedence over the default implementation.</td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
          <div class="paragraph"> 
           <p>The framework uses the value of the <code>menuOrder</code> attribute to determine priority; lowest number wins.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>However, there is no need to specify the <code>menuOrder</code> attribute: its default value is now set to a lower value (specifically: <code>Integer.MAX_VALUE - 100</code>) than all of the framework-provided implementations, and thus always takes precedence.</p> 
          </div> 
          <div class="paragraph"> 
           <p>Thus, if a single instance is to be injected, eg:</p> 
@@ -1550,20 +1542,6 @@ LocalProvider localeProvider;</code></pre>
          </div> 
          <div class="paragraph"> 
           <p>then all implementations will be present in the list, ordered by priority; your custom implementation will be first in the list.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>(As of <code>1.15.0</code> onwards), there is no need to specify the <code>menuOrder</code> attribute: its default value is now set to a lower value (specifically: <code>Integer.MAX_VALUE - 100</code>). Thus, the code simplifies to:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MyLocaleProvider</span> <span class="directive">implements</span> LocaleProvider {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Locale</span> getLocale() {
-        <span class="keyword">return</span> ...
-    }
-}</code></pre> 
-          </div> 
          </div> 
          <div class="admonitionblock note"> 
           <table> 
@@ -1818,7 +1796,7 @@ LocalProvider localeProvider;</code></pre>
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>Prior to 1.10.0 (when lifecycle events were introduced), this could also be be done by accessing the JDO API directly:</p> 
+          <p>It is also possible to accomplish this by accessing the JDO API directly:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -2808,19 +2786,6 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
                <td class="content"> 
                 <div class="paragraph"> 
                  <p>This <a href="http://isis.markmail.org/thread/472c3mrvcgnripst">thread</a> from the users mailing list (in Apr 2014) shows a typical customization (to enable per-instance security) (though note that <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips_multi-tenancy">Multi-Tenancy</a> is now a better solution to that particular use-case.</p> 
-                </div> </td> 
-              </tr> 
-             </tbody>
-            </table> 
-           </div> 
-           <div class="admonitionblock note"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-               <td class="content"> 
-                <div class="paragraph"> 
-                 <p>Previously (prior to <code>1.13.0</code>) the framework also supported the "isis.reflector.facets" configuration property, to specify a completely new implementation of the (internal API) <code>ProgrammingModel</code>. This is no longer supported; use "isis.reflector.facets.include" and "isis.reflector.facet.exclude" to adjust the framework’s default implementation (called <code>ProgrammingModelFacetsJava5</code>).</p> 
                 </div> </td> 
               </tr> 
              </tbody>
@@ -3831,10 +3796,7 @@ export ISIS_OPTS="isis.appManifest=domainapp.app.DomainAppAppManifestWithFixture
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>As of <code>1.8.0</code>, Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' <a href="http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html">Neo4J Datastore</a> implementation.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has been updated so that they can be optionally run under Neo4J.</p> 
+          <p>Apache Isis has experimental support for Neo4J, courtesy of DataNucleus' <a href="http://www.datanucleus.org/products/datanucleus/datastores/neo4j.html">Neo4J Datastore</a> implementation.</p> 
          </div> 
          <div class="admonitionblock tip"> 
           <table> 

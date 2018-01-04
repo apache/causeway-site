@@ -2036,7 +2036,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>As explained <a href="../ugfun/ugfun.html#_ugfun_building-blocks_identifiers_title-and-icon">earlier</a>, to allow the end-user to distinguish one domain object from another, it is rendered with a title and an icon.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><a href="../ugfun/ugfun.html#_ugfun_ui-hints_object-titles-and-icons">Normally</a> the code to return title and icon of an object is part of the domain object’s implementation. However, UI events allow this title and icon to be provided instead by a subscriber. (As of <code>1.15.0</code> onwards), UI events have higher precedence than the other mechanisms of supplying a title</p> 
+           <p><a href="../ugfun/ugfun.html#_ugfun_ui-hints_object-titles-and-icons">Normally</a> the code to return title and icon of an object is part of the domain object’s implementation. However, UI events allow this title and icon to be provided instead by a subscriber. UI events have higher precedence than the other mechanisms of supplying a title.</p> 
           </div> 
           <div class="paragraph"> 
            <p>If annotated with <a href="../rgant/rgant.html#_rgant_DomainObjectLayout_titleUiEvent"><code>@DomainObjectLayout#titleUiEvent()</code></a>, the appropriate (subclass of) <code>TitleUiEvent</code> will be emitted. Similarly for <a href="../rgant/rgant.html#_rgant_DomainObjectLayout_iconUiEvent"><code>iconUiEvent()</code></a> and <a href="../rgant/rgant.html#_rgant_DomainObjectLayout_cssClassUiEvent"><code>cssClassUiEvent()</code></a>.</p> 
@@ -2126,7 +2126,10 @@ table.CodeRay td.code>pre{padding:0}
           <p>In the same way that the Java module act as a namespace for domain objects, it’s good practice to map domain entities to their own (database) schemas.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>In previous versions a module class did not need to implement any specific interface; all the framework used was the package of the provided class. As of <code>1.16.0-SNAPSHOT</code> however, the <a href="../rgcms/rgcms.html#_rgcms_classes_Module"><code>Module</code></a> interface allows a module to specify its direct dependencies; from these all transitive dependencies are calculated. This should match the compile-time dependencies declared within Maven. The <code>Module</code> interface also allows a module to declare any configuration properties that should be contributed, as well as fixture scripts for reference data, and to tear down (for integration testing).</p> 
+          <p>The module class does not <em>need</em> to implement any specific interface; in this case the framework uses the module class simply to obtain a package to scan for entities and domain services. However, it’s recommended to implement the <a href="../rgcms/rgcms.html#_rgcms_classes_Module"><code>Module</code></a> interface because this allows the module to specify its direct dependencies; from these all transitive dependencies are calculated. This should match the compile-time dependencies declared within Maven.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The <code>Module</code> interface also allows a module to declare any configuration properties that should be contributed, as well as fixture scripts for reference data, and to tear down (for integration testing).</p> 
          </div> 
         </div> 
        </div> 
@@ -2819,16 +2822,6 @@ mvn clean install</code></pre>
         </ul>
        </div> 
        <div class="sectionbody"> 
-        <div class="admonitionblock note"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-            <td class="content"> this document has been updated for <code>1.16.0-SNAPSHOT</code>. </td> 
-           </tr> 
-          </tbody>
-         </table> 
-        </div> 
         <div class="paragraph"> 
          <p>The quickest way to get started building an application "for real" is to run the <code>simpleapp</code> archetype. Like the <a href="#_ugfun_getting-started_helloworld-archetype">helloworld archetype</a>, this too will generate a very simple one-class domain model (an entity called <code>SimpleObject</code> with a couple of properties).</p> 
         </div> 
@@ -2864,7 +2857,7 @@ mvn clean install</code></pre>
            <pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:generate  \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simpleapp-archetype \
-    -D archetypeVersion=1.15.1 \
+    -D archetypeVersion=1.16.0 \
     -D groupId=com.mycompany \
     -D artifactId=myapp \
     -D version=1.0-SNAPSHOT \
@@ -5746,7 +5739,7 @@ ProductRepository productRepository;</code></pre>
             <p>If your JAXB view model contains fields using the JODA datatypes (<code>LocalDate</code> and so on), then <code>@XmlJavaTypeAdapter</code> additional annotations in order to "teach" JAXB how to serialize out the state.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>(As of <code>1.15.0</code>) you can use adapters provided in the Apache Isis applib. For example:</p> 
+            <p>The Apache Isis applib provides a number of adapters to use out-of-the-box. For example:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 

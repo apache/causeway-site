@@ -405,19 +405,10 @@ table.CodeRay td.code>pre{padding:0}
         <div class="sect2"> 
          <h3 id="_telling_apache_isis_to_use_shiro">2.1. Telling Apache Isis to use Shiro</h3> 
          <div class="paragraph"> 
-          <p>To tell Apache Isis to use Shiro, set the "isis.authentication" and "isis.authorisation" properties.</p> 
+          <p>To tell Apache Isis to use Shiro when using an <a href="../rgcms/rgcms.html#__rgcms_classes_AppManifest-bootstrapping_bootstrapping_AppManifestAbstract"><code>AppManifestAbstract.BUILDER</code></a>, simply specify the "authMechanism" as "shiro".</p> 
          </div> 
          <div class="paragraph"> 
-          <p>One way to do this is by updating the <code>WEB-INF/isis.properties</code> file:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="ini">isis.authentication=shiro
-isis.authorization=shiro</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Alternatively (as of <code>1.15.0</code>) you can set them both programmatically from the <code>AppManifestAbstract.BUILDER</code> (see <a href="../rgcms/rgcms.html#__rgcms_classes_AppManifest-bootstrapping_bootstrapping_AppManifestAbstract">here</a>). For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld archetype</a> bootstraps using:</p> 
+          <p>For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">HelloWorld archetype</a> bootstraps using:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -425,18 +416,23 @@ isis.authorization=shiro</code></pre>
 
     <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder
             .forModules(HelloWorldModule.class)
-            .withConfigurationPropertiesFile(
-                HelloWorldAppManifest.class, <span class="string"><span class="delimiter">"</span><span class="content">isis.properties</span><span class="delimiter">"</span></span>)
-            .withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);
-
-    <span class="directive">public</span> HelloWorldAppManifest() {
-        <span class="local-variable">super</span>(BUILDER);
-    }
+            .withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);                        <i class="conum" data-value="1"></i><b>(1)</b>
+            ...
 }</code></pre> 
           </div> 
          </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>configures Shiro.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
          <div class="paragraph"> 
-          <p>Either way, this installs the appropriate implementation (the <code>ShiroAuthenticatorOrAuthorizor</code> class) that use Shiro’s APIs to perform authentication and authorization:</p> 
+          <p>This installs the appropriate implementation (the <code>ShiroAuthenticatorOrAuthorizor</code> class) that use Shiro’s APIs to perform authentication and authorization:</p> 
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
@@ -467,7 +463,7 @@ isis.authorization=shiro</code></pre>
              <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>This auto-logout behaviour was the default prior to <code>1.13.0</code>, but is believed to be the root cause of some exceptions caused by a possible race condition. There should generally be no need to change this property from its default (<code>false</code>).</p> 
+               <p>There should generally be no need to change this property from its default (<code>false</code>). Setting it to <code>true</code> may cause a race condition resulting in exceptions being logged.</p> 
               </div> </td> 
             </tr> 
            </tbody>
