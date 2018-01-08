@@ -179,6 +179,7 @@ table.CodeRay td.code>pre{padding:0}
         <li><a href="../../guides/ugfun/ugfun.html">Fundamentals</a></li> 
         <li><a href="../../guides/ugvw/ugvw.html">Wicket Viewer</a></li> 
         <li><a href="../../guides/ugvro/ugvro.html">Restful Objects Viewer</a></li> 
+        <li><a href="../../guides/ugodn/ugodn.html">DataNucleus Object Store</a></li> 
         <li><a href="../../guides/ugsec/ugsec.html">Security</a></li> 
         <li><a href="../../guides/ugtst/ugtst.html">Testing</a></li> 
         <li><a href="../../guides/ugbtb/ugbtb.html">Beyond the Basics</a></li> 
@@ -196,25 +197,32 @@ table.CodeRay td.code>pre{padding:0}
        </ul> </li> 
       <li class="dropdown  hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Downloads<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="../../downloads.html">Downloads</a></li> 
-        <li><a href="../../release-notes/release-notes.html">Release Notes</a></li> 
-        <li><a href="../../migration-notes/migration-notes.html">Migration Notes</a></li> 
-        <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Maven archetypes</li> 
         <li><a href="../../guides/ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">helloworld</a></li> 
         <li><a href="../../guides/ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">simpleapp</a></li> 
         <li role="separator" class="divider"></li> 
-        <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
+        <li><a href="../../downloads.html">Downloads</a></li> 
+        <li><a href="../../release-notes/release-notes.html">Release Notes</a></li> 
+        <li><a href="../../migration-notes/migration-notes.html">Migration Notes</a></li> 
+        <li role="separator" class="divider"></li> 
         <li><a href="https://github.com/apache/isis">Github mirror</a></li> 
        </ul> </li> 
       <li class="dropdown  hidden-sm"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Support<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="../../support.html">Mailing lists</a></li> 
+        <li class="dropdown-header">Guides</li> 
+        <li><a href="../../guides/dg/dg.html">Developers' Guide</a></li> 
+        <li><a href="../../guides/cgcom/cgcom.html">Committers' Guide</a></li> 
+        <li><a href="../../guides/htg.html">Hints-n-Tips Guide</a></li> 
+        <li role="separator" class="divider"></li> 
+        <li class="dropdown-header">Mailing Lists</li> 
+        <li><a href="../../support.html">How to subscribe</a></li> 
         <li><a href="https://lists.apache.org/list.html?users@isis.apache.org">Archives (ASF Pony mail)</a></li> 
         <li><a href="http://isis.markmail.org/search/?q=">Archives (Markmail)</a></li> 
+        <li role="separator" class="divider"></li> 
+        <li class="dropdown-header">Other Resources</li> 
+        <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
         <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
-        <li><a href="../../guides/dg/dg.html">How to contribute</a></li> 
-        <li><a href="../../help.html">Other resources</a></li> 
+        <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
@@ -1067,7 +1075,7 @@ CustomerRepository customers;</code></pre>
              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>(As of <code>1.15.0</code>) this can also be done by adding a dependency to <code>org.apache.isis.mavendeps:isis-mavendeps-testing</code> module; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
+               <p>This can also be done by adding a dependency to <code>org.apache.isis.mavendeps:isis-mavendeps-testing</code> module; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -1107,7 +1115,7 @@ CustomerRepository customers;</code></pre>
              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>As of <code>1.14.0</code> this can also be done using mavenmixins; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
+               <p>This can also be done using mavenmixins; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -1349,272 +1357,26 @@ CustomerRepository customers;</code></pre>
           <p>Integration tests instantiate an Apache Isis "runtime" (as a singleton) within a JUnit test. Because (depending on the size of your app) it takes a little time to bootstrap Apache Isis, the framework caches the runtime on a thread-local from one test to the next.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Newer releases of the framework reduce the amount of boilerplate to do this; this guide documents multiple versions.</p> 
+          <p>The recommended way to bootstrapping of integration tests is done using a <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest2-bootstrapping"><code>Module</code></a> implementation, along with the <code>IntegrationTestAbstract3</code> superclass.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The example code in this section is taken from the app generated by the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
+          <p>For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s integration tests all inherit from this class:</p> 
          </div> 
-         <div class="sect3"> 
-          <h4 id="_1_15_0_onwards">4.2.1. 1.15.0 onwards</h4> 
-          <div class="paragraph"> 
-           <p>In <code>1.15.0</code> the bootstrapping is accomplished using a combination of <code>AppManifestAbstract</code> (a framework-provided implementation of <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>) and <code>IntegrationTestAbstract2</code> superclass.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>For example, the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>'s integration tests all inherit from this class:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTestAbstract</span> <span class="directive">extends</span> IntegrationTestAbstract2 {
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTestAbstract</span> <span class="directive">extends</span> IntegrationTestAbstract3 {
 
-    <span class="annotation">@BeforeClass</span>
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initSystem() {
-        bootstrapUsing(<span class="keyword">new</span> DomainAppAppManifest());
-    }
-
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>where <code>DomainAppAppManifest</code> in turn is:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">extends</span> AppManifestAbstract {
-
-    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> Builder BUILDER = Builder.forModules(
-                    SimpleModuleDomSubmodule.class,
-                    DomainAppApplicationModuleFixtureSubmodule.class,
-                    DomainAppApplicationModuleServicesSubmodule.class
-            )
-            .withConfigurationPropertiesFile(DomainAppAppManifest.class,
-                    <span class="string"><span class="delimiter">"</span><span class="content">isis.properties</span><span class="delimiter">"</span></span>,
-                    <span class="string"><span class="delimiter">"</span><span class="content">authentication_shiro.properties</span><span class="delimiter">"</span></span>,
-                    <span class="string"><span class="delimiter">"</span><span class="content">persistor_datanucleus.properties</span><span class="delimiter">"</span></span>,
-                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_restfulobjects.properties</span><span class="delimiter">"</span></span>,
-                    <span class="string"><span class="delimiter">"</span><span class="content">viewer_wicket.properties</span><span class="delimiter">"</span></span>
-            ).withAuthMechanism(<span class="string"><span class="delimiter">"</span><span class="content">shiro</span><span class="delimiter">"</span></span>);
-
-    <span class="directive">public</span> DomainAppAppManifest() {
-        <span class="local-variable">super</span>(BUILDER);
+    <span class="directive">public</span> DomainAppIntegTestAbstract() {
+        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule());
     }
 }</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The <code>AppManifestAbstract</code> class (which is also used to bootstrap the regular app as well as integration tests) is discussed further <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">here</a>, while the <code>IntegrationTestAbstract2</code> class is discussed further <a href="#_ugtst_integ-test-support_abstract-class">here</a>.</p> 
           </div> 
          </div> 
-         <div class="sect3"> 
-          <h4 id="_1_13_0">4.2.2. 1.13.0</h4> 
-          <div class="paragraph"> 
-           <p>In <code>1.13.0</code> the bootstrapping itself is typically performed by a "system initializer" class. This is responsible for instantiating the Apache Isis runtime (based on a provided <code>AppManifest</code>) and binding it to a thread-local.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The <code>AppManifest.Util</code> class allows configuration properties for integration testing to be defined (replacing the <code>IsisConfigurationForJdoIntegTests</code> of earlier releases).</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>For example:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
-        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
-        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
-            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
-                    .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(<span class="keyword">new</span> DomainAppAppManifest() {
-                        <span class="annotation">@Override</span>
-                        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; getConfigurationProperties() {
-                            <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map = Maps.newHashMap();
-                            <span class="predefined-type">Util</span>.withJavaxJdoRunInMemoryProperties(map);
-                            <span class="predefined-type">Util</span>.withDataNucleusProperties(map);
-                            <span class="predefined-type">Util</span>.withIsisIntegTestProperties(map);
-                            <span class="keyword">return</span> map;
-                        }
-                    })
-                    .build();
-            isft.setUpSystem();
-            IsisSystemForTest.set(isft);
-        }
-    }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The above code uses the <code>AppManifest.Util</code> helper class, which provides a number of static methods that can be used to set up <a href="#_ugtst_integ-test-support_configuration-properties">configuration properties</a> appropriate for integration testing (eg run using an in-memory database). This allows the responsibility of returning the configuration properties to belong exclusively to the <code>AppManifest</code>.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>There are three such static methods:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AppManifest</span> {
-  ...
-  public <span class="directive">static</span> <span class="type">class</span> <span class="class">Util</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withJavaxJdoRunInMemoryProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withDataNucleusProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }           <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>,<span class="predefined-type">String</span>&gt;
-        withIsisIntegTestProperties(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; map) { ... }         <i class="conum" data-value="3"></i><b>(3)</b>
-  }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="colist arabic"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>sets up the <code>javax.jdo.option.Connection*</code> properties so as to run against an in-memory instance of HSQLDB</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>sets up DataNucleus to automatically create the databse schema, as well as a number of other standard properties (disable persistence by reachability, support mixed case identifiers, disable level 2 cache)</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>sets up standard properties for the Apache Isis framework, most specifically to enable fixtures to be installed.</td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
+         <div class="paragraph"> 
+          <p>where <code>DomainAppApplicationModule</code> in turn declares all the dependencies that make up the application.</p> 
          </div> 
-         <div class="sect3"> 
-          <h4 id="_1_9_0">4.2.3. 1.9.0</h4> 
-          <div class="paragraph"> 
-           <p>In <code>1.9.0</code> the <code>AppManifest</code> was introduced as mechanism to specify all parts (domain code, framework components, configuation properties) that make up a running application.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The suggested way to use this concept was using a "system initializer" class. This uses a <code>IsisConfigurationForJdoIntegTests</code> class to bring together the configuration properties (discussed further <a href="#_ugtst_integ-test-support_configuration-properties">here</a>) to bootstrap the application.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>For example:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
-        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
-        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
-            isft = <span class="keyword">new</span> IsisSystemForTest.Builder()
-                    .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(<span class="keyword">new</span> DomainAppAppManifest())
-                    .with(<span class="keyword">new</span> IsisConfigurationForJdoIntegTests())
-                    .build()
-                    .setUpSystem();
-            IsisSystemForTest.set(isft);
-        }
-    }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>where <code>DomainAppAppManifest</code> in turn is defined as:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppAppManifest</span> <span class="directive">implements</span> AppManifest {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getModules() {
-        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.asList(
-                domainapp.dom.DomainAppDomainModule.class,
-                domainapp.fixture.DomainAppFixtureModule.class,
-                domainapp.app.DomainAppAppModule.class
-        );
-    }
-    ...
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Further details on bootstrapping with the <code>AppManifest</code> can be found in the <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">reference guide</a>.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_1_8_0_and_earlier">4.2.4. 1.8.0 and earlier</h4> 
-          <div class="paragraph"> 
-           <p>Prior to 1.9.0, the services and entities had to be specified in two separate locations. The suggested way to do this was to introduce a subclass of the <code>IsisSystemForTest.Builder</code> class:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DomainAppSystemBuilder</span> <span class="directive">extends</span> IsisSystemForTest.Builder {      <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> DomainAppSystemBuilder() {
-        withLoggingAt(org.apache.log4j.Level.INFO);
-        with(testConfiguration());
-        with(<span class="keyword">new</span> DataNucleusPersistenceMechanismInstaller());                        <i class="conum" data-value="2"></i><b>(2)</b>
-        withServicesIn( <span class="string"><span class="delimiter">"</span><span class="content">domainapp</span><span class="delimiter">"</span></span> );                                               <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-    <span class="directive">private</span> <span class="directive">static</span> IsisConfiguration testConfiguration() {
-        <span class="directive">final</span> IsisConfigurationForJdoIntegTests testConfiguration =
-            <span class="keyword">new</span> IsisConfigurationForJdoIntegTests();                                 <i class="conum" data-value="4"></i><b>(4)</b>
-        testConfiguration.addRegisterEntitiesPackagePrefix(<span class="string"><span class="delimiter">"</span><span class="content">domainapp.dom.modules</span><span class="delimiter">"</span></span>); <i class="conum" data-value="5"></i><b>(5)</b>
-        <span class="keyword">return</span> testConfiguration;
-    }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="colist arabic"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>subclass the framework-provided <code>IsisSystemForTest.Builder</code>.</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>equivalent to <code>isis.persistor=datanucleus</code> in <code>isis.properties</code></td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>specify the <code>isis.services</code> key in <code>isis.properties</code> (where "domainapp" is the base package for all classes within the app)</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td><code>IsisConfigurationForJdoIntegTests</code> has pre-canned configuration for using an in-memory HSQLDB and other standard settings; more on this below.</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="5"></i><b>5</b></td> 
-              <td>equivalent to <code>isis.persistor.datanucleus.RegisterEntities.packagePrefix</code> key (typically in <code>persistor_datanucleus.properties</code>)</td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-          <div class="paragraph"> 
-           <p>This builder could then be used within the system initializer:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppSystemInitializer</span> {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initIsft() {
-        IsisSystemForTest isft = IsisSystemForTest.getElseNull();
-        <span class="keyword">if</span>(isft == <span class="predefined-constant">null</span>) {
-            isft = <span class="keyword">new</span> DomainAppSystemBuilder()    <i class="conum" data-value="1"></i><b>(1)</b>
-                            .build()
-                            .setUpSystem();
-            IsisSystemForTest.set(isft);           <i class="conum" data-value="2"></i><b>(2)</b>
-        }
-    }
-    <span class="directive">private</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DomainAppSystemBuilder</span>
-        <span class="directive">extends</span> IsisSystemForTest.Builder { ... }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="colist arabic"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>instantiates and initializes the Apache Isis runtime (the <code>IsisSystemForTest</code> class)</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>binds the runtime to a thread-local.</td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
+         <div class="paragraph"> 
+          <p>If required, the <code>Module</code> can be customised first using the various <code>withXxx(…​)</code> methods to specify addition modules, domain services and configuration properties.</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -1630,46 +1392,65 @@ CustomerRepository customers;</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>When writing integration tests, it’s easiest to inherit from a base class:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p>as of (<code>1.15.0</code>), use <code>IntegrationTestAbstract2</code></p> </li> 
-           <li> <p>for earlier releases, use (its superclass) <code>IntegrationTestAbstract</code>.</p> </li> 
-          </ul> 
+          <p>When writing integration tests, it’s easiest to inherit from the <code>IntegrationTestAbstract3</code> base class.</p> 
          </div> 
          <div class="paragraph"> 
           <p>This base class <a href="#_ugtst_integ-test-support_bootstrapping">bootstraps</a> the framework (caching the framework on a thread-local), and provides various utility methods and framework-provided services for use by your application’s subclass tests.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__ugtst_integ-test-support_abstract-class_IntegrationTestAbstract2">4.3.1. <code>IntegrationTestAbstract2</code></h4> 
+          <h4 id="__ugtst_integ-test-support_abstract-class_IntegrationTestAbstract3">4.3.1. <code>IntegrationTestAbstract3</code></h4> 
           <div class="paragraph"> 
-           <p>(As of <code>1.15.0</code>) we recommend that your integration tests inherit from Apache Isis' <code>IntegrationTestAbstract2</code> class:</p> 
+           <p>We recommend that your integration tests inherit from Apache Isis' <code>IntegrationTestAbstract3</code> class. The primary benefit over its predecessor, <code>IntegrationTestAbstract2</code> (discussed <a href="#__ugtst_integ-test-support_abstract-class_IntegrationTestAbstract2">below</a> is that it allows the test to be bootstrapped by passing in a <code>Module</code> rather than an <code>AppManifest</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For example:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTest</span> <span class="directive">extends</span> IntegrationTestAbstract2 {
-    ...
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTest</span>
+                        <span class="directive">extends</span> IntegrationTestAbstract3 {
+
+    <span class="directive">public</span> DomainAppIntegTestAbstract() {
+        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule());
+    }
 }</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Although not mandatory, this provides a number of helper/convenience methods and JUnit rules:</p> 
+           <p>The <code>IntegrationTestAbstract3</code> class also allows the module to be specified externally, using either the <code>isis.integTest.module</code> or the (more general) <code>isis.headless.module</code> system property, eg by updating the <code>pom.xml</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For example:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java">    <span class="annotation">@Rule</span>
-    <span class="directive">public</span> IsisTransactionRule isisTransactionRule =                         <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="keyword">new</span> IsisTransactionRule();
-    <span class="annotation">@Rule</span>
-    <span class="directive">public</span> JUnitRuleMockery2 context =                                       <i class="conum" data-value="2"></i><b>(2)</b>
-        JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
-    <span class="annotation">@Rule</span>
-    <span class="directive">public</span> ExpectedException expectedExceptions =                            <i class="conum" data-value="3"></i><b>(3)</b>
-        ExpectedException.none();
-    <span class="annotation">@Rule</span>
-    <span class="directive">public</span> ExceptionRecognizerTranslate exceptionRecognizerTranslations =    <i class="conum" data-value="4"></i><b>(4)</b>
-        ExceptionRecognizerTranslate.create();</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
+    <span class="tag">&lt;isis.integTest.module&gt;</span>
+        org.estatio.module.application.EstatioApplicationModule
+    <span class="tag">&lt;/isis.integTest.module&gt;</span>
+<span class="tag">&lt;/properties&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This is required when the codebase is organised as multiple "logical" modules within a single Maven "physical" module (ie <code>src/main/java</code> compilation unit). The integration testing framework will bootstrap the module specified by the system property and cache for all tests discovered within the physical module.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This test class provides a number of helper/convenience methods and JUnit rules:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Rule</span>
+<span class="directive">public</span> IsisTransactionRule isisTransactionRule =                         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="keyword">new</span> IsisTransactionRule();
+<span class="annotation">@Rule</span>
+<span class="directive">public</span> JUnitRuleMockery2 context =                                       <i class="conum" data-value="2"></i><b>(2)</b>
+    JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
+<span class="annotation">@Rule</span>
+<span class="directive">public</span> ExpectedException expectedExceptions =                            <i class="conum" data-value="3"></i><b>(3)</b>
+    ExpectedException.none();
+<span class="annotation">@Rule</span>
+<span class="directive">public</span> ExceptionRecognizerTranslate exceptionRecognizerTranslations =    <i class="conum" data-value="4"></i><b>(4)</b>
+    ExceptionRecognizerTranslate.create();</code></pre> 
            </div> 
           </div> 
           <div class="colist arabic"> 
@@ -1698,42 +1479,7 @@ CustomerRepository customers;</code></pre>
            <p>All of these rules could be inlined in your own base class; as we say, they are a convenience.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>IntegrationTestAbstract2</code> also provides a number of helper/convenience methods, though most of these have been deprecated because the functionality they expose is now readily accessible through various domain services; most notably these are:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_RepositoryService"><code>RepositoryService</code></a></p> </li> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a></p> </li> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>ServiceRegistry2</code></a></p> </li> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_WrapperFactory"><code>WrapperFactory</code></a><br></p> 
-             <div class="paragraph"> 
-              <p>to wrap objects simulating interaction through the user interface)</p> 
-             </div> </li> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_TransactionService"><code>TransactionService</code></a><br></p> 
-             <div class="paragraph"> 
-              <p>most commonly used to commit changes after the fixture setup) and,</p> 
-             </div> </li> 
-            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_SessionManagementService"><code>SessionManagementService</code></a><br></p> 
-             <div class="paragraph"> 
-              <p>for tests that check interactions over multiple separate sessions.</p> 
-             </div> </li> 
-           </ul> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__ugtst_integ-test-support_abstract-class_IntegrationTestAbstract">4.3.2. <code>IntegrationTestAbstract</code></h4> 
-          <div class="paragraph"> 
-           <p>For earlier releases we recommend that your base class inherit from Apache Isis' <code>IntegrationTestAbstract</code> class:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTest</span> <span class="directive">extends</span> IntegrationTestAbstract {
-    ...
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>This provides most of the benefits of <code>IntegrationTestAbstract2</code> (it is the latter’s superclass, in fact), but the <a href="#_ugtst_integ-test-support_bootstrapping">bootstrapping</a> is more verbose.</p> 
+           <p>The class also provides a number of injected domain services, notably <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_RepositoryService"><code>RepositoryService</code></a>, <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a>, <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>ServiceRegistry2</code></a>, <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_WrapperFactory"><code>WrapperFactory</code></a> (to wrap objects simulating interaction through the user interface), <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_TransactionService"><code>TransactionService</code></a> (most commonly used to commit changes after the fixture setup) and <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_SessionManagementService"><code>SessionManagementService</code></a> (for tests that check interactions over multiple separate sessions).</p> 
           </div> 
          </div> 
         </div> 
@@ -1753,10 +1499,7 @@ CustomerRepository customers;</code></pre>
           <p>The recommended way to run integration tests is against an HSQLDB in-memory database. This can be done using the application’s usual <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping"><code>AppManifest</code></a>, and then overriding JDBC URL and similar.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Different releases of the framework have provided differing ways to accomplish this. (As of <code>1.15.0</code>) using <code>IntegrationTestAbstract2’s `bootstrapUsing</code> method will make these configuration properties as the default. In earlier releases either the helper methods in <code>AppManifest.Util</code> class or the <code>IsisConfigurationForJdoIntegTests</code> (implementation of <code>IsisConfiguration</code>) can be used.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Whichever approach is used, these are the configuration properties that will be overridden:</p> 
+          <p>If inheriting from `IntegrationTestAbstract3’s then these configuration properties are set up automatically:</p> 
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
@@ -2240,7 +1983,7 @@ Customer customer = (Customer)((WrappingObject)wrappedCustomer).__isis_wrapped()
              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>(As of <code>1.15.0</code>) this can also be done by adding a dependency to <code>org.apache.isis.mavendeps:isis-mavendeps-testing</code> module; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
+               <p>This can also be done by adding a dependency to <code>org.apache.isis.mavendeps:isis-mavendeps-testing</code> module; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -2280,7 +2023,7 @@ Customer customer = (Customer)((WrappingObject)wrappedCustomer).__isis_wrapped()
              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>As of <code>1.14.0</code> this can also be done using mavenmixins; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
+               <p>This can also be done using mavenmixins; see the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -2341,92 +2084,7 @@ Customer customer = (Customer)((WrappingObject)wrappedCustomer).__isis_wrapped()
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugtst_bdd-spec-support_key-classes">5.2. Key classes</h3>
-         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_key-classes.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-          <ul class="dropdown-menu">
-           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_key-classes.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_key-classes.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_key-classes.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_key-classes.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-          </ul>
-         </div> 
-         <div class="paragraph"> 
-          <p>There are some key framework classes that make up the spec support; these are discussed below.</p> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> some of these are also used by Apache Isis' <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">Integration Test support</a>. </td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__code_isissystemfortest_code">5.2.1. <code>IsisSystemForTest</code></h4> 
-          <div class="paragraph"> 
-           <p>The <code>IsisSystemForTest</code> class allows a complete running instance of Apache Isis to be bootstrapped (with the JDO objectstore); this is then held on a a <code>ThreadLocal</code> from one test to another.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Typically bootstrapping code is used to lazily instantiate the <code>IsisSystemForTest</code> once and once only. The mechanism for doing this is line-for-line identical in both BDD step defs and integration tests.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__code_scenarioexecution_code">5.2.2. <code>ScenarioExecution</code></h4> 
-          <div class="paragraph"> 
-           <p>The <code>ScenarioExecution</code> provides a context for a scenario that is being executed. It is Cucumber that determines which step definitions are run, and in which order, and so state cannot be passed between step definitions using local variables or instance variables. Instead the <code>ScenarioExecution</code> acts like a hashmap, allowing each step to put data (eg "given an uncompleted todoitem") into the map or get data ("when I complete the todoitem") from the map. This is done using the <code>putVar(…​)</code> and <code>getVar(…​)</code> methods.</p> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>This corresponds broadly to the "World" object in Ruby-flavoured Cucumber.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The <code>ScenarioExecution</code> also provids access to the configured domain services (using the <code>service(…​)</code> method) and the <code>DomainObjectContainer</code> (through the <code>container()</code> method).</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>This could probably be refactored; Cucumber JVM provides automatic dependency injection into setp definitions, but Apache Isis does not currently leverage or exploit this capability.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Like the <code>IsisSystemForTest</code> class, the <code>ScenarioExecution</code> class binds an instance of itself onto a <code>ThreadLocal</code>. It can then be accessed in BDD step definitions using <code>ScenarioExecution.current()</code> static method.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__code_wrapperfactory_code">5.2.3. <code>WrapperFactory</code></h4> 
-          <div class="paragraph"> 
-           <p>As with integration tests, the UI can be simulated by "wrapping" each domain object in a proxy using the <code>WrapperFactory</code>.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__code_cukeglueabstract_code">5.2.4. <code>CukeGlueAbstract</code></h4> 
-          <div class="paragraph"> 
-           <p>The <code>CukeGlueAbstract</code> acts as a convenience superclass for writing BDD step definitions (analogous to the <code>IntegrationTestAbstract</code> for integation tests). Underneath the covers it delegates to an underlying <code>ScenarioExecution</code>.</p> 
-          </div> 
-         </div> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="_ugtst_bdd-spec-support_writing-a-bdd-spec">5.3. Writing a BDD spec</h3>
+         <h3 id="_ugtst_bdd-spec-support_writing-a-bdd-spec">5.2. Writing a BDD spec</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_writing-a-bdd-spec.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2452,9 +2110,11 @@ Customer customer = (Customer)((WrappingObject)wrappedCustomer).__isis_wrapped()
              <p>For example, given a feature that involves <code>Customer</code> and <code>Order</code>, have the step definitions pertaining to <code>Customer</code> reside in <code>CustomerGlue</code>, and the step definitions pertaining to <code>Order</code> reside in <code>OrderGlue</code>.<br></p> 
             </div> 
             <div class="paragraph"> 
-             <p>The <code>glue</code> attribute of the Cucumber-JVM JUnit runner eallows you to indicate which package(s) should be recursively searched to find any glue.</p> 
+             <p>The <code>glue</code> attribute of the Cucumber-JVM JUnit runner allows you to indicate which package(s) should be recursively searched to find any glue.</p> 
+            </div> 
+            <div class="paragraph"> 
+             <p>There also needs to be one glue class that is used to bootstrap the runtime.</p> 
             </div> </li> 
-           <li> <p>a system initializer class. You can reuse the system initializer from any integration tests (as described in <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">Integration Test Support</a>, bootstrapping section).</p> </li> 
           </ul> 
          </div> 
          <div class="paragraph"> 
@@ -2462,43 +2122,33 @@ Customer customer = (Customer)((WrappingObject)wrappedCustomer).__isis_wrapped()
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@SimpleObjectsFixture</span>
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainAppDemo</span>
 Feature: <span class="predefined-type">List</span> and Create New Simple Objects
 
-  <span class="annotation">@integration</span>
   Scenario: Existing simple objects can be listed and <span class="keyword">new</span> ones created
-    Given there are initially <span class="integer">3</span> simple objects
+    Given there are initially <span class="integer">10</span> simple objects
     When  I create a <span class="keyword">new</span> simple object
-    Then  there are <span class="integer">4</span> simple objects</code></pre> 
+    Then  there are <span class="integer">11</span> simple objects</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>The <code>@SimpleObjectsFixture</code> is a custom tag we’ve specified to indicate the prerequisite fixtures to be loaded; more on this in a moment. The <code>@integration</code> tag, meanwhile, says that this feature should be run with integration-level scope.</p> 
+          <p>The "@DomainAppDemo" is a custom tag we’ve specified to indicate the prerequisite fixtures to be loaded; more on this in a moment.</p> 
          </div> 
-         <div class="admonitionblock note"> 
+         <div class="admonitionblock important"> 
           <table> 
            <tbody>
             <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>Although BDD specs are most commonly used for end-to-end tests (ie at the same scope as an integration test), the two concerns (expressability of a test to a business person vs granularity of the test) should not be conflated. There are a couple of <a href="http://silkandspinach.net/2013/01/18/a-testing-strategy/">good</a> blog <a href="http://claysnow.co.uk/the-testing-iceberg/">posts</a> discussing <a href="http://claysnow.co.uk/living-documentation-can-be-readable-and-fast/">this</a>. The basic idea is to avoid the overhead of a heavy-duty integration test if possible.</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>Apache Isis does also support running BDD specs in unit test mode; by annotating the scenario with the <code>@unit</code> (rather than <code>@integration</code> tag). When running under unit-level scope, the Apache Isis system is <em>not</em> instantiated. Instead, the <code>ScenarioExecution</code> class returns JMock mocks (except for the <code>WrapperFactory</code>, if configured).</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>To support unit testing scope Apache Isis provides the <code>InMemoryDB</code> class; a glorified hashmap of "persisted" objects. Use of this utility class is optional.</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>Writing a BDD spec that supports both modes of operation therefore takes more effort and we expect most users interested in BDD will use integration-testing scope; for these reasons we have chosen <em>not</em> to include unit-testing support in the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>. For those who do require faster-executing test suite, it’s worthwhile knowing that Apache Isis can support this.</p> 
+               <p>BDD specs are assumed to run only as integration tests.</p> 
               </div> </td> 
             </tr> 
            </tbody>
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>The <code>RunSpecs</code> class to run this feature (and any other features in this package or subpackages) is just boilerplate</p> 
+          <p>The <code>RunBddSpecs</code> class to run this feature (and any other features in this package or subpackages) is just boilerplate</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -2508,10 +2158,14 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
                 <span class="string"><span class="delimiter">"</span><span class="content">html:target/cucumber-html-report</span><span class="delimiter">"</span></span>
                 ,<span class="string"><span class="delimiter">"</span><span class="content">json:target/cucumber.json</span><span class="delimiter">"</span></span>
         },
-        glue={<span class="string"><span class="delimiter">"</span><span class="content">classpath:domainapp.integtests.specglue</span><span class="delimiter">"</span></span>},
+        glue={
+                <span class="string"><span class="delimiter">"</span><span class="content">classpath:domainapp.application.bdd.specglue</span><span class="delimiter">"</span></span>,
+                <span class="string"><span class="delimiter">"</span><span class="content">classpath:domainapp.modules.simple.specglue</span><span class="delimiter">"</span></span>
+        },
         strict = <span class="predefined-constant">true</span>,
-        tags = { <span class="string"><span class="delimiter">"</span><span class="content">~@backlog</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">~@ignore</span><span class="delimiter">"</span></span> })
-<span class="directive">public</span> <span class="type">class</span> <span class="class">RunSpecs</span> {
+        tags = { <span class="string"><span class="delimiter">"</span><span class="content">~@backlog</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">~@ignore</span><span class="delimiter">"</span></span> }
+)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RunBddSpecs</span> {
     <span class="comment">// intentionally empty</span>
 }</code></pre> 
           </div> 
@@ -2520,65 +2174,110 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           <p>The JSON formatter allows integration with enhanced reports. (Commented out) configuration for this is provided in the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The bootstrapping of Apache Isis can be moved into a <code>BootstrappingGlue</code> step definition:</p> 
+          <p>The bootstrapping of Apache Isis itself lives in a <code>BootstrappingGlue</code> step definition:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">BootstrappingGlue</span> <span class="directive">extends</span> CukeGlueAbstract {
-    <span class="annotation">@Before</span>(value={<span class="string"><span class="delimiter">"</span><span class="content">@integration</span><span class="delimiter">"</span></span>}, order=<span class="integer">100</span>)
-    <span class="directive">public</span> <span class="type">void</span> beforeScenarioIntegrationScope() {
-        org.apache.log4j.PropertyConfigurator.configure(<span class="string"><span class="delimiter">"</span><span class="content">logging.properties</span><span class="delimiter">"</span></span>);
-        SimpleAppSystemInitializer.initIsft();
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">BootstrappingGlue</span> <span class="directive">extends</span> CukeGlueBootstrappingAbstract {  <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> BootstrappingGlue() {
+        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule());                        <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>superclass contains the bootstrapping logic. This reuses many of the same classes as the integration testing framework</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>the <code>Module</code> to use to bootstrap the application in headless mode.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The fixture to run also lives in its own step definition, <code>CatalogOfFixturesGlue</code>:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CatalogOfFixturesGlue</span> <span class="directive">extends</span> CukeGlueAbstract2 {
+    <span class="annotation">@Before</span>(value={<span class="string"><span class="delimiter">"</span><span class="content">@DomainAppDemo</span><span class="delimiter">"</span></span>}, order=<span class="integer">20000</span>)
+    <span class="directive">public</span> <span class="type">void</span> runDomainAppDemo() {
+        fixtureScripts.runFixtureScript(<span class="keyword">new</span> DomainAppDemo(), <span class="predefined-constant">null</span>); <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}</code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>The <code>fixtureScripts</code> service is inherited from the superclass.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This will only activate for feature files tagged with "@DomainAppDemo".</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Finally, the step definitions pertaining to <code>SimpleObject</code> domain entity then reside in the <code>SimpleObjectGlue</code> class. This is where the heavy lifting gets done:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectMenuGlue</span> <span class="directive">extends</span> CukeGlueAbstract2 {
 
-        before(ScenarioExecutionScope.INTEGRATION);
-    }
-    <span class="annotation">@After</span>
-    <span class="directive">public</span> <span class="type">void</span> afterScenario(cucumber.api.Scenario sc) {
-        assertMocksSatisfied();
-        after(sc);
-    }
-}</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The fixture to run also lives in its own step definition, <a href="https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/specglue/CatalogOfFixturesGlue.java#L24"><code>CatalogOfFixturesGlue</code></a>:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CatalogOfFixturesGlue</span> <span class="directive">extends</span> CukeGlueAbstract {
-    <span class="annotation">@Before</span>(value={<span class="string"><span class="delimiter">"</span><span class="content">@integration</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">@SimpleObjectsFixture</span><span class="delimiter">"</span></span>}, order=<span class="integer">20000</span>)
-    <span class="directive">public</span> <span class="type">void</span> integrationFixtures() <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
-        scenarioExecution().install(<span class="keyword">new</span> RecreateSimpleObjects());
-    }
-}</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Note that this is annotated with a tag (<code>@SimpleObjectsFixture</code>) so that the correct fixture runs. (We might have a whole variety of these).</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The step definitions pertaining to <code>SimpleObject</code> domain entity then reside in the <a href="https://github.com/apache/isis/blob/07fe61ef3fb029ae36427f60da2afeeb931e4f88/example/application/simpleapp/integtests/src/test/java/domainapp/integtests/specglue/modules/simple/SimpleObjectGlue.java#L31"><code>SimpleObjectGlue</code></a> class. This is where the heavy lifting gets done:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectGlue</span> <span class="directive">extends</span> CukeGlueAbstract {
-    <span class="annotation">@Given</span>(<span class="string"><span class="delimiter">"</span><span class="content">^there are.* (</span><span class="char">\\</span><span class="content">d+) simple objects$</span><span class="delimiter">"</span></span>)
+    <span class="annotation">@Given</span>(<span class="string"><span class="delimiter">"</span><span class="content">^there are.* (</span><span class="char">\\</span><span class="content">d+) simple objects$</span><span class="delimiter">"</span></span>)                           <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="directive">public</span> <span class="type">void</span> there_are_N_simple_objects(<span class="type">int</span> n) <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
-        <span class="keyword">try</span> {
-            <span class="directive">final</span> <span class="predefined-type">List</span>&lt;SimpleObject&gt; findAll = service(SimpleObjects.class).listAll();
-            assertThat(findAll.size(), is(n));
-            putVar(<span class="string"><span class="delimiter">"</span><span class="content">list</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">all</span><span class="delimiter">"</span></span>, findAll);
+        <span class="directive">final</span> <span class="predefined-type">List</span>&lt;SimpleObject&gt; list = wrap(simpleObjectMenu).listAll();   <i class="conum" data-value="2"></i><b>(2)</b>
+        assertThat(list.size(), is(n));
+    }
 
-        } <span class="keyword">finally</span> {
-            assertMocksSatisfied();
-        }
+    <span class="annotation">@When</span>(<span class="string"><span class="delimiter">"</span><span class="content">^.*create a .*simple object$</span><span class="delimiter">"</span></span>)
+    <span class="directive">public</span> <span class="type">void</span> create_a_simple_object() <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
+        wrap(simpleObjectMenu).create(<span class="predefined-type">UUID</span>.randomUUID().toString());
     }
-    <span class="annotation">@When</span>(<span class="string"><span class="delimiter">"</span><span class="content">^I create a new simple object$</span><span class="delimiter">"</span></span>)
-    <span class="directive">public</span> <span class="type">void</span> I_create_a_new_simple_object() <span class="directive">throws</span> <span class="predefined-type">Throwable</span> {
-        service(SimpleObjects.class).create(<span class="predefined-type">UUID</span>.randomUUID().toString());
-    }
+
+    <span class="annotation">@Inject</span>
+    SimpleObjectMenu simpleObjectMenu;                                      <i class="conum" data-value="3"></i><b>(3)</b>
 }</code></pre> 
           </div> 
+         </div> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>regex to match to feature file specification</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>the inherited <code>wrap(…​)</code> method delegates to <code>WrapperFactory#wrap(…​)</code></td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>injected in the usual way</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="admonitionblock tip"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>The <a href="rgsvc.html#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a> domain service is one way in which glue classes can pass state between each other. Or, for more type safety, you could develop your own custom domain services for each scenario, and inject these in as regular services. See <a href="http://www.thinkcode.se/blog/2017/04/01/sharing-state-between-steps-in-cucumberjvm-using-picocontainer">this blog</a> post for more details.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
          <div class="admonitionblock tip"> 
           <table> 
@@ -2595,23 +2294,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugtst_bdd-spec-support_bdd-tooling">5.4. BDD Tooling</h3>
-         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_bdd-tooling.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-          <ul class="dropdown-menu">
-           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_bdd-tooling.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_bdd-tooling.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_bdd-tooling.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_bdd-tooling.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-          </ul>
-         </div> 
-         <div class="paragraph"> 
-          <p>To help write feature files and generate step definitions, we recommend <a href="https://github.com/rlogiacco/Natural">Roberto Lo Giacco’s Eclipse plugin</a>. For more information, see Dan’s short <a href="http://danhaywood.com/2013/07/05/cucumber-editors-in-eclipse/">blog post</a>. It works very well. Of interest: this is implemented using <a href="http://www.eclipse.org/Xtext/">XText</a>.</p> 
-         </div> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="_ugtst_bdd-spec-support_maven-configuration">5.5. Maven Configuration</h3>
+         <h3 id="_ugtst_bdd-spec-support_maven-configuration">5.3. Maven Configuration</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_bdd-spec-support_maven-configuration.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2645,44 +2328,32 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>We also recommend that you configure the <code>maven-surefire-plugin</code> to pick up the following class patterns:</p> 
+          <p>The configuration is wrapped up as maven mixins:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
-    <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-    <span class="tag">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="tag">&lt;/artifactId&gt;</span>
-    <span class="tag">&lt;version&gt;</span>2.10<span class="tag">&lt;/version&gt;</span>
-    <span class="tag">&lt;configuration&gt;</span>
-        <span class="tag">&lt;includes&gt;</span>
-            <span class="tag">&lt;include&gt;</span>**/*Test.java<span class="tag">&lt;/include&gt;</span>
-            <span class="tag">&lt;include&gt;</span>**/*Test_*.java<span class="tag">&lt;/include&gt;</span>
-            <span class="tag">&lt;include&gt;</span>**/*Spec*.java<span class="tag">&lt;/include&gt;</span>
-        <span class="tag">&lt;/includes&gt;</span>
-        <span class="tag">&lt;excludes&gt;</span>
-            <span class="tag">&lt;exclude&gt;</span>**/Test*.java<span class="tag">&lt;/exclude&gt;</span>
-            <span class="tag">&lt;exclude&gt;</span>**/*ForTesting.java<span class="tag">&lt;/exclude&gt;</span>
-            <span class="tag">&lt;exclude&gt;</span>**/*Abstract*.java<span class="tag">&lt;/exclude&gt;</span>
-        <span class="tag">&lt;/excludes&gt;</span>
-        <span class="tag">&lt;useFile&gt;</span>true<span class="tag">&lt;/useFile&gt;</span>
-        <span class="tag">&lt;printSummary&gt;</span>true<span class="tag">&lt;/printSummary&gt;</span>
-        <span class="tag">&lt;outputDirectory&gt;</span>${project.build.directory}/surefire-reports<span class="tag">&lt;/outputDirectory&gt;</span>
-    <span class="tag">&lt;/configuration&gt;</span>
-<span class="tag">&lt;/plugin&gt;</span></code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugins&gt;</span>
+    <span class="tag">&lt;plugin&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>com.github.odavid.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>mixin-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>0.1-alpha-39<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;extensions&gt;</span>true<span class="tag">&lt;/extensions&gt;</span>
+        <span class="tag">&lt;configuration&gt;</span>
+            <span class="tag">&lt;mixins&gt;</span>
+                ...
+                <span class="tag">&lt;mixin&gt;</span>
+                    <span class="tag">&lt;groupId&gt;</span>com.danhaywood.mavenmixin<span class="tag">&lt;/groupId&gt;</span>
+                    <span class="tag">&lt;artifactId&gt;</span>surefire<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;/mixin&gt;</span>
+                <span class="tag">&lt;mixin&gt;</span>
+                    <span class="tag">&lt;groupId&gt;</span>com.danhaywood.mavenmixin<span class="tag">&lt;/groupId&gt;</span>
+                    <span class="tag">&lt;artifactId&gt;</span>cucumberreporting<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;/mixin&gt;</span>
+            <span class="tag">&lt;/mixins&gt;</span>
+        <span class="tag">&lt;/configuration&gt;</span>
+    <span class="tag">&lt;/plugin&gt;</span>
+<span class="tag">&lt;/plugins&gt;</span></code></pre> 
           </div> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>As of <code>1.14.0</code>, this configuration has been replaced to use mavenmixins.</p> 
-              </div> </td> 
-            </tr> 
-           </tbody>
-          </table> 
          </div> 
          <div class="paragraph"> 
           <p>You may also find it more convenient to place the <code>.feature</code> files in <code>src/test/java</code>, rather than <code>src/test/resources</code>. If you wish to do this, then your integtest module’s <code>pom.xml</code> must contain:</p> 
@@ -2735,7 +2406,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
          <p>Even more significantly, there’s no way to guarantee that the data that’s being loaded is logically consistent with the business behaviour of the domain objects themselves. That is, there’s nothing to stop your test from putting data into the database that would be invalid if one attempted to add it through the app.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>The solution that Apache Isis provides is a small library called <strong><em>fixture scripts</em></strong>. A fixture script is basically a wrapper for executing arbitrary work, but that work almost always invoking a business action.</p> 
+         <p>The solution that Apache Isis provides is a small library called <strong><em>fixture scripts</em></strong>. A fixture script is basically a command object for executing arbitrary work, where the work in question is almost always invoking one or more business actions. In other words, the database is populating through the functionality of the domain object model itself.</p> 
         </div> 
         <div class="admonitionblock tip"> 
          <table> 
@@ -2782,7 +2453,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>There are two parts to using fixture scripts: the <code>FixtureScripts</code> domain service class, and the <code>FixtureScript</code> view model class:</p> 
+          <p>There are two main parts to using fixture scripts: the <code>FixtureScripts</code> domain service class, and the <code>FixtureScript</code> view model class:</p> 
          </div> 
          <div class="ulist"> 
           <ul> 
@@ -2794,35 +2465,39 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           <p>Let’s look at <code>FixtureScripts</code> domain service in more detail first.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_fixturescripts_code">6.1.1. <code>FixtureScripts</code></h4> 
-          <div class="paragraph"> 
-           <p>There are two ways in which you can provide a <code>FixtureScripts</code> service.</p> 
+          <h4 id="_ugtst_fixture-scripts_api-and-usage_FixtureScripts">6.1.1. <code>FixtureScripts</code></h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScripts.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScripts.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScripts.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScripts.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScripts.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
           </div> 
           <div class="paragraph"> 
-           <p>The original (pre-<code>1.9.0</code>) approach is to subclass subclass <code>FixtureScripts</code> domain service, with your subclass specifying which package to search for. Various other settings can also be provided, and - being a custom class - you can also add in additional actions. A common example is to provide a "one-shot" action to recreate a standard demo set of objects.</p> 
+           <p>The framework provides a default implementation of <code>FixtureScripts</code> domain service, namely the <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScripts"><code>FixtureScriptsDefault</code></a> domain service. This is annotated to be rendered on the secondary "Prototyping" menu.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>As of <code>1.9.0</code> there is an alternative design. Instead of subclassing <code>FixtureScripts</code> you instead implement the <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> SPI. (As its name suggests), this provides a <code>FixtureScriptsSpecification</code> object that contains the same information as would otherwise have been in the <code>FixtureScripts</code> subclass.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The actual implementation of the <code>FixtureScripts</code> service is then provided by the framework itself, namely the <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsDefault"><code>FixtureScriptsDefault</code></a> domain service, annotated to be rendered on the secondary "Prototyping" menu. This uses the <code>FixtureScriptsSpecificationProvider</code> to adjust itself accordinly.</p> 
+           <p>The behaviour of this domain menu service can be refined by providing an implementation of the optional <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> SPI.</p> 
           </div> 
           <div class="paragraph"> 
            <p>For example, here’s the <code>FixtureScriptsSpecificationProvider</code> service that’s generated by the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppFixturesProvider</span> <span class="directive">implements</span> FixtureScriptsSpecificationProvider {
-    <span class="annotation">@Override</span>
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>( nature = NatureOfService.DOMAIN )
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppFixtureScriptsSpecificationProvider</span>
+                    <span class="directive">implements</span> FixtureScriptsSpecificationProvider {
     <span class="directive">public</span> FixtureScriptsSpecification getSpecification() {
         <span class="keyword">return</span> FixtureScriptsSpecification
-                .builder(DomainAppFixturesProvider.class)                                       <i class="conum" data-value="1"></i><b>(1)</b>
-                .with(FixtureScripts.MultipleExecutionStrategy.EXECUTE)                         <i class="conum" data-value="2"></i><b>(2)</b>
-                .withRunScriptDefault(RecreateSimpleObjects.class)                              <i class="conum" data-value="3"></i><b>(3)</b>
-                .withRunScriptDropDown(FixtureScriptsSpecification.DropDownPolicy.CHOICES)      <i class="conum" data-value="4"></i><b>(4)</b>
-                .withRecreate(RecreateSimpleObjects.class)                                      <i class="conum" data-value="5"></i><b>(5)</b>
-                .build();
+            .builder(DomainAppFixtureScriptsSpecificationProvider.class)               <i class="conum" data-value="1"></i><b>(1)</b>
+            .with(FixtureScripts.MultipleExecutionStrategy.EXECUTE)                    <i class="conum" data-value="2"></i><b>(2)</b>
+            .withRunScriptDefault(DomainAppDemo.class)                                 <i class="conum" data-value="3"></i><b>(3)</b>
+            .withRunScriptDropDown(FixtureScriptsSpecification.DropDownPolicy.CHOICES) <i class="conum" data-value="4"></i><b>(4)</b>
+            .withRecreate(DomainAppDemo.class)                                         <i class="conum" data-value="5"></i><b>(5)</b>
+            .build();
     }
 }</code></pre> 
            </div> 
@@ -2854,75 +2529,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>The benefit of this design - decoupling the responsibilities of the superclass and the subclass - is that it ensures that there is always an instance of <code>FixtureScripts</code> available, even if the application itself doesn’t provide one. .</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>By way of comparison, if using the older pre-<code>1.9.0</code> approach then you would create a subclass:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>
-<span class="annotation">@DomainServiceLayout</span>(
-        menuBar = DomainServiceLayout.MenuBar.SECONDARY,           <i class="conum" data-value="1"></i><b>(1)</b>
-        named=<span class="string"><span class="delimiter">"</span><span class="content">Prototyping</span><span class="delimiter">"</span></span>,                                       <i class="conum" data-value="2"></i><b>(2)</b>
-        menuOrder = <span class="string"><span class="delimiter">"</span><span class="content">500</span><span class="delimiter">"</span></span>
-)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">DomainAppFixturesService</span> <span class="directive">extends</span> FixtureScripts {     <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="directive">public</span> DomainAppFixturesService() {
-        <span class="local-variable">super</span>(
-            <span class="string"><span class="delimiter">"</span><span class="content">domainapp</span><span class="delimiter">"</span></span>,                                           <i class="conum" data-value="4"></i><b>(4)</b>
-            MultipleExecutionStrategy.EXECUTE);                    <i class="conum" data-value="5"></i><b>(5)</b>
-    }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> FixtureScript default0RunFixtureScript() {
-        <span class="keyword">return</span> findFixtureScriptFor(RecreateSimpleObjects.class);  <i class="conum" data-value="6"></i><b>(6)</b>
-    }
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;FixtureScript&gt; choices0RunFixtureScript() {        <i class="conum" data-value="7"></i><b>(7)</b>
-        <span class="keyword">return</span> <span class="local-variable">super</span>.choices0RunFixtureScript();
-    }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="colist arabic"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>in the UI, render the on the right hand side (secondary) menu bar…​</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>…​ under the "Prototyping" menu</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>inherit from <code>org.apache.isis.applib.fixturescripts.FixtureScripts</code></td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td>search for all fixture scripts under the "domainapp" package; in your code this would probably be "com.mycompany.myapp" or similar</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="5"></i><b>5</b></td> 
-              <td>if the same fixture script (class) is encountered more than once, then run anyway; more on this in <a href="../ugtst/ugtst.html#__ugtst_fixture-scripts_api-and-usage_organizing">Organizing Fixture scripts</a>], below.</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="6"></i><b>6</b></td> 
-              <td>(optional) specify a default fixture script to run, in this case <code>RecreateSimpleObjects</code> fixture script (see below)</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="7"></i><b>7</b></td> 
-              <td>make all fixture scripts found available as a drop-down (by increasing the visibility of this method to <code>public</code>)</td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-          <div class="paragraph"> 
-           <p>This isn’t quite equivalent; you would need to write additional code to support the "recreate objects and return first" action, for example.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Either way, here’s how the domain service looks like in the UI:</p> 
+           <p>Here’s how the domain service looks like in the UI:</p> 
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
@@ -2979,16 +2586,27 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_fixturescript_code">6.1.2. <code>FixtureScript</code></h4> 
+          <h4 id="_ugtst_fixture-scripts_api-and-usage_FixtureScript">6.1.2. <code>FixtureScript</code></h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScript.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScript.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScript.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScript.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_FixtureScript.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
            <p>A fixture script is ultimately just a block of code that can be executed, so it’s up to you how you implement it to set up the system. However, we strongly recommend that you use it to invoke actions on business objects, in essence to replay what a real-life user would have done. That way, the fixture script will remain valid even if the underlying implementation of the system changes in the future.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>Here’s the <code>RecreateSimpleObjects</code> fixture script from the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>:</p> 
+           <p>For example, here’s a fixture script called <code>RecreateSimpleObjects</code>. (This used to be part of the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>, though the archetype now ships with a more sophisticated design, discussed below):</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">RecreateSimpleObjects</span> <span class="directive">extends</span> FixtureScript {                   <i class="conum" data-value="1"></i><b>(1)</b>
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@lombok</span>.Accessors(chain = <span class="predefined-constant">true</span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RecreateSimpleObjects</span> <span class="directive">extends</span> FixtureScript {                   <i class="conum" data-value="1"></i><b>(1)</b>
 
     <span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; NAMES = <span class="predefined-type">Collections</span>.unmodifiableList(<span class="predefined-type">Arrays</span>.asList(
             <span class="string"><span class="delimiter">"</span><span class="content">Foo</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">Bar</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">Baz</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">Frodo</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">Froyo</span><span class="delimiter">"</span></span>,
@@ -2996,16 +2614,13 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
     <span class="directive">public</span> RecreateSimpleObjects() {
         withDiscoverability(Discoverability.DISCOVERABLE);                   <i class="conum" data-value="3"></i><b>(3)</b>
     }
+
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
     <span class="directive">private</span> <span class="predefined-type">Integer</span> number;                                                  <i class="conum" data-value="4"></i><b>(4)</b>
-    <span class="directive">public</span> <span class="predefined-type">Integer</span> getNumber() { <span class="keyword">return</span> number; }
-    <span class="directive">public</span> RecreateSimpleObjects setNumber(<span class="directive">final</span> <span class="predefined-type">Integer</span> number) {
-        <span class="local-variable">this</span>.number = number;
-        <span class="keyword">return</span> <span class="local-variable">this</span>;
-    }
+
+    <span class="annotation">@lombok</span>.Getter
     <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">List</span>&lt;SimpleObject&gt; simpleObjects = Lists.newArrayList();   <i class="conum" data-value="5"></i><b>(5)</b>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;SimpleObject&gt; getSimpleObjects() {
-        <span class="keyword">return</span> simpleObjects;
-    }
+
     <span class="annotation">@Override</span>
     <span class="directive">protected</span> <span class="type">void</span> execute(<span class="directive">final</span> ExecutionContext ec) {          <i class="conum" data-value="6"></i><b>(6)</b>
         <span class="comment">// defaults</span>
@@ -3078,91 +2693,25 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           </div> 
           <div class="imageblock"> 
            <div class="content"> 
-            <a class="image" href="images/testing/fixture-scripts/prompt.png"><img src="images/testing/fixture-scripts/prompt.png" alt="prompt" width="700px"></a> 
+            <a class="image" href="images/testing/fixture-scripts/prompt-specifying-number.png"><img src="images/testing/fixture-scripts/prompt-specifying-number.png" alt="prompt specifying number" width="700px"></a> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>When this is executed, the framework will parse the text and attempt to reflectively set the corresponding properties on the fixture result. So, in this case, when the fixture script is executed we actually get 6 objects created:</p> 
-          </div> 
-          <div class="imageblock"> 
-           <div class="content"> 
-            <a class="image" href="images/testing/fixture-scripts/result-list.png"><img src="images/testing/fixture-scripts/result-list.png" alt="result list" width="700px"></a> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>It’s commonplace for one fixture script to call another. In the above example this script called <code>SimpleObjectsTearDown</code> and <code>SimpleObjectCreate</code>. Let’s take a quick look at <code>SimpleObjectCreate</code>:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectCreate</span> <span class="directive">extends</span> FixtureScript {       <i class="conum" data-value="1"></i><b>(1)</b>
-
-    <span class="directive">private</span> <span class="predefined-type">String</span> name;                                      <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="directive">public</span> <span class="predefined-type">String</span> getName() { <span class="keyword">return</span> name; }
-    <span class="directive">public</span> SimpleObjectCreate setName(<span class="directive">final</span> <span class="predefined-type">String</span> name) {
-        <span class="local-variable">this</span>.name = name;
-        <span class="keyword">return</span> <span class="local-variable">this</span>;
-    }
-    <span class="directive">private</span> SimpleObject simpleObject;                        <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="directive">public</span> SimpleObject getSimpleObject() {
-        <span class="keyword">return</span> simpleObject;
-    }
-    <span class="annotation">@Override</span>
-    <span class="directive">protected</span> <span class="type">void</span> execute(<span class="directive">final</span> ExecutionContext ec) {       <i class="conum" data-value="4"></i><b>(4)</b>
-        <span class="predefined-type">String</span> name = checkParam(<span class="string"><span class="delimiter">"</span><span class="content">name</span><span class="delimiter">"</span></span>, ec, <span class="predefined-type">String</span>.class);   <i class="conum" data-value="5"></i><b>(5)</b>
-        <span class="local-variable">this</span>.simpleObject = wrap(simpleObjects)               <i class="conum" data-value="6"></i><b>(6)</b>
-                                .create(name);                <i class="conum" data-value="7"></i><b>(7)</b>
-        ec.addResult(<span class="local-variable">this</span>, simpleObject);                     <i class="conum" data-value="8"></i><b>(8)</b>
-    }
-    <span class="annotation">@javax</span>.inject.Inject
-    <span class="directive">private</span> SimpleObjects simpleObjects;                      <i class="conum" data-value="9"></i><b>(9)</b>
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="colist arabic"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>inherit from <code>org.apache.isis.applib.fixturescripts.FixtureScript</code>, as above</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>input property: name of the object; this time it is required</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>output property: the created simple object</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td>the mandatory execute(…​) API</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="5"></i><b>5</b></td> 
-              <td>the <code>checkParam(…​)</code> (inherited from <code>FixtureScript</code>) will check that the "name" property has been populated (using Java’s Reflection API) and throw an exception if not</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="6"></i><b>6</b></td> 
-              <td>wrap the injected <code>SimpleObjects</code> domain service (using the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_WrapperFactory"><code>WrapperFactory</code></a>) to simulate interaction through the UI…​</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="7"></i><b>7</b></td> 
-              <td>.. and actually create the object using the "create" business action of that service</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="8"></i><b>8</b></td> 
-              <td>add the resulting object to the execution context; this makes the object available to access if run from the UI</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="9"></i><b>9</b></td> 
-              <td>inject the domain service into the fixture script</td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p>When this is executed, the framework will parse the text and attempt to reflectively set the corresponding properties on the fixture result. So, in this case, when the fixture script is executed we actually get 6 objects created.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_using_within_tests">6.1.3. Using within Tests</h4> 
+          <h4 id="_ugtst_fixture-scripts_api-and-usage_using-within-tests">6.1.3. Using within Tests</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_using-within-tests.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_using-within-tests.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_using-within-tests.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_using-within-tests.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_using-within-tests.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
            <p>Fixture scripts can be called from integration tests just the same way that fixture scripts can call one another.</p> 
           </div> 
@@ -3172,21 +2721,19 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectIntegTest</span> <span class="directive">extends</span> SimpleAppIntegTest {
-    <span class="annotation">@Inject</span>
-    FixtureScripts fixtureScripts;                      <i class="conum" data-value="1"></i><b>(1)</b>
     SimpleObject simpleObjectWrapped;
     <span class="annotation">@Before</span>
     <span class="directive">public</span> <span class="type">void</span> setUp() <span class="directive">throws</span> <span class="exception">Exception</span> {
         <span class="comment">// given</span>
         RecreateSimpleObjects fs =
-             <span class="keyword">new</span> RecreateSimpleObjects().setNumber(<span class="integer">1</span>);  <i class="conum" data-value="2"></i><b>(2)</b>
-        fixtureScripts.runFixtureScript(fs, <span class="predefined-constant">null</span>);      <i class="conum" data-value="3"></i><b>(3)</b>
+             <span class="keyword">new</span> RecreateSimpleObjects().setNumber(<span class="integer">1</span>);  <i class="conum" data-value="1"></i><b>(1)</b>
+        fixtureScripts.runFixtureScript(fs, <span class="predefined-constant">null</span>);      <i class="conum" data-value="2"></i><b>(2)</b>
 
         SimpleObject simpleObjectPojo =
-            fs.getSimpleObjects().get(<span class="integer">0</span>);               <i class="conum" data-value="4"></i><b>(4)</b>
+            fs.getSimpleObjects().get(<span class="integer">0</span>);               <i class="conum" data-value="3"></i><b>(3)</b>
         assertThat(simpleObjectPojo).isNotNull();
 
-        simpleObjectWrapped = wrap(simpleObjectPojo);   <i class="conum" data-value="5"></i><b>(5)</b>
+        simpleObjectWrapped = wrap(simpleObjectPojo);   <i class="conum" data-value="4"></i><b>(4)</b>
     }
     <span class="annotation">@Test</span>
     <span class="directive">public</span> <span class="type">void</span> accessible() <span class="directive">throws</span> <span class="exception">Exception</span> {
@@ -3196,6 +2743,8 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
         assertThat(name).isEqualTo(fs.NAMES.get(<span class="integer">0</span>));
     }
     ...
+    <span class="annotation">@Inject</span>
+    FixtureScripts fixtureScripts;                      <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -3204,113 +2753,237 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>inject the <code>FixtureScripts</code> domain service (just like any other domain service)</td> 
-             </tr> 
-             <tr> 
-              <td><i class="conum" data-value="2"></i><b>2</b></td> 
               <td>instantiate the fixture script for this test, and configure</td> 
              </tr> 
              <tr> 
-              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
               <td>execute the fixture script</td> 
              </tr> 
              <tr> 
-              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
               <td>obtain the object under test from the fixture</td> 
              </tr> 
              <tr> 
-              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
               <td>wrap the object (to simulate being interacted with through the UI)</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>inject the <code>FixtureScripts</code> domain service (just like any other domain service)</td> 
              </tr> 
             </tbody>
            </table> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__ugtst_fixture-scripts_api-and-usage_organizing">6.1.4. Organizing Fixture scripts</h4> 
+          <h4 id="_ugtst_fixture-scripts_api-and-usage_persona-and-builders">6.1.4. Personas and Builders</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_persona-and-builders.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_persona-and-builders.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_persona-and-builders.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_persona-and-builders.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_api-and-usage_persona-and-builders.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
-           <p>There are lots of ways to organize fixture scripts, but we’ve used them as either:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p>a fairly flat style, eg as in the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a>, also as in the <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a>;</p> </li> 
-            <li> <p>in a "composite pattern" style, eg as in the <a href="https://github.com/estatio/estatio/blob/ea20a6ce257acede50de6ce4fd2ff29713fcd689/estatioapp/fixture/src/main/java/org/estatio/fixture/invoice/InvoiceForLeaseItemTypeOfDiscountOneQuarterForOxfMiracle005.java#L66)">Estatio open source app</a>.</p> </li> 
-           </ul> 
+           <p>Good integration tests are probably the best way to understand the behaviour of the domain model: better, even, than reading the code itself. This requires though that the tests are as minimal as possible so that the developer reading the test knows that everything mentioned in the test is essential to the functionality under test.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>These two styles are probably best illustrated with, well, some illustrations. Here’s a fixture script in the "flat" style for setting up a customer with some orders, a number of which has been placed:</p> 
+           <p>At the same time, "Persona" instances of entity classes help the developer become familiar with the data being set up. For example, "Steve Single" the Customer might be 21, single and no kids, whereas vs "Meghan Married-Mum" the Customer might be married 35 with 2 kids. Using "Steve" vs "Meghan" immediately informs the developer about the particular scenario being explored.</p> 
           </div> 
-          <div class="imageblock"> 
+          <div class="paragraph"> 
+           <p>The <code>PersonaWithBuilderScript</code> and <code>PersonaWithFinder</code> interfaces are intended to be implemented typically by "persona" enums, where each enum instance captures the essential data of some persona. So, going back to the previous example, we might have:</p> 
+          </div> 
+          <div class="listingblock"> 
            <div class="content"> 
-            <a class="image" href="images/testing/fixture-scripts/flat-1.png"><img src="images/testing/fixture-scripts/flat-1.png" alt="flat 1" width="700px"></a> 
+            <pre class="CodeRay highlight"><code data-lang="xml">public enum Customer_persona
+        implements PersonaWithBuilderScript<span class="tag">&lt;..&gt;</span>, PersonaWithFinder<span class="tag">&lt;..&gt;</span> {
+
+    SteveSingle("Steve", "Single", 21, MaritalStatus.SINGLE, 0)
+    MeghanMarriedMum("Meghan", "Married-Mum", 35, MaritalStatus.MARRIED, 2);
+    ...
+}</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Notice how we have a single script that’s in control of the overall process, and takes responsibility for passing data from one fixture script to the next.</p> 
+           <p>The <code>PersonaWithBuilderScript</code> interface means that this enum is able to act as a factory for a <code>BuilderScriptAbstract</code>. This is a specialization of <code>FixtureScript</code> that is used to actually create the entity (customer, or whatever), using the data taken out of the enum instance:</p> 
           </div> 
-          <div class="paragraph"> 
-           <p>Here’s a similar, simpler script, from the same fictional app, to set up two customers:</p> 
-          </div> 
-          <div class="imageblock"> 
+          <div class="listingblock"> 
            <div class="content"> 
-            <a class="image" href="images/testing/fixture-scripts/flat-2.png"><img src="images/testing/fixture-scripts/flat-2.png" alt="flat 2" width="500px"></a> 
+            <pre class="CodeRay highlight"><code data-lang="xml">public interface PersonaWithBuilderScript<span class="tag">&lt;T</span><span class="error">,</span> <span class="attribute-name">F</span> <span class="attribute-name">extends</span> <span class="attribute-name">BuilderScriptAbstract</span><span class="error">&lt;</span><span class="attribute-name">T</span><span class="error">,</span><span class="attribute-name">F</span><span class="tag">&gt;</span><span class="error">&gt;</span>  {
+    F builder();
+}</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>We can reuse the same fixture "customer" script, either calling it twice or (perhaps better) passing it an array of customer details to set up.</p> 
+           <p>The <code>PersonaWithFinder</code> interface meanwhile indicates that the enum can "lookup" its corresponding entity from the appropriate repository domain service:</p> 
           </div> 
-          <div class="paragraph"> 
-           <p>With the composite style, we rely on each fixture script to set up its own prerequisites. Thus:</p> 
-          </div> 
-          <div class="imageblock"> 
+          <div class="listingblock"> 
            <div class="content"> 
-            <a class="image" href="images/testing/fixture-scripts/composite.png"><img src="images/testing/fixture-scripts/composite.png" alt="composite" width="550px"></a> 
+            <pre class="CodeRay highlight"><code data-lang="xml">public interface PersonaWithFinder<span class="tag">&lt;T&gt;</span> {
+    T findUsing(final ServiceRegistry2 serviceRegistry);
+
+}</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Back in the earlier section we noted the <code>MultipleExecutionStrategy</code> setting. We can now explain the meaning of this: the enum value of <code>EXECUTE</code> is designed for the flat style (where every fixture script will be called), whereas the enum value of <code>IGNORE</code> is designed for the composite style, and ensures that any fixture scripts visited more than once (eg TearDown) are only every executed the first time.</p> 
+           <p>The <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> provides a sample implementation of these interfaces:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@lombok</span>.AllArgsConstructor
+<span class="directive">public</span> <span class="type">enum</span> SimpleObject_persona
+        <span class="directive">implements</span> PersonaWithBuilderScript&lt;SimpleObject, SimpleObjectBuilder&gt;,
+                   PersonaWithFinder&lt;SimpleObject&gt; {
+    FOO(<span class="string"><span class="delimiter">"</span><span class="content">Foo</span><span class="delimiter">"</span></span>),
+    BAR(<span class="string"><span class="delimiter">"</span><span class="content">Bar</span><span class="delimiter">"</span></span>),
+    BAZ(<span class="string"><span class="delimiter">"</span><span class="content">Baz</span><span class="delimiter">"</span></span>),
+    FRODO(<span class="string"><span class="delimiter">"</span><span class="content">Frodo</span><span class="delimiter">"</span></span>),
+    FROYO(<span class="string"><span class="delimiter">"</span><span class="content">Froyo</span><span class="delimiter">"</span></span>),
+    FIZZ(<span class="string"><span class="delimiter">"</span><span class="content">Fizz</span><span class="delimiter">"</span></span>),
+    BIP(<span class="string"><span class="delimiter">"</span><span class="content">Bip</span><span class="delimiter">"</span></span>),
+    BOP(<span class="string"><span class="delimiter">"</span><span class="content">Bop</span><span class="delimiter">"</span></span>),
+    BANG(<span class="string"><span class="delimiter">"</span><span class="content">Bang</span><span class="delimiter">"</span></span>),
+    BOO(<span class="string"><span class="delimiter">"</span><span class="content">Boo</span><span class="delimiter">"</span></span>);
+
+    <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">String</span> name;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> SimpleObjectBuilder builder() {
+        <span class="keyword">return</span> <span class="keyword">new</span> SimpleObjectBuilder().setName(name);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> SimpleObject findUsing(<span class="directive">final</span> ServiceRegistry2 serviceRegistry) {
+        SimpleObjectRepository simpleObjectRepository =
+            serviceRegistry.lookupService(SimpleObjectRepository.class);
+        <span class="keyword">return</span> simpleObjectRepository.findByNameExact(name);
+    }
+}</code></pre> 
+           </div> 
           </div> 
           <div class="paragraph"> 
-           <p>As already noted , the app generated by the <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> uses the flat structure, and we feel that it’s a better at separating out the "how" (how we set up some graph of domain objects into a known state, eg a customer with shipped placed orders and a newly placed order) from the "what" (what data should we actually use for the customer’s name, say).</p> 
+           <p>where <code>SimpleObjectBuilder</code> in turn is:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@lombok</span>.Accessors(chain = <span class="predefined-constant">true</span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObjectBuilder</span>
+            <span class="directive">extends</span> BuilderScriptAbstract&lt;SimpleObject, SimpleObjectBuilder&gt; {
+
+    <span class="annotation">@lombok</span>.Getter <span class="annotation">@lombok</span>.Setter
+    <span class="directive">private</span> <span class="predefined-type">String</span> name;                                    <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> execute(<span class="directive">final</span> ExecutionContext ec) {
+        checkParam(<span class="string"><span class="delimiter">"</span><span class="content">name</span><span class="delimiter">"</span></span>, ec, <span class="predefined-type">String</span>.class);               <i class="conum" data-value="2"></i><b>(2)</b>
+        object = wrap(simpleObjectMenu).create(name);
+    }
+
+    <span class="annotation">@lombok</span>.Getter
+    <span class="directive">private</span> SimpleObject object;                            <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="annotation">@javax</span>.inject.Inject
+    SimpleObjectMenu simpleObjectMenu;
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>The persona class should set this value (copied from its own state)</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>the inherited "checkParam" is used to ensure that a value is set</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>the created entity is provided as an output</td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
           <div class="paragraph"> 
-           <p>The composite style tends to combine these, which one could argue does not separate responsibilities well enough. On the other hand, one could also make an argument that the composite style is a good way to implement precanned personas, eg "Joe", the customer who has a newly placed order, from "Mary" customer who has none.</p> 
+           <p>This simplifies the integration tests considerably:</p> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="_further_approaches">Further approaches</h5> 
-           <div class="paragraph"> 
-            <p>As of there are two other approaches.</p> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SimpleObject_IntegTest</span> <span class="directive">extends</span> SimpleModuleIntegTestAbstract {
+
+    SimpleObject simpleObject;
+
+    <span class="annotation">@Before</span>
+    <span class="directive">public</span> <span class="type">void</span> setUp() {
+        <span class="comment">// given</span>
+        simpleObject = fixtureScripts.runBuilderScript(SimpleObject_persona.FOO.builder());
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> accessible() {
+        <span class="comment">// when</span>
+        <span class="directive">final</span> <span class="predefined-type">String</span> name = wrap(simpleObject).getName();
+
+        <span class="comment">// then</span>
+        assertThat(name).isEqualTo(simpleObject.getName());
+    }
+    ...
+}</code></pre> 
            </div> 
-           <div class="paragraph"> 
-            <p>The first is to take advantage of a new <code>MultipleExecutionStrategy</code>, namely <code>EXECUTE_ONCE_BY_VALUE</code>. Under this strategy the determination as to whether to run a given fixture script is by comparing the fixture script against all others that have run. If all fixture scripts implement value semantics, then they can effectively determine whether they need to run or not.</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>This strategy was introduced in order to better support the <code>ExcelFixture</code> fixture script (provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s excel module. The <code>ExcelFixture</code> takes an Excel spreadsheet and loads up each row. For those cases where we wish to ensure that the same spreadsheet is not loaded more than once, the <code>IGNORE</code> strategy would have required that a trivial subclass of <code>ExcelFixture</code> is created for each and every spreadsheet. The <code>EXECUTE_ONCE_BY_VALUE</code> on the other hand delegates the determination to the value semantics of the <code>ExcelFixture</code>, which is based on the contents of the spreadsheet.</p> 
-           </div> 
-           <div class="admonitionblock note"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-               <td class="content"> 
-                <div class="paragraph"> 
-                 <p>Note that as of <code>1.10.0</code> the <code>IGNORE</code> enum has been deprecated, replaced by <code>EXECUTE_ONCE_BY_CLASS</code></p> 
-                </div> </td> 
-              </tr> 
-             </tbody>
-            </table> 
-           </div> 
-           <div class="paragraph"> 
-            <p>The second approach is in recognition that there is, in fact, something of a design flaw with the concept of <code>MultipleExecutionStrategy</code>: it requires that all fixture scripts being run follow the same conventions. There’s a good argument that this shouldn’t be a global "setting": the responsibility for determining whether a given fixture script should be executed should reside not in the <code>FixtureScripts</code> service but in the <code>FixtureScript</code> itself.</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Thus, the <code>FixtureScripts.ExecutionContext</code> exposes the <code>getPreviouslyExecuted()</code> method that allows the fixture script to check for itself which fixture scripts have already been run, and act accordingly. For this approach, the <code>MultipleExecutionStrategy</code> should be left as simply <code>EXECUTE</code>.</p> 
-           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Put together, the persona enums provide the "what" - hard-coded values for certain key data that the developer becomes very familiar with - while the builder provides the "how-to".</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>These builder scripts (<code>BuilderScriptAbstract</code> implementations) can be used independently of the enum personas. And for more complex entity -where there might be many potential values that need to be provided - the builder script can automatically default some or even all of these values.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For example, for a customer’s date of birth, the buider could default to a date making the customer an adult, aged between 18 and 65, say. For an email address or postal address, or an image, or some "lorem ipsum" text, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s fakedata module could provide randomised values.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The benefit of an intelligent builder is that it further simplifies the test. The developer reading the test then knows that everything that has been specified exactly is of significance. Because non-specified values are randomised and change on each run, it also decreases the chance that the test passes "by accident" (based on some lucky hard-coded input value).</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugtst_fixture-scripts_sudo-service">6.2. <code>SudoService</code></h3>
+         <h3 id="_ugtst_fixture-scripts_ticking-clock-fixture">6.2. Ticking Clock Fixture</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_ticking-clock-fixture.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_ticking-clock-fixture.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_ticking-clock-fixture.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_ticking-clock-fixture.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_ticking-clock-fixture.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The <code>TickingClockFixture</code> is a pre-built fixture script that resets the date/time returned by the <a href="../rgsvc/rgsvc.html#_rgsvc_api_ClockService"><code>ClockService</code></a> to a known value.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Thereafter the time returned continues to tick forward (as would the real clock) until reset once more.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>For example, to set the clock to return "3 Sept 2014", use:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="java">executionContext.executeChild(<span class="local-variable">this</span>, <span class="keyword">new</span> TickingClockFixture().setTo(<span class="string"><span class="delimiter">"</span><span class="content">2014-09-03</span><span class="delimiter">"</span></span>));</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>A variety of format strings are supported; the format "YYYY-MM-DD" (as shown above) will work in every locale.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The fixture script requires that a <code>TickingFixtureClock</code> is initialized during bootstrapping. This is done automatically <code>IntegrationTestAbstract3</code> and <code>CukeGlueBootstrappingAbstract</code> (BDD specs).</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugtst_fixture-scripts_sudo-service">6.3. <code>SudoService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugtst/_ugtst_fixture-scripts_sudo-service.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>

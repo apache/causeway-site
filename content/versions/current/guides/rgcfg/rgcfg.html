@@ -179,6 +179,7 @@ table.CodeRay td.code>pre{padding:0}
         <li><a href="../../guides/ugfun/ugfun.html">Fundamentals</a></li> 
         <li><a href="../../guides/ugvw/ugvw.html">Wicket Viewer</a></li> 
         <li><a href="../../guides/ugvro/ugvro.html">Restful Objects Viewer</a></li> 
+        <li><a href="../../guides/ugodn/ugodn.html">DataNucleus Object Store</a></li> 
         <li><a href="../../guides/ugsec/ugsec.html">Security</a></li> 
         <li><a href="../../guides/ugtst/ugtst.html">Testing</a></li> 
         <li><a href="../../guides/ugbtb/ugbtb.html">Beyond the Basics</a></li> 
@@ -196,25 +197,32 @@ table.CodeRay td.code>pre{padding:0}
        </ul> </li> 
       <li class="dropdown  hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Downloads<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="../../downloads.html">Downloads</a></li> 
-        <li><a href="../../release-notes/release-notes.html">Release Notes</a></li> 
-        <li><a href="../../migration-notes/migration-notes.html">Migration Notes</a></li> 
-        <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Maven archetypes</li> 
         <li><a href="../../guides/ugfun/ugfun.html#_ugfun_getting-started_helloworld-archetype">helloworld</a></li> 
         <li><a href="../../guides/ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">simpleapp</a></li> 
         <li role="separator" class="divider"></li> 
-        <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
+        <li><a href="../../downloads.html">Downloads</a></li> 
+        <li><a href="../../release-notes/release-notes.html">Release Notes</a></li> 
+        <li><a href="../../migration-notes/migration-notes.html">Migration Notes</a></li> 
+        <li role="separator" class="divider"></li> 
         <li><a href="https://github.com/apache/isis">Github mirror</a></li> 
        </ul> </li> 
       <li class="dropdown  hidden-sm"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Support<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="../../support.html">Mailing lists</a></li> 
+        <li class="dropdown-header">Guides</li> 
+        <li><a href="../../guides/dg/dg.html">Developers' Guide</a></li> 
+        <li><a href="../../guides/cgcom/cgcom.html">Committers' Guide</a></li> 
+        <li><a href="../../guides/htg.html">Hints-n-Tips Guide</a></li> 
+        <li role="separator" class="divider"></li> 
+        <li class="dropdown-header">Mailing Lists</li> 
+        <li><a href="../../support.html">How to subscribe</a></li> 
         <li><a href="https://lists.apache.org/list.html?users@isis.apache.org">Archives (ASF Pony mail)</a></li> 
         <li><a href="http://isis.markmail.org/search/?q=">Archives (Markmail)</a></li> 
+        <li role="separator" class="divider"></li> 
+        <li class="dropdown-header">Other Resources</li> 
+        <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
         <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
-        <li><a href="../../guides/dg/dg.html">How to contribute</a></li> 
-        <li><a href="../../help.html">Other resources</a></li> 
+        <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
@@ -559,7 +567,7 @@ table.CodeRay td.code>pre{padding:0}
          </ul> 
         </div> 
         <div class="paragraph"> 
-         <p>As of <code>1.9.0</code> there are two different ways to perform this bootstrapping. The recommended (newer) approach is to use an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>, specified either programmatically or through the configuration properties. This allows the components, services and entities to be specified from a single class. The alternative (and older, pre 1.9.0) approach is to specify this information individually, through configuration properties.</p> 
+         <p>The recommended approach is to use an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>, specified either programmatically or through the configuration properties. This allows the components, services and entities to be specified from a single class.</p> 
         </div> 
         <div class="paragraph"> 
          <p>To specify the <code>AppManifest</code> as a configuration property, use:</p> 
@@ -606,136 +614,34 @@ table.CodeRay td.code>pre{padding:0}
          <p>From this the framework can determine the domain services, persistent entities and security (authentication and authorization) mechanisms to use. Other configuration (including fixtures) can also be specified this way.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>If the <code>AppManifest</code> approach is <em>not</em> being used, then the following configuration properties are used to specify the major components of Apache Isis to use:</p> 
+         <p>In the <code>AppManifest</code> itself, there are two methods which specify how authentication and authorisation are configured:</p> 
         </div> 
-        <table class="tableblock frame-all grid-all spread"> 
-         <caption class="title">
-          Table 3. Core Configuration Properties (ignored if 
-          <code>isis.appManifest</code> is present)
-         </caption> 
-         <colgroup> 
-          <col style="width: 33.3333%;"> 
-          <col style="width: 16.6666%;"> 
-          <col style="width: 50.0001%;"> 
-         </colgroup> 
-         <thead> 
-          <tr> 
-           <th class="tableblock halign-left valign-top">Property</th> 
-           <th class="tableblock halign-left valign-top">Value<br> (<em>default value</em>)</th> 
-           <th class="tableblock halign-left valign-top">Implements</th> 
-          </tr> 
-         </thead> 
-         <tbody> 
-          <tr> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>isis.authentication</code></p> 
-             </div>
-            </div></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>shiro</code>, <code>bypass</code>, <code>FQCN</code><br> (<code><em>shiro</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>o.a.i.core.runtime.authentication.</code> <code>AuthenticationManagerInstaller</code><br></p> 
-             </div> 
-             <div class="paragraph"> 
-              <p>This property is IGNORED if the <code>isis.appManifest</code> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
-             </div>
-            </div></td> 
-          </tr> 
-          <tr> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>isis.authorization</code></p> 
-             </div>
-            </div></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>shiro</code>, <code>bypass</code>, <code>FQCN</code><br> (<code><em>shiro</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>o.a.i.core.runtime.authorization.</code> <code>AuthorizationManagerInstaller</code><br></p> 
-             </div> 
-             <div class="paragraph"> 
-              <p>This property is IGNORED if the <code>isis.appManifest</code> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
-             </div>
-            </div></td> 
-          </tr> 
-          <tr> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>isis.persistor</code></p> 
-             </div>
-            </div></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>datanucleus</code> (<code><em>datanucleus</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>o.a.i.core.runtime.installerregistry.installerapi.</code> <code>PersistenceMechanismInstaller</code></p> 
-             </div> 
-             <div class="paragraph"> 
-              <p>This property is IGNORED completely in 1.9.0+; the <code>datanucleus</code> implementation is always used.</p> 
-             </div>
-            </div></td> 
-          </tr> 
-          <tr> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>isis.services-installer</code></p> 
-             </div>
-            </div></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>configuration</code>, <code>configuration-and-annotation</code>, <code>FQCN</code><br> (<code><em>configuration</em></code>)</p></td> 
-           <td class="tableblock halign-left valign-top">
-            <div>
-             <div class="paragraph"> 
-              <p><code>org.apache.isis.core.runtime.services.</code> <code>ServicesInstaller</code><br></p> 
-             </div> 
-             <div class="paragraph"> 
-              <p>The mechanism to discover and load domain services:</p> 
-             </div> 
-             <div class="ulist"> 
-              <ul> 
-               <li> <p><code>configuration-and-annotation</code> will search for <code>@DomainService</code>-annotated classes and also read from <code>isis.services</code> configuration property</p> </li> 
-               <li> <p><code>configuration</code> will only read from the <code>isis.services</code> configuration property.<br></p> </li> 
-               <li> <p>Otherwise an alternative implementation of the <code>o.a.i.core.runtime.services.ServicesInstaller</code> internal API can be provided.<br></p> </li> 
-              </ul> 
-             </div> 
-             <div class="paragraph"> 
-              <p>This property is IGNORED if the <code>isis.appManifest</code> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
-             </div> 
-             <div class="paragraph"> 
-              <p>This property is also IGNORED completely in 1.13.0+; the <code>configuration-and-annotation</code> implementation is always used.</p> 
-             </div>
-            </div></td> 
-          </tr> 
-         </tbody> 
-        </table> 
-        <div class="admonitionblock tip"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-            <td class="content"> 
-             <div class="paragraph"> 
-              <p>The values <code>"shiro"</code>, <code>"bypass"</code> etc are actually aliases for concrete implementations. It is also possible to specify a fully qualified class name to replace either of the two security components, implementing the appropriate interface.</p> 
-             </div> </td> 
-           </tr> 
-          </tbody>
-         </table> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">AppManifest</span> {
+    ...
+    String getAuthenticationMechanism();
+    <span class="predefined-type">String</span> getAuthorizationMechanism();
+    ...
+}</code></pre> 
+         </div> 
         </div> 
         <div class="paragraph"> 
-         <p>If the <code>AppManifest</code> is <em>not</em> being used then there are number of other configuration properties that also must be specified: <code>isis.services</code>, <code>isis.services.ServicesInstallerFromAnnotation.packagePrefix</code> and <code>isis.persistor.datanucleus.RegisterEntities.packagePrefix</code> and <code>isis.fixtures</code>; these are listed in the sections below.</p> 
+         <p>These can return either:</p> 
+        </div> 
+        <div class="ulist"> 
+         <ul> 
+          <li> <p>"shiro" - enable integration with Apache Shiro, as described in the <a href="../ugsec/ugsec.html">security</a> user guide</p> </li> 
+          <li> <p>"bypass" - bypass security (in effect, configure a no-op implementation that allows everything).</p> </li> 
+         </ul> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Note that these are actually aliases for concrete implementations. It is also possible to specify a fully qualified class name to replace either of the two security components, implementing the appropriate interface.</p> 
         </div> 
         <div class="sect2"> 
          <h3 id="_viewer_configuration">4.1. Viewer Configuration</h3> 
          <div class="paragraph"> 
           <p>Viewers are specified by way of the filters and servlets in the <a href="../ugbtb/ugbtb.html#_ugbtb_web-xml"><code>web.xml</code></a> file; these are not bootstrapped by the framework, rather it is the other way around.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>In versions prior to <code>1.13.0</code>, the "isis.viewers" context parameter was used to hint which configuration files should be read (corresponding to the viewers in use). As of <code>1.13.0</code>, however, the configuration property has no effect: the <code>viewer_wicket.properties</code> and <code>viewer_restulobjects.properties</code> are always loaded if available.</p> 
          </div> 
         </div> 
        </div> 
@@ -773,7 +679,7 @@ table.CodeRay td.code>pre{padding:0}
          <h3 id="__rgcfg_configuring-core_domain-events">5.1. Domain Events</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 4. Core Configuration Properties for Domain Events
+           Table 3. Core Configuration Properties for Domain Events
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -853,7 +759,7 @@ table.CodeRay td.code>pre{padding:0}
          <h3 id="__rgcfg_configuring-core_lifecycle-events">5.2. Lifecycle Events</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 5. Core Configuration Properties for Lifecycle Events
+           Table 4. Core Configuration Properties for Lifecycle Events
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -993,7 +899,7 @@ table.CodeRay td.code>pre{padding:0}
          <h3 id="__rgcfg_configuring-core_ui-events">5.3. UI Events</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 6. Core Configuration Properties for UI Events
+           Table 5. Core Configuration Properties for UI Events
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1070,50 +976,10 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_fixture-events">5.4. Fixture Events</h3> 
-         <div class="paragraph"> 
-          <p>(As of <code>1.15.1</code>), events are fired to indicate the start and end of fixtures are being installed. This are listened to by the <a href="rgsvc.html#_rgsvc_persistence-layer-api_QueryResultsCache"><code>QueryResultsCache</code></a> to disable caching during this period.</p> 
-         </div> 
+         <h3 id="__rgcfg_configuring-core_services">5.4. Services</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 7. Core Configuration Properties for Fixture Events
-          </caption> 
-          <colgroup> 
-           <col style="width: 33.3333%;"> 
-           <col style="width: 16.6666%;"> 
-           <col style="width: 50.0001%;"> 
-          </colgroup> 
-          <thead> 
-           <tr> 
-            <th class="tableblock halign-left valign-top">Property</th> 
-            <th class="tableblock halign-left valign-top">Value<br> (default value)</th> 
-            <th class="tableblock halign-left valign-top">Description</th> 
-           </tr> 
-          </thead> 
-          <tbody> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.fixtures.fireEvents</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>(As of <code>1.15.1</code>), whether fixture <code>FixturesInstallingEvent</code> and <code>FixturesInstalledEvent</code> events should be posted while the system is bootstrapping.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-          </tbody> 
-         </table> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_services">5.5. Services</h3> 
-         <table class="tableblock frame-all grid-all spread"> 
-          <caption class="title">
-           Table 8. Core Configuration Properties for Services
+           Table 6. Core Configuration Properties for Services
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1139,31 +1005,10 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>Fully qualified class names of classes to be instantiated as domain services. <br></p> 
+               <p>NO LONGER REQUIRED; replaced by <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>Each entry can be optionally prefixed by "n:" specifying the relative order on the menu (corresponds to <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a>).</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>This property is IGNORED if the <a href="../rgcfg/rgcfg.html#_rgcfg_specifying-components"><code>isis.appManifest</code></a> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>applicationFeatures.</code><br> <code>init</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lazy</code>, <code>eager</code><br> (<code>lazy</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether the application features repository (which surfaces the framework’s metamodel) should be initialized lazily or eagerly. <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>Lazy initialization can speed up bootstrapping, useful while developing and running tests. The default prior to <code>1.13.0</code> was eager initialization.</p> 
+               <p>(It used to define the list of fully qualified class names of classes to be instantiated as domain services; this is now inferred from the list of modules provided to the app manifest).</p> 
               </div>
              </div></td> 
            </tr> 
@@ -1219,309 +1064,6 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>container.</code><br> <code>disableAutoFlush</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether the <code>DomainObjectContainer</code> should automatically flush pending changes prior to querying (via <code>allMatches()</code>, <code>firstMatch()</code> and so on).</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>ContentNegotiation-</code><br> <code>ServiceXRoDomainType</code><br> .<code>prettyPrint</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (depends)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>If a domain object has been mapped to the specified JAXB <code>x-ro-domain-type</code>, then determines whether the result is pretty-printed or not.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>If no configuration property is available, then the defaults is determined by the <a href="../rgcfg/rgcfg.html#_rgcfg_deployment-types">deployment type</a>: production mode disables pretty printing, while prototype mode enables it.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>override.bcc</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">email address</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>intended to simplify testing, if specified then the email’s <code>bcc</code> address will be that specified (rather than the email address(es) passed in as an argument to <code>EmailService#send(…​)</code>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>override.cc</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">email address</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>intended to simplify testing, if specified then the email’s <code>cc</code> address will be that specified (rather than the email address(es) passed in as an argument to <code>EmailService#send(…​)</code>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>override.to</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">email address</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>intended to simplify testing, if specified then the email’s <code>to</code> address will be that specified (rather than the email address(es) passed in as an argument to <code>EmailService#send(…​)</code>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>port</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">port number (<code><em>587</em></code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The port number for the SMTP service on the the external SMTP host (used by <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_EmailService"><code>EmailService</code></a>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>sender.address</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">email address</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The email address to use for sending out email (used by <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_EmailService"><code>EmailService</code></a>). <strong>Mandatory</strong>. <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>sender.hostname</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">host (<code><em>smtp.gmail.com</em></code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The hostname of the external SMTP provider (used by <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_EmailService"><code>EmailService</code></a>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>sender.password</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">email password</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The corresponding password for the email address to use for sending out email (used by <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_EmailService"><code>EmailService</code></a>). <strong>Mandatory</strong>. <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>socket</code><br> <code>ConnectionTimeout</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">milliseconds<br> (2000)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The socket connection timeout</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>socketTimeout</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">milliseconds<br> (2000)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>The socket timeout</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>throwExceptionOnFail</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether to throw an exception if there the email cannot be sent (probably because of some misconfiguration).</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>This behaviour is (now) the default; the old behaviour (of just returning <code>false</code> from the <code>send()</code> method) can be re-enabled by setting this property to <code>false</code>.</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.service.</code><br> <code>email.</code><br> <code>tls.enabled</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether to enable TLS for the email SMTP connection (used by <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_EmailService"><code>EmailService</code></a>). <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>NB: note that the key is mis-spelt, (<code>isis.service.email</code> rather than <code>isis.services.email</code>)</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>eventbus.</code><br> <code>implementation</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>guava</code>, <code>axon</code>,<br> FQCN (<code><em>guava</em></code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>which implementation to use by the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> as the underlying event bus.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>eventbus.</code><br> <code>allowLate</code><br> <code>Registration</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>whether a domain service can register with the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> after any events have posted.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>Since this almost certainly constitutes a bug in application code, by default this is disallowed.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>exceprecog.</code><br> <code>logRecognized</code><br> <code>Exceptions</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>whether recognized exceptions should also be logged.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>Generally a recognized exception is one that is expected (for example a uniqueness constraint violated in the database) and which does not represent an error condition. This property logs the exception anyway, useful for debugging.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>ExceptionRecognizer</code><br> <code>CompositeFor</code><br> <code>JdoObjectStore.</code><br> <code>disable</code><br></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>whether to disable the default recognizers registered by <code>ExceptionRecognizerCompositeForJdoObjectStore</code>.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>This implementation provides a default set of recognizers to convert RDBMS constraints into user-friendly messages. In the (probably remote) chance that this functionality isn’t required, they can be disabled through this flag.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
                <p><code>isis.services.</code><br> <code>injector.</code><br> <code>injectPrefix</code></p> 
               </div>
              </div></td> 
@@ -1532,7 +1074,7 @@ table.CodeRay td.code>pre{padding:0}
                <p>(Whether the framework should support <code>inject…​()</code> as a prefix for injecting domain services into other domain objects.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>+ By default this is disabled. The default prior to <code>1.13.0</code> was enabled. If the setting is left as disabled then this may reduce application start-up times.</p> 
+               <p>+ By default this is disabled. This can help reduce application start-up times.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -1610,28 +1152,10 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>to search for domain services (including all subpackages).</p> 
+               <p>NO LONGER REQUIRED; replaced by <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a>.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>This property is IGNORED if the <a href="../rgcfg/rgcfg.html#_rgcfg_specifying-components"><code>isis.appManifest</code></a> configuration property is specified, or if an <a href="../rgcms/rgcms.html#_rgcms_classes_super_AppManifest"><code>AppManifest</code></a> is provided programmatically.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.services.</code><br> <code>translation.</code><br> <code>po.mode</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>read</code>,<code>write</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether to force the <code>TranslationService</code> into either read or write mode.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>See <a href="../ugbtb/ugbtb.html#_ugbtb_i18n">i18n support</a> to learn more about the translation service.</p> 
+               <p>(It used to define the list of packages to search for domain services; ; this is now inferred from the list of modules provided to the app manifest).</p> 
               </div>
              </div></td> 
            </tr> 
@@ -1639,10 +1163,10 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_metamodel-validation">5.6. MetaModel Validation</h3> 
+         <h3 id="__rgcfg_configuring-core_metamodel-validation">5.5. MetaModel Validation</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 9. Metamodel Validation
+           Table 7. Metamodel Validation
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1905,13 +1429,10 @@ table.CodeRay td.code>pre{padding:0}
            </tr> 
           </tbody> 
          </table> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_other">5.7. Other Config Properties</h3> 
+         <div class="paragraph"> 
+          <p>Also:</p> 
+         </div> 
          <table class="tableblock frame-all grid-all spread"> 
-          <caption class="title">
-           Table 10. Other Core Configuration Properties
-          </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
            <col style="width: 16.6666%;"> 
@@ -1929,35 +1450,45 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p><code>isis.objects.</code><br> <code>editing</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether objects' properties and collections can be edited directly (for objects annotated with <a href="../rgant/rgant.html#_rgant-DomainObject_editing"><code>@DomainObject#editing()</code></a>); see <a href="../rgcfg/rgcfg.html#__rgcfg_configuring-core_isis-objects-editing">below</a> for further discussion.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.persistor.</code><br> <code>disable</code><br> <code>ConcurrencyChecking</code></p> 
+               <p><code>isis.reflector.facets.</code><br> <code>ignoreDeprecated</code></p> 
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>Disables concurrency checking globally. <br></p> 
+               <p>Whether deprecated facets should be ignored or honoured. <br></p> 
               </div> 
               <div class="paragraph"> 
-               <p>Only intended for "emergency use" as a workaround while pending fix/patch to Apache Isis itself. (Note that there is no "datanucleus" in the property).</p> 
+               <p>By default all deprecated facets are honoured; they remain part of the metamodel. If instead this property is set to <code>true</code> then the facets are simply not loaded into the metamodel and their semantics will be excluded. <br></p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>In most cases this should reduce the start-up times for the application. However, be aware that this could also substantially alter the semantics of your application. To be safe, we recommend that you first run your application using <code>isis.reflector.validator.allowDeprecated</code> set to <code>false</code>; if any deprecated annotations etc. are in use, then the app will fail-fast and refuse to start.</p> 
               </div>
              </div></td> 
            </tr> 
+          </tbody> 
+         </table> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__rgcfg_configuring-core_ui">5.6. UI Facet Config Properties</h3> 
+         <table class="tableblock frame-all grid-all spread"> 
+          <caption class="title">
+           Table 8. UI Facet Configuration Properties
+          </caption> 
+          <colgroup> 
+           <col style="width: 33.3333%;"> 
+           <col style="width: 16.6666%;"> 
+           <col style="width: 50.0001%;"> 
+          </colgroup> 
+          <thead> 
+           <tr> 
+            <th class="tableblock halign-left valign-top">Property</th> 
+            <th class="tableblock halign-left valign-top">Value<br> (default value)</th> 
+            <th class="tableblock halign-left valign-top">Description</th> 
+           </tr> 
+          </thead> 
+          <tbody> 
            <tr> 
             <td class="tableblock halign-left valign-top">
              <div>
@@ -1994,24 +1525,28 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
            </tr> 
+          </tbody> 
+         </table> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__rgcfg_configuring-core_programming-model">5.7. Programming Model</h3> 
+         <table class="tableblock frame-all grid-all spread"> 
+          <caption class="title">
+           Table 9. Programming Model
+          </caption> 
+          <colgroup> 
+           <col style="width: 33.3333%;"> 
+           <col style="width: 16.6666%;"> 
+           <col style="width: 50.0001%;"> 
+          </colgroup> 
+          <thead> 
            <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.reflector.facet.</code><br> <code>filterVisibility</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether objects should be filtered for visibility.<br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>See <a href="../rgcfg/rgcfg.html#__rgcfg_configuring-core_filterVisibility">section below</a> for further discussion.</p> 
-              </div>
-             </div></td> 
+            <th class="tableblock halign-left valign-top">Property</th> 
+            <th class="tableblock halign-left valign-top">Value<br> (default value)</th> 
+            <th class="tableblock halign-left valign-top">Description</th> 
            </tr> 
+          </thead> 
+          <tbody> 
            <tr> 
             <td class="tableblock halign-left valign-top">
              <div>
@@ -2023,10 +1558,10 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>This property is now ignored. <br></p> 
+               <p>This property is now IGNORED.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>+ To customize the programming model, use <code>facets.exclude</code> and <code>facets.include</code>. See <a href="../ugbtb/ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the programming model</a> for more details.</p> 
+               <p>It was previously used to customize the programming model, this should now be done using <code>facets.exclude</code> and <code>facets.include</code>. See <a href="../ugbtb/ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the programming model</a> for more details.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -2045,27 +1580,6 @@ table.CodeRay td.code>pre{padding:0}
               </div> 
               <div class="paragraph"> 
                <p>See <a href="../ugbtb/ugbtb.html#_ugbtb_programming-model_finetuning">finetuning the programming model</a> for more details.</p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>isis.reflector.facets.</code><br> <code>ignoreDeprecated</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Whether deprecated facets should be ignored or honoured. <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>+ By default all deprecated facets are honoured; they remain part of the metamodel. If instead this property is set to <code>true</code> then the facets are simply not loaded into the metamodel and their semantics will be excluded. <br></p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>+ In most cases this should reduce the start-up times for the application. However, be aware that this could also substantially alter the semantics of your application. To be safe, we recommend that you first run your application using <code>isis.reflector.validator.allowDeprecated</code> set to <code>false</code>; if any deprecated annotations etc. are in use, then the app will fail-fast and refuse to start.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -2102,18 +1616,40 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
            </tr> 
+          </tbody> 
+         </table> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__rgcfg_configuring-core_policy">5.8. Policy</h3> 
+         <table class="tableblock frame-all grid-all spread"> 
+          <caption class="title">
+           Table 10. Runtime Policy Configuration Properties
+          </caption> 
+          <colgroup> 
+           <col style="width: 33.3333%;"> 
+           <col style="width: 16.6666%;"> 
+           <col style="width: 50.0001%;"> 
+          </colgroup> 
+          <thead> 
+           <tr> 
+            <th class="tableblock halign-left valign-top">Property</th> 
+            <th class="tableblock halign-left valign-top">Value<br> (default value)</th> 
+            <th class="tableblock halign-left valign-top">Description</th> 
+           </tr> 
+          </thead> 
+          <tbody> 
            <tr> 
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p><code>isis.viewers.</code><br> <code>paged.parented</code></p> 
+               <p><code>isis.objects.</code><br> <code>editing</code></p> 
               </div>
              </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">positive integer (12)</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>Default page size for parented collections (as owned by an object, eg <code>Customer#getOrders()</code>)</p> 
+               <p>Whether objects' properties and collections can be edited directly (for objects annotated with <a href="../rgant/rgant.html#_rgant-DomainObject_editing"><code>@DomainObject#editing()</code></a>); see <a href="../rgcfg/rgcfg.html#__rgcfg_configuring-core_isis-objects-editing">below</a> for further discussion.</p> 
               </div>
              </div></td> 
            </tr> 
@@ -2121,14 +1657,20 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p><code>isis.viewers.</code><br> <code>paged.standalone</code></p> 
+               <p><code>isis.reflector.</code><br> <code>explicitAnnotations.</code><br> <code>action</code></p> 
               </div>
              </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">positive integer (25)</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>false</code>)</p></td> 
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>Default page size for standalone collections (as returned from an action invocation)</p> 
+               <p>Whether action methods need to be explicitly annotated using <code>@Action</code>.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>The default is that any non-<code>@Programmatic</code> methods that are not otherwise recognised as properties, collections or supporting methods, are assumed to be actions. Setting this property reverses this policy, effectively requiring that all actions need to be annotated with <code>@Action</code>.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>Note that properties and collections are still implicitly inferred by virtue of being "getters".</p> 
               </div>
              </div></td> 
            </tr> 
@@ -2136,21 +1678,24 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p><code>isis.viewers.</code><br> <code>propertyLayout.labelPosition</code></p> 
+               <p><code>isis.reflector.facet.</code><br> <code>filterVisibility</code></p> 
               </div>
              </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>TOP</code>, <code>LEFT</code><br> (<code>LEFT</code>)</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>Default for label position for all properties if not explicitly specified using <a href="../rgant/rgant.html#_rgant-PropertyLayout_labelPosition"><code>@PropertyLayout#labelPosition()</code></a></p> 
+               <p>Whether objects should be filtered for visibility.<br></p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>See <a href="../rgcfg/rgcfg.html#__rgcfg_configuring-core_filterVisibility">section below</a> for further discussion.</p> 
               </div>
              </div></td> 
            </tr> 
           </tbody> 
          </table> 
          <div class="sect3"> 
-          <h4 id="__rgcfg_configuring-core_filterVisibility">5.7.1. Filtering visibility</h4> 
+          <h4 id="__rgcfg_configuring-core_filterVisibility">5.8.1. Filtering visibility</h4> 
           <div class="paragraph"> 
            <p>The framework provides the <code>isis.reflector.facet.filterVisibility</code> configuration property that influences whether a returned object is visible to the end-user:</p> 
           </div> 
@@ -2206,7 +1751,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcfg_configuring-core_isis-objects-editing">5.7.2. <code>objects.editing</code></h4> 
+          <h4 id="__rgcfg_configuring-core_isis-objects-editing">5.8.2. <code>objects.editing</code></h4> 
           <div class="paragraph"> 
            <p>This configuration property in effect allows editing to be disabled globally for an application:</p> 
           </div> 
@@ -2217,31 +1762,6 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="paragraph"> 
            <p>We recommend enabling this feature; it will help drive out the underlying business operations (processes and procedures) that require objects to change; these can then be captured as business actions.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__rgcfg_configuring-core_isis-viewers-propertyLayout-labelPosition">5.7.3. <code>propertyLayout.labelPosition</code></h4> 
-          <div class="paragraph"> 
-           <p>If you want a consistent look-n-feel throughout the app, eg all property labels to the top, then it’d be rather frustrating to have to annotate every property.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Instead, a default can be specified in <code>isis.properties</code>:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="ini">isis.viewers.propertyLayout.labelPosition=TOP</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>or</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="ini">isis.viewers.propertyLayout.labelPosition=LEFT</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>If these are not present then Apache Isis will render according to internal defaults. At the time of writing, this means labels are to the left for all datatypes except multiline strings.</p> 
           </div> 
          </div> 
         </div> 
