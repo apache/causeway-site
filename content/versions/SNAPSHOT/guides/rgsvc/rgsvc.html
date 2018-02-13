@@ -1220,40 +1220,46 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations">4.1.2. Implementations</h4> 
-          <div class="paragraph"> 
-           <p>No default implementations are provided by Apache Isis framework itself.</p> 
+          <h4 id="_rgsvc_presentation-layer-spi_ContentMappingService_implementations">4.1.2. Implementations</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_ContentMappingService_implementations.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_ContentMappingService_implementations.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_ContentMappingService_implementations.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_ContentMappingService_implementations.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_presentation-layer-spi_ContentMappingService_implementations.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
           </div> 
           <div class="paragraph"> 
-           <p>However, the (non-ASF) <a href="http://github.com/isisaddons/isis-app-todoapp">Isis addons' todoapp</a> includes a sample implementation to convert its <code>ToDoItem</code> entity into a (JAXB annotated) <code>ToDoItemDto</code>. The source code is:</p> 
+           <p>The framework provides two implementations of this service, both in support of the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> SPI.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>By way of background: implementations of the SPI <code>CommandService</code> work with custom implementations of the <code>Command</code> interface, typically being persisted to a datastore. The <code>CommandWithDto</code> interface is a subtype of <code>Command</code> for implementations that can be reified into <a href="../rgcms/rgcms.html#_rgcms_schema-cmd"><code>CommandDto</code></a> XML instances. One implementation that does this is the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For framework implementations of <code>ContentMappingService</code> allow domain service actions that return <code>CommandDto</code>s (either singularly or in a list) to be converted into XML documents:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><code>o.a.i.applib.conmap.ContentMappingServiceForCommandDto</code> will map any single instnce of a <code>CommandWithDto</code> into a <code>CommandDto</code> XML document</p> </li> 
+            <li> <p><code>o.a.i.applib.conmap.ContentMappingServiceForCommandsDto</code> will map list of <code>CommandWithDto</code>s into a <code>CommandsDto</code> XML document, and will wrap any single instance of a <code>CommandWithDto</code> into a singleton list and thence into a <code>CommandsDto</code> XML document.</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>If the action invocation or property edit represent provides an implementation of a <code>CommandDtoProcessor</code> (by way of <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#commandDtoProcessor()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_command"><code>@Property#commandDtoProcessor()</code></a>) then this is also called to post-process the persisted <code>CommandDto</code> if required. A typical use case for this is to dynamically add in serialized <code>Blob</code>s or <code>Clob</code>s, the values of which are not captured by default in <code>CommandDto</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To support the writing of custom implementations of this interface, the framework also provides <code>ContentMappingService.Util</code> which includes a couple of convenience utilities:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ContentMappingServiceForToDoItem</span> <span class="directive">implements</span> ContentMappingService {
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="predefined-type">Object</span> map(
-            <span class="directive">final</span> <span class="predefined-type">Object</span> object,
-            <span class="directive">final</span> <span class="predefined-type">List</span>&lt;MediaType&gt; acceptableMediaTypes) {
-        <span class="keyword">if</span>(object <span class="keyword">instanceof</span> ToDoItem) {
-            <span class="keyword">for</span> (MediaType acceptableMediaType : acceptableMediaTypes) {
-                <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; parameters = acceptableMediaType.getParameters();
-                <span class="directive">final</span> <span class="predefined-type">String</span> className = parameters.get(<span class="string"><span class="delimiter">"</span><span class="content">x-ro-domain-type</span><span class="delimiter">"</span></span>);
-                <span class="keyword">if</span>(className.eqausl(ToDoItemV1_1.class.getName())) {
-                    <span class="keyword">return</span> newToDoItemV1_1((ToDoItem) object);
-                }
-            }
-        }
-        <span class="keyword">return</span> <span class="predefined-constant">null</span>;
-    }
-    <span class="directive">private</span> ToDoItemV1_1 newToDoItemV1_1(<span class="directive">final</span> ToDoItem toDoItem) {
-        <span class="directive">final</span> ToDoItemV1_1 dto = <span class="keyword">new</span> ToDoItemV1_1();
-        dto.setToDoItem(toDoItem);
-        dto.setDescription(toDoItem.getDescription());
-        ...
-        return dto;
-    }
-    ...
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Util</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span> determineDomainType(
+        <span class="directive">final</span> <span class="predefined-type">List</span>&lt;MediaType&gt; acceptableMediaTypes) { ... }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> isSupported(
+            <span class="directive">final</span> <span class="predefined-type">Class</span>&lt;?&gt; clazz,
+            <span class="directive">final</span> <span class="predefined-type">List</span>&lt;MediaType&gt; acceptableMediaTypes) { ... }
 }</code></pre> 
            </div> 
           </div> 
@@ -1262,6 +1268,9 @@ table.CodeRay td.code>pre{padding:0}
           <h4 id="_related_services">4.1.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service is a companion to the default implementation of the <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The framework implementations of <code>ContentMappingService</code> use the <a href="#_rgsvc_metadata-api_MetamodelService"><code>MetaModelService</code></a> to lookup any custom implementations of <code>CommandDtoProcessor</code>.</p> 
           </div> 
          </div> 
         </div> 
@@ -1381,7 +1390,7 @@ table.CodeRay td.code>pre{padding:0}
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>ErrorReportingService</code> service is an optional SPI that provides the ability to record any errors/exceptions that might occur in the application into an external incident recording system (such as JIRA). The service also allows a user-friendly (jargon-free) error message to be returned and rendered to the end-user, along with an optional incident reference (eg a JIRA issue <code>XXX-1234</code>).</p> 
+          <p>The <code>ErrorReportingService</code> service is an optional SPI that provides the ability to record any errors/exceptions that might occur in the application into an external incident recording system (such as JIRA or Slack). The service also allows a user-friendly (jargon-free) error message to be returned and rendered to the end-user, along with an optional incident reference (eg a JIRA issue <code>XXX-1234</code>). The service can also return a URL for an external image. For example, this could be to a comic strip or (as a bit of fun) a picture of a random kitten.</p> 
          </div> 
          <div class="sect3"> 
           <h4 id="_spi_3">4.3.1. SPI</h4> 
@@ -1439,7 +1448,9 @@ table.CodeRay td.code>pre{padding:0}
     <span class="directive">public</span> Ticket(
         <span class="directive">final</span> <span class="predefined-type">String</span> reference,             <i class="conum" data-value="1"></i><b>(1)</b>
         <span class="directive">final</span> <span class="predefined-type">String</span> userMessage,           <i class="conum" data-value="2"></i><b>(2)</b>
-        <span class="directive">final</span> <span class="predefined-type">String</span> details) { ... }       <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">final</span> <span class="predefined-type">String</span> details,               <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">final</span> StackTracePolicy policy,      <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="directive">final</span> <span class="predefined-type">String</span> kittenUrl) { ... }     <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -1457,6 +1468,14 @@ table.CodeRay td.code>pre{padding:0}
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
               <td>is optional additional details to show. For example, these might include text on how to recover from the error, or workarounds, or just further details on contacting the help desk if the issue is severe and requires immediate attention.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>is optional, specifying whether to show a button to view details of the stack trace. By default a stack trace button is not shown if a ticket is returned (but <em>is</em> shown if there is no <code>ErrorReportingService</code> configured, or if it returns no ticket).</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>is optioal, specifying an external URL of an image to display for the end user.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -1479,13 +1498,12 @@ table.CodeRay td.code>pre{padding:0}
     <span class="directive">public</span> Ticket reportError(<span class="directive">final</span> ErrorDetails errorDetails) {
         <span class="keyword">return</span> <span class="keyword">new</span> Ticket(
                 nextTicketReference(),
-                <span class="string"><span class="delimiter">"</span><span class="content">The Kitchen sink app is sorry to report that: </span><span class="delimiter">"</span></span> + errorDetails.getMainMessage(),
-                  <span class="string"><span class="delimiter">"</span><span class="content">These are additional details for the end-user to read.</span><span class="char">\n</span><span class="delimiter">"</span></span>
-                + <span class="string"><span class="delimiter">"</span><span class="content">This content should be able to span many lines.</span><span class="char">\n</span><span class="delimiter">"</span></span>
-                + <span class="string"><span class="delimiter">"</span><span class="content">More detail.</span><span class="char">\n</span><span class="delimiter">"</span></span>
-                + <span class="string"><span class="delimiter">"</span><span class="content">Some suggested work-arounds.</span><span class="char">\n</span><span class="delimiter">"</span></span>
-                + <span class="string"><span class="delimiter">"</span><span class="content">Details of how to contact help desk.</span><span class="char">\n</span><span class="delimiter">"</span></span>
-                + <span class="string"><span class="delimiter">"</span><span class="content">And so on</span><span class="delimiter">"</span></span>);
+                errorDetails.getMainMessage(),
+                  <span class="string"><span class="delimiter">"</span><span class="content">By way of an apology, </span><span class="char">\n</span><span class="delimiter">"</span></span>
+                          + <span class="string"><span class="delimiter">"</span><span class="content">here's a picture of a </span><span class="char">\n</span><span class="delimiter">"</span></span>
+                          + <span class="string"><span class="delimiter">"</span><span class="content">kitten for you to look at.</span><span class="delimiter">"</span></span>,
+                <span class="string"><span class="delimiter">"</span><span class="content">http://www.randomkittengenerator.com/cats/rotator.php</span><span class="delimiter">"</span></span>
+                );
     }
     <span class="predefined-type">String</span> nextTicketReference() {
         <span class="keyword">return</span> <span class="string"><span class="delimiter">"</span><span class="delimiter">"</span></span> + ticketNumber++;
@@ -2418,7 +2436,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_2">4.13.2. Implementations</h4> 
+          <h4 id="_implementations">4.13.2. Implementations</h4> 
           <div class="paragraph"> 
            <p>The framework provides an implementation, <code>SessionLoggingService.Stderr</code> that just prints out to standard error. This is not registered by default, but can be easily registered manually using <code>AppManifestAbstract.Builder#withAdditionalServices(…​)</code>.</p> 
           </div> 
@@ -2476,7 +2494,7 @@ table.CodeRay td.code>pre{padding:0}
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>There can be multiple implementations of <code>TableColumnOrderService</code> registered, ordered as per <a href="../rgant/rgant.html#_rgant_DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a>. The ordering provided by the first such service that returns a non-<code>null</code> value will be used. If all provided implementations return <code>null</code>, then the framework will fallback to a default implementation.</p> 
+           <p>There can be multiple implementations of <code>TableColumnOrderService</code> registered, ordered as per <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a>. The ordering provided by the first such service that returns a non-<code>null</code> value will be used. If all provided implementations return <code>null</code>, then the framework will fallback to a default implementation.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -2904,7 +2922,7 @@ table.CodeRay td.code>pre{padding:0}
               <p>Programmatic persistence of commands to be persisted (so can be executed by a background mechanism, eg scheduler)</p> 
              </div>
             </div></td> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>BackgroundServiceDefault</code><br> <code>o.a.i.core</code><br> <code>isis-core-runtime</code></p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>BackgroundService-</code> <code>Default</code><br> <code>o.a.i.core</code><br> <code>isis-core-runtime</code></p></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock">depends on:<br> <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommand-Service</code></a></p></td> 
           </tr> 
           <tr> 
@@ -2917,6 +2935,17 @@ table.CodeRay td.code>pre{padding:0}
             </div></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CommandContext</code><br> <code>o.a.i.core</code><br> <code>isis-core-applib</code></p></td> 
            <td class="tableblock halign-left valign-top"><p class="tableblock">API is also a concrete class.<br> depends on:<br> <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> for persistent <code>Command</code>, else in-memory impl. used. </p><p class="tableblock">The <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> manages the actual execution of the command.</p></td> 
+          </tr> 
+          <tr> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandExecutorService"><code>o.a.i.applib.</code><br> <code>services.command</code><br> <code>CommandExecutorService</code></a></p></td> 
+           <td class="tableblock halign-left valign-top">
+            <div>
+             <div class="paragraph"> 
+              <p>Executes the specified <code>Command</code>.</p> 
+             </div>
+            </div></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CommandExecutorService-</code> <code>Default</code><br> <code>o.a.i.core</code><br> <code>isis-core-runtime</code></p></td> 
+           <td class="tableblock halign-left valign-top"></td> 
           </tr> 
           <tr> 
            <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_DtoMappingHelper"><code>o.a.i.applib.</code><br> <code>services.dto</code><br> <code>DtoMappingHelper</code></a></p></td> 
@@ -3009,7 +3038,7 @@ table.CodeRay td.code>pre{padding:0}
          </ul> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_ActionInvocationContext">5.1. <code>ActionInvocationContext</code></h3>
+         <h3 id="_rgsvc_application-layer-api_ActionInvocationContext">5.1. <code>ActionInvocationContext</code> (deprecated)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_ActionInvocationContext.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3025,6 +3054,22 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <div class="paragraph"> 
           <p>When an action is invoked in this way, this service allows each object instance to "know where it is" in the collection; it acts a little like an iterator. In particular, an object can determine if it is the last object to be called, and so can perform special processing, eg to return a summary calculated result.</p> 
+         </div> 
+         <div class="admonitionblock warning"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>Bulk actions are now deprecated, which means that this service is also deprecated.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>Instead, the recommended technique is to define a view model to wrap around the collection, and then to use an action on the view model, associated with the collection and with a collection parameter), to act upon the selected items of the collection.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
          <div class="sect3"> 
           <h4 id="_api_implementation_5">5.1.1. API &amp; Implementation</h4> 
@@ -3491,44 +3536,40 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
  <span class="tag">&lt;/servlet&gt;</span></code></pre> 
            </div> 
           </div> 
-         </div> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_CommandContext">5.3. <code>CommandContext</code></h3>
-         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_CommandContext.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-          <ul class="dropdown-menu">
-           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_CommandContext.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_CommandContext.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_CommandContext.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_CommandContext.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-          </ul>
-         </div> 
-         <div class="paragraph"> 
-          <p>The <code>CommandContext</code> service is a <a href="../rgant/rgant.html#_rgant-RequestScoped">request-scoped</a> service that reifies the invocation of an action on a domain object into an object itself. This reified information is encapsulated within the <code>Command</code> object.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>By default, the <code>Command</code> is held in-memory only; once the action invocation has completed, the <code>Command</code> object is gone. The optional supporting <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> enables the implementation of <code>Command</code> to be pluggable. With an appropriate implementation (eg as provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module’s <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a>) the <code>Command</code> may then be persisted.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The primary use case for persistent <code>Command</code>s is in support of background commands; they act as a parent to any background commands that can be persisted either explicitly using the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>There are a number of related use cases:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p>to enable profiling of the running application (which actions are invoked then most often, what is their response time)</p> </li> 
-           <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a> (the latter now deprecated) is configured, they provide better traceability as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p> </li> 
-           <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuderService"><code>AuditerService</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuditService"><code>AuditingService</code></a> (the latter now deprecated) is configured, they provide better audit information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the <code>transactionId</code> GUID</p> </li> 
-          </ul> 
-         </div> 
-         <div class="paragraph"> 
-          <p>However, while persistent <code>Command</code>s <em>can</em> be used for these use cases, it is recommended instead to use the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the <code>Interaction</code> object, eg as provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s publishmq module.</p> 
+          <div class="literalblock"> 
+           <div class="content"> 
+            <pre>    [[_rgsvc_application-layer-api_CommandContext]]
+= `CommandContext`
+:Notice: Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at. http://www.apache.org/licenses/LICENSE-2.0 . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR  CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+:_basedir: ../../
+:_imagesdir: images/</pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The <code>CommandContext</code> service is a <a href="../rgant/rgant.html#_rgant-RequestScoped">request-scoped</a> service that reifies the invocation of an action on a domain object into an object itself. This reified information is encapsulated within the <code>Command</code> object.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>By default, the <code>Command</code> is held in-memory only; once the action invocation has completed, the <code>Command</code> object is gone. The optional supporting <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> enables the implementation of <code>Command</code> to be pluggable. With an appropriate implementation (eg as provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module’s <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a>) the <code>Command</code> may then be persisted.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The primary use case for persistent <code>Command</code>s is in support of background commands; they act as a parent to any background commands that can be persisted either explicitly using the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>There are a number of related use cases:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>to enable profiling of the running application (which actions are invoked then most often, what is their response time)</p> </li> 
+            <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a> (the latter now deprecated) is configured, they provide better traceability as the <code>Command</code> is also correlated with any published events, again through the unique <code>transactionId</code> GUID</p> </li> 
+            <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuderService"><code>AuditerService</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_spi_AuditService"><code>AuditingService</code></a> (the latter now deprecated) is configured, they provide better audit information, since the <code>Command</code> (the 'cause' of an action) can be correlated to the audit records (the "effect" of the action) through the <code>transactionId</code> GUID</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>However, while persistent <code>Command</code>s <em>can</em> be used for these use cases, it is recommended instead to use the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> service and persistent implementations of the <code>Interaction</code> object, eg as provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s publishmq module.</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_application-layer-api_CommandContext_screencast">5.3.1. Screencast</h4> 
+          <h4 id="__rgsvc_application-layer-api_CommandContext_screencast">5.2.7. Screencast</h4> 
           <div class="paragraph"> 
            <p>The <a href="https://www.youtube.com/watch?v=tqXUZkPB3EI">screencast</a> provides a run-through of the command (profiling) service, auditing service, publishing service. It also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.</p> 
           </div> 
@@ -3547,7 +3588,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_7">5.3.2. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_7">5.2.8. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The <code>CommandContext</code> request-scoped service defines the following very simple API:</p> 
           </div> 
@@ -3677,7 +3718,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_5">5.3.3. Usage</h4> 
+          <h4 id="_usage_5">5.2.9. Usage</h4> 
           <div class="paragraph"> 
            <p>The typical way to indicate that an action should be treated as a command is to annotate it with the <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p> 
           </div> 
@@ -3730,7 +3771,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_interacting_with_the_services">5.3.4. Interacting with the services</h4> 
+          <h4 id="_interacting_with_the_services">5.2.10. Interacting with the services</h4> 
           <div class="paragraph"> 
            <p>Typically domain objects will have little need to interact with the <code>CommandContext</code> and <code>Command</code> directly; what is more useful is that these are persisted in support of the various use cases identified above.</p> 
           </div> 
@@ -3781,7 +3822,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_12">5.3.5. Related Services</h4> 
+          <h4 id="_related_services_12">5.2.11. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service is very similar in nature to the <a href="../rgsvc/rgsvc.html#_rgsvc_api_InteactionContext"><code>InteactionContext</code></a>, in that the <code>Command</code> object accessed through it is very similar to the <code>Interaction</code> object obtained from the <code>InteractionContext</code>. The principle distinction is that while <code>Command</code> represents the <em>intention</em> to invoke an action or edit a property, the <code>Interaction</code> (and contained <code>Execution</code>s) represents the actual execution.</p> 
           </div> 
@@ -3794,7 +3835,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_DtoMappingHelper">5.4. <code>DtoMappingHelper</code></h3>
+         <h3 id="_rgsvc_application-layer-api_DtoMappingHelper">5.3. <code>DtoMappingHelper</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_DtoMappingHelper.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3809,7 +3850,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <p>The <code>DtoMappingHelper</code> converts the domain object’s internal identifier into a serializable <code>OidDto</code> for use in the <a href="../rgcms/rgcms.html#_rgcms_schema-cmd">command</a> and <a href="../rgcms/rgcms.html#_rgcms_schema-ixn">interaction</a> schemas.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_and_usage">5.4.1. API and Usage</h4> 
+          <h4 id="_api_and_usage">5.3.1. API and Usage</h4> 
           <div class="paragraph"> 
            <p>The API of <code>DtoMappingHelper</code> is:</p> 
           </div> 
@@ -3837,7 +3878,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_InteractionContext">5.5. <code>InteractionContext</code></h3>
+         <h3 id="_rgsvc_application-layer-api_InteractionContext">5.4. <code>InteractionContext</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_InteractionContext.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3867,7 +3908,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </ul> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_implementation_8">5.5.1. API &amp; Implementation</h4> 
+          <h4 id="_api_implementation_8">5.4.1. API &amp; Implementation</h4> 
           <div class="paragraph"> 
            <p>The public API of the service consists of several related classes:</p> 
           </div> 
@@ -4093,13 +4134,13 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_interacting_with_the_services_2">5.5.2. Interacting with the services</h4> 
+          <h4 id="_interacting_with_the_services_2">5.4.2. Interacting with the services</h4> 
           <div class="paragraph"> 
            <p>Typically domain objects will have little need to interact with the <code>InteractionContext</code> and <code>Interaction</code> directly. The services are used within the framework however, primarily to support the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> SPI, and to emit domain events over the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_application-layer-api_InteractionContext_Related-Classes">5.5.3. Related Classes</h4> 
+          <h4 id="__rgsvc_application-layer-api_InteractionContext_Related-Classes">5.4.3. Related Classes</h4> 
           <div class="paragraph"> 
            <p>This service is very similar in nature to <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a>, in that the <code>Interaction</code> object accessed through it is very similar to the <code>Command</code> object obtained from the <code>CommandContext</code>. The principle distinction is that while <code>Command</code> represents the <em>intention</em> to invoke an action or edit a property, the <code>Interaction</code> (and contained <code>Execution</code>s) represents the actual execution.</p> 
           </div> 
@@ -4109,7 +4150,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_MessageService">5.6. <code>MessageService</code></h3>
+         <h3 id="_rgsvc_application-layer-api_MessageService">5.5. <code>MessageService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_MessageService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4137,7 +4178,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_and_usage_2">5.6.1. API and Usage</h4> 
+          <h4 id="_api_and_usage_2">5.5.1. API and Usage</h4> 
           <div class="paragraph"> 
            <p>The API of <code>MessageService</code> is:</p> 
           </div> 
@@ -4203,14 +4244,14 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_15">5.6.2. Implementation</h4> 
+          <h4 id="_implementation_15">5.5.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service, <code>o.a.i.core.runtime.services.message.MessageServiceDefault</code>.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_SessionManagementService">5.7. <code>SessionManagementService</code></h3>
+         <h3 id="_rgsvc_application-layer-api_SessionManagementService">5.6. <code>SessionManagementService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_SessionManagementService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4225,7 +4266,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <p>The <code>SessionManagementService</code> provides the ability to programmatically manage sessions. The primary use case is for fixture scripts or other routines that are invoked from the UI and which create or modify large amounts of data. A classic example is migrating data from one system to another.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api">5.7.1. API</h4> 
+          <h4 id="_api">5.6.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>SessionManagementService</code> is:</p> 
           </div> 
@@ -4257,14 +4298,14 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_16">5.7.2. Implementation</h4> 
+          <h4 id="_implementation_16">5.6.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.xactn.SessionManagementServiceDefault</code>).</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_TitleService">5.8. <code>TitleService</code></h3>
+         <h3 id="_rgsvc_application-layer-api_TitleService">5.7. <code>TitleService</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_TitleService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4292,7 +4333,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_2">5.8.1. API</h4> 
+          <h4 id="_api_2">5.7.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>TitleService</code> is:</p> 
           </div> 
@@ -4320,7 +4361,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_6">5.8.2. Usage</h4> 
+          <h4 id="_usage_6">5.7.2. Usage</h4> 
           <div class="paragraph"> 
            <p>By way of example, here’s some code based on a system for managing government benefits:</p> 
           </div> 
@@ -4345,14 +4386,14 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_17">5.8.3. Implementation</h4> 
+          <h4 id="_implementation_17">5.7.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.metamodel.services.title.TitleServiceDefault</code>).</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_TransactionService">5.9. <code>TransactionService3</code></h3>
+         <h3 id="_rgsvc_application-layer-api_TransactionService">5.8. <code>TransactionService3</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_TransactionService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4380,7 +4421,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_3">5.9.1. API</h4> 
+          <h4 id="_api_3">5.8.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>TransactionService3</code> is:</p> 
           </div> 
@@ -4545,14 +4586,14 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_18">5.9.2. Implementation</h4> 
+          <h4 id="_implementation_18">5.8.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service, <code>o.a.i.core.metamodel.services.xactn.TransactionServiceDefault</code>.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_application-layer-api_WrapperFactory">5.10. <code>WrapperFactory</code></h3>
+         <h3 id="_rgsvc_application-layer-api_WrapperFactory">5.9. <code>WrapperFactory</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_application-layer-api_WrapperFactory.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -4589,7 +4630,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <p>This capability is frequently used within <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">integration tests</a>, but can also be used in production code. (There are analogies that can be drawn here with the way that JEE beans can interact through an EJB local interface).</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_4">5.10.1. API</h4> 
+          <h4 id="_api_4">5.9.1. API</h4> 
           <div class="paragraph"> 
            <p>The API provided by the service is:</p> 
           </div> 
@@ -4688,7 +4729,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_7">5.10.2. Usage</h4> 
+          <h4 id="_usage_7">5.9.2. Usage</h4> 
           <div class="paragraph"> 
            <p>The caller will typically obtain the target object (eg from some repository) and then use the injected <code>WrapperFactory</code> to wrap it before interacting with it.</p> 
           </div> 
@@ -4748,7 +4789,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_listener_api">5.10.3. Listener API</h4> 
+          <h4 id="_listener_api">5.9.3. Listener API</h4> 
           <div class="paragraph"> 
            <p>The <code>WrapperFactory</code> also provides a listener API to allow other services to listen in on interactions.</p> 
           </div> 
@@ -5060,6 +5101,9 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          </div> 
          <div class="paragraph"> 
           <p>The primary use case for persistent <code>Command</code>s is in support of background commands; they act as a parent to any background commands that can be persisted either explicitly using the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>, or implicitly by way of the <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command()</code></a> annotation.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Persistent <code>Command</code>s also support the ability to replicate from a master to a slave instance of an application. One use case for this is for regression testing, allowing a production usages to be replayed against a new release candidate, eg after upgrading that application to a new version of Apache Isis itself (or some other dependency).</p> 
          </div> 
          <div class="paragraph"> 
           <p>There are a number of related use cases:</p> 
@@ -8639,7 +8683,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgsvc_metadata-api_MetamodelService">9.3. <code>MetaModelService4</code></h3>
+         <h3 id="_rgsvc_metadata-api_MetamodelService">9.3. <code>MetaModelService5</code></h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -8651,23 +8695,33 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>MetaModelService4</code> service (and its various supertypes) provides access to a number of aspects of Apache Isis' internal metamodel.</p> 
+          <p>The <code>MetaModelService5</code> service (and its various supertypes) provides access to a number of aspects of Apache Isis' internal metamodel.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_8">9.3.1. API</h4> 
+          <h4 id="_rgsvc_metadata-api_MetamodelService_api">9.3.1. API</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_api.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_api.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_api.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_api.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_api.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
            <p>The API defined by the service is:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService4</span> {
-    <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="predefined-type">String</span> objectType);   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="predefined-type">String</span> toObjectType(<span class="predefined-type">Class</span>&lt;?&gt; domainType);     <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="type">void</span> rebuild(<span class="predefined-type">Class</span>&lt;?&gt; domainType);            <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="predefined-type">List</span>&lt;DomainMember&gt; <span class="keyword">export</span>();                  <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="predefined-type">String</span> objectType);         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="predefined-type">String</span> toObjectType(<span class="predefined-type">Class</span>&lt;?&gt; domainType);           <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="type">void</span> rebuild(<span class="predefined-type">Class</span>&lt;?&gt; domainType);                  <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="predefined-type">List</span>&lt;DomainMember&gt; <span class="keyword">export</span>();                        <i class="conum" data-value="4"></i><b>(4)</b>
 
     <span class="comment">// introduced in MetaModelService2</span>
-    <span class="type">enum</span> Sort {                                   <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="type">enum</span> Sort {                                         <i class="conum" data-value="5"></i><b>(5)</b>
         VIEW_MODEL, JDO_ENTITY, DOMAIN_SERVICE,
         MIXIN, VALUE, COLLECTION, UNKNOWN;
     }
@@ -8675,7 +8729,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
         STRICT,
         RELAXED
     }
-    Sort sortOf(<span class="predefined-type">Class</span>&lt;?&gt; domainType);             <i class="conum" data-value="6"></i><b>(6)</b>
+    Sort sortOf(<span class="predefined-type">Class</span>&lt;?&gt; domainType);                   <i class="conum" data-value="6"></i><b>(6)</b>
     Sort sortOf(Bookmark bookmark);
 
     <span class="comment">// introduced in MetaModelService3</span>
@@ -8683,8 +8737,13 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
     Sort sortOf(Bookmark bookmark, Mode mode);
 
     <span class="comment">// introduced in MetaModelService4</span>
-    AppManifest getAppManifest();                 <i class="conum" data-value="7"></i><b>(7)</b>
+    AppManifest getAppManifest();                       <i class="conum" data-value="7"></i><b>(7)</b>
     AppManifest2 getAppManifest2();
+
+    <span class="comment">// introduced in MetaModelService5</span>
+    CommandDtoProcessor commandDtoProcessorFor(         <i class="conum" data-value="8"></i><b>(8)</b>
+                        <span class="predefined-type">String</span> memberIdentifier);
+
 }</code></pre> 
            </div> 
           </div> 
@@ -8719,18 +8778,42 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
               <td><i class="conum" data-value="7"></i><b>7</b></td> 
               <td>returns the <code>AppManifest</code> used to bootstrap the application. If an <code>AppManifest2</code> was used (from a <code>Module</code>), then this is also returned (else just <code>null</code>).</td> 
              </tr> 
+             <tr> 
+              <td><i class="conum" data-value="8"></i><b>8</b></td> 
+              <td>obtain an implementation of <code>CommandDtoProcessor</code> (if any) as per an <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#commandDtoProcessor()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_command"><code>@Property#commandDtoProcessor()</code></a>.</td> 
+             </tr> 
             </tbody>
            </table> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_27">9.3.2. Implementation</h4> 
+          <h4 id="_rgsvc_metadata-api_MetamodelService_implementation">9.3.2. Implementation</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_implementation.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_implementation.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_implementation.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_implementation.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_implementation.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
            <p>The framework provides a default implementation of this service, <code>o.a.i.c.m.services.metamodel.MetaModelServiceDefault</code>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_22">9.3.3. Related Services</h4> 
+          <h4 id="_rgsvc_metadata-api_MetamodelService_related_services">9.3.3. Related Services</h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_related_services.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_related_services.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_related_services.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_related_services.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgsvc/_rgsvc_metadata-api_MetamodelService_related_services.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
            <p>The <code>MetaModelServiceMenu</code> provides a method to download all domain members as a CSV. Internally this calls <code>MetaModelService#export()</code>. Under the covers this uses the API provided by the <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ApplicationFeatureRepository"><code>ApplicationFeatureRepository</code></a> domain service.</p> 
           </div> 
@@ -8765,7 +8848,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_9">9.4.1. API</h4> 
+          <h4 id="_api_8">9.4.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>ServiceRegistry2</code> is:</p> 
           </div> 
@@ -8826,7 +8909,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_28">9.4.3. Implementation</h4> 
+          <h4 id="_implementation_27">9.4.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.registry.ServiceRegistryDefault</code>).</p> 
           </div> 
@@ -8917,7 +9000,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_23">9.5.3. Related Services</h4> 
+          <h4 id="_related_services_22">9.5.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>A <code>SwaggerServiceMenu</code> domain service provides a prototype action that enables the swagger spec to be downloaded from the Wicket viewer’s UI.</p> 
           </div> 
@@ -9098,7 +9181,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The default implementation of this service, <code>FixtureScriptsDefault</code>, uses the associated <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> to obtain a <code>FixtureScriptsSpecification</code>. This configures this service, for example telling it which package to search for <code>FixtureScript</code> classes, how to execute those classes, and hints that influence the UI.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_10">10.2.1. API</h4> 
+          <h4 id="_api_9">10.2.1. API</h4> 
           <div class="paragraph"> 
            <p>The API for the service is:</p> 
           </div> 
@@ -9114,7 +9197,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_29">10.2.2. Implementation</h4> 
+          <h4 id="_implementation_28">10.2.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The default implementation is <code>o.a.i.applib.services.fixturespec.FixtureScriptsDefault</code></p> 
           </div> 
@@ -9162,7 +9245,7 @@ repositoryService.persist(cust);</code></pre>
            </table> 
           </div> 
           <div class="sect4"> 
-           <h5 id="_related_services_24">Related Services</h5> 
+           <h5 id="_related_services_23">Related Services</h5> 
            <div class="paragraph"> 
             <p>The default implementation of this domain service interacts with <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a>.</p> 
            </div> 
@@ -9234,7 +9317,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_30">10.3.2. Implementation</h4> 
+          <h4 id="_implementation_29">10.3.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has a simple implementation of this service:</p> 
           </div> 
@@ -9273,7 +9356,7 @@ repositoryService.persist(cust);</code></pre>
           <p>The <code>SudoService</code> allows the current user reported by the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_UserService"><code>UserService</code></a> to be temporarily changed to some other user. This is useful both for <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">integration testing</a> (eg if testing a workflow system whereby objects are moved from one user to another) and while running <a href="../ugtst/ugtst.html#_ugtst_fixture-scripts">fixture scripts</a> (eg setting up objects that would normally require several users to have acted upon the objects).</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_11">10.4.1. API</h4> 
+          <h4 id="_api_10">10.4.1. API</h4> 
           <div class="paragraph"> 
            <p>The API provided by the service is:</p> 
           </div> 
@@ -9312,7 +9395,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_31">10.4.2. Implementation</h4> 
+          <h4 id="_implementation_30">10.4.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.sudo.SudoServiceDefault</code>).</p> 
           </div> 
@@ -9442,7 +9525,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_12">10.5.1. API</h4> 
+          <h4 id="_api_11">10.5.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of this service:</p> 
           </div> 
@@ -9466,7 +9549,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_32">10.5.2. Implementation</h4> 
+          <h4 id="_implementation_31">10.5.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The framework provides a default implementation of this service: <code>SwitchUserServiceImpl</code> in <code>isis-core-runtime</code></p> 
           </div> 
@@ -9992,7 +10075,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_25">11.3.2. Related Services</h4> 
+          <h4 id="_related_services_24">11.3.2. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> also captures the metrics gathered by the <code>MetricsService</code> and publishes them as part of the <code>PublishedObjects</code> class (part of its SPI).</p> 
           </div> 
@@ -10135,7 +10218,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_26">11.4.3. Related Services</h4> 
+          <h4 id="_related_services_25">11.4.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_Scratchpad"><code>Scratchpad</code></a> service is also intended for actions that are called many times, allowing arbitrary information to be shared between them. Those methods could be called from some outer loop in domain code, or by the framework itself if the action invoked has the <a href="../rgant/rgant.html#_rgant-Action_invokeOn"><code>@Action#invokeOn()</code></a> annotation attribute set to <code>OBJECT_AND_COLLECTION</code> or <code>COLLECTION_ONLY</code>.</p> 
           </div> 
@@ -10176,7 +10259,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_api_13">11.5.1. API</h4> 
+          <h4 id="_api_12">11.5.1. API</h4> 
           <div class="paragraph"> 
            <p>The API of <code>RepositoryService</code> is:</p> 
           </div> 
@@ -10495,7 +10578,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_33">11.5.3. Implementation</h4> 
+          <h4 id="_implementation_32">11.5.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The default implementation of this domain service is <code>o.a.i.core.metamodel.services.repository.RepositoryServiceDefault</code>.</p> 
           </div> 
@@ -10749,7 +10832,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_3">12.1.2. Implementations</h4> 
+          <h4 id="_implementations_2">12.1.2. Implementations</h4> 
           <div class="paragraph"> 
            <p>The framework allows multiple implementations of this service to be registered; all will be called. The framework provides one implementation of its own, <code>AuditerServiceLogging</code> (in <code>o.a.i.applib.services.audit</code> package); this logs simple messages to an SLF4J logger.</p> 
           </div> 
@@ -10798,7 +10881,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_27">12.1.5. Related Services</h4> 
+          <h4 id="_related_services_26">12.1.5. Related Services</h4> 
           <div class="paragraph"> 
            <p>The auditing service works very well with implementations of <a href="../rgsvc/rgsvc.html#<em>rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> that persist the <code>Interaction.Execution</code> objects obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> service. The interaction execution captures the _cause of an interaction (an action was invoked, a property was edited), while the <code>AuditerService</code> audit entries capture the <em>effect</em> of that interaction in terms of changed state.</p> 
           </div> 
@@ -10861,7 +10944,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_34">12.2.2. Implementation</h4> 
+          <h4 id="_implementation_33">12.2.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The most full-featured available implementation is the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module. This creates an audit records for each changed property (ie every time that <code>AuditingService3#audit(…​)</code> is called. The implementation is <code>org.isisaddons.module.audit.dom.AuditingService</code>.</p> 
           </div> 
@@ -10895,7 +10978,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_28">12.2.5. Related Services</h4> 
+          <h4 id="_related_services_27">12.2.5. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service has been deprecated and replaced by the equivalent <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditerService"><code>AuditerService</code></a>.</p> 
           </div> 
@@ -10970,7 +11053,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_35">12.3.2. Implementation</h4> 
+          <h4 id="_implementation_34">12.3.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>There is no default implementation of this service provided by the core Apache Isis framework.</p> 
           </div> 
@@ -11004,7 +11087,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_29">12.3.3. Related Services</h4> 
+          <h4 id="_related_services_28">12.3.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service is intended (though not mandated) to be used by implementations of <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a>. The (non-ASF) <a href="http://github.com/isisaddons-legacy/isis-module-publishing">Isis addons' publishing</a> module does use it (though the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> publishmq module does not).</p> 
           </div> 
@@ -11108,7 +11191,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementations_4">12.4.2. Implementations</h4> 
+          <h4 id="_implementations_3">12.4.2. Implementations</h4> 
           <div class="paragraph"> 
            <p>The framework allows multiple implementations of this service to be registered; all will be called. The framework provides one implementation of its own, <code>PublisherServiceLogging</code> (in <code>o.a.i.applib.services.publish</code> package); this logs "deep" serializations to an SLF4J logger.</p> 
           </div> 
@@ -11153,7 +11236,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_30">12.4.5. Related Services</h4> 
+          <h4 id="_related_services_29">12.4.5. Related Services</h4> 
           <div class="paragraph"> 
            <p>This service supports two main use cases:</p> 
           </div> 
@@ -11269,7 +11352,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_36">12.5.2. Implementation</h4> 
+          <h4 id="_implementation_35">12.5.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>There is no default implementation of this service provided by the core Apache Isis framework.</p> 
           </div> 
@@ -11392,7 +11475,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_31">12.5.4. Related Services</h4> 
+          <h4 id="_related_services_30">12.5.4. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <code>PublishingService</code> is intended for coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system. Here the only events published are those that action invocations (for actions annotated with <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a>) and of changed objects (for objects annotated with <a href="../rgant/rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a>.</p> 
           </div> 
@@ -11501,7 +11584,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_37">12.6.2. Implementation</h4> 
+          <h4 id="_implementation_36">12.6.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p> 
           </div> 
@@ -11534,7 +11617,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_32">12.6.3. Related Services</h4> 
+          <h4 id="_related_services_31">12.6.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>The most common use case is to allow users to sign-up through Apache Isis' Wicket viewer. Because the process requires email to be sent, the following services must be configured:</p> 
           </div> 
@@ -11663,7 +11746,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_38">13.1.2. Implementation</h4> 
+          <h4 id="_implementation_37">13.1.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p> 
           </div> 
@@ -11682,7 +11765,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_33">13.1.3. Related Services</h4> 
+          <h4 id="_related_services_32">13.1.3. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="#_rgsvc_testing_FixtureScripts"><code>FixtureScripts</code></a> domain service uses <code>ClassDiscoveryService</code> to discover <code>FixtureScript</code>s implementations to present in the UI.</p> 
           </div> 
