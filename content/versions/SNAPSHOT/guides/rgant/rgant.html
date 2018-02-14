@@ -2368,7 +2368,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgant-Action_command">3.2. <code>command()</code></h3>
+         <h3 id="_rgant-Action_command">3.2. Command Persistence and Processing</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_command.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -2380,138 +2380,1168 @@ table.CodeRay td.code>pre{padding:0}
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>@Action(command=…​)</code> attribute (and the related <code>@Action(commandXxx=…​)</code> attributes) allows an action invocation to be made into a concrete object such that it can be inspected and persisted. The primary use case for this are to support the deferring the execution of the action such that it can be invoked in the background, and to replay commands in a master/slave configuration.</p> 
+          <p>Every action invocation (and property edit for that matter) is automatically reified into a concrete <code>Command</code> object. The <code>@Action(command=…​, commandXxx=…​)</code> attributes provide hints for the persistence of that <code>Command</code> object, and the subsequent processing of that persisted command. The primary use cases for this are to support the deferring the execution of the action such that it can be invoked in the background, and to replay commands in a master/slave configuration.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The annotation works with (and is influenced by the behaviour of) a number of domain services:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_spi_BackgroundService"><code>BackgroundService</code></a> and</p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a></p> </li> 
-          </ul> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Each action invocation is reified by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service into a <code>Command</code> object, capturing details of the target object, the action, the parameter arguments, the user, a timestamp and so on.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>If an appropriate <code>CommandService</code> is configured (for example using (non-ASF) <a href="http://platform.incode.org/modules/spi/command/spi-command.html">Incode Platform’s command</a> module), then the <code>Command</code> itself is persisted.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>By default, actions are invoked in directly in the thread of the invocation. If there is an implementation of <code>BackgroundCommandService</code> (as the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module does provide), then this means in turn that the <code>BackgroundService</code> can be used by the domain object code to programmatically create background <code>Command</code>s.</p> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>If background <code>Command</code>s are used, then an external scheduler, using <a href="../ugbtb/ugbtb.html#_ugbtb_headless-access_BackgroundCommandExecution">headless access</a>, must also be configured.</p> 
-              </div> </td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The <code>command()</code> attribute determines whether the action invocation should be reified into a <code>Command</code> object (by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service).</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The default is <code>AS_CONFIGURED</code>, meaning that the <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.command.actions</code> is used to determine whether the action invocation is reified:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p><code>all</code><br></p> 
-            <div class="paragraph"> 
-             <p>all action invocations are reified</p> 
-            </div> </li> 
-           <li> <p><code>ignoreSafe</code> (or <code>ignoreQueryOnly</code>)<br></p> 
-            <div class="paragraph"> 
-             <p>invocations of actions with safe (read-only) semantics are ignored, but actions which may modify data are not ignored</p> 
-            </div> </li> 
-           <li> <p><code>none</code><br></p> 
-            <div class="paragraph"> 
-             <p>no action invocations are reified.</p> 
-            </div> </li> 
-          </ul> 
-         </div> 
-         <div class="paragraph"> 
-          <p>If there is no configuration property in <code>isis.properties</code> then all action invocations are reified into <code>Command</code>s.</p> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>Note: <code>Command</code> reification does not necessarily imply that <code>Command</code> objects will be persisted; that depends on whether there is a <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> configured that will persist said <code>Command</code>s.</p> 
-              </div> </td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
-         <div class="paragraph"> 
-          <p>This default can be overridden on an action-by-action basis; if <code>command()</code> is set to <code>ENABLED</code> then the action is reified irrespective of the configured value; if set to <code>DISABLED</code> then the action invocation is NOT reified irrespective of the configured value.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>For example:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
-    <span class="annotation">@Action</span>(command=CommandReification.ENABLED)
-    <span class="directive">public</span> Invoice generateInvoice(...) { ... }
-}</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>corresponds to the behaviour described above; the <code>Command</code> object is persisted (assuming an appropriate <code>CommandService</code> is defined, and executed immediately in the foreground).</p> 
+          <p>Note that for a <code>Command</code> to actually be persisted requires an appropriate implementation of <code>CommandService</code> SPI. The framework does <em>not</em> provide an implementation of this SPI "out-of-the-box". However, the (non-ASF) Incode Platform’s <a href="http://platform.incode.org/modules/spi/command/spi-command.html"> command module</a>) <em>does</em> provide such an implementation.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commandpersistence_code">3.2.1. <code>commandPersistence()</code></h4> 
+          <h4 id="_design">3.2.1. Design</h4> 
           <div class="paragraph"> 
-           <p>If the action invocation has been reified, then the <code>commandPersistence()</code> attribute determines whether that <code>Command</code> object should then also be persisted (the default), or not persisted, or only if hinted.</p> 
+           <p>The annotation works with (and is influenced by the behaviour of) a number of domain services:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a></p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a></p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_spi_BackgroundService"><code>BackgroundService</code></a> and</p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a></p> </li> 
+           </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>To explain this last alternative:</p> 
+           <p>Each action invocation is automatically reified by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service into a <code>Command</code> object, capturing details of the target object, the action, the parameter arguments, the user, a timestamp and so on.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>If an appropriate <code>CommandService</code> is configured (for example using (non-ASF) <a href="http://platform.incode.org/modules/spi/command/spi-command.html">Incode Platform’s command</a> module), then the <code>Command</code> itself is persisted.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>By default, actions are invoked in directly in the thread of the invocation. If there is an implementation of <code>BackgroundCommandService</code> (as the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module does provide), then this means in turn that the <code>BackgroundService</code> can be used by the domain object code to programmatically create background <code>Command</code>s.</p> 
+          </div> 
+          <div class="admonitionblock note"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>If background <code>Command</code>s are used, then an external scheduler, using <a href="../ugbtb/ugbtb.html#_ugbtb_headless-access_BackgroundCommandExecution">headless access</a>, must also be configured.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_rgant-Action_commandPersistence">3.2.2. <code>command()</code> and <code>commandPersistence()</code></h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_commandPersistence.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_commandPersistence.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_commandPersistence.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_commandPersistence.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Action_commandPersistence.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
+          <div class="paragraph"> 
+           <p>The <code>command()</code> and `commandPersistence() attributes work together to determine whether a command will actually be persisted. There inter-relationship is somewhat complex, so is probably best explained by way of examples:</p> 
+          </div> 
+          <table class="tableblock frame-all grid-all spread"> 
+           <colgroup> 
+            <col style="width: 14.2857%;"> 
+            <col style="width: 14.2857%;"> 
+            <col style="width: 14.2857%;"> 
+            <col style="width: 14.2857%;"> 
+            <col style="width: 14.2857%;"> 
+            <col style="width: 28.5715%;"> 
+           </colgroup> 
+           <thead> 
+            <tr> 
+             <th class="tableblock halign-left valign-top"><code>command()</code></th> 
+             <th class="tableblock halign-left valign-top"><code>isis.services. command.actions</code> config property</th> 
+             <th class="tableblock halign-left valign-top">action’s declared <code>semantics()</code></th> 
+             <th class="tableblock halign-left valign-top"><code>command Persistence()</code></th> 
+             <th class="tableblock halign-left valign-top">action dirties objects?</th> 
+             <th class="tableblock halign-left valign-top">is command persisted?</th> 
+            </tr> 
+           </thead> 
+           <tbody> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(either)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>SAFE</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>SAFE</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code> or <code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>SAFE</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code> or <code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>SAFE</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IDEMPOTENT</code> or <code>NON_IDEMPOTENT</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IDEMPOTENT</code> or <code>NON_IDEMPOTENT</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IDEMPOTENT</code> or <code>NON_IDEMPOTENT</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ignoreSafe</code> or <code>ignoreQueryOnly</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IDEMPOTENT</code> or <code>NON_IDEMPOTENT</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+           </tbody> 
+          </table> 
+          <div class="paragraph"> 
+           <p>For example:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
     <span class="annotation">@Action</span>(
         command=CommandReification.ENABLED,
-        commandPersistence=CommandPersistence.IF_HINTED
+        commandPersistence=CommandPersistence.PERSISTED
     )
     <span class="directive">public</span> Invoice generateInvoice(...) { ... }
 }</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>will suppress the persistence of the <code>Command</code> object <em>unless</em> a child background <code>Command</code> has been created in the body of the action by way of the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>On the other hand:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
-    <span class="annotation">@Action</span>(
-        command=CommandReification.ENABLED,
-        commandPersistence=CommandPersistence.NOT_PERSISTED
-    )
-    <span class="directive">public</span> Invoice generateInvoice(...) { ... }
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>will prevent the parent <code>Command</code> object from being persisted, <em>even if</em> a child background <code>Command</code> is created.</p> 
+           <p>As can be seen, whether a command is actually persisted does not always follow the value of the <code>commandPersistence()</code> attribute. This is because the <code>command()</code> attribute actually determines whether any command metadata for the action is captured within the framework’s internal metamodel. If <code>command</code> is <code>DISABLED</code> or does not otherwise apply due to the action’s declared semantics, then the framework decides to persist a command based solely on whether the action dirtied any objects (as if <code>commandPersistence()</code> was set to <code>IF_HINTED</code>).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commandexecutein_code">3.2.2. <code>commandExecuteIn()</code></h4> 
+          <h4 id="__code_commandexecutein_code">3.2.3. <code>commandExecuteIn()</code></h4> 
           <div class="paragraph"> 
            <p>For persisted commands, the <code>commandExecuteIn()</code> attribute determines whether the <code>Command</code> should be executed in the foreground (the default) or executed in the background.</p> 
           </div> 
@@ -2537,7 +3567,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commanddtoprocessor_code">3.2.3. <code>commandDtoProcessor()</code></h4> 
+          <h4 id="__code_commanddtoprocessor_code">3.2.4. <code>commandDtoProcessor()</code></h4> 
           <div class="paragraph"> 
            <p>The <code>commandDtoProcessor()</code> attribute allows an implementation of <code>CommandDtoProcessor</code> to be specified. This interface has the following API:</p> 
           </div> 
@@ -11640,7 +12670,7 @@ container.persist(cust);</code></pre>
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgant-Property_command">30.1. <code>command()</code></h3>
+         <h3 id="_rgant-Property_command">30.1. Command Persistence and Processing</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_command.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -11652,115 +12682,29 @@ container.persist(cust);</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>@Property(command=…​)</code> attribute (and the related <code>@Property(commandXxx=…​)</code> attributes) allows a property edit to be made into a concrete object such that it can be inspected and persisted. The primary use case for this are to support the deferring the execution of the action such that it can be invoked in the background, and to replay commands in a master/slave configuration.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The annotation works with (and is influenced by the behaviour of) a number of domain services:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a></p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_spi_BackgroundService"><code>BackgroundService</code></a> and</p> </li> 
-           <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a></p> </li> 
-          </ul> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Each property edit is reified by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service into a <code>Command</code> object, capturing details of the target object, the property, the proposed new value fo the property, the user, a timestamp and so on.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>If an appropriate <code>CommandService</code> is configured (for example using (non-ASF) <a href="http://platform.incode.org/modules/spi/command/spi-command.html">Incode Platform’s command</a> module), then the <code>Command</code> itself is persisted.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>By default, actions are invoked in directly in the thread of the invocation. If there is an implementation of <code>BackgroundCommandService</code> (as the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module does provide), then this means in turn that the <code>BackgroundService</code> can be used by the domain object code to programmatically create background <code>Command</code>s.</p> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>If background <code>Command</code>s are used, then an external scheduler, using <a href="../ugbtb/ugbtb.html#_ugbtb_headless-access_BackgroundCommandExecution">headless access</a>, must also be configured.</p> 
-              </div> </td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The <code>command()</code> attribute determines whether the property edit should be reified into a <code>Command</code> object (by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service).</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The default is <code>AS_CONFIGURED</code>, meaning that the <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.command.properties</code> is used to determine whether the property edit is reified:</p> 
-         </div> 
-         <div class="ulist"> 
-          <ul> 
-           <li> <p><code>all</code><br></p> 
-            <div class="paragraph"> 
-             <p>all property edits are reified</p> 
-            </div> </li> 
-           <li> <p><code>none</code><br></p> 
-            <div class="paragraph"> 
-             <p>no property edits are reified.</p> 
-            </div> </li> 
-          </ul> 
-         </div> 
-         <div class="paragraph"> 
-          <p>If there is no configuration property in <code>isis.properties</code> then all property edits are reified into <code>Command</code>s.</p> 
-         </div> 
-         <div class="admonitionblock note"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>Note: <code>Command</code> reification does not necessarily imply that <code>Command</code> objects will be persisted; that depends on whether there is a <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> configured that will persist said <code>Command</code>s.</p> 
-              </div> </td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
-         <div class="paragraph"> 
-          <p>This default can be overridden on an property-by-property basis; if <code>command()</code> is set to <code>ENABLED</code> then the action is reified irrespective of the configured value; if set to <code>DISABLED</code> then the property edit is NOT reified irrespective of the configured value.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>For example:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
-    <span class="annotation">@Property</span>(command=CommandReification.ENABLED)
-    <span class="directive">public</span> Product getProduct() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setProduct(Product p) { ... }
-}</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>corresponds to the behaviour described above; the <code>Command</code> object is persisted (assuming an appropriate <code>CommandService</code> is defined, and executed immediately in the foreground).</p> 
+          <p>Every property edit (and action invocation for that matter) is automatically reified into a concrete <code>Command</code> object. The <code>@Property(command=…​, commandXxx=…​)</code> attributes provide hints for the persistence of that <code>Command</code> object, and the subsequent processing of that persisted command. The primary use cases for this are to support the deferring the execution of the action such that it can be invoked in the background, and to replay commands in a master/slave configuration.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commandpersistence_code_2">30.1.1. <code>commandPersistence()</code></h4> 
+          <h4 id="_design_2">30.1.1. Design</h4> 
           <div class="paragraph"> 
-           <p>If the property edit has been reified, then the <code>commandPersistence()</code> attribute determines whether that <code>Command</code> object should then also be persisted (the default), or not persisted, or only if hinted.</p> 
+           <p>The annotation works with (and is influenced by the behaviour of) a number of domain services:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a></p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a></p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_spi_BackgroundService"><code>BackgroundService</code></a> and</p> </li> 
+            <li> <p><a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a></p> </li> 
+           </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>To explain this last alternative:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
-    <span class="annotation">@Property</span>(
-        command=CommandReification.ENABLED,
-        commandPersistence=CommandPersistence.IF_HINTED
-    )
-    <span class="directive">public</span> Product getProduct() { ... }
-    <span class="directive">public</span> <span class="type">void</span> setProduct(Product p) { ... }
-}</code></pre> 
-           </div> 
+           <p>Each property edit is automatically reified by the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service into a <code>Command</code> object, capturing details of the target object, the property, the proposed new value fo the property, the user, a timestamp and so on.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>will suppress the persistence of the <code>Command</code> object <em>unless</em> a child background <code>Command</code> has been created in the body of the property by way of the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>.</p> 
+           <p>If an appropriate <code>CommandService</code> is configured (for example using (non-ASF) <a href="http://platform.incode.org/modules/spi/command/spi-command.html">Incode Platform’s command</a> module), then the <code>Command</code> itself is persisted.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>By default, actions are invoked in directly in the thread of the invocation. If there is an implementation of <code>BackgroundCommandService</code> (as the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module does provide), then this means in turn that the <code>BackgroundService</code> can be used by the domain object code to programmatically create background <code>Command</code>s.</p> 
           </div> 
           <div class="admonitionblock note"> 
            <table> 
@@ -11769,21 +12713,697 @@ container.persist(cust);</code></pre>
               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>Unlike actions, where this is quite feasible, it is rather unlikely to occur as a side-effect of editing a property.</p> 
+                <p>If background <code>Command</code>s are used, then an external scheduler, using <a href="../ugbtb/ugbtb.html#_ugbtb_headless-access_BackgroundCommandExecution">headless access</a>, must also be configured.</p> 
                </div> </td> 
              </tr> 
             </tbody>
            </table> 
           </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_rgant-Property_commandPersistence">30.1.2. <code>command()</code> and <code>commandPersistence()</code></h4>
+          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_commandPersistence.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+           <ul class="dropdown-menu">
+            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_commandPersistence.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_commandPersistence.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_commandPersistence.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgant/_rgant-Property_commandPersistence.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+           </ul>
+          </div> 
           <div class="paragraph"> 
-           <p>On the other hand:</p> 
+           <p>The <code>command()</code> and `commandPersistence() attributes work together to determine whether a command will actually be persisted. There inter-relationship is somewhat complex, so is probably best explained by way of examples:</p> 
+          </div> 
+          <table class="tableblock frame-all grid-all spread"> 
+           <colgroup> 
+            <col style="width: 16.6666%;"> 
+            <col style="width: 16.6666%;"> 
+            <col style="width: 16.6666%;"> 
+            <col style="width: 16.6666%;"> 
+            <col style="width: 33.3336%;"> 
+           </colgroup> 
+           <thead> 
+            <tr> 
+             <th class="tableblock halign-left valign-top"><code>command()</code></th> 
+             <th class="tableblock halign-left valign-top"><code>isis.services. command.properties</code> config property</th> 
+             <th class="tableblock halign-left valign-top"><code>command Persistence()</code></th> 
+             <th class="tableblock halign-left valign-top">action dirties objects?</th> 
+             <th class="tableblock halign-left valign-top">is command persisted?</th> 
+            </tr> 
+           </thead> 
+           <tbody> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(either)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>ENABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>all</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>AS_CONFIGURED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>none</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>IF_HINTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>no</p> 
+               </div>
+              </div></td> 
+            </tr> 
+            <tr> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>DISABLED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>(any)</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p><code>NOT_PERSISTED</code></p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes</p> 
+               </div>
+              </div></td> 
+             <td class="tableblock halign-left valign-top">
+              <div>
+               <div class="paragraph"> 
+                <p>yes (!)</p> 
+               </div>
+              </div></td> 
+            </tr> 
+           </tbody> 
+          </table> 
+          <div class="paragraph"> 
+           <p>For example:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
     <span class="annotation">@Property</span>(
         command=CommandReification.ENABLED,
-        commandPersistence=CommandPersistence.NOT_PERSISTED
+        commandPersistence=CommandPersistence.PERSISTED
     )
     <span class="directive">public</span> Product getProduct() { ... }
     <span class="directive">public</span> <span class="type">void</span> setProduct(Product p) { ... }
@@ -11791,11 +13411,11 @@ container.persist(cust);</code></pre>
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>will prevent the parent <code>Command</code> object from being persisted, <em>even if</em> a child background <code>Command</code> is created.</p> 
+           <p>As can be seen, whether a command is actually persisted does not always follow the value of the <code>commandPersistence()</code> attribute. This is because the <code>command()</code> attribute actually determines whether any command metadata for the action is captured within the framework’s internal metamodel. If <code>command</code> is <code>DISABLED</code> or does not otherwise apply due to the action’s declared semantics, then the framework decides to persist a command based solely on whether the action dirtied any objects (as if <code>commandPersistence()</code> was set to <code>IF_HINTED</code>).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commandexecutein_code_2">30.1.2. <code>commandExecuteIn()</code></h4> 
+          <h4 id="__code_commandexecutein_code_2">30.1.3. <code>commandExecuteIn()</code></h4> 
           <div class="paragraph"> 
            <p>For persisted commands, the <code>commandExecuteIn()</code> attribute determines whether the <code>Command</code> should be executed in the foreground (the default) or executed in the background.</p> 
           </div> 
@@ -11822,7 +13442,7 @@ container.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_commanddtoprocessor_code_2">30.1.3. <code>commandDtoProcessor()</code></h4> 
+          <h4 id="__code_commanddtoprocessor_code_2">30.1.4. <code>commandDtoProcessor()</code></h4> 
           <div class="paragraph"> 
            <p>The <code>commandDtoProcessor()</code> attribute allows an implementation of <code>CommandDtoProcessor</code> to be specified. This interface has the following API:</p> 
           </div> 
