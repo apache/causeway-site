@@ -243,6 +243,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
+     <p class="nav navbar-text navbar-right small">v1.16.1</p> 
     </div> 
    </div> 
   </nav> 
@@ -1149,7 +1150,7 @@ env | grep ISIS | sort</code></pre>
                <ul> 
                 <li> <p>mainClass=<code>org.apache.isis.WebServer</code></p> </li> 
                 <li> <p>args=<code>-m domainapp.application.manifest.DomainAppAppManifestWithFixtures</code></p> </li> 
-                <li> <p>run before: <code>mvn -f pom-jdo-enhance-all.xml datanucleus:enhance -o</code> in the root module</p> </li> 
+                <li> <p>run before: <code>mvn -pl module-simple datanucleus:enhance -o</code> in the root module</p> </li> 
                </ul> 
               </div> </li> 
              <li> <p>can be run using the mvn jetty plugin:</p> 
@@ -1822,26 +1823,36 @@ gpg --import /tmp/KEYS</code></pre>
             <p>Assuming the ZIP file verifies, it should be unpacked, and then the artifact built from source.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>To build Apache Isis core, first download any dependencies:</p> 
+            <p>To build Apache Isis core, first clean out the local repository cache:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code>mvn dependency:go-offline</code></pre> 
+             <pre class="CodeRay highlight"><code>rm -rf ~/m2/repository/org/apache/isis</code></pre> 
             </div> 
            </div> 
            <div class="paragraph"> 
-            <p>Check that no Isis artifacts have yet been downloaded, ie there is no <code>~/.m2/org/repository/org/apache/isis</code> directory. If there are, it could indicate that the release being verified incorrectly references previous versions of Apache Isis</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Assuming all is ok, build using the <code>-o</code> offline flag:</p> 
+            <p>and then build using:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code>mvn clean install -o</code></pre> 
+             <pre class="CodeRay highlight"><code>mvn clean install -Dskip.git</code></pre> 
             </div> 
            </div> 
+           <div class="admonitionblock important"> 
+            <table> 
+             <tbody>
+              <tr> 
+               <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
+               <td class="content"> 
+                <div class="paragraph"> 
+                 <p>The <code>-Dskip.git</code> is required in order to temporarily disable the <code>git-commit-id-plugin</code> (which expects to be run within a git repository).</p> 
+                </div> </td> 
+              </tr> 
+             </tbody>
+            </table> 
+           </div> 
            <div class="paragraph"> 
-            <p>Confirm that the versions of the Isis artifacts now cached in your local repository are correct.</p> 
+            <p>Optionally, confirm that the versions of the Isis artifacts now cached in your local repository are correct.</p> 
            </div> 
           </div> 
           <div class="sect4"> 
@@ -2307,7 +2318,6 @@ popd</code></pre>
          <div class="ulist"> 
           <ul> 
            <li> <p>Paste in the JIRA-generated release notes generated above, adding to top of <code>adocs/documentation/src/main/asciidoc/release-notes.adoc</code>. Also add a summary line for the release.</p> </li> 
-           <li> <p>Search for any <code>-SNAPSHOT</code> suffices, and remove</p> </li> 
            <li> <p>Search these release procedures, and update any hard-coded reference to the release to the next release (so when they are followed next time the text will be correct).</p> </li> 
            <li> <p>Update the <a href="../../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p> </li> 
            <li> <p>Update any pages (<code>.adoc</code>, <code>.md</code>, <code>.html</code> etc) that describe how to run the archetype, and ensure they reference the correct version.<br></p> 
@@ -2319,17 +2329,34 @@ popd</code></pre>
              <p>For more information on DOAP files, see these <a href="http://projects.apache.org/doap.html">Apache policy docs</a>.</p> 
             </div> </li> 
            <li> <p>Update the <a href="https://git-wip-us.apache.org/repos/asf/isis/repo?p=isis.git;a=blob_plain;f=STATUS;hb=HEAD">STATUS</a> file (in root of Apache Isis' source) should be updated with details of the new release.</p> </li> 
-           <li> <p>commit the <code>.adoc</code> changes and publish to the <code>isis-site</code> repo.</p> </li> 
+           <li> <p>commit the <code>.adoc</code> changes</p> </li> 
           </ul> 
          </div> 
          <div class="paragraph"> 
-          <p>This will have published to the <code>SNAPSHOT</code> directory of the <code>isis-site</code> repo. Now, in the <code>isis-site</code> repo itself:</p> 
+          <p>Now we need to publish the website.</p> 
+         </div> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>locate <code>template/document.html.erb</code> file, and remove <code>-SNAPSHOT</code> from the navbar:</p> 
+            <div class="listingblock"> 
+             <div class="content"> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M1<span class="tag">&lt;/p&gt;</span></code></pre> 
+             </div> 
+            </div> </li> 
+           <li> <p>publish to the <code>isis-site</code> repo.</p> 
+            <div class="paragraph"> 
+             <p>This will have published to the <code>SNAPSHOT</code> directory of the <code>isis-site</code> repo.</p> 
+            </div> </li> 
+          </ul> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Now, in the <code>isis-site</code> repo itself:</p> 
          </div> 
          <div class="ulist"> 
           <ul> 
            <li> <p>double check that a copy of <code>current</code> exists as a named directory under <code>content/versions</code></p> 
             <div class="paragraph"> 
-             <p>If for any reason it isn’t there, then create a copy before it gets deleted in the step below. Also, take a copy of the <code>index.html</code> with one that redirects up to the home page (see a few steps below for an example).</p> 
+             <p>If for any reason it isn’t there, then create a copy (under <code>content/versions</code>) before it gets deleted in the step below.</p> 
             </div> </li> 
            <li> <p>delete the <code>current</code> version and then rename the just-published <code>SNAPSHOT</code> as <code>current</code>:</p> 
             <div class="listingblock"> 
@@ -2375,10 +2402,25 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
           </ul> 
          </div> 
          <div class="paragraph"> 
-          <p>At this point the files in the root (directly under <code>content</code>) will still be out of date; the publish process simply preserves whatever is in <code>content/versions/current</code>. Also, the <code>SNAPSHOT</code> will be missing (above it was renamed to <code>current</code>). To fix both of these issues, simply publish the website one more time (from the <code>isis</code> main repo).</p> 
+          <p>At this point the files in the root (directly under <code>content</code>) will still be out of date; the publish process simply preserves whatever is in <code>content/versions/current</code>. Also, the <code>SNAPSHOT</code> will be missing (above it was renamed to <code>current</code>). And, we also need to make sure that any future publishing of snapshots has the correct version in the navbar.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Finally, preview the changes (in the <code>isis-site</code>). If everything looks ok, then push the changes to make live.</p> 
+          <p>Therefore:</p> 
+         </div> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>locate <code>template/document.html.erb</code> file, and add in <code>-SNAPSHOT</code> for version in the navbar:</p> 
+            <div class="listingblock"> 
+             <div class="content"> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M2-SNAPSHOT<span class="tag">&lt;/p&gt;</span></code></pre> 
+             </div> 
+            </div> </li> 
+           <li> <p>publish the website once more (from the <code>isis</code> main repo).</p> </li> 
+           <li> <p>Finally, preview the changes (using <code>sh preview-html.sh</code> in the <code>isis-site</code>).</p> </li> 
+          </ul> 
+         </div> 
+         <div class="paragraph"> 
+          <p>If everything looks ok, then push the changes to make live.</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2442,7 +2484,7 @@ git branch -d release-2.0.0-M1-RC1              # branch no longer needed</code>
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>1.17.0-SNAPSHOT</code>)</p> 
+          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>2.0.0-M1-SNAPSHOT</code>)</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2795,7 +2837,7 @@ mvn -D deploy=snapshot deploy</code></pre>
          <p>The intent of an "interim" release is to allow a developer team to release their application based on a <code>-SNAPSHOT</code> version of the framework. Since <code>-SNAPSHOT</code> changes on a day-to-day basis, the idea is to tag a particular revision and to release this, thereby providing stability/traceability for the application being developed.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>Whereas <a href="../cgcom/cgcom.html#<em>cgcom_cutting-a-release.adoc">formal release</a>s and <a href="../cgcom/cgcom.html#_cgcom_relesae-process-for-snapshots.adoc">snapshot release</a>s are public (released through the Maven repository maintained by Apache Software Foundation), interim releases are non-public and rely on infrastructure provided by a developer team. The tagged release resides _not in the <a href="../../downloads.html#__downloads_source_code">official Apache Isis git repository</a>, but instead in a fork/clone maintained by the developer team.</p> 
+         <p>Whereas <a href="../cgcom/cgcom.html#<em>cgcom_cutting-a-release.adoc">formal release</a>s and <a href="../cgcom/cgcom.html#_cgcom_release-process-for-snapshots.adoc">snapshot release</a>s are public (released through the Maven repository maintained by Apache Software Foundation), interim releases are non-public and rely on infrastructure provided by a developer team. The tagged release resides _not in the <a href="../../downloads.html#__downloads_source_code">official Apache Isis git repository</a>, but instead in a fork/clone maintained by the developer team.</p> 
         </div> 
         <div class="admonitionblock note"> 
          <table> 
@@ -4399,7 +4441,7 @@ modify_committee.pl isis --remove joebloggs</code></pre>
   <footer class="footer"> 
    <div class="container"> 
     <div class="row"> 
-     <p class="text-center small text-muted"> Copyright © 2010~2017 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0. <br> Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation. </p> 
+     <p class="text-center small text-muted"> Copyright © 2010~2018 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0. <br> Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation. </p> 
     </div> 
    </div> 
   </footer> 

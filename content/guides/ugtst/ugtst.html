@@ -243,6 +243,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
+     <p class="nav navbar-text navbar-right small">v1.16.1</p> 
     </div> 
    </div> 
   </nav> 
@@ -2178,9 +2179,20 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">BootstrappingGlue</span> <span class="directive">extends</span> CukeGlueBootstrappingAbstract {  <i class="conum" data-value="1"></i><b>(1)</b>
+           <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">BootstrappingGlue</span>
+                <span class="directive">extends</span> HeadlessWithBootstrappingAbstract { <i class="conum" data-value="1"></i><b>(1)</b>
+
     <span class="directive">public</span> BootstrappingGlue() {
-        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule());                        <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule());            <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+
+    <span class="annotation">@Before</span>(order=<span class="integer">100</span>)                                      <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">public</span> <span class="type">void</span> beforeScenario() {
+        <span class="local-variable">super</span>.bootstrapAndSetupIfRequired();
+    }
+    <span class="annotation">@After</span>
+    <span class="directive">public</span> <span class="type">void</span> afterScenario(cucumber.api.Scenario sc) {
+        <span class="local-variable">super</span>.tearDownAllModules();
     }
 }</code></pre> 
           </div> 
@@ -2190,11 +2202,28 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
            <tbody>
             <tr> 
              <td><i class="conum" data-value="1"></i><b>1</b></td> 
-             <td>superclass contains the bootstrapping logic. This reuses many of the same classes as the integration testing framework</td> 
+             <td>superclass contains much of the bootstrapping logic (and is also used by the integration testing framework)</td> 
             </tr> 
             <tr> 
              <td><i class="conum" data-value="2"></i><b>2</b></td> 
              <td>the <code>Module</code> to use to bootstrap the application in headless mode.</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>remainder of the class is just boilerplate.</td> 
+            </tr> 
+           </tbody>
+          </table> 
+         </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>For BDD specs, the <code>CukeGlueBootstrappingAbstract</code> was previously provided (as a BDD counterpart to <code>IntegrationTestAbstract3</code>) to perform the relevant bootstrapping. <em>However</em>, it turns out that Cucumber does not allow subclassing of BDD specs. Therefore the bootstrapping boilerplate (that ideally would have been factored out into an abstract superclass) must be included within the BDD spec.</p> 
+              </div> </td> 
             </tr> 
            </tbody>
           </table> 
@@ -2273,7 +2302,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>The <a href="rgsvc.html#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a> domain service is one way in which glue classes can pass state between each other. Or, for more type safety, you could develop your own custom domain services for each scenario, and inject these in as regular services. See <a href="http://www.thinkcode.se/blog/2017/04/01/sharing-state-between-steps-in-cucumberjvm-using-picocontainer">this blog</a> post for more details.</p> 
+               <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_api_Scratchpad"><code>Scratchpad</code></a> domain service is one way in which glue classes can pass state between each other. Or, for more type safety, you could develop your own custom domain services for each scenario, and inject these in as regular services. See <a href="http://www.thinkcode.se/blog/2017/04/01/sharing-state-between-steps-in-cucumberjvm-using-picocontainer">this blog</a> post for more details.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -2979,7 +3008,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
           <p>A variety of format strings are supported; the format "YYYY-MM-DD" (as shown above) will work in every locale.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The fixture script requires that a <code>TickingFixtureClock</code> is initialized during bootstrapping. This is done automatically <code>IntegrationTestAbstract3</code> and <code>CukeGlueBootstrappingAbstract</code> (BDD specs).</p> 
+          <p>The fixture script requires that a <code>TickingFixtureClock</code> is initialized during bootstrapping. This is done automatically in <code>HeadlessWithBootstrappingAbstract</code> (the superclass of <code>IntegrationTestAbstract3</code> and for BDD bootstrapping classes).</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -3076,7 +3105,7 @@ toDoItem = sudoService.sudo(username,
   <footer class="footer"> 
    <div class="container"> 
     <div class="row"> 
-     <p class="text-center small text-muted"> Copyright © 2010~2017 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0. <br> Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation. </p> 
+     <p class="text-center small text-muted"> Copyright © 2010~2018 The Apache&nbsp;Software&nbsp;Foundation, licensed under the Apache&nbsp;License,&nbsp;v2.0. <br> Apache, the Apache feather logo, Apache&nbsp;Isis, and the Apache&nbsp;Isis project logo are all trademarks of The&nbsp;Apache&nbsp;Software&nbsp;Foundation. </p> 
     </div> 
    </div> 
   </footer> 
