@@ -227,10 +227,11 @@ table.CodeRay td.code>pre{padding:0}
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
         <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -3552,7 +3553,94 @@ mvn clean install</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_modifying_the_app">5.7. Modifying the App</h3> 
+         <h3 id="_using_gitlab_ci_and_dockerhub">5.7. Using GitLab CI and DockerHub</h3> 
+         <div class="paragraph"> 
+          <p>The archetype provides configuration files to allow you to build and package the application using <a href="https://gitlab.com/">GitLab</a> (for continuous integration pipelines) and <a href="https://hub.docker.com/">Docker Hub</a> (as a registry of Docker images).</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>To use, you’ll need an account on both GitLab and DockerHub.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_dockerhub">5.7.1. DockerHub</h4> 
+          <div class="paragraph"> 
+           <p>Simply create Docker repository "myapp" in DockerHub.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_source_code">5.7.2. Source code</h4> 
+          <div class="paragraph"> 
+           <p>In the <code>.gitlab-ci.yml</code> file, update the name of the Docker repository on DockerHub:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="yml"><span class="key">variables</span>:
+  <span class="error">...</span>
+  <span class="key">DOCKER_REGISTRY_REPOSITORY</span>: <span class="string"><span class="delimiter">"</span><span class="content">myapp</span><span class="delimiter">"</span></span></code></pre> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_gitlab">5.7.3. GitLab</h4> 
+          <div class="paragraph"> 
+           <p>Create a git repository "myapp" in GitLab.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Using Settings &gt; CI/CD, specify the following <em>Secret Variables</em>:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><code>DOCKER_REGISTRY_USERNAME</code> - corresponds to user account name on DockerHub</p> </li> 
+            <li> <p><code>DOCKER_REGISTRY_PASSWORD</code> - corresponding password</p> </li> 
+            <li> <p><code>DOCKER_REGISTRY_EMAIL</code> - associated email for the user account</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Finally, push a copy of the generated application to this repository using the instructions provided by GitLab.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This will kick off a pipeline that will build the image and push to DockerHub.</p> 
+          </div> 
+          <div class="imageblock"> 
+           <div class="content"> 
+            <a class="image" href="images/getting-started/dockerhub-tags.png"><img src="images/getting-started/dockerhub-tags.png" alt="dockerhub tags" width="600px"></a> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The tag name is based on a combination of the date, the branch and the git shaId.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_running_the_image">5.7.4. Running the Image</h4> 
+          <div class="paragraph"> 
+           <p>You can run the image in a new container using:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">docker run -p 8080:8080 -d XXX/YYY:ZZZ</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>where</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><code>XXX</code> is your DockerHub account name (<code>DOCKER_REGISTRY_USERNAME</code> secret variable in GitLab CI)</p> </li> 
+            <li> <p><code>YYY</code> is the name of the DockerHub registry (<code>DOCKER_REGISTRY_REPOSITORY</code> in the <code>.gitlab-ci.yml</code> file)</p> </li> 
+            <li> <p><code>ZZZ</code> is the tag of the image to run</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>For example, using the screenshot above, that image could be run using:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">docker run -p 8080:8080 -d danhaywood/simpleapp:20180315.0935.master.4521215</code></pre> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_modifying_the_app">5.8. Modifying the App</h3> 
          <div class="paragraph"> 
           <p>Once you are familiar with the generated app, you’ll want to start modifying it. There is plenty of guidance on this site; start with this guide (fundamentals) and then look at the other guides available the main <a href="../../documentation.html">documentation</a> page.</p> 
          </div> 
