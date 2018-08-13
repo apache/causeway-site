@@ -697,13 +697,10 @@ table.CodeRay td.code>pre{padding:0}
           <p>The <code>RepresentationService</code> is the main plug-in point for the <a href="../ugvro/ugvro.html">RestfulObjects viewer</a> to generate representations.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The default implementation generates representations according to the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0. However, it also delegates to the <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a> which provides a mechanism for altering representations according to the HTTP <code>Accept</code> header.</p> 
+          <p>The default implementations ultimately generate representations according to the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0. However, it also delegates to the <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a> which provides a mechanism for altering representations according to the HTTP <code>Accept</code> header. This allows more flexible representations to be generated for REST clients that (perhaps through their use of a certain Javascript library, say) expect, or at least works best with, a certain style of representation.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The principal motivation is to allow more flexible representations to be generated for REST clients that (perhaps through their use of a certain Javascript library, say) expect, or at least works best with, a certain style of representation.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>In all there are three domain services that can influence the representations generated: this service, <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a>and the <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_ContentMappingService"><code>ContentMappingService</code></a>. The diagram below shows how these collaborate:</p> 
+          <p>In all there are three domain services that can influence the representations generated: this service, <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a> and the <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_ContentMappingService"><code>ContentMappingService</code></a>. The diagram below shows how these collaborate:</p> 
          </div> 
          <div class="imageblock"> 
           <div class="content"> 
@@ -711,7 +708,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>The <code>RepresentationServiceForRestfulObjects</code> is the default implementation of this service; likewise <code>ContentNegotiationServiceXRoDomainType</code> is the default implementation of the <code>ContentNegotiationService</code>. If you inspect the source code you’ll see that the default implementation of this service’s primary responsibility is to generate the default Restful Objects representations. Therefore, if you what you want to do is to generate a <em>different _representation then in many cases replacing either this service _or</em> the <code>ContentNegotiationService</code> will be equivalent (you’ll notice that their SPIs are very similar).</p> 
+          <p>The <code>RepresentationServiceContentNegotiator</code> is the default implementation of the top-level <code>RepresentationService</code>, and it delegates to list of injecting <code>ContentNegotiationService</code> services. Using a chain of responsibility pattern, it returns the first non-null representation. For their part, the implementations of <code>ContentNegotiationService</code> use the HTTP Accept header to determine if they should render any representation or just return null.</p> 
          </div> 
          <div class="sect3"> 
           <h4 id="_spi_2">2.2.1. SPI</h4> 
@@ -750,23 +747,23 @@ table.CodeRay td.code>pre{padding:0}
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>representation of a single object, as per section 14.4 of the RO spec, v1.0</td> 
+              <td>representation of a single object, eg as per section 14.4 of the RO spec, v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>representation of a single property of an object, as per section 16.4 of the RO spec v1.0</td> 
+              <td>representation of a single property of an object, eg as per section 16.4 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>representation of a single collection of an object, as per section 17.5 of the RO spec v1.0</td> 
+              <td>representation of a single collection of an object, eg as per section 17.5 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td>representation of a single action (prompt) of an object, as per section 18.2 of the RO spec v1.0</td> 
+              <td>representation of a single action (prompt) of an object, eg as per section 18.2 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="5"></i><b>5</b></td> 
-              <td>representation of the results of a single action invocation, as per section 19.5 of the RO spec v1.0</td> 
+              <td>representation of the results of a single action invocation, eg as per section 19.5 of the RO spec v1.0</td> 
              </tr> 
             </tbody>
            </table> 
@@ -1457,7 +1454,7 @@ table.CodeRay td.code>pre{padding:0}
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The (internal) <code>PublishingServiceInternal</code> domain service acts as an internal facade to any configured <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> or (deprecated) <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a> domain services.</p> 
+          <p>The (internal) <code>PublishingServiceInternal</code> domain service acts as an internal facade to any configured <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> domain service(s).</p> 
          </div> 
          <div class="paragraph"> 
           <p>For published action invocations/ property edits, it provides an API for those member executions to call.</p> 
@@ -1512,7 +1509,7 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_related_classes_3">4.4.3. Related Classes</h4> 
           <div class="paragraph"> 
-           <p>The service delegates between the (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_ChangedObjectsServiceInternal"><code>ChangedObjectsServiceInternal</code></a> domain service to the configured <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> and <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a>.</p> 
+           <p>The service delegates between the (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_ChangedObjectsServiceInternal"><code>ChangedObjectsServiceInternal</code></a> domain service to the configured <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a>.</p> 
           </div> 
           <div class="paragraph"> 
            <p>The (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_AuditingServiceInternal"><code>AuditingServiceInternal</code></a> performs a similar function for the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a>, also collating details of the changed objects from <code>ChangedObjectsServiceInternal</code>.</p> 

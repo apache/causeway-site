@@ -6441,10 +6441,23 @@ WrapperFactory wrapperFactory;</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>Whenever a domain object is instantiated or otherwise becomes known to the framework, a "created" lifecycle event is fired. This is typically when the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-creation-api"><code>newTransientInstance()</code></a> is called; it will also happen if the object is simply instantiated with <code>new(…​)</code>, and then the <code>ServiceRegistry</code>'s <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>injectServicesInto(…​)</code></a> method is called.</p> 
+          <p>Whenever a domain object is instantiated or otherwise becomes known to the framework, a "created" lifecycle event is fired. This is typically when the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a>'s <code>instantiate()</code> method is called.</p> 
          </div> 
          <div class="paragraph"> 
           <p>Subscribers subscribe through the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> and can use the event to obtain a reference to the object just created. The subscriber could then, for example, update the object, eg looking up state from some external datastore.</p> 
+         </div> 
+         <div class="admonitionblock tip"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>It’s possible to instantiate objects without firing this lifecycle; just instantiate using its regular constructor, and then use the <code>ServiceRegistry</code>'s <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>injectServicesInto(…​)</code></a> to manually inject any required domain services.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
          <div class="paragraph"> 
           <p>By default the event raised is <code>ObjectCreatedEvent.Default</code>. For example:</p> 
@@ -6481,7 +6494,7 @@ WrapperFactory wrapperFactory;</code></pre>
          <div class="sect3"> 
           <h4 id="_subscribers_3">10.4.1. Subscribers</h4> 
           <div class="paragraph"> 
-           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below use the Guava API.</p> 
+           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below are compatible with both.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Subscribers can be either coarse-grained (if they subscribe to the top-level event type):</p> 
@@ -6490,7 +6503,8 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(ObjectCreatedEvent ev) {
         <span class="keyword">if</span>(ev.getSource() <span class="keyword">instanceof</span> ToDoItem) { ... }
     }
@@ -6504,25 +6518,13 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(ToDoItem.ObjectCreatedEvent ev) {
         ...
     }
 }</code></pre> 
            </div> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>If the AxonFramework is being used, replace <code>@com.google.common.eventbus.Subscribe</code> with <code>@org.axonframework.eventhandling.annotation.EventHandler</code>.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -8139,7 +8141,7 @@ WrapperFactory wrapperFactory;</code></pre>
          <div class="sect3"> 
           <h4 id="_subscribers_10">11.4.1. Subscribers</h4> 
           <div class="paragraph"> 
-           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below use the Guava API.</p> 
+           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below are compatible with both.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Subscribers can be either coarse-grained (if they subscribe to the top-level event type):</p> 
@@ -8148,7 +8150,8 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(CssClassUiEvent ev) {
         <span class="keyword">if</span>(ev.getSource() <span class="keyword">instanceof</span> ToDoItemDto) { ... }
     }
@@ -8162,7 +8165,8 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(ToDoItemDto.CssClassUiEvent ev) {
         ...
     }
@@ -8171,19 +8175,6 @@ WrapperFactory wrapperFactory;</code></pre>
           </div> 
           <div class="paragraph"> 
            <p>The subscriber should then use <code>CssClassUiEvent#setCssClass(…​)</code> to actually specify the CSS class to be used.</p> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>If the AxonFramework is being used, replace <code>@com.google.common.eventbus.Subscribe</code> with <code>@org.axonframework.eventhandling.annotation.EventHandler</code>.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -8204,7 +8195,7 @@ WrapperFactory wrapperFactory;</code></pre>
          <div class="sect3"> 
           <h4 id="_raising_events_programmatically_3">11.4.3. Raising events programmatically</h4> 
           <div class="paragraph"> 
-           <p>Normally events are only raised for interactions through the UI. However, events can be raised programmatically either by calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> API directly, or as a result of calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <code>cssClassOf(…​)</code> method.</p> 
+           <p>Normally events are only raised for interactions through the UI. However, events can be raised programmatically either by calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> API directly.</p> 
           </div> 
          </div> 
         </div> 
@@ -8302,7 +8293,7 @@ WrapperFactory wrapperFactory;</code></pre>
          <div class="sect3"> 
           <h4 id="_subscribers_11">11.6.1. Subscribers</h4> 
           <div class="paragraph"> 
-           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below use the Guava API.</p> 
+           <p>Subscribers (which must be domain services) subscribe using either the <a href="https://github.com/google/guava">Guava</a> API or (if the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> has been appropriately configured) using the <a href="http://www.axonframework.org/">Axon Framework</a> API. The examples below are compatible with both.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Subscribers can be either coarse-grained (if they subscribe to the top-level event type):</p> 
@@ -8311,7 +8302,8 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(IconUiEvent ev) {
         <span class="keyword">if</span>(ev.getSource() <span class="keyword">instanceof</span> ToDoItemDto) { ... }
     }
@@ -8325,7 +8317,8 @@ WrapperFactory wrapperFactory;</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
 <span class="directive">public</span> <span class="type">class</span> <span class="class">SomeSubscriber</span> <span class="directive">extends</span> AbstractSubscriber {
-    <span class="annotation">@com</span>.google.common.eventbus.Subscribe
+    <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+    <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
     <span class="directive">public</span> <span class="type">void</span> on(ToDoItemDto.IconUiEvent ev) {
         ...
     }
@@ -8334,19 +8327,6 @@ WrapperFactory wrapperFactory;</code></pre>
           </div> 
           <div class="paragraph"> 
            <p>The subscriber should then use <code>IconUiEvent#setIconName(…​)</code> to actually specify the icon name to be used.</p> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>If the AxonFramework is being used, replace <code>@com.google.common.eventbus.Subscribe</code> with <code>@org.axonframework.eventhandling.annotation.EventHandler</code>.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -8367,7 +8347,7 @@ WrapperFactory wrapperFactory;</code></pre>
          <div class="sect3"> 
           <h4 id="_raising_events_programmatically_4">11.6.3. Raising events programmatically</h4> 
           <div class="paragraph"> 
-           <p>Normally events are only raised for interactions through the UI. However, events can be raised programmatically either by calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> API directly, or as a result of calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <code>iconNameOf(…​)</code> method.</p> 
+           <p>Normally events are only raised for interactions through the UI. However, events can be raised programmatically either by calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a> API directly, or as a result of calling the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_TitleService"><code>TitleService</code></a>'s <code>iconNameOf(…​)</code> method.</p> 
           </div> 
          </div> 
         </div> 
@@ -9404,10 +9384,10 @@ WrapperFactory wrapperFactory;</code></pre>
     )
     <span class="annotation">@HomePage</span>
     <span class="directive">public</span> ToDoAppDashboard lookup() {
-        <span class="keyword">return</span> container.injectServicesInto(<span class="keyword">new</span> ToDoAppDashboard());
+        <span class="keyword">return</span> serviceRegistry.injectServicesInto(<span class="keyword">new</span> ToDoAppDashboard());
     }
     <span class="annotation">@Inject</span>
-    <span class="directive">private</span> DomainObjectContainer container;
+    <span class="predefined-type">ServiceRegistry</span> serviceRegistry;
 }</code></pre> 
          </div> 
         </div> 
@@ -9472,7 +9452,7 @@ WrapperFactory wrapperFactory;</code></pre>
          </table> 
         </div> 
         <div class="paragraph"> 
-         <p>Isis supports several syntaxes for injecting domain services. The simplest uses the <code>@javax.inject.Inject</code> annotation on the field, as defined in <a href="https://jcp.org/en/jsr/detail?id=330">JSR-330</a>.</p> 
+         <p>Apache Isis supports several syntaxes for injecting domain services. The simplest uses the <code>@javax.inject.Inject</code> annotation on the field, as defined in <a href="https://jcp.org/en/jsr/detail?id=330">JSR-330</a>.</p> 
         </div> 
         <div class="paragraph"> 
          <p>For example:</p> 
@@ -9505,7 +9485,7 @@ WrapperFactory wrapperFactory;</code></pre>
         <div class="sect2"> 
          <h3 id="_alternative_syntaxes">16.1. Alternative syntaxes</h3> 
          <div class="paragraph"> 
-          <p>Isis also supports setter-based injection:</p> 
+          <p>Apache Isis also supports setter-based injection:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -9591,55 +9571,35 @@ WrapperFactory wrapperFactory;</code></pre>
         <div class="sect2"> 
          <h3 id="_manually_injecting_services">16.3. Manually injecting services</h3> 
          <div class="paragraph"> 
-          <p>Isis performs dependency injection when domain entities are recreated. It will also perform dependency injection if an object is created through the <code>DomainObjectContainer</code>.</p> 
+          <p>Apache Isis performs dependency injection when domain entities are recreated. It will also perform dependency injection if an object is created through the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>For example, to create a new (transient) domain object, the idiom is:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java">Customer cust = container.newTransientInstance(Customer.class);  <i class="conum" data-value="1"></i><b>(1)</b>
+           <pre class="CodeRay highlight"><code data-lang="java">Customer cust = repositoryService.instantiate(Customer.class);  <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="comment">// initialize state of "cust"</span>
-container.persist(cust);</code></pre> 
+repositoryService.persist(cust);</code></pre> 
           </div> 
          </div> 
-         <div class="colist arabic"> 
-          <table> 
-           <tbody>
-            <tr> 
-             <td><i class="conum" data-value="1"></i><b>1</b></td> 
-             <td>where <code>container</code> is an instance of <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>.</td> 
-            </tr> 
-           </tbody>
-          </table> 
-         </div> 
          <div class="paragraph"> 
-          <p>View models are created similarly:</p> 
+          <p>View models are created identically:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java">ToDoAppDashboard dashboard = container.newViewModelInstance(ToDoAppDashboard.class);</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="java">ToDoAppDashboard dashboard = repositoryService.instantiate(ToDoAppDashboard.class);</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>If you prefer, though, you can simply instantiate domain objects using "new" and then inject domain services manually:</p> 
+          <p>If you prefer, though, you can simply instantiate domain objects using "new" and then inject domain services manually using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_ServiceRegistry"><code>ServiceRegistry</code></a>:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="java">Customer cust = <span class="keyword">new</span> Customer();
-container.injectServicesInto(cust);
+serviceRegistry.injectServicesInto(cust);
 <span class="comment">// initialize state of "cust"</span>
-container.persist(cust);</code></pre> 
-          </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>or if you prefer:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="java">Customer cust = container.injectServicesInto(<span class="keyword">new</span> Customer());
-<span class="comment">// initialize state of "cust"</span>
-container.persist(cust);</code></pre> 
+repositoryService.persist(cust);</code></pre> 
           </div> 
          </div> 
          <div class="admonitionblock note"> 
@@ -9649,10 +9609,10 @@ container.persist(cust);</code></pre>
              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>There is one subtle difference between using <code>DomainObjectContainer#newTransientInstance(…​)</code> and <code>DomainObjectContainer#injectServicesInto(…​)</code>, in that with the former Apache Isis will automatically initialize all fields to their default values.</p> 
+               <p>Note that using either <code>FactoryService#instantiate(…​)</code> or <code>RepositoryService#instantiate(…​)</code> will also automatically initialize all fields to their default values, and will also fire a "created" lifecycle event.</p> 
               </div> 
               <div class="paragraph"> 
-               <p>This isn’t a particular useful feature (and indeed can sometimes be rather confusing) so you may well wish to standardize on using <code>injectServicesInto(…​)</code> throughout.</p> 
+               <p>Neither of these are particularly useful (and indeed can sometimes be rather confusing) so you may well wish to standardize on using <code>injectServicesInto(…​)</code> throughout.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -11202,7 +11162,7 @@ container.persist(cust);</code></pre>
          </div> 
         </div> 
         <div class="paragraph"> 
-         <p>Isis uses argument to pass in the configuration properties read from all <a href="../rgcfg/rgcfg.html#_rgcfg_configuration-files">configuration files</a>:</p> 
+         <p>Apache Isis uses argument to pass in the configuration properties read from all <a href="../rgcfg/rgcfg.html#_rgcfg_configuration-files">configuration files</a>:</p> 
         </div> 
         <div class="admonitionblock tip"> 
          <table> 
@@ -11211,48 +11171,14 @@ container.persist(cust);</code></pre>
             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
             <td class="content"> 
              <div class="paragraph"> 
-              <p>Alternatively, you could inject <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a> into the service and read configuration properties using <code>DomainObjectContainer#getProperty(…​)</code> and related methods. Note that when using this latter API only those configuration properties prefixes <code>application.</code> key are provided.</p> 
+              <p>Alternatively, you could inject <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_ConfigurationService"><code>ConfigurationService</code></a> into the service and read configuration properties using <code>ConfigurationService#getProperty(…​)</code> and related methods. However, be aware when using this latter API that only those configuration properties keys with an <code>application.</code> prefix are provided.</p> 
              </div> </td> 
            </tr> 
           </tbody>
          </table> 
         </div> 
         <div class="paragraph"> 
-         <p>A common use case is for domain services that interact with the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a>. For example:</p> 
-        </div> 
-        <div class="listingblock"> 
-         <div class="content"> 
-          <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainService</span>(nature=NatureOfService.DOMAIN)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MySubscribingService</span> {
-    <span class="annotation">@PostConstruct</span>
-    <span class="directive">public</span> <span class="type">void</span> postConstruct() {
-        eventBusService.register(<span class="local-variable">this</span>);
-    }
-    <span class="annotation">@PreDestroy</span>
-    <span class="directive">public</span> <span class="type">void</span> preDestroy() {
-        eventBusService.unregister(<span class="local-variable">this</span>);
-    }
-    ...
-    <span class="annotation">@javax</span>.inject.Inject
-    EventBusService eventBusService;
-}</code></pre> 
-         </div> 
-        </div> 
-        <div class="admonitionblock tip"> 
-         <table> 
-          <tbody>
-           <tr> 
-            <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-            <td class="content"> 
-             <div class="paragraph"> 
-              <p>In this particular use case, it is generally simpler to just subclass from <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractSubscriber"><code>AbstractSubscriber</code></a>.</p> 
-             </div> </td> 
-           </tr> 
-          </tbody>
-         </table> 
-        </div> 
-        <div class="paragraph"> 
-         <p>Other use cases include obtaining connections to external datasources, eg subscribing to an ActiveMQ router, say, or initializing/cleaning up a background scheduler such as Quartz.</p> 
+         <p>Use cases include obtaining connections to external datasources, eg subscribing to an ActiveMQ router, say, or initializing/cleaning up a background scheduler such as Quartz.</p> 
         </div> 
         <div class="paragraph"> 
          <p>See also <a href="../rgant/rgant.html#_rgant-PreDestroy"><code>@PreDestroy</code></a></p> 
@@ -11360,7 +11286,7 @@ container.persist(cust);</code></pre>
          <p>The <code>@javax.jdo.annotation.PrimaryKey</code> annotation is used by JDO/DataNucleus to indicate that a property is used as the primary key for an entity with application-managed identity.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>Apache Isis also uses this annotation in a very minimal way: to ensure that the framework’s own logic to initialize newly instantiated objects (eg using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer#newTransientInstance(…​)</code></a> does not touch the primary key, and also to ensure that the primary key property is always disabled (read-only).</p> 
+         <p>Apache Isis also uses this annotation in a very minimal way: to ensure that the framework’s own logic to initialize newly instantiated objects (eg using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a> does not touch the primary key, and also to ensure that the primary key property is always disabled (read-only).</p> 
         </div> 
         <div class="admonitionblock note"> 
          <table> 

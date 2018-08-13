@@ -1153,7 +1153,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The <code>default…​()</code> supporting method is called for action parameters to return the initial argument value. This may be some sensible default (eg today’s date, or 0 or 1), or — for an action that is modifying the state of an object — might default to the current value of a corresponding property.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The method is <em>also</em> called for properties in the case when an object is newly instantiated using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer#newTransientInstance(…​)</code></a>. This is a much less common use case. If a default is not specified then properties are initialized to a default based on their type (eg 0 or <code>false</code>).</p> 
+           <p>The method is <em>also</em> called for properties in the case when an object is newly instantiated using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a>. This is a much less common use case. If a default is not specified then properties are initialized to a default based on their type (eg 0 or <code>false</code>).</p> 
           </div> 
           <div class="paragraph"> 
            <p>The signature of the supporting method depends on whether it is for an action parameter or a property.</p> 
@@ -1294,7 +1294,7 @@ table.CodeRay td.code>pre{padding:0}
              <p>There are, in fact, two other ways to set properties of a newly instantiated object to default values.</p> 
             </div> 
             <div class="paragraph"> 
-             <p>The first is to use the <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_created"><code>created()</code></a> callback, called by the framework when <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer#newTransientInstance(…​)</code></a> is called. This method is called after any dependencies have been injected into the service.</p> 
+             <p>The first is to use the <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_created"><code>created()</code></a> callback, called by the framework when <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a> is called. This method is called after any services have been injected into the domain object.</p> 
             </div> 
             <div class="paragraph"> 
              <p>The second is more straightforward: simply initialize properties in the constructor. However, this cannot use any injected services as they will not have been initialized.</p> 
@@ -2190,9 +2190,7 @@ table.CodeRay td.code>pre{padding:0}
              <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">ToDoAppDomainModule</span> {
     <span class="directive">private</span> ToDoAppDomainModule(){}
     <span class="directive">public</span> <span class="directive">abstract</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">PropertyDomainEvent</span>&lt;S,T&gt;
-            <span class="directive">extends</span> org.apache.isis.applib.events.domain.PropertyDomainEvent&lt;S,T&gt; {
-        ...
-    }
+            <span class="directive">extends</span> org.apache.isis.applib.events.domain.PropertyDomainEvent&lt;S,T&gt; { }
     ...
 }</code></pre> 
             </div> 
@@ -2203,10 +2201,7 @@ table.CodeRay td.code>pre{padding:0}
            <div class="listingblock"> 
             <div class="content"> 
              <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> ... {
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DescriptionDomainEvent</span>
-            <span class="directive">extends</span> PropertyDomainEvent&lt;<span class="predefined-type">String</span>&gt; {
-        ...
-    }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">DescriptionDomainEvent</span> <span class="directive">extends</span> PropertyDomainEvent&lt;<span class="predefined-type">String</span>&gt; { }
     <span class="annotation">@Property</span>(
         domainEvent = DescriptionDomainEvent.class
     )
@@ -2574,20 +2569,14 @@ table.CodeRay td.code>pre{padding:0}
              <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>Note that these callbacks are fired by Apache Isis rather than JDO. In the future we may deprecate them because there are better mechanisms available using listeners/subscribers:</p> 
-              </div> 
-              <div class="ulist"> 
-               <ul> 
-                <li> <p>in Isis 1.9.0 and earlier, you may therefore want to consider using the JDO API directly to set up a lifecycle listener; see <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_jdo-api">here</a> for further discussion.</p> </li> 
-                <li> <p>alternatively, you can use a subscriber for the <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle event</a>s fired in Isis.</p> </li> 
-               </ul> 
+               <p>Note that these callbacks are fired by Apache Isis rather than JDO. In the future we may deprecate them because there are better mechanisms available using a subscriber for the <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle event</a>s.</p> 
               </div> </td> 
             </tr> 
            </tbody>
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>The lifecycle callback methods supported by Isis are:</p> 
+          <p>The lifecycle callback methods supported by Apache Isis are:</p> 
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
@@ -2609,7 +2598,7 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>newTransientInstance()</code></a></p> 
+               <p>called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(..)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a></p> 
               </div>
              </div></td> 
            </tr> 
@@ -2678,84 +2667,6 @@ table.CodeRay td.code>pre{padding:0}
            </tr> 
           </tbody> 
          </table> 
-         <div class="paragraph"> 
-          <p>Some lifecycle methods have been deprecated:</p> 
-         </div> 
-         <table class="tableblock frame-all grid-all spread"> 
-          <caption class="title">
-           Table 4. Deprecated lifecycle methods
-          </caption> 
-          <colgroup> 
-           <col style="width: 20%;"> 
-           <col style="width: 80%;"> 
-          </colgroup> 
-          <thead> 
-           <tr> 
-            <th class="tableblock halign-left valign-top">Method</th> 
-            <th class="tableblock halign-left valign-top">Notes</th> 
-           </tr> 
-          </thead> 
-          <tbody> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>deleted()</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Replaced by <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_removed"><code>removed()</code></a></p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>deleting()</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Replaced by <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_removing"><code>removing()</code></a></p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>loading()</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>callback for when the (persistent) object is just about to be loaded from the object store.<br></p> 
-              </div> 
-              <div class="admonitionblock warning"> 
-               <table> 
-                <tbody>
-                 <tr> 
-                  <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
-                  <td class="content"> 
-                   <div class="paragraph"> 
-                    <p>This method is never called.</p> 
-                   </div> </td> 
-                 </tr> 
-                </tbody>
-               </table> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>saved()</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Replaced by <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_persisted"><code>persisted()</code></a></p> 
-              </div>
-             </div></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>saving()</code></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p>Replaced by <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_persisting"><code>persisting()</code></a></p> 
-              </div>
-             </div></td> 
-           </tr> 
-          </tbody> 
-         </table> 
          <div class="sect3"> 
           <h4 id="_rgcms_methods_lifecycle_created">2.3.1. <code>created()</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
@@ -2769,7 +2680,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>The <code>created()</code> lifecycle callback method is called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>newTransientInstance()</code></a></p> 
+           <p>The <code>created()</code> lifecycle callback method is called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a></p> 
           </div> 
           <div class="admonitionblock tip"> 
            <table> 
@@ -3565,7 +3476,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 5. Convenience Superclasses
+           Table 4. Convenience Superclasses
           </caption> 
           <colgroup> 
            <col style="width: 25%;"> 
@@ -3582,39 +3493,6 @@ table.CodeRay td.code>pre{padding:0}
            </tr> 
           </thead> 
           <tbody> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>o.a.i.applib.</code><br> <code>AbstractContainedObject</code></a></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>o.a.i.core</code><br> <code>isis-core-applib</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class)</p></td> 
-            <td class="tableblock halign-left valign-top"></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractDomainObject"><code>o.a.i.applib.</code><br> <code>AbstractDomainObject</code></a></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>o.a.i.core</code><br> <code>isis-core-applib</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class)</p></td> 
-            <td class="tableblock halign-left valign-top"></td> 
-           </tr> 
-           <tr> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractFactoryAndRepository"><code>o.a.i.applib.</code><br> <code>AbstractFactoryAndRepository</code></a></p></td> 
-            <td class="tableblock halign-left valign-top">
-             <div>
-              <div class="paragraph"> 
-               <p><code>o.a.i.core</code><br> <code>isis-core-applib</code></p> 
-              </div>
-             </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class)</p></td> 
-            <td class="tableblock halign-left valign-top"></td> 
-           </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractService"><code>o.a.i.applib.</code><br> <code>AbstractService</code></a></p></td> 
             <td class="tableblock halign-left valign-top">
@@ -3667,98 +3545,13 @@ table.CodeRay td.code>pre{padding:0}
                <p><code>o.a.i.core</code><br> <code>isis-core-applib</code></p> 
               </div>
              </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>FixtureScriptsDefault</code> is a default implementation that is used when the alternative <a href="../rgsvc/rgsvc.html#_rgsvc_api_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> is provided (and no other implementation of <code>FixtureScripts</code> was found).</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>FixtureScriptsDefault</code> is a default implementation that is used when the alternative <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> is provided (and no other implementation of <code>FixtureScripts</code> was found).</p></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">depends on:<br> <code>ClassDiscoveryService</code></p></td> 
            </tr> 
           </tbody> 
          </table> 
          <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractContainedObject">3.2.1. <code>AbstractContainedObject</code></h4>
-          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractContainedObject.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-           <ul class="dropdown-menu">
-            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractContainedObject.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractContainedObject.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractContainedObject.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractContainedObject.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-           </ul>
-          </div> 
-          <div class="paragraph"> 
-           <p>This class is a convenience superclass for domain objects and services, providing general purpose methods for interacting with the framework. These include:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p><code>allMatches(Query)</code> - search for all objects matching the specified <code>Query</code>.<br></p> 
-             <div class="paragraph"> 
-              <p>+ Note that this, and other similar methods (eg <code>firstMatch(…​)</code>, <code>uniqueMatch(…​)</code>) will automatically flush the current transaction.</p> 
-             </div> </li> 
-            <li> <p><code>newTransientInstance(Class)</code> - to create a new instance of an object, with any services injected into it</p> </li> 
-            <li> <p><code>persistIfNotAlready(Object)</code> - to persist an object<br></p> 
-             <div class="paragraph"> 
-              <p>In fact, the object is queued up to be persisted, and is only actually persisted either when the transaction commits, or when the transaction is flushed (typically when a query is performed).</p> 
-             </div> </li> 
-            <li> <p><code>warnUser(String)</code> - generate a warning to the user</p> </li> 
-            <li> <p><code>getContainer()</code> - which returns the <code>DomainObjectContainer</code></p> </li> 
-           </ul> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Each of these methods simply delegates to an equivalent method in <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>.</p> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In practice we find that there’s little to gain from subclassing; it’s easier/less obscure to simply inject <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a> into a simple pojo class.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractDomainObject">3.2.2. <code>AbstractDomainObject</code></h4>
-          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractDomainObject.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-           <ul class="dropdown-menu">
-            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractDomainObject.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractDomainObject.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractDomainObject.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractDomainObject.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-           </ul>
-          </div> 
-          <div class="paragraph"> 
-           <p>This class extends <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>AbstractContainedObject</code></a>, adding in convenience methods for managing the persistence lifecycle of the object instance.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Each of these methods, eg <code>isPersistent(…​)</code>, delegates to an equivalent method in <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractFactoryAndRepository">3.2.3. <code>AbstractFactoryAndRepository</code></h4>
-          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractFactoryAndRepository.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-           <ul class="dropdown-menu">
-            <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractFactoryAndRepository.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-            <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractFactoryAndRepository.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-            <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractFactoryAndRepository.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-            <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractFactoryAndRepository.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-           </ul>
-          </div> 
-          <div class="paragraph"> 
-           <p>This class extends <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>AbstractContainedObject</code></a>. Its intent was to be a convenience subclass for services acting as either a repository or a factory, however note that all of the methods that it defines are now deprecated.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Instead, indicate that a service is repository using the <a href="../rgant/rgant.html#_rgant-DomainService_repositoryFor"><code>@DomainService#repositoryFor()</code></a> attribute.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractService">3.2.4. <code>AbstractService</code></h4>
+          <h4 id="_rgcms_classes_super_AbstractService">3.2.1. <code>AbstractService</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
            <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractService.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3770,14 +3563,14 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>This class extends <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>AbstractContainedObject</code></a>, adding in an implementation of <code>getId()</code> based upon the classes name.</p> 
+           <p>This class provides an implementation of the optional <code>getId()</code> method for domain services, based upon the classes name.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>In practice there is little to gain from subclassing; simply inject <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a> for broadly equivalent functionality.</p> 
+           <p>In practice there is little to gain from subclassing. Instead annotated with <a href="../rgant/rgant.html#_rgant_DomainService"><code>@DomainService</code></a> and specify its <a href="../rgant/rgant.html#_rgant_DomainService_objectType"><code>#objectType()</code></a></p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractSubscriber">3.2.5. <code>AbstractSubscriber</code></h4>
+          <h4 id="_rgcms_classes_super_AbstractSubscriber">3.2.2. <code>AbstractSubscriber</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
            <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractSubscriber.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3799,7 +3592,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_AbstractViewModel">3.2.6. <code>AbstractViewModel</code></h4>
+          <h4 id="_rgcms_classes_super_AbstractViewModel">3.2.3. <code>AbstractViewModel</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
            <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_AbstractViewModel.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3811,7 +3604,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>This class extends <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>AbstractContainedObject</code></a>, also implementing the <a href="../rgcms/rgcms.html#_rgcms_classes_super_ViewModel"><code>ViewModel</code></a> interface. In and of itself it provides no new behaviour.</p> 
+           <p>This class simply implements the <a href="../rgcms/rgcms.html#_rgcms_classes_super_ViewModel"><code>ViewModel</code></a> interface, however the methods are still abstract. In and of itself it provides no new behaviour.</p> 
           </div> 
           <div class="admonitionblock tip"> 
            <table> 
@@ -3820,7 +3613,7 @@ table.CodeRay td.code>pre{padding:0}
               <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>As an alternative, consider simply annotating the view model class with {@link org.apache.isis.applib.annotation.ViewModel}.</p> 
+                <p>As an alternative, consider simply annotating the view model class with {@link org.apache.isis.applib.annotation.ViewModel} annotation.</p> 
                </div> </td> 
              </tr> 
             </tbody>
@@ -3828,7 +3621,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_FixtureScript">3.2.7. <code>FixtureScript</code></h4>
+          <h4 id="_rgcms_classes_super_FixtureScript">3.2.4. <code>FixtureScript</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
            <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_FixtureScript.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3858,7 +3651,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_rgcms_classes_super_FixtureScripts">3.2.8. <code>FixtureScripts</code></h4>
+          <h4 id="_rgcms_classes_super_FixtureScripts">3.2.5. <code>FixtureScripts</code></h4>
           <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
            <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_classes_super_FixtureScripts.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -3903,7 +3696,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 6. Domain Event Classes
+           Table 5. Domain Event Classes
           </caption> 
           <colgroup> 
            <col style="width: 25%;"> 
@@ -4406,7 +4199,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 7. UI Event Classes
+           Table 6. UI Event Classes
           </caption> 
           <colgroup> 
            <col style="width: 25%;"> 
@@ -4593,7 +4386,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 8. Lifecycle Event Classes
+           Table 7. Lifecycle Event Classes
           </caption> 
           <colgroup> 
            <col style="width: 25%;"> 
@@ -4630,7 +4423,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectCreatedEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-creation-api"><code>DomainObjectContainer</code></a>'s <code>#newTransientInstance(…​)</code> method.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a>'s <code>#instantiate(…​)</code> method.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_ObjectLoadedDomainEvent"><code>o.a.i.applib.</code><br> <code>ObjectLoadedEvent</code></a></p></td> 
@@ -4652,7 +4445,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectPersistedEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_ObjectPersistingDomainEvent"><code>o.a.i.applib.</code><br> <code>ObjectPersistingEvent</code></a></p></td> 
@@ -4663,7 +4456,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectPersistingEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_ObjectRemovingDomainEvent"><code>o.a.i.applib.</code><br> <code>ObjectRemovingEvent</code></a></p></td> 
@@ -4674,7 +4467,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectRemovingEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#remove(…​)</code> method.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#remove(…​)</code> method.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_ObjectUpdatedDomainEvent"><code>o.a.i.applib.</code><br> <code>ObjectUpdatedEvent</code></a></p></td> 
@@ -4685,7 +4478,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectUpdatedEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_ObjectUpdatingDomainEvent"><code>o.a.i.applib.</code><br> <code>ObjectUpdatingEvent</code></a></p></td> 
@@ -4696,7 +4489,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>ObjectUpdatingEvent.Default</code> is the concrete implementation that is used.</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p></td> 
            </tr> 
           </tbody> 
          </table> 
@@ -4743,23 +4536,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-creation-api"><code>DomainObjectContainer</code></a>'s <code>#newTransientInstance(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryServuce</code></a>'s <code>#instantiate(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectCreatedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectCreatedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_createdLifecycleEvent"><code>@DomainObject#createdLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4807,23 +4587,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectPersistedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectPersistedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_persistedLifecycleEvent"><code>@DomainObject#persistedLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4839,23 +4606,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectPersistingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectPersistingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_persistingLifecycleEvent"><code>@DomainObject#persistingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4871,23 +4625,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#remove(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#remove(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectRemovingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectRemovingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_removingLifecycleEvent"><code>@DomainObject#removingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4903,23 +4644,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectUpdatedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectUpdatedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_updatedLifecycleEvent"><code>@DomainObject#updatedLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4935,23 +4663,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectUpdatingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectUpdatingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_updatingLifecycleEvent"><code>@DomainObject#updatingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
         </div> 
@@ -5743,7 +5458,7 @@ table.CodeRay td.code>pre{padding:0}
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> that either have domain entity that implement and/or services that contribute this interface are:</p> 
+           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> that have domain entity/ies that implement this interface, and/or services that contribute this interface are:</p> 
           </div> 
           <div class="ulist"> 
            <ul> 
