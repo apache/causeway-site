@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v2.0.0-M1</p> 
+     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
     </div> 
    </div> 
   </nav> 
@@ -675,124 +675,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvw_features_where-am-i">2.4. Where am I</h3>
-         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
-          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_where-am-i.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
-          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
-          <ul class="dropdown-menu">
-           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_where-am-i.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
-           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_where-am-i.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
-           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_where-am-i.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
-           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_where-am-i.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
-          </ul>
-         </div> 
-         <div class="paragraph"> 
-          <p>The Wicket viewer provides a secondary navigation scheme that allows users to quickly access domain objects, that are organized in a hierarchical manner.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>This hierarchy can be understood as a navigable tree-structure, where the navigable tree-nodes are either domain objects or domain views. Domain objects that take part in such a navigable-tree-structure need to declare their actual navigable parent within this hierarchy. That’s all the framework needs, in order to build a navigable-tree. With version 2.0 we introduced the <code>Navigable</code> enum to use with the <code>@PropertyLayout</code> annotation to allow declarative specification of a domain object’s navigable parent.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>In other words: a domain object or view may declare it’s parent (with respect to the navigable tree-structure it is part of) via use of a <code>@PropertyLayout(navigable=Navigable.PARENT)</code> annotation.</p> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_screenshots_4">2.4.1. Screenshots</h4> 
-          <div class="paragraph"> 
-           <p>The following screenshot shows the navigation links below the top menu bar.</p> 
-          </div> 
-          <div class="imageblock"> 
-           <div class="content"> 
-            <a class="image" href="images/where-am-i/hello_grey_bg.png"><img src="images/where-am-i/hello_grey_bg.png" alt="hello grey bg" width="720px"></a> 
-           </div> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_domain_code_3">2.4.2. Domain Code</h4> 
-          <div class="paragraph"> 
-           <p>To declare a domain object’s (or view’s) navigable parent, add a <code>@PropertyLayout(navigable=Navigable.PARENT)</code> annotation to a field (that has an associated getter) or a no-arg method, that returns the parent object:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DomainObject</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Company</span> { ... }
-
-<span class="annotation">@DomainObject</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Employee</span> {
-
-    <span class="annotation">@PropertyLayout</span>(navigable=Navigable.PARENT) <span class="comment">// annotated field with e.g. lombok provided getter</span>
-    <span class="annotation">@Getter</span>
-    Company myCompany;
-}
-
-<span class="annotation">@DomainObject</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">PhoneNumber</span> {
-
-    <span class="annotation">@PropertyLayout</span>(navigable=Navigable.PARENT)  <span class="comment">// annotated no-arg supplier</span>
-    Employee employee(){
-        <span class="keyword">return</span> ...
-    }
-
-}</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>This results in a navigable tree-structure …​</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Company &gt; Employee &gt; PhoneNumber</p> 
-          </div> 
-          <div class="sect4"> 
-           <h5 id="_how_to_use_navigable_parent">How to use Navigable.PARENT</h5> 
-           <div class="olist arabic"> 
-            <ol class="arabic"> 
-             <li> <p>Any use of <code>@PropertyLayout(navigable=Navigable.PARENT)</code> with Java interfaces is simply ignored. These do not contribute to the domain meta model.</p> </li> 
-             <li> <p>Any class (abstract or concrete) may at most have one <code>@PropertyLayout</code> annotation, having <code>navigable=Navigable.PARENT</code> 'flag' set (on either a method or a field); otherwise meta-model validation will fail.</p> </li> 
-             <li> <p>The annotated member (method or field), when …​</p> 
-              <div class="olist loweralpha"> 
-               <ol class="loweralpha" type="a"> 
-                <li> <p>…​ a method: then must be a no-arg method returning a non-primitive type (e.g. a getter)</p> </li> 
-                <li> <p>…​ a field: then the field must be of non-primitive type and must also have a getter (as specified by the Java Beans Standard, particularly to allow <code>@PropertyLayout(navigable=Navigable.PARENT)</code> annotations on fields that use the lombok @Getter annotation)</p> </li> 
-               </ol> 
-              </div> </li> 
-             <li> <p>Starting from the current domain-object, we search the object’s class inheritance hierarchy (super class, super super class, …​), until we find the first class that has a <code>@PropertyLayout(navigable=Navigable.PARENT)</code> annotation. That’s the one we use to resolve the current domain-object’s navigable parent.</p> </li> 
-            </ol> 
-           </div> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_user_experience_4">2.4.3. User Experience</h4> 
-          <div class="paragraph"> 
-           <p>When viewing a domain object that is part of a hierarchical structure, one can easily navigate to any parent of this object. Horizontally arranged text links separated by the 'greater than' symbol (&gt;) are provided below the main menu. (Traditionally called breadcrumbs.)</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_related_functionality_3">2.4.4. Related functionality</h4> 
-          <div class="paragraph"> 
-           <p>The navigable tree-structure, as provided by the 'Where am I' feature, is declared at compile-time (predefined by the programmer), whereas related features (<a href="../ugvw/ugvw.html#_ugvw_features_recent-pages">Recent Pages</a> and <a href="../ugvw/ugvw.html#_ugvw_features_bookmarked-pages">Bookmarked Pages</a>) are populated at runtime only after user interaction.</p> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="_configuration_3">2.4.5. Configuration</h4> 
-          <div class="paragraph"> 
-           <p>By default, the 'Where am I' feature will show a maximum of 64 links. This can be overridden using a property (in <code>isis.properties</code>), for example:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.whereAmI.maxParentChainLength=20</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>To disable the 'Where am I' feature, override the default (=enabled) by using a property (in <code>isis.properties</code>):</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="ini">isis.viewer.whereAmI.enabled=false</code></pre> 
-           </div> 
-          </div> 
-         </div> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="_ugvw_features_titles-in-tables">2.5. Titles in Tables</h3>
+         <h3 id="_ugvw_features_titles-in-tables">2.4. Titles in Tables</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_titles-in-tables.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -902,7 +785,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvw_features_blob-attachments">2.6. File upload/download</h3>
+         <h3 id="_ugvw_features_blob-attachments">2.5. File upload/download</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_blob-attachments.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -920,7 +803,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>A class can define a property using either of these types, for example:</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_5">2.6.1. Screenshots</h4> 
+          <h4 id="_screenshots_4">2.5.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>The following screenshots are taken from the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp">todoapp</a> (not ASF):</p> 
           </div> 
@@ -1013,7 +896,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_domain_code_4">2.6.2. Domain Code</h4> 
+          <h4 id="_domain_code_3">2.5.2. Domain Code</h4> 
           <div class="paragraph"> 
            <p>To define a <code>Blob</code>, use:</p> 
           </div> 
@@ -1058,7 +941,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvw_features_user-registration">2.7. User Registration</h3>
+         <h3 id="_ugvw_features_user-registration">2.6. User Registration</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvw/_ugvw_features_user-registration.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1110,7 +993,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_6">2.7.1. Screenshots</h4> 
+          <h4 id="_screenshots_5">2.6.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>The user is presented with a login page:</p> 
           </div> 
@@ -1161,7 +1044,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_4">2.7.2. Configuration</h4> 
+          <h4 id="_configuration_3">2.6.2. Configuration</h4> 
           <div class="paragraph"> 
            <p>There are two prerequisites:</p> 
           </div> 
@@ -1439,7 +1322,7 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_other_annotations">3.1.4. Other Annotations</h4> 
           <div class="paragraph"> 
-           <p>Layout semantics can also be specified using the various <code>XxxLayout</code> annotations:</p> 
+           <p>All the layout annotations (eg <code>@Regex</code> and <code>@Named</code>) have been deprecated, instead replaced by the various <code>XxxLayout</code> annotations:</p> 
           </div> 
           <div class="ulist"> 
            <ul> 
@@ -1503,6 +1386,25 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="paragraph"> 
            <p>This therefore allows libraries that provide a domain entities/view models (for example, the (non-ASF) <a href="http://platform.incode.org">Incode Platform</a> modules) to define the UI of these objects using a layout file, while still allowing the consuming application to override that layout if it so requires.</p> 
+          </div> 
+          <div class="admonitionblock note"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>It is also possible to describe layouts using a <code>.layout.json</code> file. However, <code>.layout.json</code> support is deprecated; the <code>.layout.xml</code> file also enables much more sophisticated layouts than those afforded by <code>.layout.json</code>.</p> 
+               </div> 
+               <div class="paragraph"> 
+                <p>If you have an application with older <code>.layout.json</code> files, then it is possible to download initial <code>.layout.xml</code> files using the <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_LayoutService"><code>LayoutService</code></a> (exposed as an action on the prototyping menu).</p> 
+               </div> 
+               <div class="paragraph"> 
+                <p>The <code>.layout.json</code> file will be ignored once a <code>.layout.xml</code> file is present.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1871,7 +1773,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>Ignorig the "current" style (which merely downloads the currently cached layout), the other three styles allow the developer to choose how much metadata is to be specified in the XML, and how much (if any) will be obtained from annotations in the metamodel. The table below summarises the choices:</p> 
+           <p>Ignoring the "current" style (which merely downloads the currently cached layout), the other three styles allow the developer to choose how much metadata is to be specified in the XML, and how much (if any) will be obtained from annotations in the metamodel. The table below summarises the choices:</p> 
           </div> 
           <table class="tableblock frame-all grid-all spread"> 
            <caption class="title">
@@ -3135,7 +3037,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           <p>The 'remember me' checkbox on the login page can be suppressed, if required, by setting a configuration flag.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_7">5.2.1. Screenshots</h4> 
+          <h4 id="_screenshots_6">5.2.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>With 'remember me' not suppressed (the default):</p> 
           </div> 
@@ -3154,7 +3056,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_5">5.2.2. Configuration</h4> 
+          <h4 id="_configuration_4">5.2.2. Configuration</h4> 
           <div class="paragraph"> 
            <p>To suppress the 'remember me' checkbox, add the following configuration flag:</p> 
           </div> 
@@ -3184,7 +3086,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           <p>The 'sign up' link can be suppressed, if required, by setting a configuration flag.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_8">5.3.1. Screenshots</h4> 
+          <h4 id="_screenshots_7">5.3.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>With 'sign up' not suppressed (the default):</p> 
           </div> 
@@ -3203,7 +3105,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_6">5.3.2. Configuration</h4> 
+          <h4 id="_configuration_5">5.3.2. Configuration</h4> 
           <div class="paragraph"> 
            <p>To suppress the 'sign up' link, add the following configuration flag:</p> 
           </div> 
@@ -3239,7 +3141,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           <p>The 'password reset' link can be suppressed, if required, by setting a configuration flag.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_9">5.4.1. Screenshots</h4> 
+          <h4 id="_screenshots_8">5.4.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>With 'password reset' not suppressed (the default):</p> 
           </div> 
@@ -3258,7 +3160,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_7">5.4.2. Configuration</h4> 
+          <h4 id="_configuration_6">5.4.2. Configuration</h4> 
           <div class="paragraph"> 
            <p>To suppress the 'password reset' link, add the following configuration flag:</p> 
           </div> 
@@ -3413,7 +3315,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           <p>By default the Wicket viewer will display the application name top-left in the header menu. This can be changed to display a png logo instead.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_10">6.1.1. Screenshots</h4> 
+          <h4 id="_screenshots_9">6.1.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>The screenshot below shows the Isis addons example <a href="https://github.com/isisaddons/isis-app-todoapp/">todoapp</a> (not ASF) with a 'brand logo' image in its header:</p> 
           </div> 
@@ -3432,7 +3334,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_8">6.1.2. Configuration</h4> 
+          <h4 id="_configuration_7">6.1.2. Configuration</h4> 
           <div class="paragraph"> 
            <p>In the application-specific subclass of <code>IsisWicketApplication</code>, bind:</p> 
           </div> 
@@ -3621,7 +3523,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_configuration_9">6.4.2. Configuration</h4> 
+          <h4 id="_configuration_8">6.4.2. Configuration</h4> 
           <div class="sect4"> 
            <h5 id="_adding_attributes_to_the_war_s_manifest">Adding attributes to the WAR’s manifest</h5> 
            <div class="paragraph"> 
@@ -4199,7 +4101,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
           <p>Currently this support consists simply of being able to suppress the header and/or footer.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_screenshots_11">6.10.1. Screenshots</h4> 
+          <h4 id="_screenshots_10">6.10.1. Screenshots</h4> 
           <div class="paragraph"> 
            <p>For example, the regular view is:</p> 
           </div> 
@@ -4475,7 +4377,7 @@ isis.viewer.wicket.maxTitleLengthInParentedTables=8</code></pre>
            <p>As explained above, in most cases Apache Isis' Wicket viewer will search for the first <code>ComponentFactory</code> that can render an element, and use it. In the case of (either standalone or parented) collections, though, Apache Isis will show all available views.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>For example, out-of-the-box Apache Isis provides a table view, a summary view (totals/sums/averages of any data), and a collapsed view. These are selected by clicking on the toolbar by each collection.</p> 
+           <p>For example, out-of-the-box Apache Isis provides a table view, a summary view (totals/sums/averages of any data), and a collapsed view (for <code>@Render(LAZILY)</code> collections). These are selected by clicking on the toolbar by each collection.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Additional views though could render the objects in the collection as a variety of ways. Indeed, some third-party implementations in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> already exist, including:</p> 
@@ -4896,7 +4798,7 @@ cssClassUiEvent = DemoObject.CssClassUiEvent.class
 <span class="directive">public</span> <span class="type">class</span> <span class="class">DemoObject</span> ... {
 
 <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CssClassUiEvent</span>
-<span class="directive">extends</span> org.apache.isis.applib.events.ui.CssClassUiEvent&lt;DemoObject&gt; {}
+<span class="directive">extends</span> org.apache.isis.applib.services.eventbus.CssClassUiEvent&lt;DemoObject&gt; {}
 ...
 }</code></pre> 
           </div> 

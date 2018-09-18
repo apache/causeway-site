@@ -221,16 +221,17 @@ table.CodeRay td.code>pre{padding:0}
         <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Other Resources</li> 
         <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
-        <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
+        <li><a href="https://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
         <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/">Apache Homepage</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -1152,7 +1153,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>The <code>default…​()</code> supporting method is called for action parameters to return the initial argument value. This may be some sensible default (eg today’s date, or 0 or 1), or — for an action that is modifying the state of an object — might default to the current value of a corresponding property.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The method is <em>also</em> called for properties in the case when an object is newly instantiated using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer#newTransientInstance(…​)</code></a>. This is a much less common use case. If a default is not specified then properties are initialized to a default based on their type (eg 0 or <code>false</code>).</p> 
+           <p>The method is <em>also</em> called for properties in the case when an object is newly instantiated using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a>. This is a much less common use case. If a default is not specified then properties are initialized to a default based on their type (eg 0 or <code>false</code>).</p> 
           </div> 
           <div class="paragraph"> 
            <p>The signature of the supporting method depends on whether it is for an action parameter or a property.</p> 
@@ -1293,7 +1294,7 @@ table.CodeRay td.code>pre{padding:0}
              <p>There are, in fact, two other ways to set properties of a newly instantiated object to default values.</p> 
             </div> 
             <div class="paragraph"> 
-             <p>The first is to use the <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_created"><code>created()</code></a> callback, called by the framework when <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer#newTransientInstance(…​)</code></a> is called. This method is called after any dependencies have been injected into the service.</p> 
+             <p>The first is to use the <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_created"><code>created()</code></a> callback, called by the framework when <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a> is called. This method is called after any services have been injected into the domain object.</p> 
             </div> 
             <div class="paragraph"> 
              <p>The second is more straightforward: simply initialize properties in the constructor. However, this cannot use any injected services as they will not have been initialized.</p> 
@@ -2480,7 +2481,7 @@ table.CodeRay td.code>pre{padding:0}
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>simple <a href="../rgcms/rgcms.html#_rgcms_classes_utility_TitleBuffer">tility class</a> to help construct the title string</td> 
+              <td>simple <a href="../rgcms/rgcms.html#_rgcms_classes_utility_TitleBuffer">utility class</a> to help construct the title string</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="2"></i><b>2</b></td> 
@@ -2573,20 +2574,14 @@ table.CodeRay td.code>pre{padding:0}
              <td class="icon"> <i class="fa icon-warning" title="Warning"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>Note that these callbacks are fired by Apache Isis rather than JDO. In the future we may deprecate them because there are better mechanisms available using listeners/subscribers:</p> 
-              </div> 
-              <div class="ulist"> 
-               <ul> 
-                <li> <p>in Isis 1.9.0 and earlier, you may therefore want to consider using the JDO API directly to set up a lifecycle listener; see <a href="../rgcms/rgcms.html#_rgcms_methods_lifecycle_jdo-api">here</a> for further discussion.</p> </li> 
-                <li> <p>alternatively, you can use a subscriber for the <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle event</a>s fired in Isis.</p> </li> 
-               </ul> 
+               <p>Note that these callbacks are fired by Apache Isis rather than JDO. In the future we may deprecate them because there are better mechanisms available using a subscriber for the <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle event</a>s.</p> 
               </div> </td> 
             </tr> 
            </tbody>
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>The lifecycle callback methods supported by Isis are:</p> 
+          <p>The lifecycle callback methods supported by Apache Isis are:</p> 
          </div> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
@@ -2608,7 +2603,7 @@ table.CodeRay td.code>pre{padding:0}
             <td class="tableblock halign-left valign-top">
              <div>
               <div class="paragraph"> 
-               <p>called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>newTransientInstance()</code></a></p> 
+               <p>called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(..)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a></p> 
               </div>
              </div></td> 
            </tr> 
@@ -2768,7 +2763,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>The <code>created()</code> lifecycle callback method is called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>newTransientInstance()</code></a></p> 
+           <p>The <code>created()</code> lifecycle callback method is called when an object has just been created using <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a> or <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a></p> 
           </div> 
           <div class="admonitionblock tip"> 
            <table> 
@@ -3666,7 +3661,7 @@ table.CodeRay td.code>pre{padding:0}
                <p><code>o.a.i.core</code><br> <code>isis-core-applib</code></p> 
               </div>
              </div></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>FixtureScriptsDefault</code> is a default implementation that is used when the alternative <a href="../rgsvc/rgsvc.html#_rgsvc_api_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> is provided (and no other implementation of <code>FixtureScripts</code> was found).</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>FixtureScriptsDefault</code> is a default implementation that is used when the alternative <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> is provided (and no other implementation of <code>FixtureScripts</code> was found).</p></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">depends on:<br> <code>ClassDiscoveryService</code></p></td> 
            </tr> 
           </tbody> 
@@ -3769,10 +3764,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>This class extends <a href="../rgcms/rgcms.html#_rgcms_classes_super_AbstractContainedObject"><code>AbstractContainedObject</code></a>, adding in an implementation of <code>getId()</code> based upon the classes name.</p> 
+           <p>This class provides an implementation of the optional <code>getId()</code> method for domain services, based upon the classes name.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>In practice there is little to gain from subclassing; simply inject <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a> for broadly equivalent functionality.</p> 
+           <p>In practice there is little to gain from subclassing. Instead annotate with <a href="../rgant/rgant.html#_rgant_DomainService"><code>@DomainService</code></a> and specify its <a href="../rgant/rgant.html#_rgant_DomainService_objectType"><code>#objectType()</code></a></p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -3819,7 +3814,7 @@ table.CodeRay td.code>pre{padding:0}
               <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>As an alternative, consider simply annotating the view model class with {@link org.apache.isis.applib.annotation.ViewModel}.</p> 
+                <p>As an alternative, consider simply annotating the view model class with the {@link org.apache.isis.applib.annotation.ViewModel} annotation.</p> 
                </div> </td> 
              </tr> 
             </tbody>
@@ -4742,23 +4737,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-creation-api"><code>DomainObjectContainer</code></a>'s <code>#newTransientInstance(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first instantiated using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryServuce</code></a>'s <code>#instantiate(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectCreatedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectCreatedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_createdLifecycleEvent"><code>@DomainObject#createdLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4806,23 +4788,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is first saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectPersistedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectPersistedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_persistedLifecycleEvent"><code>@DomainObject#persistedLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4838,23 +4807,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#persist(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be saved (inserted) into the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#persist(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectPersistingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectPersistingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_persistingLifecycleEvent"><code>@DomainObject#persistingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4870,23 +4826,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#remove(…​)</code> method.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be deleted from the database using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#remove(…​)</code> method.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectRemovingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectRemovingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_removingLifecycleEvent"><code>@DomainObject#removingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4902,23 +4845,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object has just been updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectUpdatedEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectUpdatedEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_updatedLifecycleEvent"><code>@DomainObject#updatedLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -4934,23 +4864,10 @@ table.CodeRay td.code>pre{padding:0}
            </ul>
           </div> 
           <div class="paragraph"> 
-           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_object-persistence-api"><code>DomainObjectContainer</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
+           <p>Subclass of <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent_AbstractLifecycleEvent"><code>AbstractLifecycleEvent</code></a>, broadcast when an object is about to be updated in the database. This is done either explicitly when the current transaction is flushed using the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>'s <code>#flush(…​)</code> method, else is done implicitly when the transaction commits at the end of the user request.</p> 
           </div> 
           <div class="paragraph"> 
-           <p><code>ObjectUpdatingEvent.Default</code> is the concrete implementation that is used.</p> 
-          </div> 
-          <div class="admonitionblock note"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>In the future this may be generalized to allow arbitrary subclasses to be broadcast, see ISIS-803.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
+           <p><code>ObjectUpdatingEvent.Default</code> is the implementation that is used by default, but this can be overridden using <a href="../rgant/rgant.html#_rgant_DomainObject_updatingLifecycleEvent"><code>@DomainObject#updatingLifecycleEvent()</code></a>.</p> 
           </div> 
          </div> 
         </div> 
@@ -7517,7 +7434,7 @@ table.CodeRay td.code>pre{padding:0}
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>These type definitions are just building blocks, also used within the <a href="../rgcms/rgcms.html#_rgcms_schema-aim">action iInvocation memento</a> schema. The first, <code>valueDto</code> is The second, <code>valueType</code>, enumerates the different types of vales, eg of a formal parameter to an action.</p> 
+           <p>These type definitions are just building blocks. The first, <code>valueDto</code> is The second, <code>valueType</code>, enumerates the different types of vales, eg of a formal parameter to an action.</p> 
           </div> 
           <div class="admonitionblock important"> 
            <table> 

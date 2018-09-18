@@ -221,16 +221,17 @@ table.CodeRay td.code>pre{padding:0}
         <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Other Resources</li> 
         <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
-        <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
+        <li><a href="https://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
         <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/">Apache Homepage</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -404,7 +405,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>For objects that are already persisted, the service is automatically injected just after the object is rehydrated by JDO/DataNucleus.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>For transient objects (instantiated programmatically), the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService</code></a>'s <code>instantiate()</code> method (or the deprecated <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <code>newTransientInstance()</code> method) will automatically inject the services.</p> 
+          <p>For transient objects (instantiated programmatically), the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_FactoryService"><code>FactoryService#instantiate(…​)</code></a> or the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService#instantiate(…​)</code></a>'s will automatically inject the services.</p> 
          </div> 
          <div class="paragraph"> 
           <p>Alternatively the object can be instantiated simply using <code>new</code>, then services injected using <a href="../rgsvc/rgsvc.html#_rgsvc_metadata-api_ServiceRegistry"><code>ServiceRegistry</code></a>'s <code>injectServicesInto(…​)</code> method (or the deprecated <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>'s <code>injectServicesInto(…​)</code> method).</p> 
@@ -432,7 +433,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_api_LocaleProvider"><code>LocaleProvider</code></a>. Here’s how:</p> 
+          <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_LocaleProvider"><code>LocaleProvider</code></a>. Here’s how:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -461,7 +462,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>It’s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy (if using <code>1.10.0</code> or later). The idea is to have the framework inject all implementations of the service, and then to delegate to the first one that isn’t "this" one:</p> 
+          <p>It’s also quite common to want to decorate the existing implementation (ie have your own implementation delegate to the default); this is also possible and quite easy. The idea is to have the framework inject all implementations of the service, and then to delegate to the first one that isn’t "this" one:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -527,19 +528,19 @@ table.CodeRay td.code>pre{padding:0}
          <div class="ulist"> 
           <ul> 
            <li> <p>the (request-scoped) <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> captures the user’s intention to invoke an action or edit a property; this is held by the <code>Command</code> object.</p> </li> 
-           <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> has been configured, then this will be used to create the <code>Command</code> object implementation, generally so that it can then also be persisted.<br></p> 
+           <li> <p>if a <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_CommandService"><code>CommandService</code></a> has been configured, then this will be used to create the <code>Command</code> object implementation, generally so that it can then also be persisted.</p> 
             <div class="paragraph"> 
              <p>If the action or property is annotated to be invoked in the background (using <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#command…​()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_command"><code>@Property#command…​()</code></a>) then no further work is done. But, if the action/property is to be executed in the foreground, then the interaction continues.</p> 
             </div> </li> 
            <li> <p>the (request-scoped) <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a> domain service acts as a factory for the <code>Interaction</code> object, which keeps track of the call-graph of executions (<code>Interaction.Execution</code>) of either action invocations or property edits. In the majority of cases there is likely to be just a single top-level node of this graph, but for applications that use the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_WrapperFactory"><code>WrapperFactory</code></a> extensively each successive call results in a new child execution.</p> </li> 
-           <li> <p>before and after each action invocation/property edit, a <a href="../rgcms/rgcms.html#_rgcms_classes_domainevent">domain event</a> is may be broadcast to all subscribers. Whether this occurs depends on whether the action/property has been annotated (using <a href="../rgant/rgant.html#_rgant-Action_domainEvent"><code>@Action#domainEvent()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_domainEvent"><code>@Property#domainEvent()</code></a>).<br></p> 
+           <li> <p>before and after each action invocation/property edit, a <a href="../rgcms/rgcms.html#_rgcms_classes_domainevent">domain event</a> is may be broadcast to all subscribers. Whether this occurs depends on whether the action/property has been annotated (using <a href="../rgant/rgant.html#_rgant-Action_domainEvent"><code>@Action#domainEvent()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_domainEvent"><code>@Property#domainEvent()</code></a>).</p> 
             <div class="paragraph"> 
              <p>(Note that susbcribers will also receive events for vetoing the action/property; this is not shown on the diagram).</p> 
             </div> </li> 
            <li> <p>As each execution progresses, and objects that are modified are "enlisted" into the (internal) <a href="../rgfis/rgfis.html#_rgfis_persistence-layer_ChangedObjectsServiceInternal"><code>ChangedObjectsServiceInternal</code></a> domain service. Metrics as to which objects are merely loaded into memory are also captured using the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-api_MetricsService"><code>MetricsService</code></a> (not shown on the diagram).</p> </li> 
-           <li> <p>At the end of each execution, details of that execution are published through the (internal) <a href="../rgfis/rgfis.html#_rgfis_spi_PublisherServiceInternal"><code>PublisherServiceInternal</code></a> domain service. This is only done for actions/properties annotated appropriate (with <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_publishing"><code>@Property#publishing()</code></a>). <br></p> 
+           <li> <p>At the end of each execution, details of that execution are published through the (internal) <a href="../rgfis/rgfis.html#_rgfis_spi_PublisherServiceInternal"><code>PublisherServiceInternal</code></a> domain service. This is only done for actions/properties annotated appropriate (with <a href="../rgant/rgant.html#_rgant-Action_publishing"><code>@Action#publishing()</code></a> or <a href="../rgant/rgant.html#_rgant-Property_publishing"><code>@Property#publishing()</code></a>).</p> 
             <div class="paragraph"> 
-             <p>The internal service delegates in turn to any registered <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a> (deprecated) and also to any registered <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a>s (there may be more than one).</p> 
+             <p>The internal service delegates in turn to any registered <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a>s (there may be more than one).</p> 
             </div> </li> 
            <li> <p>At the end of each transaction, details of all changed objects are published, again through the (internal) <a href="../rgfis/rgfis.html#_rgfis_spi_PublisherServiceInternal"><code>PublisherServiceInternal</code></a> to any registered <code>PublishingService</code> or <code>PublisherService</code> implementations. Only domain objects specified to be published with <a href="../rgant/rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a> are published.<br></p> 
             <div class="admonitionblock note"> 
@@ -741,6 +742,9 @@ table.CodeRay td.code>pre{padding:0}
             </tbody>
            </table> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_usage">3.1.2. Usage</h4> 
@@ -892,7 +896,10 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>The <a href="../ugvw/ugvw.html">Wicket viewer</a> this provides an implementation of this service.</p> 
+           <p>The <a href="../ugvw/ugvw.html">Wicket viewer</a> this provides a default implementation of this service.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>GuideBeanProvider</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1363,9 +1370,6 @@ table.CodeRay td.code>pre{padding:0}
              <li> <p>second, there may not be any Apache Isis session running. (If necessary, one can be created on the fly using <code>IsisContext.doInSession(…​)</code>)</p> </li> 
             </ul> 
            </div> 
-           <div class="paragraph"> 
-            <p>To ensure that your alternative implementation takes the place of the default implementation, register it explicitly in <code>isis.properties</code>.</p> 
-           </div> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1653,8 +1657,14 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p><code>o.a.i.core.metamodel.services.container.DomainObjectContainerDefault</code> provided by Apache Isis core is itself an <code>ExceptionRecognizer</code>, and will handle <code>ConcurrencyException</code>s. It will also handle any application exceptions raised by the system (subclasses of <code>o.a.i.applib.RecoverableException</code>).</p> </li> 
-            <li> <p><code>o.a.i.objectstore.jdo.applib.service.exceprecog.ExceptionRecognizerCompositeForJdoObjectStore</code> bundles up a number of more fine-grained implementations:</p> 
+            <li> <p><code>o.a.i.core.metamodel.services.container.DomainObjectContainerDefault</code> provided by Apache Isis core is itself an <code>ExceptionRecognizer</code>, and will handle <code>ConcurrencyException</code>s.</p> 
+             <div class="paragraph"> 
+              <p>It will also handle any application exceptions raised by the system (subclasses of <code>o.a.i.applib.RecoverableException</code>).</p> 
+             </div> </li> 
+            <li> <p><code>o.a.i.objectstore.jdo.applib.service.exceprecog.ExceptionRecognizerCompositeForJdoObjectStore</code></p> 
+             <div class="paragraph"> 
+              <p>which bundles up a number of more fine-grained implementations:</p> 
+             </div> 
              <div class="ulist"> 
               <ul> 
                <li> <p><code>ExceptionRecognizerForSQLIntegrityConstraintViolationUniqueOrIndexException</code></p> </li> 
@@ -1665,7 +1675,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>If you want to recognize and handle additional exceptions (for example to capture error messages specific to the JDBC driver you might be using), then create a fine-grained implementation of <code>ExceptionRecognizer2</code> for the particular error message (there are some convenience implementations of the interface that you can subclass from if required) and register in <code>isis.properties</code>.</p> 
+           <p>If you want to recognize and handle additional exceptions (for example to capture error messages specific to the JDBC driver you might be using), then create a fine-grained implementation of <code>ExceptionRecognizer</code> for the particular error message (there are some convenience implementations of the interface that you can subclass from if required) and annotated with <code>@DomainService</code> in the usual way. Make sure that the service resides under a module registered in <code>AppManifest</code>.</p> 
           </div> 
           <div class="sect4"> 
            <h5 id="_configuration_properties">Configuration Properties</h5> 
@@ -2065,6 +2075,9 @@ table.CodeRay td.code>pre{padding:0}
           <h4 id="_implementation_7">4.8.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>org.apache.isis.viewer.wicket.viewer.services.HintStoreUsingWicketSession</code>).</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>HintStore</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -2503,6 +2516,9 @@ table.CodeRay td.code>pre{padding:0}
           <div class="paragraph"> 
            <p>The framework provides a fallback implementation of this service, namely <code>TableColumnOrderService.Default</code>.</p> 
           </div> 
+          <div class="paragraph"> 
+           <p>There can be multiple implementations of <code>TableColumnOrderService registered. These are checked in turn (chain of responsibility pattern), ordered according to <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"></a></code><a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder">@DomainServiceLayout#menuOrder()`</a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide). The order from the first service that returns a non null value will be used.</p> 
+          </div> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2592,6 +2608,9 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="paragraph"> 
            <p>For more details on the implementation, see <a href="../ugbtb/ugbtb.html#_ugbtb_i18n">i18n support</a>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>If the menu items are not required then these can be suppressed either using security or by implementing a <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips_vetoing-visibility">vetoing subscriber</a>.</p> 
           </div> 
           <div class="sect4"> 
            <h5 id="_configuration_properties_2">Configuration Properties</h5> 
@@ -2738,7 +2757,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p>first, (though some browsers support longer strings), there is a limit of 2083 characters for URLs. For view model mementos that correspond to large strings (as might occur when serializing a JAXB <a href="../rgant/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>-annotated view model), the service provides a hook. <br></p> 
+           <li> <p>first, (though some browsers support longer strings), there is a limit of 2083 characters for URLs. For view model mementos that correspond to large strings (as might occur when serializing a JAXB <a href="../rgant/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>-annotated view model), the service provides a hook.</p> 
             <div class="paragraph"> 
              <p>For example, each memento string could be mapped to a GUID held in some cluster-aware cache.</p> 
             </div> </li> 
@@ -2781,10 +2800,10 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_implementation_13">4.17.2. Implementation</h4> 
           <div class="paragraph"> 
-           <p>The framework provides a default implementation (<code>UrlEncodingServiceUsingBaseEncoding</code>) that simply converts the string using base-64 encoding and UTF-8 character set. As already noted, be aware that the maximum length of a URL should not exceed 2083 characters. For large view models, there’s the possibility that this limit could be exceeded; in such cases register an alternative implementation of this service.</p> 
+           <p>The framework provides a default implementation — <code>UrlEncodingServiceUsingBaseEncoding</code> — that simply converts the string using base-64 encoding and UTF-8 character set. As already noted, be aware that the maximum length of a URL should not exceed 2083 characters. For large view models, there’s the possibility that this limit could be exceeded; in such cases register an alternative implementation of this service.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>To use an alternative implementation, use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+           <p>To use an alternative implementation, implement the <code>UrlEncodingService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
         </div> 
@@ -3113,6 +3132,9 @@ table.CodeRay td.code>pre{padding:0}
             </tbody>
            </table> 
           </div> 
+          <div class="paragraph"> 
+           <p>To provide an alternative implementation, subclass and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_usage_3">5.1.2. Usage</h4> 
@@ -3200,7 +3222,10 @@ table.CodeRay td.code>pre{padding:0}
           <p>The <code>BackgroundService2</code> is responsible for capturing a memento representing the command in a typesafe way, and persisting it rather than executing it directly.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The default <code>BackgroundServiceDefault</code> implementation works by using a proxy wrapper around the target so that it can capture the action to invoke and its arguments. This is done using <a href="../rgfis/rgfis.html#_rgfis_application-layer_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a>.</p> 
+          <p>The default <code>BackgroundServiceDefault</code> implementation works by using a proxy wrapper around the target so that it can capture the action to invoke and its arguments.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This is done using <a href="../rgfis/rgfis.html#_rgfis_application-layer_CommandDtoServiceInternal"><code>CommandDtoServiceInternal</code></a>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>The persistence delegates the persistence of the memento to an appropriate implementation of the companion <code>BackgroundCommandService2</code>. One such implementation of <code>BackgroundCommandService</code> is provided by (non-ASF) <a href="http://github.com/isisaddons/isis-module-command">Isis addons' command</a> module.</p> 
@@ -3237,6 +3262,9 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="paragraph"> 
            <p>The default implementation is provided by core (<code>o.a.i.core.runtime.services.background.BackgroundServiceDefault</code>).</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To provide an alternative implementation, subclass and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -3572,7 +3600,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="__rgsvc_application-layer-api_CommandContext_screencast">5.2.7. Screencast</h4> 
           <div class="paragraph"> 
-           <p>The <a href="https://www.youtube.com/watch?v=tqXUZkPB3EI">screencast</a> provides a run-through of the command (profiling) service, auditing service, publishing service. It also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.</p> 
+           <p>The <a href="https://www.youtube.com/watch?v=tqXUZkPB3EI">screencast</a> provides a run-through of the command (profiling) service, auditing service, publishing service (note: auditing service has since been replaced by <code>AuditerService</code>, and publishing service by <code>PublisherService</code>). It also shows how commands can be run in the background either explicitly by scheduling through the background service or implicitly by way of a framework annotation.</p> 
           </div> 
           <div class="admonitionblock note"> 
            <table> 
@@ -3603,7 +3631,10 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>This class (<code>o.a.i.applib.services.CommandContext</code>) is also the default implementation. Under normal circumstances there shouldn’t be any need to replace this implementation with another.</p> 
+           <p>This class (<code>o.a.i.applib.services.CommandContext</code>) is also the default implementation.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Under normal circumstances there shouldn’t be any need to replace this implementation with another. But if you do need to for some reason, then subclass and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
           <div class="paragraph"> 
            <p>The <code>Command</code> type referenced above is in fact an interface, defined as:</p> 
@@ -3756,7 +3787,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItem</span> ... {
-    <span class="annotation">@Command</span>(executeIn=ExecuteIn.BACKGROUND)
+    <span class="annotation">@Action</span>(commandExecuteIn=CommandExecuteIn.BACKGROUND)
     <span class="directive">public</span> ToDoItem scheduleImplicitly() {
         completeSlowly(<span class="integer">3000</span>);
         <span class="keyword">return</span> <span class="local-variable">this</span>;
@@ -3780,7 +3811,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
            <p>One case however where a domain object might want to obtain the <code>Command</code> is to determine whether it has been invoked in the foreground, or in the background. It can do this using the <code>getExecutedIn()</code> method:</p> 
           </div> 
           <div class="paragraph"> 
-           <p>Although not often needed, this then allows the domain object to access the <code>Command</code> object through the <code>CommandContext</code> service. To expand th above example:</p> 
+           <p>Although not often needed, this then allows the domain object to access the <code>Command</code> object through the <code>CommandContext</code> service. To expand the above example:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
@@ -3825,7 +3856,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="_related_services_12">5.2.11. Related Services</h4> 
           <div class="paragraph"> 
-           <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service is very similar in nature to the <a href="../rgsvc/rgsvc.html#_rgsvc_api_InteactionContext"><code>InteactionContext</code></a>, in that the <code>Command</code> object accessed through it is very similar to the <code>Interaction</code> object obtained from the <code>InteractionContext</code>. The principle distinction is that while <code>Command</code> represents the <em>intention</em> to invoke an action or edit a property, the <code>Interaction</code> (and contained <code>Execution</code>s) represents the actual execution.</p> 
+           <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_CommandContext"><code>CommandContext</code></a> service is very similar in nature to the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_InteractionContext"><code>InteractionContext</code></a>, in that the <code>Command</code> object accessed through it is very similar to the <code>Interaction</code> object obtained from the <code>InteractionContext</code>. The principle distinction is that while <code>Command</code> represents the <em>intention</em> to invoke an action or edit a property, the <code>Interaction</code> (and contained <code>Execution</code>s) represents the actual execution.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Most of the time a <code>Command</code> will be followed directly by its corresponding <code>Interaction</code>. However, if the <code>Command</code> is annotated to run in the background (using <a href="../rgant/rgant.html#_rgant-Action_command"><code>@Action#commandExecuteIn()</code></a>, or is explicitly created through the <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-api_BackgroundService"><code>BackgroundService</code></a>, then the actual interaction/execution is deferred until some other mechanism invokes the command (eg as described <a href="../ugbtb/ugbtb.html#_ugbtb_headless-access_BackgroundCommandExecution">here</a>). The persistence of background commands requires a configured <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>) to actually persist such commands for execution.</p> 
@@ -3868,7 +3899,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>Uses the <a href="../rgsvc/rgsvc.html#_rgsvc_api_BookmarkService"><code>BookmarkService</code></a> to convert the domain object’s internal identifier into a serializable <code>OidDto</code>.</td> 
+              <td>Uses the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService"><code>BookmarkService</code></a> to convert the domain object’s internal identifier into a serializable <code>OidDto</code>.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -4133,6 +4164,12 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
             </table> 
            </div> 
           </div> 
+          <div class="sect4"> 
+           <h5 id="_alternate_implementations">Alternate Implementations</h5> 
+           <div class="paragraph"> 
+            <p>Apache Isis' default implementation of <code>InteractionContext</code> class is automatically registered (it is annotated with <code>@DomainService</code>).</p> 
+           </div> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_interacting_with_the_services_2">5.4.2. Interacting with the services</h4> 
@@ -4249,6 +4286,9 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service, <code>o.a.i.core.runtime.services.message.MessageServiceDefault</code>.</p> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>MessageService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -4303,6 +4343,9 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.xactn.SessionManagementServiceDefault</code>).</p> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>SessionManagementService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -4340,7 +4383,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">PresentationService</span> {
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">TitleService</span> {
     <span class="predefined-type">String</span> titleOf(<span class="predefined-type">Object</span> domainObject);                <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="predefined-type">String</span> iconNameOf(<span class="predefined-type">Object</span> domainObject);             <i class="conum" data-value="2"></i><b>(2)</b>
 }</code></pre> 
@@ -4625,7 +4668,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>This capability goes beyond enforcing the (imperative) constraints within the <code>hideXxx()</code>, <code>disableXxx()</code> and <code>validateXxx()</code> supporting methods; it also enforces (declarative) constraints such as those represented by annotations, eg <code>@MaxLength</code> or <code>@Regex</code>.</p> 
+          <p>This capability goes beyond enforcing the (imperative) constraints within the <code>hideXxx()</code>, <code>disableXxx()</code> and <code>validateXxx()</code> supporting methods; it also enforces (declarative) constraints such as those represented by annotations, eg <code>@Parameter(maxLength=…​)</code> or <code>@Property(mustSatisfy=…​)</code>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>This capability is frequently used within <a href="../ugtst/ugtst.html#_ugtst_integ-test-support">integration tests</a>, but can also be used in production code. (There are analogies that can be drawn here with the way that JEE beans can interact through an EJB local interface).</p> 
@@ -4746,7 +4789,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
         <span class="keyword">try</span> {
             wrappedOrder.refund();
         } <span class="keyword">catch</span>(InteractionException ex) {          <i class="conum" data-value="1"></i><b>(1)</b>
-            container.raiseError(ex.getMessage());  <i class="conum" data-value="2"></i><b>(2)</b>
+            messageService.raiseError(ex.getMessage());  <i class="conum" data-value="2"></i><b>(2)</b>
             <span class="keyword">return</span>;
         }
     }
@@ -4754,7 +4797,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
     <span class="annotation">@Inject</span>
     WrapperFactory wrapperFactory;
     <span class="annotation">@Inject</span>
-    DomainObjectContainer container;
+    MessageService messageService;
 }</code></pre> 
            </div> 
           </div> 
@@ -4832,7 +4875,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>The original intent of this API was to enable test transcripts to be captured (in a BDD-like fashion) from integration tests. No such feature has yet been implemented however. Also, the capabilities have by and large been superceded by Apache Isis' support for domain events. We may therefore deprecate this API in the future.</p> 
+           <p>One possible use case for this API is to enable test transcripts to be captured (in a BDD-like fashion) from integration tests. As the time of writing, no such feature has yet been implemented.</p> 
           </div> 
          </div> 
         </div> 
@@ -5213,7 +5256,7 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
            <p>The implementations of <code>CommandService</code> and <code>BackgroundCommandService</code> are intended to go together, so that persistent parent `Command`s can be associated with their child background `Command`s.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The services provided by this module combines very well with the <a href="../rgsvc/rgsvc.html#<em>rgsvc_persistence-layer-spi_AuditingService"><code>AuditingService</code></a>. The <code>CommandService</code> captures the _cause of an interaction (an action was invoked, a property was edited), while the <code>AuditingService3</code> captures the <em>effect</em> of that interaction in terms of changed state.</p> 
+           <p>The services provided by this module combines very well with the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditingService"><code>AuditingService</code></a>. The <code>CommandService</code> captures the <em>cause</em> of an interaction (an action was invoked, a property was edited), while the <code>AuditingService3</code> captures the <em>effect</em> of that interaction in terms of changed state.</p> 
           </div> 
           <div class="paragraph"> 
            <p>You may also want to configure the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublishingService"><code>PublishingService</code></a>.</p> 
@@ -5509,18 +5552,19 @@ org.quartz.plugin.jobInitializer.failOnFileNotFound = true</code></pre>
          <div class="sect3"> 
           <h4 id="_testing_support">7.1.2. Testing Support</h4> 
           <div class="paragraph"> 
-           <p>The default <code>ClockService</code> implementation in fact simply delegates to another class defined in the API, namely the <code>o.a.i.applib.clock.Clock</code>, an abstract singleton class. It is not recommended that your code use the <code>Clock</code> directly, but you should understand how this all works:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p>there are two subclasses implementations <code>Clock</code>, namely <code>SystemClock</code> and <code>FixtureClock</code>.</p> </li> 
-            <li> <p>the first implementation that is instantiated registers itself as the singleton.</p> </li> 
-            <li> <p>if running in <a href="../rgcfg/rgcfg.html#_rgcfg_deployment-types">production</a> (server) mode, then (unless another implementation has beaten it to the punch) the framework will instantiate the <code>`SystemClock</code>. Once instantiated this cannot be replaced.</p> </li> 
-            <li> <p>if running in <a href="../rgcfg/rgcfg.html#<em>rgcfg_deployment-types">prototype</a> mode, then the framework will instead instantiate <code>FixtureClock</code>. This _can be replaced if required.</p> </li> 
-           </ul> 
+           <p>The default <code>ClockService</code> implementation in fact simply delegates to another class defined in the API, namely the <code>o.a.i.applib.clock.Clock</code>, an abstract singleton class. It is not recommended that your code use the <code>Clock</code> directly, but it’s worth understanding how this all works.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>The <code>FixtureClock</code> will behave as the system clock, unless its is explicitly set using <code>FixtureClock#setDate(…​)</code> or <code>FixtureClock#setTime(…​)</code> and so forth.</p> 
+           <p>If running in <a href="../rgcfg/rgcfg.html#_rgcfg_deployment-types">production</a> (server) mode, then the framework will (lazily) instantiate the <code>`SystemClock</code> when first required. This is a read-only clock that reads from the system time. The instance registers itself as the singleton and cannot be replaced.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>If running in <a href="../rgcfg/rgcfg.html#_rgcfg_deployment-types">prototype</a> mode, though, then the framework will instead instantiate <code>FixtureClock</code>. This is a read-write clock that will behave as the system clock, unless it is explicitly set using eg, <code>FixtureClock#setDate(…​)</code> or <code>FixtureClock#setTime(…​)</code> etc.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Moreover, <code>FixtureClock</code> singleton can be replaced with another implementation. And, it is sometimes useful to replace it using <code>TickingFixtureClock</code>, a subclass that is very similar to <code>FixtureClock</code> (in that the time can be changed) but which will continue to tick once set.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use <code>TickingFixtureClock</code> instead of <code>FixtureClock</code>, use the <code>TickingClockFixture</code> fixture script.</p> 
           </div> 
           <div class="sect4"> 
            <h5 id="_alternative_implementations_4">Alternative Implementations</h5> 
@@ -6432,6 +6476,9 @@ container.persist(cust);</code></pre>
             </tbody>
            </table> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>EventBusService</code> domain service and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_registering_subscribers">7.4.2. Registering Subscribers</h4> 
@@ -6934,8 +6981,8 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
           <div class="listingblock"> 
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">FactoryService</span> {
-    &lt;T&gt; T instantiate(<span class="directive">final</span> <span class="predefined-type">Class</span>&lt;T&gt; ofType);       <i class="conum" data-value="1"></i><b>(1)</b>
-    &lt;T&gt; T mixin();                                  <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;T&gt; T instantiate(<span class="predefined-type">Class</span>&lt;T&gt; domainClass);           <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;T&gt; T mixin(<span class="predefined-type">Class</span>&lt;T&gt; mixinClass, <span class="predefined-type">Object</span> mixedIn);  <i class="conum" data-value="2"></i><b>(2)</b>
 }</code></pre> 
            </div> 
           </div> 
@@ -6944,11 +6991,11 @@ public <span class="directive">static</span> <span class="type">class</span> <sp
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>create a new non-persisted domain entity. Any services will be automatically injected into the service.</td> 
+              <td>create a new non-persisted domain entity. Any services will be automatically injected into the service. The class must have a no-arg constructor.</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>programmatically instantiate a mixin, as annotated with <a href="../rgant/rgant.html#_rgant-Mixin"><code>@Mixin</code></a> or <a href="../rgant/rgant.html#_rgant-DomainObject_nature"><code>@DomainObject#nature()</code></a>.</td> 
+              <td>programmatically instantiate a mixin, for example as annotated with <a href="../rgant/rgant.html#_rgant-Mixin"><code>@Mixin</code></a>. The class must have a 1-arg constructor of the appropriate type.</td> 
              </tr> 
             </tbody>
            </table> 
@@ -7031,6 +7078,9 @@ repositoryService.persist(cust);</code></pre>
           </div> 
           <div class="paragraph"> 
            <p>This class (<code>o.a.i.applib.services.scratchpad.Scratchpad</code>) is also the implementation. And, as you can see, the service is just a request-scoped wrapper around a <code>java.util.Map</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, subclass and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -7426,6 +7476,9 @@ Scratchpad scratchpad;</code></pre>
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this API, namely <code>o.a.i.core.metamodel.services.bookmarks.BookmarkServiceInternalDefault</code></p> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement <code>BookmarkService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="__code_bookmarkholder_code">8.1.2. <code>BookmarkHolder</code></h4> 
@@ -7470,7 +7523,7 @@ Scratchpad scratchpad;</code></pre>
          <div class="sect3"> 
           <h4 id="_usage_by_other_services">8.1.3. Usage by other services</h4> 
           <div class="paragraph"> 
-           <p>Bookmarks are used by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module’s implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_api_BackgroundCommandService"><code>BackgroundCommandService</code></a>, which uses a bookmark to capture the target object on which an action will be invoked subsequently.</p> 
+           <p>Bookmarks are used by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command module’s implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_application-layer-spi_BackgroundCommandService"><code>BackgroundCommandService</code></a>, which uses a bookmark to capture the target object on which an action will be invoked subsequently.</p> 
           </div> 
           <div class="paragraph"> 
            <p>Bookmarks are also used by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s auditing module’s implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditerService"><code>AuditerService</code></a>.</p> 
@@ -7918,7 +7971,10 @@ Scratchpad scratchpad;</code></pre>
            <p>With respect to the <code>IsisSchemas</code> enum: a JAXB-annotated domain object will live in its own XSD namespace and may reference multiple other XSD schemas. In particular, many JAXB domain objects will reference the <a href="../rgcms/rgcms.html#_rgcms_schema">common Isis schemas</a> (for example the <code>OidDto</code> class that represents a reference to a persistent entity). The enum indicates whether these schemas should be included or excluded from the map.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>Isis provides a default implementation of the service, <code>o.a.i.schema.services.jaxb.JaxbServiceDefault</code>.</p> 
+           <p>Apache Isis provides a default implementation of the service, <code>o.a.i.schema.services.jaxb.JaxbServiceDefault</code>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement <code>JaxbService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -7996,6 +8052,9 @@ Scratchpad scratchpad;</code></pre>
              </tr> 
             </tbody>
            </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement <code>MementoService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
           <div class="paragraph"> 
            <p>The types of objects that are supported by the <code>MementoService</code> are implementation-specific, but would typically include all the usual value types as well as Apache Isis' <code>Bookmark</code> class (to represent references to arbitrary entities). Nulls can also be set.</p> 
@@ -8111,9 +8170,6 @@ Scratchpad scratchpad;</code></pre>
          </div> 
          <div class="paragraph"> 
           <p>The service offers a basic API to create a snapshot of a single object, and an more flexible API that allows the size of the graph to be customized.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The core framework provides an implementation of this service (<code>o.a.i.core.runtime.services.xmlsnapshot.XmlSnapshotServiceDefault</code>).</p> 
          </div> 
          <div class="sect3"> 
           <h4 id="_standard_api">8.5.1. Standard API</h4> 
@@ -8320,7 +8376,13 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_20">8.5.5. Related Services</h4> 
+          <h4 id="_implementation_26">8.5.5. Implementation</h4> 
+          <div class="paragraph"> 
+           <p>The core framework provides an implementation of this service (<code>o.a.i.core.runtime.services.xmlsnapshot.XmlSnapshotServiceDefault</code>).</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_related_services_20">8.5.6. Related Services</h4> 
           <div class="paragraph"> 
            <p>The <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService"><code>BookmarkService</code></a> provides a mechanism for obtaining a string representations of a single domain object.</p> 
           </div> 
@@ -8501,7 +8563,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_26">9.1.2. Implementation</h4> 
+          <h4 id="_implementation_27">9.1.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The default implementation of this service is <code>ApplicationFeatureRepositoryDefault</code>.</p> 
           </div> 
@@ -8715,7 +8777,7 @@ Element customerXsd = snapshot.getXsdElement();</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService4</span> {
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MetaModelService5</span> {
     <span class="predefined-type">Class</span>&lt;?&gt; fromObjectType(<span class="predefined-type">String</span> objectType);         <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="predefined-type">String</span> toObjectType(<span class="predefined-type">Class</span>&lt;?&gt; domainType);           <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="type">void</span> rebuild(<span class="predefined-type">Class</span>&lt;?&gt; domainType);                  <i class="conum" data-value="3"></i><b>(3)</b>
@@ -8910,7 +8972,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_27">9.4.3. Implementation</h4> 
+          <h4 id="_implementation_28">9.4.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.registry.ServiceRegistryDefault</code>).</p> 
           </div> 
@@ -8948,7 +9010,7 @@ repositoryService.persist(cust);</code></pre>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgsvc_metadata-api_SwaggerService_api-and-implementation">9.5.1. API &amp; Implementation</h4> 
+          <h4 id="__rgsvc_metadata-api_SwaggerService_api-and-implementation">9.5.1. API</h4> 
           <div class="paragraph"> 
            <p>The API defined by <code>SwaggerService</code> is:</p> 
           </div> 
@@ -8990,18 +9052,21 @@ repositoryService.persist(cust);</code></pre>
             </tbody>
            </table> 
           </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_implementation_29">9.5.2. Implementation</h4> 
           <div class="paragraph"> 
-           <p>Isis provides a default implementation of the service, <code>o.a.i.core.metamodel.services.swagger.SwaggerServiceDefault</code>.</p> 
+           <p>Apache Isis provides a default implementation of the service, <code>o.a.i.core.metamodel.services.swagger.SwaggerServiceDefault</code>.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_usage_within_the_framework_3">9.5.2. Usage within the framework</h4> 
+          <h4 id="_usage_within_the_framework_3">9.5.3. Usage within the framework</h4> 
           <div class="paragraph"> 
            <p>This service is provided as a convenience for applications, it is not (currently) used by the framework itself.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_related_services_22">9.5.3. Related Services</h4> 
+          <h4 id="_related_services_22">9.5.4. Related Services</h4> 
           <div class="paragraph"> 
            <p>A <code>SwaggerServiceMenu</code> domain service provides a prototype action that enables the swagger spec to be downloaded from the Wicket viewer’s UI.</p> 
           </div> 
@@ -9176,7 +9241,7 @@ repositoryService.persist(cust);</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>FixtureScripts</code> service provides the ability to execute <a href="../ugtst/ugtst.html#_ugtst_fixture-scripts_api-and-usage">fixture scripts</a> .</p> 
+          <p>The <code>FixtureScripts</code> service provides the ability to execute <a href="../ugtst/ugtst.html#_ugtst_fixture-scripts_api-and-usage">fixture scripts</a>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>The default implementation of this service, <code>FixtureScriptsDefault</code>, uses the associated <a href="../rgsvc/rgsvc.html#_rgsvc_testing_FixtureScriptsSpecificationProvider"><code>FixtureScriptsSpecificationProvider</code></a> to obtain a <code>FixtureScriptsSpecification</code>. This configures this service, for example telling it which package to search for <code>FixtureScript</code> classes, how to execute those classes, and hints that influence the UI.</p> 
@@ -9198,7 +9263,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_28">10.2.2. Implementation</h4> 
+          <h4 id="_implementation_30">10.2.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The default implementation is <code>o.a.i.applib.services.fixturespec.FixtureScriptsDefault</code></p> 
           </div> 
@@ -9318,7 +9383,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_29">10.3.2. Implementation</h4> 
+          <h4 id="_implementation_31">10.3.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The <a href="../ugfun/ugfun.html#_ugfun_getting-started_simpleapp-archetype">SimpleApp archetype</a> has a simple implementation of this service:</p> 
           </div> 
@@ -9396,7 +9461,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_30">10.4.2. Implementation</h4> 
+          <h4 id="_implementation_32">10.4.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core framework provides a default implementation of this service (<code>o.a.i.core.runtime.services.sudo.SudoServiceDefault</code>).</p> 
           </div> 
@@ -9550,7 +9615,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_31">10.5.2. Implementation</h4> 
+          <h4 id="_implementation_33">10.5.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The framework provides a default implementation of this service: <code>SwitchUserServiceImpl</code> in <code>isis-core-runtime</code></p> 
           </div> 
@@ -9716,7 +9781,7 @@ repositoryService.persist(cust);</code></pre>
           </ul>
          </div> 
          <div class="paragraph"> 
-          <p>The <code>IsisJdoSupport</code> service provides a number of general purpose methods for working with the JDO/DataNucleus objectstore. In general these act at a lower-level of abstraction than the APIs normally used (specifically, those of <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer"><code>DomainObjectContainer</code></a>), but nevertheless deal with some of the most common use cases. For service also provides access to the underlying JDO <code>PersistenceManager</code> for full control.</p> 
+          <p>The <code>IsisJdoSupport</code> service provides a number of general purpose methods for working with the JDO/DataNucleus objectstore. In general these act at a lower-level of abstraction than the APIs normally used (specifically, those of <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_RepositoryService"><code>RepositoryService</code></a>), but nevertheless deal with some of the most common use cases. For service also provides access to the underlying JDO <code>PersistenceManager</code> for full control.</p> 
          </div> 
          <div class="paragraph"> 
           <p>The following sections discuss the functionality provided by the service, broken out into categories.</p> 
@@ -10154,6 +10219,9 @@ repositoryService.persist(cust);</code></pre>
           <div class="paragraph"> 
            <p>This class (<code>o.a.i.applib.services.queryresultscache.QueryResultsCache</code>) is also the implementation.</p> 
           </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, subclass <code>QueryResultsCache</code> and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_usage_15">11.4.2. Usage</h4> 
@@ -10372,7 +10440,7 @@ repositoryService.persist(cust);</code></pre>
             <p>You should be aware that by default Apache Isis queues up calls to <code>#persist()</code> and <code>#remove()</code>. These are then executed either when the request completes (and the transaction commits), or if the queue is flushed. This can be done either implicitly by the framework, or as the result of a direct call to <code>#flush()</code>.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>By default the framework itself will cause <code>#flush()</code> to be called whenever a query is executed by way of <code>#allMatches(Query)</code>, as documented <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_DomainObjectContainer_generic-repository-api">above</a>. However, this behaviour can be disabled using the <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.container.disableAutoFlush</code>.</p> 
+            <p>By default the framework itself will cause <code>#flush()</code> to be called whenever a query is executed by way of <code>#allMatches(Query)</code>. However, this behaviour can be disabled using the <a href="../rgcfg/rgcfg.html#_rgcfg_configuring-core">configuration property</a> <code>isis.services.container.disableAutoFlush</code>.</p> 
            </div> 
           </div> 
           <div class="sect4"> 
@@ -10527,7 +10595,7 @@ repositoryService.persist(cust);</code></pre>
 <span class="directive">public</span> <span class="type">class</span> <span class="class">ToDoItemRepositoryImplUsingJdoql</span> <span class="directive">implements</span> ToDoItemRepositoryImpl {
     <span class="annotation">@Programmatic</span>
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; findByAtPathAndCategory(<span class="directive">final</span> <span class="predefined-type">String</span> atPath, <span class="directive">final</span> Category category) {
-        <span class="keyword">return</span> container.allMatches(
+        <span class="keyword">return</span> repositoryService.allMatches(
                 <span class="keyword">new</span> QueryDefault&lt;&gt;(ToDoItem.class,
                         <span class="string"><span class="delimiter">"</span><span class="content">findByAtPathAndCategory</span><span class="delimiter">"</span></span>,                              <i class="conum" data-value="1"></i><b>(1)</b>
                         <span class="string"><span class="delimiter">"</span><span class="content">atPath</span><span class="delimiter">"</span></span>, atPath,                                       <i class="conum" data-value="2"></i><b>(2)</b>
@@ -10535,7 +10603,7 @@ repositoryService.persist(cust);</code></pre>
     }
     ...
     <span class="annotation">@javax</span>.inject.Inject
-    DomainObjectContainer container;
+    RepositoryService repositoryService;
 }</code></pre> 
             </div> 
            </div> 
@@ -10579,7 +10647,7 @@ repositoryService.persist(cust);</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_32">11.5.3. Implementation</h4> 
+          <h4 id="_implementation_34">11.5.3. Implementation</h4> 
           <div class="paragraph"> 
            <p>The default implementation of this domain service is <code>o.a.i.core.metamodel.services.repository.RepositoryServiceDefault</code>.</p> 
           </div> 
@@ -10669,7 +10737,7 @@ repositoryService.persist(cust);</code></pre>
          </thead> 
          <tbody> 
           <tr> 
-           <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditingService"><code>o.a.i.applib.</code><br> <code>services.audit</code><br> <code>AuditerService</code></a></p></td> 
+           <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_AuditerService"><code>o.a.i.applib.</code><br> <code>services.audit</code><br> <code>AuditerService</code></a></p></td> 
            <td class="tableblock halign-left valign-top">
             <div>
              <div class="paragraph"> 
@@ -10852,19 +10920,6 @@ log4j.logger.org.apache.isis.applib.services.audit.AuditerServiceLogging=DEBUG,A
 log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=false</code></pre> 
            </div> 
           </div> 
-          <div class="paragraph"> 
-           <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module also provides an implementation, <code>org.isisaddons.module.audit.dom.AuditerServiceUsingJdo</code>. This creates an audit record for each changed property (ie every time that <code>AuditerService#audit(…​)</code> is called.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The module also provides:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p><code>AuditingServiceMenu</code> service which provides actions to search for <code>AuditEntry</code>s, underneath an 'Activity' menu on the secondary menu bar.</p> </li> 
-            <li> <p><code>AuditingServiceRepository</code> service to to search for persisted <code>AuditEntry``s. None of its actions are visible in the user interface (they are all `@Programmatic</code>).</p> </li> 
-            <li> <p><code>AuditingServiceContributions</code> which contrbutes collections to the <a href="../rgcms/rgcms.html#_rgcms_classes_mixins_HasTransactionId"> <code>HasTransactionId</code></a> interface. This will therefore display all audit entries that occurred in a given request/transaction, in other words whenever a command, a published event or another audit entry is displayed.</p> </li> 
-           </ul> 
-          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_usage_17">12.1.3. Usage</h4> 
@@ -10876,6 +10931,22 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           <h4 id="_alternative_implementations_6">12.1.4. Alternative Implementations</h4> 
           <div class="paragraph"> 
            <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module provides an implementation of this service (<code>AuditerService</code>), and also provides a number of related domain services (<code>AuditingServiceMenu</code>, <code>AuditingServiceRepository</code> and <code>AuditingServiceContributions</code>).</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module also provides an implementation, <code>org.isisaddons.module.audit.dom.AuditerServiceUsingJdo</code>. This creates an audit record for each changed property (ie every time that <code>AuditerService#audit(…​)</code> is called.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The module also provides:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p><code>AuditingServiceMenu</code> service which provides actions to search for <code>AuditEntry</code>s, underneath an 'Activity' menu on the secondary menu bar.</p> </li> 
+            <li> <p><code>AuditingServiceRepository</code> service to to search for persisted <code>AuditEntry``s. None of its actions are visible in the user interface (they are all `@Programmatic</code>).</p> </li> 
+            <li> <p><code>AuditingServiceContributions</code> which contributes collections to the <a href="../rgcms/rgcms.html#_rgcms_classes_mixins_HasTransactionId"> <code>HasTransactionId</code></a> interface. This will therefore display all audit entries that occurred in a given request/transaction, in other words whenever a command, a published event or another audit entry is displayed.</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>These services can be activated by updating the <code>pom.xml</code> and updating the <code>AppManifest#getModules()</code> method.</p> 
           </div> 
           <div class="paragraph"> 
            <p>If menu items or contributions are not required in the UI, these can be suppressed either using security or by implementing a <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips_vetoing-visibility">vetoing subscriber</a>.</p> 
@@ -10945,7 +11016,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_33">12.2.2. Implementation</h4> 
+          <h4 id="_implementation_35">12.2.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The most full-featured available implementation is the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module. This creates an audit records for each changed property (ie every time that <code>AuditingService3#audit(…​)</code> is called. The implementation is <code>org.isisaddons.module.audit.dom.AuditingService</code>.</p> 
           </div> 
@@ -11054,7 +11125,7 @@ log4j.additivity.org.apache.isis.applib.services.audit.AuditerServiceLogging=fal
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_34">12.3.2. Implementation</h4> 
+          <h4 id="_implementation_36">12.3.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>There is no default implementation of this service provided by the core Apache Isis framework.</p> 
           </div> 
@@ -11211,9 +11282,6 @@ log4j.logger.org.apache.isis.applib.services.publish.PublisherServiceLogging=DEB
 log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging=false</code></pre> 
            </div> 
           </div> 
-          <div class="paragraph"> 
-           <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s publishmq module also provides an implementation (<code>o.ia.m.publishmq.dom.servicespi.PublishingServiceUsingActiveMq</code>). This implementation publishes each member execution as an event on an <a href="http://activemq.apache.org">ActiveMQ</a> message queue. It also persists each execution as a <code>PublishedEvent</code> entity, allowing the event to be republished if necessary. The implementation also provides the ability to log additional <code>StatusMessage</code> entities, correlated on the transactionId, useful for diagnosing and monitoring the activity of subscribers of said message queues.</p> 
-          </div> 
          </div> 
          <div class="sect3"> 
           <h4 id="_usage_19">12.4.3. Usage</h4> 
@@ -11230,7 +11298,17 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
          <div class="sect3"> 
           <h4 id="_alternative_implementations_8">12.4.4. Alternative Implementations</h4> 
           <div class="paragraph"> 
-           <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>;s publishmq module provides an implementation of this service.</p> 
+           <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s publishmq module also provides an implementation (<code>o.ia.m.publishmq.dom.servicespi.PublisherServiceUsingActiveMq</code>). This implementation:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>publishes each member execution as an event on an <a href="http://activemq.apache.org">ActiveMQ</a> message queue.</p> </li> 
+            <li> <p>persists each execution as a <code>PublishedEvent</code> entity, allowing the event to be republished if necessary.</p> </li> 
+            <li> <p>provides the ability to log additional <code>StatusMessage</code> entities, correlated on the transactionId, useful for diagnosing and monitoring the activity of subscribers of said message queues.</p> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This service can be activated by updating the <code>pom.xml</code> and updating the <code>AppManifest#getModules()</code> method.</p> 
           </div> 
           <div class="paragraph"> 
            <p>The module also provide services that contribute to the UI. If contributions are not required in the UI, these can be suppressed either using security or by implementing a <a href="../ugbtb/ugbtb.html#_ugbtb_hints-and-tips_vetoing-visibility">vetoing subscriber</a>.</p> 
@@ -11243,7 +11321,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p>coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.<br></p> 
+            <li> <p>coarse-grained publish/subscribe for system-to-system interactions, from Apache Isis to some other system.</p> 
              <div class="admonitionblock note"> 
               <table> 
                <tbody>
@@ -11353,7 +11431,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_35">12.5.2. Implementation</h4> 
+          <h4 id="_implementation_37">12.5.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>There is no default implementation of this service provided by the core Apache Isis framework.</p> 
           </div> 
@@ -11585,7 +11663,7 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_36">12.6.2. Implementation</h4> 
+          <h4 id="_implementation_38">12.6.2. Implementation</h4> 
           <div class="paragraph"> 
            <p>The core Apache Isis framework itself defines only an API; there is no default implementation. Rather, the implementation will depend on the security mechanism being used.</p> 
           </div> 
@@ -11747,9 +11825,9 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_implementation_37">13.1.2. Implementation</h4> 
+          <h4 id="_implementation_39">13.1.2. Implementation</h4> 
           <div class="paragraph"> 
-           <p>Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p> 
+           <p>Apache Isis provides an implementation of this service, namely <code>o.a.i.applib.services.classdiscovery.ClassDiscoveryServiceUsingReflections</code>.</p> 
           </div> 
           <div class="admonitionblock note"> 
            <table> 
@@ -11763,6 +11841,9 @@ log4j.additivity.org.apache.isis.applib.services.publish.PublisherServiceLogging
              </tr> 
             </tbody>
            </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, implement the <code>ClassDiscoveryService</code> interface and use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 

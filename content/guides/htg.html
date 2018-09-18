@@ -221,16 +221,17 @@ table.CodeRay td.code>pre{padding:0}
         <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Other Resources</li> 
         <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
-        <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
+        <li><a href="https://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
         <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/">Apache Homepage</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -922,7 +923,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>The framework also supports i18n: locale-specific names and descriptions. for more information, see the <a href="../ugbtb/ugbtb.html#_ugbtb_i18n">beyond-the-basics</a> guide.</p> 
+          <p>The framework also supports i18n: locale-specific names and descriptions. For more information, see the <a href="../ugbtb/ugbtb.html#_ugbtb_i18n">beyond-the-basics</a> guide.</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2207,7 +2208,7 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
           <p>The framework provides default implementations for many of the <a href="../rgsvc/rgsvc.html">domain services</a>. This is convenient, but sometimes you will want to replace the default implementation with your own service implementation.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_api_LocaleProvider"><code>LocaleProvider</code></a>. The trick is to use the <a href="../rgant/rgant.html#_rgant-DomainService_menuOrder"><code>@DomainService#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p> 
+          <p>For example, suppose you wanted to provide your own implementation of <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_LocaleProvider"><code>LocaleProvider</code></a>. The trick is to use the <a href="../rgant/rgant.html#_rgant-DomainService_menuOrder"><code>@DomainService#menuOrder()</code></a> attribute, specifying a low number (typically <code>"1"</code>).</p> 
          </div> 
          <div class="paragraph"> 
           <p>Here’s how:</p> 
@@ -2469,11 +2470,11 @@ LocalProvider localeProvider;</code></pre>
         <span class="keyword">if</span>(persistentInstance <span class="keyword">instanceof</span> ObjectWithPersistedTitle) {
             <span class="directive">final</span> ObjectWithPersistedTitle objectWithPersistedTitle =
                 (ObjectWithPersistedTitle) persistentInstance;
-            objectWithPersistedTitle.setTitle(container.titleOf(objectWithPersistedTitle));
+            objectWithPersistedTitle.setTitle(titleService.titleOf(objectWithPersistedTitle));
         }
     }
     <span class="annotation">@Inject</span>
-    <span class="directive">private</span> DomainObjectContainer container;
+    TitleService titleService;
 }</code></pre> 
           </div> 
          </div> 
@@ -2495,7 +2496,7 @@ LocalProvider localeProvider;</code></pre>
                     <span class="keyword">if</span>(persistentInstance <span class="keyword">instanceof</span> ObjectWithPersistedTitle) {
                         <span class="directive">final</span> ObjectWithPersistedTitle objectWithPersistedTitle =
                             (ObjectWithPersistedTitle) persistentInstance;
-                        objectWithPersistedTitle.setTitle(container.titleOf(objectWithPersistedTitle));
+                        objectWithPersistedTitle.setTitle(titleService.titleOf(objectWithPersistedTitle));
                     }
                 }
                 <span class="annotation">@Override</span>
@@ -2504,9 +2505,9 @@ LocalProvider localeProvider;</code></pre>
             }, <span class="predefined-constant">null</span>);
     }
     <span class="annotation">@Inject</span>
-    <span class="directive">private</span> IsisJdoSupport isisJdoSupport;
+    IsisJdoSupport isisJdoSupport;
     <span class="annotation">@Inject</span>
-    <span class="directive">private</span> DomainObjectContainer container;
+    TitleService titleService;
 }</code></pre> 
           </div> 
          </div> 
@@ -2774,7 +2775,7 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
         <span class="keyword">if</span>(original != <span class="predefined-constant">null</span>) {                                                  <i class="conum" data-value="2"></i><b>(2)</b>
             <span class="keyword">return</span> original;
         }
-        container.flush();                                                      <i class="conum" data-value="3"></i><b>(3)</b>
+        repositoryService.flush();                                              <i class="conum" data-value="3"></i><b>(3)</b>
 
         <span class="directive">final</span> BreadcrumbModelProvider wicketSession =                           <i class="conum" data-value="4"></i><b>(4)</b>
             (BreadcrumbModelProvider) AuthenticatedWebSession.get();
@@ -2800,7 +2801,7 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
     <span class="annotation">@Inject</span>
     HomePageProviderService homePageProviderService;
     <span class="annotation">@Inject</span>
-    DomainObjectContainer container;
+    RepositoryService repositoryService;
 }</code></pre> 
           </div> 
          </div> 

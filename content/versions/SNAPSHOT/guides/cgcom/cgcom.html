@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v2.0.0-M1</p> 
+     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
     </div> 
    </div> 
   </nav> 
@@ -664,8 +664,8 @@ git checkout master &amp;&amp; git merge --no-ff ISIS-1162_pr-31 &amp;&amp; git 
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp                               <i class="conum" data-value="1"></i><b>(1)</b>
-export ISISDEV=2.0.0-M2-SNAPSHOT
-export ISISREL=2.0.0-M1
+export ISISDEV=1.16.3-SNAPSHOT
+export ISISREL=1.16.3
 export ISISRC=RC1
 export ISISBRANCH=release-$ISISREL-$ISISRC
 export ISISJIRA=ISIS-9999                           <i class="conum" data-value="2"></i><b>(2)</b>
@@ -702,7 +702,7 @@ env | grep ISIS | sort</code></pre>
              <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>Note that the branch name is intentionally <strong>not</strong> the same any of the eventual tag names (eg <code>isis-2.0.0-M1</code> or <code>simpleapp-archetype-2.0.0-M1</code>).</p> 
+               <p>Note that the branch name is intentionally <strong>not</strong> the same any of the eventual tag names (eg <code>isis-1.16.3</code> or <code>simpleapp-archetype-1.16.3</code>).</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -728,13 +728,13 @@ git checkout -b $ISISBRANCH</code></pre>
           <p>Double check that the version number of the parent pom should reflect the branch name that you are now on (with a <code>-SNAPSHOT</code> suffix). This will normally have been done already during earlier development; but confirm that it has been updated. If it has not, make the change.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on. For example, if releasing version <code>2.0.0-M1</code>, the POM should read:</p> 
+          <p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on. For example, if releasing version <code>1.16.3</code>, the POM should read:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.core<span class="tag">&lt;/groupId&gt;</span>
 <span class="tag">&lt;artifactId&gt;</span>isis<span class="tag">&lt;/artifactId&gt;</span>
-<span class="tag">&lt;version&gt;</span>2.0.0-M1-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre> 
+<span class="tag">&lt;version&gt;</span>1.16.3-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -776,7 +776,7 @@ git checkout -b $ISISBRANCH</code></pre>
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;revision&gt;</span>2.0.0-M1-SNAPSHOT<span class="tag">&lt;/revision&gt;</span>
+    <span class="tag">&lt;revision&gt;</span>1.16.3-SNAPSHOT<span class="tag">&lt;/revision&gt;</span>
     ...
 <span class="tag">&lt;/properties&gt;</span></code></pre> 
           </div> 
@@ -943,6 +943,7 @@ mvn clean install -o</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="bash">mvn -P apache-release \
     clean deploy      \
+    -Dgit \
     -Dgpg.passphrase="this is not really my passphrase"
 
 git tag $ISISART-$ISISREL
@@ -1535,17 +1536,17 @@ git tag $ISISART-$ISISREL-$ISISRC</code></pre>
         <div class="sect2"> 
          <h3 id="__cgcom_cutting-a-release_bump-revision-to-ISISDEV">4.9. Bump <code>revision</code> property to <code>$ISISDEV</code></h3> 
          <div class="paragraph"> 
-          <p>At the beginning of the release process we bumped the <code>revision</code> property to the release version, ie <code>${ISISREL}</code>. With the release now deployed we now need to bump the revision up to the next development version, ie <code>${ISISDEV}</code>.</p> 
+          <p>At the beginning of the release process we bumped the <code>revision</code> property to the release version, ie <code>${ISISREL}</code>. With the release now deployed we now need to bump the revision up to the next development version, ie <code>$1.16.3-SNAPSHOT</code>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>In the root of the Apache Isis repo, we do this for all three <code>pom.xml</code>s with:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISDEV}&lt;|g" core/pom.xml
-sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISDEV}&lt;|g" example/application/simpleapp/pom.xml
-sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISDEV}&lt;|g" example/application/helloworld/pom.xml
-git commit -am "${ISISJIRA}: bumps revision property across all pom.xml's to ${ISISDEV}"</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" core/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" example/application/simpleapp/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" example/application/helloworld/pom.xml
+git commit -am "${ISISJIRA}: bumps revision property across all pom.xml's to $1.16.3-SNAPSHOT"</code></pre> 
           </div> 
          </div> 
         </div> 
@@ -1564,7 +1565,7 @@ git commit -am "${ISISJIRA}: bumps revision property across all pom.xml's to ${I
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code>git push origin refs/tags/isis-$ISISREL:refs/tags/isis-$ISISREL-$ISISRC
+           <pre class="CodeRay highlight"><code data-lang="bash">git push origin refs/tags/isis-$ISISREL:refs/tags/isis-$ISISREL-$ISISRC
 git push origin refs/tags/simpleapp-archetype-$ISISREL:refs/tags/simpleapp-archetype-$ISISREL-$ISISRC
 git push origin refs/tags/helloworld-archetype-$ISISREL:refs/tags/helloworld-archetype-$ISISREL-$ISISRC
 git fetch</code></pre> 
@@ -1605,7 +1606,7 @@ git fetch</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 2.0.0-M1 RC1</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 1.16.3 RC1</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -1615,19 +1616,19 @@ git fetch</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="bash">I've cut a release for Apache Isis Core and the two archetypes:
 
-* Core 2.0.0-M1
-* HelloWorld Archetype 2.0.0-M1
-* SimpleApp Archetype 2.0.0-M1
+* Core 1.16.3
+* HelloWorld Archetype 1.16.3
+* SimpleApp Archetype 1.16.3
 
 The source code artifacts have been uploaded to staging repositories on repository.apache.org:
 
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/2.0.0-M1/isis-2.0.0-M1-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/helloworld-archetype/2.0.0-M1/helloworld-archetype-2.0.0-M1-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/2.0.0-M1/simpleapp-archetype-2.0.0-M1-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.16.3/isis-1.16.3-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/helloworld-archetype/1.16.3/helloworld-archetype-1.16.3-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.16.3/simpleapp-archetype-1.16.3-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-2.0.0-M1-RC1, helloworld-archetype-2.0.0-M1-RC1 and simpleapp-archetype-2.0.0-M1-RC1; see https://github.com/apache/isis/tags
+In the source code repo the code has been tagged as isis-1.16.3-RC1, helloworld-archetype-1.16.3-RC1 and simpleapp-archetype-1.16.3-RC1; see https://github.com/apache/isis/tags
 
 For instructions on how to verify the release (build from binaries and/or use in Maven directly), see https://isis.apache.org/guides/cgcom/cgcom.html#_cgcom_verifying-releases
 
@@ -1643,7 +1644,7 @@ Please verify the release and cast your vote.  The vote will be open for a minim
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p>the version number (<code>2.0.0-M1</code> or whatever)</p> </li> 
+            <li> <p>the version number (<code>1.16.3</code> or whatever)</p> </li> 
             <li> <p>the release candidate number (<code>RC1</code> or whatever)</p> </li> 
             <li> <p>the repository id, as provided by Nexus earlier (<code>orgapacheisis-10xx</code> or whatever)</p> </li> 
            </ul> 
@@ -1919,7 +1920,7 @@ http://repository.apache.org/content/repositories/orgapacheisis-1059/org/apache/
     -D archetypeCatalog=local \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=helloworld-archetype \
-    -D archetypeVersion=2.0.0-M1 \
+    -D archetypeVersion=1.16.3 \
     -D groupId=com.mycompany \
     -D artifactId=myhelloworld \
     -D version=1.0-SNAPSHOT \
@@ -1942,7 +1943,7 @@ mvn archetype:generate  \
     -D archetypeCatalog=local \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simpleapp-archetype \
-    -D archetypeVersion=2.0.0-M1 \
+    -D archetypeVersion=1.16.3 \
     -D groupId=com.mycompany \
     -D artifactId=mysimpleapp \
     -D version=1.0-SNAPSHOT \
@@ -2009,7 +2010,7 @@ mvn clean install -o &amp;&amp; mvn -pl webapp jetty:run -o</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 2.0.0-M1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.16.3</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2041,9 +2042,9 @@ I'll now go ahead and complete the post-release activities.</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-2.0.0-M1 RC1
-sh scripts/promoterctag.sh helloworld-archetype-2.0.0-M1 RC1
-sh scripts/promoterctag.sh simpleapp-archetype-2.0.0-M1 RC1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-1.16.3 RC1
+sh scripts/promoterctag.sh helloworld-archetype-1.16.3 RC1
+sh scripts/promoterctag.sh simpleapp-archetype-1.16.3 RC1</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2209,7 +2210,7 @@ popd</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 2.0.0-M1 &gt; /tmp/1</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 1.16.3 &gt; /tmp/1</code></pre> 
            </div> 
           </div> 
          </div> 
@@ -2249,7 +2250,7 @@ popd</code></pre>
          <div class="ulist"> 
           <ul> 
            <li> <p>Paste in the JIRA-generated release notes generated above, adding to top of <code>adocs/documentation/src/main/asciidoc/release-notes.adoc</code>. Also add a summary line for the release.</p> </li> 
-           <li> <p>Search these release procedures, and update any hard-coded reference to the release to the next release (so when they are followed next time the text will be correct).</p> </li> 
+           <li> <p>Update the <a href="../../<em>versions.adoc">versions.adoc</a> file that declares the current and next releases.</p> </li> 
            <li> <p>Update the <a href="../../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p> </li> 
            <li> <p>Update any pages (<code>.adoc</code>, <code>.md</code>, <code>.html</code> etc) that describe how to run the archetype, and ensure they reference the correct version.<br></p> 
             <div class="paragraph"> 
@@ -2268,10 +2269,10 @@ popd</code></pre>
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p>locate <code>template/document.html.erb</code> file, and remove <code>-SNAPSHOT</code> from the navbar:</p> 
+           <li> <p>locate <code>template/document.html.erb</code> file, and remove <code>-SNAPSHOT</code> from the navbar, so that it reads something like:</p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M1<span class="tag">&lt;/p&gt;</span></code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>1.16.3<span class="tag">&lt;/p&gt;</span></code></pre> 
              </div> 
             </div> </li> 
            <li> <p>publish to the <code>isis-site</code> repo.</p> 
@@ -2302,7 +2303,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
             </div> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">cp -rf content/versions/current content/versions/2.0.0-M1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">cp -rf content/versions/current content/versions/1.16.3</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>update the new named version’s <code>index.html</code> with one that will redirect back to the home page.</p> 
@@ -2343,7 +2344,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
            <li> <p>locate <code>template/document.html.erb</code> file, and add in <code>-SNAPSHOT</code> for version in the navbar:</p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M2-SNAPSHOT<span class="tag">&lt;/p&gt;</span></code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>1.16.4-SNAPSHOT<span class="tag">&lt;/p&gt;</span></code></pre> 
              </div> 
             </div> </li> 
            <li> <p>publish the website once more (from the <code>isis</code> main repo).</p> </li> 
@@ -2364,7 +2365,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[ANN] Apache Isis version 2.0.0-M1 Released</code></pre> 
+           <pre class="CodeRay highlight"><code>[ANN] Apache Isis version 1.16.3 Released</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2372,7 +2373,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis v2.0.0-M1.
+           <pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis 1.16.3.
 
 New features in this release include:
 * ...
@@ -2387,8 +2388,8 @@ Enjoy!
 
 --The Apache Isis team
 
-[1] http://isis.apache.org/release-notes/release-notes.html#_release-notes_2.0.0-M1
-[2] http://isis.apache.org/migration-notes/migration-notes.html#_migration-notes_1.16.0-to-2.0.0-M1
+[1] http://isis.apache.org/release-notes/release-notes.html#_release-notes_1.16.3
+[2] http://isis.apache.org/migration-notes/migration-notes.html#_migration-notes_1.16.2-to-1.16.3
 [3] http://search.maven.org
 [4] http://isis.apache.org/downloads.html</code></pre> 
           </div> 
@@ -2409,13 +2410,13 @@ Enjoy!
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="bash">git checkout master                           # update master with latest
 git pull
-git merge release-2.0.0-M1-RC1                  # merge branch onto master
-git push origin --delete release-2.0.0-M1-RC1   # remote branch no longer needed
-git branch -d release-2.0.0-M1-RC1              # branch no longer needed</code></pre> 
+git merge release-1.16.3-RC1                  # merge branch onto master
+git push origin --delete release-1.16.3-RC1   # remote branch no longer needed
+git branch -d release-1.16.3-RC1              # branch no longer needed</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>2.0.0-M1-SNAPSHOT</code>)</p> 
+          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>1.16.4-SNAPSHOT</code>)</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2564,7 +2565,7 @@ git push</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 2.0.0-M1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.16.3</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2594,23 +2595,23 @@ The vote is UNSUCCESSFUL.</code></pre>
            <li> <p>delete the remote branch, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin release-2.0.0-M1-RC1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin release-1.16.3-RC1</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>delete the remote origin server’s tags, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin isis-2.0.0-M1-RC1
-git push --delete origin helloworld-archetype-2.0.0-M1-RC1
-git push --delete origin simpleapp-archetype-2.0.0-M1-RC1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin isis-1.16.3-RC1
+git push --delete origin helloworld-archetype-1.16.3-RC1
+git push --delete origin simpleapp-archetype-1.16.3-RC1</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>delete the tags that were created locally, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git tag -d isis-2.0.0-M1
-git tag -d helloworld-archetype-2.0.0-M1
-git tag -d simpleapp-archetype-2.0.0-M1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git tag -d isis-1.16.3
+git tag -d helloworld-archetype-1.16.3
+git tag -d simpleapp-archetype-1.16.3</code></pre> 
              </div> 
             </div> </li> 
           </ul> 

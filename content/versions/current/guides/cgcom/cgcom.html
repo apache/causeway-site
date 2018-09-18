@@ -221,16 +221,17 @@ table.CodeRay td.code>pre{padding:0}
         <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Other Resources</li> 
         <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
-        <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
+        <li><a href="https://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
         <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/">Apache Homepage</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -662,14 +663,13 @@ git checkout master &amp;&amp; git merge --no-ff ISIS-1162_pr-31 &amp;&amp; git 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">cd core
-export ISISTMP=/c/tmp                               <i class="conum" data-value="1"></i><b>(1)</b>
-export ISISDEV=2.1.0-SNAPSHOT
-export ISISREL=2.0.0
+           <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp                               <i class="conum" data-value="1"></i><b>(1)</b>
+export ISISDEV=1.16.3-SNAPSHOT
+export ISISREL=1.16.3
 export ISISRC=RC1
 export ISISBRANCH=release-$ISISREL-$ISISRC
 export ISISJIRA=ISIS-9999                           <i class="conum" data-value="2"></i><b>(2)</b>
-export CATALINA_HOME=/c/java/apache-tomcat-8.0.30   <i class="conum" data-value="3"></i><b>(3)</b>
+export CATALINA_HOME=/c/java/apache-tomcat-9.0.10   <i class="conum" data-value="3"></i><b>(3)</b>
 
 env | grep ISIS | sort</code></pre> 
           </div> 
@@ -702,10 +702,7 @@ env | grep ISIS | sort</code></pre>
              <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>Note that the branch name is <strong>not</strong> the same any of the eventual tag names (eg <code>isis-2.0.0</code> or <code>simpleapp-archetype-2.0.0</code>).</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>If they did have the same name, then what would happen is that the <code>maven-release-plugin</code> would checkout the (HEAD of the) branch and thus upload a SNAPSHOT to the snapshot repository. What it should of course do is checkout the tag and then upload that to the release staging repository.</p> 
+               <p>Note that the branch name is intentionally <strong>not</strong> the same any of the eventual tag names (eg <code>isis-1.16.3</code> or <code>simpleapp-archetype-1.16.3</code>).</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -725,19 +722,19 @@ git checkout -b $ISISBRANCH</code></pre>
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>All release preparation is done locally; if we are successful, this branch will be merged back into master.</p> 
+          <p>The release is performed on a branch; if we are successful, this branch will be merged back into master.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Double check that the version number of the parent pom should reflect the branch name that you are now on (with a <code>-SNAPSHOT</code> suffix). his will normally have been done already during earlier development; but confirm that it has been updated. If it has not, make the change.</p> 
+          <p>Double check that the version number of the parent pom should reflect the branch name that you are now on (with a <code>-SNAPSHOT</code> suffix). This will normally have been done already during earlier development; but confirm that it has been updated. If it has not, make the change.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on. For example, if releasing version <code>2.0.0</code>, the POM should read:</p> 
+          <p>Double check that the version number of the core POM (<code>core/pom.xml</code>) should reflect the branch name that you are now on. For example, if releasing version <code>1.16.3</code>, the POM should read:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;groupId&gt;</span>org.apache.isis.core<span class="tag">&lt;/groupId&gt;</span>
 <span class="tag">&lt;artifactId&gt;</span>isis<span class="tag">&lt;/artifactId&gt;</span>
-<span class="tag">&lt;version&gt;</span>2.0.0-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre> 
+<span class="tag">&lt;version&gt;</span>1.16.3-SNAPSHOT<span class="tag">&lt;/version&gt;</span></code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -766,7 +763,41 @@ git checkout -b $ISISBRANCH</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__cgcom_cutting-a-release_releasing-core">4.4. Releasing Core</h3> 
+         <h3 id="__cgcom_cutting-a-release_bump-revision-to-ISISREL">4.4. Bump <code>revision</code> property to <code>$ISISREL</code></h3> 
+         <div class="paragraph"> 
+          <p>Previously we used the <code>maven-release-plugin</code> which took responsibility for bumping the <code>&lt;version&gt;</code> from -SNAPSHOT to release, and then onto the next -SNAPSHOT. However, this plugin does not seem to be compatible with the support for <code>${revision}</code> property introduced in Maven 3.5.0 in order <a href="https://maven.apache.org/maven-ci-friendly.html">to support CI/CD use cases</a>; at least we couldn’t make it work.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>So, instead, we perform the edit of ${revision}` manually before.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>In the three <code>pom.xml</code> files (for <code>core</code> and the two archetypes) the property is defined:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
+    <span class="tag">&lt;revision&gt;</span>1.16.3-SNAPSHOT<span class="tag">&lt;/revision&gt;</span>
+    ...
+<span class="tag">&lt;/properties&gt;</span></code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Change all of these to the release version, using:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISREL}&lt;|g" core/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISREL}&lt;|g" example/application/simpleapp/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;${ISISREL}&lt;|g" example/application/helloworld/pom.xml
+git commit -am "${ISISJIRA}: bumps revision property across all pom.xml's to ${ISISREL}"</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>After release, there is a <a href="#__cgcom_cutting-a-release_bump-revision-to-ISISDEV">similar step at the end</a> to update to the next development <code>SNAPSHOT</code>.</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__cgcom_cutting-a-release_releasing-core">4.5. Releasing Core</h3> 
          <div class="paragraph"> 
           <p>First, we release <code>core</code>. Switch to the appropriate directory:</p> 
          </div> 
@@ -776,7 +807,7 @@ git checkout -b $ISISBRANCH</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_set-environment-variables">4.4.1. Set environment variables</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_set-environment-variables">4.5.1. Set environment variables</h4> 
           <div class="paragraph"> 
            <p>Set additional environment variables for the core "artifact":</p> 
           </div> 
@@ -790,7 +821,7 @@ env | grep ISIS | sort</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_license-headers">4.4.2. License headers</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_license-headers">4.5.2. License headers</h4> 
           <div class="paragraph"> 
            <p>The Apache Release Audit Tool <code>RAT</code> (from the <a href="http://creadur.apache.org">Apache Creadur</a> project) checks for missing license header files. The parent <code>pom.xml</code> of each releasable module specifies the RAT Maven plugin, with a number of custom exclusions.</p> 
           </div> 
@@ -836,7 +867,7 @@ for a in `find . -name rat.txt -print`; do grep '!???' $a; done</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_missing-license-check">4.4.3. Missing License Check</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_missing-license-check">4.5.3. Missing License Check</h4> 
           <div class="paragraph"> 
            <p>Although Apache Isis has no dependencies on artifacts with incompatible licenses, the POMs for some of these dependencies (in the Maven central repo) do not necessarily contain the required license information. Without appropriate additional configuration, this would result in the generated <code>DEPENDENCIES</code> file and generated Maven site indicating dependencies as having "unknown" licenses.</p> 
           </div> 
@@ -875,7 +906,7 @@ licenses to remove from supplemental-models.xml (are spurious):
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_commit-changes">4.4.4. Commit changes</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_commit-changes">4.5.4. Commit changes</h4> 
           <div class="paragraph"> 
            <p>Commit any changes from the preceding steps:</p> 
           </div> 
@@ -886,7 +917,7 @@ licenses to remove from supplemental-models.xml (are spurious):
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_sanity-check">4.4.5. Sanity check</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_sanity-check">4.5.5. Sanity check</h4> 
           <div class="paragraph"> 
            <p>Perform one last sanity check on the codebase. Delete all Isis artifacts from your local Maven repo, then build using the <code>-o</code> offline flag:</p> 
           </div> 
@@ -898,162 +929,52 @@ mvn clean install -o</code></pre>
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_release-prepare-dry-run">4.4.6. Release prepare "dry run"</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-core_deploy">4.5.6. Deploy</h4> 
           <div class="paragraph"> 
-           <p>Most of the work is done using the <code>mvn release:prepare</code> goal. Since this makes a lot of changes, we run it first in "dry run" mode; only if that works do we run the goal for real.</p> 
+           <p>Previously the release procedures used <code>mvn release:prepare</code> and <code>mvn release:perform</code>. These are however not compatible with <code>${revision}</code> that we now use <a href="https://maven.apache.org/maven-ci-friendly.html">for CI/CD</a>.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>Run the dry-run as follows:</p> 
+           <p>We therefore just use <code>mvn deploy</code> directly, activating the (inherited) <code>apache-release</code> profile that, amongst other things, brings in the <code>gpg</code> plugin for code signing.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To build and deploy and tag, we use:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D dryRun=true \
-    -DreleaseVersion=$ISISREL \
-    -Dtag=$ISISART-$ISISREL \
-    -DdevelopmentVersion=$ISISDEV</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">mvn -P apache-release \
+    clean deploy      \
+    -Dgit \
+    -Dgpg.passphrase="this is not really my passphrase"
+
+git tag $ISISART-$ISISREL
+git tag $ISISART-$ISISREL-$ISISRC</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>You may be prompted for the gpg passphrase.</p> 
+           <p>using your own GPG passphrase, of course.</p> 
           </div> 
-          <div class="admonitionblock note"> 
+          <div class="admonitionblock important"> 
            <table> 
             <tbody>
              <tr> 
-              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+              <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>Experiments in using <code>--batch-mode -Dgpg.passphrase="…​"</code> to fully automate this didn’t work; for more info, see <a href="http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html">here</a> (maven release plugin docs) and <a href="http://maven.apache.org/maven-release/maven-release-plugin/examples/non-interactive-release.html">here</a> (maven gpg plugin docs).</p> 
+                <p>This requires <code>gpg</code> v2.1 or later.</p> 
                </div> </td> 
              </tr> 
             </tbody>
            </table> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_release-prepare-proper">4.4.7. Release prepare "proper"</h4> 
-          <div class="paragraph"> 
-           <p>Assuming this completes successfully, re-run the command, but without the <code>dryRun</code> flag and specifying <code>resume=false</code> (to ignore the generated <code>release.properties</code> file that gets generated as a side-effect of using <code>git</code>). You can also set the <code>skipTests</code> flag since they would have been run during the previous dry run:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">mvn release:prepare -P apache-release -D resume=false -DskipTests=true \
-        -DreleaseVersion=$ISISREL \
-        -Dtag=$ISISART-$ISISREL \
-        -DdevelopmentVersion=$ISISDEV</code></pre> 
-           </div> 
-          </div> 
-          <div class="admonitionblock tip"> 
-           <table> 
-            <tbody>
-             <tr> 
-              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-              <td class="content"> 
-               <div class="paragraph"> 
-                <p>If there are any snags at this stage, then explicitly delete the generated <code>release.properties</code> file first before trying again.</p> 
-               </div> </td> 
-             </tr> 
-            </tbody>
-           </table> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_post-prepare-sanity-check">4.4.8. Post-prepare sanity check</h4> 
-          <div class="paragraph"> 
-           <p>You should end up with artifacts in your local repo with the new version (eg <code>2.0.0-M1</code>). This is a good time to do some quick sanity checks; nothing has yet been uploaded:</p> 
-          </div> 
-          <div class="ulist"> 
-           <ul> 
-            <li> <p>unzip the source-release ZIP and check it builds.</p> </li> 
-            <li> <p>Inspect the <code>DEPENDENCIES</code> file, and check it looks correct.</p> </li> 
-           </ul> 
-          </div> 
-          <div class="paragraph"> 
-           <p>These steps can be performed using the following script:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code>rm -rf $ISISTMP/$ISISART-$ISISREL
-mkdir $ISISTMP/$ISISART-$ISISREL
-
-if [ "$ISISCOR" == "Y" ]; then
-    ZIPDIR="$M2_REPO/repository/org/apache/isis/core/$ISISART/$ISISREL"
-else
-    ZIPDIR="$M2_REPO/repository/org/apache/isis/$ISISCPT/$ISISART/$ISISREL"
-fi
-echo "cp \"$ZIPDIR/$ISISART-$ISISREL-source-release.zip\" $ISISTMP/$ISISART-$ISISREL/."
-cp "$ZIPDIR/$ISISART-$ISISREL-source-release.zip" $ISISTMP/$ISISART-$ISISREL/.
-
-pushd $ISISTMP/$ISISART-$ISISREL
-unzip $ISISART-$ISISREL-source-release.zip
-
-cd $ISISART-$ISISREL
-mvn clean install
-
-cat DEPENDENCIES
-
-popd</code></pre> 
-           </div> 
-          </div> 
-         </div> 
-         <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-core_release-perform-upload">4.4.9. Release perform (Upload)</h4> 
-          <div class="paragraph"> 
-           <p>Once the release has been built locally, it should be uploaded for voting. This is done by deploying the Maven artifacts to a staging directory (this includes the source release ZIP file which will be voted upon).</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The Apache staging repository runs on Nexus server, hosted at <a href="https://repository.apache.org">repository.apache.org</a>. The process of uploading will create a staging repository that is associated with the host (IP address) performing the release. Once the repository is staged, the newly created staging repository is "closed" in order to make it available to others.</p> 
-          </div> 
-          <div class="paragraph"> 
-           <p>Use:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">mvn release:perform -P apache-release \
-    -DworkingDirectory=$ISISTMP/$ISISART-$ISISREL/checkout</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>The custom <code>workingDirectory</code> prevents file path issues if releasing on Windows. The command checks out the codebase from the tag, then builds the artifacts, then uploads them to the Apache staging repository:</p> 
-          </div> 
-          <div class="listingblock"> 
-           <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">...
-[INFO] --- maven-release-plugin:2.3.2:perform (default-cli) @ isis ---
-[INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw\co
-re
-[INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch release-2.0.0-M1 file:///C:\APACHE\isis-git-rw\core C:\APACHE\isis-git-rw\core\target\checkout"
-[INFO] Working directory: C:\APACHE\isis-git-rw\core\target
-[INFO] Performing a LOCAL checkout from scm:git:file:///C:\APACHE\isis-git-rw
-[INFO] Checking out the project to perform the release ...
-[INFO] Executing: cmd.exe /X /C "git clone --branch release-2.0.0-M1 file:///C:\APACHE\isis-git-rw C:\APACHE\isis-git-rw\core\target\checkout"
-[INFO] Working directory: C:\APACHE\isis-git-rw\core\target
-[INFO] Executing: cmd.exe /X /C "git ls-remote file:///C:\APACHE\isis-git-rw"
-[INFO] Working directory: C:\Users\ADMINI~1\AppData\Local\Temp
-[INFO] Executing: cmd.exe /X /C "git fetch file:///C:\APACHE\isis-git-rw"
-[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C "git checkout release-2.0.0-M1"
-[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Executing: cmd.exe /X /C "git ls-files"
-[INFO] Working directory: C:\APACHE\isis-git-rw\core\target\checkout
-[INFO] Invoking perform goals in directory C:\APACHE\isis-git-rw\core\target\checkout\core
-[INFO] Executing goals 'deploy'...
-...</code></pre> 
-           </div> 
-          </div> 
-          <div class="paragraph"> 
-           <p>You may (again) be prompted for gpg passphrase. All being well this command will complete successfully. Given that it is uploading code artifacts, it could take a while to complete.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__cgcom_cutting-a-release_releasing-the-archetypes">4.5. Releasing the Archetypes</h3> 
+         <h3 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype">4.6. Releasing <code>simpleapp</code> archetype</h3> 
          <div class="paragraph"> 
-          <p>Apache Isis archetypes are reverse engineered from example applications. Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p> 
+          <p>The Apache Isis archetypes are reverse engineered from example applications. Once reverse engineered, the source is checked into git (replacing any earlier version of the archetype) and released.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>There are currently two archetypes, <code>simpleapp</code> and <code>helloworld</code>.</p> 
+          <p>There are currently two archetypes, <code>simpleapp</code> and <code>helloworld</code>. In this section we release <code>simpleapp</code>, in the following <a href="#__cgcom_cutting-a-release_releasing-the-helloworld-archetype">section</a> we release <code>helloworld</code>.</p> 
          </div> 
          <div class="admonitionblock note"> 
           <table> 
@@ -1071,243 +992,207 @@ re
            </tbody>
           </table> 
          </div> 
+         <div class="paragraph"> 
+          <p>Switch to the directory containing the <code>simpleapp</code> example:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="bash">cd ../example/application/simpleapp</code></pre> 
+          </div> 
+         </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_setup-environment-variables">4.5.1. Releasing <code>simpleapp</code> archetype</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype_setup-environment-variables">4.6.1. Setup environment variables</h4> 
           <div class="paragraph"> 
-           <p>Switch to the directory containing the <code>simpleapp</code> example:</p> 
+           <p>Set additional environment variables for the <code>simpleapp-archetype</code> artifact:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">cd ../example/application/simpleapp</code></pre> 
-           </div> 
-          </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_setup-environment-variables">Setup environment variables</h5> 
-           <div class="paragraph"> 
-            <p>Set additional environment variables for the <code>simpleapp-archetype</code> artifact:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">export ISISART=simpleapp-archetype
+            <pre class="CodeRay highlight"><code data-lang="bash">export ISISART=simpleapp-archetype
 export ISISPAR=$ISISREL                 <i class="conum" data-value="1"></i><b>(1)</b>
 
 export ISISCPT=$(echo $ISISART | cut -d- -f2)
 export ISISCPN=$(echo $ISISART | cut -d- -f1)
 
 env | grep ISIS | sort</code></pre> 
-            </div> 
-           </div> 
-           <div class="colist arabic"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-               <td><code>$ISISPAR</code> is the version of the Apache Isis core that will act as the archetype’s parent. Usually this is the same as <code>$ISISREL</code>.</td> 
-              </tr> 
-             </tbody>
-            </table> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_check-the-example-app">Check the example app</h5> 
-           <div class="paragraph"> 
-            <p>Update the parent <code>pom.xml</code> to reference the <em>released</em> version of Apache Isis core, eg:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;isis.version&gt;</span>2.0.0-M1<span class="tag">&lt;/isis.version&gt;</span>
-    ...
-<span class="tag">&lt;/properties&gt;</span></code></pre> 
-            </div> 
-           </div> 
-           <div class="admonitionblock note"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-               <td class="content"> 
-                <div class="paragraph"> 
-                 <p>Previously at this point we used to check for and fix any missing license header notices; however it doesn’t make sense for the archetype to include the Apache rat-plugin, so this has been removed.</p> 
-                </div> </td> 
-              </tr> 
-             </tbody>
-            </table> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Finally, double check that the app</p> 
-           </div> 
-           <div class="ulist"> 
-            <ul> 
-             <li> <p>builds:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be run from an IDE</p> 
-              <div class="ulist"> 
-               <ul> 
-                <li> <p>mainClass=<code>org.apache.isis.WebServer</code></p> </li> 
-                <li> <p>args=<code>-m domainapp.application.manifest.DomainAppAppManifestWithFixtures</code></p> </li> 
-                <li> <p>run before: <code>mvn -pl module-simple datanucleus:enhance -o</code> in the root module</p> </li> 
-               </ul> 
-              </div> </li> 
-             <li> <p>can be run using the mvn jetty plugin:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be packaged and run using the mvn jetty-console plugin:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dmavenmixin-jettyconsole
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td><code>$ISISPAR</code> is the version of the Apache Isis core that will act as the archetype’s parent. Usually this is the same as <code>$ISISREL</code>.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype_check-the-example-app">4.6.2. Check the example app</h4> 
+          <div class="paragraph"> 
+           <p>Double check that the app:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>builds:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>can be run from an IDE</p> 
+             <div class="ulist"> 
+              <ul> 
+               <li> <p>mainClass=<code>org.apache.isis.WebServer</code></p> </li> 
+               <li> <p>args=<code>-m domainapp.application.manifest.DomainAppAppManifestWithFixtures</code></p> </li> 
+               <li> <p>run before: <code>mvn -pl module-simple datanucleus:enhance -o</code> in the root module</p> </li> 
+              </ul> 
+             </div> </li> 
+            <li> <p>can be run using the mvn jetty plugin:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn -pl webapp jetty:run</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>can be packaged and run using the mvn jetty-console plugin:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dmavenmixin-jettyconsole
 mvn antrun:run -Dmavenmixin-jettyconsole</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be deployed as a WAR</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">cp webapp/target/simpleapp.war $CATALINA_HOME/webapps/ROOT.war
+              </div> 
+             </div> </li> 
+            <li> <p>can be deployed as a WAR</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">cp webapp/target/simpleapp.war $CATALINA_HOME/webapps/ROOT.war
 pushd $CATALINA_HOME/bin
 sh startup.sh
 tail -f ../logs/catalina.out</code></pre> 
-               </div> 
               </div> 
-              <div class="paragraph"> 
-               <p>quit using:</p> 
-              </div> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">sh shutdown.sh
+             </div> 
+             <div class="paragraph"> 
+              <p>quit using:</p> 
+             </div> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">sh shutdown.sh
 popd</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be packaged and run using Docker:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dmavenmixin-docker -D docker-plugin.imageName=test/simpleapp
-docker container run -p 8080:8080 -d test/simpleapp</code></pre> 
-               </div> 
               </div> 
-              <div class="admonitionblock note"> 
-               <table> 
-                <tbody>
-                 <tr> 
-                  <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-                  <td class="content"> 
-                   <div class="paragraph"> 
-                    <p>On Windows, make sure that Docker is first switched to using linux containers, not Windows containers (because the <code>Dockerfile</code> in the application references a linux base image).</p> 
+             </div> </li> 
+            <li> <p>can be packaged and run using Docker:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dmavenmixin-docker -D docker-plugin.imageName=test/simpleapp
+docker container run -p 8080:8080 --name simpleapp -d test/simpleapp
+
+#winpty docker exec -it simpleapp bash</code></pre> 
+              </div> 
+             </div> 
+             <div class="admonitionblock note"> 
+              <table> 
+               <tbody>
+                <tr> 
+                 <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+                 <td class="content"> 
+                  <div class="paragraph"> 
+                   <p>On Windows, make sure that Docker is first switched to using linux containers, not Windows containers (because the <code>Dockerfile</code> in the application references a linux base image).</p> 
+                  </div> 
+                  <div class="paragraph"> 
+                   <p>You may also need to enable the Docker daemon first, otherwise the "mvn install" command above will fail:</p> 
+                  </div> 
+                  <div class="imageblock"> 
+                   <div class="content"> 
+                    <a class="image" href="images/docker/docker-daemon.png"><img src="images/docker/docker-daemon.png" alt="docker daemon" width="600px"></a> 
                    </div> 
-                   <div class="paragraph"> 
-                    <p>You may also need to enable the Docker daemon first, otherwise the "mvn install" command above will fail:</p> 
+                  </div> 
+                  <div class="paragraph"> 
+                   <p>You might also need to ensure that the "Unidentified networks" are configured to be private:</p> 
+                  </div> 
+                  <div class="imageblock"> 
+                   <div class="content"> 
+                    <a class="image" href="images/docker/026-docker-nat-private.png"><img src="images/docker/026-docker-nat-private.png" alt="026 docker nat private" width="600px"></a> 
                    </div> 
-                   <div class="imageblock"> 
-                    <div class="content"> 
-                     <a class="image" href="images/docker/docker-daemon.png"><img src="images/docker/docker-daemon.png" alt="docker daemon" width="600px"></a> 
-                    </div> 
-                   </div> 
-                   <div class="paragraph"> 
-                    <p>You might also need to ensure that the "Unidentified networks" are configured to be private:</p> 
-                   </div> 
-                   <div class="imageblock"> 
-                    <div class="content"> 
-                     <a class="image" href="images/docker/026-docker-nat-private.png"><img src="images/docker/026-docker-nat-private.png" alt="026 docker nat private" width="600px"></a> 
-                    </div> 
-                   </div> 
-                   <div class="paragraph"> 
-                    <p>This can be done using the "Local Security Policy" application.</p> 
-                   </div> </td> 
-                 </tr> 
-                </tbody>
-               </table> 
-              </div> </li> 
-            </ul> 
-           </div> 
-           <div class="paragraph"> 
-            <p>This too should be accessed at <a href="http://localhost:8080">localhost:8080</a>.</p> 
-           </div> 
-           <div class="admonitionblock tip"> 
-            <table> 
-             <tbody>
-              <tr> 
-               <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-               <td class="content"> 
-                <div class="paragraph"> 
-                 <p>The Kitematic UI tool is handy for viewing and interacting with running containers.</p> 
-                </div> </td> 
-              </tr> 
-             </tbody>
-            </table> 
-           </div> 
-           <div class="paragraph"> 
-            <p>In each case, check the about page and confirm has been built against non-SNAPSHOT versions of the Apache Isis jars.</p> 
-           </div> 
+                  </div> 
+                  <div class="paragraph"> 
+                   <p>This can be done using the "Local Security Policy" application.</p> 
+                  </div> </td> 
+                </tr> 
+               </tbody>
+              </table> 
+             </div> </li> 
+           </ul> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_create-the-archetype">Create the archetype</h5> 
-           <div class="paragraph"> 
-            <p>Make sure you are in the correct directory and environment variables are correct.</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>To recreate the <strong>simpleapp</strong> archetype:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">cd example/application/simpleapp
-env | grep ISIS | sort</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Then, run the script:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">sh ../../../scripts/recreate-archetype.sh $ISISJIRA</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>The script automatically commits changes; if you wish use <code>git log</code> and <code>git diff</code> (or a tool such as SourceTree) to review changes made.</p> 
+          <div class="paragraph"> 
+           <p>This too should be accessed at <a href="http://localhost:8080">localhost:8080</a>.</p> 
+          </div> 
+          <div class="admonitionblock tip"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>The Kitematic UI tool is handy for viewing and interacting with running containers.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To tidy up, kill and remove the container:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">docker container kill simpleapp
+docker container rm simpleapp</code></pre> 
            </div> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_release-prepare">4.5.2. Release prepare</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype_create-the-archetype">4.6.3. Recreate the archetype</h4> 
           <div class="paragraph"> 
-           <p>Switch to the <strong>archetype</strong> directory and execute the <code>release:prepare</code>:</p> 
+           <p>Make sure you are in the correct directory and environment variables are correct.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To recreate the <strong>simpleapp</strong> archetype, first ensure in the correct directory:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code>cd ../../../example/archetype/$ISISCPN
-rm -rf $ISISTMP/checkout
-mvn release:prepare -P apache-release \
-                -DreleaseVersion=$ISISREL \
-                -DdevelopmentVersion=$ISISDEV \
-                -Dtag=$ISISART-$ISISREL</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">cd example/application/simpleapp
+env | grep ISIS | sort</code></pre> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simpleapp_post-prepare-sanity-check">Post-prepare sanity check</h5> 
-           <div class="paragraph"> 
-            <p>This is a good point to test the archetype; nothing has yet been uploaded.</p> 
+          <div class="paragraph"> 
+           <p>Then, run the script (which also builds the archetype once generated) and switch to the archetype’s directory:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">sh ../../../scripts/recreate-archetype.sh $ISISJIRA
+cd `pwd|sed 's/application/archetype/'`</code></pre> 
            </div> 
-           <div class="paragraph"> 
-            <p><em>In a different session</em>, create a new app from the archetype. First set up environment variables:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp    # or as required
+          </div> 
+          <div class="paragraph"> 
+           <p>The script automatically commits changes; if you wish use <code>git log</code> and <code>git diff</code> (or a tool such as SourceTree) to review changes made.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype_sanity-check">4.6.4. Sanity check</h4> 
+          <div class="paragraph"> 
+           <p><em>In a different session</em>, create a new app from the archetype. First set up environment variables:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp    # or as required
 export ISISCPN=simpleapp
 env | grep ISIS | sort</code></pre> 
-            </div> 
            </div> 
-           <div class="paragraph"> 
-            <p>Then generate a new app from the archetype:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">rm -rf $ISISTMP/test-$ISISCPN
+          </div> 
+          <div class="paragraph"> 
+           <p>Then generate a new app from the archetype:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">rm -rf $ISISTMP/test-$ISISCPN
 
 mkdir $ISISTMP/test-$ISISCPN
 cd $ISISTMP/test-$ISISCPN
@@ -1317,193 +1202,197 @@ mvn archetype:generate  \
     -D artifactId=myapp \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=$ISISCPN-archetype</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Build the newly generated app and test:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">cd myapp
-mvn clean install -o
-mvn -pl webapp jetty:run              # runs as mvn jetty plugin</code></pre> 
-            </div> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simplapp_release-perform-upload">Release Perform (upload)</h5> 
-           <div class="paragraph"> 
-            <p>Back in the original session (in the <strong>archetype</strong> directory, <code>example/archetype/$ISISCPN</code>), execute <code>release:perform</code>:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code>mvn release:perform -P apache-release \
-                -DworkingDirectory=$ISISTMP/checkout</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>This will upload the artifacts to the ASF Nexus repository.</p> 
+          <div class="paragraph"> 
+           <p>Build the newly generated app and test:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">cd myapp
+mvn clean install -o
+mvn -pl webapp jetty:run              # runs as mvn jetty plugin</code></pre> 
            </div> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_setup-environment-variables">4.5.3. Releasing <code>helloworld</code> archetype</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-simpleapp-archetype_deploy">4.6.5. Deploy</h4> 
           <div class="paragraph"> 
-           <p>We now repeat the procedure for the <code>helloworld</code> example app.</p> 
+           <p>Back in the original session, we upload (deploy) the archetype to the staging repository.</p> 
+          </div> 
+          <div class="admonitionblock note"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>Previously we used <code>mvn release:prepare</code> and <code>mvn release:perform</code> to do this. However not compatible with <code>${revision}</code> that we now use <a href="https://maven.apache.org/maven-ci-friendly.html">for CI/CD</a>. We therefore now just use <code>mvn deploy</code> directly, activating the (inherited) <code>apache-release</code> profile that, amongst other things, brings in the <code>gpg</code> plugin for code signing.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
           <div class="paragraph"> 
-           <p>Start by switching to the directory containing the <code>helloworld</code> example:</p> 
+           <p>To build and deploy and tag, we use:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">cd ../../../example/application/helloworld</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">mvn -P apache-release \
+    clean deploy      \
+    -Dgpg.passphrase="this is not really my passphrase"
+
+git tag $ISISART-$ISISREL
+git tag $ISISART-$ISISREL-$ISISRC</code></pre> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_setup-environment-variables">Setup environment variables</h5> 
-           <div class="paragraph"> 
-            <p>Update additional environment variables for the <code>helloworld-archetype</code> artifact:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">export ISISART=helloworld-archetype
+          <div class="paragraph"> 
+           <p>using your own GPG passphrase, of course.</p> 
+          </div> 
+          <div class="admonitionblock important"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>This requires <code>gpg</code> v2.1 or later.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype">4.7. Releasing <code>helloworld</code> archetype</h3> 
+         <div class="paragraph"> 
+          <p>We now repeat the archetype release procedure, this time for the <code>helloworld</code> example app.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Start by switching to the directory containing the <code>helloworld</code> example:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="bash">cd ../../../example/application/helloworld</code></pre> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype_setup-environment-variables">4.7.1. Setup environment variables</h4> 
+          <div class="paragraph"> 
+           <p>Update additional environment variables for the <code>helloworld-archetype</code> artifact:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">export ISISART=helloworld-archetype
 export ISISPAR=$ISISREL
 
 export ISISCPT=$(echo $ISISART | cut -d- -f2)
 export ISISCPN=$(echo $ISISART | cut -d- -f1)
 
 env | grep ISIS | sort</code></pre> 
-            </div> 
-           </div> 
-          </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_check-the-example-app">Check the example app</h5> 
-           <div class="paragraph"> 
-            <p>Update the parent <code>pom.xml</code> to reference the <em>released</em> version of Apache Isis core, eg:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;isis.version&gt;</span>2.0.0-M1<span class="tag">&lt;/isis.version&gt;</span>
-    ...
-<span class="tag">&lt;/properties&gt;</span></code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Finally, double check that the app</p> 
-           </div> 
-           <div class="ulist"> 
-            <ul> 
-             <li> <p>builds:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be run from an IDE</p> 
-              <div class="ulist"> 
-               <ul> 
-                <li> <p>mainClass=<code>org.apache.isis.WebServer</code></p> </li> 
-                <li> <p>args=<code>-m domainapp.application.HelloWorldAppManifest</code></p> </li> 
-                <li> <p>run before: <code>mvn datanucleus:enhance -o</code> in the root module</p> </li> 
-               </ul> 
-              </div> </li> 
-             <li> <p>can be run using the mvn jetty plugin:</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">mvn jetty:run</code></pre> 
-               </div> 
-              </div> </li> 
-             <li> <p>can be deployed as a WAR</p> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">cp target/helloworld.war $CATALINA_HOME/webapps/ROOT.war
-pushd $CATALINA_HOME/bin
-sh startup.sh
-tail -f ../logs/catalina.out</code></pre> 
-               </div> 
-              </div> 
-              <div class="paragraph"> 
-               <p>quit using:</p> 
-              </div> 
-              <div class="listingblock"> 
-               <div class="content"> 
-                <pre class="CodeRay highlight"><code data-lang="bash">sh shutdown.sh
-popd</code></pre> 
-               </div> 
-              </div> </li> 
-            </ul> 
-           </div> 
-           <div class="paragraph"> 
-            <p>This too should be accessed at <a href="http://localhost:8080">localhost:8080</a>.</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>In each case, check the about page and confirm has been built against non-SNAPSHOT versions of the Apache Isis jars.</p> 
-           </div> 
-          </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_create-the-archetype">Create the archetype</h5> 
-           <div class="paragraph"> 
-            <p>Make sure you are in the correct directory and environment variables are correct.</p> 
-           </div> 
-           <div class="paragraph"> 
-            <p>To recreate the <strong>helloworld</strong> archetype:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">cd example/application/helloworld
-env | grep ISIS | sort</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Then, run the script:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">sh ../../../scripts/recreate-archetype.sh $ISISJIRA</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>The script automatically commits changes; if you wish use <code>git log</code> and <code>git diff</code> (or a tool such as SourceTree) to review changes made.</p> 
            </div> 
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_release-prepare">4.5.4. Release prepare</h4> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype_check-the-example-app">4.7.2. Check the example app</h4> 
           <div class="paragraph"> 
-           <p>Switch to the <strong>archetype</strong> directory and execute the <code>release:prepare</code>:</p> 
+           <p>Check that the app:</p> 
+          </div> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>builds:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn clean install</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>can be run from an IDE</p> 
+             <div class="ulist"> 
+              <ul> 
+               <li> <p>mainClass=<code>org.apache.isis.WebServer</code></p> </li> 
+               <li> <p>args=<code>-m domainapp.application.HelloWorldAppManifest</code></p> </li> 
+               <li> <p>run before: <code>mvn datanucleus:enhance -o</code> in the root module</p> </li> 
+              </ul> 
+             </div> </li> 
+            <li> <p>can be run using the mvn jetty plugin:</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">mvn jetty:run</code></pre> 
+              </div> 
+             </div> </li> 
+            <li> <p>can be deployed as a WAR</p> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">cp target/helloworld.war $CATALINA_HOME/webapps/ROOT.war
+pushd $CATALINA_HOME/bin
+sh startup.sh
+tail -f ../logs/catalina.out</code></pre> 
+              </div> 
+             </div> 
+             <div class="paragraph"> 
+              <p>quit using:</p> 
+             </div> 
+             <div class="listingblock"> 
+              <div class="content"> 
+               <pre class="CodeRay highlight"><code data-lang="bash">sh shutdown.sh
+popd</code></pre> 
+              </div> 
+             </div> </li> 
+           </ul> 
+          </div> 
+          <div class="paragraph"> 
+           <p>This too should be accessed at <a href="http://localhost:8080">localhost:8080</a>.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>In each case, check the about page and confirm has been built against non-SNAPSHOT versions of the Apache Isis jars.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype_create-the-archetype">4.7.3. Recreate the archetype</h4> 
+          <div class="paragraph"> 
+           <p>Make sure you are in the correct directory and environment variables are correct.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To recreate the <strong>helloworld</strong> archetype:</p> 
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code>cd ../../../example/archetype/$ISISCPN
-rm -rf $ISISTMP/checkout
-mvn release:prepare -P apache-release \
-                -DreleaseVersion=$ISISREL \
-                -DdevelopmentVersion=$ISISDEV \
-                -Dtag=$ISISART-$ISISREL</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">cd example/application/helloworld
+env | grep ISIS | sort</code></pre> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_helloworld_post-prepare-sanity-check">Post-prepare sanity check</h5> 
-           <div class="paragraph"> 
-            <p>This is a good point to test the archetype; nothing has yet been uploaded.</p> 
+          <div class="paragraph"> 
+           <p>Then, run the script (which also builds the archetype once generated) and then switch to the archetype’s directory:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">sh ../../../scripts/recreate-archetype.sh $ISISJIRA
+cd `pwd|sed 's/application/archetype/'`</code></pre> 
            </div> 
-           <div class="paragraph"> 
-            <p><em>In a different session</em>, create a new app from the archetype. First set up environment variables:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp    # or as required
+          </div> 
+          <div class="paragraph"> 
+           <p>The script automatically commits its changes. If you wish use <code>git log</code> and <code>git diff</code> (or a tool such as SourceTree) to review changes made.</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype_sanity-check">4.7.4. Sanity check</h4> 
+          <div class="paragraph"> 
+           <p><em>In a different session</em>, create a new app from the archetype. First set up environment variables:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">export ISISTMP=/c/tmp    # or as required
 export ISISCPN=helloworld
 env | grep ISIS | sort</code></pre> 
-            </div> 
            </div> 
-           <div class="paragraph"> 
-            <p>Then generate a new app from the archetype:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">rm -rf $ISISTMP/test-$ISISCPN
+          </div> 
+          <div class="paragraph"> 
+           <p>Then generate a new app from the archetype:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">rm -rf $ISISTMP/test-$ISISCPN
 
 mkdir $ISISTMP/test-$ISISCPN
 cd $ISISTMP/test-$ISISCPN
@@ -1513,40 +1402,59 @@ mvn archetype:generate  \
     -D artifactId=myapp \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=$ISISCPN-archetype</code></pre> 
-            </div> 
-           </div> 
-           <div class="paragraph"> 
-            <p>Build the newly generated app and test:</p> 
-           </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code data-lang="bash">cd myapp
-mvn clean install -o
-mvn jetty:run</code></pre> 
-            </div> 
            </div> 
           </div> 
-          <div class="sect4"> 
-           <h5 id="__cgcom_cutting-a-release_releasing-the-archetypes_simplapp_release-perform-upload">Release Perform (upload)</h5> 
-           <div class="paragraph"> 
-            <p>Back in the original session (in the <strong>archetype</strong> directory, <code>example/archetype/$ISISCPN</code>), execute <code>release:perform</code>:</p> 
+          <div class="paragraph"> 
+           <p>Build the newly generated app and test:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">cd myapp
+mvn clean install -o
+mvn jetty:run</code></pre> 
            </div> 
-           <div class="listingblock"> 
-            <div class="content"> 
-             <pre class="CodeRay highlight"><code>mvn release:perform -P apache-release \
-                -DworkingDirectory=$ISISTMP/checkout</code></pre> 
-            </div> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__cgcom_cutting-a-release_releasing-the-helloworld-archetype_deploy">4.7.5. Deploy</h4> 
+          <div class="paragraph"> 
+           <p>Back in the original session, we upload (deploy) the archetype to the staging repository.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To build and deploy and tag, we use:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">mvn -P apache-release \
+    clean deploy      \
+    -Dgpg.passphrase="this is not really my passphrase"
+
+git tag $ISISART-$ISISREL
+git tag $ISISART-$ISISREL-$ISISRC</code></pre> 
            </div> 
-           <div class="paragraph"> 
-            <p>This will upload the artifacts to the ASF Nexus repository.</p> 
-           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>using your own GPG passphrase, of course.</p> 
+          </div> 
+          <div class="admonitionblock important"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>This requires <code>gpg</code> v2.1 or later.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__cgcom_cutting-a-release_check-close-staging-repo">4.6. Check/Close Staging Repo</h3> 
+         <h3 id="__cgcom_cutting-a-release_check-close-staging-repo">4.8. Check/Close Staging Repo</h3> 
          <div class="paragraph"> 
-          <p>The <code>mvn release:perform</code> commands will have put release artifacts for both <code>core</code> and the <code>simpleapp</code> archetype into a newly created staging repository on the ASF Nexus repository server.</p> 
+          <p>The <code>mvn deploy</code> commands will have uploaded release artifacts for both <code>core</code> and the <code>simpleapp</code> archetype into a newly created staging repository on the ASF Nexus repository server.</p> 
          </div> 
          <div class="paragraph"> 
           <p>Log onto <a href="http://repository.apache.org">repository.apache.org</a> (using your ASF LDAP account):</p> 
@@ -1626,7 +1534,24 @@ mvn jetty:run</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__cgcom_cutting-a-release_push-branches">4.7. Push branches</h3> 
+         <h3 id="__cgcom_cutting-a-release_bump-revision-to-ISISDEV">4.9. Bump <code>revision</code> property to <code>$ISISDEV</code></h3> 
+         <div class="paragraph"> 
+          <p>At the beginning of the release process we bumped the <code>revision</code> property to the release version, ie <code>${ISISREL}</code>. With the release now deployed we now need to bump the revision up to the next development version, ie <code>$1.16.3-SNAPSHOT</code>.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>In the root of the Apache Isis repo, we do this for all three <code>pom.xml</code>s with:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" core/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" example/application/simpleapp/pom.xml
+sed -i -E "s|&lt;revision&gt;[^&lt;]+&lt;|&lt;revision&gt;$1.16.3-SNAPSHOT&lt;|g" example/application/helloworld/pom.xml
+git commit -am "${ISISJIRA}: bumps revision property across all pom.xml's to $1.16.3-SNAPSHOT"</code></pre> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__cgcom_cutting-a-release_push-branches">4.10. Push branches</h3> 
          <div class="paragraph"> 
           <p>Push the release branch to origin:</p> 
          </div> 
@@ -1640,7 +1565,7 @@ mvn jetty:run</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code>git push origin refs/tags/isis-$ISISREL:refs/tags/isis-$ISISREL-$ISISRC
+           <pre class="CodeRay highlight"><code data-lang="bash">git push origin refs/tags/isis-$ISISREL:refs/tags/isis-$ISISREL-$ISISRC
 git push origin refs/tags/simpleapp-archetype-$ISISREL:refs/tags/simpleapp-archetype-$ISISREL-$ISISRC
 git push origin refs/tags/helloworld-archetype-$ISISREL:refs/tags/helloworld-archetype-$ISISREL-$ISISRC
 git fetch</code></pre> 
@@ -1661,7 +1586,7 @@ git fetch</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__cgcom_cutting-a-release_voting">4.8. Voting</h3> 
+         <h3 id="__cgcom_cutting-a-release_voting">4.11. Voting</h3> 
          <div class="paragraph"> 
           <p>Once the artifacts have been uploaded, you can call a vote.</p> 
          </div> 
@@ -1669,7 +1594,10 @@ git fetch</code></pre>
           <p>In all cases, votes last for 72 hours and require a +3 (binding) vote from members.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__cgcom_cutting-a-release_voting-start-voting-thread">4.8.1. Start voting thread on <a href="mailto:dev@isis.apache.org">dev@isis.apache.org</a></h4> 
+          <h4 id="__cgcom_cutting-a-release_voting-start-voting-thread">4.11.1. Start voting thread on dev mailing list</h4> 
+          <div class="paragraph"> 
+           <p>That is, <a href="mailto:dev@apache.isis.org" class="bare">mailto:dev@apache.isis.org</a></p> 
+          </div> 
           <div class="paragraph"> 
            <p>The following boilerplate is for a release of the Apache Isis Core. Adapt as required:</p> 
           </div> 
@@ -1678,7 +1606,7 @@ git fetch</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 2.0.0-M1 RC1</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">[VOTE] Apache Isis Core release 1.16.3 RC1</code></pre> 
            </div> 
           </div> 
           <div class="paragraph"> 
@@ -1688,19 +1616,19 @@ git fetch</code></pre>
            <div class="content"> 
             <pre class="CodeRay highlight"><code data-lang="bash">I've cut a release for Apache Isis Core and the two archetypes:
 
-* Core 2.0.0-M1
-* HelloWorld Archetype 2.0.0-M1
-* SimpleApp Archetype 2.0.0-M1
+* Core 1.16.3
+* HelloWorld Archetype 1.16.3
+* SimpleApp Archetype 1.16.3
 
 The source code artifacts have been uploaded to staging repositories on repository.apache.org:
 
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/2.0.0-M1/isis-2.0.0-M1-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/helloworld-archetype/2.0.0-M1/helloworld-archetype-2.0.0-M1-source-release.zip
-* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/2.0.0-M1/simpleapp-archetype-2.0.0-M1-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/core/isis/1.16.3/isis-1.16.3-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/helloworld-archetype/1.16.3/helloworld-archetype-1.16.3-source-release.zip
+* http://repository.apache.org/content/repositories/orgapacheisis-10xx/org/apache/isis/archetype/simpleapp-archetype/1.16.3/simpleapp-archetype-1.16.3-source-release.zip
 
 For each zip there is a corresponding signature file (append .asc to the zip's url).
 
-In the source code repo the code has been tagged as isis-2.0.0-M1-RC1, helloworld-archetype-2.0.0-M1-RC1 and simpleapp-archetype-2.0.0-M1-RC1; see https://github.com/apache/isis/tags
+In the source code repo the code has been tagged as isis-1.16.3-RC1, helloworld-archetype-1.16.3-RC1 and simpleapp-archetype-1.16.3-RC1; see https://github.com/apache/isis/tags
 
 For instructions on how to verify the release (build from binaries and/or use in Maven directly), see https://isis.apache.org/guides/cgcom/cgcom.html#_cgcom_verifying-releases
 
@@ -1716,7 +1644,7 @@ Please verify the release and cast your vote.  The vote will be open for a minim
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p>the version number (<code>2.0.0-M1</code> or whatever)</p> </li> 
+            <li> <p>the version number (<code>1.16.3</code> or whatever)</p> </li> 
             <li> <p>the release candidate number (<code>RC1</code> or whatever)</p> </li> 
             <li> <p>the repository id, as provided by Nexus earlier (<code>orgapacheisis-10xx</code> or whatever)</p> </li> 
            </ul> 
@@ -1827,7 +1755,7 @@ gpg --import /tmp/KEYS</code></pre>
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
-             <pre class="CodeRay highlight"><code>rm -rf ~/m2/repository/org/apache/isis</code></pre> 
+             <pre class="CodeRay highlight"><code>rm -rf ~/.m2/repository/org/apache/isis</code></pre> 
             </div> 
            </div> 
            <div class="paragraph"> 
@@ -1989,16 +1917,17 @@ http://repository.apache.org/content/repositories/orgapacheisis-1059/org/apache/
             <div class="listingblock"> 
              <div class="content"> 
               <pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:generate  \
+    -D archetypeCatalog=local \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=helloworld-archetype \
-    -D archetypeVersion=2.0.0-M1 \
+    -D archetypeVersion=1.16.3 \
     -D groupId=com.mycompany \
-    -D artifactId=myapp \
+    -D artifactId=myhelloworld \
     -D version=1.0-SNAPSHOT \
     -B \
     -o
 
-cd myapp
+cd myhelloworld
 mvn clean install jetty:run -o</code></pre> 
              </div> 
             </div> 
@@ -2008,17 +1937,20 @@ mvn clean install jetty:run -o</code></pre>
            <li> <p>Next, the <code>simpleapp</code> archetype:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:generate  \
+              <pre class="CodeRay highlight"><code data-lang="bash">cd ..
+
+mvn archetype:generate  \
+    -D archetypeCatalog=local \
     -D archetypeGroupId=org.apache.isis.archetype \
     -D archetypeArtifactId=simpleapp-archetype \
-    -D archetypeVersion=2.0.0-M1 \
+    -D archetypeVersion=1.16.3 \
     -D groupId=com.mycompany \
-    -D artifactId=myapp \
+    -D artifactId=mysimpleapp \
     -D version=1.0-SNAPSHOT \
     -B \
     -o
 
-cd myapp
+cd mysimpleapp
 mvn clean install -o &amp;&amp; mvn -pl webapp jetty:run -o</code></pre> 
              </div> 
             </div> 
@@ -2078,7 +2010,7 @@ mvn clean install -o &amp;&amp; mvn -pl webapp jetty:run -o</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 2.0.0-M1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.16.3</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2110,9 +2042,9 @@ I'll now go ahead and complete the post-release activities.</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-2.0.0-M1 RC1
-sh scripts/promoterctag.sh helloworld-archetype-2.0.0-M1 RC1
-sh scripts/promoterctag.sh simpleapp-archetype-2.0.0-M1 RC1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/promoterctag.sh isis-1.16.3 RC1
+sh scripts/promoterctag.sh helloworld-archetype-1.16.3 RC1
+sh scripts/promoterctag.sh simpleapp-archetype-1.16.3 RC1</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2243,7 +2175,7 @@ popd</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">sh upd.sh 1.16.0 2.0.0-M1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sh upd.sh 1.16.2 1.16.3</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2278,7 +2210,7 @@ popd</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 2.0.0-M1 &gt; /tmp/1</code></pre> 
+            <pre class="CodeRay highlight"><code data-lang="bash">sh scripts/jira-release-notes.sh ISIS 1.16.3 &gt; /tmp/1</code></pre> 
            </div> 
           </div> 
          </div> 
@@ -2318,7 +2250,7 @@ popd</code></pre>
          <div class="ulist"> 
           <ul> 
            <li> <p>Paste in the JIRA-generated release notes generated above, adding to top of <code>adocs/documentation/src/main/asciidoc/release-notes.adoc</code>. Also add a summary line for the release.</p> </li> 
-           <li> <p>Search these release procedures, and update any hard-coded reference to the release to the next release (so when they are followed next time the text will be correct).</p> </li> 
+           <li> <p>Update the <a href="../../<em>versions.adoc">versions.adoc</a> file that declares the current and next releases.</p> </li> 
            <li> <p>Update the <a href="../../downloads.html">downloads page</a> with a link to the source release zip file (under <a href="https://dist.apache.org/repos/dist/release/isis">https://dist.apache.org/repos/dist/release/isis</a>)</p> </li> 
            <li> <p>Update any pages (<code>.adoc</code>, <code>.md</code>, <code>.html</code> etc) that describe how to run the archetype, and ensure they reference the correct version.<br></p> 
             <div class="paragraph"> 
@@ -2337,10 +2269,10 @@ popd</code></pre>
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p>locate <code>template/document.html.erb</code> file, and remove <code>-SNAPSHOT</code> from the navbar:</p> 
+           <li> <p>locate <code>template/document.html.erb</code> file, and remove <code>-SNAPSHOT</code> from the navbar, so that it reads something like:</p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M1<span class="tag">&lt;/p&gt;</span></code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>1.16.3<span class="tag">&lt;/p&gt;</span></code></pre> 
              </div> 
             </div> </li> 
            <li> <p>publish to the <code>isis-site</code> repo.</p> 
@@ -2371,7 +2303,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
             </div> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">cp -rf content/versions/current content/versions/2.0.0-M1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">cp -rf content/versions/current content/versions/1.16.3</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>update the new named version’s <code>index.html</code> with one that will redirect back to the home page.</p> 
@@ -2412,7 +2344,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
            <li> <p>locate <code>template/document.html.erb</code> file, and add in <code>-SNAPSHOT</code> for version in the navbar:</p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>v2.0.0-M2-SNAPSHOT<span class="tag">&lt;/p&gt;</span></code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;p</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">nav navbar-text navbar-right small</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>1.16.4-SNAPSHOT<span class="tag">&lt;/p&gt;</span></code></pre> 
              </div> 
             </div> </li> 
            <li> <p>publish the website once more (from the <code>isis</code> main repo).</p> </li> 
@@ -2433,7 +2365,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[ANN] Apache Isis version 2.0.0-M1 Released</code></pre> 
+           <pre class="CodeRay highlight"><code>[ANN] Apache Isis version 1.16.3 Released</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2441,7 +2373,7 @@ mv content/versions/SNAPSHOT content/versions/current</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis v2.0.0-M1.
+           <pre class="CodeRay highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis 1.16.3.
 
 New features in this release include:
 * ...
@@ -2456,8 +2388,8 @@ Enjoy!
 
 --The Apache Isis team
 
-[1] http://isis.apache.org/release-notes/release-notes.html#_release-notes_2.0.0-M1
-[2] http://isis.apache.org/migration-notes/migration-notes.html#_migration-notes_1.16.0-to-2.0.0-M1
+[1] http://isis.apache.org/release-notes/release-notes.html#_release-notes_1.16.3
+[2] http://isis.apache.org/migration-notes/migration-notes.html#_migration-notes_1.16.2-to-1.16.3
 [3] http://search.maven.org
 [4] http://isis.apache.org/downloads.html</code></pre> 
           </div> 
@@ -2478,13 +2410,13 @@ Enjoy!
           <div class="content"> 
            <pre class="CodeRay highlight"><code data-lang="bash">git checkout master                           # update master with latest
 git pull
-git merge release-2.0.0-M1-RC1                  # merge branch onto master
-git push origin --delete release-2.0.0-M1-RC1   # remote branch no longer needed
-git branch -d release-2.0.0-M1-RC1              # branch no longer needed</code></pre> 
+git merge release-1.16.3-RC1                  # merge branch onto master
+git push origin --delete release-1.16.3-RC1   # remote branch no longer needed
+git branch -d release-1.16.3-RC1              # branch no longer needed</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>2.0.0-M1-SNAPSHOT</code>)</p> 
+          <p>Finally, update helloworld’s <code>pom.xml</code> and simpleapp’s root <code>pom.xml</code> to reference the next SNAPSHOT release (<code>1.16.4-SNAPSHOT</code>)</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2633,7 +2565,7 @@ git push</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 2.0.0-M1</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">[RESULT] [VOTE] Apache Isis Core release 1.16.3</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
@@ -2663,23 +2595,23 @@ The vote is UNSUCCESSFUL.</code></pre>
            <li> <p>delete the remote branch, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin release-2.0.0-M1-RC1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin release-1.16.3-RC1</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>delete the remote origin server’s tags, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin isis-2.0.0-M1-RC1
-git push --delete origin helloworld-archetype-2.0.0-M1-RC1
-git push --delete origin simpleapp-archetype-2.0.0-M1-RC1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git push --delete origin isis-1.16.3-RC1
+git push --delete origin helloworld-archetype-1.16.3-RC1
+git push --delete origin simpleapp-archetype-1.16.3-RC1</code></pre> 
              </div> 
             </div> </li> 
            <li> <p>delete the tags that were created locally, for example:<br></p> 
             <div class="listingblock"> 
              <div class="content"> 
-              <pre class="CodeRay highlight"><code data-lang="bash">git tag -d isis-2.0.0-M1
-git tag -d helloworld-archetype-2.0.0-M1
-git tag -d simpleapp-archetype-2.0.0-M1</code></pre> 
+              <pre class="CodeRay highlight"><code data-lang="bash">git tag -d isis-1.16.3
+git tag -d helloworld-archetype-1.16.3
+git tag -d simpleapp-archetype-1.16.3</code></pre> 
              </div> 
             </div> </li> 
           </ul> 
@@ -2837,7 +2769,7 @@ mvn -D deploy=snapshot deploy</code></pre>
          <p>The intent of an "interim" release is to allow a developer team to release their application based on a <code>-SNAPSHOT</code> version of the framework. Since <code>-SNAPSHOT</code> changes on a day-to-day basis, the idea is to tag a particular revision and to release this, thereby providing stability/traceability for the application being developed.</p> 
         </div> 
         <div class="paragraph"> 
-         <p>Whereas <a href="../cgcom/cgcom.html#<em>cgcom_cutting-a-release.adoc">formal release</a>s and <a href="../cgcom/cgcom.html#_cgcom_release-process-for-snapshots.adoc">snapshot release</a>s are public (released through the Maven repository maintained by Apache Software Foundation), interim releases are non-public and rely on infrastructure provided by a developer team. The tagged release resides _not in the <a href="../../downloads.html#__downloads_source_code">official Apache Isis git repository</a>, but instead in a fork/clone maintained by the developer team.</p> 
+         <p>Whereas <a href="../cgcom/cgcom.html#\_cgcom_cutting-a-release.adoc">formal release</a>s and <a href="../cgcom/cgcom.html#\_cgcom_release-process-for-snapshots.adoc">snapshot release</a>s are public (released through the Maven repository maintained by Apache Software Foundation), interim releases are non-public and rely on infrastructure provided by a developer team. The tagged release resides <em>not</em> in the <a href="../../downloads.html#\__downloads_source_code">official Apache Isis git repository</a>, but instead in a fork/clone maintained by the developer team.</p> 
         </div> 
         <div class="admonitionblock note"> 
          <table> 
@@ -2974,21 +2906,39 @@ mvn -D deploy=snapshot deploy</code></pre>
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code>/APACHE/
-    isis/                       # checkout of isis.git
-        adocs/
-            documentation/
-                README.adoc     # this file you are reading right now
-                ...
-    isis-site/                  # checkout of isis-site.git
-        content/                # the published website</code></pre> 
+           <pre class="CodeRay highlight"><code>/GITHUB/
+  apache/
+    isis/                       <i class="conum" data-value="1"></i><b>(1)</b>
+      adocs
+        documentation/
+          README.adoc
+          ...
+/ASF/
+  isis/
+    isis-site/                  <i class="conum" data-value="2"></i><b>(2)</b>
+      content/                  <i class="conum" data-value="3"></i><b>(3)</b></code></pre> 
           </div> 
          </div> 
-         <div class="paragraph"> 
-          <p>If this isn’t the case, then it is possible to override the relative directory by passing in a system property to the mvn goal; see below.</p> 
+         <div class="colist arabic"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>checkout of isis.git</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>checkout of isis-site.git</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>the published website</td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
          <div class="paragraph"> 
-          <p>You also need to know that ASF’s publishing script work from the 'asf-site' branch, NOT from the 'master' branch. Therefore, in the <code>isis.git</code> repo site:</p> 
+          <p>One oddity; ASF’s script to upload the documentation to the web server checks out from the 'asf-site' branch, NOT from the 'master' branch. Therefore, in the <code>isis.git</code> repo site:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -2997,33 +2947,89 @@ mvn -D deploy=snapshot deploy</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_publishing_full_build">10.2. Publishing (full build)</h3> 
+         <h3 id="_preview">10.2. Preview</h3> 
          <div class="paragraph"> 
-          <p>Back in the <code>adocs/documentation</code> directory of the main <code>isis-git.repo</code>, to copy the generated documents to the <code>isis-site.git</code> repo, run:</p> 
+          <p>To preview changes (ignoring PDFs), run:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">mvn clean package</code></pre> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sh preview-html.sh</code></pre> 
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>This deletes the entire content of <code>contents</code>, and replaces with the content under <code>target/site</code>. It also fixes up line endings, standardizing on unix-style LFs.</p> 
+          <p>This will update the documentation and start a (Python) webserver so that the documents can be viewed.</p> 
          </div> 
-         <div class="admonitionblock tip"> 
+         <div class="paragraph"> 
+          <p>If you want to also view the PDFs, use:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="bash">sh preview-pdf.sh</code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>There’s generally little point in doing this, however.</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_publishing_full_build">10.3. Publishing (full build)</h3> 
+         <div class="paragraph"> 
+          <p>The <code>content</code> directory for the published website contains not only the "current version" of the docs, but also has an archive of older versions of the document from earlier releases:</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code>/ASF/
+  isis/
+    isis-site/
+      content/                  <i class="conum" data-value="1"></i><b>(1)</b>
+        index.html              <i class="conum" data-value="2"></i><b>(2)</b>
+        *                       <i class="conum" data-value="3"></i><b>(3)</b>
+        versions/
+          current/              <i class="conum" data-value="4"></i><b>(4)</b>
+          SNAPSHOT/             <i class="conum" data-value="5"></i><b>(5)</b>
+          ...                   <i class="conum" data-value="6"></i><b>(6)</b>
+          latest/               <i class="conum" data-value="7"></i><b>(7)</b></code></pre> 
+          </div> 
+         </div> 
+         <div class="colist arabic"> 
           <table> 
            <tbody>
             <tr> 
-             <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
-             <td class="content"> 
-              <div class="paragraph"> 
-               <p>If you have checked out the <code>isis-site.git</code> repo into some other directory (relative to <code>isis.site.git), then this can be overridden by specifying `-Disis-site.dir=…​</code> when calling <code>mvn</code>.</p> 
-              </div> </td> 
+             <td><i class="conum" data-value="1"></i><b>1</b></td> 
+             <td>the published website</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="2"></i><b>2</b></td> 
+             <td>home page. This has a drop-down to access older versions of the documentation, but most links are through to the "current version"</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="3"></i><b>3</b></td> 
+             <td>documentation for the current release version</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="4"></i><b>4</b></td> 
+             <td>also holds documentation for the current release version</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="5"></i><b>5</b></td> 
+             <td>documentation for the next snapshot version, ie work-in-progress</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="6"></i><b>6</b></td> 
+             <td>other versions, by version number (eg <code>1.16.2</code>, <code>1.16.1</code>, etc)</td> 
+            </tr> 
+            <tr> 
+             <td><i class="conum" data-value="7"></i><b>7</b></td> 
+             <td>not checked into git, this is a working directory that contains the results of the latest publication build. This is an implementation detail actually, so this directory need not be considered further.</td> 
             </tr> 
            </tbody>
           </table> 
          </div> 
          <div class="paragraph"> 
-          <p>To copy and to also commit the generated documents to the <code>isis-site.git</code> repo , run:</p> 
+          <p>The earlier versions of the documentation are (obviously) not recreated when the documentation is published, only the current version is updated.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>To publish the current version of the documents, switch to the <code>adocs/documentation</code> directory of the main <code>isis-git.repo</code>. Then run:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -3031,35 +3037,73 @@ mvn -D deploy=snapshot deploy</code></pre>
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>Behind the scenes this just calls <code>mvn clean install -Dmessage=…​</code>.</p> 
+          <p>This does the following:</p> 
+         </div> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>deletes everything under <code>content</code> (except <code>content/versions</code>)</p> </li> 
+           <li> <p>generates documentation and copies to <code>content/versions/SNAPSHOT</code></p> 
+            <div class="paragraph"> 
+             <p>Including fixing up line endings, standardizing on unix-style LFs.</p> 
+            </div> </li> 
+           <li> <p>copies over current home page (<code>index.html</code>)</p> </li> 
+           <li> <p>reinstates <code>content/*</code> with the contents of <code>content/versions/current</code></p> </li> 
+          </ul> 
          </div> 
          <div class="paragraph"> 
-          <p>It’s also possible to omit the message, in which case <code>publish.sh</code> will reuse the most recent commit message from the main <code>isis.git</code> repo.</p> 
+          <p>In other words, the effect of running <code>publish.sh</code> is in essence to overwrite <code>content/versions/SNAPSHOT</code> and to overwrite <code>index.html</code>, but leave everything else as it is.</p> 
          </div> 
-         <div class="paragraph"> 
-          <p>Pushing the commits (in the <code>isis-site.git</code> directory, of course) will publishing the changes:</p> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>The version on the header of each generated document is hard-coded in the <code>adocs/template/document.html.erb</code> file.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>This should therefore be updated whenever working on a new release.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">git push</code></pre> 
+         <div class="sect3"> 
+          <h4 id="_new_release">10.3.1. New release</h4> 
+          <div class="paragraph"> 
+           <p>When a new release is published, we therefore need to do a little extra work:</p> 
           </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>Double check at <a href="http://isis.apache.org">isis.apache.org</a>.</p> 
-         </div> 
-        </div> 
-        <div class="sect2"> 
-         <h3 id="_publishing_partial_build">10.3. Publishing (partial build)</h3> 
-         <div class="paragraph"> 
-          <p>If none of the guides have been changed, and if you have run the full rebuild recently, then you can skip the generation of PDFs using:</p> 
-         </div> 
-         <div class="listingblock"> 
-          <div class="content"> 
-           <pre class="CodeRay highlight"><code data-lang="bash">mvn install -Dskip.pdf -D"ISIS-nnnn: a custom commit message"</code></pre> 
+          <div class="ulist"> 
+           <ul> 
+            <li> <p>run <code>publish.sh</code> a first time</p> 
+             <div class="paragraph"> 
+              <p>This will update <code>content/versions/SNAPSHOT</code></p> 
+             </div> </li> 
+            <li> <p>delete <code>content/versions/current</code></p> </li> 
+            <li> <p>rename <code>content/versions/SNAPSHOT</code> to <code>content/versions/current</code></p> </li> 
+            <li> <p>run <code>publish.sh</code> a second time.</p> 
+             <div class="paragraph"> 
+              <p>This has the effect of "promoting" <code>content/versions/current</code> to <code>content/*</code></p> 
+             </div> </li> 
+            <li> <p>(optionally) also copy <code>content/versions/current</code> to <code>content/versions/N.N.N</code></p> 
+             <div class="paragraph"> 
+              <p>where <code>N.N.N</code> is the release number</p> 
+             </div> </li> 
+           </ul> 
           </div> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The <code>clean</code> goal <strong>must not</strong> be included though (else all the guides will disappear from the site content).</p> 
+          <div class="paragraph"> 
+           <p>Ensure in doing this that the dropdown for the home page correctly references the versions.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>When ready, then stage, commit and push the changes (in the <code>isis-site.git</code> directory, of course):</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="bash">git commit -am "ISIS-nnnn: updating docs"
+git push</code></pre> 
+           </div> 
+          </div> 
          </div> 
         </div> 
        </div> 
@@ -3643,7 +3687,7 @@ your machine might store the data and make it available to others!</code></pre>
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>ie, referencing your publically exported public key</p> 
+           <p>ie, referencing your publicly exported public key</p> 
           </div> 
           <div class="paragraph"> 
            <p>Finally, commit your changes.</p> 

@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v2.0.0-M1</p> 
+     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
     </div> 
    </div> 
   </nav> 
@@ -1456,9 +1456,9 @@ log4j.additivity.org.apache.isis.core.runtime.services.i18n.po.PotWriter=false</
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">"</span><span class="content">Are you sure?</span><span class="delimiter">"</span></span>) <span class="type">boolean</span> areYouSure) {
-    repositoryService.remove(<span class="local-variable">this</span>);
-    messageService.informUser(<span class="string"><span class="delimiter">"</span><span class="content">Deleted </span><span class="delimiter">"</span></span> + titleService.titleOf(<span class="local-variable">this</span>));
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@Named</span>(<span class="string"><span class="delimiter">"</span><span class="content">Are you sure?</span><span class="delimiter">"</span></span>) <span class="type">boolean</span> areYouSure) {
+    container.removeIfNotAlready(<span class="local-variable">this</span>);
+    container.informUser(<span class="string"><span class="delimiter">"</span><span class="content">Deleted </span><span class="delimiter">"</span></span> + container.titleOf(<span class="local-variable">this</span>));
     <span class="keyword">return</span> toDoItems.notYetComplete();          <i class="conum" data-value="1"></i><b>(1)</b>
 }
 <span class="directive">public</span> <span class="predefined-type">String</span> validateDelete(<span class="type">boolean</span> areYouSure) {
@@ -2794,6 +2794,142 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
              </tbody>
             </table> 
            </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugbtb_programming-model_layout-metadata-reader">5.3. Layout Metadata Reader (deprecated)</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_programming-model_layout-metadata-reader.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_programming-model_layout-metadata-reader.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_programming-model_layout-metadata-reader.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_programming-model_layout-metadata-reader.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugbtb/_ugbtb_programming-model_layout-metadata-reader.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The metadata for domain objects is obtained both <a href="../ugvw/ugvw.html#_ugvw_layout_annotation-based">annotations</a> and <a href="../ugvw/ugvw.html#_ugvw_layout_file-based">files</a>. There is also deprecated support for reading layouts from <code>.layout.json</code> files. This service provides an SPI (and default implementation) for reading layouts defined in this fashion.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_default_implementation">5.3.1. Default implementation</h4> 
+          <div class="paragraph"> 
+           <p>The default implementation for reading dynamic layout metadata is <code>org.apache.isis.core.metamodel.layoutmetadata.json.LayoutMetadataReaderFromJson</code>, which is responsible for reading from the <code>Xxx.layout.json</code> files on the classpath (for each domain entity <code>Xxx</code>).</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>You can also implement your own metadata readers and plug them into Apache Isis. These could read from a different file format, or they could, even, read data dynamically from a URL or database. (Indeed, one could imagine an implementation whereby users could share layouts, all stored in some central repository).</p> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_api_and_implementation_2">5.3.2. API and Implementation</h4> 
+          <div class="paragraph"> 
+           <p>Any reader must implement Apache Isis' internal <code>LayoutMetadataReader</code> interface:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">LayoutMetadataReader</span> {
+    <span class="directive">public</span> <span class="predefined-type">Properties</span> asProperties(<span class="predefined-type">Class</span>&lt;?&gt; domainClass) <span class="directive">throws</span> ReaderException;
+}</code></pre> 
+           </div> 
+          </div> 
+          <div class="paragraph"> 
+           <p>The implementation "simply" returns a set of properties where the property key is a unique identifier to both the class member and also the facet of the class member to which the metadata relates.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>See the implementation of the built-in <code>LayoutMetadataReaderFromJson</code> for more detail.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Returning either <code>null</code> or throwing an exception indicates that the reader was unable to load any metadata for the specified class.</p> 
+          </div> 
+          <div class="sect4"> 
+           <h5 id="_extended_api">Extended API</h5> 
+           <div class="paragraph"> 
+            <p>Optionally the reader can implement the extended <code>LayoutMetadaReader2</code> API:</p> 
+           </div> 
+           <div class="listingblock"> 
+            <div class="content"> 
+             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">LayoutMetadataReader2</span> <span class="directive">extends</span> LayoutMetadataReader {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Support</span> {
+        <span class="directive">public</span> <span class="directive">static</span> Support entitiesOnly() {
+            <span class="keyword">return</span> <span class="keyword">new</span> Support(<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>);
+        }
+        ...
+        public <span class="type">boolean</span> interfaces() { ... } <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> anonymous() { ... }  <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> synthetic() { ... }  <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> array() { ... }      <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> enums() { ... }      <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> applibValueTypes() { <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="directive">public</span> <span class="type">boolean</span> services() { ... }   <i class="conum" data-value="7"></i><b>(7)</b>
+    }
+    Support support();
+}</code></pre> 
+            </div> 
+           </div> 
+           <div class="colist arabic"> 
+            <table> 
+             <tbody>
+              <tr> 
+               <td><i class="conum" data-value="1"></i><b>1</b></td> 
+               <td>whether this implementation can provide metadata for interface types.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="2"></i><b>2</b></td> 
+               <td>whether this implementation can provide metadata for anonymous classes.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="3"></i><b>3</b></td> 
+               <td>whether this implementation can provide metadata for synthetic types.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="4"></i><b>4</b></td> 
+               <td>whether this implementation can provide metadata for arrays.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="5"></i><b>5</b></td> 
+               <td>whether this implementation can provide metadata for enums.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="6"></i><b>6</b></td> 
+               <td>whether this implementation can provide metadata for applib value types.</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="7"></i><b>7</b></td> 
+               <td>whether this implementation can provide metadata for domain services.</td> 
+              </tr> 
+             </tbody>
+            </table> 
+           </div> 
+           <div class="paragraph"> 
+            <p>The <code>support()</code> method returns a struct class that describes the types of classes are supported by this implementation.</p> 
+           </div> 
+           <div class="paragraph"> 
+            <p>The <code>LayoutMetadataReaderFromJson</code> implements this extended API.</p> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_configuration_2">5.3.3. Configuration</h4> 
+          <div class="paragraph"> 
+           <p>Once you have implemented your validator, you must register it with the framework by defining the appropriate configuration property:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="ini">isis.reflector.layoutMetadataReaders=\
+           com.mycompany.myapp.MyMetaModelValidator,\
+           org.apache.isis.core.metamodel.layoutmetadata.json.LayoutMetadataReaderFromJson   <i class="conum" data-value="1"></i><b>(1)</b></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>the property replaces any existing metadata readers; if you want to preserve the ability to read from <code>Xxx.layout.json</code> then also register Apache Isis' built-in implementation.</td> 
+             </tr> 
+            </tbody>
+           </table> 
           </div> 
          </div> 
         </div> 

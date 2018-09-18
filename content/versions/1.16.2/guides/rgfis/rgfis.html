@@ -221,16 +221,17 @@ table.CodeRay td.code>pre{padding:0}
         <li role="separator" class="divider"></li> 
         <li class="dropdown-header">Other Resources</li> 
         <li><a href="https://issues.apache.org/jira/browse/ISIS">ASF JIRA</a></li> 
-        <li><a href="http://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
+        <li><a href="https://stackoverflow.com/questions/tagged/isis">Stack Overflow</a></li> 
         <li><a href="../../help.html">Wiki, Fisheye etc.</a></li> 
        </ul> </li> 
       <li class="dropdown hidden-sm hidden-md"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ASF<span class="caret"></span></a> 
        <ul class="dropdown-menu"> 
-        <li><a href="http://www.apache.org/">Apache Homepage</a></li> 
-        <li><a href="http://www.apache.org/licenses/">Licenses</a></li> 
-        <li><a href="http://www.apache.org/security/">Security</a></li> 
-        <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
-        <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li> 
+        <li><a href="https://www.apache.org/">Apache Homepage</a></li> 
+        <li><a href="https://www.apache.org/events/current-event">Events</a></li> 
+        <li><a href="https://www.apache.org/licenses/">Licenses</a></li> 
+        <li><a href="https://www.apache.org/security/">Security</a></li> 
+        <li><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li> 
+        <li><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li> 
         <li role="separator" class="divider"></li> 
         <li><a href="https://whimsy.apache.org/board/minutes/Isis.html">PMC board minutes</a></li> 
        </ul> </li> 
@@ -664,10 +665,10 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_registering_the_services">2.1.5. Registering the Services</h4> 
           <div class="paragraph"> 
-           <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementations of <code>ContentNegotiationService</code> service are automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+           <p>Apache Isis' default implementations of <code>ContentNegotiationService</code> service are automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>To use an alternative implementation, use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
+           <p>To use an alternative implementation, use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc adoc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -696,10 +697,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>The <code>RepresentationService</code> is the main plug-in point for the <a href="../ugvro/ugvro.html">RestfulObjects viewer</a> to generate representations.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>The default implementation generates representations according to the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0. However, it also delegates to the <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a> which provides a mechanism for altering representations according to the HTTP <code>Accept</code> header.</p> 
-         </div> 
-         <div class="paragraph"> 
-          <p>The principal motivation is to allow more flexible representations to be generated for REST clients that (perhaps through their use of a certain Javascript library, say) expect, or at least works best with, a certain style of representation.</p> 
+          <p>The default implementations generate representations according to the <a href="http://restfulobjects.org">Restful Objects spec</a> v1.0. However, it also delegates to the <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a> which provides a mechanism for altering representations according to the HTTP <code>Accept</code> header. This allows more flexible representations to be generated for REST clients that (perhaps through their use of a certain Javascript library, say) expect, or at least works best with, a certain style of representation.</p> 
          </div> 
          <div class="paragraph"> 
           <p>In all there are three domain services that can influence the representations generated: this service, <a href="../rgfis/rgfis.html#_rgfis_presentation-layer_ContentNegotiationService"><code>ContentNegotiationService</code></a>and the <a href="../rgsvc/rgsvc.html#_rgsvc_presentation-layer-spi_ContentMappingService"><code>ContentMappingService</code></a>. The diagram below shows how these collaborate:</p> 
@@ -710,7 +708,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="paragraph"> 
-          <p>The <code>RepresentationServiceForRestfulObjects</code> is the default implementation of this service; likewise <code>ContentNegotiationServiceXRoDomainType</code> is the default implementation of the <code>ContentNegotiationService</code>. If you inspect the source code you’ll see that the default implementation of this service’s primary responsibility is to generate the default Restful Objects representations. Therefore, if you what you want to do is to generate a <em>different _representation then in many cases replacing either this service _or</em> the <code>ContentNegotiationService</code> will be equivalent (you’ll notice that their SPIs are very similar).</p> 
+          <p>The <code>RepresentationServiceContentNegotiator</code> is the default implementation of the top-level <code>RepresentationService</code>, and it delegates to list of injecting <code>ContentNegotiationService</code> services. Using a chain of responsibility pattern, it returns the first non-null representation. For their part, the implementations of <code>ContentNegotiationService</code> use the HTTP Accept header to determine if they should render any representation or just return null.</p> 
          </div> 
          <div class="sect3"> 
           <h4 id="_spi_2">2.2.1. SPI</h4> 
@@ -749,23 +747,23 @@ table.CodeRay td.code>pre{padding:0}
             <tbody>
              <tr> 
               <td><i class="conum" data-value="1"></i><b>1</b></td> 
-              <td>representation of a single object, as per section 14.4 of the RO spec, v1.0</td> 
+              <td>representation of a single object, eg as per section 14.4 of the RO spec, v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>representation of a single property of an object, as per section 16.4 of the RO spec v1.0</td> 
+              <td>representation of a single property of an object, eg as per section 16.4 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
-              <td>representation of a single collection of an object, as per section 17.5 of the RO spec v1.0</td> 
+              <td>representation of a single collection of an object, eg as per section 17.5 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="4"></i><b>4</b></td> 
-              <td>representation of a single action (prompt) of an object, as per section 18.2 of the RO spec v1.0</td> 
+              <td>representation of a single action (prompt) of an object, eg as per section 18.2 of the RO spec v1.0</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="5"></i><b>5</b></td> 
-              <td>representation of the results of a single action invocation, as per section 19.5 of the RO spec v1.0</td> 
+              <td>representation of the results of a single action invocation, eg as per section 19.5 of the RO spec v1.0</td> 
              </tr> 
             </tbody>
            </table> 
@@ -799,7 +797,7 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_registering_the_services_2">2.2.3. Registering the Services</h4> 
           <div class="paragraph"> 
-           <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>RepresentationService</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+           <p>Apache Isis' default implementation of <code>RepresentationService</code> service is automatically registered and injected (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1220,7 +1218,7 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_registering_the_service">4.1.2. Registering the Service</h4> 
           <div class="paragraph"> 
-           <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>AuditingServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+           <p>Apache Isis' default implementation of <code>AuditingServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1309,7 +1307,7 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_registering_the_service_2">4.2.2. Registering the Service</h4> 
           <div class="paragraph"> 
-           <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>ChangedObjectsServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+           <p>Apache Isis' default implementation of <code>ChangedObjectsServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -1535,7 +1533,10 @@ table.CodeRay td.code>pre{padding:0}
          <div class="sect3"> 
           <h4 id="_registering_the_service_3">4.4.2. Registering the Service</h4> 
           <div class="paragraph"> 
-           <p>Assuming that the <code>configuration-and-annotation</code> services installer is configured (implicit if using the <code>AppManifest</code> to <a href="../rgcms/rgcms.html#_rgcms_classes_AppManifest-bootstrapping">bootstrap the app</a>) then Apache Isis' default implementation of <code>PublishingServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+           <p>Apache Isis' default implementation of <code>PublishingServiceInternal</code> class is automatically registered (it is annotated with <code>@DomainService</code>) so no further configuration is required.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To use an alternative implementation, use <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> (as explained in the <a href="../rgsvc/rgsvc adoc.html#__rgsvc_intro_overriding-the-services">introduction</a> to this guide).</p> 
           </div> 
          </div> 
          <div class="sect3"> 

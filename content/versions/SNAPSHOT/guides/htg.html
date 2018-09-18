@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v2.0.0-M1</p> 
+     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
     </div> 
    </div> 
   </nav> 
@@ -423,7 +423,7 @@ table.CodeRay td.code>pre{padding:0}
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Author</span> <span class="directive">extends</span> Customer {
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">TitleUiEvent</span>
-            <span class="directive">extends</span> org.apache.isis.applib.events.ui.TitleUiEvent&lt;Author&gt; {}
+            <span class="directive">extends</span> org.apache.isis.applib.services.eventbus.TitleUiEvent&lt;Author&gt; {}
     ...
 }</code></pre> 
             </div> 
@@ -537,7 +537,7 @@ table.CodeRay td.code>pre{padding:0}
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">IconUiEvent</span>
-            <span class="directive">extends</span> org.apache.isis.applib.events.ui.IconUiEvent&lt;Order&gt; {}
+            <span class="directive">extends</span> org.apache.isis.applib.services.eventbus.IconUiEvent&lt;Order&gt; {}
     ...
 }</code></pre> 
             </div> 
@@ -633,7 +633,7 @@ table.CodeRay td.code>pre{padding:0}
 )
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Order</span> {
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CssClassUiEvent</span>
-            <span class="directive">extends</span> org.apache.isis.applib.events.ui.CssClassUiEvent&lt;Order&gt; {}
+            <span class="directive">extends</span> org.apache.isis.applib.services.eventbus.CssClassUiEvent&lt;Order&gt; {}
     ...
 }</code></pre> 
             </div> 
@@ -916,10 +916,7 @@ table.CodeRay td.code>pre{padding:0}
              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>If you’re running on Java 8, then note that it’s possible to write Isis applications without using <code>@ParameterLayout(named=…​)</code> annotation. Support for this can be found in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s paraname8 metamodel extension (non-ASF). (In the future we’ll fold this into core).</p> 
-              </div> 
-              <div class="paragraph"> 
-               <p>See also our guidance on <a href="../../migration-notes/migration-notes.html#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">upgrading to Java 8</a>.</p> 
+               <p>If you’re running on Java 8, then note that it’s possible to write Isis applications without using <code>@ParameterLayout(named=…​)</code> annotation. Support for this can be found in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s paraname8 metamodel extension (non-ASF). (In the future we’ll fold this into core). See also our guidance on <a href="../../migration-notes/migration-notes.html#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">upgrading to Java 8</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -957,6 +954,19 @@ table.CodeRay td.code>pre{padding:0}
     <span class="keyword">return</span> dependencies;
 }</code></pre> 
           </div> 
+         </div> 
+         <div class="admonitionblock note"> 
+          <table> 
+           <tbody>
+            <tr> 
+             <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+             <td class="content"> 
+              <div class="paragraph"> 
+               <p>The <code>defaultView()</code> attribute replaces the deprecated approach of using <a href="../rgant/rgant.html#_rgant-CollectionLayout_render"><code>@CollectionLayout#render()</code></a> eagerly.</p> 
+              </div> </td> 
+            </tr> 
+           </tbody>
+          </table> 
          </div> 
          <div class="paragraph"> 
           <p>Alternatively, it can be specified the <code>Xxx.layout.xml</code> file:</p> 
@@ -1130,7 +1140,7 @@ cssClassUiEvent = DemoObject.CssClassUiEvent.class
 <span class="directive">public</span> <span class="type">class</span> <span class="class">DemoObject</span> ... {
 
 <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CssClassUiEvent</span>
-<span class="directive">extends</span> org.apache.isis.applib.events.ui.CssClassUiEvent&lt;DemoObject&gt; {}
+<span class="directive">extends</span> org.apache.isis.applib.services.eventbus.CssClassUiEvent&lt;DemoObject&gt; {}
 ...
 }</code></pre> 
           </div> 
@@ -2167,9 +2177,9 @@ securityManager.cacheManager = $memoryCacheManager</code></pre>
           </div> 
           <div class="listingblock"> 
            <div class="content"> 
-            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@ParameterLayout</span>(named=<span class="string"><span class="delimiter">"</span><span class="content">Are you sure?</span><span class="delimiter">"</span></span>) <span class="type">boolean</span> areYouSure) {
-    repositoryService.remove(<span class="local-variable">this</span>);
-    messageService.informUser(<span class="string"><span class="delimiter">"</span><span class="content">Deleted </span><span class="delimiter">"</span></span> + titleService.titleOf(<span class="local-variable">this</span>));
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span>&lt;ToDoItem&gt; delete(<span class="annotation">@Named</span>(<span class="string"><span class="delimiter">"</span><span class="content">Are you sure?</span><span class="delimiter">"</span></span>) <span class="type">boolean</span> areYouSure) {
+    container.removeIfNotAlready(<span class="local-variable">this</span>);
+    container.informUser(<span class="string"><span class="delimiter">"</span><span class="content">Deleted </span><span class="delimiter">"</span></span> + container.titleOf(<span class="local-variable">this</span>));
     <span class="keyword">return</span> toDoItems.notYetComplete();          <i class="conum" data-value="1"></i><b>(1)</b>
 }
 <span class="directive">public</span> <span class="predefined-type">String</span> validateDelete(<span class="type">boolean</span> areYouSure) {
