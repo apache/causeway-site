@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
+     <p class="nav navbar-text navbar-right small">v1.17.0</p> 
     </div> 
    </div> 
   </nav> 
@@ -1165,10 +1165,115 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_metamodel-validation">5.5. MetaModel Validation</h3> 
+         <h3 id="__rgcfg_configuring-core_metamodel-introspection">5.5. MetaModel Introspection</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 7. Metamodel Validation
+           Table 7. Metamodel Introspection
+          </caption> 
+          <colgroup> 
+           <col style="width: 33.3333%;"> 
+           <col style="width: 16.6666%;"> 
+           <col style="width: 50.0001%;"> 
+          </colgroup> 
+          <thead> 
+           <tr> 
+            <th class="tableblock halign-left valign-top">Property</th> 
+            <th class="tableblock halign-left valign-top">Value<br> (default value)</th> 
+            <th class="tableblock halign-left valign-top">Description</th> 
+           </tr> 
+          </thead> 
+          <tbody> 
+           <tr> 
+            <td class="tableblock halign-left valign-top">
+             <div>
+              <div class="paragraph"> 
+               <p><code>isis.reflector.introspect.</code><br> <code>parallelize</code></p> 
+              </div>
+             </div></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code><br> (<code>true</code>)</p></td> 
+            <td class="tableblock halign-left valign-top">
+             <div>
+              <div class="paragraph"> 
+               <p>Whether to build the metamodel in parallel (with multiple threads) or in serial (using a single thread).</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>In general, parallelisation should result in faster bootstrap times.</p> 
+              </div>
+             </div></td> 
+           </tr> 
+           <tr> 
+            <td class="tableblock halign-left valign-top">
+             <div>
+              <div class="paragraph"> 
+               <p><code>isis.reflector.introspect.</code><br> <code>mode</code></p> 
+              </div>
+             </div></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lazy</code>,<code>lazy_unless_production</code>,<code>full</code><br> (<code>lazy_unless_production</code>)</p></td> 
+            <td class="tableblock halign-left valign-top">
+             <div>
+              <div class="paragraph"> 
+               <p>How complete to build the metamodel during bootstrapping.</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>Setting to <code>lazy</code> In general, parallelisation should result in faster bootstrap times. This is discussed further below.</p> 
+              </div> 
+              <div class="admonitionblock important"> 
+               <table> 
+                <tbody>
+                 <tr> 
+                  <td class="icon"> <i class="fa icon-important" title="Important"></i> </td> 
+                  <td class="content"> 
+                   <div class="paragraph"> 
+                    <p>Metamodel validation is only done after full introspection.</p> 
+                   </div> </td> 
+                 </tr> 
+                </tbody>
+               </table> 
+              </div>
+             </div></td> 
+           </tr> 
+          </tbody> 
+         </table> 
+         <div class="sect3"> 
+          <h4 id="_lazy_vs_full_introspection">5.5.1. Lazy vs Full introspection.</h4> 
+          <div class="paragraph"> 
+           <p>The framework performs classpath scanning to identify all domain classes (domain services, mixins, entities, view models and fixture scripts), and the class-level facets for all of these are always created during bootstrapping.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>In addition, the members for all domain services and mixins are also created, because these can give rise to contributed members of the entities/view models.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Lazy introspection means that the class members (properties, collections and actions) and their respective facets are <em>not</em> created for all of the entities/view models in the domain model. Instead these are created only on first access. The purpose of this is primarily to speed up bootstrapping during development.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To enable lazy introspection, either set the <code>isis.reflector.introspect.mode</code> configuration property to "lazy" or to "lazy_unless_production" (the latter only if also running with a deployment type of "production").</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>However, the trade-off is that metamodel validation is <em>not</em> performed in lazy mode.</p> 
+          </div> 
+          <div class="admonitionblock tip"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
+              <td class="content"> 
+               <div class="paragraph"> 
+                <p>Note that integration tests are run in <code>production</code> mode, and so by default these perform full introspection. This can be overridden when calling the superclass (<code>IntegrationTestAbstract3</code>)'s contributor with <code>IntrospectionMode.LAZY</code>.</p> 
+               </div> </td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="__rgcfg_configuring-core_metamodel-validation">5.6. MetaModel Validation</h3> 
+         <div class="paragraph"> 
+          <p>Metamodel validation is only done if full introspection is configured, see the <code>isis.reflector.introspect.mode</code> configuration property.</p> 
+         </div> 
+         <table class="tableblock frame-all grid-all spread"> 
+          <caption class="title">
+           Table 8. Metamodel Validation
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1506,10 +1611,10 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_ui">5.6. UI Facet Config Properties</h3> 
+         <h3 id="__rgcfg_configuring-core_ui">5.7. UI Facet Config Properties</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 8. UI Facet Configuration Properties
+           Table 9. UI Facet Configuration Properties
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1564,10 +1669,10 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_programming-model">5.7. Programming Model</h3> 
+         <h3 id="__rgcfg_configuring-core_programming-model">5.8. Programming Model</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 9. Programming Model
+           Table 10. Programming Model
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1655,10 +1760,10 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__rgcfg_configuring-core_policy">5.8. Policy</h3> 
+         <h3 id="__rgcfg_configuring-core_policy">5.9. Policy</h3> 
          <table class="tableblock frame-all grid-all spread"> 
           <caption class="title">
-           Table 10. Runtime Policy Configuration Properties
+           Table 11. Runtime Policy Configuration Properties
           </caption> 
           <colgroup> 
            <col style="width: 33.3333%;"> 
@@ -1730,7 +1835,7 @@ table.CodeRay td.code>pre{padding:0}
           </tbody> 
          </table> 
          <div class="sect3"> 
-          <h4 id="__rgcfg_configuring-core_filterVisibility">5.8.1. Filtering visibility</h4> 
+          <h4 id="__rgcfg_configuring-core_filterVisibility">5.9.1. Filtering visibility</h4> 
           <div class="paragraph"> 
            <p>The framework provides the <code>isis.reflector.facet.filterVisibility</code> configuration property that influences whether a returned object is visible to the end-user:</p> 
           </div> 
@@ -1755,7 +1860,7 @@ table.CodeRay td.code>pre{padding:0}
            </ul> 
           </div> 
           <div class="paragraph"> 
-           <p>The original motivation for this feature was to transparently support such features as multi-tenancy (as per the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s security module). That is, if an entity is logically "owned" by a user, then the multi-tenancy support can be arranged to prevent some other user from viewing that object.</p> 
+           <p>The original motivation for this feature was to transparently support such features as multi-tenancy (as per the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s security module). That is, if an entity is logically "owned" by a user, then the multi-tenancy support can be arranged to prevent some other user from viewing that object.</p> 
           </div> 
           <div class="paragraph"> 
            <p>By default this configuration property is enabled. To disable the visibility filtering, set the appropriate configuration property to <code>false</code>:</p> 
@@ -1786,7 +1891,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcfg_configuring-core_isis-objects-editing">5.8.2. <code>objects.editing</code></h4> 
+          <h4 id="__rgcfg_configuring-core_isis-objects-editing">5.9.2. <code>objects.editing</code></h4> 
           <div class="paragraph"> 
            <p>This configuration property in effect allows editing to be disabled globally for an application:</p> 
           </div> 

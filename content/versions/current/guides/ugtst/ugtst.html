@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
+     <p class="nav navbar-text navbar-right small">v1.17.0</p> 
     </div> 
    </div> 
   </nav> 
@@ -417,7 +417,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>If the test invokes an action that is disabled, then the wrapper will throw an appropriate exception. If the action is ok to invoke, it delegates through.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>What this means is that an Isis application can be tested end-to-end without having to deploy it onto a webserver; the whole app can be tested while running in-memory. Although integration tests re (necessarily) slower than unit tests, they are not any harder to write (in fact, in some respects they are easier).</p> 
+          <p>What this means is that an Apache Isis application can be tested end-to-end without having to deploy it onto a webserver; the whole app can be tested while running in-memory. Although integration tests re (necessarily) slower than unit tests, they are not any harder to write (in fact, in some respects they are easier).</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -516,7 +516,7 @@ CustomerRepository customers;</code></pre>
           <p>One way to do this is to use random (or fake) values for any insignificant data. This in effect tells the reader that "any value will do". Moreover, if it turns out that any data won’t do, and that there’s some behaviour that is sensitive to the value, then the test will start to flicker, passing and then failing depending on inputs. This is A Good Thing™.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Apache Isis does not, itself, ship with a fake data library. However, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s fakedata module (non-ASF) does provide exactly this capability.</p> 
+          <p>Apache Isis does not, itself, ship with a fake data library. However, the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s fakedata module (non-ASF) does provide exactly this capability.</p> 
          </div> 
          <div class="admonitionblock tip"> 
           <table> 
@@ -541,7 +541,7 @@ CustomerRepository customers;</code></pre>
           <p>Sometimes, though, a feature will take longer to implement than your iteration cycle. In such a case, how do you use continuous integration to keep everyone working on the mainline without revealing a half-implemented feature on your releases? One option is to use <a href="http://martinfowler.com/bliki/FeatureToggle.html">feature toggle</a>s.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>Apache Isis does not, itself, ship with a feature toggle library. However, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s togglz module does provide exactly this capability.</p> 
+          <p>Apache Isis does not, itself, ship with a feature toggle library. However, the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s togglz module does provide exactly this capability.</p> 
          </div> 
          <div class="paragraph"> 
           <p>With all that said, let’s look in detail at the testing features provided by Apache Isis.</p> 
@@ -581,7 +581,7 @@ CustomerRepository customers;</code></pre>
           <p>Contract tests ensure that all instances of a particular idiom/pattern that occur within your codebase are implemented correctly. You could think of them as being a way to enforce a certain type of coding standard. Implementation-wise they use <a href="https://code.google.com/p/reflections/">Reflections</a> library to scan for classes.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_sortedset_code_s">3.1.1. <code>SortedSet</code>s</h4> 
+          <h4 id="_code_sortedset_code_s">3.1.1. <code>SortedSet</code>s</h4> 
           <div class="paragraph"> 
            <p>This contract test automatically checks that all fields of type <code>java.util.Collection</code> are declared as <code>java.util.SortedSet</code>. In other words, it precludes either <code>java.util.List</code> or <code>java.util.Set</code> from being used as a collection.</p> 
           </div> 
@@ -892,14 +892,14 @@ CustomerRepository customers;</code></pre>
              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s publishmq module provides a full example of how to integrate and test an Apache Isis application with a (faked out) external system.</p> 
+               <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s publishmq module provides a full example of how to integrate and test an Apache Isis application with a (faked out) external system.</p> 
               </div> </td> 
             </tr> 
            </tbody>
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_soapendpointpublishingrule_code">3.3.1. <code>SoapEndpointPublishingRule</code></h4> 
+          <h4 id="_code_soapendpointpublishingrule_code">3.3.1. <code>SoapEndpointPublishingRule</code></h4> 
           <div class="paragraph"> 
            <p>The idea behind this rule is that you write a fake server endpoint that implements the same WSDL contract as the "real" external system does, but which also exposes additional API to specify responses (or throw exceptions) from SOAP calls. It also typically records the requests and allows these to be queried.</p> 
           </div> 
@@ -1379,6 +1379,28 @@ CustomerRepository customers;</code></pre>
          </div> 
          <div class="paragraph"> 
           <p>If required, the <code>Module</code> can be customised first using the various <code>withXxx(…​)</code> methods to specify addition modules, domain services and configuration properties.</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_faster_bootstrapping">4.2.1. Faster Bootstrapping</h4> 
+          <div class="paragraph"> 
+           <p>The <code>IntegrationTestAbstract3</code> superclass also allows the introspection mode to be specified, which can reduce the time to bootstrap the test.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>By default integration tests are run in "production" deployment mode, so with the <code>isis.reflector.introspection.mode</code> set to its default of "lazy_unless_production" this will actually result in full introspection of the Apache Isis metamodel. The <em>does</em> have the benefit that the metamodel will be validated, but - as mentioned - with the corresponding downside of taking longer to bootstrap.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>To bootstrap lazily, override as follows:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">DomainAppIntegTestAbstract</span> <span class="directive">extends</span> IntegrationTestAbstract3 {
+
+    <span class="directive">public</span> DomainAppIntegTestAbstract() {
+        <span class="local-variable">super</span>(<span class="keyword">new</span> DomainAppApplicationModule(), IntrospectionMode.LAZY);
+    }
+}</code></pre> 
+           </div> 
+          </div> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -2681,7 +2703,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
              </tr> 
              <tr> 
               <td><i class="conum" data-value="2"></i><b>2</b></td> 
-              <td>a hard-coded list of values for the names. Note that the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s fakedata module could also have been used</td> 
+              <td>a hard-coded list of values for the names. Note that the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s fakedata module could also have been used</td> 
              </tr> 
              <tr> 
               <td><i class="conum" data-value="3"></i><b>3</b></td> 
@@ -2972,7 +2994,7 @@ Feature: <span class="predefined-type">List</span> and Create New Simple Objects
            <p>These builder scripts (<code>BuilderScriptAbstract</code> implementations) can be used independently of the enum personas. And for more complex entity -where there might be many potential values that need to be provided - the builder script can automatically default some or even all of these values.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>For example, for a customer’s date of birth, the buider could default to a date making the customer an adult, aged between 18 and 65, say. For an email address or postal address, or an image, or some "lorem ipsum" text, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s fakedata module could provide randomised values.</p> 
+           <p>For example, for a customer’s date of birth, the buider could default to a date making the customer an adult, aged between 18 and 65, say. For an email address or postal address, or an image, or some "lorem ipsum" text, the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s fakedata module could provide randomised values.</p> 
           </div> 
           <div class="paragraph"> 
            <p>The benefit of an intelligent builder is that it further simplifies the test. The developer reading the test then knows that everything that has been specified exactly is of significance. Because non-specified values are randomised and change on each run, it also decreases the chance that the test passes "by accident" (based on some lucky hard-coded input value).</p> 

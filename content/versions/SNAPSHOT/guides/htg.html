@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
+     <p class="nav navbar-text navbar-right small">v1.17.0</p> 
     </div> 
    </div> 
   </nav> 
@@ -916,7 +916,10 @@ table.CodeRay td.code>pre{padding:0}
              <td class="icon"> <i class="fa icon-tip" title="Tip"></i> </td> 
              <td class="content"> 
               <div class="paragraph"> 
-               <p>If you’re running on Java 8, then note that it’s possible to write Isis applications without using <code>@ParameterLayout(named=…​)</code> annotation. Support for this can be found in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s paraname8 metamodel extension (non-ASF). (In the future we’ll fold this into core). See also our guidance on <a href="../../migration-notes/migration-notes.html#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">upgrading to Java 8</a>.</p> 
+               <p>If you’re running on Java 8, then note that it’s possible to write Isis applications without using <code>@ParameterLayout(named=…​)</code> annotation. Support for this can be found in the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s paraname8 metamodel extension (non-ASF). (In the future we’ll fold this into core).</p> 
+              </div> 
+              <div class="paragraph"> 
+               <p>See also our guidance on <a href="../../migration-notes/migration-notes.html#_migration-notes_1.8.0-to-1.9.0_upgrading-to-java8">upgrading to Java 8</a>.</p> 
               </div> </td> 
             </tr> 
            </tbody>
@@ -1011,7 +1014,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
          <div class="ulist"> 
           <ul> 
-           <li> <p><em>Is it possible to have each of our resellers (using our Isis application) use there own theme/branding with their own logo and colors? Would this also be possible for the login page, possibly depending on the used host name?</em></p> </li> 
+           <li> <p><em>Is it possible to have each of our resellers (using our Apache Isis application) use there own theme/branding with their own logo and colors? Would this also be possible for the login page, possibly depending on the used host name?</em></p> </li> 
           </ul> 
          </div> 
          <div class="paragraph"> 
@@ -1156,8 +1159,8 @@ cssClassUiEvent = DemoObject.CssClassUiEvent.class
            <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">HomePageViewModel</span> ... {
     <span class="annotation">@DomainService</span>(nature = NatureOfService.DOMAIN)
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">CssHighlighter</span> <span class="directive">extends</span> AbstractSubscriber {
-        <span class="annotation">@EventHandler</span>
-        <span class="annotation">@Subscribe</span>
+        <span class="annotation">@org</span>.axonframework.eventhandling.annotation.EventHandler <span class="comment">// if using axon</span>
+        <span class="annotation">@com</span>.google.common.eventbus.Subscribe                    <span class="comment">// if using guava</span>
         <span class="directive">public</span> <span class="type">void</span> on(DemoObject.CssClassUiEvent ev) {
             <span class="keyword">if</span>(getContext() == <span class="predefined-constant">null</span>) { <span class="keyword">return</span>; }
             <span class="keyword">if</span>(ev.getSource() == getContext().getSelected()) {      <i class="conum" data-value="1"></i><b>(1)</b>
@@ -1483,6 +1486,69 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           </div> 
          </div> 
         </div> 
+        <div class="sect2"> 
+         <h3 id="_ugvro_hints-and-tips_troubleshooting">3.6. Troubleshooting</h3> 
+         <div class="sect3"> 
+          <h4 id="_exception">3.6.1. Exception</h4> 
+          <div class="paragraph"> 
+           <p>When invoking a REST service and getting a response with an embeded stacktrace like:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="json">{
+        <span class="key"><span class="delimiter">"</span><span class="content">httpStatusCode</span><span class="delimiter">"</span></span>: <span class="integer">500</span>,
+        <span class="key"><span class="delimiter">"</span><span class="content">message</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions Klasse enthält zwei Eigenschaften mit demselben Namen </span><span class="char">\"</span><span class="content">name</span><span class="char">\"</span><span class="content"> this problem is related to the following location: at public java.lang.String ife.dep.ServiceName.getName() at ife.dep.ServiceName at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName() at ife.dep.ProvidedService at public java.util.SortedSet ife.dep.Release.getCapabilities() at ife.dep.Release at public ife.dep.Release ife.cfg.Configuration.getRelease() at ife.cfg.Configuration at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration() at ife.cfg.ConfigEntry at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries() at ife.cfg.Endpoint this problem is related to the following location: at public java.lang.String ife.dep.ServiceName.name at ife.dep.ServiceName at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName() at ife.dep.ProvidedService at public java.util.SortedSet ife.dep.Release.getCapabilities() at ife.dep.Release at public ife.dep.Release ife.cfg.Configuration.getRelease() at ife.cfg.Configuration at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration() at ife.cfg.ConfigEntry at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries() at ife.cfg.Endpoint </span><span class="delimiter">"</span></span>,
+[<span class="error">.</span><span class="error">.</span><span class="error">.</span>]
+}</code></pre> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_solution">3.6.2. Solution</h4> 
+          <div class="paragraph"> 
+           <p>Add <code>@XmlAccessorType(XmlAccessType.FIELD)</code> to your domain entity:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
+<span class="annotation">@javax</span>.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.NATIVE, column = <span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)
+<span class="annotation">@javax</span>.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = <span class="string"><span class="delimiter">"</span><span class="content">version</span><span class="delimiter">"</span></span>)
+<span class="annotation">@DomainObject</span>(objectType = <span class="string"><span class="delimiter">"</span><span class="content">ServiceName</span><span class="delimiter">"</span></span>, bounded = <span class="predefined-constant">true</span>)
+<span class="annotation">@DomainObjectLayout</span>(cssClassFa = <span class="string"><span class="delimiter">"</span><span class="content">tag</span><span class="delimiter">"</span></span>, describedAs = <span class="string"><span class="delimiter">"</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="annotation">@SuppressWarnings</span>(<span class="string"><span class="delimiter">"</span><span class="content">javadoc</span><span class="delimiter">"</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ServiceName</span> <span class="directive">implements</span> Capability, <span class="predefined-type">Comparable</span>&lt;ServiceName&gt; {
+
+        <span class="directive">public</span> <span class="predefined-type">String</span> title() {
+                <span class="keyword">return</span> getName();
+        }
+
+        <span class="directive">public</span> <span class="type">int</span> compareTo(ServiceName o) {
+                <span class="keyword">return</span> name.compareTo(o.name);
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+                <span class="keyword">return</span> title();
+        }
+
+        <span class="annotation">@MemberOrder</span>(sequence = <span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span>)
+        <span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull = <span class="string"><span class="delimiter">"</span><span class="content">false</span><span class="delimiter">"</span></span>)
+        <span class="annotation">@Getter</span>        <span class="annotation">@Setter</span>
+        <span class="directive">public</span> <span class="predefined-type">String</span> name;
+
+        <span class="directive">public</span> <span class="type">boolean</span> isSynchronous() {
+                <span class="keyword">return</span> !isAsynchonous();
+        }
+
+        <span class="directive">public</span> <span class="type">boolean</span> isAsynchonous() {
+                <span class="keyword">return</span> name.startsWith(Constants.ESB_JMS_PREFIX);
+        }
+}</code></pre> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
        </div> 
       </div> 
       <div class="sect1"> 
@@ -1524,7 +1590,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           <p>The second approach (using an <code>.orm</code> file) is therefore often more useful than the first, because the metadata provided overrides rather than replaces the annotations (and annotations not overridden continue to be honoured).</p> 
          </div> 
          <div class="paragraph"> 
-          <p>A typical use case is to change the database schema for an entity. For example, the various (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> modules use schemas for each entity. For example, the <code>AuditEntry</code> entity in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s audit module is annotated as:</p> 
+          <p>A typical use case is to change the database schema for an entity. For example, the various (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a> modules use schemas for each entity. For example, the <code>AuditEntry</code> entity in the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s audit module is annotated as:</p> 
          </div> 
          <div class="listingblock"> 
           <div class="content"> 
@@ -2854,10 +2920,10 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
         <div class="sect2"> 
          <h3 id="_ugbtb_hints-and-tips_multi-tenancy">6.9. Multi-tenancy</h3> 
          <div class="paragraph"> 
-          <p>Of the various modules provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>, the security module has the most features. One significant feature is the ability to associate users and objects with a "tenancy".</p> 
+          <p>Of the various modules provided by the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>, the security module has the most features. One significant feature is the ability to associate users and objects with a "tenancy".</p> 
          </div> 
          <div class="paragraph"> 
-          <p>For more details, see the <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s security module README.</p> 
+          <p>For more details, see the <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s security module README.</p> 
          </div> 
         </div> 
         <div class="sect2"> 
@@ -3307,7 +3373,7 @@ serviceRegistry.injectServicesInto(viewModel);</code></pre>
           <p>Alternatively just set <code>isis.fixtures</code> and <code>isis.persistor.datanucleus.install-fixtures</code> properties.</p> 
          </div> 
          <div class="paragraph"> 
-          <p>In terms of implementations, you might also want to check out the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s excel module, by using <code>ExcelFixture</code> and overriding <code>ExcelFixtureRowHandler</code>.</p> 
+          <p>In terms of implementations, you might also want to check out the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s excel module, by using <code>ExcelFixture</code> and overriding <code>ExcelFixtureRowHandler</code>.</p> 
          </div> 
          <div class="paragraph"> 
           <p>An example can be found in this (non ASF) <a href="https://github.com/incodehq/contactapp">contactapp</a>, see <a href="https://github.com/incodehq/contactapp/blob/master/backend/fixture/src/main/java/org/incode/eurocommercial/contactapp/fixture/scenarios/demo/ContactImport.java"><code>ContactRowHandler</code></a>.</p> 

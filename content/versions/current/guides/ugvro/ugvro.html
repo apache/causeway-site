@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
+     <p class="nav navbar-text navbar-right small">v1.17.0</p> 
     </div> 
    </div> 
   </nav> 
@@ -984,7 +984,99 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </div> 
       <div class="sect1"> 
-       <h2 id="_ugvro_simplified-representations">5. Simplified Representations</h2>
+       <h2 id="_ugvro_health-check">5. Health Check</h2>
+       <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+        <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_health-check.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+        <ul class="dropdown-menu">
+         <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_health-check.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+         <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_health-check.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+         <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_health-check.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+         <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_health-check.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+        </ul>
+       </div> 
+       <div class="sectionbody"> 
+        <div class="paragraph"> 
+         <p>The <a href="rgsvc.html#_rgsvc_application-layer-spi_HealthCheckService"><code>HealthCheckService</code></a> SPI allows applications to provide an implementation of that service which can indicate the overall health of the application. The "health" is defined by the very simple <code>Health</code> class, where a non-null message indicates a problem, otherwise everything is ok:</p> 
+        </div> 
+        <div class="listingblock"> 
+         <div class="content"> 
+          <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Health</span> {
+    <span class="directive">public</span> <span class="directive">static</span> Health ok() {
+        <span class="keyword">return</span> <span class="keyword">new</span> Health(<span class="predefined-constant">null</span>);
+    }
+    <span class="directive">public</span> <span class="directive">static</span> Health error(<span class="predefined-type">String</span> message) {
+        <span class="keyword">return</span> <span class="keyword">new</span> Health(message);
+    }
+    ...
+    public <span class="type">boolean</span> getResult() { <span class="keyword">return</span> message == <span class="predefined-constant">null</span>; }
+    <span class="directive">public</span> <span class="predefined-type">String</span> getMessage() { <span class="keyword">return</span> message; }
+}</code></pre> 
+         </div> 
+        </div> 
+        <div class="paragraph"> 
+         <p>The Restful Objects viewer exposes this as <code>/health</code> REST endpoint:</p> 
+        </div> 
+        <div class="ulist"> 
+         <ul> 
+          <li> <p>If <code>HealthCheckService</code> has been implemented, then this will be called to obtain the <code>Health</code>.</p> </li> 
+          <li> <p>If no implementation has been provided by the application, then an ok <code>Health</code> will be assumed.</p> </li> 
+         </ul> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Either way, the viewer will serialize a <code>Health</code> object into JSON, with the mime type indicated as <code>application/json;profile="urn:org.restfulobjects:repr-types/health"</code>.</p> 
+        </div> 
+        <div class="paragraph"> 
+         <p>Monitoring infrastructure or container orchestrators (such as Docker Swarm and Kubernetes) can then be configured to call this endpoint to check on the health of the application and take remedial action if not.</p> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_session_management">5.1. Session Management</h3> 
+         <div class="paragraph"> 
+          <p>The Restful Objects viewer will execute the <code>HealthCheckService</code> using a hard-coded user and role:</p> 
+         </div> 
+         <div class="ulist"> 
+          <ul> 
+           <li> <p>the user name is: <code>__health</code></p> </li> 
+           <li> <p>the role is: <code>__health-role</code></p> </li> 
+          </ul> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This design means that there is no need to configure monitoring infrastructure with credentials or other such complexity; they can simply hit the health endpoint.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>Moreover (unless the <code>HealthCheckService</code> implementation uses the <code>WrapperFactory</code> to invoke actions), it shouldn’t be needed to set up a security account for this user name.</p> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rest_api_mapping">5.2. REST API Mapping</h3> 
+         <div class="paragraph"> 
+          <p>The <code>/restful/health</code> path must be specified as a "passThru" in <code>web.xml</code> so that no authentication challenge is issued.</p> 
+         </div> 
+         <div class="listingblock"> 
+          <div class="title">
+           web.xml
+          </div> 
+          <div class="content"> 
+           <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;filter&gt;</span>
+    <span class="tag">&lt;filter-name&gt;</span>IsisSessionFilterForRestfulObjects<span class="tag">&lt;/filter-name&gt;</span>
+    <span class="tag">&lt;filter-class&gt;</span>org.apache.isis.core.webapp.IsisSessionFilter<span class="tag">&lt;/filter-class&gt;</span>
+    ...
+    <span class="tag">&lt;init-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>passThru<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>/restful/swagger,/restful/health<span class="tag">&lt;/param-value&gt;</span>
+    <span class="tag">&lt;/init-param&gt;</span>
+    ...
+<span class="tag">&lt;/filter&gt;</span></code></pre> 
+          </div> 
+         </div> 
+         <div class="paragraph"> 
+          <p>This is a comma separated list, so there may be other values also (for example <code>/restful/swagger</code>, as shown above).</p> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="sect1"> 
+       <h2 id="_ugvro_simplified-representations">6. Simplified Representations</h2>
        <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
         <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1003,7 +1095,7 @@ table.CodeRay td.code>pre{padding:0}
          <p>Apache Isis also provides support for its own simplified representation for the most commonly-used representations. This is implemented using the <code>ContentNegotiationService</code> described in the <a href="../ugvro/ugvro.html#_ugvro_architecture">architecture</a> chapter.</p> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_simplified-representations_apache-isis-profile">5.1. The Apache Isis "Profile"</h3>
+         <h3 id="_ugvro_simplified-representations_apache-isis-profile">6.1. The Apache Isis "Profile"</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_apache-isis-profile.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1044,7 +1136,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_simplified-representations_domain-object">5.2. Domain Object</h3>
+         <h3 id="_ugvro_simplified-representations_domain-object">6.2. Domain Object</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_domain-object.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1165,7 +1257,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_simplified-representations_object-collection">5.3. Domain Object Collection</h3>
+         <h3 id="_ugvro_simplified-representations_object-collection">6.3. Domain Object Collection</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_object-collection.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1277,7 +1369,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_simplified-representations_action-invocation">5.4. Action Invocation</h3>
+         <h3 id="_ugvro_simplified-representations_action-invocation">6.4. Action Invocation</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_action-invocation.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1292,7 +1384,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>When an action is invoked, it can return a domain object, a list, a scalar, or return nothing.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_returning_an_object">5.4.1. Returning an Object</h4> 
+          <h4 id="_returning_an_object">6.4.1. Returning an Object</h4> 
           <div class="paragraph"> 
            <p>If the action returned an object, then the domain object representation described <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_domain-object">above</a> is returned.</p> 
           </div> 
@@ -1345,7 +1437,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_returning_a_list">5.4.2. Returning a List</h4> 
+          <h4 id="_returning_a_list">6.4.2. Returning a List</h4> 
           <div class="paragraph"> 
            <p>On the other hand if the action returned a list (a "standalone" collection, then an array representation is returned. This is very similar to that returned by a <a href="../ugvro/ugvro.html#__ugvro_simplified-representations_object-collection">(parented) object collection</a>, though with a slightly different <code>Content-Type</code> to distinguish.</p> 
           </div> 
@@ -1409,14 +1501,14 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_returning_scalar_nothing">5.4.3. Returning Scalar/Nothing</h4> 
+          <h4 id="_returning_scalar_nothing">6.4.3. Returning Scalar/Nothing</h4> 
           <div class="paragraph"> 
            <p>Note that actions returning scalar values or nothing (which includes <code>void</code> actions) are not supported; for these the regular RO spec representation will be returned.</p> 
           </div> 
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__ugvro_simplified-representations_other-representations">5.5. Other Representations</h3> 
+         <h3 id="__ugvro_simplified-representations_other-representations">6.5. Other Representations</h3> 
          <div class="paragraph"> 
           <p>Sometimes though you may want to extend or change the representations generated. This might be because you want to write a RESTful client that uses a particular library (say a Javascript library or web components) that can only handle representations in a certain form.</p> 
          </div> 
@@ -1458,7 +1550,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_simplified-representations_configuration-properties">5.6. Global Config Props (Deprecated)</h3>
+         <h3 id="_ugvro_simplified-representations_configuration-properties">6.6. Global Config Props (Deprecated)</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_simplified-representations_configuration-properties.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1482,7 +1574,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </div> 
       <div class="sect1"> 
-       <h2 id="_ugvro_configuration-properties">6. Configuration Properties</h2>
+       <h2 id="_ugvro_configuration-properties">7. Configuration Properties</h2>
        <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
         <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_configuration-properties.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1501,7 +1593,7 @@ table.CodeRay td.code>pre{padding:0}
          <p>These configuration properties are typically stored in <code>WEB-INF/viewer_restfulobjects.properties</code>. However, you can place all configuration properties into <code>WEB-INF/isis.properties</code> if you wish (the configuration properties from all config files are merged together).</p> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__ugvro_configuration-properties_standard">6.1. Standard</h3> 
+         <h3 id="__ugvro_configuration-properties_standard">7.1. Standard</h3> 
          <div class="paragraph"> 
           <p>The following configuration properties are supported:</p> 
          </div> 
@@ -1540,7 +1632,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>,<code>false</code> (<code><em>false</em></code>)</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to strictly enforce the <code>Accept</code> header checking for the default RO-spec representations (by the <code>ContentNegotiationServiceForRestfulObjectsV1_0</code> service). Will otherwise accept anything. <br> </p><p class="tableblock">This is convenient because it allows the <code>Accept</code> header to be set to that of the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">Apache Isis profile</a> for all resources, rather than simply the handful of resources that supported that profile.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to strictly enforce the <code>Accept</code> header checking for the default RO-spec representations (by the <code>ContentNegotiationServiceForRestfulObjectsV1_0</code> service). Will otherwise accept anything. <br></p> <p class="tableblock">This is convenient because it allows the <code>Accept</code> header to be set to that of the <a href="../ugvro/ugvro.html#_ugvro_simplified-representations">Apache Isis profile</a> for all resources, rather than simply the handful of resources that supported that profile.</p></td> 
            </tr> 
           </tbody> 
          </table> 
@@ -1583,7 +1675,7 @@ table.CodeRay td.code>pre{padding:0}
          </table> 
         </div> 
         <div class="sect2"> 
-         <h3 id="__ugvro_configuration-properties_deprecated">6.2. Deprecated</h3> 
+         <h3 id="__ugvro_configuration-properties_deprecated">7.2. Deprecated</h3> 
          <div class="paragraph"> 
           <p>There are also a number of configuration properties that can be used to suppress or simplify the default RO-spec representations.</p> 
          </div> 
@@ -1763,7 +1855,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
        </div> 
       </div> 
       <div class="sect1"> 
-       <h2 id="_ugvro_hints-and-tips">7. Hints and Tips</h2>
+       <h2 id="_ugvro_hints-and-tips">8. Hints and Tips</h2>
        <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
         <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1798,7 +1890,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
          <p>This section provides a few hints-and-tips to help you on your way.</p> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_hints-and-tips_using-chrome-devtools">7.1. Using Chrome Dev Tools</h3>
+         <h3 id="_ugvro_hints-and-tips_using-chrome-devtools">8.1. Using Chrome Dev Tools</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_using-chrome-devtools.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1814,7 +1906,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_hints-and-tips_angular-tips">7.2. Angular Tips</h3>
+         <h3 id="_ugvro_hints-and-tips_angular-tips">8.2. Angular Tips</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_angular-tips.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1832,7 +1924,7 @@ isis.viewer.restfulobjects.suppressMemberDisabledReason=true</code></pre>
           <p>This page captures one or two tips on using Angular to write such a bespoke client.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_invoking_a_get_link_eg_invoking_a_query_action">7.2.1. Invoking a GET link (eg invoking a query action)</h4> 
+          <h4 id="_invoking_a_get_link_eg_invoking_a_query_action">8.2.1. Invoking a GET link (eg invoking a query action)</h4> 
           <div class="paragraph"> 
            <p>Suppose you have a <code>CustomerService</code> providing a <code>findCustomer</code> action:</p> 
           </div> 
@@ -1886,7 +1978,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_invoking_a_put_or_post_link">7.2.2. Invoking a PUT or POST link</h4> 
+          <h4 id="_invoking_a_put_or_post_link">8.2.2. Invoking a PUT or POST link</h4> 
           <div class="paragraph"> 
            <p>If the method is a PUT or a POST, then no <code>:queryString</code> placeholder is required in the URL, and the args are instead part of the body.</p> 
           </div> 
@@ -1896,7 +1988,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_hints-and-tips_pretty-printing">7.3. Pretty printing</h3>
+         <h3 id="_ugvro_hints-and-tips_pretty-printing">8.3. Pretty printing</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_pretty-printing.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1912,7 +2004,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_hints-and-tips_restful-image-property">7.4. How parse images in RO viewer?</h3>
+         <h3 id="_ugvro_hints-and-tips_restful-image-property">8.4. How parse images in RO viewer?</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_restful-image-property.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1955,7 +2047,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_ugvro_hints-and-tips_view-model-as-parameter">7.5. View Model as Parameter</h3>
+         <h3 id="_ugvro_hints-and-tips_view-model-as-parameter">8.5. View Model as Parameter</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_view-model-as-parameter.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -1970,7 +2062,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           <p>As discussed <a href="https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E">on the mailing list</a>.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_query">7.5.1. Query</h4> 
+          <h4 id="_query">8.5.1. Query</h4> 
           <div class="paragraph"> 
            <p>I must provide a REST service accepting more complex view model as input parameter.</p> 
           </div> 
@@ -2019,7 +2111,7 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_possible_answer">7.5.2. Possible Answer…​</h4> 
+          <h4 id="_possible_answer">8.5.2. Possible Answer…​</h4> 
           <div class="paragraph"> 
            <p>Rather than try to "upload" the <code>OfferTemplateFilter</code> view model as a parameter, instead treat it as a resource.</p> 
           </div> 
@@ -2035,6 +2127,79 @@ findCustomer.get({<span class="key">queryString</span>: JSON.stringify(findCusto
           </div> 
           <div class="paragraph"> 
            <p>Obviously the URL passed in the last step will be rather long and messy, but that’s not a problem per-se.</p> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_ugvro_hints-and-tips_troubleshooting">8.6. Troubleshooting</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_troubleshooting.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_troubleshooting.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_troubleshooting.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_troubleshooting.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/ugvro/_ugvro_hints-and-tips_troubleshooting.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_exception">8.6.1. Exception</h4> 
+          <div class="paragraph"> 
+           <p>When invoking a REST service and getting a response with an embeded stacktrace like:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="json">{
+        <span class="key"><span class="delimiter">"</span><span class="content">httpStatusCode</span><span class="delimiter">"</span></span>: <span class="integer">500</span>,
+        <span class="key"><span class="delimiter">"</span><span class="content">message</span><span class="delimiter">"</span></span>: <span class="string"><span class="delimiter">"</span><span class="content">com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions Klasse enthält zwei Eigenschaften mit demselben Namen </span><span class="char">\"</span><span class="content">name</span><span class="char">\"</span><span class="content"> this problem is related to the following location: at public java.lang.String ife.dep.ServiceName.getName() at ife.dep.ServiceName at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName() at ife.dep.ProvidedService at public java.util.SortedSet ife.dep.Release.getCapabilities() at ife.dep.Release at public ife.dep.Release ife.cfg.Configuration.getRelease() at ife.cfg.Configuration at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration() at ife.cfg.ConfigEntry at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries() at ife.cfg.Endpoint this problem is related to the following location: at public java.lang.String ife.dep.ServiceName.name at ife.dep.ServiceName at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName() at ife.dep.ProvidedService at public java.util.SortedSet ife.dep.Release.getCapabilities() at ife.dep.Release at public ife.dep.Release ife.cfg.Configuration.getRelease() at ife.cfg.Configuration at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration() at ife.cfg.ConfigEntry at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries() at ife.cfg.Endpoint </span><span class="delimiter">"</span></span>,
+[<span class="error">.</span><span class="error">.</span><span class="error">.</span>]
+}</code></pre> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="_solution">8.6.2. Solution</h4> 
+          <div class="paragraph"> 
+           <p>Add <code>@XmlAccessorType(XmlAccessType.FIELD)</code> to your domain entity:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@javax</span>.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
+<span class="annotation">@javax</span>.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.NATIVE, column = <span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)
+<span class="annotation">@javax</span>.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = <span class="string"><span class="delimiter">"</span><span class="content">version</span><span class="delimiter">"</span></span>)
+<span class="annotation">@DomainObject</span>(objectType = <span class="string"><span class="delimiter">"</span><span class="content">ServiceName</span><span class="delimiter">"</span></span>, bounded = <span class="predefined-constant">true</span>)
+<span class="annotation">@DomainObjectLayout</span>(cssClassFa = <span class="string"><span class="delimiter">"</span><span class="content">tag</span><span class="delimiter">"</span></span>, describedAs = <span class="string"><span class="delimiter">"</span><span class="delimiter">"</span></span>)
+<span class="annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="annotation">@SuppressWarnings</span>(<span class="string"><span class="delimiter">"</span><span class="content">javadoc</span><span class="delimiter">"</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ServiceName</span> <span class="directive">implements</span> Capability, <span class="predefined-type">Comparable</span>&lt;ServiceName&gt; {
+
+        <span class="directive">public</span> <span class="predefined-type">String</span> title() {
+                <span class="keyword">return</span> getName();
+        }
+
+        <span class="directive">public</span> <span class="type">int</span> compareTo(ServiceName o) {
+                <span class="keyword">return</span> name.compareTo(o.name);
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+                <span class="keyword">return</span> title();
+        }
+
+        <span class="annotation">@MemberOrder</span>(sequence = <span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span>)
+        <span class="annotation">@javax</span>.jdo.annotations.Column(allowsNull = <span class="string"><span class="delimiter">"</span><span class="content">false</span><span class="delimiter">"</span></span>)
+        <span class="annotation">@Getter</span>        <span class="annotation">@Setter</span>
+        <span class="directive">public</span> <span class="predefined-type">String</span> name;
+
+        <span class="directive">public</span> <span class="type">boolean</span> isSynchronous() {
+                <span class="keyword">return</span> !isAsynchonous();
+        }
+
+        <span class="directive">public</span> <span class="type">boolean</span> isAsynchonous() {
+                <span class="keyword">return</span> name.startsWith(Constants.ESB_JMS_PREFIX);
+        }
+}</code></pre> 
+           </div> 
           </div> 
           <div class="paragraph"> 
            <p><a href="https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E" class="bare">https://lists.apache.org/thread.html/cbd18320bbf6e5c5e767283f9e675cf56e7f4692c109e1e79dbaa90a@%3Cusers.isis.apache.org%3E</a></p> 

@@ -244,7 +244,7 @@ table.CodeRay td.code>pre{padding:0}
        </div> 
       </form> 
      </div> 
-     <p class="nav navbar-text navbar-right small">v1.16.2</p> 
+     <p class="nav navbar-text navbar-right small">v1.17.0</p> 
     </div> 
    </div> 
   </nav> 
@@ -3227,7 +3227,7 @@ table.CodeRay td.code>pre{padding:0}
             </div> 
            </div> 
            <div class="paragraph"> 
-            <p>As can be seen, the various (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> modules also each provide a module class that can be easily referenced.</p> 
+            <p>As can be seen, the various (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a> modules also each provide a module class that can be easily referenced.</p> 
            </div> 
           </div> 
           <div class="sect4"> 
@@ -3236,7 +3236,7 @@ table.CodeRay td.code>pre{padding:0}
             <p>We normally we recommend that services are defined exclusively through <code>getModules()</code>, and that this method should therefore return an empty list. However, there are certain use cases where the a service must be explicitly specified either because the service required does not (for whatever reason) have a <a href="../rgant/rgant.html#_rgant-DomainService"><code>@DomainService</code></a> annotation.</p> 
            </div> 
            <div class="paragraph"> 
-            <p>For example, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s security module allows the policy to evaluate conflicting permissions to be specified by explicitly registering either the <code>PermissionsEvaluationServiceAllowBeatsVeto</code> domain service or the <code>PermissionsEvaluationServiceVetoBeatsAllow</code> domain service:</p> 
+            <p>For example, the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s security module allows the policy to evaluate conflicting permissions to be specified by explicitly registering either the <code>PermissionsEvaluationServiceAllowBeatsVeto</code> domain service or the <code>PermissionsEvaluationServiceVetoBeatsAllow</code> domain service:</p> 
            </div> 
            <div class="listingblock"> 
             <div class="content"> 
@@ -3786,7 +3786,7 @@ table.CodeRay td.code>pre{padding:0}
            <p>This is a convenience superclass for creating subscriber domain services on the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a>. It uses <a href="../rgant/rgant.html#_rgant-PostConstruct"><code>@PostConstruct</code></a> and <a href="../rgant/rgant.html#_rgant-PreDestroy"><code>@PreDestroy</code></a> callbacks to automatically register/unregister itself with the <code>EventBusService</code>.</p> 
           </div> 
           <div class="paragraph"> 
-           <p>It’s important that subscribers register before any domain services that might emit events on the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a>. For example, the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> security module provides a domain service that automatically seeds certain domain entities; these will generate <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle events</a> and so any subscribers must be registered before such seed services. The easiest way to do this is to use the <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute.</p> 
+           <p>It’s important that subscribers register before any domain services that might emit events on the <a href="../rgsvc/rgsvc.html#_rgsvc_core-domain-api_EventBusService"><code>EventBusService</code></a>. For example, the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a> security module provides a domain service that automatically seeds certain domain entities; these will generate <a href="../rgcms/rgcms.html#_rgcms_classes_lifecycleevent">lifecycle events</a> and so any subscribers must be registered before such seed services. The easiest way to do this is to use the <a href="../rgant/rgant.html#_rgant-DomainServiceLayout_menuOrder"><code>@DomainServiceLayout#menuOrder()</code></a> attribute.</p> 
           </div> 
           <div class="paragraph"> 
            <p>As a convenience, the <code>AbstractSubscriber</code> specifies this attribute.</p> 
@@ -3997,29 +3997,33 @@ table.CodeRay td.code>pre{padding:0}
             <div class="content"> 
              <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">AbstractDomainEvent</span>&lt;S&gt; <span class="directive">extends</span> java.util.EventObject {
 
-    <span class="directive">public</span> Phase getEventPhase();                                   <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="directive">public</span> S getSource();                                           <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="directive">public</span> Identifier getIdentifier();                              <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="directive">public</span> S getSource();                                           <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> getMixedIn();                                     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> getSubject();                                     <i class="conum" data-value="3"></i><b>(3)</b>
 
-    <span class="directive">public</span> <span class="type">void</span> hide();                                             <i class="conum" data-value="4"></i><b>(4)</b>
-    <span class="directive">public</span> <span class="type">boolean</span> isHidden();                                      <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">public</span> Identifier getIdentifier();                              <i class="conum" data-value="4"></i><b>(4)</b>
 
-    <span class="directive">public</span> <span class="type">void</span> disable(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                       <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="directive">public</span> Phase getEventPhase();                                   <i class="conum" data-value="5"></i><b>(5)</b>
+
+    <span class="directive">public</span> <span class="type">void</span> hide();                                             <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="directive">public</span> <span class="type">boolean</span> isHidden();                                      <i class="conum" data-value="7"></i><b>(7)</b>
+
+    <span class="directive">public</span> <span class="type">void</span> disable(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                       <i class="conum" data-value="8"></i><b>(8)</b>
     <span class="directive">public</span> <span class="type">void</span> disable(<span class="directive">final</span> TranslatableString reason);
-    <span class="directive">public</span> <span class="predefined-type">String</span> getDisabledReason();                              <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getDisabledReason();                              <i class="conum" data-value="9"></i><b>(9)</b>
     <span class="directive">public</span> TranslatableString getDisabledReasonTranslatable();
     <span class="directive">public</span> <span class="type">boolean</span> isDisabled();
 
-    <span class="directive">public</span> <span class="type">void</span> invalidate(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                    <i class="conum" data-value="8"></i><b>(8)</b>
+    <span class="directive">public</span> <span class="type">void</span> invalidate(<span class="directive">final</span> <span class="predefined-type">String</span> reason);                    <i class="conum" data-value="10"></i><b>(10)</b>
     <span class="directive">public</span> <span class="type">void</span> invalidate(<span class="directive">final</span> TranslatableString reason);
-    <span class="directive">public</span> <span class="predefined-type">String</span> getInvalidityReason();                            <i class="conum" data-value="9"></i><b>(9)</b>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getInvalidityReason();                            <i class="conum" data-value="11"></i><b>(11)</b>
     <span class="directive">public</span> TranslatableString getInvalidityReasonTranslatable();
     <span class="directive">public</span> <span class="type">boolean</span> isInvalid();
 
-    <span class="directive">public</span> <span class="type">void</span> veto(<span class="directive">final</span> <span class="predefined-type">String</span> reason, <span class="directive">final</span> <span class="predefined-type">Object</span>... args);    <i class="conum" data-value="10"></i><b>(10)</b>
+    <span class="directive">public</span> <span class="type">void</span> veto(<span class="directive">final</span> <span class="predefined-type">String</span> reason, <span class="directive">final</span> <span class="predefined-type">Object</span>... args);    <i class="conum" data-value="12"></i><b>(12)</b>
     <span class="directive">public</span> <span class="type">void</span> veto(<span class="directive">final</span> TranslatableString translatableReason);
 
-    <span class="directive">public</span> <span class="predefined-type">Object</span> get(<span class="predefined-type">Object</span> key);                                  <i class="conum" data-value="11"></i><b>(11)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> get(<span class="predefined-type">Object</span> key);                                  <i class="conum" data-value="13"></i><b>(13)</b>
     <span class="directive">public</span> <span class="type">void</span> put(<span class="predefined-type">Object</span> key, <span class="predefined-type">Object</span> value);
 }</code></pre> 
             </div> 
@@ -4029,46 +4033,66 @@ table.CodeRay td.code>pre{padding:0}
              <tbody>
               <tr> 
                <td><i class="conum" data-value="1"></i><b>1</b></td> 
-               <td>Whether the framework is checking visibility, enablement, validity or actually executing (invoking action, editing property), as per the <code>Phase</code> enum (defined below).</td> 
+               <td>The domain object raising this event. 
+                <div class="paragraph"> 
+                 <p>For a "regular" action, property or collection then this will be the target domain object. But for a "mixin" action, this will be an instance of the mixin itself.</p> 
+                </div></td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="2"></i><b>2</b></td> 
-               <td>The domain object raising this event</td> 
+               <td>For a "mixin", this will be the target object that is being contributed to. 
+                <div class="paragraph"> 
+                 <p>For a "regular" action, this will return <code>null</code>.</p> 
+                </div></td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="3"></i><b>3</b></td> 
-               <td>Identifier of the action, property or collection being interacted with.</td> 
+               <td>Returns the domain object being interacted with, irrespective of whether this is a "regular" action/property/collection or a "mixin". 
+                <div class="ulist"> 
+                 <ul> 
+                  <li> <p>For a regular member, this will return the same as <code>getSource()</code>.</p> </li> 
+                  <li> <p>For a mixin, this will return the same as <code>getMixedIn()</code>.</p> </li> 
+                 </ul> 
+                </div></td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="4"></i><b>4</b></td> 
-               <td>API for subscribers to hide the member</td> 
+               <td>Identifier of the action, property or collection being interacted with.</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="5"></i><b>5</b></td> 
-               <td>Used by the framework to determine if the member should be hidden (not rendered)</td> 
+               <td>Whether the framework is checking visibility, enablement, validity or actually executing (invoking action, editing property), as per the <code>Phase</code> enum (defined below).</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="6"></i><b>6</b></td> 
-               <td>API for subscribers to disable the member, specifying the reason why (possibly translated)</td> 
+               <td>API for subscribers to hide the member</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="7"></i><b>7</b></td> 
-               <td>Used by the framework to determine whether the member should be disabled (greyed out) when rendered.</td> 
+               <td>Used by the framework to determine if the member should be hidden (not rendered)</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="8"></i><b>8</b></td> 
-               <td>API for subscribers to invalidate an interaction, eg invalid arguments to an action</td> 
+               <td>API for subscribers to disable the member, specifying the reason why (possibly translated)</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="9"></i><b>9</b></td> 
-               <td>Used by the framework to determine whether the interaction is invalid and should be blocked (eg pressing OK shows message)</td> 
+               <td>Used by the framework to determine whether the member should be disabled (greyed out) when rendered.</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="10"></i><b>10</b></td> 
-               <td>Convenience API for subscribers to veto; will automatically call either <code>hide()</code>, <code>disable(…​)</code> or <code>invalidate(…​)</code> based on the phase</td> 
+               <td>API for subscribers to invalidate an interaction, eg invalid arguments to an action</td> 
               </tr> 
               <tr> 
                <td><i class="conum" data-value="11"></i><b>11</b></td> 
+               <td>Used by the framework to determine whether the interaction is invalid and should be blocked (eg pressing OK shows message)</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="12"></i><b>12</b></td> 
+               <td>Convenience API for subscribers to veto; will automatically call either <code>hide()</code>, <code>disable(…​)</code> or <code>invalidate(…​)</code> based on the phase</td> 
+              </tr> 
+              <tr> 
+               <td><i class="conum" data-value="13"></i><b>13</b></td> 
                <td>Mechanism to allow subscribers to share arbitrary information between phases. One event instance is used for both the hide and disable phases, and a different event instance is shared between validate/pre-execute/post-execute.</td> 
               </tr> 
              </tbody>
@@ -4151,9 +4175,8 @@ table.CodeRay td.code>pre{padding:0}
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">String</span>&gt; getParameterNames();
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Class</span>&lt;?&gt;&gt; getParameterTypes();
 
-    <span class="directive">public</span> <span class="predefined-type">Object</span> getMixedIn();                                             <i class="conum" data-value="5"></i><b>(5)</b>
-    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Object</span>&gt; getArguments();                                     <i class="conum" data-value="6"></i><b>(6)</b>
-    <span class="directive">public</span> <span class="predefined-type">Object</span> getReturnValue();                                         <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Object</span>&gt; getArguments();                                     <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> getReturnValue();                                         <i class="conum" data-value="6"></i><b>(6)</b>
 }</code></pre> 
             </div> 
            </div> 
@@ -4178,14 +4201,10 @@ table.CodeRay td.code>pre{padding:0}
               </tr> 
               <tr> 
                <td><i class="conum" data-value="5"></i><b>5</b></td> 
-               <td>Populated only for mixins; holds the underlying domain object that the mixin contributes to.</td> 
-              </tr> 
-              <tr> 
-               <td><i class="conum" data-value="6"></i><b>6</b></td> 
                <td>The arguments being used to invoke the action; populated during validate phase and subsequent phases.</td> 
               </tr> 
               <tr> 
-               <td><i class="conum" data-value="7"></i><b>7</b></td> 
+               <td><i class="conum" data-value="6"></i><b>6</b></td> 
                <td>The value returned by the action; populated only in the executed phase.</td> 
               </tr> 
              </tbody>
@@ -4437,7 +4456,7 @@ table.CodeRay td.code>pre{padding:0}
               </div>
              </div></td> 
             <td class="tableblock halign-left valign-top"><p class="tableblock">(abstract class).<br> <code>IconUiEvent.Default</code> is the concrete implementation used if no <code>@DomainObjectLayout#iconUiEvent</code> attribute is specified</p></td> 
-            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast whenever there is a requirement to obtain an icon (or rather, the name of an icon) for a domain object. Note that if the domain object defines its own <a href="../rgcms/rgcms.html#_rgcms_methods_reserved_iconName"><code>iconName()</code></a> supporting method, or if it has the <a href="../rgant/rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout#cssClassFa()</code></a> attribute, then these will take precedence.</p></td> 
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Broadcast whenever there is a requirement to obtain an icon (or rather, the name of an icon) for a domain object. Note that if the domain object defines its own <a href="../rgcms/rgcms.html#_rgcms_methods_reserved_iconName"><code>iconName()</code></a> supporting method, or if it has the <a href="../rgant/rgant.html#_rgant-DomainObjectLayout#cssClassFa"><code>@DomainObjectLayout#cssClassFa()</code></a> attribute, then these will take precedence.</p></td> 
            </tr> 
            <tr> 
             <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../rgcms/rgcms.html#_rgcms_classes_uievent_CssClassUiEvent"><code>o.a.i.applib.</code><br> <code>CssClassUiEvent</code></a></p></td> 
@@ -4521,7 +4540,7 @@ table.CodeRay td.code>pre{padding:0}
               <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
               <td class="content"> 
                <div class="paragraph"> 
-                <p>If the domain object defines its own <a href="../rgcms/rgcms.html#_rgcms_methods_reserved_iconName"><code>iconName()</code></a> supporting method, or if it has the <a href="../rgant/rgant.html#_rgant-DomainObjectLayout"><code>@DomainObjectLayout#cssClassFa()</code></a> attribute, then these will take precedence.</p> 
+                <p>If the domain object defines its own <a href="../rgcms/rgcms.html#_rgcms_methods_reserved_iconName"><code>iconName()</code></a> supporting method, or if it has the <a href="../rgant/rgant.html#_rgant-DomainObjectLayout#cssClassFa"><code>@DomainObjectLayout#cssClassFa()</code></a> attribute, then these will take precedence.</p> 
                </div> </td> 
              </tr> 
             </tbody>
@@ -5425,7 +5444,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>Apache Isis will automatically apply such specifications as validation rules on properties (as per <a href="../rgant/rgant.html#_rgant-Property_mustSatisfy"><code>@Property#mustSatisfy()</code></a>) and on action parameters (as per <a href="../rgant/rgant.html#_rgant-Parameter_mustSatisfy"><code>@Parameter#mustSatisfy()</code></a>).</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_specification_code">3.8.1. <code>Specification</code></h4> 
+          <h4 id="_code_specification_code"><code>Specification</code></h4> 
           <div class="paragraph"> 
            <p>The heart of the support for this pattern is the <code>Specification</code> interface:</p> 
           </div> 
@@ -5480,7 +5499,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_specification2_code">3.8.2. <code>Specification2</code></h4> 
+          <h4 id="_code_specification2_code"><code>Specification2</code></h4> 
           <div class="paragraph"> 
            <p>The <code>Specification2</code> interface extends the <code>Specification</code> API to add support for i18n. This is done by defining an additional method that returns a <a href="../rgcms/rgcms.html#_rgcms_classes_i18n_TranslatableString">translatable string</a>:</p> 
           </div> 
@@ -5506,7 +5525,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_adapter_classes">3.8.3. Adapter classes</h4> 
+          <h4 id="_adapter_classes">Adapter classes</h4> 
           <div class="paragraph"> 
            <p>The <code>AbstractSpecification</code> and <code>AbstractSpecification2</code> adapter classes provide a partial implementation of the respective interfaces, providing type-safety. (Their design is modelled on the <code>TypesafeMatcher</code> class within <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>).</p> 
           </div> 
@@ -5536,7 +5555,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="_combining_specifications">3.8.4. Combining specifications</h4> 
+          <h4 id="_combining_specifications">Combining specifications</h4> 
           <div class="paragraph"> 
            <p>There are also adapter classes that can be inherited from to combine specifications:</p> 
           </div> 
@@ -5659,7 +5678,7 @@ table.CodeRay td.code>pre{padding:0}
            </table> 
           </div> 
           <div class="paragraph"> 
-           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> that either have domain entity that implement and/or services that contribute this interface are:</p> 
+           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a> that either have domain entity that implement and/or services that contribute this interface are:</p> 
           </div> 
           <div class="ulist"> 
            <ul> 
@@ -5667,6 +5686,31 @@ table.CodeRay td.code>pre{padding:0}
             <li> <p>command module: <code>CommandJdo</code> entity, <code>CommandServiceJdoContributions</code> service</p> </li> 
             <li> <p>publishmq module: <code>PublishedEvent</code> entity</p> </li> 
            </ul> 
+          </div> 
+          <div class="sect4"> 
+           <h5 id="_code_representsinteractionmemberexecution_code"><code>RepresentsInteractionMemberExecution</code></h5> 
+           <div class="paragraph"> 
+            <p>The <code>RepresentsInteractionMemberExecution</code> interface is a sub-interface of <code>HasTransactionId</code> that also includes a sequence property:</p> 
+           </div> 
+           <div class="listingblock"> 
+            <div class="content"> 
+             <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">RepresentsInteractionMemberExecution</span> <span class="directive">extends</span> HasTransactionId {
+    <span class="type">int</span> getSequence();
+}</code></pre> 
+            </div> 
+           </div> 
+           <div class="paragraph"> 
+            <p>Here the (inherited) <code>getTransactionId()</code> is intended to be interpreted as an interaction (cf <a href="../../rgcms/rgcms.html#_rgcms_schema-ixn"><code>InteractionDto</code></a>) that has at least one member execution (cf <a href="../rgcms/rgcms.html#__rgcms_schema-ixn_memberExecutionDto"><code>memberExecutionDto</code></a>).</p> 
+           </div> 
+           <div class="paragraph"> 
+            <p>If the interaction (almost certainly an action) calls other actions by way of <a href="../../rgsvc/rgsvc.html#_rgsvc_application-layer-api_WrapperFactory"><code>WrapperFactory</code></a>), then there may be several member executions, each with a unique sequence number, within the same transaction Id.</p> 
+           </div> 
+           <div class="paragraph"> 
+            <p>The purpose of this interface is to allow mixins to be defined, though the framework itself defines none.</p> 
+           </div> 
+           <div class="paragraph"> 
+            <p>Currently the only implementation of this interface is that for <code>PublishedObjects</code> applib interface as defined by the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a>.</p> 
+           </div> 
           </div> 
          </div> 
          <div class="sect3"> 
@@ -5695,7 +5739,7 @@ table.CodeRay td.code>pre{padding:0}
            </div> 
           </div> 
           <div class="paragraph"> 
-           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a> that either have domain entity that implement and/or services that contribute this interface are:</p> 
+           <p>Modules in the (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a> that either have domain entity that implement and/or services that contribute this interface are:</p> 
           </div> 
           <div class="ulist"> 
            <ul> 
@@ -6492,6 +6536,7 @@ table.CodeRay td.code>pre{padding:0}
         </div> 
         <div class="ulist"> 
          <ul> 
+          <li> <p>the <a href="../rgcms/rgcms.html#_rgcms_schema-mml">metamodel</a> schema, which allows the internal metamodel to be exported in a canonical fashion</p> </li> 
           <li> <p>the <a href="../rgcms/rgcms.html#_rgcms_schema-cmd">command</a> schema, which captures the <em>intention</em> of a user to invoke an action or edit a property</p> </li> 
           <li> <p>the <a href="../rgcms/rgcms.html#_rgcms_schema-ixn">interaction execution</a> schema, which captures the actual execution of an action invocation/property edit</p> </li> 
           <li> <p>the <a href="../rgcms/rgcms.html#_rgcms_schema-chg">changes</a> schema, which captures which objects have been created, updated or deleted as the result of an execution of an action invocation/property edit</p> </li> 
@@ -6502,13 +6547,526 @@ table.CodeRay td.code>pre{padding:0}
          <p>These each use XSD types defined by the <a href="../rgcms/rgcms.html#_rgcms_schema-common">common schema</a> (most notably the <code>oidDto</code> complex type which identifies a domain object).</p> 
         </div> 
         <div class="paragraph"> 
-         <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank">Incode Platform</a>'s command and publishmq modules use these schemas to reify corresponding applib objects (<code>Command</code>, <code>Interaction.Execution</code> and <code>PublishedObjects</code>), either to persist or publishing using an <a href="http://activemq.apache.org">Apache ActiveMQ</a> message queue.</p> 
+         <p>The (non-ASF) <a href="http://platform.incode.org" target="_blank" rel="noopener">Incode Platform</a>'s command and publishmq modules use these schemas to reify corresponding applib objects (<code>Command</code>, <code>Interaction.Execution</code> and <code>PublishedObjects</code>), either to persist or publishing using an <a href="http://activemq.apache.org">Apache ActiveMQ</a> message queue.</p> 
         </div> 
         <div class="paragraph"> 
          <p>The sections below discuss these schemas in more detail.</p> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgcms_schema-cmd">4.1. Command</h3>
+         <h3 id="_rgcms_schema-mml">4.1. MetaModel</h3>
+         <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
+          <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-mml.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
+          <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
+          <ul class="dropdown-menu">
+           <li><a href="https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-mml.adoc" target="_blank"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>&nbsp; Edit</a></li>
+           <li><a href="https://github.com/apache/isis/commits/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-mml.adoc" target="_blank"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>&nbsp; History</a></li>
+           <li><a href="https://github.com/apache/isis/raw/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-mml.adoc" target="_blank"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp; Raw</a></li>
+           <li><a href="https://github.com/apache/isis/blame/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-mml.adoc" target="_blank"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i>&nbsp; Blame</a></li>
+          </ul>
+         </div> 
+         <div class="paragraph"> 
+          <p>The metamodel ("mml") schema defines the serialized form of the metamodel, used by the framework to render and interact with the application’s domain objects.</p> 
+         </div> 
+         <div class="paragraph"> 
+          <p>The top-level metamodel consists of a set of domain classes, which in turn contain members (actions, properties and collections). Actions also have action parameters. All of the elements of the metamodel (domain classes, domain class members and action parameters) can have multiple facets associated with them. Some facets relate to presentational aspects (for example the name), others to the domain layer (for example the presence of a <code>validateXxx()</code> method to enforce business rules).</p> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_metamodelDto">4.1.1. <code>metamodelDto</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>metamodelDto</code> root element is defined as:</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/metamodel</span><span class="delimiter">"</span></span>        <i class="conum" data-value="1"></i><b>(1)</b>
+           <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">"</span><span class="content">qualified</span><span class="delimiter">"</span></span>
+           <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/metamodel</span><span class="delimiter">"</span></span>
+           <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">metamodelDto</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                                        <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tag">&lt;xs:complexType&gt;</span>
+            <span class="tag">&lt;xs:sequence</span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>               <i class="conum" data-value="3"></i><b>(3)</b>
+                <span class="tag">&lt;xs:element</span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">"</span><span class="content">domainClassDto</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;/xs:sequence&gt;</span>
+        <span class="tag">&lt;/xs:complexType&gt;</span>
+    <span class="tag">&lt;/xs:element&gt;</span>
+
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>the metamodel schema has a namespace URI of "http://isis.apache.org/schema/mml". Although URIs are not the same as URLs, you will find that the schemas are also downloadable from this location.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>definition of the <code>metamodelDto</code> root element. The corresponding XML will use this as its top-level element.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>consists of a list of <code>domainClassDto</code>, defined below.</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_domainClassDto">4.1.2. <code>domainClassDto</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>domainClassDto</code> element describes the behaviour and structure of a single domain class within the metamodel.</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">domainClassDto</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                                          <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;xs:complexType&gt;</span>
+            <span class="tag">&lt;xs:complexContent&gt;</span>
+                <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetHolder</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                               <i class="conum" data-value="2"></i><b>(2)</b>
+                    <span class="tag">&lt;xs:sequence&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">majorVersion</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span>        <i class="conum" data-value="3"></i><b>(3)</b>
+                                    <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">minorVersion</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span>
+                                    <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">1</span><span class="delimiter">"</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">properties</span><span class="delimiter">"</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>            <i class="conum" data-value="4"></i><b>(4)</b>
+                            <span class="tag">&lt;xs:complexType&gt;</span>
+                                <span class="tag">&lt;xs:sequence&gt;</span>
+                                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">prop</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">property</span><span class="delimiter">"</span></span>
+                                                <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;/xs:sequence&gt;</span>
+                            <span class="tag">&lt;/xs:complexType&gt;</span>
+                        <span class="tag">&lt;/xs:element&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">collections</span><span class="delimiter">"</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>           <i class="conum" data-value="5"></i><b>(5)</b>
+                            <span class="tag">&lt;xs:complexType&gt;</span>
+                                <span class="tag">&lt;xs:sequence&gt;</span>
+                                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">coll</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">collection</span><span class="delimiter">"</span></span>
+                                                <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;/xs:sequence&gt;</span>
+                            <span class="tag">&lt;/xs:complexType&gt;</span>
+                        <span class="tag">&lt;/xs:element&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">actions</span><span class="delimiter">"</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>               <i class="conum" data-value="6"></i><b>(6)</b>
+                            <span class="tag">&lt;xs:complexType&gt;</span>
+                                <span class="tag">&lt;xs:sequence&gt;</span>
+                                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">act</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">action</span><span class="delimiter">"</span></span>
+                                                <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                                <span class="tag">&lt;/xs:sequence&gt;</span>
+                            <span class="tag">&lt;/xs:complexType&gt;</span>
+                        <span class="tag">&lt;/xs:element&gt;</span>
+                    <span class="tag">&lt;/xs:sequence&gt;</span>
+                    <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:ID</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>                      <i class="conum" data-value="7"></i><b>(7)</b>
+                    <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">service</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:boolean</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>            <i class="conum" data-value="8"></i><b>(8)</b>
+                <span class="tag">&lt;/xs:extension&gt;</span>
+            <span class="tag">&lt;/xs:complexContent&gt;</span>
+        <span class="tag">&lt;/xs:complexType&gt;</span>
+    <span class="tag">&lt;/xs:element&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td><code>domainClassDto</code> is defined as an element so that if necessary each domain class can be serialized to XML independently (rather than only within an outer <code>metamodelDto</code>.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>extends from <code>facetHolder</code> type, defined below. 
+               <div class="paragraph"> 
+                <p>This allows a map of facets to be associated with the domain class.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>each instance of this schema indicates the version of the schema it is compatible with (following semantic versioning)</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>the collection of properties (if any) of this domain class. 
+               <div class="paragraph"> 
+                <p>This will include any mixin properties.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>the collection of collections (if any) of this domain class. 
+               <div class="paragraph"> 
+                <p>This will include any mixin collections.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="6"></i><b>6</b></td> 
+              <td>the collection of actions (if any) of this domain class. 
+               <div class="paragraph"> 
+                <p>This will include any mixin actions.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="7"></i><b>7</b></td> 
+              <td>The fully qualified class name of the underlying Java class. 
+               <div class="paragraph"> 
+                <p>This is declared as 'xs:ID' so can be referenced elsewhere (using 'xs:IDREF').</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="8"></i><b>8</b></td> 
+              <td>Whether this is domain type is a domain service</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_member">4.1.3. <code>member</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>member</code> (abstract) complex type is the supertype for properties, collections and actions.</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">member</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetHolder</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                           <i class="conum" data-value="1"></i><b>(1)</b>
+                <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>              <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Inherits from <code>facetHolder</code>, allowing a set of facets to be associated with the member.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>The id of the member, which should be unique within the domain class. 
+               <div class="admonitionblock note"> 
+                <table> 
+                 <tbody>
+                  <tr> 
+                   <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+                   <td class="content"> 
+                    <div class="paragraph"> 
+                     <p>This assumes no overloading of method names.</p> 
+                    </div> </td> 
+                  </tr> 
+                 </tbody>
+                </table> 
+               </div></td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_property">4.1.4. <code>property</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>property</code> complex type represent a scalar association returning a single value (eg <code>getFirstName()</code>).</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">property</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">member</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                        <i class="conum" data-value="1"></i><b>(1)</b>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">type</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:IDREF</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>   <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Extends from <code>member</code> complex type, defined above. Every property therefore has an id (unique within the domain class), and a set of facets.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>A (reference to ) the type of this property, eg a String or a Customer. 
+               <div class="paragraph"> 
+                <p>This will be the value of the <code>id</code> of some other <code>domainClassDto</code>.</p> 
+               </div></td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_collection">4.1.5. <code>collection</code></h4> 
+          <div class="paragraph"> 
+           <p>Like <code>property</code> (above), the <code>collection</code> complex types represent an association, but this time one that is a vector, in other words returning multiple instances (eg <code>getOrders()</code>).</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">collection</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">member</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                            <i class="conum" data-value="1"></i><b>(1)</b>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">type</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:IDREF</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>       <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Extends from <code>member</code> complex type, defined above. Every collection therefore has an id (unique within the domain class), and a set of facets.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>A (reference to ) the <em>element</em> type of this collection, eg a Customer. 
+               <div class="paragraph"> 
+                <p>This will be the value of the <code>id</code> of some other <code>domainClassDto</code>.</p> 
+               </div></td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_action">4.1.6. <code>action</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>action</code> complex type represents a behaviour of the domain object.</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">action</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">member</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                                                <i class="conum" data-value="1"></i><b>(1)</b>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">returnType</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:IDREF</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>                     <i class="conum" data-value="2"></i><b>(2)</b>
+                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">params</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+                        <span class="tag">&lt;xs:complexType&gt;</span>
+                            <span class="tag">&lt;xs:sequence&gt;</span>
+                                <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">param</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">param</span><span class="delimiter">"</span></span>                   <i class="conum" data-value="3"></i><b>(3)</b>
+                                            <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                            <span class="tag">&lt;/xs:sequence&gt;</span>
+                        <span class="tag">&lt;/xs:complexType&gt;</span>
+                    <span class="tag">&lt;/xs:element&gt;</span>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>Extends from <code>member</code> complex type, defined above. Every action therefore has an id (unique within the domain class), and a set of facets.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>(A reference to) the return type of this action, eg a String or a Customer.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>Each action has a collection of parameters (possibly none).</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_action-parameters">4.1.7. Action parameters</h4> 
+          <div class="paragraph"> 
+           <p>The <code>param</code> (abstract) complex type represents a parameter of an <code>action</code>. The concrete implementations are either <code>scalarParam</code> or <code>vectorParam</code>.</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">param</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                                   <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetHolder</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                       <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                    <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">type</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:IDREF</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>       <i class="conum" data-value="3"></i><b>(3)</b>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+                <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>          <i class="conum" data-value="4"></i><b>(4)</b>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">scalarParam</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                             <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">param</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">vectorParam</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                             <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="tag">&lt;xs:complexContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">param</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;xs:sequence&gt;</span>
+                <span class="tag">&lt;/xs:sequence&gt;</span>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:complexContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>defines the <code>param</code> (abstract) complex type</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>inherits from <code>facetHolder</code>, allowing a set of facets to be associated with the action parameter.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>A (reference to) the type of this action parameter, eg a String or a Customer. 
+               <div class="paragraph"> 
+                <p>For vector parameters, this is the <em>element</em> type of the collection parameter.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>The id of the parameter, which should be unique within the action.</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>defines the <code>scalarParam</code> (concrete) complex type</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="6"></i><b>6</b></td> 
+              <td>defines the <code>vectorParam</code> (concrete) complex type</td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+         <div class="sect3"> 
+          <h4 id="__rgcms_schema-mml_action-facetholder-and-facet">4.1.8. <code>facetHolder</code> and <code>facet</code></h4> 
+          <div class="paragraph"> 
+           <p>The <code>facetHolder</code> (abstract) complex type defines a collection of <code>facet</code>s, where a <code>facet</code> is in effect just a type and an implementation. In most cases the type has a particular purpose, for example representing the means to obtain the icon of a domain class, or the name of a parameter.</p> 
+          </div> 
+          <div class="paragraph"> 
+           <p>Each <code>facet</code> can also have bag of associated attributes (each attribute is just a tuple of key/value pairs). The meaning of the attributes depends on the facet implementation.</p> 
+          </div> 
+          <div class="listingblock"> 
+           <div class="content"> 
+            <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;xs:schema</span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">"</span><span class="content">http://isis.apache.org/schema/mml</span><span class="delimiter">"</span></span> <span class="attribute-name">...</span> <span class="tag">&gt;</span>
+    ...
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetHolder</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                         <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tag">&lt;xs:sequence&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">facets</span><span class="delimiter">"</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>            <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tag">&lt;xs:complexType&gt;</span>
+                    <span class="tag">&lt;xs:sequence&gt;</span>
+                        <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">facet</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">facet</span><span class="delimiter">"</span></span>
+                                    <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+                    <span class="tag">&lt;/xs:sequence&gt;</span>
+                <span class="tag">&lt;/xs:complexType&gt;</span>
+            <span class="tag">&lt;/xs:element&gt;</span>
+        <span class="tag">&lt;/xs:sequence&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">facet</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                               <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tag">&lt;xs:sequence&gt;</span>
+            <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">attr</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetAttr</span><span class="delimiter">"</span></span>            <i class="conum" data-value="4"></i><b>(4)</b>
+                        <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">0</span><span class="delimiter">"</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">"</span><span class="content">unbounded</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/xs:sequence&gt;</span>
+        <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>              <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">fqcn</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>            <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+
+    <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">facetAttr</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>                           <i class="conum" data-value="7"></i><b>(7)</b>
+        <span class="tag">&lt;xs:simpleContent&gt;</span>
+            <span class="tag">&lt;xs:extension</span> <span class="attribute-name">base</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">"</span><span class="content">name</span><span class="delimiter">"</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">"</span><span class="content">xs:string</span><span class="delimiter">"</span></span><span class="tag">/&gt;</span>    <i class="conum" data-value="8"></i><b>(8)</b>
+            <span class="tag">&lt;/xs:extension&gt;</span>
+        <span class="tag">&lt;/xs:simpleContent&gt;</span>
+    <span class="tag">&lt;/xs:complexType&gt;</span>
+    ...
+<span class="tag">&lt;/xs:schema&gt;</span></code></pre> 
+           </div> 
+          </div> 
+          <div class="colist arabic"> 
+           <table> 
+            <tbody>
+             <tr> 
+              <td><i class="conum" data-value="1"></i><b>1</b></td> 
+              <td>defines the <code>facetHolder</code> (abstract) complex type</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="2"></i><b>2</b></td> 
+              <td>... which contains a set of <code>facet</code>s</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="3"></i><b>3</b></td> 
+              <td>defines the <code>facet</code> complex type</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="4"></i><b>4</b></td> 
+              <td>... which contains a set of <code>facetAttr</code>s. 
+               <div class="paragraph"> 
+                <p>The meaning of the attributes depends on the implementation of the facet.</p> 
+               </div></td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="5"></i><b>5</b></td> 
+              <td>the identifier of the <em>type</em> of the facet, well-known by the framework as representing a certain semantic (eg icon name or name of an action parameter)</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="6"></i><b>6</b></td> 
+              <td>the fully qualified class name of the implementation of the facet</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="7"></i><b>7</b></td> 
+              <td>defines the <code>facetAttr</code> complex type</td> 
+             </tr> 
+             <tr> 
+              <td><i class="conum" data-value="8"></i><b>8</b></td> 
+              <td>the name of the attribute, unique across all facet attributes of a facet. 
+               <div class="paragraph"> 
+                <p>Note this complexType extends from <code>xs:string,</code> which defines the attribute’s corresponding value.</p> 
+               </div></td> 
+             </tr> 
+            </tbody>
+           </table> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="sect2"> 
+         <h3 id="_rgcms_schema-cmd">4.2. Command</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-cmd.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -6536,7 +7094,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-cmd_commandDto">4.1.1. <code>commandDto</code></h4> 
+          <h4 id="__rgcms_schema-cmd_commandDto">4.2.1. <code>commandDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>commandDto</code> root element is defined as:</p> 
           </div> 
@@ -6634,7 +7192,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-cmd_memberDto">4.1.2. <code>memberDto</code> and subtypes</h4> 
+          <h4 id="__rgcms_schema-cmd_memberDto">4.2.2. <code>memberDto</code> and subtypes</h4> 
           <div class="paragraph"> 
            <p>The <code>memberDto</code> complex type is an abstract type representing the intention to either invoke an action or to edit a property. The <code>actionDto</code> and <code>propertyDto</code> are the concrete subtypes:</p> 
           </div> 
@@ -6711,7 +7269,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-cmd_ancillary">4.1.3. Ancillary types</h4> 
+          <h4 id="__rgcms_schema-cmd_ancillary">4.2.3. Ancillary types</h4> 
           <div class="paragraph"> 
            <p>The schema also defines a small number of supporting types:</p> 
           </div> 
@@ -6752,7 +7310,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgcms_schema-ixn">4.2. Interaction Execution</h3>
+         <h3 id="_rgcms_schema-ixn">4.3. Interaction Execution</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-ixn.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -6783,7 +7341,7 @@ table.CodeRay td.code>pre{padding:0}
           </table> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-ixn_interactionDto">4.2.1. <code>interactionDto</code></h4> 
+          <h4 id="__rgcms_schema-ixn_interactionDto">4.3.1. <code>interactionDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>interactionDto</code> root element is defined as:</p> 
           </div> 
@@ -6853,7 +7411,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-ixn_memberExecutionDto">4.2.2. <code>memberExecutionDto</code></h4> 
+          <h4 id="__rgcms_schema-ixn_memberExecutionDto">4.3.2. <code>memberExecutionDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>memberExecutionDto</code> complex type is an abstract type representing either the invocation an action or the editing of a property. It corresponds to the <a href="../rgcms/rgcms.html#__rgcms_schema-cmd_memberDto"><code>memberDto</code></a> of the "cmd" schema; some elements are copied directly:</p> 
           </div> 
@@ -7002,7 +7560,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-ixn_ancillary">4.2.3. Ancillary types</h4> 
+          <h4 id="__rgcms_schema-ixn_ancillary">4.3.3. Ancillary types</h4> 
           <div class="paragraph"> 
            <p>The schema also defines a small number of supporting types:</p> 
           </div> 
@@ -7058,7 +7616,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgcms_schema-chg">4.3. Changes</h3>
+         <h3 id="_rgcms_schema-chg">4.4. Changes</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-chg.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -7076,7 +7634,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>An instance of the DTO (corresponding to this schema) is used within the <a href="../rgsvc/rgsvc.html#_rgsvc_persistence-layer-spi_PublisherService"><code>PublisherService</code></a> SPI, identifying changed objects that are to be published (as per <a href="../rgant/rgant.html#_rgant-DomainObject_publishing"><code>@DomainObject#publishing()</code></a> or equivalent).</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_changesdto_code">4.3.1. <code>changesDto</code></h4> 
+          <h4 id="_code_changesdto_code">4.4.1. <code>changesDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>changesDto</code> root element is defined as:</p> 
           </div> 
@@ -7158,7 +7716,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__code_objectsdto_code">4.3.2. <code>objectsDto</code></h4> 
+          <h4 id="_code_objectsdto_code">4.4.2. <code>objectsDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>objectsDto</code> complex type actually identifies the objects created, updated or deleted. It also captures additional metrics counters:</p> 
           </div> 
@@ -7202,7 +7760,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgcms_schema-aim">4.4. Action Invocation Memento</h3>
+         <h3 id="_rgcms_schema-aim">4.5. Action Invocation Memento</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-aim.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -7233,7 +7791,7 @@ table.CodeRay td.code>pre{padding:0}
          </div> 
         </div> 
         <div class="sect2"> 
-         <h3 id="_rgcms_schema-common">4.5. Common Schema</h3>
+         <h3 id="_rgcms_schema-common">4.6. Common Schema</h3>
          <div class="btn-group" style="float: right; font-size: small; padding: 6px; margin-top: -55px; ">
           <button type="button" class="btn btn-xs btn-default" onclick="window.location.href=&quot;https://github.com/apache/isis/edit/master/adocs/documentation/src/main/asciidoc/guides/rgcms/_rgcms_schema-common.adoc&quot;"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit</button>
           <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
@@ -7248,7 +7806,7 @@ table.CodeRay td.code>pre{padding:0}
           <p>The "common" schema defines a number of complex types that are used by other higher-level schemas.</p> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-common_oidDto">4.5.1. <code>oidDto</code></h4> 
+          <h4 id="__rgcms_schema-common_oidDto">4.6.1. <code>oidDto</code></h4> 
           <div class="paragraph"> 
            <p>The <code>oidDto</code> complex type captures an object’s type and its identifier. This is basically a formal XML equivalent to the <code>Bookmark</code> object obtained from the <a href="../rgsvc/rgsvc.html#_rgsvc_integration-api_BookmarkService"><code>BookmarkService</code></a>.</p> 
           </div> 
@@ -7327,11 +7885,11 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
           <div class="ulist"> 
            <ul> 
-            <li> <p>first, as a means of serializing JAXB view model/DTOs (annotated with <a href="../rgant/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>), that reference domain entities.<br></p> 
+            <li> <p>first, as a means of serializing JAXB view model/DTOs (annotated with <a href="../rgant/rgant.html#_rgant-XmlRootElement"><code>@XmlRootElement</code></a>), that reference domain entities.</p> 
              <div class="paragraph"> 
               <p>These references are serialized instead into OIDs</p> 
              </div> </li> 
-            <li> <p>second, as references to the target of a command representing the <em>intention</em> to invoke an action or edit a property, as described by the <a href="../rgcms/rgcms.html#_rgcms_schema-cmd">"cmd" (command)</a> schema.<br></p> 
+            <li> <p>second, as references to the target of a command representing the <em>intention</em> to invoke an action or edit a property, as described by the <a href="../rgcms/rgcms.html#_rgcms_schema-cmd">"cmd" (command)</a> schema.</p> 
              <div class="paragraph"> 
               <p>They are also used to represent references to any action arguments/properties that take domain object entities/view models.</p> 
              </div> </li> 
@@ -7340,7 +7898,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-common_collectionDto">4.5.2. <code>collectionDto</code> etc</h4> 
+          <h4 id="__rgcms_schema-common_collectionDto">4.6.2. <code>collectionDto</code> etc</h4> 
           <div class="paragraph"> 
            <p>The <code>collectionDto</code> type defines a collection of values, also capturing the type of those values (for example <code>string</code>s, or <code>OidDto</code>s). It is used primarily to model invocations of actions with collection parameters.</p> 
           </div> 
@@ -7361,7 +7919,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-common_valueDto">4.5.3. <code>valueDto</code> etc</h4> 
+          <h4 id="__rgcms_schema-common_valueDto">4.6.3. <code>valueDto</code> etc</h4> 
           <div class="paragraph"> 
            <p>The common schema also defines two types representing values: the <code>valueDto</code> complex type, the <code>valueType</code> simple type and the <code>valueWithTypeDto</code> complex type:</p> 
           </div> 
@@ -7451,7 +8009,7 @@ table.CodeRay td.code>pre{padding:0}
           </div> 
          </div> 
          <div class="sect3"> 
-          <h4 id="__rgcms_schema-common_ancillary">4.5.4. Ancillary types</h4> 
+          <h4 id="__rgcms_schema-common_ancillary">4.6.4. Ancillary types</h4> 
           <div class="paragraph"> 
            <p>The common schema also defines a number of ancillary types, used either by the common schema itself (see above) or by the <a href="../rgcms/rgcms.html#_rgcms_schema_cmd">"cmd"</a> and <a href="../rgcms/rgcms.html#_rgcms_schema_ixn">"ixn"</a> schemas.</p> 
           </div> 
