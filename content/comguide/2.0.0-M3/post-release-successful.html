@@ -709,241 +709,6 @@ git commit -m "$ISISJIRA: updates release notes, STATUS and doap_isis.rdf"</code
 </div>
 </div>
 <div class="sect1">
-<h2 id="generate-website"><a class="anchor" href="#generate-website"></a>Generate website</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We use Antora to generate the site, not only the latest version but also any previous versions listed in <code>site.yml</code>.
-The most recently version being released is built in effect twice, as both "latest" and with its formal tag name.</p>
-</div>
-<div class="paragraph">
-<p>As a slight complication, the tags created previously on the release branch (<code>refs/tags/rel/xxx</code>) can&#8217;t be used for this purpose, because the <code>antora.yml</code> files specify a branch name of simply "latest".
-We therefore temporarily modify all of the <code>antora.yml</code> files and <code>site.yml</code> with a reference to a new tag, and then change them back afterwards:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If there have been any changes from other branches (eg fixes to documentation in non-release branches) then merge them into the release branch.</p>
-</li>
-<li>
-<p>Update all <code>antora.yml</code> files, eg using an IDE:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>version: latest</code> &#8594; <code>version: 2.0.0-M3</code></p>
-<div class="imageblock">
-<div class="content">
-<a class="image" href="_images/release-process-post/update-antora-latest.png"><img src="_images/release-process-post/update-antora-latest.png" alt="update antora latest" width="600px"></a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Commit the change, and tag:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
-git commit -m "$ISISJIRA: bumps antora.yml version to $ISISREL"
-
-git tag docs/$ISISART-$ISISREL
-git push origin refs/tags/docs/$ISISART-$ISISREL:refs/tags/docs/$ISISART-$ISISREL</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Now, immediately the change to <code>antora.yml</code> files back again:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>version: 2.0.0-M3</code> &#8594; <code>version: latest</code></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Commit these changes, and push the release branch:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
-git commit -m "$ISISJIRA: reverts antora.yml version to latest"
-
-git push</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Now we update <code>site.yml</code> (in <code>antora/playbooks</code>).
-This will reference the tag and also the current branch (for "latest").
-Every content source needs to be updated:</p>
-<div class="paragraph">
-<p>For example, we change:</p>
-</div>
-<div class="listingblock">
-<div class="title">site.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: .
-  start_path: antora/components/docs # docs
-  branches: HEAD</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>to:</p>
-</div>
-<div class="listingblock">
-<div class="title">site.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: https://github.com/apache/isis.git
-  start_path: antora/components/docs # docs
-  tags: docs/isis-2.0.0-M3                    <i class="conum" data-value="1"></i><b>(1)</b>
-  branches: release-isis-2.0.0-M3             <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>will generate the 2.0.0-M3 version</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>will generate the 'latest' version</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>commit this change, too (there&#8217;s no need to push):</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
-git commit -m "$ISISJIRA: reverts antora.yml version to latest"</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>We are now in a position to actually generate the Antora website:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will write to <code>antora/target/site</code>; we&#8217;ll use the results in the <a href="#publish-website">next section</a>.</p>
-</div>
-</li>
-<li>
-<p>Finally, revert the changes to <code>site.yml</code> back into "author mode".</p>
-<div class="paragraph">
-<p>That is, so that each content source specifies a local URL and only the HEAD branch:</p>
-</div>
-<div class="listingblock">
-<div class="title">site.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: .
-  start_path: antora/components/docs # docs
-  branches: HEAD</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="publish-website"><a class="anchor" href="#publish-website"></a>Publish website</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We now copy the results of the Antora website generation over to the <code>isis-site</code> repo:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>in the <code>isis-site</code> repo, check out the <code>asf-site</code> branch:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis-site
-
-git checkout asf-site
-git pull origin/asf-site --ff-only</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>still in the <code>isis-site</code> repo, delete all the files in <code>content/</code> <em>except</em> for the <code>schema</code> and <code>versions</code> directories:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pushd content
-for a in $(ls -1 | grep -v schema | grep -v versions)
-do
-    rm -rf $a
-done
-popd</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Copy the generated Antora site to <code>isis-site</code> repo&#8217;s <code>contents</code> directory:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis
-
-cp -Rf antora/target/site/* ../isis-site/content/.</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Back in the <code>isis-site</code> repo, commit the changes and preview:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis-site
-
-git add .
-git commit -m "$ISISJIRA : production changes to website"
-
-sh preview.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>If everything looks ok, then push the changes to make live, and switch back to the <code>isis</code> repo:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin asf-site
-
-cd ../isis</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="merge-in-release-branch"><a class="anchor" href="#merge-in-release-branch"></a>Merge in release branch</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Because we release from a branch, the changes made in the branch should be merged back from the release branch back into the <code>master</code> branch.</p>
-</div>
-<div class="paragraph">
-<p>In the <code>isis</code> repo:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout master                           # update master with latest
-git pull
-git merge release-2.0.0-M3-RC1                  # merge branch onto master
-git push origin --delete release-2.0.0-M3-RC1   # remote branch no longer needed
-git branch -d release-2.0.0-M3-RC1              # branch no longer needed</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="release-source-zip"><a class="anchor" href="#release-source-zip"></a>Release Source Zip</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -1011,7 +776,7 @@ popd</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh 2.0.0-M2 2.0.0-M3</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh [previous_release] 2.0.0-M3</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1036,6 +801,338 @@ It should be sufficient to check just the <code>md5</code> or <code>.asc</code> 
 </div>
 <div class="paragraph">
 <p>If the files are invalid, then revert using <code>svn revert . --recursive</code> and try again in a little while.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="final-website-updates"><a class="anchor" href="#final-website-updates"></a>Final website updates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we <a href="#generate-website">generate the website</a>, we apply final updates:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If there have been updates to any of the schemas:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>copy the new schema(s) from <code>api/schema/src/main/resources/o.a.i.s.xxx</code></p>
+<div class="paragraph">
+<p>to its versioned:</p>
+</div>
+<div class="paragraph">
+<p><code>antora/supplemental-ui/schema/xxx/xxx-ver.xsd</code></p>
+</div>
+</li>
+<li>
+<p>ensure the non-versioned is same as the highest versioned</p>
+<div class="paragraph">
+<p><code>antora/supplemental-ui/schema/xxx/xxx.xsd</code></p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Update the version that appears on the home page of the website, in <code>antora/supplemental-ui/index.html</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">curl https://codeload.github.com/apache/isis-app-helloworld/zip/2.0.0-M3 | jar xv
+cd isis-app-helloworld-2.0.0-M3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">curl https://codeload.github.com/apache/isis-app-simpleapp/zip/2.0.0-M3 | jar xv
+cd isis-app-simpleapp-2.0.0-M3</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commit the changes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$ISISJIRA: bumps index.html version to $ISISREL, also schema updates"</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="generate-website"><a class="anchor" href="#generate-website"></a>Generate website</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use Antora to generate the site, not only the latest version but also any previous versions listed in <code>site.yml</code>.
+The most recently version being released is built in effect twice, as both "latest" and with its formal tag name.</p>
+</div>
+<div class="paragraph">
+<p>As a slight complication, the tags created previously on the release branch (<code>refs/tags/rel/xxx</code>) can&#8217;t be used for this purpose, because the <code>antora.yml</code> files specify a branch name of simply "latest".
+We therefore temporarily modify all of the <code>antora.yml</code> files and <code>site.yml</code> with a reference to a new tag, and then change them back afterwards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If there have been any changes from other branches (eg fixes to documentation in non-release branches) then merge them into the release branch.</p>
+</li>
+<li>
+<p>Update all <code>antora.yml</code> files, eg using an IDE:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>version: latest</code> &#8594; <code>version: 2.0.0-M3</code></p>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="_images/release-process-post/update-antora-latest.png"><img src="_images/release-process-post/update-antora-latest.png" alt="update antora latest" width="800px"></a>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Commit the changes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$ISISJIRA: bumps antora.yml to $ISISREL"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now tag</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git tag docs/$ISISART-$ISISREL
+git push origin refs/tags/docs/$ISISART-$ISISREL:refs/tags/docs/$ISISART-$ISISREL</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, immediately the change to <code>antora.yml</code> files back again:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>version: 2.0.0-M3</code> &#8594; <code>version: latest</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Commit these changes, and push the release branch:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$ISISJIRA: reverts antora.yml version to latest"
+
+git push</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now we update <code>site.yml</code> (in <code>antora/playbooks</code>).
+This will reference the tag and also the current branch (for "latest").
+Every content source needs to be updated:</p>
+<div class="paragraph">
+<p>For example, we change:</p>
+</div>
+<div class="listingblock">
+<div class="title">site.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: .
+  start_path: antora/components/docs # docs
+  branches: HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to:</p>
+</div>
+<div class="listingblock">
+<div class="title">site.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: .
+  start_path: antora/components/docs # docs
+  tags: docs/isis-2.0.0-M3                    <i class="conum" data-value="1"></i><b>(1)</b>
+  branches: HEAD                                  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>will generate the 2.0.0-M3 version</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>will generate the 'latest' version</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>eg using the IDE:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="_images/release-process-post/update-site-yml-tags.png"><img src="_images/release-process-post/update-site-yml-tags.png" alt="update site yml tags" width="800px"></a>
+</div>
+</div>
+</li>
+<li>
+<p>commit this change, too (there&#8217;s no need to push):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$ISISJIRA: adds tag to site.yml"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We are now in a position to actually generate the Antora website:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will write to <code>antora/target/site</code>; we&#8217;ll use the results in the <a href="#publish-website">next section</a>.</p>
+</div>
+</li>
+<li>
+<p>Finally, revert the changes to <code>site.yml</code> back into "author mode".</p>
+<div class="paragraph">
+<p>That is, comment out the tags entries:</p>
+</div>
+<div class="listingblock">
+<div class="title">site.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">- url: .
+  start_path: antora/components/docs # docs
+#  tags: docs/isis-2.0.0-M3
+  branches: HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>eg using the IDE:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="_images/release-process-post/update-site-yml-no-tags.png"><img src="_images/release-process-post/update-site-yml-no-tags.png" alt="update site yml no tags" width="800px"></a>
+</div>
+</div>
+</li>
+<li>
+<p>commit this change, too (there&#8217;s no need to push):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$ISISJIRA: site.yml back to author mode"</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="publish-website"><a class="anchor" href="#publish-website"></a>Publish website</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We now copy the results of the Antora website generation over to the <code>isis-site</code> repo:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>in the <code>isis-site</code> repo, check out the <code>asf-site</code> branch:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis-site
+
+git checkout asf-site
+git pull --ff-only</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>still in the <code>isis-site</code> repo, delete all the files in <code>content/</code> <em>except</em> for the <code>schema</code> and <code>versions</code> directories:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pushd content
+for a in $(ls -1 | grep -v schema | grep -v versions)
+do
+    rm -rf $a
+done
+popd</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the generated Antora site to <code>isis-site</code> repo&#8217;s <code>contents</code> directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis
+
+cp -Rf antora/target/site/* ../isis-site/content/.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Back in the <code>isis-site</code> repo, commit the changes and preview:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../isis-site
+
+git add .
+git commit -m "$ISISJIRA : production changes to website"
+
+sh preview.sh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>If everything looks ok, then push the changes to make live, and switch back to the <code>isis</code> repo:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin asf-site
+
+cd ../isis</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="merge-in-release-branch"><a class="anchor" href="#merge-in-release-branch"></a>Merge in release branch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Because we release from a branch, the changes made in the branch should be merged back from the release branch back into the <code>master</code> branch.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>isis</code> repo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout master                              # update master with latest
+git pull
+git merge release-2.0.0-M3-RC1                  # merge branch onto master
+git push origin --delete release-2.0.0-M3-RC1   # remote branch no longer needed
+git branch -d release-2.0.0-M3-RC1              # branch no longer needed</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bump-isisrel-in-site-yml"><a class="anchor" href="#bump-isisrel-in-site-yml"></a>Bump {isisrel} in <code>site.yml</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In <code>site.yml</code> file, bump the version of <code>{isisrel}</code>, and commit.</p>
 </div>
 </div>
 </div>
@@ -1069,22 +1166,21 @@ It should be sufficient to check just the <code>md5</code> or <code>.asc</code> 
 <pre class="highlightjs highlight"><code>The Apache Isis team is pleased to announce the release of Apache Isis 2.0.0-M3.
 
 New features in this release include:
+
 * ...
 
 Full release notes are available on the Apache Isis website at [1].
-Please also read the migration notes [2].
 
-You can access this release directly from the Maven central repo [3].
-Alternatively, download the release and build it from source [4].
+You can access this release directly from the Maven central repo [2].
+Alternatively, download the release and build it from source [3].
 
 Enjoy!
 
 --The Apache Isis team
 
-[1] http://isis.apache.org/downloads/rn/about.html#_release-notes_2.0.0-M3
-[2] http://isis.apache.org/downloads/mn/about.html#_migration-notes_2.0.0-M2-to-2.0.0-M3
-[3] http://search.maven.org
-[4] http://isis.apache.org/downloads.html</code></pre>
+[1] http://isis.apache.org/relnotes/latest/about.html
+[2] http://search.maven.org
+[3] http://isis.apache.org/downloads.html</code></pre>
 </div>
 </div>
 </div>
