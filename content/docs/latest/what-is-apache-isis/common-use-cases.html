@@ -634,7 +634,7 @@ page.parent doesn't seem to be set...
 <p>If you wish, you could combine this with BDD - the framework integrates with <a href="../../../testing/latest/specsupport/about.html" class="page">Cucumber</a>.</p>
 </div>
 <div class="paragraph">
-<p>Once you&#8217;ve sketched out your domain model, you can then either start-over using your preferred framework, or you might choose to take the domain model forward into more formal specification and testing.</p>
+<p>Once you&#8217;ve sketched out your domain model, you can then either start-over and deploy with one of the deployment options listed below.</p>
 </div>
 </div>
 </div>
@@ -642,20 +642,29 @@ page.parent doesn't seem to be set...
 <h2 id="deploy-with-a-generic-ui"><a class="anchor" href="#deploy-with-a-generic-ui"></a>Deploy with a generic UI</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>One of the original motivations for Apache Isis itself was to be able automatically generate a user interface for a domain object model.</p>
-</div>
-<div class="paragraph">
-<p>Apache Isis' has a pluggable architecture allowing different user interface technologies.
- The principal implementation is the <a href="../../../vw/latest/about.html" class="page">Wicket viewer</a>.</p>
-</div>
-<div class="paragraph">
-<p>This provides an appealing default user interface, with the ability to customize the user interface by writing new <a href="http://wicket.apache.org">Apache Wicket</a> components.
-The framework provides a number of <a href="../../../extensions/latest/about.html" class="page">Extensions</a>.</p>
+<p>One of the original motivations for Apache Isis was to be able automatically generate a user interface for a domain object model.
+The framework&#8217;s architecture allows for different user interface technologies.
+The principal implementation is the <a href="../../../vw/latest/about.html" class="page">Wicket viewer</a>, which as well as providing an appealing default user interface also has the ability to be customized the user interface by writing new <a href="http://wicket.apache.org">Apache Wicket</a> components.
+The framework provides a <a href="../../../extensions/latest/about.html" class="page">number of these</a>.</p>
 </div>
 <div class="paragraph">
 <p>Deploying on Apache Isis means that the framework also manages object persistence.
-Again this is pluggable, but the principal implementation is the <a href="../../../pjdo/latest/about.html" class="page">JDO/DataNucleus object store</a>.
-Because JDO supports both SQL and NoSQL databases, you can then deploy on a variety of platforms, normally relational but also databases such as <a href="http://neo4j.com/">Neo4J</a>.</p>
+Again this is pluggable.
+There are two implementations, either <a href="../../../pjdo/latest/about.html" class="page">JDO (DataNucleus)</a> or <a href="#pjpa:ROOT:about.adoc" class="page unresolved">JPA (EclipseLink)</a>.
+These are normally used with an RDBMS, though in principle could be used with NoSQL databases.
+JDO/DataNucleus historically has <a href="https://www.datanucleus.org/products/accessplatform/datastores/datastores.html">extensive support</a> for NoSQL, though JPA/EclipseLink also has <a href="https://wiki.eclipse.org/EclipseLink/FAQ/NoSQL">some support</a> also.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploy-with-custom-controllers"><a class="anchor" href="#deploy-with-custom-controllers"></a>Deploy with custom controllers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the <a href="../../../vw/latest/about.html" class="page">Wicket viewer</a>'s extensions are too restrictive, another option is to deploy custom controllers/views for specific use cases <em>alongside</em> the generic viewer.
+This way you can use the generic viewer to deliver the majority of the app&#8217;s functionality, but you can justify the additional effort of writing a custom controller for those specialised/high volume use cases where a different flow is needed.</p>
+</div>
+<div class="paragraph">
+<p>Because Apache Isis runs on top of <a href="https://spring.io/projects/spring-boot">Spring Boot</a>, you can easily integrate any of the UI technologies supported by Spring, or of course use Apache Wicket for a similar look-n-feel.</p>
 </div>
 </div>
 </div>
@@ -715,7 +724,10 @@ It is perfectly possible to deploy the RESTful API alongside an auto-generated w
 <h2 id="deploy-on-your-own-platform"><a class="anchor" href="#deploy-on-your-own-platform"></a>Deploy on your own platform</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The programming model defined by Apache Isis deliberately minimizes the dependencies on the rest of the framework.
+<p>You may be happy to use Apache Isis for prototyping, but have your own proprietary application framework to actually build production apps.</p>
+</div>
+<div class="paragraph">
+<p>Apache Isis supports this, because the programming model defined by Apache Isis deliberately minimizes the dependencies on the rest of the framework.
 In fact, the only hard dependency that the domain model classes have on Apache Isis is through the <code>org.apache.isis.applib</code> classes, mostly to pick up annotations such as <a href="../../../refguide/latest/applib/index/annotation/Action.html" class="page">@Action</a> and <a href="../../../refguide/latest/applib/index/annotation/Property.html" class="page">@Property</a>.
 It&#8217;s therefore relatively easy to take a domain object prototyped and/or tested using Apache Isis, but to deploy on some other framework&#8217;s runtime.</p>
 </div>
@@ -723,9 +735,10 @@ It&#8217;s therefore relatively easy to take a domain object prototyped and/or t
 <p>If you are interested in taking this approach, then you will need to provide your own implementations of any framework-provided services used by your code.</p>
 </div>
 <div class="paragraph">
-<p>Under the covers, Apache Isis itself runs on top of <a href="https://spring.io/projects/spring-boot">Spring Boot</a>.
-So an alternative option is to develop a custom UI using one of the regular Spring technologies and run that alongside Apache Isis.
-In other words, Apache Isis continues to manage the object lifecycle and persistence as a thin layer on top of Spring, but your custom UI renders the domain objects as you require.</p>
+<p>If your own application framework is based on <a href="https://spring.io/projects/spring-boot">Spring Boot</a> and with JPA or JDO, then there is another option.
+As noted above, Apache Isis itself runs on top of Spring Boot.
+You could therefore develop a complete custom UI using one of the regular Spring technologies and run that alongside Apache Isis - in effect the option described <a href="#deploy-with-custom-controllers">earlier</a> but for every use case, not just selected ones.
+Apache Isis continues to manage the object lifecycle and persistence as a thin layer on top of Spring, but your custom UI renders the domain objects exactly as you require.</p>
 </div>
 </div>
 </div>
