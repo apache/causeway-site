@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://isis.apache.org" title="Apache Isis">
+  <link rel="next" href="../audit-trail/about.html" title="Audit Trail">
   <link rel="prev" href="jpa-persistence.html" title="JPA Persistence">
   </head>
   <body class="article">
@@ -145,8 +146,8 @@
     <div class="panels">
 <div class="nav-panel-pagination">
   <a class="page-previous" rel="prev" href="jpa-persistence.html" title="JPA Persistence"><span></span></a>
-  <a class="page-next disabled" rel="next"
-     href="" title=""><span></span></a>
+  <a class="page-next" rel="next"
+     href="../audit-trail/about.html" title="Audit Trail"><span></span></a>
 <!--
 page.parent doesn't seem to be set...
   <a class="page-parent" rel="prev" href="about.html" title="JPA Persistence"><span></span></a>
@@ -159,14 +160,7 @@ page.parent doesn't seem to be set...
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../domain-services-api-for-applications.html">Domain Services API</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../core/about.html">API</a>
+    <a class="nav-link" href="../core/about.html">Security Component SPI</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../bypass/about.html">Bypass Implementation</a>
@@ -187,9 +181,6 @@ page.parent doesn't seem to be set...
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Extensions</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../shiro-realm-ldap/about.html">LDAP Realm for Shiro</a>
-  </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="about.html">Secman</a>
@@ -214,6 +205,15 @@ page.parent doesn't seem to be set...
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audit-trail/about.html">Audit Trail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../session-log/about.html">Session Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shiro-realm-ldap/about.html">LDAP Realm for Shiro</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -236,7 +236,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">BC Mappings Catalog</span>
+      <span class="title">BC Mapping Libraries</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../mappings/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -324,7 +324,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Restful Objects Viewer</span>
+      <span class="title">REST API (Restful Objects Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../vro/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -388,7 +388,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Wicket Viewer</span>
+      <span class="title">Web UI (Wicket Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../vw/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -417,11 +417,21 @@ page.parent doesn't seem to be set...
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">Shiro Realm</h1>
-<div class="paragraph">
-<p>The SecMan extension includes a Shiro realm, which fits in as follows:</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+TODO - not yet reviewed for v2.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The general configuration is as follows:</p>
+<p>Because each user to be authorised must exist in the SecMan database, this means that it can also act as a secondary authenticator.
+It does this by providing an implementation of the Shiro <code>Realm</code> API, which fits in as follows:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -430,6 +440,9 @@ page.parent doesn't seem to be set...
 </div>
 <div class="paragraph">
 <p>where the <code>IsisModuleSecurityRealm</code> realm is the implementation provided by the module.</p>
+</div>
+<div class="paragraph">
+<p>Using this design the password management can be handled to a subsidiary (delegate) Shiro realm (for example, using the <a href="../shiro-realm-ldap/about.html" class="page">LDAP Realm for Shiro</a>).</p>
 </div>
 <div class="paragraph">
 <p>In the configuration above user passwords are stored in the database.  The module uses <a href="http://www.mindrot.org/projects/jBCrypt/">jBCrypt</a> so that passwords are only stored in a (one-way) encrypted form in the database.</p>
@@ -466,7 +479,7 @@ The README also explains in detail how to configure an existing app to use this 
             </p>
         </div>
         <div class="revision">
-            <p>Revision: SNAPSHOT</p>
+            <p>Revision: 2.0.0-M5.20210409-1206</p>
         </div>
     </div>
 </footer>

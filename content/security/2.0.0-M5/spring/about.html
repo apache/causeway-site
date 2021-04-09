@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Sring Security :: Apache Isis</title>
+    <title>Spring Security :: Apache Isis</title>
     <link rel="canonical" href="https://isis.apache.org/security/2.0.0-M5/spring/about.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -160,14 +160,7 @@ page.parent doesn't seem to be set...
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../domain-services-api-for-applications.html">Domain Services API</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../core/about.html">API</a>
+    <a class="nav-link" href="../core/about.html">Security Component SPI</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../bypass/about.html">Bypass Implementation</a>
@@ -188,9 +181,6 @@ page.parent doesn't seem to be set...
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Extensions</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../shiro-realm-ldap/about.html">LDAP Realm for Shiro</a>
-  </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../secman/about.html">Secman</a>
@@ -215,6 +205,15 @@ page.parent doesn't seem to be set...
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audit-trail/about.html">Audit Trail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../session-log/about.html">Session Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shiro-realm-ldap/about.html">LDAP Realm for Shiro</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -237,7 +236,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">BC Mappings Catalog</span>
+      <span class="title">BC Mapping Libraries</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../mappings/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -325,7 +324,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Restful Objects Viewer</span>
+      <span class="title">REST API (Restful Objects Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../vro/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -389,7 +388,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Wicket Viewer</span>
+      <span class="title">Web UI (Wicket Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../vw/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -415,21 +414,627 @@ page.parent doesn't seem to be set...
 </div>
 <article class="doc">
     <a name="section-top"></a>
-<h1 class="page">Sring Security</h1>
-<div class="admonitionblock warning">
+<h1 class="page">Spring Security</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide describes the configuration of the Spring implementation of Apache Isis' <a href="../../../refguide/2.0.0-M5/core/index/security/authentication/Authenticator.html" class="page">Authenticator</a> SPI.</p>
+</div>
+<div class="paragraph">
+<p>It does <em>not</em> however provide any implementation of <a href="../../../refguide/2.0.0-M5/core/index/security/authorization/Authorizor.html" class="page">Authorizor</a> SPI.
+You will therefore need to configure an alternative implementation, eg the <a href="../bypass/about.html" class="page">Bypass</a> implementation (to disable authorisation checks completely), or use the <a href="../secman/about.html" class="page">SecMan</a> implementation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dependency-management"><a class="anchor" href="#dependency-management"></a>Dependency Management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If your application inherits from the Apache Isis starter app (<code>org.apache.isis.app:isis-app-starter-parent</code> then that will define the version automatically:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;parent&gt;
+    &lt;groupId&gt;org.apache.isis.app&lt;/groupId&gt;
+    &lt;artifactId&gt;isis-app-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;2.0.0-M5&lt;/version&gt;
+    &lt;relativePath/&gt;
+&lt;/parent&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, import the core BOM.
+This is usually done in the top-level parent pom of your application:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.isis.core&lt;/groupId&gt;
+            &lt;artifactId&gt;isis-core&lt;/artifactId&gt;
+            &lt;version&gt;2.0.0-M5&lt;/version&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dependency"><a class="anchor" href="#dependency"></a>Dependency</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the webapp module of your application, add the following dependency:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.isis.security&lt;/groupId&gt;
+        &lt;artifactId&gt;isis-security-spring&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_update-appmanifest"><a class="anchor" href="#_update-appmanifest"></a>Update AppManifest</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In your application&#8217;s <code>AppManifest</code> (top-level Spring <code>@Configuration</code> used to bootstrap the app), import the <code>IsisModuleSecuritySpring</code> module and remove any other <code>IsisModuleSecurityXxx</code> modules.</p>
+</div>
+<div class="paragraph">
+<p>Also, as this module provides no implementation of the <a href="../../../refguide/2.0.0-M5/core/index/security/authorization/Authorizor.html" class="page">Authorizor</a> SPI, instead you will need some an alternative implementation, such as the <a href="../bypass/about.html" class="page">Bypass</a> implementation.
+(Note: this will in effect disable authorisation checks).</p>
+</div>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleSecuritySpring.class,     <i class="conum" data-value="1"></i><b>(1)</b>
+        AuthorizorBypass.class,             <i class="conum" data-value="2"></i><b>(2)</b>
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>make sure that no other <code>IsisModuleSecurityXxx</code> module is imported.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>or some other implementation of <code>Authorizor</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="design"><a class="anchor" href="#design"></a>Design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The module brings in a transitive dependency to <code>org.springframework.boot:spring-boot-starter-security</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This enables security by default, and should then be adjusted as required to enable access.
+See the Spring documentation for details on how to do this, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://spring.io/guides/gs/securing-web/">Spring security introductory guide</a></p>
+</li>
+<li>
+<p><a href="https://www.baeldung.com/spring-boot-security-autoconfiguration">Baeldung article</a> on <code>spring-boot-starter-security</code></p>
+</li>
+<li>
+<p><a href="https://www.tutorialspoint.com/spring_boot/spring_boot_securing_web_applications.htm">Tutorialspoint</a> tutorial on <code>spring-boot-starter-security</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The module itself configures a filter that is installed at the end of Spring Security&#8217;s filter chain.
+It uses the <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/core/context/SecurityContextHolder.html">SecurityContextHolder</a> to obtain the current authentication:</p>
+</div>
+<div class="listingblock">
+<div class="title">SpringSecurityFilter.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val springAuthentication = SecurityContextHolder.getContext().getAuthentication();
+if(springAuthentication==null
+        || !springAuthentication.isAuthenticated()) {
+    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    return; // not authenticated
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For an authenticated user the <code>org.apache.isis.viewer.wicket.roles.USER</code> role&#8201;&#8212;&#8201;as required by <a href="../../../vw/2.0.0-M5/about.html" class="page">Web UI (Wicket viewer)</a> &#8201;&#8212;&#8201;is automatically added to the list of roles.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="walk-through-in-memory"><a class="anchor" href="#walk-through-in-memory"></a>Walk-through : In-memory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using Spring Security we can configure your app with various authentication providers.
+In this section we describe how to modify the <a href="../../../docs/2.0.0-M5/starters/helloworld.html" class="page">HelloWorld</a> starter app to use an in-memory authenticator.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-TODO: this content has not yet been reviewed/updated for v2.0
+These changes have been applied to the <code>origin/jdo-spring-security-inmemory</code> branch.
 </td>
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="code-changes"><a class="anchor" href="#code-changes"></a>Code Changes</h3>
 <div class="paragraph">
-<p>This guide describes the configuration of the Spring implementation of Apache Isis' <code>Authenticator and `Authorizor</code> APIs.</p>
+<p>First, we need an implementation of <code>WebSecurityConfigurerAdapter</code> to setup the inmemory authenticator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter
+{
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("sven")
+                .password(passwordEncoder().encode("pass"))
+                .roles("USER");   <i class="conum" data-value="1"></i><b>(1)</b>
+                ;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>at least one role must be assigned to each user.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Next, we configure the necessary components (including <code>SecurityConfig</code>, above).
+As discussed <a href="#_update-appmanifest">above</a>, we need to reference Apache Isis' Spring security module and also an implementation of <a href="../../../refguide/2.0.0-M5/core/index/security/authorization/Authorizor.html" class="page">Authorizor</a> SPI, eg the <a href="../bypass/about.html" class="page">Bypass</a> implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleSecuritySpring.class,
+        AuthorizorBypass.class,
+        SecurityConfig.class,
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-patch"><a class="anchor" href="#code-patch"></a>Code Patch</h3>
+<div class="paragraph">
+<p>In the current release of Apache Isis (2.0.0-M5), there is an issue with its <code>SpringSecurityFilter</code>; it does not recognise <code>UserDetails</code> as a valid authenticated principal.
+We therefore (for now) need to patch in our own replacement.</p>
+</div>
+<div class="listingblock">
+<div class="title">org/apache/isis/security/spring/webmodule/SpringSecurityFilter.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.apache.isis.security.spring.webmodule;
+
+//...
+
+public class SpringSecurityFilter implements Filter {
+
+    @Autowired
+    private InteractionFactory isisInteractionFactory;
+
+    @Override
+    public void doFilter(
+            final ServletRequest servletRequest,
+            final ServletResponse servletResponse,
+            final FilterChain filterChain) throws IOException, ServletException {
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+
+        org.springframework.security.core.Authentication springAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        if(springAuthentication==null
+                || !springAuthentication.isAuthenticated()) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return; // not authenticated
+        }
+
+        String principalIdentity;
+        Object principal = springAuthentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            final UserDetails user = (UserDetails) principal;
+            principalIdentity = user.getUsername();
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return; // unknown principal type, not handled
+        }
+
+        UserMemento user = UserMemento.ofNameAndRoleNames(principalIdentity,
+                Stream.of("org.apache.isis.viewer.wicket.roles.USER"));
+        SimpleAuthentication authentication = SimpleAuthentication.validOf(user);
+        authentication.setType(Authentication.Type.EXTERNAL);
+
+        isisInteractionFactory.runAuthenticated(
+                authentication,
+                ()-&gt;{
+                    filterChain.doFilter(servletRequest, servletResponse);
+                });
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tidying-up"><a class="anchor" href="#tidying-up"></a>Tidying up</h3>
+<div class="paragraph">
+<p>Finally, (and optionally), the swagger/REST API is not configured for spring security, so we replace the <code>index.html</code> page with one to redirect straight to the <a href="../../../vw/2.0.0-M5/about.html" class="page">Wicket Viewer</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">static/index.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;
+    &lt;meta http-equiv="refresh" content="0;url=/wicket/" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="wrapper"&gt;
+    &lt;!-- we just redirect immediately, because swagger/restful API not configured to use spring security --&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="run-the-application"><a class="anchor" href="#run-the-application"></a>Run the application</h3>
+<div class="paragraph">
+<p>You should now be able to run the application.
+You will see that the usual login page is replaced by one provided by Spring:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/spring-security-login.png" alt="spring security login" width="300px">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="walk-through-oauth2"><a class="anchor" href="#walk-through-oauth2"></a>Walk-through : OAuth2</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using Spring Security we can configure your app with various authentication providers.
+In this section we describe how to modify the <a href="../../../docs/2.0.0-M5/starters/helloworld.html" class="page">HelloWorld</a> starter app to use github as an OAuth2 provider.
+The steps here are based on <a href="https://spring.io/guides/tutorials/spring-boot-oauth2/">this Spring tutorial</a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+These changes have been applied to the <code>origin/jdo-spring-security-oauth2</code> branch.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="code-changes-2"><a class="anchor" href="#code-changes-2"></a>Code Changes</h3>
+<div class="paragraph">
+<p>First, we add in the OAuth2 client dependency:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-oauth2-client&lt;/artifactId&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;           <i class="conum" data-value="1"></i><b>(1)</b>
+            &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>excluded to avoid log4j2 &#8592;&#8594; slf4j bidirectional dependency</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Next: the OAuth2 integration provided by Spring (seemingly) forwards onto an "/login" endpoint immediately after the user has logged into github, but with an authenticated principal.
+We therefore use a controller to simply forward directly onto the <a href="../../../vw/2.0.0-M5/about.html" class="page">Wicket Viewer</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>create this page to redirect:</p>
+<div class="listingblock">
+<div class="title">templates/redirect-immediately.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;
+        &lt;meta http-equiv="refresh" content="0;url=/wicket/" /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id="wrapper"&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>define this controller for <code>/login</code>:</p>
+<div class="listingblock">
+<div class="title">LoginController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller
+@RequestMapping({"/login"})
+public class LoginController {
+
+    @RequestMapping(
+        produces = {"text/html"}
+    )
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        return "redirect-immediately";
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next, we configure the necessary components (including <code>LoginController</code>, above).
+As discussed <a href="#_update-appmanifest">above</a>, we need to reference Apache Isis' Spring security module and also an implementation of <a href="../../../refguide/2.0.0-M5/core/index/security/authorization/Authorizor.html" class="page">Authorizor</a> SPI, eg the <a href="../bypass/about.html" class="page">Bypass</a> implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleSecuritySpring.class,
+        AuthorizorBypass.class,
+        LoginController.class,
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-patch-2"><a class="anchor" href="#code-patch-2"></a>Code Patch</h3>
+<div class="paragraph">
+<p>In the current release of Apache Isis (2.0.0-M5), there is an issue with its <code>SpringSecurityFilter</code>.
+We therefore (for now) need to patch in our own replacement.</p>
+</div>
+<div class="listingblock">
+<div class="title">org/apache/isis/security/spring/webmodule/SpringSecurityFilter.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.apache.isis.security.spring.webmodule;
+
+//...
+
+public class SpringSecurityFilter implements Filter {
+
+    @Autowired
+    private InteractionFactory isisInteractionFactory;
+
+    @Override
+    public void doFilter(
+            final ServletRequest servletRequest,
+            final ServletResponse servletResponse,
+            final FilterChain filterChain) throws IOException, ServletException {
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+
+        org.springframework.security.core.Authentication springAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        if(springAuthentication==null
+                || !springAuthentication.isAuthenticated()) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return; // not authenticated
+        }
+
+         Object principal = springAuthentication.getPrincipal();
+        if (principal instanceof OAuth2User) {
+            OAuth2User oAuth2User = (OAuth2User) principal;
+            final Object login = oAuth2User.getAttributes().get("login");
+            principalIdentity = login instanceof String ? (String)login : oAuth2User.getName();
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return; // unknown principal type, not handled
+        }
+
+        UserMemento user = UserMemento.ofNameAndRoleNames(principalIdentity,
+                Stream.of("org.apache.isis.viewer.wicket.roles.USER"));
+        SimpleAuthentication authentication = SimpleAuthentication.validOf(user);
+        authentication.setType(Authentication.Type.EXTERNAL);
+
+        isisInteractionFactory.runAuthenticated(
+                authentication,
+                ()-&gt;{
+                    filterChain.doFilter(servletRequest, servletResponse);
+                });
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tidying-up-2"><a class="anchor" href="#tidying-up-2"></a>Tidying up</h3>
+<div class="paragraph">
+<p>Finally, (and optionally), the swagger/REST API is not configured for oauth2, so we replace the <code>index.html</code> page with one to redirect straight to the <a href="../../../vw/2.0.0-M5/about.html" class="page">Wicket Viewer</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">static/index.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;
+    &lt;meta http-equiv="refresh" content="0;url=/wicket/" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="wrapper"&gt;
+    &lt;!-- we just redirect immediately, because swagger/restful API not configured to use spring security --&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h3>
+<div class="paragraph">
+<p>We are now ready to configure the app.
+As described in the <a href="https://spring.io/guides/tutorials/spring-boot-oauth2/">this Spring tutorial</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>register the app on github:</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/register-github-oauth-app.png" alt="register github oauth app" width="500px">
+</div>
+</div>
+</li>
+<li>
+<p>obtain the clientId and create a new client secret:</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-client-id.png" alt="github client id" width="600px">
+</div>
+</div>
+</li>
+<li>
+<p>update the configuration:</p>
+<div class="listingblock">
+<div class="title">config/application-github-example.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">spring.security.oauth2.client.registration.github.clientId=XXXX
+spring.security.oauth2.client.registration.github.clientSecret=XXXXXXXX</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="run-the-application-2"><a class="anchor" href="#run-the-application-2"></a>Run the application</h3>
+<div class="paragraph">
+<p>You should now be able to run the application, setting the "github-example" profile using this JVM argument:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>-Dspring.profiles.active=github-example</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are already signed into github:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-already-signed-in.png" alt="github already signed in" width="300px">
+</div>
+</div>
+<div class="paragraph">
+<p>then you should be logged in directly; the app will show your user name:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/helloworld-shows-username.png" alt="helloworld shows username" width="300px">
+</div>
+</div>
+<div class="paragraph">
+<p>On the other hand, if you are not signed in then you will be redirected to the github login page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-login-page.png" alt="github login page" width="300px">
+</div>
+</div>
+<div class="paragraph">
+<p>If you have 2FA enabled, then this also works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-2fa.png" alt="github 2fa" width="300px">
+</div>
+</div>
+<div class="paragraph">
+<p>and then, once again, you will be redirected to the app and it will show your user name:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/helloworld-shows-username.png" alt="helloworld shows username" width="250px">
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, if you log out then Spring will show a page to allow you to trigger the login process:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-sign-in-again.png" alt="github sign in again" width="600px">
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
@@ -448,7 +1053,7 @@ TODO: this content has not yet been reviewed/updated for v2.0
             </p>
         </div>
         <div class="revision">
-            <p>Revision: SNAPSHOT</p>
+            <p>Revision: 2.0.0-M5.20210409-1206</p>
         </div>
     </div>
 </footer>

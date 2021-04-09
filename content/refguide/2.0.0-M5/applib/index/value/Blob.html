@@ -680,7 +680,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">BC Mappings Catalog</span>
+      <span class="title">BC Mapping Libraries</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../../../mappings/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -768,7 +768,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Restful Objects Viewer</span>
+      <span class="title">REST API (Restful Objects Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../../../vro/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -832,7 +832,7 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Wicket Viewer</span>
+      <span class="title">Web UI (Wicket Viewer)</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../../../vw/2.0.0-M5/about.html">2.0.0-M5</a>
@@ -969,26 +969,23 @@ page.parent doesn't seem to be set...
 <h2 id="usage-notes"><a class="anchor" href="#usage-notes"></a>Usage Notes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mandatory properties of this type can be mapped with <a href="../../../../../pjdo/2.0.0-M5/about.html" class="page">JDO/DataNucleus</a> using:</p>
+<p>If using <a href="../../../../../pjdo/2.0.0-M5/about.html" class="page">JDO/DataNucleus</a>, <code>Blob</code> properties can be mapped using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Column;
-
-@Persistent(defaultFetchGroup="false", columns = {
-    @Column(name = "someImage_name"
-            , allowsNull = "false"),
-    @Column(name = "someImage_mimetype"
-            , allowsNull = "false"),
-    @Column(name = "someImage_bytes"
-            , allowsNull = "false")
-})
-private Blob someImage;</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@javax.jdo.annotations.Persistent(defaultFetchGroup="false")
+    @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
+            @javax.jdo.annotations.Column(name = "attachment_name"),
+            @javax.jdo.annotations.Column(name = "attachment_mimetype"),
+            @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType = "BLOB", sqlType = "BLOB")
+    })
+@Property(optionality = Optionality.OPTIONAL)
+@Getter @Setter
+private Blob attachment;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>while optional properties can be mapped the same, but using <code>allowsNull = "true</code> for each of the <code>@Column</code>s.</p>
+<p>If the property is mandatory, add <code>allowsNull = "false</code> for each of the <code>@Column</code>s.</p>
 </div>
 </div>
 </div>
@@ -1009,7 +1006,7 @@ private Blob someImage;</code></pre>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: SNAPSHOT</p>
+            <p>Revision: 2.0.0-M5.20210409-1206</p>
         </div>
     </div>
 </footer>
