@@ -873,8 +873,8 @@ page.parent doesn't seem to be set...
   String title()     <i class="conum" data-value="1"></i><b>(1)</b>
   String iconName()
   String getName()
-  String getEncryptedPassword()
-  AccountType getAccountType()
+  String getEncryptedPassword()     <i class="conum" data-value="2"></i><b>(2)</b>
+  AccountType getAccountType()     <i class="conum" data-value="3"></i><b>(3)</b>
   void setAccountType(AccountType accountType)
   ApplicationPermissionValueSet getPermissionSet()
   Set&lt;? extends ApplicationRole&gt; getRoles()
@@ -914,6 +914,28 @@ page.parent doesn't seem to be set...
 </div>
 </div></td>
 </tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><a href="#getEncryptedPassword__">getEncryptedPassword()</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Only used for <em>#getAccountType() local</em> users, stores the password in encrypted form.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><a href="#getAccountType__">getAccountType()</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Determines how to authenticate this user.</p>
+</div>
+</div>
+</div></td>
+</tr>
 </table>
 </div>
 </div>
@@ -925,6 +947,27 @@ page.parent doesn't seem to be set...
 <h3 id="title__"><a class="anchor" href="#title__"></a>title()</h3>
 <div class="paragraph">
 <p>having a title() method (rather than using @Title annotation) is necessary as a workaround to be able to use wrapperFactory#unwrap(&#8230;&#8203;) method, which is otherwise broken in Isis 1.6.0</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getEncryptedPassword__"><a class="anchor" href="#getEncryptedPassword__"></a>getEncryptedPassword()</h3>
+<div class="paragraph">
+<p>Only used for <em>#getAccountType() local</em> users, stores the password in encrypted form.</p>
+</div>
+<div class="paragraph">
+<p>The password will have been encrypted by the configured <em>org.apache.isis.extensions.secman.api.encryption.PasswordEncryptionService</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getAccountType__"><a class="anchor" href="#getAccountType__"></a>getAccountType()</h3>
+<div class="paragraph">
+<p>Determines how to authenticate this user.</p>
+</div>
+<div class="paragraph">
+<p><em>AccountType#LOCAL local</em> users are authenticated directly against the <em>#getEncryptedPassword() password</em> .</p>
+</div>
+<div class="paragraph">
+<p><em>AccountType#DELEGATED delegated</em> users are authenticated by some other authentication mechanism. For example, Secman&#8217;s Shiro realm allows a delegate realm to be configured, and will call that delegate realm for delegated users rather than authenticating locally.</p>
 </div>
 </div>
 </div>
@@ -946,7 +989,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: 2.0.0-M5.20210409-1206</p>
+            <p>Revision: 2.0.0-M5.20210417-1912</p>
         </div>
     </div>
 </footer>
