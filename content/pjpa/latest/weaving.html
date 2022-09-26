@@ -384,26 +384,132 @@ page.parent doesn't seem to be set...
     <li><a href="weaving.html">Weaving</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC1/persistence/jpa/adoc/modules/ROOT/pages/weaving.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC2/persistence/jpa/adoc/modules/ROOT/pages/weaving.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">Weaving</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>A responsibility of all ORMs is lazy loading of related objects (so as not to load all the data in one go), and tracking of objects as they are modified (to flush back to the database).</p>
 </div>
 <div class="paragraph">
 <p>With JPA, this is typically done dynamically at runtime, using a Java agent.
-The <a href="../../docs/latest/starters/simpleapp.html" class="page">SimpleApp</a> and <a href="../../docs/latest/starters/helloworld.html" class="page">HelloWorld</a> starter apps demonstrate this, bundling the <code>spring-instrument-5.3.5.jar</code> file.
-To run, use:</p>
+The <a href="../../docs/latest/starters/simpleapp.html" class="page">SimpleApp</a> and <a href="../../docs/latest/starters/helloworld.html" class="page">HelloWorld</a> starter apps demonstrate this.
+See <a href="#runtime">below</a> for further details on how to set this up.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a number of EclipseLink configuration options to set or optionally to be set to enable weaving:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>at a minimum, set <a href="../../refguide/latest/config/sections/eclipselink.html#eclipselink.weaving" class="page">eclipselink.weaving</a>:</p>
 <div class="listingblock">
+<div class="title">application.properties</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">-javaagent:lib/spring-instrument-5.3.5.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">eclipselink.weaving=true</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>in addition, optionally set the following (their default values are shown):</p>
+<div class="listingblock">
+<div class="title">application.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">eclipselink.weaving.changetracking=true
+eclipselink.weaving.eager=false
+eclipselink.weaving.fetchgroups=true
+eclipselink.weaving.internal=true
+eclipselink.weaving.lazy=true</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>as a JVM argument (where the system properties also are located.)</p>
+<p>These all default to <code>true</code> except for <a href="../../refguide/latest/config/sections/eclipselink.html#eclipselink.weaving.eager" class="page">eclipselink.weaving.eager</a>, which you should only enable if you fully understand its consequences.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The weaving process modifies the classes themselves, introducing additional <code>public</code> methods.
+Depending upon the value of <a href="../../refguide/latest/config/sections/isis.core.meta-model.introspector.html#isis.core.meta-model.introspector.policy" class="page">isis.core.meta-model.introspector.policy</a> configuration property, these could be picked up as part of the framework&#8217;s metamodel, which is not what you want.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, to use JPA, you will also need to change this configuration property, either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>to <a href="../../refguide/latest/applib/index/annotation/Introspection.html#ANNOTATION_REQUIRED" class="page">IntrospectionPolicy.ANNOTATION_REQUIRED</a></p>
+<div class="listingblock">
+<div class="title">application.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">isis.core.meta-model.introspector.policy=annotation_required</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or,</p>
+</div>
+</li>
+<li>
+<p>to <a href="../../refguide/latest/applib/index/annotation/Introspection.html#ENCAPSULATION_ENABLED" class="page">IntrospectionPolicy.ENCAPSULATION_ENABLED</a></p>
+<div class="listingblock">
+<div class="title">application.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">isis.core.meta-model.introspector.policy=encapsulation_enabled</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <a href="../../docs/latest/starters/simpleapp.html" class="page">SimpleApp</a> and <a href="../../docs/latest/starters/helloworld.html" class="page">HelloWorld</a> starter apps both use the latter option.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="runtime"><a class="anchor" href="#runtime"></a>Runtime</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As well as setting the above configuration options, it&#8217;s also neceesary to run the application with the <code>spring-instrument.jar</code> Java agent, which actually performs the weaving at load-time.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download this jar file using:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn dependency:get -DgroupId=org.springframework -DartifactId=spring-instrument -Dversion=XXX</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=
+changing "XXX" to the value that <code>${spring-framework.version}</code> resolves to, from the Isis parent <code>pom.xml</code>.</p>
+</div>
+</li>
+<li>
+<p>Move and rename this file, eg to <code>lib/spring-instrument.jar</code>.</p>
+</li>
+<li>
+<p>Run the application using:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">-javaagent:lib/spring-instrument.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>as a JVM option.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
@@ -422,7 +528,7 @@ To run, use:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC1.20220821-1826</p>
+            <p>Revision: release-2.0.0-M8-RC2.20220926-2332</p>
         </div>
     </div>
 </footer>

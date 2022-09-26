@@ -397,7 +397,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">PDF.js</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC1/extensions/vw/pdfjs/adoc/modules/pdfjs/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC2/extensions/vw/pdfjs/adoc/modules/pdfjs/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -412,22 +412,36 @@ page.parent doesn't seem to be set...
 <div class="sect1">
 <h2 id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 <div class="sectionbody">
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p>To use the extension, annotate an <a href="../../../refguide/latest/applib/index/value/Blob.html" class="page">Blob</a> property with the <a href="../../../refguide/latest/extensions/index/pdfjs/applib/annotations/PdfJsViewer.html" class="page">@PdfJsViewer</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">@PdfJsViewer
+@Property()
+@PropertyLayout(fieldSetId = "content", sequence = "1")
+public Blob getAttachment() { ... }</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>TODO: v2 - to write up&#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>need to annotate property using <code>@PdfJsViewer</code> and implement the <code>PdfJsViewerAdvisor</code> SPI.</p>
-</div>
+The <code>Blob</code> should only ever return a bytes that correspond to a PDF, with a mime type of "application/pdf".
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Optionally, you can also provide an implementation of the <a href="../../../refguide/latest/extensions/index/pdfjs/applib/spi/PdfJsViewerAdvisor.html" class="page">PdfJsViewerAdvisor</a> SPI, which advises on the size of the viewer (and has callbacks to keep track of which page of the PDF is being viewed).
+The framework provides a fallback implementation that sets the height to 800px, and scaled to 75% normal size.</p>
 </div>
 </div>
 </div>
@@ -435,8 +449,27 @@ page.parent doesn't seem to be set...
 <h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Add the following dependency:</p>
+<p>Make the following changes:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>In your domain module (containing the domain class that has a <code>Blob</code> PDF type), add in the following dependency:</p>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.isis.extensions&lt;/groupId&gt;
+    &lt;artifactId&gt;isis-extensions-pdfjs-applib&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will provide access to the <a href="../../../refguide/latest/extensions/index/pdfjs/applib/annotations/PdfJsViewer.html" class="page">@PdfJsViewer</a> annotation.</p>
+</div>
+</li>
+<li>
+<p>And, in the webapp module, add the following dependency:</p>
 <div class="listingblock">
 <div class="title">pom.xml</div>
 <div class="content">
@@ -446,9 +479,9 @@ page.parent doesn't seem to be set...
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Also add the following module to your <code>AppManifest</code>:</p>
-</div>
+</li>
+<li>
+<p>In your <code>AppManifest</code>:</p>
 <div class="listingblock">
 <div class="title">AppManifest.java</div>
 <div class="content">
@@ -460,6 +493,9 @@ page.parent doesn't seem to be set...
 public class AppManifest {
 }</code></pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -480,7 +516,7 @@ public class AppManifest {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC1.20220821-1826</p>
+            <p>Revision: release-2.0.0-M8-RC2.20220926-2332</p>
         </div>
     </div>
 </footer>

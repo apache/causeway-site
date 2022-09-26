@@ -416,25 +416,67 @@ page.parent doesn't seem to be set...
     <li><a href="setting-up-with-spring-oauth2.html">Setting up with Spring OAuth2</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC1/extensions/security/secman/adoc/modules/secman/pages/setting-up-with-spring-oauth2.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC2/extensions/security/secman/adoc/modules/secman/pages/setting-up-with-spring-oauth2.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">Setting up with Spring OAuth2</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>This section describes how to setup and configure SecMan authorizor combined with <a href="../spring/about.html" class="page">Spring</a> being used as the authenticator, configured with <a href="../spring-oauth2/about.html" class="page">OAuth2</a>.</p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-TODO: v2 - to write up&#8230;&#8203;
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>In this scenario, we require that SecMan automatically creates any <code>ApplicationUser</code>s as delegated users, meaning that they are defined externally (in the OAuth2 external store).</p>
+</div>
+<div class="paragraph">
+<p>We use an extension module to register a service that performs this task.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Update your pom.xml:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.isis.extensions&lt;/groupId&gt;
+        &lt;artifactId&gt;isis-extensions-secman-delegated-spring-oauth2&lt;/artifactId&gt;    <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And update your <code>AppManifest</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleExtSecmanDelegatedSpringOauth2.class,
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="applicationusers-cannot-be-disabled"><a class="anchor" href="#applicationusers-cannot-be-disabled"></a>ApplicationUsers cannot be DISABLED</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This integration has one small limitation: it is not possible to disable delegated <code>ApplicationUser</code>s.
+Or rather, they can be disabled, but this will have no effect; the user will still be able to log in.</p>
+</div>
+</div>
 </div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
@@ -453,7 +495,7 @@ TODO: v2 - to write up&#8230;&#8203;
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC1.20220821-1826</p>
+            <p>Revision: release-2.0.0-M8-RC2.20220926-2332</p>
         </div>
     </div>
 </footer>

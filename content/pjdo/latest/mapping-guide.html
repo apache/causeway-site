@@ -399,11 +399,13 @@ page.parent doesn't seem to be set...
     <li><a href="mapping-guide.html">Mapping Guide</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC1/persistence/jdo/adoc/modules/ROOT/pages/mapping-guide.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC2/persistence/jdo/adoc/modules/ROOT/pages/mapping-guide.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">Mapping Guide</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The best resource for learning how to map JDO entities is the DataNucleus website.
 Take a look at:</p>
@@ -434,6 +436,226 @@ Take a look at:</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="custom-value-types"><a class="anchor" href="#custom-value-types"></a>Custom Value Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The framework provides a number of custom value types.
+Some of these are wrappers around a single value (eg <code>AsciiDoc</code> or <code>Password</code>) while others map onto multiple values (eg <code>Blob</code>).</p>
+</div>
+<div class="paragraph">
+<p>This section shows how to map each (and can be adapted for your own custom types or <code>@Embedded</code> values).</p>
+</div>
+<div class="sect2">
+<h3 id="mapping-asciidoc"><a class="anchor" href="#mapping-asciidoc"></a>Mapping AsciiDoc</h3>
+<div class="paragraph">
+<p>The <a href="../../refguide/latest/valuetypes/index/asciidoc/applib/value/AsciiDoc.html" class="page">AsciiDoc</a> value type is used for documentation written using the <a href="https://asciidoctor.org/">AsciiDoc</a> syntax:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the domain entity, map <code>AsciiDoc</code> type using <code>@Column(jdbcType = "CLOB")</code>:</p>
+<div class="listingblock">
+<div class="title">MyEntity.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyEntity ... {
+
+    @Column(allowsNull = "false", jdbcType = "CLOB")
+    @Property
+    @Getter @Setter
+    private AsciiDoc documentation;
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>in the webapp module, register the JDO specific converter by:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>adding a dependency to this module:</p>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.isis.valuetypes&lt;/groupId&gt;
+    &lt;artifactId&gt;isis-valuetypes-asciidoc-persistence-jdo&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>and adding reference the corresponding module in the <code>AppManifest</code>:</p>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleValAsciidocPersistenceJdo.java
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mapping-markdown"><a class="anchor" href="#mapping-markdown"></a>Mapping Markdown</h3>
+<div class="paragraph">
+<p>The <a href="../../refguide/latest/valuetypes/index/markdown/applib/value/Markdown.html" class="page">Markdown</a> value type is used for documentation written using markdown:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the domain entity, map <code>Markdown</code> type using <code>@Column(jdbcType = "CLOB")</code>:</p>
+<div class="listingblock">
+<div class="title">MyEntity.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyEntity ... {
+
+    @Column(allowsNull = "false", jdbcType = "CLOB")
+    @Property
+    @Getter @Setter
+    private Markdown documentation;
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>in the webapp module, register the JDO specific converter by:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>adding a dependency to this module:</p>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.isis.valuetypes&lt;/groupId&gt;
+    &lt;artifactId&gt;isis-valuetypes-markdown-persistence-jdo&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>and adding reference the corresponding module in the <code>AppManifest</code>:</p>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        IsisModuleValMarkdownPersistenceJdo.java
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mapping-blobs-and-clobs"><a class="anchor" href="#mapping-blobs-and-clobs"></a>Mapping Blobs and Clobs</h3>
+<div class="paragraph">
+<p>The JDO ObjectStore integration of DataNucleus ORM can automatically persist <a href="../../refguide/latest/applib/index/value/Blob.html" class="page">Blob</a> and <a href="../../refguide/latest/applib/index/value/Clob.html" class="page">Clob</a> values into multiple columns, corresponding to their constituent parts.</p>
+</div>
+<div class="sect3">
+<h4 id="blobs"><a class="anchor" href="#blobs"></a>Blobs</h4>
+<div class="paragraph">
+<p>To map a <a href="../../refguide/latest/applib/index/value/Blob.html" class="page">Blob</a>, use:</p>
+</div>
+<div class="listingblock">
+<div class="title">MyEntity.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyEntity ... {
+
+    @Persistent(defaultFetchGroup="false", columns = {
+            @Column(name = "pdf_name"),                 <i class="conum" data-value="1"></i><b>(1)</b>
+            @Column(name = "pdf_mimetype"),             <i class="conum" data-value="2"></i><b>(2)</b>
+            @Column(name = "pdf_bytes")                 <i class="conum" data-value="3"></i><b>(3)</b>
+    })
+    @Getter @Setter
+    private Blob pdf;
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>string, maps to a varchar in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>string, maps to a varchar in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>byte array, maps to a Blob or varbinary in the database</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="clobs"><a class="anchor" href="#clobs"></a>Clobs</h4>
+<div class="paragraph">
+<p>To map a <a href="../../refguide/latest/applib/index/value/Clob.html" class="page">Clob</a>, use:</p>
+</div>
+<div class="listingblock">
+<div class="title">MyEntity.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code>public class MyEntity ... {
+
+    @Persistent(defaultFetchGroup="false", columns = {
+            @Column(name = "xml_name"),                 <i class="conum" data-value="1"></i><b>(1)</b>
+            @Column(name = "xml_mimetype"),             <i class="conum" data-value="2"></i><b>(2)</b>
+            @Column(name = "xml_chars"                  <i class="conum" data-value="3"></i><b>(3)</b>
+                    , jdbcType = "CLOB"
+            )
+    })
+    @Getter @Setter
+    private Clob xml;
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>string, maps to a varchar in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>string, maps to a varchar in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>char array, maps to a Clob or varchar in the database</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -451,7 +673,7 @@ Take a look at:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC1.20220821-1826</p>
+            <p>Revision: release-2.0.0-M8-RC2.20220926-2332</p>
         </div>
     </div>
 </footer>
