@@ -421,7 +421,7 @@ page.parent doesn't seem to be set...
     <li><a href="cutting-a-release.html">Cutting a Release</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC2/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC3/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -486,7 +486,7 @@ They should work on Linux and MacOS; for Windows, use mSysGit.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The deploy process requires <code>gpg</code> v2.1 or later.</p>
+<p>The deploy process has been tested only with <code>gpg</code> 2.0.x ; you may need to adjust if using a later version.</p>
 </div>
 </td>
 </tr>
@@ -593,7 +593,7 @@ This is stored in the <code>src/main/appended-resources/supplemental-models.xml<
 mvn -Dgithub clean install -T1C -DskipTests <i class="conum" data-value="1"></i><b>(1)</b>
 mvn -Dgithub license:download-licenses      <i class="conum" data-value="2"></i><b>(2)</b>
 popd
-groovy scripts/checkmissinglicenses.groovy</code></pre>
+groovy scripts/checkmissinglicenses.groovy  <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -678,7 +678,7 @@ licenses to remove from supplemental-models.xml (are spurious):
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn clean install -pl core/config</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn clean install -pl core/config -DskipTests</code></pre>
 </div>
 </div>
 </li>
@@ -914,10 +914,11 @@ We activate the (inherited) <code>apache-release</code> profile to bring in the 
 <p>Make sure that the version of <code>gpg</code> on the <code>$PATH</code> is correct, because the configuration in the <code>pom.xml</code> assumes <code>gpg</code> v2.0, rather than v2.1+.</p>
 </div>
 <div class="paragraph">
-<p>The older version of <code>gpg</code> picks up the secret keys from <code>pubring.gpg</code> and <code>secring.gpg</code> (and does not use an agent); the newer version uses rather than <code>pubring.pbx</code>.</p>
+<p>The older version of <code>gpg</code> picks up the secret keys from <code>pubring.gpg</code> and <code>secring.gpg</code> (and does not use an agent); the newer version uses <code>pubring.pbx</code>.</p>
 </div>
 <div class="paragraph">
-<p>For myself, I hit issues running on Windows under git-bash, because it picked up git&#8217;s version of <code>gpg</code> in <code>/usr/bin</code>, which is <code>gpg</code> v2.1.</p>
+<p>On Windows, be careful using git-bash as this will pick up git&#8217;s version of <code>gpg</code> in <code>/usr/bin</code>, which is <code>gpg</code> v2.1.
+Instead, consider building in a Powershell console, described below.</p>
 </div>
 </td>
 </tr>
@@ -1047,8 +1048,8 @@ uid                  Dan Haywood (CODE SIGNING KEY) &lt;danhaywood@apache.org&gt
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git tag $ISISART-$ISISREL
-git tag $ISISART-$ISISREL-$ISISRC</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git tag $ISISART-$ISISREL --force
+git tag $ISISART-$ISISREL-$ISISRC --force</code></pre>
 </div>
 </div>
 </div>
@@ -1713,7 +1714,7 @@ The vote will be open for a minimum of 72 hours.
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC2.20220926-2332</p>
+            <p>Revision: release-2.0.0-M8-RC3.20221001-2234</p>
         </div>
     </div>
 </footer>
