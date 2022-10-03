@@ -445,7 +445,7 @@ page.parent doesn't seem to be set...
     <li><a href="mixins.html">Mixins</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC4/antora/components/userguide/modules/fun/pages/mixins.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/isis/edit/release-2.0.0-M8-RC5/antora/components/userguide/modules/fun/pages/mixins.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -453,7 +453,8 @@ page.parent doesn't seem to be set...
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>As described in the <a href="overview.html#mixins" class="page">overview</a>, a mixin acts like a trait or extension method, allowing one module to contribute behaviour or derived state to another object.</p>
+<p>As described in the <a href="overview.html#mixins" class="page">overview</a>, a mixin acts like a trait or extension method, allowing one module to contribute behaviour or derived state to another object.
+This is a <strong>very powerful feature</strong>, but at the same time is  easy to use.</p>
 </div>
 <div class="paragraph">
 <p>Under the covers, all mixins are basically actions that use the mixee as one of their arguments.</p>
@@ -485,10 +486,12 @@ page.parent doesn't seem to be set...
 <p>Accordingly, a mixin can be defined using the <a href="../../../refguide/latest/applib/index/annotation/Action.html" class="page">@Action</a>, <a href="../../../refguide/latest/applib/index/annotation/Property.html" class="page">@Property</a> or <a href="../../../refguide/latest/applib/index/annotation/Collection.html" class="page">@Collection</a> annotations, but defined at the domain class level rather than at the method level.</p>
 </div>
 <div class="paragraph">
-<p>Using <a href="../../../refguide/latest/applib/index/annotation/DomainObject.html#nature" class="page">@DomainObject#nature</a> attribute (specifying a nature of <code>Nature.MIXIN</code>), in combination with the above allows for more fine grained control, eg. nominating the mixin&#8217;s method name.</p>
+<p>The mixin is expected to follow the naming convention <code>SomeType_mixinName</code>, with the name of the contributed member being contributed is inferred from the name of the class itself, being everything after the last '_'.
+For example, if the mixin is called <code>DocumentHolder_documents</code>, then the mixee is <code>DocumentHolder</code> interface, and <code>documents</code> is the name of the contributed collection.</p>
 </div>
 <div class="paragraph">
-<p>When the mixin follows the naming convention <code>SomeType_mixinName</code> then the method name can be abbreviated, and the name of the member being contributed is inferred from the name of the class itself, being everything after the last '_'.</p>
+<p>This example also hints at why mixins are so powerful: the mixee&#8217;s type is usually an interface, not a concrete class.
+Thus, any class that implements <code>DocumentHolder</code>, eg <code>Customer</code> or <code>Order</code>, will be contributed to.</p>
 </div>
 </div>
 </div>
@@ -496,7 +499,7 @@ page.parent doesn't seem to be set...
 <h2 id="contributed-collection"><a class="anchor" href="#contributed-collection"></a>Contributed Collection</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The example below shows how to contribute a collection, using <a href="../../../refguide/latest/applib/index/annotation/Collection.html" class="page">@Collection</a>.
+<p>The example below shows in more detail how to contribute a collection, using <a href="../../../refguide/latest/applib/index/annotation/Collection.html" class="page">@Collection</a>.
 The method is expected to be called "coll":</p>
 </div>
 <div class="listingblock">
@@ -658,15 +661,17 @@ However, to support mixins as nested classes, the character "$" is also recogniz
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SimpleObject /* ... */ {
 
     // ...
-    public static class UpdateNameActionDomainEvent extends
-            SimpleModule.ActionDomainEvent&lt;SimpleObject.updateName&gt; {}  <i class="conum" data-value="1"></i><b>(1)</b>
 
     @Action(semantics = IDEMPOTENT,
-	        commandPublishing = Publishing.ENABLED,
-	        executionPublishing = Publishing.ENABLED,
-	        associateWith = "name",
-	        domainEvent = UpdateNameActionDomainEvent.class)
-    public class updateName {                                           <i class="conum" data-value="2"></i><b>(2)</b>
+            commandPublishing = Publishing.ENABLED,
+            executionPublishing = Publishing.ENABLED,
+            associateWith = "name",
+            domainEvent = updateName.DomainEvent.class)                 <i class="conum" data-value="2"></i><b>(2)</b>
+    public class updateName {                                           <i class="conum" data-value="1"></i><b>(1)</b>
+
+        public class DomainEvent extends
+            SimpleModule.ActionDomainEvent&lt;SimpleObject.updateName&gt; {}  <i class="conum" data-value="2"></i><b>(2)</b>
+
         public SimpleObject act(@Name final String name) {
             setName(name);                                              <i class="conum" data-value="3"></i><b>(3)</b>
             return SimpleObject.this;
@@ -683,12 +688,17 @@ However, to support mixins as nested classes, the character "$" is also recogniz
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Domain event is genericised on the mixin, not on the mixee</td>
+<td>Mixin class is not <code>static</code>, so that the containing object is implicitly available.
+<div class="paragraph">
+<p>Its name can be either "camelCase" or "PascalCase", either will work.</p>
+</div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Not static.
-Can be camelCase or PascalCase, either will work.</td>
+<td>Domain event can be declared within the mixin, again, not <code>static</code>.
+<div class="paragraph">
+<p>Note that it is genericised on the mixin, not on the mixee</p>
+</div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -727,7 +737,7 @@ If writing integration tests or fixtures, or (sometimes) just regular domain log
 </div>
 <div class="paragraph">
 <p>Alternatively, you can use <a href="../../../refguide/latest/applib/index/services/inject/ServiceInjector.html" class="page">ServiceInjector</a> to inject domain services after the mixin has been instantiated.
-You&#8217;ll need to use this method if using nested non-static mixins:</p>
+You&#8217;ll need to use this method if using nested non-<code>static</code> mixins:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -754,7 +764,7 @@ You&#8217;ll need to use this method if using nested non-static mixins:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-M8-RC4.20221002-1203</p>
+            <p>Revision: release-2.0.0-M8-RC5.20221003-0846</p>
         </div>
     </div>
 </footer>
