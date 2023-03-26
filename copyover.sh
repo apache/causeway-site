@@ -7,7 +7,7 @@ done
 popd
 
 pushd ../../causeway/master
-cp -Rf antora/target/site/* ../../causeway-site/content/.
+cp -Rf antora/target/site/* ../../causeway-site/asf-site/content/.
 popd
 
 git add .
