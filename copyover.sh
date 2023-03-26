@@ -6,8 +6,8 @@ do
 done
 popd
 
-pushd ../isis
-cp -Rf antora/target/site/* ../isis-site/content/.
+pushd ../../causeway/master
+cp -Rf antora/target/site/* ../../causeway-site/content/.
 popd
 
 git add .
