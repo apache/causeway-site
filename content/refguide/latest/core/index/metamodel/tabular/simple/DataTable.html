@@ -68,12 +68,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -134,7 +136,7 @@
             <a class="navbar-item" href="../../../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -155,8 +157,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -808,6 +811,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -820,7 +826,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -917,6 +926,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1055,7 +1072,7 @@ page.parent doesn't seem to be set...
     <li><a href="DataTable.html">DataTable</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/core/pages/index/metamodel/tabular/simple/DataTable.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/core/pages/index/metamodel/tabular/simple/DataTable.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1075,13 +1092,25 @@ page.parent doesn't seem to be set...
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class DataTable {
   DataTable(ObjectSpecification elementType)     <i class="conum" data-value="1"></i><b>(1)</b>
-  DataTable(ObjectSpecification elementType, Can&lt;? extends ObjectAssociation&gt; dataColumns)     <i class="conum" data-value="2"></i><b>(2)</b>
+  DataTable(ObjectSpecification elementType, Predicate&lt;ObjectAssociation&gt; columnFilter)     <i class="conum" data-value="2"></i><b>(2)</b>
+  DataTable(ObjectSpecification elementType, Can&lt;? extends ObjectAssociation&gt; dataColumns)     <i class="conum" data-value="3"></i><b>(3)</b>
   DataTable(ObjectSpecification elementType, String tableFriendlyName, Can&lt;? extends ObjectAssociation&gt; dataColumns, Can&lt;ManagedObject&gt; dataElements)
-  DataTable forDomainType(Class&lt;?&gt; domainType)     <i class="conum" data-value="3"></i><b>(3)</b>
-  void setDataElements(Can&lt;ManagedObject&gt; dataElements)
-  String getLogicalName()     <i class="conum" data-value="4"></i><b>(4)</b>
-  int getElementCount()     <i class="conum" data-value="5"></i><b>(5)</b>
+  DataTable forDomainType(Class&lt;?&gt; domainType)     <i class="conum" data-value="4"></i><b>(4)</b>
+  DataTable forDomainType(Class&lt;?&gt; domainType, Predicate&lt;ObjectAssociation&gt; columnFilter)     <i class="conum" data-value="5"></i><b>(5)</b>
+  String getLogicalName()     <i class="conum" data-value="6"></i><b>(6)</b>
+  int getElementCount()     <i class="conum" data-value="7"></i><b>(7)</b>
   Stream&lt;ManagedObject&gt; streamDataElements()
+  DataTable addDataElementsFrom(DataTable otherTable)     <i class="conum" data-value="8"></i><b>(8)</b>
+  DataTable setDataElements(Iterable&lt;ManagedObject&gt; dataElements)     <i class="conum" data-value="9"></i><b>(9)</b>
+  void setDataElementPojos(Iterable&lt;?&gt; dataElementPojos)     <i class="conum" data-value="10"></i><b>(10)</b>
+  DataTable populateEntities()     <i class="conum" data-value="11"></i><b>(11)</b>
+  DataTable populateEntities(Query&lt;?&gt; query)     <i class="conum" data-value="12"></i><b>(12)</b>
+  DataTable visit(CellVisitor visitor)
+  DataTable visit(CellVisitor visitor, Predicate&lt;DataColumn&gt; columnFilter)
+  Blob exportToBlob(CollectionContentsExporter exporter)     <i class="conum" data-value="13"></i><b>(13)</b>
+  Predicate&lt;ObjectAssociation&gt; columnFilterIncluding(Where whereToInclude)
+  Predicate&lt;ObjectAssociation&gt; columnFilterExcludingMixins()
+  Predicate&lt;ObjectAssociation&gt; columnFilterIncludingEnabledForSnapshot()
 }</code></pre>
 </div>
 </div>
@@ -1093,35 +1122,57 @@ page.parent doesn't seem to be set...
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all properties as columns, excluding mixed-in ones. (For more control on which columns to include, consider a different constructor.)</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><a href="#DataTable_ObjectSpecification_Can">DataTable(ObjectSpecification, Can)</a>
+<td><a href="#DataTable_ObjectSpecification_Predicate">DataTable(ObjectSpecification, Predicate)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all (including mixed-in) associations as columns, that pass given <em>columnFilter</em> . If the filter is <em>null</em> it acts as a pass-through.</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><a href="#forDomainType_Class">forDomainType(Class)</a>
+<td><a href="#DataTable_ObjectSpecification_Can">DataTable(ObjectSpecification, Can)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type.</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><a href="#forDomainType_Class">forDomainType(Class)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all properties as columns, excluding mixed-in ones. (For more control on which columns to include, consider <em>#forDomainType(Class, Predicate)</em> or a constructor that fits.)</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><a href="#forDomainType_Class_Predicate">forDomainType(Class, Predicate)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all (including mixed-in) associations as columns, that pass given <em>columnFilter</em> . If the filter is <em>null</em> it acts as a pass-through.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
 <td><a href="#getLogicalName_">getLogicalName()</a>
 <div class="openblock">
 <div class="content">
@@ -1132,12 +1183,78 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
 <td><a href="#getElementCount_">getElementCount()</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
 <p>Count data rows.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><a href="#addDataElementsFrom_DataTable">addDataElementsFrom(DataTable)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Adds all data-elements from the other table to this table.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><a href="#setDataElements_Iterable">setDataElements(Iterable)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Sets the data-elements of this table, which make up the rows of this table.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td><a href="#setDataElementPojos_Iterable">setDataElementPojos(Iterable)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Sets the data-elements of this table from given pojos, that are adapted to <a href="../../object/ManagedObject.html" class="xref page">ManagedObject</a> (s).</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td><a href="#populateEntities_">populateEntities()</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Populates this table from the underlying (default) persistence layer.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td><a href="#populateEntities_Query">populateEntities(Query)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Populates this table from the underlying (default) persistence layer, using given <a href="../../../../../applib/index/query/Query.html" class="xref page">Query</a> to refine the result.</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td><a href="#exportToBlob_CollectionContentsExporter">exportToBlob(CollectionContentsExporter)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Typical use-case:</p>
 </div>
 </div>
 </div></td>
@@ -1152,19 +1269,46 @@ page.parent doesn't seem to be set...
 <div class="sect2">
 <h3 id="DataTable_ObjectSpecification"><a class="anchor" href="#DataTable_ObjectSpecification"></a>DataTable(ObjectSpecification)</h3>
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all properties as columns, excluding mixed-in ones. (For more control on which columns to include, consider a different constructor.)</p>
+</div>
+<div class="paragraph">
+<p>The table can be populated later on using <em>DataTable#setDataElements(Iterable)</em> or <em>#setDataElementPojos(Iterable)</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="DataTable_ObjectSpecification_Predicate"><a class="anchor" href="#DataTable_ObjectSpecification_Predicate"></a>DataTable(ObjectSpecification, Predicate)</h3>
+<div class="paragraph">
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all (including mixed-in) associations as columns, that pass given <em>columnFilter</em> . If the filter is <em>null</em> it acts as a pass-through.</p>
+</div>
+<div class="paragraph">
+<p>The table can be populated later on using <em>DataTable#setDataElements(Iterable)</em> or <em>#setDataElementPojos(Iterable)</em> .</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="DataTable_ObjectSpecification_Can"><a class="anchor" href="#DataTable_ObjectSpecification_Can"></a>DataTable(ObjectSpecification, Can)</h3>
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type.</p>
+</div>
+<div class="paragraph">
+<p>The table can be populated later on using <em>DataTable#setDataElements(Iterable)</em> or <em>#setDataElementPojos(Iterable)</em> .</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="forDomainType_Class"><a class="anchor" href="#forDomainType_Class"></a>forDomainType(Class)</h3>
 <div class="paragraph">
-<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type. It can be populated later on using <em>DataTable#setDataElements(Can)</em> .</p>
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all properties as columns, excluding mixed-in ones. (For more control on which columns to include, consider <em>#forDomainType(Class, Predicate)</em> or a constructor that fits.)</p>
+</div>
+<div class="paragraph">
+<p>The table can be populated later on using <em>DataTable#setDataElements(Iterable)</em> or <em>#setDataElementPojos(Iterable)</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="forDomainType_Class_Predicate"><a class="anchor" href="#forDomainType_Class_Predicate"></a>forDomainType(Class, Predicate)</h3>
+<div class="paragraph">
+<p>Returns an empty <a href="DataTable.html" class="xref page">DataTable</a> for given domain object type, with all (including mixed-in) associations as columns, that pass given <em>columnFilter</em> . If the filter is <em>null</em> it acts as a pass-through.</p>
+</div>
+<div class="paragraph">
+<p>The table can be populated later on using <em>DataTable#setDataElements(Iterable)</em> or <em>#setDataElementPojos(Iterable)</em> .</p>
 </div>
 </div>
 <div class="sect2">
@@ -1177,6 +1321,47 @@ page.parent doesn't seem to be set...
 <h3 id="getElementCount_"><a class="anchor" href="#getElementCount_"></a>getElementCount()</h3>
 <div class="paragraph">
 <p>Count data rows.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="addDataElementsFrom_DataTable"><a class="anchor" href="#addDataElementsFrom_DataTable"></a>addDataElementsFrom(DataTable)</h3>
+<div class="paragraph">
+<p>Adds all data-elements from the other table to this table.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="setDataElements_Iterable"><a class="anchor" href="#setDataElements_Iterable"></a>setDataElements(Iterable)</h3>
+<div class="paragraph">
+<p>Sets the data-elements of this table, which make up the rows of this table.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="setDataElementPojos_Iterable"><a class="anchor" href="#setDataElementPojos_Iterable"></a>setDataElementPojos(Iterable)</h3>
+<div class="paragraph">
+<p>Sets the data-elements of this table from given pojos, that are adapted to <a href="../../object/ManagedObject.html" class="xref page">ManagedObject</a> (s).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="populateEntities_"><a class="anchor" href="#populateEntities_"></a>populateEntities()</h3>
+<div class="paragraph">
+<p>Populates this table from the underlying (default) persistence layer.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="populateEntities_Query"><a class="anchor" href="#populateEntities_Query"></a>populateEntities(Query)</h3>
+<div class="paragraph">
+<p>Populates this table from the underlying (default) persistence layer, using given <a href="../../../../../applib/index/query/Query.html" class="xref page">Query</a> to refine the result.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exportToBlob_CollectionContentsExporter"><a class="anchor" href="#exportToBlob_CollectionContentsExporter"></a>exportToBlob(CollectionContentsExporter)</h3>
+<div class="paragraph">
+<p>Typical use-case:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{@code</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1198,7 +1383,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

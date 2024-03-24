@@ -68,12 +68,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -134,7 +136,7 @@
             <a class="navbar-item" href="../../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -155,8 +157,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -808,6 +811,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -820,7 +826,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -917,6 +926,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1055,7 +1072,7 @@ page.parent doesn't seem to be set...
     <li><a href="Visibility.html">Visibility <em>(enum)</em></a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/applib/pages/index/services/swagger/Visibility.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/applib/pages/index/services/swagger/Visibility.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1091,7 +1108,7 @@ page.parent doesn't seem to be set...
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Specification for use by third-party clients, ie public use and not under the control of the authors of the backend Apache Causeway application.</p>
+<p>The generated swagger spec is restricted only to include only <em>org.apache.causeway.applib.annotation.Nature#VIEW_MODEL view model</em> s.</p>
 </div>
 </div>
 </div></td>
@@ -1102,7 +1119,7 @@ page.parent doesn't seem to be set...
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Specification for use only by internally-managed clients, ie private internal use.</p>
+<p>Includes the specifications of domain entities as well as view models.</p>
 </div>
 </div>
 </div></td>
@@ -1128,19 +1145,19 @@ page.parent doesn't seem to be set...
 <div class="sect2">
 <h3 id="PUBLIC"><a class="anchor" href="#PUBLIC"></a>PUBLIC</h3>
 <div class="paragraph">
-<p>Specification for use by third-party clients, ie public use and not under the control of the authors of the backend Apache Causeway application.</p>
+<p>The generated swagger spec is restricted only to include only <em>org.apache.causeway.applib.annotation.Nature#VIEW_MODEL view model</em> s.</p>
 </div>
 <div class="paragraph">
-<p>The generated swagger spec is therefore restricted only to include only view models ( <em>DomainObject#nature()</em> of <em>org.apache.causeway.applib.annotation.Nature#VIEW_MODEL</em> ) and to REST domain services ( <em>DomainService#nature()</em> of <em>NatureOfService#REST</em> ). Exposing entities also would couple the REST client too deeply to the backend implementation.</p>
+<p>Specification for use by third-party clients, ie public use and not under the control of the authors of the backend Apache Causeway application. Exposing entities also would couple the REST client too deeply to the backend implementation.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="PRIVATE"><a class="anchor" href="#PRIVATE"></a>PRIVATE</h3>
 <div class="paragraph">
-<p>Specification for use only by internally-managed clients, ie private internal use.</p>
+<p>Includes the specifications of domain entities as well as view models.</p>
 </div>
 <div class="paragraph">
-<p>This visibility level removes all constraints and so includes the specifications of domain entities as well as view models. This is perfectly acceptable where the team developing the REST client is the same as the team developing the backend service &#8230;&#8203; the use of the REST API between the client and server is a private implementation detail of the application.</p>
+<p>This is perfectly acceptable where the team developing the REST client is the same as the team developing the backend service &#8230;&#8203; the use of the Web API between the client and server is a private implementation detail of the application.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1168,7 +1185,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

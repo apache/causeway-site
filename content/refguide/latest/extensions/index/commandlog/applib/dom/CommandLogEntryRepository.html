@@ -68,12 +68,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -134,7 +136,7 @@
             <a class="navbar-item" href="../../../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -155,8 +157,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -808,6 +811,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -820,7 +826,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -917,6 +926,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1055,7 +1072,7 @@ page.parent doesn't seem to be set...
     <li><a href="CommandLogEntryRepository.html">CommandLogEntryRepository</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/extensions/pages/index/commandlog/applib/dom/CommandLogEntryRepository.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/extensions/pages/index/commandlog/applib/dom/CommandLogEntryRepository.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1073,33 +1090,32 @@ page.parent doesn't seem to be set...
 <div class="listingblock">
 <div class="title">CommandLogEntryRepository.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class CommandLogEntryRepository&lt;C&gt; {
-  Class&lt;C&gt; getEntityClass()
-  C createEntryAndPersist(Command command, UUID parentInteractionIdIfAny, ExecuteIn executeIn)
-  Optional&lt;C&gt; findByInteractionId(UUID interactionId)
-  List&lt;C&gt; findByParent(CommandLogEntry parent)
-  List&lt;C&gt; findByParentInteractionId(UUID parentInteractionId)
-  List&lt;C&gt; findByFromAndTo(LocalDate from, LocalDate to)
-  List&lt;C&gt; findCurrent()
-  List&lt;C&gt; findCompleted()
-  List&lt;C&gt; findByTargetAndFromAndTo(Bookmark target, LocalDate from, LocalDate to)
-  List&lt;C&gt; findMostRecent()
-  List&lt;C&gt; findMostRecent(int limit)
-  List&lt;C&gt; findRecentByUsername(String username)
-  List&lt;C&gt; findRecentByTarget(Bookmark target)
-  List&lt;C&gt; findRecentByTargetOrResult(Bookmark targetOrResult)
-  List&lt;C&gt; findSince(UUID interactionId, Integer batchSize)     <i class="conum" data-value="1"></i><b>(1)</b>
-  List&lt;C&gt; findBackgroundAndNotYetStarted()     <i class="conum" data-value="2"></i><b>(2)</b>
-  List&lt;C&gt; findRecentBackgroundByTarget(Bookmark target)
-  Optional&lt;C&gt; findMostRecentReplayed()     <i class="conum" data-value="3"></i><b>(3)</b>
-  Optional&lt;C&gt; findMostRecentCompleted()     <i class="conum" data-value="4"></i><b>(4)</b>
-  List&lt;C&gt; findNotYetReplayed()
-  C saveForReplay(CommandDto dto)
-  List&lt;C&gt; saveForReplay(CommandsDto commandsDto)
-  void persist(C commandLogEntry)
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface CommandLogEntryRepository {
+  CommandLogEntry createEntryAndPersist(Command command, UUID parentInteractionIdIfAny, ExecuteIn executeIn)
+  Optional&lt;CommandLogEntry&gt; findByInteractionId(UUID interactionId)
+  List&lt;CommandLogEntry&gt; findByParent(CommandLogEntry parent)
+  List&lt;CommandLogEntry&gt; findByParentInteractionId(UUID parentInteractionId)
+  List&lt;CommandLogEntry&gt; findByFromAndTo(LocalDate from, LocalDate to)
+  List&lt;CommandLogEntry&gt; findCurrent()
+  List&lt;CommandLogEntry&gt; findCompleted()
+  List&lt;CommandLogEntry&gt; findByTargetAndFromAndTo(Bookmark target, LocalDate from, LocalDate to)
+  List&lt;CommandLogEntry&gt; findMostRecent()
+  List&lt;CommandLogEntry&gt; findMostRecent(int limit)
+  List&lt;CommandLogEntry&gt; findRecentByUsername(String username)
+  List&lt;CommandLogEntry&gt; findRecentByTarget(Bookmark target)
+  List&lt;CommandLogEntry&gt; findRecentByTargetOrResult(Bookmark targetOrResult)
+  List&lt;CommandLogEntry&gt; findSince(UUID interactionId, Integer batchSize)     <i class="conum" data-value="1"></i><b>(1)</b>
+  List&lt;CommandLogEntry&gt; findBackgroundAndNotYetStarted()     <i class="conum" data-value="2"></i><b>(2)</b>
+  List&lt;CommandLogEntry&gt; findRecentBackgroundByTarget(Bookmark target)
+  Optional&lt;CommandLogEntry&gt; findMostRecentReplayed()     <i class="conum" data-value="3"></i><b>(3)</b>
+  Optional&lt;CommandLogEntry&gt; findMostRecentCompleted()     <i class="conum" data-value="4"></i><b>(4)</b>
+  List&lt;CommandLogEntry&gt; findNotYetReplayed()
+  CommandLogEntry saveForReplay(CommandDto dto)
+  List&lt;CommandLogEntry&gt; saveForReplay(CommandsDto commandsDto)
+  void persist(CommandLogEntry commandLogEntry)
   void truncateLog()
-  List&lt;C&gt; findCommandsOnPrimaryElseFail(UUID interactionId, Integer batchSize)
-  List&lt;C&gt; findAll()     <i class="conum" data-value="5"></i><b>(5)</b>
+  List&lt;CommandLogEntry&gt; findCommandsOnPrimaryElseFail(UUID interactionId, Integer batchSize)
+  List&lt;CommandLogEntry&gt; findAll()     <i class="conum" data-value="5"></i><b>(5)</b>
   void removeAll()     <i class="conum" data-value="6"></i><b>(6)</b>
 }</code></pre>
 </div>
@@ -1243,7 +1259,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

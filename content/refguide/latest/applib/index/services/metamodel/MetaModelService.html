@@ -70,12 +70,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -136,7 +138,7 @@
             <a class="navbar-item" href="../../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -157,8 +159,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -810,6 +813,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -822,7 +828,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -919,6 +928,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1058,7 +1075,7 @@ page.parent doesn't seem to be set...
     <li><a href="MetaModelService.html">MetaModelService</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/applib/pages/index/services/metamodel/MetaModelService.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/applib/pages/index/services/metamodel/MetaModelService.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1078,14 +1095,16 @@ page.parent doesn't seem to be set...
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface MetaModelService {
   Optional&lt;LogicalType&gt; lookupLogicalTypeByName(String logicalTypeName)     <i class="conum" data-value="1"></i><b>(1)</b>
-  Optional&lt;LogicalType&gt; lookupLogicalTypeByClass(Class&lt;?&gt; domainType)     <i class="conum" data-value="2"></i><b>(2)</b>
-  void rebuild(Class&lt;?&gt; domainType)     <i class="conum" data-value="3"></i><b>(3)</b>
-  DomainModel getDomainModel()     <i class="conum" data-value="4"></i><b>(4)</b>
-  BeanSort sortOf(Class&lt;?&gt; domainType, Mode mode)     <i class="conum" data-value="5"></i><b>(5)</b>
-  BeanSort sortOf(Bookmark bookmark, Mode mode)     <i class="conum" data-value="6"></i><b>(6)</b>
-  CommandDtoProcessor commandDtoProcessorFor(String logicalMemberIdentifier)     <i class="conum" data-value="7"></i><b>(7)</b>
-  MetamodelDto exportMetaModel(Config config)     <i class="conum" data-value="8"></i><b>(8)</b>
-  ObjectGraph exportObjectGraph(BiPredicate&lt;BeanSort, LogicalType&gt; filter)     <i class="conum" data-value="9"></i><b>(9)</b>
+  Can&lt;LogicalType&gt; logicalTypeAndAliasesFor(LogicalType logicalType)     <i class="conum" data-value="2"></i><b>(2)</b>
+  Can&lt;LogicalType&gt; logicalTypeAndAliasesFor(String logicalTypeName)     <i class="conum" data-value="3"></i><b>(3)</b>
+  Optional&lt;LogicalType&gt; lookupLogicalTypeByClass(Class&lt;?&gt; domainType)     <i class="conum" data-value="4"></i><b>(4)</b>
+  void rebuild(Class&lt;?&gt; domainType)     <i class="conum" data-value="5"></i><b>(5)</b>
+  DomainModel getDomainModel()     <i class="conum" data-value="6"></i><b>(6)</b>
+  BeanSort sortOf(Class&lt;?&gt; domainType, Mode mode)     <i class="conum" data-value="7"></i><b>(7)</b>
+  BeanSort sortOf(Bookmark bookmark, Mode mode)     <i class="conum" data-value="8"></i><b>(8)</b>
+  CommandDtoProcessor commandDtoProcessorFor(String logicalMemberIdentifier)     <i class="conum" data-value="9"></i><b>(9)</b>
+  MetamodelDto exportMetaModel(Config config)     <i class="conum" data-value="10"></i><b>(10)</b>
+  ObjectGraph exportObjectGraph(BiPredicate&lt;BeanSort, LogicalType&gt; filter)     <i class="conum" data-value="11"></i><b>(11)</b>
 }</code></pre>
 </div>
 </div>
@@ -1104,6 +1123,28 @@ page.parent doesn't seem to be set...
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><a href="#logicalTypeAndAliasesFor_LogicalType">logicalTypeAndAliasesFor(LogicalType)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Assuming that the <a href="../../id/LogicalType.html" class="xref page">LogicalType</a> passed in actually represents a domain type, then returns it along with any aliases defined as per <em>DomainService#aliased()</em> or <em>DomainObject#aliased()</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><a href="#logicalTypeAndAliasesFor_String">logicalTypeAndAliasesFor(String)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns the <a href="../../id/LogicalType.html" class="xref page">LogicalType</a> of a domain class' object type, corresponding to <em>Named#value()</em> , along with any aliases defined as per <em>DomainService#aliased()</em> or <em>DomainObject#aliased()</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td><a href="#lookupLogicalTypeByClass_Class">lookupLogicalTypeByClass(Class)</a>
 <div class="openblock">
 <div class="content">
@@ -1114,7 +1155,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td><a href="#rebuild_Class">rebuild(Class)</a>
 <div class="openblock">
 <div class="content">
@@ -1125,7 +1166,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
 <td><a href="#getDomainModel_">getDomainModel()</a>
 <div class="openblock">
 <div class="content">
@@ -1136,7 +1177,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
 <td><a href="#sortOf_Class_Mode">sortOf(Class, Mode)</a>
 <div class="openblock">
 <div class="content">
@@ -1147,7 +1188,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
 <td><a href="#sortOf_Bookmark_Mode">sortOf(Bookmark, Mode)</a>
 <div class="openblock">
 <div class="content">
@@ -1158,7 +1199,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
 <td><a href="#commandDtoProcessorFor_String">commandDtoProcessorFor(String)</a>
 <div class="openblock">
 <div class="content">
@@ -1169,7 +1210,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
 <td><a href="#exportMetaModel_Config">exportMetaModel(Config)</a>
 <div class="openblock">
 <div class="content">
@@ -1180,7 +1221,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
 <td><a href="#exportObjectGraph_BiPredicate">exportObjectGraph(BiPredicate)</a>
 <div class="openblock">
 <div class="content">
@@ -1201,6 +1242,24 @@ page.parent doesn't seem to be set...
 <h3 id="lookupLogicalTypeByName_String"><a class="anchor" href="#lookupLogicalTypeByName_String"></a>lookupLogicalTypeByName(String)</h3>
 <div class="paragraph">
 <p>Provides a lookup by logicalTypeName of a domain class' object type, corresponding to <em>Named#value()</em> or <em>DomainService#aliased()</em> or <em>DomainObject#aliased()</em> . Will return an empty result if there is no such non-abstract class registered. (interfaces and abstract types are never added to the lookup table).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logicalTypeAndAliasesFor_LogicalType"><a class="anchor" href="#logicalTypeAndAliasesFor_LogicalType"></a>logicalTypeAndAliasesFor(LogicalType)</h3>
+<div class="paragraph">
+<p>Assuming that the <a href="../../id/LogicalType.html" class="xref page">LogicalType</a> passed in actually represents a domain type, then returns it along with any aliases defined as per <em>DomainService#aliased()</em> or <em>DomainObject#aliased()</em> .</p>
+</div>
+<div class="paragraph">
+<p>If there is no such domain type, then an empty <a href="../../../../commons/index/collections/Can.html" class="xref page">Can</a> will be returned.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logicalTypeAndAliasesFor_String"><a class="anchor" href="#logicalTypeAndAliasesFor_String"></a>logicalTypeAndAliasesFor(String)</h3>
+<div class="paragraph">
+<p>Returns the <a href="../../id/LogicalType.html" class="xref page">LogicalType</a> of a domain class' object type, corresponding to <em>Named#value()</em> , along with any aliases defined as per <em>DomainService#aliased()</em> or <em>DomainObject#aliased()</em> .</p>
+</div>
+<div class="paragraph">
+<p>If there is no such domain type, then an empty <a href="../../../../commons/index/collections/Can.html" class="xref page">Can</a> will be returned.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1317,7 +1376,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

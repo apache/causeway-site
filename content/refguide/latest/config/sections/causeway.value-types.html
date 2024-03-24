@@ -70,12 +70,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -136,7 +138,7 @@
             <a class="navbar-item" href="../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -157,8 +159,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -810,6 +813,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -822,7 +828,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -919,6 +928,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1058,7 +1075,7 @@ page.parent doesn't seem to be set...
     <li><a href="causeway.value-types.html">Value types</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/core/config/src/main/adoc/modules/config/pages/sections/causeway.value-types.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/core/config/src/main/adoc/modules/config/pages/sections/causeway.value-types.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1091,6 +1108,28 @@ min-scale</p>
 </div>
 <div class="paragraph">
 <p>Is only used if the minimum scale has not been specified explicitly by some other means, typically either <code>Digits#fraction()</code> or an ORM semantic such as the (JPA) <code>Column#scale()</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.value-types.big-decimal.use-grouping-separator" class="paragraph">
+<p>causeway.value-types.big-decimal.<br>
+use-grouping-separator</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A common use of <code>BigDecimal</code> is as a money value. In some locales (eg English), the "," (comma) is the grouping (thousands) separator wihle the "." (period) acts as a decimal point, but in others (eg France, Italy) it is the other way around.</p>
+</div>
+<div class="paragraph">
+<p>Surprisingly perhaps, a string such as "123,99", when parsed ((by <code>DecimalFormat</code>) in an English locale, is not rejected but instead is evaluated as the value 12399L. That&#8217;s almost certainly not what the end-user would have expected, and results in a money value 100x too large.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of this configuration property is to remove the confusion by simply disallowing the thousands separator from being part of the input string.</p>
+</div>
+<div class="paragraph">
+<p>For maximum safety, allowing the grouping separator is disallowed, but the alternate (original) behaviour can be reinstated by setting this config property back to <code>true</code>.</p>
+</div>
+<div class="paragraph">
+<p>The same configuration property is also used for rendering the value.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1161,7 +1200,7 @@ request-timeout</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

@@ -68,12 +68,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -134,7 +136,7 @@
             <a class="navbar-item" href="../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -155,8 +157,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -808,6 +811,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -820,7 +826,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -917,6 +926,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1055,7 +1072,7 @@ page.parent doesn't seem to be set...
     <li><a href="Can.html">Can</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/commons/pages/index/collections/Can.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/commons/pages/index/collections/Can.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1073,7 +1090,7 @@ page.parent doesn't seem to be set...
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>*IMPORTANT:* A xref:refguide:commons:index/collections/Can.adoc[Can] must not contain _null_ elements. If you need to use store null, then use a different data structure, for example a regular _java.util.List java.util.List_ .</pre>
+<pre>*IMPORTANT:* A xref:refguide:commons:index/collections/Can.adoc[Can] must not contain _null_ elements. If you need to store _null_ , then use a different data structure, for example a regular _java.util.List java.util.List_ .</pre>
 </div>
 </div>
 </div>
@@ -1086,63 +1103,66 @@ page.parent doesn't seem to be set...
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface Can&lt;T&gt; {
   Optional&lt;T&gt; get(int elementIndex)     <i class="conum" data-value="1"></i><b>(1)</b>
-  T getElseFail(int elementIndex)     <i class="conum" data-value="2"></i><b>(2)</b>
-  int compareTo(Can&lt;T&gt; o)     <i class="conum" data-value="3"></i><b>(3)</b>
-  Optional&lt;T&gt; getFirst()     <i class="conum" data-value="4"></i><b>(4)</b>
-  T getFirstElseFail()     <i class="conum" data-value="5"></i><b>(5)</b>
-  Optional&lt;T&gt; getLast()     <i class="conum" data-value="6"></i><b>(6)</b>
-  T getLastElseFail()     <i class="conum" data-value="7"></i><b>(7)</b>
-  Can&lt;T&gt; empty()     <i class="conum" data-value="8"></i><b>(8)</b>
-  Can&lt;T&gt; ofNullable(T element)     <i class="conum" data-value="9"></i><b>(9)</b>
-  Can&lt;T&gt; ofSingleton(T element)     <i class="conum" data-value="10"></i><b>(10)</b>
-  Can&lt;T&gt; of(T... array)     <i class="conum" data-value="11"></i><b>(11)</b>
-  Can&lt;T&gt; ofArray(T[] array)     <i class="conum" data-value="12"></i><b>(12)</b>
-  Can&lt;T&gt; ofCollection(Collection&lt;T&gt; collection)     <i class="conum" data-value="13"></i><b>(13)</b>
-  Can&lt;T&gt; ofIterable(Iterable&lt;T&gt; iterable)     <i class="conum" data-value="14"></i><b>(14)</b>
-  Can&lt;T&gt; ofEnumeration(Enumeration&lt;T&gt; enumeration)     <i class="conum" data-value="15"></i><b>(15)</b>
-  Can&lt;T&gt; ofStream(Stream&lt;T&gt; stream)     <i class="conum" data-value="16"></i><b>(16)</b>
-  Can&lt;T&gt; sorted(Comparator&lt;? super T&gt; comparator)     <i class="conum" data-value="17"></i><b>(17)</b>
-  Can&lt;T&gt; distinct()     <i class="conum" data-value="18"></i><b>(18)</b>
-  Can&lt;T&gt; distinct(BiPredicate&lt;T, T&gt; equality)     <i class="conum" data-value="19"></i><b>(19)</b>
-  Can&lt;T&gt; reverse()     <i class="conum" data-value="20"></i><b>(20)</b>
-  Can&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)     <i class="conum" data-value="21"></i><b>(21)</b>
-  Can&lt;R&gt; map(Function&lt;? super T, R&gt; mapper)     <i class="conum" data-value="22"></i><b>(22)</b>
+  Optional&lt;T&gt; getRelativeToLast(int offset)     <i class="conum" data-value="2"></i><b>(2)</b>
+  T getElseFail(int elementIndex)     <i class="conum" data-value="3"></i><b>(3)</b>
+  T getRelativeToLastElseFail(int offset)     <i class="conum" data-value="4"></i><b>(4)</b>
+  int compareTo(Can&lt;T&gt; o)     <i class="conum" data-value="5"></i><b>(5)</b>
+  Optional&lt;T&gt; getFirst()     <i class="conum" data-value="6"></i><b>(6)</b>
+  T getFirstElseFail()     <i class="conum" data-value="7"></i><b>(7)</b>
+  Optional&lt;T&gt; getLast()     <i class="conum" data-value="8"></i><b>(8)</b>
+  T getLastElseFail()     <i class="conum" data-value="9"></i><b>(9)</b>
+  Can&lt;T&gt; empty()     <i class="conum" data-value="10"></i><b>(10)</b>
+  Can&lt;T&gt; ofNullable(T element)     <i class="conum" data-value="11"></i><b>(11)</b>
+  Can&lt;T&gt; ofSingleton(T element)     <i class="conum" data-value="12"></i><b>(12)</b>
+  Can&lt;T&gt; of(T... array)     <i class="conum" data-value="13"></i><b>(13)</b>
+  Can&lt;T&gt; ofArray(T[] array)     <i class="conum" data-value="14"></i><b>(14)</b>
+  Can&lt;T&gt; ofCollection(Collection&lt;T&gt; collection)     <i class="conum" data-value="15"></i><b>(15)</b>
+  Can&lt;T&gt; ofIterable(Iterable&lt;T&gt; iterable)     <i class="conum" data-value="16"></i><b>(16)</b>
+  Can&lt;T&gt; ofEnumeration(Enumeration&lt;T&gt; enumeration)     <i class="conum" data-value="17"></i><b>(17)</b>
+  Can&lt;T&gt; ofStream(Stream&lt;T&gt; stream)     <i class="conum" data-value="18"></i><b>(18)</b>
+  Can&lt;T&gt; sorted(Comparator&lt;? super T&gt; comparator)     <i class="conum" data-value="19"></i><b>(19)</b>
+  Can&lt;T&gt; distinct()     <i class="conum" data-value="20"></i><b>(20)</b>
+  Can&lt;T&gt; distinct(BiPredicate&lt;T, T&gt; equality)     <i class="conum" data-value="21"></i><b>(21)</b>
+  Can&lt;T&gt; reverse()     <i class="conum" data-value="22"></i><b>(22)</b>
+  Can&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)     <i class="conum" data-value="23"></i><b>(23)</b>
+  Can&lt;R&gt; map(Function&lt;? super T, R&gt; mapper)     <i class="conum" data-value="24"></i><b>(24)</b>
   Can&lt;R&gt; flatMap(Function&lt;? super T, ? extends Can&lt;? extends R&gt;&gt; mapper)
-  Can&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator)     <i class="conum" data-value="23"></i><b>(23)</b>
-  Can&lt;T&gt; concat(Can&lt;T&gt; can, T element)     <i class="conum" data-value="24"></i><b>(24)</b>
-  Iterator&lt;T&gt; iterator(int skip, int limit)     <i class="conum" data-value="25"></i><b>(25)</b>
+  Can&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator)     <i class="conum" data-value="25"></i><b>(25)</b>
+  Can&lt;T&gt; concat(Can&lt;T&gt; can, T element)     <i class="conum" data-value="26"></i><b>(26)</b>
+  Iterator&lt;T&gt; iterator(int skip, int limit)     <i class="conum" data-value="27"></i><b>(27)</b>
   Iterator&lt;T&gt; reverseIterator()
   void forEach(Consumer&lt;? super T&gt; action)
-  void zip(Iterable&lt;R&gt; zippedIn, BiConsumer&lt;? super T, ? super R&gt; action)     <i class="conum" data-value="26"></i><b>(26)</b>
-  Can&lt;R&gt; zipMap(Iterable&lt;Z&gt; zippedIn, BiFunction&lt;? super T, ? super Z, R&gt; mapper)     <i class="conum" data-value="27"></i><b>(27)</b>
+  void zip(Iterable&lt;R&gt; zippedIn, BiConsumer&lt;? super T, ? super R&gt; action)     <i class="conum" data-value="28"></i><b>(28)</b>
+  Can&lt;R&gt; zipMap(Iterable&lt;Z&gt; zippedIn, BiFunction&lt;? super T, ? super Z, R&gt; mapper)     <i class="conum" data-value="29"></i><b>(29)</b>
   Can&lt;T&gt; add(T element)
-  Can&lt;T&gt; addUnique(T element)     <i class="conum" data-value="28"></i><b>(28)</b>
+  Can&lt;T&gt; addUnique(T element)     <i class="conum" data-value="30"></i><b>(30)</b>
   Can&lt;T&gt; addAll(Can&lt;T&gt; other)
-  Can&lt;T&gt; add(int index, T element)     <i class="conum" data-value="29"></i><b>(29)</b>
+  Can&lt;T&gt; add(int index, T element)     <i class="conum" data-value="31"></i><b>(31)</b>
   Can&lt;T&gt; replace(int index, T element)
-  Can&lt;T&gt; remove(int index)     <i class="conum" data-value="30"></i><b>(30)</b>
+  Can&lt;T&gt; remove(int index)     <i class="conum" data-value="32"></i><b>(32)</b>
   Can&lt;T&gt; remove(T element)
-  Can&lt;T&gt; pickByIndex(int... indices)     <i class="conum" data-value="31"></i><b>(31)</b>
-  Can&lt;T&gt; pickByIndex(IntStream intStream)     <i class="conum" data-value="32"></i><b>(32)</b>
-  Can&lt;T&gt; subCan(int startInclusive, int endExclusive)     <i class="conum" data-value="33"></i><b>(33)</b>
-  Can&lt;Can&lt;T&gt;&gt; partitionInnerBound(int maxInnerSize)     <i class="conum" data-value="34"></i><b>(34)</b>
-  Can&lt;Can&lt;T&gt;&gt; partitionOuterBound(int outerSizeYield)     <i class="conum" data-value="35"></i><b>(35)</b>
-  int indexOf(T element)     <i class="conum" data-value="36"></i><b>(36)</b>
-  boolean isEqualTo(Can&lt;?&gt; other)     <i class="conum" data-value="37"></i><b>(37)</b>
-  boolean startsWith(Can&lt;?&gt; other)     <i class="conum" data-value="38"></i><b>(38)</b>
-  boolean endsWith(Can&lt;?&gt; other)     <i class="conum" data-value="39"></i><b>(39)</b>
+  Can&lt;T&gt; pickByIndex(int... indices)     <i class="conum" data-value="33"></i><b>(33)</b>
+  Can&lt;T&gt; pickByIndex(IntStream intStream)     <i class="conum" data-value="34"></i><b>(34)</b>
+  Can&lt;T&gt; subCan(int startInclusive)     <i class="conum" data-value="35"></i><b>(35)</b>
+  Can&lt;T&gt; subCan(int startInclusive, int endExclusive)     <i class="conum" data-value="36"></i><b>(36)</b>
+  Can&lt;Can&lt;T&gt;&gt; partitionInnerBound(int maxInnerSize)     <i class="conum" data-value="37"></i><b>(37)</b>
+  Can&lt;Can&lt;T&gt;&gt; partitionOuterBound(int outerSizeYield)     <i class="conum" data-value="38"></i><b>(38)</b>
+  int indexOf(T element)     <i class="conum" data-value="39"></i><b>(39)</b>
+  boolean isEqualTo(Can&lt;?&gt; other)     <i class="conum" data-value="40"></i><b>(40)</b>
+  boolean startsWith(Can&lt;?&gt; other)     <i class="conum" data-value="41"></i><b>(41)</b>
+  boolean endsWith(Can&lt;?&gt; other)     <i class="conum" data-value="42"></i><b>(42)</b>
   boolean isEmpty()
   boolean isNotEmpty()
   boolean isCardinalityOne()
   boolean isCardinalityMultiple()
   Collector&lt;T, ?, Can&lt;T&gt;&gt; toCan()
-  List&lt;T&gt; toList()     <i class="conum" data-value="40"></i><b>(40)</b>
-  List&lt;T&gt; toArrayList()     <i class="conum" data-value="41"></i><b>(41)</b>
-  Set&lt;T&gt; toSet()     <i class="conum" data-value="42"></i><b>(42)</b>
-  Set&lt;T&gt; toSet(Consumer&lt;T&gt; onDuplicated)     <i class="conum" data-value="43"></i><b>(43)</b>
-  C toCollection(Supplier&lt;C&gt; collectionFactory)     <i class="conum" data-value="44"></i><b>(44)</b>
-  T[] toArray(T[] a)     <i class="conum" data-value="45"></i><b>(45)</b>
-  T[] toArray(Class&lt;T&gt; elementType)     <i class="conum" data-value="46"></i><b>(46)</b>
+  List&lt;T&gt; toList()     <i class="conum" data-value="43"></i><b>(43)</b>
+  List&lt;T&gt; toArrayList()     <i class="conum" data-value="44"></i><b>(44)</b>
+  Set&lt;T&gt; toSet()     <i class="conum" data-value="45"></i><b>(45)</b>
+  Set&lt;T&gt; toSet(Consumer&lt;T&gt; onDuplicated)     <i class="conum" data-value="46"></i><b>(46)</b>
+  C toCollection(Supplier&lt;C&gt; collectionFactory)     <i class="conum" data-value="47"></i><b>(47)</b>
+  T[] toArray(T[] a)     <i class="conum" data-value="48"></i><b>(48)</b>
+  T[] toArray(Class&lt;T&gt; elementType)     <i class="conum" data-value="49"></i><b>(49)</b>
 }</code></pre>
 </div>
 </div>
@@ -1154,13 +1174,24 @@ page.parent doesn't seem to be set...
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Will only ever return an empty Optional, if the elementIndex is out of bounds.</p>
+<p>Will (only ever) return an empty <em>Optional</em> , if the elementIndex is out of bounds.</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><a href="#getRelativeToLast_int">getRelativeToLast(int)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Shortcut for <em>get(this.size() - 1 - (-offset))</em></p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td><a href="#getElseFail_int">getElseFail(int)</a>
 <div class="openblock">
 <div class="content">
@@ -1171,7 +1202,18 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><a href="#getRelativeToLastElseFail_int">getRelativeToLastElseFail(int)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Shortcut for <em>getElseFail(this.size() - 1 - (-offset))</em></p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
 <td><a href="#compareTo_Can">compareTo(Can)</a>
 <div class="openblock">
 <div class="content">
@@ -1182,11 +1224,11 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
 <td><a href="#getFirst_">getFirst()</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
 <td><a href="#getFirstElseFail_">getFirstElseFail()</a>
 <div class="openblock">
 <div class="content">
@@ -1197,11 +1239,11 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
 <td><a href="#getLast_">getLast()</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
 <td><a href="#getLastElseFail_">getLastElseFail()</a>
 <div class="openblock">
 <div class="content">
@@ -1212,7 +1254,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
 <td><a href="#empty_">empty()</a>
 <div class="openblock">
 <div class="content">
@@ -1223,7 +1265,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
 <td><a href="#ofNullable_T">ofNullable(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1234,7 +1276,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
 <td><a href="#ofSingleton_T">ofSingleton(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1245,7 +1287,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
 <td><a href="#of_T">of(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1256,7 +1298,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td><i class="conum" data-value="14"></i><b>14</b></td>
 <td><a href="#ofArray_T">ofArray(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1267,7 +1309,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td><i class="conum" data-value="15"></i><b>15</b></td>
 <td><a href="#ofCollection_Collection">ofCollection(Collection)</a>
 <div class="openblock">
 <div class="content">
@@ -1278,7 +1320,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="14"></i><b>14</b></td>
+<td><i class="conum" data-value="16"></i><b>16</b></td>
 <td><a href="#ofIterable_Iterable">ofIterable(Iterable)</a>
 <div class="openblock">
 <div class="content">
@@ -1289,7 +1331,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="15"></i><b>15</b></td>
+<td><i class="conum" data-value="17"></i><b>17</b></td>
 <td><a href="#ofEnumeration_Enumeration">ofEnumeration(Enumeration)</a>
 <div class="openblock">
 <div class="content">
@@ -1300,7 +1342,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="16"></i><b>16</b></td>
+<td><i class="conum" data-value="18"></i><b>18</b></td>
 <td><a href="#ofStream_Stream">ofStream(Stream)</a>
 <div class="openblock">
 <div class="content">
@@ -1311,7 +1353,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="17"></i><b>17</b></td>
+<td><i class="conum" data-value="19"></i><b>19</b></td>
 <td><a href="#sorted_Comparator">sorted(Comparator)</a>
 <div class="openblock">
 <div class="content">
@@ -1322,7 +1364,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="18"></i><b>18</b></td>
+<td><i class="conum" data-value="20"></i><b>20</b></td>
 <td><a href="#distinct_">distinct()</a>
 <div class="openblock">
 <div class="content">
@@ -1333,7 +1375,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="19"></i><b>19</b></td>
+<td><i class="conum" data-value="21"></i><b>21</b></td>
 <td><a href="#distinct_BiPredicate">distinct(BiPredicate)</a>
 <div class="openblock">
 <div class="content">
@@ -1344,7 +1386,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="20"></i><b>20</b></td>
+<td><i class="conum" data-value="22"></i><b>22</b></td>
 <td><a href="#reverse_">reverse()</a>
 <div class="openblock">
 <div class="content">
@@ -1355,7 +1397,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="21"></i><b>21</b></td>
+<td><i class="conum" data-value="23"></i><b>23</b></td>
 <td><a href="#filter_Predicate">filter(Predicate)</a>
 <div class="openblock">
 <div class="content">
@@ -1366,7 +1408,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="22"></i><b>22</b></td>
+<td><i class="conum" data-value="24"></i><b>24</b></td>
 <td><a href="#map_Function">map(Function)</a>
 <div class="openblock">
 <div class="content">
@@ -1377,7 +1419,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="23"></i><b>23</b></td>
+<td><i class="conum" data-value="25"></i><b>25</b></td>
 <td><a href="#reduce_BinaryOperator">reduce(BinaryOperator)</a>
 <div class="openblock">
 <div class="content">
@@ -1388,7 +1430,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="24"></i><b>24</b></td>
+<td><i class="conum" data-value="26"></i><b>26</b></td>
 <td><a href="#concat_Can_T">concat(Can, T)</a>
 <div class="openblock">
 <div class="content">
@@ -1399,7 +1441,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="25"></i><b>25</b></td>
+<td><i class="conum" data-value="27"></i><b>27</b></td>
 <td><a href="#iterator_int_int">iterator(int, int)</a>
 <div class="openblock">
 <div class="content">
@@ -1410,7 +1452,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="26"></i><b>26</b></td>
+<td><i class="conum" data-value="28"></i><b>28</b></td>
 <td><a href="#zip_Iterable_BiConsumer">zip(Iterable, BiConsumer)</a>
 <div class="openblock">
 <div class="content">
@@ -1421,7 +1463,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="27"></i><b>27</b></td>
+<td><i class="conum" data-value="29"></i><b>29</b></td>
 <td><a href="#zipMap_Iterable_BiFunction">zipMap(Iterable, BiFunction)</a>
 <div class="openblock">
 <div class="content">
@@ -1432,7 +1474,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="28"></i><b>28</b></td>
+<td><i class="conum" data-value="30"></i><b>30</b></td>
 <td><a href="#addUnique_T">addUnique(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1443,7 +1485,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="29"></i><b>29</b></td>
+<td><i class="conum" data-value="31"></i><b>31</b></td>
 <td><a href="#add_int_T">add(int, T)</a>
 <div class="openblock">
 <div class="content">
@@ -1454,7 +1496,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="30"></i><b>30</b></td>
+<td><i class="conum" data-value="32"></i><b>32</b></td>
 <td><a href="#remove_int">remove(int)</a>
 <div class="openblock">
 <div class="content">
@@ -1465,7 +1507,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="31"></i><b>31</b></td>
+<td><i class="conum" data-value="33"></i><b>33</b></td>
 <td><a href="#pickByIndex_int">pickByIndex(int)</a>
 <div class="openblock">
 <div class="content">
@@ -1476,7 +1518,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="32"></i><b>32</b></td>
+<td><i class="conum" data-value="34"></i><b>34</b></td>
 <td><a href="#pickByIndex_IntStream">pickByIndex(IntStream)</a>
 <div class="openblock">
 <div class="content">
@@ -1487,18 +1529,29 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="33"></i><b>33</b></td>
-<td><a href="#subCan_int_int">subCan(int, int)</a>
+<td><i class="conum" data-value="35"></i><b>35</b></td>
+<td><a href="#subCan_int">subCan(int)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , when selected by those indices, that result from given range <em>endExclusive)</em> .</p>
+<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , starting with indices from <em>startInclusive</em> .</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="34"></i><b>34</b></td>
+<td><i class="conum" data-value="36"></i><b>36</b></td>
+<td><a href="#subCan_int_int">subCan(int, int)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , when selected by indices from given range <em>[startInclusive, endExclusive)</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="37"></i><b>37</b></td>
 <td><a href="#partitionInnerBound_int">partitionInnerBound(int)</a>
 <div class="openblock">
 <div class="content">
@@ -1509,7 +1562,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="35"></i><b>35</b></td>
+<td><i class="conum" data-value="38"></i><b>38</b></td>
 <td><a href="#partitionOuterBound_int">partitionOuterBound(int)</a>
 <div class="openblock">
 <div class="content">
@@ -1520,7 +1573,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="36"></i><b>36</b></td>
+<td><i class="conum" data-value="39"></i><b>39</b></td>
 <td><a href="#indexOf_T">indexOf(T)</a>
 <div class="openblock">
 <div class="content">
@@ -1531,11 +1584,11 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="37"></i><b>37</b></td>
+<td><i class="conum" data-value="40"></i><b>40</b></td>
 <td><a href="#isEqualTo_Can">isEqualTo(Can)</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="38"></i><b>38</b></td>
+<td><i class="conum" data-value="41"></i><b>41</b></td>
 <td><a href="#startsWith_Can">startsWith(Can)</a>
 <div class="openblock">
 <div class="content">
@@ -1546,7 +1599,7 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="39"></i><b>39</b></td>
+<td><i class="conum" data-value="42"></i><b>42</b></td>
 <td><a href="#endsWith_Can">endsWith(Can)</a>
 <div class="openblock">
 <div class="content">
@@ -1557,31 +1610,31 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="40"></i><b>40</b></td>
+<td><i class="conum" data-value="43"></i><b>43</b></td>
 <td><a href="#toList_">toList()</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="41"></i><b>41</b></td>
+<td><i class="conum" data-value="44"></i><b>44</b></td>
 <td><a href="#toArrayList_">toArrayList()</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="42"></i><b>42</b></td>
+<td><i class="conum" data-value="45"></i><b>45</b></td>
 <td><a href="#toSet_">toSet()</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="43"></i><b>43</b></td>
+<td><i class="conum" data-value="46"></i><b>46</b></td>
 <td><a href="#toSet_Consumer">toSet(Consumer)</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="44"></i><b>44</b></td>
+<td><i class="conum" data-value="47"></i><b>47</b></td>
 <td><a href="#toCollection_Supplier">toCollection(Supplier)</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="45"></i><b>45</b></td>
+<td><i class="conum" data-value="48"></i><b>48</b></td>
 <td><a href="#toArray_T">toArray(T)</a></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="46"></i><b>46</b></td>
+<td><i class="conum" data-value="49"></i><b>49</b></td>
 <td><a href="#toArray_Class">toArray(Class)</a></td>
 </tr>
 </table>
@@ -1594,7 +1647,13 @@ page.parent doesn't seem to be set...
 <div class="sect2">
 <h3 id="get_int"><a class="anchor" href="#get_int"></a>get(int)</h3>
 <div class="paragraph">
-<p>Will only ever return an empty Optional, if the elementIndex is out of bounds.</p>
+<p>Will (only ever) return an empty <em>Optional</em> , if the elementIndex is out of bounds.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getRelativeToLast_int"><a class="anchor" href="#getRelativeToLast_int"></a>getRelativeToLast(int)</h3>
+<div class="paragraph">
+<p>Shortcut for <em>get(this.size() - 1 - (-offset))</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -1604,6 +1663,12 @@ page.parent doesn't seem to be set...
 </div>
 <div class="paragraph">
 <p>Will only ever throw, if the elementIndex is out of bounds.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getRelativeToLastElseFail_int"><a class="anchor" href="#getRelativeToLastElseFail_int"></a>getRelativeToLastElseFail(int)</h3>
+<div class="paragraph">
+<p>Shortcut for <em>getElseFail(this.size() - 1 - (-offset))</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -1844,9 +1909,18 @@ page.parent doesn't seem to be set...
 </div>
 </div>
 <div class="sect2">
+<h3 id="subCan_int"><a class="anchor" href="#subCan_int"></a>subCan(int)</h3>
+<div class="paragraph">
+<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , starting with indices from <em>startInclusive</em> .</p>
+</div>
+<div class="paragraph">
+<p>Out of bounds picking is simply ignored.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="subCan_int_int"><a class="anchor" href="#subCan_int_int"></a>subCan(int, int)</h3>
 <div class="paragraph">
-<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , when selected by those indices, that result from given range <em>endExclusive)</em> .</p>
+<p>Returns a sub- <a href="Can.html" class="xref page">Can</a> that is made of elements from this <a href="Can.html" class="xref page">Can</a> , when selected by indices from given range <em>[startInclusive, endExclusive)</em> .</p>
 </div>
 <div class="paragraph">
 <p>Out of bounds picking is simply ignored.</p>
@@ -1939,7 +2013,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

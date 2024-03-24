@@ -70,12 +70,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -136,7 +138,7 @@
             <a class="navbar-item" href="../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -157,8 +159,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -323,6 +326,14 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../gqlv/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
       <span class="title">Incubator Catalog</span>
       <ul class="versions">
         <li class="version">
@@ -459,7 +470,7 @@ page.parent doesn't seem to be set...
     <li><a href="post-release-successful.html">Post Release (Successful)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -499,7 +510,7 @@ If there are not +3 votes after this time then it is perfectly permissible to ke
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway Core release 2.0.0-RC4</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway Core release {page-causewayrel}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -560,7 +571,7 @@ We release from Maven Central before anything else; we don&#8217;t want to push 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CAUSEWAYJIRA=CAUSEWAY-9999                           <i class="conum" data-value="1"></i><b>(1)</b>
 export CAUSEWAYTMP=/c/tmp                               <i class="conum" data-value="2"></i><b>(2)</b>
-export CAUSEWAYREL=2.0.0-RC4                           <i class="conum" data-value="3"></i><b>(3)</b>
+export CAUSEWAYREL={page-causewayrel}                           <i class="conum" data-value="3"></i><b>(3)</b>
 export CAUSEWAYRC=RC1                                   <i class="conum" data-value="4"></i><b>(4)</b>
 export CAUSEWAYBRANCH=release-$CAUSEWAYREL-$CAUSEWAYRC
 export CAUSEWAYART=causeway
@@ -827,7 +838,7 @@ done</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh 2.0.0-RC4</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh {page-causewayrel}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -916,14 +927,25 @@ git commit -m "$CAUSEWAYJIRA: merging in final changes to docs"</code></pre>
 <h2 id="generate-website"><a class="anchor" href="#generate-website"></a>Generate website</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We use Antora to generate the site, not only the version being released but also any previous versions listed in <code>site.yml</code>; each of these are tags.
-This is done using the <code>content.sources.url[].branches</code> properties.
-We use branches for all cases - note that the branch name appears in the generated UI.
-If there are patches to the documentation, we move the branches.</p>
+<p>We use Antora to generate the site, setting up a document maintenance branch to allow the website to be updated in the future if required.
+The <code>site.yml</code> references this documentation branch.</p>
 </div>
 <div class="paragraph">
 <p>We therefore temporarily modify all of the <code>antora.yml</code> files (and update <code>index.html</code>) file and create a branch for this change; then we update <code>site.yml</code> with a reference to that new branch.
-All of this is changed afterwards.</p>
+All of this is changed after.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Previously we built a site with the current version and all previous versions.
+For the moment, though, we&#8217;ve simplified to just publish the current version.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>We also use the <a href="https://docs.antora.org/antora/latest/playbook/urls-latest-version-segment/">latest version</a> support of Antora 3.x so that the most recent version is made available as "latest".
@@ -940,7 +962,7 @@ This has two benefits: first, the top-level <code>index.html</code> (in <code>su
 <p>Update all <code>antora.yml</code> files:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sed -i 's/latest/2.0.0-RC4/g' {} \;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sed -i 's/latest/{page-causewayrel}/g' {} \;</code></pre>
 </div>
 </div>
 </li>
@@ -961,14 +983,14 @@ git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code><
 <div class="ulist">
 <ul>
 <li>
-<p>We create the <code>2.0.0-RC4</code> branch.</p>
+<p>We create the <code>{page-causewayrel}</code> branch.</p>
 <div class="paragraph">
-<p>This mirrors the "rel/causeway-2.0.0-RC4" used for the formal (immutable) release tag, but is a branch because it allows us to move it, and must have this simplified name as it is used in the "edit page" link of the site template.</p>
+<p>This mirrors the "rel/causeway-{page-causewayrel}" used for the formal (immutable) release tag, but is a branch because it allows us to move it, and must have this simplified name as it is used in the "edit page" link of the site template.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git branch 2.0.0-RC4
-git push origin 2.0.0-RC4</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git branch {page-causewayrel}
+git push origin {page-causewayrel}</code></pre>
 </div>
 </div>
 </li>
@@ -984,19 +1006,38 @@ git push origin 2.0.0-RC4</code></pre>
 <p>checkout the branch:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout 2.0.0-RC4</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout {page-causewayrel}</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>build prereqs</p>
+<p>build framework</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pushd bom
 mvnd clean install -T1C -DskipTests -Dgithub
-popd
-mvnd -D module-tooling -D skip.essential install -DskipTests</code></pre>
+popd</code></pre>
 </div>
+</div>
+</li>
+<li>
+<p>build module tooling</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvnd -D module-tooling -D skip.essential install -DskipTests</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+this now requires at least JDK 17 in order to build the <code>module-tooling</code> module that is used to generate some of the website.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1020,7 +1061,7 @@ git commit -m "$CAUSEWAYJIRA: updates docs on new release branch"</code></pre>
 <p>push the updated doc branch:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin 2.0.0-RC4</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin {page-causewayrel}</code></pre>
 </div>
 </div>
 </li>
@@ -1030,8 +1071,8 @@ git commit -m "$CAUSEWAYJIRA: updates docs on new release branch"</code></pre>
 <div class="sect2">
 <h3 id="generate-the-site"><a class="anchor" href="#generate-the-site"></a>Generate the site</h3>
 <div class="paragraph">
-<p>To build the site (referencing the current release and all previous releases), we need to update the <code>site.yml</code>.
-This is done in the release branch (<code>$CAUSEWAYBRANCH</code>), <em>not</em> in the documentation branch for the current release (2.0.0-RC4).</p>
+<p>To build the site , we need to update the <code>site.yml</code>.
+This is done in the release branch (<code>$CAUSEWAYBRANCH</code>), <em>not</em> in the documentation branch for the current release ({page-causewayrel}).</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1052,10 +1093,10 @@ This is done in the release branch (<code>$CAUSEWAYBRANCH</code>), <em>not</em> 
 </div>
 </li>
 <li>
-<p>Update with the documentation branch for the current release (2.0.0-RC4)</p>
+<p>Update with the documentation branch for the current release ({page-causewayrel})</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git merge 2.0.0-RC4 --ff-only  <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git merge {page-causewayrel} --ff-only  <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1108,12 +1149,25 @@ popd</code></pre>
   sources:
     - url: .
       start_path: antora/components/docs # docs
-      branches: [2.0.0-M5, ...  2.0.0-RC3]
+      branches: [{page-causewayrel}]
       # ...
     - url: .
       start_path: viewers/wicket/adoc # vw
-      branches: [2.0.0-M5, ... 2.0.0-RC3]</code></pre>
+      branches: [{page-causewayrel}]</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Previously we built a site with the current version and all previous versions.
+For the moment, though, we&#8217;ve simplified to just publish the current version.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1123,19 +1177,29 @@ popd</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">asciidoc:
   attributes:
-    page-causewayprev: "..."    <i class="conum" data-value="1"></i><b>(1)</b>
-    page-causewayrel: "..."     <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+    page-causewayprevv2: "..."    <i class="conum" data-value="1"></i><b>(1)</b>
+    page-causewayprevv3: "..."    <i class="conum" data-value="2"></i><b>(2)</b>
+    page-causewayrelv2: "..."     <i class="conum" data-value="3"></i><b>(3)</b>
+    page-causewayrelv3: "..."     <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>needs to be (the current) <code>2.0.0-RC4</code></td>
+<td>needs to be (the current) <code>2.0.1</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>needs to be set to the <em>next</em> likely release version.</td>
+<td>needs to be (the current) <code>3.0.1</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>needs to be set to the <em>next</em> likely release version for v2.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>needs to be set to the <em>next</em> likely release version for v3 branch</td>
 </tr>
 </table>
 </div>
@@ -1350,10 +1414,10 @@ Further documentation on the crawler can be found link:as per <a href="https://d
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RC=RC1                                                <i class="conum" data-value="1"></i><b>(1)</b>
 git checkout master
 git pull
-git merge release-2.0.0-RC4-$RC
+git merge release-{page-causewayrel}-$RC
 git push origin master
-git branch -d release-2.0.0-RC4-$RC
-git push origin release-2.0.0-RC4-$RC --delete</code></pre>
+git branch -d release-{page-causewayrel}-$RC
+git push origin release-{page-causewayrel}-$RC --delete</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1385,7 +1449,7 @@ git push origin release-2.0.0-RC4-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 2.0.0-RC4</code></pre>
+      BASELINE: {page-causewayrel}</code></pre>
 </div>
 </div>
 </li>
@@ -1398,7 +1462,7 @@ git push origin release-2.0.0-RC4-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 2.0.0-RC4</code></pre>
+      BASELINE: {page-causewayrel}</code></pre>
 </div>
 </div>
 </li>
@@ -1441,7 +1505,7 @@ git reset --hard origin/master</code></pre>
     runs-on: ubuntu-latest
     env:
       # to be shared among all steps of this job
-      BASELINE_MAIN: 2.0.0-RC4
+      BASELINE_MAIN: {page-causewayrel}
       BASELINE_EDGE: 3.0.0-M1</code></pre>
 </div>
 </div>
@@ -1548,7 +1612,7 @@ The <code>jpa</code> and <code>jdo</code> branches should always work against th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[ANN] Apache Causeway version 2.0.0-RC4 Released</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[ANN] Apache Causeway version {page-causewayrel} Released</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1556,7 +1620,7 @@ The <code>jpa</code> and <code>jdo</code> branches should always work against th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">The Apache Causeway team is pleased to announce the release of Apache Causeway 2.0.0-RC4.
+<pre class="highlightjs highlight"><code class="language-none hljs">The Apache Causeway team is pleased to announce the release of Apache Causeway {page-causewayrel}.
 
 New features in this release include:
 
@@ -1575,15 +1639,6 @@ Enjoy!
 [2] https://search.maven.org
 [3] https://causeway.apache.org/docs/latest/downloads/how-to.html</code></pre>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="blog-post"><a class="anchor" href="#blog-post"></a>Blog post</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://blogs.apache.org/roller-ui/login.rol">Log onto</a> the <a href="http://blogs.apache.org/causeway/">Apache blog</a> and create a new post.
-Copy-n-paste the above mailing list announcement should suffice.</p>
 </div>
 </div>
 </div>
@@ -1683,7 +1738,7 @@ The message must:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

@@ -70,12 +70,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -136,7 +138,7 @@
             <a class="navbar-item" href="../../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -157,8 +159,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -810,6 +813,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../config/sections/causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../config/sections/causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../config/sections/causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -822,7 +828,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../../../config/sections/causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../config/sections/causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="../../../config/sections/causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../config/sections/causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../../config/sections/causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -919,6 +928,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1058,7 +1075,7 @@ page.parent doesn't seem to be set...
     <li><a href="DomainService.html">@DomainService</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/antora/components/refguide-index/modules/applib/pages/index/annotation/DomainService.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/antora/components/refguide-index/modules/applib/pages/index/annotation/DomainService.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1081,7 +1098,8 @@ page.parent doesn't seem to be set...
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@interface DomainService {
   String[] aliased() default {};     <i class="conum" data-value="1"></i><b>(1)</b>
-  NatureOfService nature() default NatureOfService.VIEW;     <i class="conum" data-value="2"></i><b>(2)</b>
+  @Deprecated(forRemoval = true, since = "2.0.0-RC4")
+NatureOfService nature() default NatureOfService.VIEW;     <i class="conum" data-value="2"></i><b>(2)</b>
 }</code></pre>
 </div>
 </div>
@@ -1103,6 +1121,23 @@ page.parent doesn't seem to be set...
 <td><a href="#nature">nature</a>
 <div class="openblock">
 <div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>has no scope limiting effect any longer, see [CAUSEWAY-3697]</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The nature of this service, either in the UI or REST only</p>
 </div>
@@ -1124,6 +1159,23 @@ page.parent doesn't seem to be set...
 </div>
 <div class="sect2">
 <h3 id="nature"><a class="anchor" href="#nature"></a>nature</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>has no scope limiting effect any longer, see [CAUSEWAY-3697]</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The nature of this service, either in the UI or REST only</p>
 </div>
@@ -1170,9 +1222,8 @@ This can appear in several contexts, including:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@DomainService(
-    logicalTypeName="orders.OrderMenu"
-)
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Named("orders.OrderMenu")
+@DomainService
 public class OrderMenu {
     ...
 }</code></pre>
@@ -1264,11 +1315,11 @@ An error message will be printed in the log to help you determine which classes 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@DomainService( nature=NatureOfService.VIEW )
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@DomainService
 @RequiredArgsConstructor(onConstructor_ = {@Inject} )
-public class Loans {                                   <i class="conum" data-value="1"></i><b>(1)</b>
+public class Loans {                                    <i class="conum" data-value="1"></i><b>(1)</b>
 
-    private final LoanRepository loanRepository;       <i class="conum" data-value="2"></i><b>(2)</b>
+    private final LoanRepository loanRepository;        <i class="conum" data-value="2"></i><b>(2)</b>
 
     @Action(semantics=SemanticsOf.SAFE)
     public List&lt;Loan&gt; findOverdueLoans() {
@@ -1325,7 +1376,7 @@ public class LoanRepository {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>

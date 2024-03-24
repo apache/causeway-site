@@ -70,12 +70,14 @@
           <div class="navbar-dropdown">
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../security/latest/bypass/about.html">Bypass</a>
+            <a class="navbar-item" href="../../../../security/latest/simple/about.html">Simple</a>
             <a class="navbar-item" href="../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Viewers</span>
             <a class="navbar-item" href="../../../../vw/latest/about.html">Web UI (Wicket)</a>
+            <a class="navbar-item" href="../../../../gqlv/latest/about.html">GraphQL API</a>
             <a class="navbar-item" href="../../../../vro/latest/about.html">REST API (Restful Objects)</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
@@ -136,7 +138,7 @@
             <a class="navbar-item" href="../../../../tooling/latest/about.html">Tooling</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Automated Analysis</span>
-            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_isis">SonarCloud.io</a>
+            <a class="navbar-item" href="https://sonarcloud.io/dashboard?id=apache_causeway">SonarCloud.io</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Interim Builds</span>
             <a class="navbar-item" href="../../../../comguide/latest/nightly-builds.html">Nightly builds</a>
@@ -157,8 +159,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="http://www.apache.org/">Apache Homepage</a>
             <a class="navbar-item" href="https://www.apache.org/events/current-event">Events</a>
-            <a class="navbar-item" href="https://www.apache.org/licenses/">Licenses</a>
+            <a class="navbar-item" href="https://www.apache.org/licenses/">License</a>
             <a class="navbar-item" href="https://www.apache.org/security/">Security</a>
+            <a class="navbar-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
             <a class="navbar-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             <hr class="navbar-divider"/>
@@ -810,6 +813,9 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="causeway.persistence.schema.html">Core Persistence Schema</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="causeway.persistence.commons.html">Core Persistence Commons</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="causeway.security.shiro.html">Shiro Security Implementation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -822,7 +828,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="causeway.viewer.common.html">Common Config for Viewers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="causeway.viewer.restfulobjects.html">Restful Objects Viewer</a>
+    <a class="nav-link" href="causeway.viewer.graphql.html">GraphQL API</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="causeway.viewer.restfulobjects.html">REST API (Restful Objects Viewer)</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="causeway.viewer.wicket.html">Wicket Viewer</a>
@@ -919,6 +928,14 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../../extensions/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">GraphQL Viewer</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1058,7 +1075,7 @@ page.parent doesn't seem to be set...
     <li><a href="causeway.core.runtime-services.html">Core Runtime Services</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.0.0-RC4-RC1/core/config/src/main/adoc/modules/config/pages/sections/causeway.core.runtime-services.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/master/core/config/src/main/adoc/modules/config/pages/sections/causeway.core.runtime-services.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -1121,18 +1138,6 @@ email.override.to</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.port" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.port</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>587</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The port to use for sending email.</p>
-</div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.address" class="paragraph">
 <p>causeway.core.runtime-services.<br>
 email.sender.address</p>
@@ -1149,69 +1154,6 @@ email.sender.address</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.hostname" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.sender.hostname</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the host running the SMTP service.</p>
-</div>
-<div class="paragraph">
-<p>If not specified, then the value used depends upon the email implementation. The default implementation will use the <code>host</code> system property.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.password" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.sender.password</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the password (corresponding to the username to connect to the SMTP service.</p>
-</div>
-<div class="paragraph">
-<p>This configuration property is mandatory (for the default implementation of the <code>EmailService</code>, at least).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.username" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.sender.username</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the username to use to connect to the SMTP service.</p>
-</div>
-<div class="paragraph">
-<p>If not specified, then the sender&#8217;s address will be used instead.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.socket-connection-timeout" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.socket-connection-timeout</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>2000</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The maximum number of millseconds to wait to obtain a socket connection before timing out.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.socket-timeout" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.socket-timeout</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>2000</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The maximum number of millseconds to wait to obtain a socket before timing out.</p>
-</div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.throw-exception-on-fail" class="paragraph">
 <p>causeway.core.runtime-services.<br>
 email.throw-exception-on-fail</p>
@@ -1224,18 +1166,6 @@ email.throw-exception-on-fail</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.tls.enabled" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-email.tls.enabled</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>true</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Whether TLS encryption should be started (that is, <code>STARTTLS</code>).</p>
-</div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.exception-recognizer.dae.disable" class="paragraph">
 <p>causeway.core.runtime-services.<br>
 exception-recognizer.dae.disable</p>
@@ -1243,32 +1173,6 @@ exception-recognizer.dae.disable</p>
 <td class="tableblock halign-left valign-top"><div class="content"></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether the <code>ExceptionRecognizer</code> implementation for Spring&#8217;s DataAccessException - which attempts to sanitize any exceptions arising from object stores - should be disabled (meaning that exceptions will potentially propagate as more serious to the end user).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.repository-service.disable-auto-flush" class="paragraph">
-<p>causeway.core.runtime-services.<br>
-repository-service.<br>
-disable-auto-flush</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Normally any queries are automatically preceded by flushing pending executions.</p>
-</div>
-<div class="paragraph">
-<p>This key allows this behaviour to be disabled.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-this key is redundant for JPA/EclipseLink, which supports its own auto-flush using <a href="https://www.eclipse.org/eclipselink/documentation/2.7/jpa/extensions/persistenceproperties_ref.htm#BABDHEEB">eclipselink.persistence-context.flush-mode</a>
-</td>
-</tr>
-</table>
 </div></div></td>
 </tr>
 <tr>
@@ -1313,6 +1217,95 @@ translation.resource-location</p>
 <p>Replaces the former Servlet context parameter 'causeway.config.dir';</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.port" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.port</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>587</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.hostname" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.sender.hostname</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.password" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.sender.password</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.sender.username" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.sender.username</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.socket-connection-timeout" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.socket-connection-timeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2000</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.socket-timeout" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.socket-timeout</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2000</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.email.tls.enabled" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+email.tls.enabled</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>true</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div id="causeway.core.runtime-services.repository-service.disable-auto-flush" class="paragraph">
+<p>causeway.core.runtime-services.<br>
+repository-service.<br>
+disable-auto-flush</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>null</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </article>
@@ -1332,7 +1325,7 @@ translation.resource-location</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.0.0-RC4-RC1.20231228-2317</p>
+            <p>Revision: master.20240324-1732</p>
         </div>
     </div>
 </footer>
