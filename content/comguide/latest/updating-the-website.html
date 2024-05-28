@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Updating the Website :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/comguide/latest/updating-the-website.html">
-    <meta name="generator" content="Antora 3.1.1">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -459,17 +459,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Tooling</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../tooling/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../tooling/2.0.0/about.html">2.0.0</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">Tutorials</span>
       <ul class="versions">
         <li class="version">
@@ -541,231 +530,44 @@ page.parent doesn't seem to be set...
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">Updating the Website</h1>
-<div id="preamble">
-<div class="sectionbody">
+<div class="paragraph">
+<p>To page describes how to update the website <em>between</em> releases.</p>
+</div>
 <div class="paragraph">
 <p>As part of the release process we <a href="post-release-successful.html#generate-website" class="xref page">generate</a> and publish the website.
-An (intentional) side-effect of this process is to create a branch for the release (that is, <code>{page-causewayrel}</code>).
-This branch can then be used for documentation updates.</p>
+An (intentional) side-effect of this process is to create a branch for the release (that is, <code>2.0.0</code> or `3.0.0).</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="update-docs"><a class="anchor" href="#update-docs"></a>Update docs</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Prereqs:</p>
+<p>If we need to make a change:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>jdk 11</p>
+<p>make the change on <code>master</code> as normal (so that the docs will be there for the next release)</p>
 </li>
 <li>
-<p>mvn 3.x</p>
-</li>
-<li>
-<p>groovy 3.x</p>
-</li>
-<li>
-<p>pandoc 2.x</p>
-</li>
-<li>
-<p>dos2unix</p>
+<p>cherry-pick the changes onto these documentation branches.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In the regular <code>causeway</code> repo:</p>
+<p>Then publish as per the main release process:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Check out the branch:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout {page-causewayrel}</code></pre>
-</div>
-</div>
+<p><a href="post-release-successful.html#generate-the-site" class="xref page">generate the site</a></p>
 </li>
 <li>
-<p>make documentation updates, and commit changes</p>
+<p><a href="post-release-successful.html#publish-website" class="xref page">publish the site</a>.</p>
 </li>
 <li>
-<p>make sure the tooling is built:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn -D module-tooling -D skip.essential install -DskipTests</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>generate the website:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This now runs updates the config properties automatically (unless suppressed by a flag)</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn clean install -pl core/config</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
+<p><a href="post-release-successful.html#update-the-algolia-search-index" class="xref page">update the algolia search index</a></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>This updated website is written to <code>antora/target/site</code>; we&#8217;ll use the results in the <a href="#publish-website">next section</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="publish-website"><a class="anchor" href="#publish-website"></a>Publish website</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We now copy the results of the Antora website generation over to the <code>causeway-site</code> repo:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>in the <code>causeway-site</code> repo, check out the <code>asf-site</code> branch:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../causeway-site
-
-git checkout asf-site
-git pull --ff-only</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>still in the <code>causeway-site</code> repo, run the <code>copyover.sh</code> script:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh copyover.sh</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This deletes all the files in <code>content/</code> <em>except</em> for the <code>schema</code> and <code>versions</code> directories, and copies the generated Antora site to <code>causeway-site</code> repo&#8217;s <code>contents</code> directory:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">#!/usr/bin/env bash
-pushd content
-for a in $(ls -1 | grep -v schema | grep -v versions)
-do
-    rm -rf $a
-done
-popd
-
-pushd ../causeway
-cp -Rf antora/target/site/* ../causeway-site/content/.
-popd
-
-git add .</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Commit the changes and preview:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git commit -m "updates website"
-
-sh preview.sh</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>If everything looks ok, then push the changes to make live, and switch back to the <code>causeway</code> repo:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin asf-site</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="update-the-algolia-search-index"><a class="anchor" href="#update-the-algolia-search-index"></a>Update the Algolia search index</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We use <a href="https://docsearch.algolia.com">Algolia</a> to build our search index.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If required, create a <code>algolia.env</code> file holding the <code>APP_ID</code> and the admin <code>API_KEY</code>, in the root of <code>causeway-site</code>:</p>
-<div class="listingblock">
-<div class="title">algolia.env</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">APPLICATION_ID=...
-API_KEY=...</code></pre>
-</div>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-This file should not be checked into the repo, because the API_KEY allows the index to be modified or deleted.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>If required, update the <code>algolia-config.json</code> file</p>
-<div class="paragraph">
-<p>For example, update the <code>stop_urls</code> property with any paths that should not be crawled.</p>
-</div>
-</li>
-<li>
-<p>Use the Algolia-provided <a href="https://hub.docker.com/r/algolia/docsearch-scraper">docker image</a> to crawl the web pages and create the search index:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pushd content
-docker run -it --env-file=../algolia.env -e "CONFIG=$(cat ../algolia-config.json | jq -r tostring)" algolia/docsearch-scraper:v1.16.0
-popd</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This posts the index up to the <a href="https://algolia.com">Algolia</a> site.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Further documentation on the crawler can be found link:as per <a href="https://docsearch.algolia.com/docs/run-your-own/#run-the-crawl-from-the-docker-image">here</a>; additional config options for the crawler can be found <a href="https://www.algolia.com/doc/api-reference/crawler/">here</a>.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ul>
-</div>
-</div>
+<p>Prereqs (software and doc tooling) are summarised in <a href="release-process-prereqs.html" class="xref page">Appendix: Release Prereqs</a>.</p>
 </div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
@@ -784,7 +586,7 @@ Further documentation on the crawler can be found link:as per <a href="https://d
             </p>
         </div>
         <div class="revision">
-            <p>Revision: website.20240407-1718</p>
+            <p>Revision: CAUSEWAY-2873.20240528-0937</p>
         </div>
     </div>
 </footer>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Appendix: Algolia Search :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/comguide/latest/algolia-search.html">
-    <meta name="generator" content="Antora 3.1.1">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -459,17 +459,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">Tooling</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../tooling/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../tooling/2.0.0/about.html">2.0.0</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">Tutorials</span>
       <ul class="versions">
         <li class="version">
@@ -638,36 +627,22 @@ the "admin API" should not be made public, as it allows the index to be modified
 <div class="sectionbody">
 <div class="paragraph">
 <p>We use Algolia&#8217;s <a href="https://docsearch.algolia.com/docs/scraper/">DocSearch crawler</a> tool (also called the scraper) to index over the static html files to populate the index records.
-A config file describes how to process the files</p>
+A config file describes how to process the files.</p>
 </div>
 <div class="listingblock">
 <div class="title">algolia-config.json</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "index_name": "isis-apache-org",
+  "index_name": "causeway-apache-org",
   "start_urls": [
-    "https://isis.apache.org"
+    "https://causeway.apache.org"
   ],
   "sitemap_urls": [
-    "https://isis.apache.org/sitemap.xml"
+    "https://causeway.apache.org/sitemap.xml"
   ],
   "stop_urls": [
-    "https://isis.apache.org/versions/1.17.0/documentation.html",
-    "https://isis.apache.org/versions/1.16.2/documentation.html",
-    "https://isis.apache.org/versions/1.16.1/documentation.html",
-    "https://isis.apache.org/versions/1.16.0/documentation.html",
-    "https://isis.apache.org/versions/1.15.1/documentation.html",
-    "https://isis.apache.org/versions/1.15.0/documentation.html",
-    "https://isis.apache.org/versions/1.14.0/documentation.html",
-    "https://isis.apache.org/versions/1.13.2.1/documentation.html",
-    "https://isis.apache.org/versions/1.13.2/documentation.html",
-    "https://isis.apache.org/versions/1.13.1/documentation.html",
-    "https://isis.apache.org/versions/1.13.0/documentation.html",
-    "https://isis.apache.org/versions/1.12.2/documentation.html",
-    "https://isis.apache.org/versions/1.12.1/documentation.html",
-    "https://isis.apache.org/versions/1.12.0/documentation.html",
-    "https://isis.apache.org/versions/1.11.1/documentation.html",
-    "https://isis.apache.org/versions/1.11.0/documentation.html"
+    "https://causeway[.]apache[.]org/(docs|comguide|conguide|setupguide|relnotes|refguide|userguide|core|security|extensions|valuetypes|vro|vw|pjdo|pjpa|testing|tutorials|incubator|regressiontests)/(2.0.0|2.0.0-RC2|2.0.0-RC1|2.0.0-M9|2.0.0-M8|2.0.0-M7|2.0.0-M6|2.0.0-M5)/.*",
+    "https://causeway[.]apache[.]org/versions/(1.17.0|1.16.2|1.16.1|1.16.0|1.15.1|1.15.0|1.14.0|1.13.2|1.13.2|1.13.1|1.13.0|1.12.2|1.12.1|1.12.0|1.11.1|1.11.0)/.*"
   ],
   "selectors": {
     "lvl0": {
@@ -677,19 +652,58 @@ A config file describes how to process the files</p>
       "default_value": "Home"
     },
     "lvl1": ".doc h1"
-    ,"lvl2": ".doc h2"
-    ,"lvl3": ".doc h3"
-    ,"lvl4": ".doc h4"
-    ,"text": ".doc p, .doc td.content, .doc th.tableblock"
+  ,"lvl2": ".doc h2"
+  ,"lvl3": ".doc h3"
+  ,"lvl4": ".doc h4"
+  ,"text": ".doc p, .doc td.content, .doc th.tableblock"
   }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The config file reference can be found <a href="https://docsearch.algolia.com/docs/config-file">here</a>.</p>
+<p>The <code>stop_urls</code> property with any paths that should not be crawled.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Our policy is to only index the most recent version.
+This avoids lots of duplication in the index; previous versions of the page are easily accessible.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>This has been checked into causeway-site as <code>./algolia-config.json</code>.</p>
+<p>The config file reference for this file can be found <a href="https://docsearch.algolia.com/docs/config-file">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>The file itself resides in the <code><a href="https://github.com/apache/causeway-site" class="bare">https://github.com/apache/causeway-site</a></code> repo (in the <code>asf-site</code> branch).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-the-algolia-env-file"><a class="anchor" href="#create-the-algolia-env-file"></a>Create the algolia.env file</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>algolia.env</code> file provides credentials to populate the search index maintained by the algolia service.</p>
+</div>
+<div class="listingblock">
+<div class="title">algolia.env</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">APPLICATION_ID=5ISP5TFAEN
+API_KEY=xxxx</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>API_KEY</code> is available in the <code>1password.com</code> vault shared between all Causeway committers.</p>
+</div>
+<div class="paragraph">
+<p>The file itself resides in the <code><a href="https://github.com/apache/causeway-site" class="bare">https://github.com/apache/causeway-site</a></code> repo (in the <code>asf-site</code> branch)</p>
 </div>
 </div>
 </div>
@@ -731,13 +745,13 @@ There are other options for styling, see <a href="https://docsearch.algolia.com/
 <div class="ulist">
 <ul>
 <li>
-<p><a href="post-release-successful.html#generate-website" class="xref page">Generate website</a> and then</p>
+<p><a href="post-release-successful.html#generate-website" class="xref page">generate website</a></p>
 </li>
 <li>
-<p><a href="post-release-successful.html#update-index-html-site-yml-generate" class="xref page">Index the site</a>, and then</p>
+<p><a href="post-release-successful.html#publish-website" class="xref page">publish website</a>.</p>
 </li>
 <li>
-<p><a href="post-release-successful.html#publish-website" class="xref page">Publish website</a>.</p>
+<p><a href="post-release-successful.html#update-the-algolia-search-index" class="xref page">update the algolia search index</a></p>
 </li>
 </ul>
 </div>
@@ -763,7 +777,7 @@ There are other options for styling, see <a href="https://docsearch.algolia.com/
             </p>
         </div>
         <div class="revision">
-            <p>Revision: website.20240407-1718</p>
+            <p>Revision: CAUSEWAY-2873.20240528-0937</p>
         </div>
     </div>
 </footer>
