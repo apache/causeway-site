@@ -379,6 +379,9 @@ page.parent doesn't seem to be set...
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#exercise-9-1-testing-bookvisit-using-an-integtest"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>9.1</strong>: Testing <code>bookVisit()</code> using an integtest</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#exercise-9-2-adds-visit-fixture"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>9.2</strong>: Adds fixtures for the <code>visit</code> module</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -661,7 +664,7 @@ Another term sometimes used is <em>subcutaneous</em> testing; we execute the tes
 <h3 id="solution"><a class="anchor" href="#solution"></a>Solution</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout tags/09-01-bookVisit-integ-test
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout tags/v3/09-01-bookVisit-integ-test
 mvn clean install</code></pre>
 </div>
 </div>
@@ -878,6 +881,238 @@ public void cannot_book_in_the_past() {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="exercise-9-2-adds-visit-fixture"><a class="anchor" href="#exercise-9-2-adds-visit-fixture"></a>Ex 9.2: Adds fixture for <code>Visit</code>s</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently we have a fixture for <code>PetOwner</code>s and their <code>Pet</code>s, but none for <code>Visit</code>s.
+If we want to write additional integration tests for <code>Visit</code>s also, then it&#8217;s a good idea to have some fixtures.
+They can also be used when prototyping.</p>
+</div>
+<div class="paragraph">
+<p>In this exercise we&#8217;ll therefore add a new fixture for the <code>visit</code> module.</p>
+</div>
+<div class="sect2">
+<h3 id="solution-2"><a class="anchor" href="#solution-2"></a>Solution</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout tags/v3/09-02-adds-visit-fixture
+mvn clean install</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tasks-2"><a class="anchor" href="#tasks-2"></a>Tasks</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>copy in the following persona enum (we&#8217;ll add the <code>Builder</code> next):</p>
+<div class="listingblock">
+<div class="title">Visit_persona.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/**
+ * Returns the most recent Visit, or the one scheduled.
+ */
+@RequiredArgsConstructor
+public enum Visit_persona
+implements Persona&lt;Visit, Visit_persona.Builder&gt; {
+
+    JAMAL_VISITS(PetOwner_persona.JAMAL),
+    CAMILA_VISITS(PetOwner_persona.CAMILA),
+    ARJUN_VISITS(PetOwner_persona.ARJUN),
+    NIA_VISITS(PetOwner_persona.NIA),
+    OLIVIA_VISITS(PetOwner_persona.OLIVIA),
+    LEILA_VISITS(PetOwner_persona.LEILA),
+    MATT_VISITS(PetOwner_persona.MATT),
+    BENJAMIN_VISITS(PetOwner_persona.BENJAMIN),
+    JESSICA_VISITS(PetOwner_persona.JESSICA),
+    DANIEL_VISITS(PetOwner_persona.DANIEL);
+
+    private final PetOwner_persona petOwner_p;
+
+    @Override
+    public Builder builder() {
+        return new Builder().setPersona(this);
+    }
+
+    @Override
+    public Visit findUsing(final ServiceRegistry serviceRegistry) {
+        final var owner = petOwner_p.findUsing(serviceRegistry);
+        final var visits = serviceRegistry.lookupService(VisitRepository.class)
+                .map(x -&gt; x.findByPetOwner(owner))
+                .orElseThrow();
+        return lastOf(visits);
+    }
+
+    private static Visit lastOf(List&lt;Visit&gt; visits) {
+        return visits.get(visits.size()-1);
+    }
+
+    // ...
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>now add in the <code>Builder</code>:</p>
+<div class="listingblock">
+<div class="title">Visit_persona.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RequiredArgsConstructor
+public enum Visit_persona
+implements Persona&lt;Visit, Visit_persona.Builder&gt; {
+    // ...
+
+    @Accessors(chain = true)
+    public static class Builder extends BuilderScriptWithResult&lt;Visit&gt; {
+
+        @Getter @Setter private Visit_persona persona;
+
+        @Override
+        protected Visit buildResult(final ExecutionContext ec) {
+
+            final var petOwner = ec.executeChildT(this, persona.petOwner_p);    <i class="conum" data-value="1"></i><b>(1)</b>
+
+            petOwner.getPets().forEach(pet -&gt; {
+
+                // in the past
+                final var numVisits = fakeDataService.ints().between(2, 4);     <i class="conum" data-value="2"></i><b>(2)</b>
+                for (var i = 0; i &lt; numVisits; i++) {
+                    final var daysAgo = fakeDataService.ints().between(5, 500);
+                    final var minsInTheDay = randomAppointmentTime();
+                    final var appointmentTime = randomAppointmentTimeFromToday(-daysAgo, minsInTheDay);
+                    wrapperFactory.wrapMixin(PetOwner_bookVisit.class, petOwner, SyncControl.control().withSkipRules()).act(pet, appointmentTime);
+                }
+
+                // in the future
+                if (fakeDataService.booleans().coinFlip()) {                    <i class="conum" data-value="3"></i><b>(3)</b>
+                    final var daysAhead = fakeDataService.ints().between(1, 10);
+                    final var minsInTheDay = randomAppointmentTime();
+                    final var appointmentTime = randomAppointmentTimeFromToday(daysAhead, minsInTheDay);
+                    wrapperFactory.wrapMixin(PetOwner_bookVisit.class, petOwner, SyncControl.control().withSkipRules()).act(pet, appointmentTime);
+                }
+            });
+
+            final var numDaysAgo = fakeDataService.ints().between(2, 100);
+            final var lastVisit = clockService.getClock().nowAsLocalDate().minusDays(numDaysAgo);
+            petOwner.setLastVisit(lastVisit);
+
+            final var visits = wrapperFactory.wrapMixin(PetOwner_visits.class, petOwner, SyncControl.control().withSkipRules()).coll();
+            return lastOf(visits);
+        }
+
+        private LocalDateTime randomAppointmentTimeFromToday(int days, int appointmentTime) {
+            return clockService.getClock().nowAsLocalDate().atStartOfDay().plusDays(days).plusMinutes(appointmentTime);
+        }
+
+        private int randomAppointmentTime() {
+            return (9 * 60) + (fakeDataService.ints().between(0, 32) * 15);
+        }
+
+        // -- DEPENDENCIES
+
+        @Inject ClockService clockService;
+        @Inject FakeDataService fakeDataService;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Using the supplied <code>ExecutionContext</code>, we can execute any prerequisites fixtures (in this case to obtain the corresponding <code>PetOwner</code> and <code>Pet</code>s)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>we create between 2 and 4 <code>Visit</code>s in the past for each <code>Pet</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>we create a <code>Visit</code> in the future for approximately every other <code>Pet</code>.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>add in the <code>PersistAll</code>:</p>
+<div class="listingblock">
+<div class="title">Visit_persona.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RequiredArgsConstructor
+public enum Visit_persona
+implements Persona&lt;Visit, Visit_persona.Builder&gt; {
+    // ...
+
+    public static class PersistAll
+            extends PersonaEnumPersistAll&lt;Visit, Visit_persona, Builder&gt; {
+        public PersistAll() {
+            super(Visit_persona.class);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>update the top-level <code>DomainAppDemo</code> fixture to create visits rather than petowners/pets:</p>
+<div class="listingblock">
+<div class="title">DomainAppDemo.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class DomainAppDemo extends FixtureScript {
+
+    @Override
+    protected void execute(final ExecutionContext ec) {
+        ec.executeChildren(this, moduleWithFixturesService.getTeardownFixture());
+        ec.executeChild(this, new Visit_persona.PersistAll());      <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+
+    @Inject ModuleWithFixturesService moduleWithFixturesService;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Because <code>Visit_persona</code> automatically creates its prereqs, there&#8217;s no need to run the <code>PetOwner_persona</code> fixture.
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Currently the <code>PetOwner_persona</code> isn&#8217;t rerunnable, so we have to take some care.
+However, it&#8217;s easy to refactor if we wanted to:</p>
+</div>
+<div class="listingblock">
+<div class="title">PetOwner_persona.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val petOwner = serviceRegistry.lookupService(PetOwners.class)
+                    .map(x -&gt; x.findByNameExact(persona.name))
+                    .orElseGet(
+                        () -&gt; petOwners.create(persona.name, null, null, null)
+                    );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the above change <em>isn&#8217;t</em> one of the exercises.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -895,7 +1130,7 @@ public void cannot_book_in_the_past() {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-2873.20240529-0650</p>
+            <p>Revision: CAUSEWAY-2873.20240604-0844</p>
         </div>
     </div>
 </footer>
