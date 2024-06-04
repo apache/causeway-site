@@ -1,1 +1,3 @@
-serve  -p 4000 content
+pushd content
+serve -p 4000 .
+popd
