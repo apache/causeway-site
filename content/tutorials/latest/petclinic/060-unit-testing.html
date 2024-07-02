@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Unit Testing :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/tutorials/latest/petclinic/060-unit-testing.html">
-    <meta name="generator" content="Antora 3.1.1">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   <link rel="next" href="070-modularity.html" title="Modularity (domain events)">
-  <link rel="prev" href="050-visit-entity.html" title="Visit module and entity">
+  <link rel="prev" href="050-visit-entity.html" title="The &lt;code&gt;visit&lt;/code&gt; module and &lt;code&gt;Visit&lt;/code&gt; entity">
   </head>
   <body class="article">
 <header class="header">
@@ -97,6 +97,7 @@
             <a class="navbar-item" href="../../../userguide/latest/excel/about.html">Excel</a>
             <a class="navbar-item" href="../../../userguide/latest/flyway/about.html">Flyway</a>
             <a class="navbar-item" href="../../../userguide/latest/layoutloaders/about.html">Layout Loaders</a>
+            <a class="navbar-item" href="../../../userguide/latest/titlecache/about.html">Title Cache</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../security/latest/secman/about.html">Secman</a>
@@ -178,19 +179,19 @@
   </nav>
 </header>
 <div class="body ">
-<div class="nav-container" data-component="tutorials" data-version="3.0.0">
+<div class="nav-container" data-component="tutorials" data-version="latest">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-search hide-for-print">
   <input id="algolia-search-input" placeholder="Search"></span>
 </div>
 <div class="nav-panel-pagination">
-  <a class="page-previous" rel="prev" href="050-visit-entity.html" title="Visit module and entity"><span></span></a>
+  <a class="page-previous" rel="prev" href="050-visit-entity.html" title="The &lt;code&gt;visit&lt;/code&gt; module and &lt;code&gt;Visit&lt;/code&gt; entity"><span></span></a>
   <a class="page-next" rel="next"
      href="070-modularity.html" title="Modularity (domain events)"><span></span></a>
 <!--
 page.parent doesn't seem to be set...
-  <a class="page-parent disabled" rel="prev" href="" title="Visit module and entity"><span></span></a>
+  <a class="page-parent disabled" rel="prev" href="" title="The &lt;code&gt;visit&lt;/code&gt; module and &lt;code&gt;Visit&lt;/code&gt; entity"><span></span></a>
 -->
 </div>
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -225,100 +226,121 @@ page.parent doesn't seem to be set...
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="020-the-petclinic-domain.html">The PetClinic Domain</a>
+    <a class="nav-link" href="020-the-petclinic-domain.html">The PetClinic Domain and <code>petowner</code> module</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-1-refactor-simpleobject-to-petowner"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.1</strong>: Refactor SimpleObject to PetOwner</a>
+    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-1-create-a-new-petowner-module"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.1</strong>: Create new <code>petowner</code> module</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-2-configure-the-app-to-include-the-petowner-module"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.2</strong>: Include the <code>petowner</code> module</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-3-add-security-role-for-petowner-module"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.3</strong>: Add security role for the <code>petowner</code> module</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-4-update-menubar-for-PetOwners"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.4</strong>: Update menubar for <code>PetOwners</code></a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="020-the-petclinic-domain.html#exercise-2-5-setup-demo-PetOwners"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>2.5</strong>: Setup demo <code>PetOwner</code>s</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="030-petowner-entity.html">PetOwner entity</a>
+    <a class="nav-link" href="030-petowner-entity.html">The <code>PetOwner</code> entity</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-1-rename-petowners-name-property"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.1</strong>: Rename PetOwner&#8217;s name property</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-1-add-petowners-knownAs-property"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.1</strong>: Add <code>PetOwner</code>'s <code>knownAs</code> property</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-2-add-petowners-firstname-property"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.2</strong>: Add PetOwner&#8217;s firstName property</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-2-define-PetOwners-title-imperatively"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.2</strong>: Define <code>PetOwner</code>'s title imperatively</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-3-modify-petowners-updatename-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.3</strong>: Modify PetOwner&#8217;s updateName action</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-3-remaining-PetOwner-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.3</strong>: Add remaining <code>PetOwner</code> properties</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-4-modify-the-menu-action-to-create-petowners"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.4</strong>: Modify the menu action to create PetOwners</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-4-list-new-properties-of-PetOwner"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.4</strong>: List new properties of <code>PetOwner</code></a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="030-petowner-entity.html#exercise-3-5-initial-fixture-script"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.5</strong>: Initial Fixture Script</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-6-prompt-styles"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.6</strong>: Prompt styles</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-6-update-home-page-to-show-PetOwners"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.6</strong>:  Update Home Page to show <code>PetOwner</code>s</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-7-derived-name-property"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.7</strong>: Derived name property</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-7-modify-the-menu-action-that-creates-petowners"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.7</strong>: Modify the menu action that creates <code>PetOwner</code>s</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-8-add-other-properties-for-petowner"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.8</strong>: Add other properties for PetOwner</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-8-prompt-styles"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.8</strong>: Prompt styles</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-9-validation"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.9</strong>: Validation</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-9-derived-days-since-last-visit-property"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.9</strong>: Derived 'days since last visit' property</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-10-field-layout"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.10</strong>: Field layout</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-10-use-meta-annotations-to-reduce-duplication"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.10</strong>: Use meta-annotations to reduce duplication</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="030-petowner-entity.html#exercise-3-11-column-orders"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.11</strong>: Column Orders</a>
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-11-validation"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.11</strong>: Validation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-12-more-validation"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.12</strong>: More validation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-13-scalar-custom-value-types"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.13</strong>: Scalar custom value types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-14-use-layout-xml-file-for-ui-semantics"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.14</strong>: Use layout xml file for UI semantics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="030-petowner-entity.html#exercise-3-15-update-icon-for-pet-owner"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>3.15</strong>: Update icon for <code>PetOwner</code></a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="040-pet-entity.html">Pet entity</a>
+    <a class="nav-link" href="040-pet-entity.html">The <code>Pet</code> entity</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-1-pet-entitys-key-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.1</strong>: Pet entity&#8217;s key properties</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-1-pet-entitys-key-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.1</strong>: <code>Pet</code> entity&#8217;s key properties</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-2-add-petrepository"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.2</strong>: Add PetRepository</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-2-add-pet-ui-and-layout-semantics"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.2</strong>: Add <code>Pet</code>'s UI and layout semantics</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-3-add-petowners-collection-of-pets"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.3</strong>: Add PetOwner&#8217;s collection of Pets</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-3-add-petowners-collection-of-pets"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.3</strong>: Add <code>PetOwner</code>'s collection of <code>Pet</code>s</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-4-add-pets-remaining-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.4</strong>: Add Pet&#8217;s remaining properties</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-4-add-actions-to-add-or-remove-pets"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.4</strong>: Add actions to add or remove <code>Pet</code>s</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-5-digression-clean-up-casing-of-database-schema"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.5</strong>: Digression: clean-up casing of database schema</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-5-extend-the-fixture-data-to-add-in-Pets"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.5</strong>: Extend the fixture data to add in <code>Pet</code>s</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-6-add-petowner-action-to-add-pets"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.6</strong>: Add PetOwner action to add Pets</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-6-add-action-validation"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.6</strong>: Unique <code>Pet</code> names (action validation)</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-7-add-pets-ui-customisation"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.7</strong>: Add Pet&#8217;s UI customisation</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-7-add-pets-remaining-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.7</strong>: Add <code>Pet</code>'s remaining properties</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-8-update-fixture-script-using-pet-personas"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.8</strong>: Update fixture script using Pet personas</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-9-add-petowner-action-to-delete-a-pet"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.9</strong>: Add PetOwner action to delete a Pet</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="040-pet-entity.html#exercise-4-10-cleanup"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.10</strong>: Cleanup</a>
+    <a class="nav-link" href="040-pet-entity.html#exercise-4-8-dynamic-icons-for-pet"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>4.8</strong>: Add dynamic icons for <code>Pet</code></a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="050-visit-entity.html">Visit module and entity</a>
+    <a class="nav-link" href="050-visit-entity.html">The <code>visit</code> module and <code>Visit</code> entity</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="050-visit-entity.html#exercise-5-1-the-visits-module"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.1</strong>: The visits module</a>
+    <a class="nav-link" href="050-visit-entity.html#exercise-5-1-the-visits-module"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.1</strong>: The <code>visit</code> module</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="050-visit-entity.html#exercise-5-2-visit-entitys-key-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.2</strong>: Visit entity&#8217;s key properties</a>
+    <a class="nav-link" href="050-visit-entity.html#exercise-5-2-visit-module-dependencies"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.2</strong>: The <code>visit</code> module dependencies</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="050-visit-entity.html#exercise-5-3-book-visit-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.3</strong>: "Book Visit" action</a>
+    <a class="nav-link" href="050-visit-entity.html#exercise-5-3-visit-entitys-key-properties"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.3</strong>: <code>Visit</code> entity&#8217;s key properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="050-visit-entity.html#exercise-5-4-book-visit-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>5.4</strong>: The "Book Visit" action</a>
   </li>
 </ul>
   </li>
@@ -336,7 +358,7 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="070-modularity.html">Modularity (domain events)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="070-modularity.html#exercise-7-1-refactor-petowners-delete-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>7.1</strong>: refactor PetOwner&#8217;s delete action</a>
+    <a class="nav-link" href="070-modularity.html#exercise-7-1-refactor-petowners-delete-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>7.1</strong>: refactor <code>PetOwner</code>'s delete action</a>
   </li>
 </ul>
   </li>
@@ -350,9 +372,6 @@ page.parent doesn't seem to be set...
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="080-view-models.html#exercise-8-2-add-a-convenience-action"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>8.2</strong>: Add a convenience action</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="080-view-models.html#exercise-8-3-using-a-view-model-as-a-projection-of-an-entity"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>8.3</strong>: Using a view model as a projection of an entity</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -360,7 +379,10 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="090-integration-testing.html">Integration Testing</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="090-integration-testing.html#exercise-9-1-testing-bookvisit-using-an-integtest"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>9.1</strong>: Testing bookVisit using an integtest</a>
+    <a class="nav-link" href="090-integration-testing.html#exercise-9-1-testing-bookvisit-using-an-integtest"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>9.1</strong>: Testing <code>bookVisit()</code> using an integtest</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="090-integration-testing.html#exercise-9-2-adds-visit-fixture"><span class="image"><img src="_images/hand.png" alt="hand"></span> <strong>9.2</strong>: Adds fixtures for the <code>visit</code> module</a>
   </li>
 </ul>
   </li>
@@ -372,17 +394,14 @@ page.parent doesn't seem to be set...
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Tutorials</span>
-    <span class="version">3.0.0</span>
+    <span class="version">latest</span>
   </div>
   <ul class="components">
     <li class="component">
       <span class="title"> </span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../docs/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../docs/2.0.0/about.html">2.0.0</a>
+          <a href="../../../docs/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -390,10 +409,7 @@ page.parent doesn't seem to be set...
       <span class="title">Committers' Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../comguide/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../comguide/2.0.0/about.html">2.0.0</a>
+          <a href="../../../comguide/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -401,10 +417,7 @@ page.parent doesn't seem to be set...
       <span class="title">Contributors' Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../conguide/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../conguide/2.0.0/about.html">2.0.0</a>
+          <a href="../../../conguide/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -412,10 +425,7 @@ page.parent doesn't seem to be set...
       <span class="title">Design Docs</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../core/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../core/2.0.0/about.html">2.0.0</a>
+          <a href="../../../core/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -423,10 +433,7 @@ page.parent doesn't seem to be set...
       <span class="title">Extensions</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../extensions/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../extensions/2.0.0/about.html">2.0.0</a>
+          <a href="../../../extensions/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -434,10 +441,7 @@ page.parent doesn't seem to be set...
       <span class="title">GraphQL Viewer</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../gqlv/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../gqlv/2.0.0/about.html">2.0.0</a>
+          <a href="../../../gqlv/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -445,10 +449,7 @@ page.parent doesn't seem to be set...
       <span class="title">Incubator Catalog</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../incubator/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../incubator/2.0.0/about.html">2.0.0</a>
+          <a href="../../../incubator/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -456,10 +457,7 @@ page.parent doesn't seem to be set...
       <span class="title">JDO/DataNucleus</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../pjdo/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../pjdo/2.0.0/about.html">2.0.0</a>
+          <a href="../../../pjdo/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -467,10 +465,7 @@ page.parent doesn't seem to be set...
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../pjpa/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../pjpa/2.0.0/about.html">2.0.0</a>
+          <a href="../../../pjpa/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -478,10 +473,7 @@ page.parent doesn't seem to be set...
       <span class="title">Reference Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../refguide/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../refguide/2.0.0/about.html">2.0.0</a>
+          <a href="../../../refguide/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -489,10 +481,7 @@ page.parent doesn't seem to be set...
       <span class="title">regressiontests</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../regressiontests/latest/index.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../regressiontests/2.0.0/index.html">2.0.0</a>
+          <a href="../../../regressiontests/latest/index.html">latest</a>
         </li>
       </ul>
     </li>
@@ -500,10 +489,7 @@ page.parent doesn't seem to be set...
       <span class="title">Release Notes</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../relnotes/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../relnotes/2.0.0/about.html">2.0.0</a>
+          <a href="../../../relnotes/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -511,10 +497,7 @@ page.parent doesn't seem to be set...
       <span class="title">REST API (Restful Objects Viewer)</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../vro/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../vro/2.0.0/about.html">2.0.0</a>
+          <a href="../../../vro/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -522,10 +505,7 @@ page.parent doesn't seem to be set...
       <span class="title">Security Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../security/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../security/2.0.0/about.html">2.0.0</a>
+          <a href="../../../security/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -533,10 +513,7 @@ page.parent doesn't seem to be set...
       <span class="title">Setup Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../setupguide/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../setupguide/2.0.0/about.html">2.0.0</a>
+          <a href="../../../setupguide/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -544,21 +521,7 @@ page.parent doesn't seem to be set...
       <span class="title">Testing Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../testing/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../testing/2.0.0/about.html">2.0.0</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <span class="title">Tooling</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../tooling/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../tooling/2.0.0/about.html">2.0.0</a>
+          <a href="../../../testing/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -566,10 +529,7 @@ page.parent doesn't seem to be set...
       <span class="title">Tutorials</span>
       <ul class="versions">
         <li class="version is-current">
-          <a href="../about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../2.0.0/about.html">2.0.0</a>
+          <a href="../about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -577,10 +537,7 @@ page.parent doesn't seem to be set...
       <span class="title">User Guide</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../userguide/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../userguide/2.0.0/about.html">2.0.0</a>
+          <a href="../../../userguide/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -588,10 +545,7 @@ page.parent doesn't seem to be set...
       <span class="title">Value Types Catalog</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../valuetypes/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../valuetypes/2.0.0/about.html">2.0.0</a>
+          <a href="../../../valuetypes/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -599,10 +553,7 @@ page.parent doesn't seem to be set...
       <span class="title">Web UI (Wicket Viewer)</span>
       <ul class="versions">
         <li class="version">
-          <a href="../../../vw/latest/about.html">3.0.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../vw/2.0.0/about.html">2.0.0</a>
+          <a href="../../../vw/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -621,14 +572,7 @@ page.parent doesn't seem to be set...
     <li><a href="060-unit-testing.html">Unit Testing</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.0.0</button>
-  <div class="version-menu">
-    <a class="version is-current" href="060-unit-testing.html">3.0.0</a>
-    <a class="version" href="../../2.0.0/petclinic/060-unit-testing.html">2.0.0</a>
-  </div>
-</div>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/3.0.0/antora/components/tutorials/modules/petclinic/pages/060-unit-testing.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.1.0-RC1/antora/components/tutorials/modules/petclinic/pages/060-unit-testing.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -645,16 +589,16 @@ In this part of the tutorial we&#8217;ll cover unit testing, later on we&#8217;l
 <h2 id="exercise-6-1-unit-test-the-default-time-when-booking-visits"><a class="anchor" href="#exercise-6-1-unit-test-the-default-time-when-booking-visits"></a>Ex 6.1: Unit test the default time when booking visits</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="050-visit-entity.html#exercise-5-3-book-visit-action" class="xref page">"Book Visit"</a> action has a default time of 9am the next morning.
+<p>The <a href="050-visit-entity.html#exercise-5-4-book-visit-action" class="xref page">"Book Visit"</a> action has a default time of 9am the next morning.
 In this section we&#8217;ll write a unit test to verify this logic, using Mockito to "mock the clock".</p>
 </div>
 <div class="sect2">
 <h3 id="solution"><a class="anchor" href="#solution"></a>Solution</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout tags/06-01-unit-test-bookVisit-default-time
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout tags/v2/06-01-unit-test-bookVisit-default-time
 mvn clean install
-mvn -pl spring-boot:run</code></pre>
+mvn -pl webapp spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev"</code></pre>
 </div>
 </div>
 </div>
@@ -667,23 +611,11 @@ mvn -pl spring-boot:run</code></pre>
 <div class="listingblock">
 <div class="title">module-visits/pom.xml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
-    &lt;!-- ... --&gt;
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.causeway.mavendeps&lt;/groupId&gt;
-        &lt;artifactId&gt;causeway-mavendeps-unittests&lt;/artifactId&gt;
-        &lt;type&gt;pom&lt;/type&gt;
-        &lt;scope&gt;test&lt;/scope&gt;
-        &lt;exclusions&gt;
-            &lt;exclusion&gt;
-                &lt;groupId&gt;org.jmock&lt;/groupId&gt;
-                &lt;artifactId&gt;jmock-junit4&lt;/artifactId&gt;
-            &lt;/exclusion&gt;
-        &lt;/exclusions&gt;
-    &lt;/dependency&gt;
-
-&lt;/dependencies&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.causeway.testing&lt;/groupId&gt;
+    &lt;artifactId&gt;causeway-testing-unittestsupport-applib&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </li>
@@ -695,7 +627,7 @@ mvn -pl spring-boot:run</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ExtendWith(MockitoExtension.class)                                             <i class="conum" data-value="1"></i><b>(1)</b>
-class Pet_bookVisit_Test {
+public class PetOwner_bookVisit_Test {
 
     @Mock ClockService mockClockService;                                        <i class="conum" data-value="2"></i><b>(2)</b>
     @Mock VirtualClock mockVirtualClock;                                        <i class="conum" data-value="2"></i><b>(2)</b>
@@ -706,26 +638,27 @@ class Pet_bookVisit_Test {
     }
 
     @Nested
-    class default0 {
+    class default1 {
 
         @Test
         void defaults_to_9am_tomorrow_morning() {
 
             // given
-            Pet_bookVisit mixin = new Pet_bookVisit(null);
+            PetOwner_bookVisit mixin = new PetOwner_bookVisit(null);
             mixin.clockService = mockClockService;                              <i class="conum" data-value="4"></i><b>(4)</b>
 
-            LocalDateTime now = LocalDateTime.of(2021, 10, 21, 16, 37, 45);
+            LocalDateTime now = LocalDateTime.of(2024, 5, 26, 16, 37, 45);
 
             // expecting
-            Mockito.when(mockVirtualClock.nowAsLocalDateTime()).thenReturn(now);<i class="conum" data-value="5"></i><b>(5)</b>
+            Mockito.when(mockVirtualClock.nowAsLocalDate())                     <i class="conum" data-value="5"></i><b>(5)</b>
+                   .thenReturn(now.toLocalDate());
 
             // when
-            LocalDateTime localDateTime = mixin.default0Act();
+            LocalDateTime localDateTime = mixin.default1Act();
 
             // then
             Assertions.assertThat(localDateTime)                                <i class="conum" data-value="6"></i><b>(6)</b>
-                    .isEqualTo(LocalDateTime.of(2021,10,22,9,0,0));
+                    .isEqualTo(LocalDateTime.of(2024,5,27,9,0,0));
         }
     }
 }</code></pre>
@@ -767,8 +700,10 @@ Automatically provisioned by Mockito.</td>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Unit tests should have a suffix "_Test", to distinguish them from integration tests.
-The top-level pom configures Maven surefire to run the unit tests first and then integration tests as a separate execution.
+<div class="paragraph">
+<p>Unit tests should have a suffix "_Test", to distinguish them from integration tests.
+The top-level pom configures Maven surefire to run the unit tests first and then integration tests as a separate execution.</p>
+</div>
 </td>
 </tr>
 </table>
@@ -813,13 +748,13 @@ Verify that the app still works, and write a unit test to check your specificati
     <div class="content">
         <div class="copyright">
             <p>
-                Copyright © 2010~2023 The Apache Software Foundation, licensed under the Apache License, v2.0.
+                Copyright © 2010~2024 The Apache Software Foundation, licensed under the Apache License, v2.0.
                 <br/>
                 Apache, the Apache feather logo, Apache Causeway, and the Apache Causeway project logo are all trademarks of The Apache Software Foundation.
             </p>
         </div>
         <div class="revision">
-            <p>Revision: website.20240325-2342</p>
+            <p>Revision: release-2.1.0-RC1.20240702-1443</p>
         </div>
     </div>
 </footer>
