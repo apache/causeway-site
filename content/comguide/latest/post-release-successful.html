@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Post Release (Successful) :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/comguide/latest/post-release-successful.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 3.1.9">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -356,6 +356,14 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
+      <span class="title">QueryDSL</span>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../querydsl/latest/about.html">latest</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
       <span class="title">Reference Guide</span>
       <ul class="versions">
         <li class="version">
@@ -460,7 +468,7 @@ page.parent doesn't seem to be set...
     <li><a href="post-release-successful.html">Post Release (Successful)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-2.1.0-RC1/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/3.2.0/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -500,7 +508,7 @@ If there are not +3 votes after this time then it is perfectly permissible to ke
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway Core release 2.0.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway Core release 3.2.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -561,7 +569,7 @@ We release from Maven Central before anything else; we don&#8217;t want to push 
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CAUSEWAYJIRA=CAUSEWAY-9999                           <i class="conum" data-value="1"></i><b>(1)</b>
 export CAUSEWAYTMP=/c/tmp                               <i class="conum" data-value="2"></i><b>(2)</b>
-export CAUSEWAYREL=2.0.1                           <i class="conum" data-value="3"></i><b>(3)</b>
+export CAUSEWAYREL=3.2.0                           <i class="conum" data-value="3"></i><b>(3)</b>
 export CAUSEWAYRC=RC1                                   <i class="conum" data-value="4"></i><b>(4)</b>
 export CAUSEWAYBRANCH=release-$CAUSEWAYREL-$CAUSEWAYRC
 export CAUSEWAYART=causeway
@@ -828,7 +836,7 @@ done</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh 2.0.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh upd.sh 3.2.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -879,7 +887,7 @@ cat *.sha512</code></pre>
 <li>
 <p>copy the new schema(s) from</p>
 <div class="paragraph">
-<p><code>api/schema/src/main/resources/o.a.i.s.xxx</code></p>
+<p><code>api/schema/src/main/resources/o.a.c.s.xxx</code></p>
 </div>
 <div class="paragraph">
 <p>to its versioned:</p>
@@ -917,99 +925,53 @@ git commit -m "$CAUSEWAYJIRA: merging in final changes to docs"</code></pre>
 <h2 id="generate-website"><a class="anchor" href="#generate-website"></a>Generate website</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We use Antora to generate the site, setting up a document maintenance branch to allow the website to be updated in the future if required.
-The <code>site.yml</code> references this documentation branch.</p>
+<p>We use Antora to generate the site, setting up a document maintenance branch <code>3.2.0</code>.
+This mirrors the "rel/causeway-3.2.0" (immutable) release tag, but is a branch because it allows us to update the docs outside formal releases.</p>
 </div>
 <div class="paragraph">
-<p>We therefore temporarily modify all of the <code>antora.yml</code> files (and update <code>index.html</code>) file and create a branch for this change; then we update <code>site.yml</code> with a reference to that new branch.
-All of this is changed after.</p>
+<p>The <code>site.yml</code> (which can be in any branch) references these documentation branches, but uses the <a href="https://docs.antora.org/antora/latest/playbook/urls-latest-version-segment/">latest version</a> support of Antora 3.x to reference the <code>3.2.0</code> version as "latest":</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Previously we built a site with the current version and all previous versions.
-For the moment, though, we&#8217;ve simplified to just publish the current version.
-</td>
-</tr>
-</table>
+<div class="listingblock">
+<div class="title">site.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">urls:
+    latest_version_segment: latest</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>We also use the <a href="https://docs.antora.org/antora/latest/playbook/urls-latest-version-segment/">latest version</a> support of Antora 3.x so that the most recent version is made available as "latest".
-This has two benefits: first, the top-level <code>index.html</code> (in <code>supplemental-ui</code>) does not need to be updated, and secondly, this improves search engine results as there will always be a <code>latest</code> version.</p>
+<p>This approach also means that the top-level <code>index.html</code> (from the Antora template) does not need to be modified; it can simply refer to "latest".
+To avoid duplicates in the Algolia search index, we also only index the "latest" directory.</p>
 </div>
 <div class="sect2">
-<h3 id="create-doc-branch"><a class="anchor" href="#create-doc-branch"></a>Create doc branch</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-At the time of writing we support two branches, <code>master</code> (for v2) and <code>v3</code>.
-Adjust these instructions if necessary.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>First, we update all versions in <code>antora.yml</code>:</p>
-</div>
+<h3 id="create-doc-branch"><a class="anchor" href="#create-doc-branch"></a>Create the doc branch</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Update all <code>antora.yml</code> files to use the latest branch (2.0.1):</p>
+<p>We create the <code>3.2.0</code> branch, at the rel/causeway-3.2.0 release tag.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sed -i 's/latest/2.0.1/g' {} \;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout -b 3.2.0
+git reset --hard rel/causeway-3.2.0</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Commit all these changes:</p>
+<p>update all <code>antora.yml</code> files to use the latest branch (3.2.0):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
-git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sed -i 's/latest/3.2.0/g' {} \;</code></pre>
 </div>
 </div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We now create a branch which can be referenced in the <code>site.yml</code>, later on.</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>We create the <code>2.0.1</code> branch.</p>
-<div class="paragraph">
-<p>This mirrors the "rel/causeway-2.0.1" used for the formal (immutable) release tag, but is a branch because it allows us to move it, and must have this simplified name as it is used in the "edit page" link of the site template.</p>
-</div>
+<p>update the version for the petclinic tutorial:</p>
 <div class="listingblock">
+<div class="title">antora/components/tutorials/antora.yml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git branch 2.0.1
-git push origin 2.0.1</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Now we make sure that the docs in the new doc branch are actually up-to-date.
-(There is no need to update <code>site.yml</code>, because at this stage it continues to refer to the <code>HEAD</code> branch):</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>checkout the branch:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout 2.0.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">asciidoc:
+  attributes:
+    tag-version: '3.2.0'
+    jdk-version: '17'</code></pre>
 </div>
 </div>
 </li>
@@ -1024,7 +986,7 @@ popd</code></pre>
 </div>
 </li>
 <li>
-<p>if necessary, build the module tooling, as per <a href="release-process-prereqs.html#doc-tooling" class="xref page">doc tooling prereqs</a> process.</p>
+<p>build and link to the module tooling jar, as per <a href="release-process-prereqs.html#doc-tooling" class="xref page">doc tooling prereqs</a> process</p>
 </li>
 <li>
 <p>generate the website:</p>
@@ -1044,10 +1006,19 @@ git commit -m "$CAUSEWAYJIRA: updates docs on new release branch"</code></pre>
 </div>
 </li>
 <li>
-<p>push the updated doc branch:</p>
+<p>Commit all these changes:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin 2.0.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Push the documentation branch:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push origin 3.2.0 -u</code></pre>
 </div>
 </div>
 </li>
@@ -1057,36 +1028,25 @@ git commit -m "$CAUSEWAYJIRA: updates docs on new release branch"</code></pre>
 <div class="sect2">
 <h3 id="generate-the-site"><a class="anchor" href="#generate-the-site"></a>Generate the site</h3>
 <div class="paragraph">
-<p>To build the site , we need to update the <code>site.yml</code>.
-This is done in the release branch (<code>$CAUSEWAYBRANCH</code>), <em>not</em> in the documentation branch for the current release (2.0.1).</p>
+<p>To build the site, we need to update the <code>site.yml</code>.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Recreate the <code>website</code> branch off of <code>master</code>.</p>
 <div class="paragraph">
-<p>All that will be picked up from this branch is the <code>supplementary-ui</code> files (top-level index) and the <code>site.yml</code> playbook that identifies which branch(es) to include in the website.</p>
+<p>This can be done from any branch, normally the release branch (<code>$CAUSEWAYBRANCH</code>) or <code>master</code>.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout master
-git branch -D website     <i class="conum" data-value="1"></i><b>(1)</b>
-git checkout -b website   <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>delete the branch if necessary</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>recreate the branch</td>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+All that will be picked up from this branch is the <code>supplementary-ui</code> files (top-level index) and the <code>site.yml</code> playbook that identifies which branch(es) to include in the website.
+</td>
 </tr>
 </table>
 </div>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p>Update <code>site.yml</code> using <code>site.NEXT.yml</code>:</p>
 </li>
@@ -1110,11 +1070,11 @@ popd</code></pre>
   sources:
     - url: .
       start_path: antora/components/docs # docs
-      branches: [2.0.1, 3.0.1]
+      branches: [3.2.0]
       # ...
     - url: .
       start_path: viewers/wicket/adoc # vw
-      branches: [2.0.1, 3.0.1]</code></pre>
+      branches: [3.2.0]</code></pre>
 </div>
 </div>
 </li>
@@ -1125,29 +1085,14 @@ popd</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">asciidoc:
   attributes:
-    page-causewayprevv2: "..."    <i class="conum" data-value="1"></i><b>(1)</b>
-    page-causewayprevv3: "..."    <i class="conum" data-value="2"></i><b>(2)</b>
-    page-causewayrelv2: "..."     <i class="conum" data-value="3"></i><b>(3)</b>
-    page-causewayrelv3: "..."     <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+    page-causewayreleaseversion: "..."    <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>needs to be (the current) <code>2.0.1</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>needs to be (the current) <code>3.0.1</code></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>needs to be set to the <em>next</em> likely release version for v2.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>needs to be set to the <em>next</em> likely release version for v3 branch</td>
+<td>needs to be the next likely <code>3.2.0</code></td>
 </tr>
 </table>
 </div>
@@ -1161,13 +1106,6 @@ git commit -m "$CAUSEWAYJIRA: updates site.yml in readiness for website generati
 </div>
 </div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We are ready to actually generate the Antora website.</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p>generate the website:</p>
 <div class="listingblock">
@@ -1179,15 +1117,13 @@ git commit -m "$CAUSEWAYJIRA: updates site.yml in readiness for website generati
 <p>This will write to <code>antora/target/site</code>; we&#8217;ll use the results in the <a href="#publish-website">next section</a>.</p>
 </div>
 </li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="revert-site-yml"><a class="anchor" href="#revert-site-yml"></a>Revert site.yml</h3>
+<li>
+<p>Revert <code>site.yml</code></p>
 <div class="paragraph">
-<p>Optionally, restore the original <code>site.yml</code> file.
-However, you might want to leave it as is in case there is a requirement to regenerate the website.
-In any case, when the next release comes around, we will delete this branch anyway.</p>
+<p>Restore the original <code>site.yml</code> file.</p>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1334,10 +1270,10 @@ Further documentation on the crawler can be found link:as per <a href="https://d
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RC=RC1                                                <i class="conum" data-value="1"></i><b>(1)</b>
 git checkout master
 git pull
-git merge release-2.0.1-$RC
+git merge release-3.2.0-$RC
 git push origin master
-git branch -d release-2.0.1-$RC
-git push origin release-2.0.1-$RC --delete</code></pre>
+git branch -d release-3.2.0-$RC
+git push origin release-3.2.0-$RC --delete</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1369,7 +1305,7 @@ git push origin release-2.0.1-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 2.0.1</code></pre>
+      BASELINE: 3.2.0</code></pre>
 </div>
 </div>
 </li>
@@ -1382,7 +1318,7 @@ git push origin release-2.0.1-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 2.0.1</code></pre>
+      BASELINE: 3.2.0</code></pre>
 </div>
 </div>
 </li>
@@ -1425,8 +1361,8 @@ git reset --hard origin/master</code></pre>
     runs-on: ubuntu-latest
     env:
       # to be shared among all steps of this job
-      BASELINE_MAIN: 2.0.1
-      BASELINE_EDGE: 3.0.1</code></pre>
+      BASELINE_MAIN: 3.2.0
+      BASELINE_EDGE: 3.2.0</code></pre>
 </div>
 </div>
 </li>
@@ -1451,19 +1387,25 @@ git commit -m "$CAUSEWAYJIRA: bumps BASELINE to latest release version"</code></
 <h2 id="update-starter-projects"><a class="anchor" href="#update-starter-projects"></a>Update starter projects</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As explained in <a href="cutting-a-release.html#update-starter-apps" class="xref page">cutting a release</a>,for each of the two starter apps, we maintain eight (!) branches:</p>
+<p>As explained in <a href="cutting-a-release.html#update-starter-apps" class="xref page">cutting a release</a>,for each of the two starter apps, we maintain
+four
+branches:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v2-jpa</code>; <code>v2-jdo</code>; <code>v3-jpa</code>; <code>v3-jdo</code></p>
+<p><code>v3-jpa</code>; <code>v3-jdo</code></p>
 <div class="paragraph">
 <p>These are intended to reference the <em>most recently released</em> version, the first demonstrating persistence using JDO, the second using JPA.
 These are the branches referenced from the home page and getting started pages of the website.</p>
 </div>
 </li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p><code>v2-jpa-SNAPSHOT</code>; <code>v2-jdo-SNAPSHOT</code>; <code>v3-jpa-SNAPSHOT</code>; <code>v3-jdo-SNAPSHOT</code></p>
+<p><code>v3-jpa-SNAPSHOT</code>; <code>v3-jdo-SNAPSHOT</code></p>
 <div class="paragraph">
 <p>These reference the most current snapshot nightly build.</p>
 </div>
@@ -1471,11 +1413,12 @@ These are the branches referenced from the home page and getting started pages o
 </ul>
 </div>
 <div class="paragraph">
-<p>The general idea is that a release will fast-forward <code>v2-jpa</code> to <code>v2-jpa-SNAPSHOT</code> and similarly moves <code>v2-jdo</code> up to <code>v2-jdo-SNAPSHOT</code>, and then repeat the process for v3.
-The non-SNAPSHOT builds should always reference the most recently release of v2 or v3.</p>
+<p>The general idea is that a release will fast-forward <code>vN-jpa</code> to <code>vN-jpa-SNAPSHOT</code> and similarly moves <code>vN-jdo</code> up to <code>vN-jdo-SNAPSHOT</code>, bumping to the newly released version of the framework in the process.
+This is done for all current <code>vN</code> branches.
+The non-SNAPSHOT builds should always reference the most recently release.</p>
 </div>
 <div class="paragraph">
-<p>In order that we don&#8217;t break the starter apps while a release is being voted on, we do the changes in work branches, <code>$CAUSEWAYBRANCH-jpa</code> and <code>$CAUSEWAYBRANCH-jdo</code> (where <code>$CAUSEWAYBRANCH</code> is "release-2.0.0-RC1", or "release-3.0.0-RC1" etc).</p>
+<p>In order that we don&#8217;t break the starter apps while a release is being voted on, we do the changes in work branches, <code>$CAUSEWAYBRANCH-jpa</code> and <code>$CAUSEWAYBRANCH-jdo</code>.</p>
 </div>
 <div class="paragraph">
 <p>Now that the release is complete, tidy up these branches and then set up the <code>-SNAPSHOT</code> branches as required.</p>
@@ -1487,7 +1430,7 @@ The non-SNAPSHOT builds should always reference the most recently release of v2 
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The <code>v{2,3}-{jpa,jdo}</code> branches should always work against the most recent release, whereas the <code>v{2,3}-{jpa,jdo}-SNAPSHOT</code> reference more recent nightly builds if necessary.
+The <code>vN-{jpa,jdo}</code> branches should always work against the most recent release, whereas the <code>vN-{jpa,jdo}-SNAPSHOT</code> reference more recent nightly builds if necessary.
 </td>
 </tr>
 </table>
@@ -1521,7 +1464,7 @@ The <code>v{2,3}-{jpa,jdo}</code> branches should always work against the most r
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[ANN] Apache Causeway version 2.0.1 Released</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[ANN] Apache Causeway version 3.2.0 Released</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1529,7 +1472,7 @@ The <code>v{2,3}-{jpa,jdo}</code> branches should always work against the most r
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">The Apache Causeway team is pleased to announce the release of Apache Causeway 2.0.1.
+<pre class="highlightjs highlight"><code class="language-none hljs">The Apache Causeway team is pleased to announce the release of Apache Causeway 3.2.0.
 
 New features in this release include:
 
@@ -1647,7 +1590,7 @@ The message must:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-2.1.0-RC1.20240702-1443</p>
+            <p>Revision: 3.2.0.20241231-1721</p>
         </div>
     </div>
 </footer>
