@@ -14,8 +14,8 @@ do
 done
 popd
 
-pushd ../../causeway/master
-cp -Rf antora/target/site/* ../../causeway-site/asf-site/content/.
+pushd ../causeway/master
+cp -Rf antora/target/site/* ../../causeway-site/content/.
 popd
 
 git add .
