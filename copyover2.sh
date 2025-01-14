@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 #
-# This variant of copyover.sh assumes that the git repos have been checked out with an additional directory for the worktree.
+# This variant of copyover.sh assumes that the git repos have been checked out with an additional directory 
+# for the worktree of causeway
 #
-# github/apache/causeway/master
-# github/apache/causeway-site/asf-site
+# github/apache/causeway/main
+# github/apache/causeway-site
 #
 
 pushd content
@@ -14,7 +15,7 @@ do
 done
 popd
 
-pushd ../causeway/master
+pushd ../causeway/main
 cp -Rf antora/target/site/* ../../causeway-site/content/.
 popd
 
