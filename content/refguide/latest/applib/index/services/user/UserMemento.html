@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>UserMemento :: causeway</title>
+    <title>UserMemento (record) :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/refguide/latest/applib/index/services/user/UserMemento.html">
-    <meta name="generator" content="Antora 3.1.9">
+    <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../../../../../_/css/site.css">
     <link rel="stylesheet" href="../../../../../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -1121,14 +1121,14 @@ page.parent doesn't seem to be set...
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../../../about.html">Reference Guide</a></li>
-    <li><a href="UserMemento.html">UserMemento</a></li>
+    <li><a href="UserMemento.html">UserMemento <em>(record)</em></a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/3.2.0/antora/components/refguide-index/modules/applib/pages/index/services/user/UserMemento.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/refguide-index/modules/applib/pages/index/services/user/UserMemento.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
-<h1 class="page">UserMemento</h1>
+<h1 class="page">UserMemento <em>(record)</em></h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -1142,7 +1142,7 @@ page.parent doesn't seem to be set...
 <div class="listingblock">
 <div class="title">UserMemento.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class UserMemento {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record UserMemento {
   public static final String LOGICAL_TYPE_NAME;
   public static final String AUTHORIZED_USER_ROLE;     <i class="conum" data-value="1"></i><b>(1)</b>
   UserMemento system()     <i class="conum" data-value="2"></i><b>(2)</b>
@@ -1152,14 +1152,35 @@ page.parent doesn't seem to be set...
   UserMemento ofNameAndRoleNames(String name, List&lt;String&gt; roleNames)     <i class="conum" data-value="6"></i><b>(6)</b>
   UserMemento ofNameAndRoleNames(String name, Stream&lt;String&gt; roleNames)     <i class="conum" data-value="7"></i><b>(7)</b>
   String nameFormatted()
-  List&lt;RoleMemento&gt; getRoles()     <i class="conum" data-value="8"></i><b>(8)</b>
   UserMemento withRoleAdded(String role)
-  boolean isCurrentUser(String userName)     <i class="conum" data-value="9"></i><b>(9)</b>
+  boolean isCurrentUser(String userName)     <i class="conum" data-value="8"></i><b>(8)</b>
   Stream&lt;String&gt; streamRoleNames()
   boolean hasRoleName(String roleName)
-  boolean hasSudoAccessAllRole()     <i class="conum" data-value="10"></i><b>(10)</b>
+  boolean hasSudoAccessAllRole()     <i class="conum" data-value="9"></i><b>(9)</b>
   UserMementoBuilder asBuilder()
   UserLocale asUserLocale()
+  UserMementoBuilder builder(String name)
+  UserMemento withRealName(String realName)
+  UserMemento withAvatarUrl(URL avatarUrl)
+  UserMemento withImpersonating(boolean impersonating)
+  UserMemento withAuthenticationCode(String authenticationCode)
+  UserMemento withAuthenticationSource(AuthenticationSource authenticationSource)
+  UserMemento withMultiTenancyToken(String multiTenancyToken)
+  UserMemento withLanguageLocale(Locale languageLocale)
+  UserMemento withNumberFormatLocale(Locale numberFormatLocale)
+  UserMemento withTimeFormatLocale(Locale timeFormatLocale)
+  boolean equals(Object obj)
+  int hashCode()
+  String getName()     <i class="conum" data-value="10"></i><b>(10)</b>
+  String getAuthenticationCode()     <i class="conum" data-value="11"></i><b>(11)</b>
+  AuthenticationSource getAuthenticationSource()     <i class="conum" data-value="12"></i><b>(12)</b>
+  URL getAvatarUrl()     <i class="conum" data-value="13"></i><b>(13)</b>
+  String getRealName()     <i class="conum" data-value="14"></i><b>(14)</b>
+  Locale getLanguageLocale()     <i class="conum" data-value="15"></i><b>(15)</b>
+  Locale getnumberFormatLocale()     <i class="conum" data-value="16"></i><b>(16)</b>
+  Locale getTimeFormatLocale()     <i class="conum" data-value="17"></i><b>(17)</b>
+  String getMultiTenancyToken()     <i class="conum" data-value="18"></i><b>(18)</b>
+  List&lt;RoleMemento&gt; getRoles()     <i class="conum" data-value="19"></i><b>(19)</b>
 }</code></pre>
 </div>
 </div>
@@ -1244,17 +1265,6 @@ page.parent doesn't seem to be set...
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td><a href="#getRoles_">getRoles()</a>
-<div class="openblock">
-<div class="content">
-<div class="paragraph">
-<p>The roles associated with this user.</p>
-</div>
-</div>
-</div></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="9"></i><b>9</b></td>
 <td><a href="#isCurrentUser_String">isCurrentUser(String)</a>
 <div class="openblock">
 <div class="content">
@@ -1265,12 +1275,262 @@ page.parent doesn't seem to be set...
 </div></td>
 </tr>
 <tr>
-<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
 <td><a href="#hasSudoAccessAllRole_">hasSudoAccessAllRole()</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Whether this <a href="UserMemento.html" class="xref page">UserMemento</a> 's <em>UserMemento#getRoles() roles</em> contains the <a href="../sudo/SudoService.html" class="xref page">SudoService</a> 's <em>SudoService#ACCESS_ALL_ROLE ACCESS_ALL_ROLE</em> role (meaning that security checks are disabled).</p>
+<p>Whether this <a href="UserMemento.html" class="xref page">UserMemento</a> 's <em>UserMemento#roles() roles</em> contains the <a href="../sudo/SudoService.html" class="xref page">SudoService</a> 's <em>SudoService#ACCESS_ALL_ROLE ACCESS_ALL_ROLE</em> role (meaning that security checks are disabled).</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td><a href="#getName_">getName()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#name()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td><a href="#getAuthenticationCode_">getAuthenticationCode()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#authenticationCode()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td><a href="#getAuthenticationSource_">getAuthenticationSource()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#authenticationSource()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td><a href="#getAvatarUrl_">getAvatarUrl()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#avatarUrl()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="14"></i><b>14</b></td>
+<td><a href="#getRealName_">getRealName()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#realName()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="15"></i><b>15</b></td>
+<td><a href="#getLanguageLocale_">getLanguageLocale()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#languageLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="16"></i><b>16</b></td>
+<td><a href="#getnumberFormatLocale_">getnumberFormatLocale()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#numberFormatLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="17"></i><b>17</b></td>
+<td><a href="#getTimeFormatLocale_">getTimeFormatLocale()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#timeFormatLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="18"></i><b>18</b></td>
+<td><a href="#getMultiTenancyToken_">getMultiTenancyToken()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#multiTenancyToken()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="19"></i><b>19</b></td>
+<td><a href="#getRoles_">getRoles()</a>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#roles()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div></td>
@@ -1325,12 +1585,6 @@ page.parent doesn't seem to be set...
 </div>
 </div>
 <div class="sect2">
-<h3 id="getRoles_"><a class="anchor" href="#getRoles_"></a>getRoles()</h3>
-<div class="paragraph">
-<p>The roles associated with this user.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="isCurrentUser_String"><a class="anchor" href="#isCurrentUser_String"></a>isCurrentUser(String)</h3>
 <div class="paragraph">
 <p>Determine if the specified name is this user.</p>
@@ -1339,7 +1593,207 @@ page.parent doesn't seem to be set...
 <div class="sect2">
 <h3 id="hasSudoAccessAllRole_"><a class="anchor" href="#hasSudoAccessAllRole_"></a>hasSudoAccessAllRole()</h3>
 <div class="paragraph">
-<p>Whether this <a href="UserMemento.html" class="xref page">UserMemento</a> 's <em>UserMemento#getRoles() roles</em> contains the <a href="../sudo/SudoService.html" class="xref page">SudoService</a> 's <em>SudoService#ACCESS_ALL_ROLE ACCESS_ALL_ROLE</em> role (meaning that security checks are disabled).</p>
+<p>Whether this <a href="UserMemento.html" class="xref page">UserMemento</a> 's <em>UserMemento#roles() roles</em> contains the <a href="../sudo/SudoService.html" class="xref page">SudoService</a> 's <em>SudoService#ACCESS_ALL_ROLE ACCESS_ALL_ROLE</em> role (meaning that security checks are disabled).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getName_"><a class="anchor" href="#getName_"></a>getName()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#name()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getAuthenticationCode_"><a class="anchor" href="#getAuthenticationCode_"></a>getAuthenticationCode()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#authenticationCode()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getAuthenticationSource_"><a class="anchor" href="#getAuthenticationSource_"></a>getAuthenticationSource()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#authenticationSource()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getAvatarUrl_"><a class="anchor" href="#getAvatarUrl_"></a>getAvatarUrl()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#avatarUrl()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getRealName_"><a class="anchor" href="#getRealName_"></a>getRealName()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#realName()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getLanguageLocale_"><a class="anchor" href="#getLanguageLocale_"></a>getLanguageLocale()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#languageLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getnumberFormatLocale_"><a class="anchor" href="#getnumberFormatLocale_"></a>getnumberFormatLocale()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#numberFormatLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getTimeFormatLocale_"><a class="anchor" href="#getTimeFormatLocale_"></a>getTimeFormatLocale()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#timeFormatLocale()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getMultiTenancyToken_"><a class="anchor" href="#getMultiTenancyToken_"></a>getMultiTenancyToken()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#multiTenancyToken()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getRoles_"><a class="anchor" href="#getRoles_"></a>getRoles()</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><span class="red"><em>deprecated:</em></span></p>
+</div>
+<div class="paragraph">
+<p>use <em>#roles()</em> instead</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1361,7 +1815,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: 3.2.0.20241231-1731</p>
+            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
         </div>
     </div>
 </footer>

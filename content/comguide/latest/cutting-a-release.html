@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Cutting a Release :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/comguide/latest/cutting-a-release.html">
-    <meta name="generator" content="Antora 3.1.9">
+    <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -467,7 +467,7 @@ page.parent doesn't seem to be set...
     <li><a href="cutting-a-release.html">Cutting a Release</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/3.2.0/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -557,11 +557,11 @@ In most cases a JIRA ticket will have been created at the beginning of the previ
 <h3 id="pull-down-code-to-release"><a class="anchor" href="#pull-down-code-to-release"></a>Pull down code to release</h3>
 <div class="paragraph">
 <p>Set the HEAD of your local git repo to the commit to be released.
-This will usually be the tip of the origin&#8217;s <code>master</code> branch:</p>
+This will usually be the tip of the origin&#8217;s <code>main</code> branch:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout master
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git checkout main
 git pull --ff-only</code></pre>
 </div>
 </div>
@@ -764,7 +764,7 @@ For example:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CAUSEWAYJIRA=CAUSEWAY-9999                           <i class="conum" data-value="1"></i><b>(1)</b>
 export CAUSEWAYTMP=/c/tmp                               <i class="conum" data-value="2"></i><b>(2)</b>
-export CAUSEWAYREL=3.2.0                             <i class="conum" data-value="3"></i><b>(3)</b>
+export CAUSEWAYREL=3.3.0                             <i class="conum" data-value="3"></i><b>(3)</b>
 export CAUSEWAYRC=RC1                                   <i class="conum" data-value="4"></i><b>(4)</b>
 export CAUSEWAYBRANCH=release-$CAUSEWAYREL-$CAUSEWAYRC
 export CAUSEWAYART=causeway
@@ -800,7 +800,7 @@ env | grep CAUSEWAY | sort</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The branch name is intentionally <strong>not</strong> the same as the eventual tag names (eg <code>causeway-3.2.0</code>).</p>
+<p>The branch name is intentionally <strong>not</strong> the same as the eventual tag names (eg <code>causeway-3.3.0</code>).</p>
 </div>
 </td>
 </tr>
@@ -822,7 +822,7 @@ git commit -m "$CAUSEWAYJIRA: updates to pom.xml etc for release"</code></pre>
 <div class="sect2">
 <h3 id="create-a-release-branch"><a class="anchor" href="#create-a-release-branch"></a>Create a release branch</h3>
 <div class="paragraph">
-<p>The release is performed on a branch; if we are successful, this branch will be merged back into master.
+<p>The release is performed on a branch; if we are successful, this branch will be merged back into <code>main</code>.
 We also recommend creating a separate git worktree to capture any documentation fixes that you might notice along the way.</p>
 </div>
 <div class="ulist">
@@ -1296,7 +1296,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jpa
 
-mvnd versions:update-parent -DparentVersion=[$CAUSEWAYREL,$CAUSEWAYREL] -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
+mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
 mvnd versions:set -DnewVersion=$CAUSEWAYREL
 
 git add .
@@ -1348,7 +1348,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jdo
 
-mvnd versions:update-parent -DparentVersion=[$CAUSEWAYREL,$CAUSEWAYREL] -Dskip.nightly
+mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly
 mvnd versions:set -DnewVersion=$CAUSEWAYREL
 
 git add .
@@ -1422,7 +1422,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jpa
 
-mvnd versions:update-parent -DparentVersion=[$CAUSEWAYREL,$CAUSEWAYREL] -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
+mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
 mvnd versions:set -DnewVersion=$CAUSEWAYREL
 
 git add .
@@ -1474,7 +1474,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jdo
 
-mvnd versions:update-parent -DparentVersion=[$CAUSEWAYREL,$CAUSEWAYREL] -Dskip.nightly
+mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly
 mvnd versions:set -DnewVersion=$CAUSEWAYREL
 
 git add .
@@ -1646,7 +1646,7 @@ Adapt as required:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[VOTE] Apache Causeway Core release 3.2.0 RC1</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[VOTE] Apache Causeway Core release 3.3.0 RC1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1659,14 +1659,14 @@ Adapt as required:</p>
 The source code zip artifact has been uploaded to a staging repository on
 https://repository.apache.org, along with its corresponding .asc signature.
 
-In the source code repo the code has been tagged as causeway-3.2.0-RC1;
+In the source code repo the code has been tagged as causeway-3.3.0-RC1;
 see https://github.com/apache/causeway/tags
 
 To verify the source code itself, you can use the following commands
 (in an empty directory):
 
 ----------------------------------------------------------------
-VERSION=3.2.0
+VERSION=3.3.0
 RC=RC1
 NEXUSREPONUM=11xx
 
@@ -1701,7 +1701,7 @@ The vote will be open for a minimum of 72 hours.
 <div class="ulist">
 <ul>
 <li>
-<p>the version number (<code>3.2.0</code> or whatever)</p>
+<p>the version number (<code>3.3.0</code> or whatever)</p>
 </li>
 <li>
 <p>the release candidate number (<code>RC1</code> or whatever)</p>
@@ -1734,7 +1734,7 @@ The vote will be open for a minimum of 72 hours.
             </p>
         </div>
         <div class="revision">
-            <p>Revision: 3.2.0.20241231-1731</p>
+            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
         </div>
     </div>
 </footer>
