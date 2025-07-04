@@ -3,13 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>WrapperFactoryDefault :: causeway</title>
-    <link rel="canonical" href="https://causeway.apache.org/refguide/latest/core/index/runtimeservices/wrapper/WrapperFactoryDefault.html">
+    <title>WrappingObject :: causeway</title>
+    <link rel="canonical" href="https://causeway.apache.org/refguide/latest/core/index/runtime/wrap/WrappingObject.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../../../../../_/css/site.css">
     <link rel="stylesheet" href="../../../../../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   </head>
   <body class="article">
@@ -1121,18 +1119,18 @@ page.parent doesn't seem to be set...
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../../../about.html">Reference Guide</a></li>
-    <li><a href="WrapperFactoryDefault.html">WrapperFactoryDefault</a></li>
+    <li><a href="WrappingObject.html">WrappingObject</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/refguide-index/modules/core/pages/index/runtimeservices/wrapper/WrapperFactoryDefault.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/refguide-index/modules/core/pages/index/runtime/wrap/WrappingObject.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
-<h1 class="page">WrapperFactoryDefault</h1>
+<h1 class="page">WrappingObject</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Default implementation of <a href="../../../../applib/index/services/wrapper/WrapperFactory.html" class="xref page">WrapperFactory</a> .</p>
+<p>Implemented by all objects that have been viewed as per <em>WrapperFactory#wrap(Object)</em> .</p>
 </div>
 </div>
 </div>
@@ -1140,25 +1138,95 @@ page.parent doesn't seem to be set...
 <h2 id="api"><a class="anchor" href="#api"></a>API</h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="title">WrapperFactoryDefault.java</div>
+<div class="title">WrappingObject.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class WrapperFactoryDefault {
-  void init()
-  void close()
-  T wrap(T domainObject)
-  T wrap(T domainObject, SyncControl syncControl)
-  T wrapMixin(Class&lt;T&gt; mixinClass, Object mixee)
-  T wrapMixin(Class&lt;T&gt; mixinClass, Object mixee, SyncControl syncControl)
-  boolean isWrapper(Object obj)
-  T unwrap(T possibleWrappedDomainObject)
-  T asyncWrap(T domainObject, AsyncControl&lt;R&gt; asyncControl)
-  T asyncWrapMixin(Class&lt;T&gt; mixinClass, Object mixee, AsyncControl&lt;R&gt; asyncControl)
-  List&lt;InteractionListener&gt; getListeners()
-  boolean addInteractionListener(InteractionListener listener)
-  boolean removeInteractionListener(InteractionListener listener)
-  void notifyListeners(InteractionEvent interactionEvent)
-  R execute(AsyncCallable&lt;R&gt; asyncCallable)
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface WrappingObject {
+  final static String ORIGIN_GETTER_NAME;
+  final static String ORIGIN_FIELD_NAME;
+  final static String SAVE_METHOD_NAME;
+  final static List&lt;AdditionalField&gt; ADDITIONAL_FIELDS;
+  Origin __causeway_origin()     <i class="conum" data-value="1"></i><b>(1)</b>
+  Origin getOrigin(WrappingObject proxyObject)     <i class="conum" data-value="2"></i><b>(2)</b>
+  T withOrigin(T proxyObject, Origin origin)     <i class="conum" data-value="3"></i><b>(3)</b>
+  void __causeway_save()     <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><a href="#<em>causeway_origin_"></em>causeway_origin()</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Getter for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><a href="#getOrigin_WrappingObject">getOrigin(WrappingObject)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Getter for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><a href="#withOrigin_T_Origin">withOrigin(T, Origin)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Wither for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><a href="#<em>causeway_save_"></em>causeway_save()</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Programmatic equivalent of invoking save for a transient object .</p>
+</div>
+</div>
+</div></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="members"><a class="anchor" href="#members"></a>Members</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="__causeway_origin_"><a class="anchor" href="#__causeway_origin_"></a>__causeway_origin()</h3>
+<div class="paragraph">
+<p>Getter for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getOrigin_WrappingObject"><a class="anchor" href="#getOrigin_WrappingObject"></a>getOrigin(WrappingObject)</h3>
+<div class="paragraph">
+<p>Getter for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="withOrigin_T_Origin"><a class="anchor" href="#withOrigin_T_Origin"></a>withOrigin(T, Origin)</h3>
+<div class="paragraph">
+<p>Wither for the underlying <em>Origin</em> .</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__causeway_save_"><a class="anchor" href="#__causeway_save_"></a>__causeway_save()</h3>
+<div class="paragraph">
+<p>Programmatic equivalent of invoking save for a transient object .</p>
 </div>
 </div>
 </div>
@@ -1180,7 +1248,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -1205,7 +1273,7 @@ page.parent doesn't seem to be set...
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../../../../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({

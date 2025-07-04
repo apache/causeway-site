@@ -8,8 +8,6 @@
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   <link rel="next" href="post-release-unsuccessful.html" title="Post Release (Unsuccessful)">
   <link rel="prev" href="verifying-releases.html" title="Verifying Releases">
@@ -468,7 +466,7 @@ page.parent doesn't seem to be set...
     <li><a href="post-release-successful.html">Post Release (Successful)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -703,7 +701,7 @@ Any tickets that were partially implemented should be closed, and new tickets cr
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This script uses 'jq' to parse JSON.
+<p>This script uses <code>jq</code> to parse JSON.
 See the script itself for details of how to install this utility.</p>
 </div>
 </td>
@@ -959,7 +957,7 @@ git reset --hard rel/causeway-3.3.0</code></pre>
 <p>update all <code>antora.yml</code> files to use the latest branch (3.3.0):</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sed -i 's/latest/3.3.0/g' {} \;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">find . -name antora.yml -exec sh -c 'sed "s/latest/3.3.0/g" "$1" &gt; "$1.tmp" &amp;&amp; mv "$1.tmp" "$1"' _ {} \;</code></pre>
 </div>
 </div>
 </li>
@@ -972,6 +970,15 @@ git reset --hard rel/causeway-3.3.0</code></pre>
   attributes:
     tag-version: '3.3.0'
     jdk-version: '17'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commit all these changes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code></pre>
 </div>
 </div>
 </li>
@@ -992,7 +999,7 @@ popd</code></pre>
 <p>generate the website:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./preview.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1002,15 +1009,6 @@ popd</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
 git commit -m "$CAUSEWAYJIRA: updates docs on new release branch"</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Commit all these changes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
-git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code></pre>
 </div>
 </div>
 </li>
@@ -1045,11 +1043,11 @@ All that will be picked up from this branch is the <code>supplementary-ui</code>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Update <code>site.yml</code> using <code>site.NEXT.yml</code>:</p>
+</div>
 <div class="ulist">
 <ul>
-<li>
-<p>Update <code>site.yml</code> using <code>site.NEXT.yml</code>:</p>
-</li>
 <li>
 <p>move <code>site.yml</code> to one side, and replace with <code>site.NEXT.yml</code>:</p>
 <div class="listingblock">
@@ -1110,7 +1108,7 @@ git commit -m "$CAUSEWAYJIRA: updates site.yml in readiness for website generati
 <p>generate the website:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh -AS</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./preview.sh -AS</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1181,7 +1179,7 @@ git add .</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git commit -m "updates website"
 
-sh preview.sh</code></pre>
+./preview.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1289,6 +1287,22 @@ git push origin release-3.3.0-$RC --delete</code></pre>
 <div class="sect1">
 <h2 id="bump-baselines-for-nightlyweekly-builds"><a class="anchor" href="#bump-baselines-for-nightlyweekly-builds"></a>Bump baselines for nightly/weekly builds</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Nightly builds of the framework&#8217;s packages are available in two different locations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, they can be found as packages of the main <a href="https://github.com/apache/causeway">github.com/apache/causeway</a> repo; these can be accessed using your github credentials.</p>
+</li>
+<li>
+<p>But they are also to be found as packages within the (non-ASF) <a href="https://github.com/apache-causeway-committers/causeway-nightly">github.com/apache-causeway-committers/causeway-nightly</a> repo; no credentials are required for these because the git repo is used as a package repository directly.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bump the <code>BASELINE</code> variables for each, as explained below.</p>
+</div>
 <div class="sect2">
 <h3 id="main-repo-weekly-builds"><a class="anchor" href="#main-repo-weekly-builds"></a>Main repo (weekly builds)</h3>
 <div class="paragraph">
@@ -1305,8 +1319,16 @@ git push origin release-3.3.0-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 3.3.0</code></pre>
+      BASELINE: 3.3.0   <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adjust as necessary</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1318,8 +1340,16 @@ git push origin release-3.3.0-$RC --delete</code></pre>
   build:
 
     env:
-      BASELINE: 3.3.0</code></pre>
+      BASELINE: 3.3.0   <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adjust as necessary</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1346,7 +1376,7 @@ git commit -m "$CAUSEWAYJIRA: bumps BASELINE to latest release version"</code></
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git fetch
-git reset --hard origin/master</code></pre>
+git reset --hard origin/main</code></pre>
 </div>
 </div>
 </li>
@@ -1361,9 +1391,17 @@ git reset --hard origin/master</code></pre>
     runs-on: ubuntu-latest
     env:
       # to be shared among all steps of this job
-      BASELINE_MAIN: 3.3.0
-      BASELINE_EDGE: 3.3.0</code></pre>
+      BASELINE_MAIN: 3.3.0      <i class="conum" data-value="1"></i><b>(1)</b>
+      BASELINE_EDGE: 3.3.0      <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>adjust as necessary</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1549,30 +1587,6 @@ The message must:</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="update-baseline-for-the-non-asf-nightly-builds"><a class="anchor" href="#update-baseline-for-the-non-asf-nightly-builds"></a>Update BASELINE for the (non-ASF) nightly builds</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Nightly builds of the framework&#8217;s packages are available in two different locations:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>First, they can be found as packages of the main <a href="https://github.com/apache/causeway">github.com/apache/causeway</a> repo; these can be accessed using your github credentials.</p>
-<div class="paragraph">
-<p>Bump the <code>BASELINE</code> variable in <a href="https://github.com/apache/causeway/blob/main/.github/workflows/ci-build-artifacts-no-push-maven.yml#L20">ci-build-artifacts-no-push-maven.yml</a> (workflow file).</p>
-</div>
-</li>
-<li>
-<p>But they are also to be found as packages within the (non-ASF) <a href="https://github.com/apache-causeway-committers/causeway-nightly">github.com/apache-causeway-committers/causeway-nightly</a> repo; no credentials are required for these because the git repo is used as a package repository directly.</p>
-<div class="paragraph">
-<p>Bump the <code>BASELINE</code> variable in <a href="https://github.com/apache-causeway-committers/causeway-nightly/blob/0fdea0c4e7419b40acc9a03746e4c3cac3f262b2/.github/workflows/apache-causeway-ci-nightly.yml#L15">apache-causeway-ci-nightly.yml</a> (workflow file).</p>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -1590,7 +1604,7 @@ The message must:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -1615,7 +1629,7 @@ The message must:</p>
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({

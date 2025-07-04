@@ -8,8 +8,6 @@
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   <link rel="next" href="post-release-successful.html" title="Post Release (Successful)">
   <link rel="prev" href="cutting-a-release.html" title="Cutting a Release">
@@ -467,7 +465,7 @@ page.parent doesn't seem to be set...
     <li><a href="verifying-releases.html">Verifying Releases</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/comguide/modules/ROOT/pages/verifying-releases.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/comguide/modules/ROOT/pages/verifying-releases.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -526,51 +524,43 @@ Details of how to do this are also documented below.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You will also require the following commands/tools:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>bash</code> - to run shell script</p>
-</li>
-<li>
-<p><code>curl</code> - to download the ZIP and ASC files</p>
-</li>
-<li>
-<p><code>gpg</code> - to verify signatures</p>
-</li>
-<li>
-<p><code>unzip</code> - to unzip the ZIP files</p>
-</li>
-<li>
-<p>JDK 17</p>
-</li>
-<li>
-<p>Apache Maven (<code>mvn</code>) 3.9.6+</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="verifying-source-artifacts"><a class="anchor" href="#verifying-source-artifacts"></a>Verifying source artifacts</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The easiest way to verify the source artifacts is to use a script that automates the steps.
-Run these commands, with the environment variables set correctly.
-(The full details should also be in the VOTE email):</p>
+For extra safety, run within a docker container as a clean room.
+These same details should also be in the VOTE email:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start the docker container:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">VERSION=3.3.0
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -p8080:8080 \
+    -it --platform linux/amd64 eclipse-temurin:21-jdk /bin/bash</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>and then within the docker container, install prerqs and verify (update the envirnment variables as necessary):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">apt update &amp;&amp; apt install -y curl zip unzip vim
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install maven 3.9.10
+
+VERSION=3.3.0
 RC=RC1
 NEXUSREPONUM=11xx
 
-curl https://downloads.apache.org/causeway/KEYS &gt; /tmp/KEYS
-gpg --import /tmp/KEYS
+curl https://downloads.apache.org/causeway/KEYS | gpg --import
+gpg --list-keys --with-colons --with-fingerprint \
+  | awk -F: '
+    $1 == "pub" { in_pub = 1; next }
+    in_pub &amp;&amp; $1 == "fpr" { print $10 ":3:"; in_pub = 0 }
+  ' | gpg --import-ownertrust
 
 rm -rf causeway-$VERSION
 
@@ -579,6 +569,9 @@ curl -O -L https://raw.githubusercontent.com/apache/causeway/release-$VERSION-$R
 chmod +x ./verify-causeway-release.sh
 ./verify-causeway-release.sh $NEXUSREPONUM $VERSION $RC</code></pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The <code>verify-causeway-release.sh</code> script performs these steps:</p>
@@ -729,7 +722,7 @@ Things to check include:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -754,7 +747,7 @@ Things to check include:</p>
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({

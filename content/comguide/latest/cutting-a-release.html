@@ -8,8 +8,6 @@
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../_/css/site.css">
     <link rel="stylesheet" href="../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   <link rel="next" href="verifying-releases.html" title="Verifying Releases">
   <link rel="prev" href="weekly-builds.html" title="Weekly Builds">
@@ -467,7 +465,7 @@ page.parent doesn't seem to be set...
     <li><a href="cutting-a-release.html">Cutting a Release</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/comguide/modules/ROOT/pages/cutting-a-release.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -598,8 +596,8 @@ mvnd -Dapache-release clean
 mvnd -Dapache-release org.apache.rat:apache-rat-plugin:check -D rat.numUnapprovedLicenses=1000     <i class="conum" data-value="1"></i><b>(1)</b>
 popd
 
-for a in `/bin/find . -name rat.txt -print`; do grep '!???' $a; done &gt; /tmp/rat-qn.txt            <i class="conum" data-value="2"></i><b>(2)</b>
-for a in `/bin/find . -name rat.txt -print`; do grep '!AL' $a; done &gt; /tmp/rat-al.txt            <i class="conum" data-value="2"></i><b>(2)</b>
+for a in `/usr/bin/find . -name rat.txt -print`; do grep '!???' $a; done &gt; /tmp/rat-qn.txt            <i class="conum" data-value="2"></i><b>(2)</b>
+for a in `/usr/bin/find . -name rat.txt -print`; do grep '!AL' $a; done &gt; /tmp/rat-al.txt            <i class="conum" data-value="2"></i><b>(2)</b>
 
 cat /tmp/rat-qn.txt
 cat /tmp/rat-al.txt</code></pre>
@@ -726,7 +724,7 @@ licenses to remove from supplemental-models.xml (are spurious):
 <p>Then, generate the website:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sh preview.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./preview.sh</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -814,8 +812,8 @@ env | grep CAUSEWAY | sort</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add ..
-git commit -m "$CAUSEWAYJIRA: updates to pom.xml etc for release"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git add .
+git commit -m "$CAUSEWAYJIRA: updates to docs, license etc for release"</code></pre>
 </div>
 </div>
 </div>
@@ -1296,22 +1294,23 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jpa
 
-mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
-mvnd versions:set -DnewVersion=$CAUSEWAYREL
+find . -name pom.xml -exec sed -i '' "s/&lt;version&gt;${CAUSEWAYREL}-SNAPSHOT&lt;\/version&gt;/&lt;version&gt;${CAUSEWAYREL}&lt;\/version&gt;/g" {} +
 
 git add .
 git commit -m "$CAUSEWAYJIRA - updates to $CAUSEWAYREL (jpa)"</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the top-level <code>pom.xml</code> references the ASF staging repository, so this will pull down the release if not already present in <code>~/.m2/repository</code>.</td>
-</tr>
-</table>
+</li>
+</ul>
 </div>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The parent <code>pom.xml</code> references the ASF staging repository, so this will pull down the release if not already present in <code>~/.m2/repository</code>.</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Test the app</p>
 <div class="listingblock">
@@ -1331,14 +1330,14 @@ mvnd spring-boot:run</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git push -u origin $CAUSEWAYBRANCH-jpa</code></pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>for <code>jdo</code>:</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>for <code>jdo</code>:</p>
-<div class="ulist">
-<ul>
 <li>
 <p>Checkout the branch, bump versions, and commit:</p>
 <div class="listingblock">
@@ -1348,8 +1347,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jdo
 
-mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly
-mvnd versions:set -DnewVersion=$CAUSEWAYREL
+find . -name pom.xml -exec sed -i '' "s/&lt;version&gt;${CAUSEWAYREL}-SNAPSHOT&lt;\/version&gt;/&lt;version&gt;${CAUSEWAYREL}&lt;\/version&gt;/g" {} +
 
 git add .
 git commit -m "$CAUSEWAYJIRA - updates to $CAUSEWAYREL (jdo)"</code></pre>
@@ -1398,9 +1396,6 @@ The merge commit should end up with no changes:</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="simpleapp"><a class="anchor" href="#simpleapp"></a>SimpleApp</h3>
@@ -1422,8 +1417,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jpa
 
-mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly  <i class="conum" data-value="1"></i><b>(1)</b>
-mvnd versions:set -DnewVersion=$CAUSEWAYREL
+find . -name pom.xml -exec sed -i '' "s/&lt;version&gt;${CAUSEWAYREL}-SNAPSHOT&lt;\/version&gt;/&lt;version&gt;${CAUSEWAYREL}&lt;\/version&gt;/g" {} +
 
 git add .
 git commit -m "$CAUSEWAYJIRA - updates to $CAUSEWAYREL (jpa)"</code></pre>
@@ -1474,8 +1468,7 @@ git pull --ff-only
 
 git checkout -b $CAUSEWAYBRANCH-jdo
 
-mvnd versions:update-parent -DparentVersion="[$CAUSEWAYREL,$CAUSEWAYREL]" -Dskip.nightly
-mvnd versions:set -DnewVersion=$CAUSEWAYREL
+find . -name pom.xml -exec sed -i '' "s/&lt;version&gt;${CAUSEWAYREL}-SNAPSHOT&lt;\/version&gt;/&lt;version&gt;${CAUSEWAYREL}&lt;\/version&gt;/g" {} +
 
 git add .
 git commit -m "$CAUSEWAYJIRA - updates to $CAUSEWAYREL (jdo)"</code></pre>
@@ -1583,7 +1576,7 @@ popd</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ../causeway
 
-sh preview.sh -AB</code></pre>
+./preview.sh -AB</code></pre>
 </div>
 </div>
 </li>
@@ -1604,7 +1597,7 @@ sh preview.sh -AB</code></pre>
 git add .
 git commit -m "$CAUSEWAYJIRA : staging changes to website"
 
-sh preview.sh</code></pre>
+./preview.sh</code></pre>
 </div>
 </div>
 </li>
@@ -1662,16 +1655,32 @@ https://repository.apache.org, along with its corresponding .asc signature.
 In the source code repo the code has been tagged as causeway-3.3.0-RC1;
 see https://github.com/apache/causeway/tags
 
-To verify the source code itself, you can use the following commands
-(in an empty directory):
+To verify the source code itself, we recommend you start a docker container as
+a clean room:
 
-----------------------------------------------------------------
+-------------------------------------------------------------------------------
+docker run -p8080:8080 \
+    -it --platform linux/amd64 eclipse-temurin:21-jdk /bin/bash
+-------------------------------------------------------------------------------
+
+then use the following commands to install prereqs and verify:
+
+-------------------------------------------------------------------------------
+apt update &amp;&amp; apt install -y curl zip unzip vim
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install maven 3.9.10
+
 VERSION=3.3.0
 RC=RC1
 NEXUSREPONUM=11xx
 
-curl https://downloads.apache.org/causeway/KEYS &gt; /tmp/KEYS
-gpg --import /tmp/KEYS
+curl https://downloads.apache.org/causeway/KEYS | gpg --import
+gpg --list-keys --with-colons --with-fingerprint \
+  | awk -F: '
+    $1 == "pub" { in_pub = 1; next }
+    in_pub &amp;&amp; $1 == "fpr" { print $10 ":3:"; in_pub = 0 }
+  ' | gpg --import-ownertrust
 
 rm -rf causeway-$VERSION
 
@@ -1679,7 +1688,7 @@ curl -O -L https://raw.githubusercontent.com/apache/causeway/release-$VERSION-$R
 
 chmod +x ./verify-causeway-release.sh
 ./verify-causeway-release.sh $NEXUSREPONUM $VERSION $RC
-----------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 You can then test the helloworld or simpleapp starter apps, see:
 https://causeway.staged.apache.org/comguide/latest/verifying-releases.html.
@@ -1734,7 +1743,7 @@ The vote will be open for a minimum of 72 hours.
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -1759,7 +1768,7 @@ The vote will be open for a minimum of 72 hours.
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({

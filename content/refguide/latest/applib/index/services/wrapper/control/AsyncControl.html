@@ -3,13 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>AsyncControl :: causeway</title>
+    <title>AsyncControl (record) :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/refguide/latest/applib/index/services/wrapper/control/AsyncControl.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../../../../../../_/css/site.css">
     <link rel="stylesheet" href="../../../../../../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   </head>
   <body class="article">
@@ -1121,14 +1119,14 @@ page.parent doesn't seem to be set...
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../../../../about.html">Reference Guide</a></li>
-    <li><a href="AsyncControl.html">AsyncControl</a></li>
+    <li><a href="AsyncControl.html">AsyncControl <em>(record)</em></a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/antora/components/refguide-index/modules/applib/pages/index/services/wrapper/control/AsyncControl.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/refguide-index/modules/applib/pages/index/services/wrapper/control/AsyncControl.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
-<h1 class="page">AsyncControl</h1>
+<h1 class="page">AsyncControl <em>(record)</em></h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -1145,18 +1143,20 @@ page.parent doesn't seem to be set...
 <div class="listingblock">
 <div class="title">AsyncControl.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class AsyncControl&lt;R&gt; {
-  AsyncControl&lt;Void&gt; returningVoid()     <i class="conum" data-value="1"></i><b>(1)</b>
-  AsyncControl&lt;X&gt; returning(Class&lt;X&gt; cls)     <i class="conum" data-value="2"></i><b>(2)</b>
-  AsyncControl&lt;R&gt; withSkipRules()     <i class="conum" data-value="3"></i><b>(3)</b>
-  AsyncControl&lt;R&gt; with(ExceptionHandler exceptionHandler)     <i class="conum" data-value="4"></i><b>(4)</b>
-  AsyncControl&lt;R&gt; with(ExecutorService executorService)     <i class="conum" data-value="5"></i><b>(5)</b>
-  AsyncControl&lt;R&gt; withClock(VirtualClock clock)
-  AsyncControl&lt;R&gt; withLocale(Locale locale)
-  AsyncControl&lt;R&gt; withTimeZone(ZoneId timeZone)
-  AsyncControl&lt;R&gt; withUser(UserMemento user)     <i class="conum" data-value="6"></i><b>(6)</b>
-  void setFuture(Future&lt;R&gt; future)     <i class="conum" data-value="7"></i><b>(7)</b>
-  R waitForResult(long timeout, TimeUnit unit)     <i class="conum" data-value="8"></i><b>(8)</b>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record AsyncControl {
+  AsyncControl defaults()
+  AsyncControl withExecute()     <i class="conum" data-value="1"></i><b>(1)</b>
+  AsyncControl withNoExecute()     <i class="conum" data-value="2"></i><b>(2)</b>
+  AsyncControl withSkipRules()     <i class="conum" data-value="3"></i><b>(3)</b>
+  AsyncControl withCheckRules()
+  AsyncControl withExceptionHandler(ExceptionHandler exceptionHandler)     <i class="conum" data-value="4"></i><b>(4)</b>
+  AsyncControl with(ExecutorService executorService)     <i class="conum" data-value="5"></i><b>(5)</b>
+  AsyncControl listen(SyncControl.@NonNull CommandListener commandListener)
+  AsyncControl withClock(VirtualClock clock)     <i class="conum" data-value="6"></i><b>(6)</b>
+  AsyncControl withLocale(Locale locale)     <i class="conum" data-value="7"></i><b>(7)</b>
+  AsyncControl withTimeZone(ZoneId timeZone)     <i class="conum" data-value="8"></i><b>(8)</b>
+  AsyncControl withUser(UserMemento user)     <i class="conum" data-value="9"></i><b>(9)</b>
+  InteractionContext override(InteractionContext interactionContext)
 }</code></pre>
 </div>
 </div>
@@ -1164,22 +1164,22 @@ page.parent doesn't seem to be set...
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><a href="#returningVoid_">returningVoid()</a>
+<td><a href="#withExecute_">withExecute()</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Factory method to instantiate a control instance for a void action or a property edit (where there is no need or intention to provide a return value through the <code>Future</code>).</p>
+<p>Explicitly set the action to be executed.</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><a href="#returning_Class">returning(Class)</a>
+<td><a href="#withNoExecute_">withNoExecute()</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Factory method to instantiate for a control instance for an action returning a value of <code>` (where this value will be returned through the `Future</code>).</p>
+<p>Explicitly set the action to <em>not</em> be executed, in other words a 'dry run'.</p>
 </div>
 </div>
 </div></td>
@@ -1197,7 +1197,7 @@ page.parent doesn't seem to be set...
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td><a href="#with_ExceptionHandler">with(ExceptionHandler)</a>
+<td><a href="#withExceptionHandler_ExceptionHandler">withExceptionHandler(ExceptionHandler)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
@@ -1219,33 +1219,44 @@ page.parent doesn't seem to be set...
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td><a href="#withUser_UserMemento">withUser(UserMemento)</a>
+<td><a href="#withClock_VirtualClock">withClock(VirtualClock)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Specifies the user for the session used to execute the command asynchronously, in the background.</p>
+<p>Defaults to the system clock, if not overridden</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td><a href="#setFuture_Future">setFuture(Future)</a>
+<td><a href="#withLocale_Locale">withLocale(Locale)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>For framework use only.</p>
+<p>Defaults to the system locale, if not overridden</p>
 </div>
 </div>
 </div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td><a href="#waitForResult_long_TimeUnit">waitForResult(long, TimeUnit)</a>
+<td><a href="#withTimeZone_ZoneId">withTimeZone(ZoneId)</a>
 <div class="openblock">
 <div class="content">
 <div class="paragraph">
-<p>Waits on the callers thread, for a maximum amount of time, for the result of the invocation to become available.</p>
+<p>Defaults to the system time zone, if not overridden</p>
+</div>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><a href="#withUser_UserMemento">withUser(UserMemento)</a>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Specifies the user for the session used to execute the command asynchronously, in the background.</p>
 </div>
 </div>
 </div></td>
@@ -1258,15 +1269,15 @@ page.parent doesn't seem to be set...
 <h2 id="members"><a class="anchor" href="#members"></a>Members</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="returningVoid_"><a class="anchor" href="#returningVoid_"></a>returningVoid()</h3>
+<h3 id="withExecute_"><a class="anchor" href="#withExecute_"></a>withExecute()</h3>
 <div class="paragraph">
-<p>Factory method to instantiate a control instance for a void action or a property edit (where there is no need or intention to provide a return value through the <code>Future</code>).</p>
+<p>Explicitly set the action to be executed.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="returning_Class"><a class="anchor" href="#returning_Class"></a>returning(Class)</h3>
+<h3 id="withNoExecute_"><a class="anchor" href="#withNoExecute_"></a>withNoExecute()</h3>
 <div class="paragraph">
-<p>Factory method to instantiate for a control instance for an action returning a value of <code>` (where this value will be returned through the `Future</code>).</p>
+<p>Explicitly set the action to <em>not</em> be executed, in other words a 'dry run'.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1276,7 +1287,7 @@ page.parent doesn't seem to be set...
 </div>
 </div>
 <div class="sect2">
-<h3 id="with_ExceptionHandler"><a class="anchor" href="#with_ExceptionHandler"></a>with(ExceptionHandler)</h3>
+<h3 id="withExceptionHandler_ExceptionHandler"><a class="anchor" href="#withExceptionHandler_ExceptionHandler"></a>withExceptionHandler(ExceptionHandler)</h3>
 <div class="paragraph">
 <p>How to handle exceptions if they occur, using the provided <a href="ExceptionHandler.html" class="xref page">ExceptionHandler</a> .</p>
 </div>
@@ -1294,24 +1305,30 @@ page.parent doesn't seem to be set...
 </div>
 </div>
 <div class="sect2">
+<h3 id="withClock_VirtualClock"><a class="anchor" href="#withClock_VirtualClock"></a>withClock(VirtualClock)</h3>
+<div class="paragraph">
+<p>Defaults to the system clock, if not overridden</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="withLocale_Locale"><a class="anchor" href="#withLocale_Locale"></a>withLocale(Locale)</h3>
+<div class="paragraph">
+<p>Defaults to the system locale, if not overridden</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="withTimeZone_ZoneId"><a class="anchor" href="#withTimeZone_ZoneId"></a>withTimeZone(ZoneId)</h3>
+<div class="paragraph">
+<p>Defaults to the system time zone, if not overridden</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="withUser_UserMemento"><a class="anchor" href="#withUser_UserMemento"></a>withUser(UserMemento)</h3>
 <div class="paragraph">
 <p>Specifies the user for the session used to execute the command asynchronously, in the background.</p>
 </div>
 <div class="paragraph">
 <p>If not specified, then the user of the current foreground session is used.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="setFuture_Future"><a class="anchor" href="#setFuture_Future"></a>setFuture(Future)</h3>
-<div class="paragraph">
-<p>For framework use only.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="waitForResult_long_TimeUnit"><a class="anchor" href="#waitForResult_long_TimeUnit"></a>waitForResult(long, TimeUnit)</h3>
-<div class="paragraph">
-<p>Waits on the callers thread, for a maximum amount of time, for the result of the invocation to become available.</p>
 </div>
 </div>
 </div>
@@ -1333,7 +1350,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -1358,7 +1375,7 @@ page.parent doesn't seem to be set...
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../../../../../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({

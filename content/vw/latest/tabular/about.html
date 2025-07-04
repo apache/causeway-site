@@ -8,8 +8,6 @@
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/site-custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 <link rel="home" href="https://causeway.apache.org" title="causeway">
   <link rel="prev" href="../sse/about.html" title="SSE">
   </head>
@@ -430,7 +428,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">Tabular Extension</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.3.0-RC1/extensions/vw/tabular/adoc/modules/tabular/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/extensions/vw/tabular/adoc/modules/tabular/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -511,19 +509,29 @@ public class AppManifest {
 <h2 id="custom-export-spi"><a class="anchor" href="#custom-export-spi"></a>Custom Export (SPI)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To provide a custom exporter, simply implement <code>CollectionContentsExporter</code> and register with <em>Spring</em>.</p>
+<p>To provide a custom exporter, simply implement <code>TabularExporter</code> and register with <em>Spring</em>.</p>
 </div>
 <div class="listingblock">
-<div class="title">Collection Contents Exporter (SPI)</div>
+<div class="title">Tabular Exporter (SPI)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/**
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package org.apache.causeway.applib.tabular;
+
+/**
  * SPI to provide file export to table views.
  *
- * @since 2.0 {@index}}
+ * @since 3.2
  */
-public interface CollectionContentsExporter {
+public interface TabularExporter {
 
-    File createExportFile(DataTable dataTable);
+    /**
+     * Implementing exporters need to write given tabular data from
+     * {@link org.apache.causeway.commons.tabular.TabularModel.TabularSheet} into the {@link File exportFile},
+     * which is provided by the framework for the duration of a single request cycle.
+     *
+     * @param dataTable data model for the table
+     * @param exportFile destination, this exporter writes its data to
+     */
+    void export(TabularModel.TabularSheet tabularSheet, File exportFile);
 
     CommonMimeType getMimeType();
 
@@ -551,10 +559,73 @@ public interface CollectionContentsExporter {
     int orderOfAppearanceInUiDropdown();
 
     /**
-     * Whether activation of this table presentation view should result in a full page reload.
+     * Whether this exporter applies to given {@code elementType}.
+     * If &lt;code&gt;false&lt;/code&gt;, this exporter is not provided to end users.
      */
-    default boolean isPageReloadRequiredOnTableViewActivation() { return false; }
+    default boolean appliesTo(final Class&lt;?&gt; elementType) { return true; }
+
+    /**
+     * Writes given tabular data to a {@link Blob}, using given sheet's name as blob name.
+     */
+    @SneakyThrows
+    default Blob exportToBlob(final TabularModel.TabularSheet tabularSheet) {
+        var tempFile = File.createTempFile(this.getClass().getCanonicalName(), tabularSheet.sheetName());
+        try {
+            export(tabularSheet, tempFile);
+            return Blob.of(tabularSheet.sheetName(), getMimeType(), DataSource.ofFile(tempFile).bytes());
+        } finally {
+            Files.deleteIfExists(tempFile.toPath()); // cleanup
+        }
+    }
+
 }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tabular-model"><a class="anchor" href="#tabular-model"></a>Tabular Model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Underneath a general purpose tabular model is used, with simple buildings blocks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Cell</p>
+</li>
+<li>
+<p>Column</p>
+</li>
+<li>
+<p>Row</p>
+</li>
+<li>
+<p>Sheet</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Tabular Model Example</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.apache.causeway.commons.tabular.*;
+import org.apache.causeway.commons.collections.Can;
+
+// create a TabularModel with 2 columns and 2 rows ..
+
+var col1 = new TabularModel.TabularColumn(0, "Col-1", "Column Description 1");
+var col2 = new TabularModel.TabularColumn(1, "Col-2", "Column Description 2");
+
+var row1 = new TabularModel.TabularRow(Can.of(
+        TabularModel.TabularCell.single("cell1-1"),
+        TabularModel.TabularCell.single("cell1-2")));
+var row2 = new TabularModel.TabularRow(Can.of(
+        TabularModel.TabularCell.single("cell1-1"),
+        TabularModel.TabularCell.single("cell1-2")));
+
+var sheet = new TabularModel.TabularSheet("sheet-1", Can.of(col1, col2), Can.of(row1, row2));
+
+var tabularModel = new TabularModel(sheet);</code></pre>
 </div>
 </div>
 </div>
@@ -576,7 +647,7 @@ public interface CollectionContentsExporter {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.3.0-RC1.20250404-1221</p>
+            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
         </div>
     </div>
 </footer>
@@ -601,7 +672,7 @@ public interface CollectionContentsExporter {
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="../../../_/js/vendor/docsearch.min.js"></script>
 <script>
   function focusSearchInput () { document.querySelector('#algolia-search-input').focus() }
   var search = docsearch({
