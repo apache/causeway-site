@@ -201,6 +201,9 @@ page.parent doesn't seem to be set...
     <span class="nav-text">2025</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="relnotes.html">3.4.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../3.3.0/relnotes.html">3.3.0</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -873,7 +876,34 @@ page.parent doesn't seem to be set...
     <a name="section-top"></a>
 <h1 class="page">Migrating from 3.3.0 to 3.4.0</h1>
 <div class="paragraph">
-<p>No specific migration notes have been recorded to date.</p>
+<p>In <a href="https://issues.apache.org/jira/browse/CAUSEWAY-3896">CAUSEWAY-3896</a> we made a small change to the API for the <a href="../../../../refguide/latest/applib/index/services/wrapper/WrapperFactory.html" class="xref page">WrapperFactor</a>'s async programming model.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">var counter = bookmarkService.lookup(bookmark, Counter.class).orElseThrow();
+
+var counter = wrapperFactory.asyncWrap(counter)                 <i class="conum" data-value="1"></i><b>(1)</b>
+          .applyAsync(Counter::bumpUsingDeclaredAction)
+          .tryGet(5, TimeUnit.SECONDS)                          <i class="conum" data-value="2"></i><b>(2)</b>
+          .valueAsNonNullElseFail();
+
+assertThat(counter.getNum()).isEqualTo(2L);</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>returns the detached counter entity</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>wait max 5 sec to allow executor to complete before continuing</td>
+</tr>
+</table>
 </div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
@@ -892,7 +922,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: 3.4.0.20250708-1527</p>
+            <p>Revision: build-website.20250711-1004</p>
         </div>
     </div>
 </footer>
