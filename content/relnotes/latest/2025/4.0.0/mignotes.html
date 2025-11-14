@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Migrating from 3.x to 4.0.0 (Draft) :: causeway</title>
     <link rel="canonical" href="https://causeway.apache.org/relnotes/latest/2025/4.0.0/mignotes.html">
-    <meta name="generator" content="Antora 3.1.10">
+    <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <link rel="stylesheet" href="../../../../_/css/site-custom.css">
 <link rel="home" href="https://causeway.apache.org" title="causeway">
@@ -67,7 +67,6 @@
             <span class="navbar-item navbar-heading">Security</span>
             <a class="navbar-item" href="../../../../security/latest/bypass/about.html">Bypass</a>
             <a class="navbar-item" href="../../../../security/latest/simple/about.html">Simple</a>
-            <a class="navbar-item" href="../../../../security/latest/shiro/about.html">Shiro</a>
             <a class="navbar-item" href="../../../../security/latest/spring/about.html">Spring</a>
             <a class="navbar-item" href="../../../../security/latest/keycloak/about.html">Keycloak</a>
             <hr class="navbar-divider"/>
@@ -78,7 +77,6 @@
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Persistence</span>
             <a class="navbar-item" href="../../../../pjpa/latest/about.html">JPA (EclipseLink)</a>
-            <a class="navbar-item" href="../../../../pjdo/latest/about.html">JDO (DataNucleus)</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
@@ -99,7 +97,6 @@
             <a class="navbar-item" href="../../../../security/latest/secman/about.html">Secman</a>
             <a class="navbar-item" href="../../../../security/latest/audittrail/about.html">Audit Trail</a>
             <a class="navbar-item" href="../../../../security/latest/spring-oauth2/about.html">Spring OAuth2 Integration</a>
-            <a class="navbar-item" href="../../../../security/latest/shiro-realm-ldap/about.html">LDAP Realm for Shiro</a>
             <a class="navbar-item" href="../../../../security/latest/sessionlog/about.html">Session Log</a>
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">Web UI (Wicket)</span>
@@ -110,6 +107,9 @@
             <hr class="navbar-divider"/>
             <span class="navbar-item navbar-heading">REST API (Restful Objects)</span>
             <a class="navbar-item" href="../../../../vro/latest/cors/about.html">CORS</a>
+            <hr class="navbar-divider"/>
+            <span class="navbar-item navbar-heading">Persistence</span>
+            <a class="navbar-item" href="../../../../querydsl/latest/about.html">QueryDSL</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
@@ -200,6 +200,9 @@ page.parent doesn't seem to be set...
     <button class="nav-item-toggle"></button>
     <span class="nav-text">2025</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../3.4.0/relnotes.html">3.4.0</a>
+  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../3.3.0/relnotes.html">3.3.0</a>
   </li>
@@ -489,7 +492,7 @@ page.parent doesn't seem to be set...
     <li><a href="mignotes.html">Migrating from 3.x to 4.0.0 (Draft)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-3.4.0-RC1/antora/components/relnotes/modules/ROOT/pages/2025/4.0.0/mignotes.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/relnotes/modules/ROOT/pages/2025/4.0.0/mignotes.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -502,7 +505,7 @@ page.parent doesn't seem to be set...
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>stay at <strong>Java 17</strong> baseline (as <em>Spring</em> does)</p>
+<p>stay at <strong>Java 17</strong> baseline (as <em>Spring</em> does; however, JRuby 10.x as used for AsciiDoc extensions requires Java 21+ runtime)</p>
 </li>
 <li>
 <p>upgrade to <strong>Jackson 3</strong> (as <em>Spring</em> does)</p>
@@ -517,13 +520,19 @@ page.parent doesn't seem to be set...
 <p><strong>JDO</strong> support removed ✅</p>
 </li>
 <li>
+<p><strong>Joda</strong> time support removed ✅</p>
+</li>
+<li>
+<p><strong>RestEasy</strong> integration removed ✅</p>
+</li>
+<li>
 <p>Causeway now uses <strong>slf4j</strong> (instead of <em>log4j</em>) ✅</p>
 </li>
 <li>
-<p>migrate to <strong>Maven 4</strong> (optional)</p>
+<p>Migrate build requirements to <strong>Maven 4</strong> ✅</p>
 </li>
 <li>
-<p>ditch <strong>Joda</strong> time support (optional)</p>
+<p>ditch <strong>rest-client</strong> artifact in favor of Spring&#8217;s RestClient (optional)</p>
 </li>
 <li>
 <p>ditch <strong>encrypt-jbcrypt</strong> artifact (optional)</p>
@@ -559,6 +568,95 @@ page.parent doesn't seem to be set...
 </table>
 </div>
 </div>
+<div class="sect1">
+<h2 id="resteasy-integration-removed"><a class="anchor" href="#resteasy-integration-removed"></a>RestEasy Integration Removed</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">Maven</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- REMOVED
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.causeway.viewer&lt;/groupId&gt;
+    &lt;artifactId&gt;causeway-viewer-restfulobjects-jaxrsresteasy&lt;/artifactId&gt;
+&lt;/dependency&gt;
+--&gt;
+
+&lt;!-- USE INSTEAD --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.causeway.viewer&lt;/groupId&gt;
+    &lt;artifactId&gt;causeway-viewer-restfulobjects-viewer&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Spring bean import</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Import({
+    //..
+
+    // REST
+
+    // CausewayModuleViewerRestfulObjectsJaxrsResteasy.class &lt;-- REMOVED
+    CausewayModuleViewerRestfulObjectsViewer.class, // &lt;-- USE INSTEAD
+})</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">application.yaml (Spring configuration properties)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">#configures the servlet-context relative path prefix for the _Restful Objects Viewer_
+
+# removed ..
+#resteasy:
+#  jaxrs:
+#    defaultPath: /restful
+#
+
+causeway:
+  viewer:
+    restfulobjects:
+      basePath: /restful</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="immutable-configuration"><a class="anchor" href="#immutable-configuration"></a>Immutable Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>CausewayConfiguration</code> was refactored using Java records over regular classes,
+in effect all accessors have been renamed, stripping any <code>get</code> or <code>is</code> prefixes.
+<code>CausewayConfiguration</code> is now immutable.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="errordetails"><a class="anchor" href="#errordetails"></a>ErrorDetails</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>ErrorDetails</code> as used by the <code>ErrorReportingService</code> has been converted from a class to a record.
+(In effect all accessors have been renamed, stripping any <code>get</code> or <code>is</code> prefixes)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="object-icon-support"><a class="anchor" href="#object-icon-support"></a>Object Icon Support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Object support method <code>FontAwesomeLayers iconFaLayers()</code> has been replaced by <code>IconResource icon(IconWhere iconWhere)</code>,
+which also supports image data embedding and supersedes <code>String iconName()</code>.
+However, the latter is still supported for backward compatibility.</p>
+</div>
+<div class="paragraph">
+<p>With <code>TitleService</code> method
+<code>String iconNameOf(final Object domainObject)</code> was replaced by
+    <code>IconResource iconOf(Object domainObject, IconWhere iconWhere)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Likewise <code>IconUiEvent</code> was updated to reflect the new programming model.</p>
+</div>
+</div>
+</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -576,7 +674,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: release-3.4.0-RC1.20250704-2341</p>
+            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
         </div>
     </div>
 </footer>
