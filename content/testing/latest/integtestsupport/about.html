@@ -305,14 +305,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -431,7 +423,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">Integ Test Support</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/testing/integtestsupport/adoc/modules/integtestsupport/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/testing/integtestsupport/adoc/modules/integtestsupport/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -638,9 +630,9 @@ public abstract class SimpleModuleIntegTestAbstract extends CausewayIntegrationT
     @Import({
         CausewayModuleCoreRuntimeServices.class,
         CausewayModuleSecurityBypass.class,
-        CausewayModuleJdoDataNucleus5.class,
+        CausewayModuleJpaEclipseLink.class,
         CausewayModuleTestingFixturesApplib.class,
-        SimpleModule.class                      <i class="conum" data-value="1"></i><b>(1)</b>
+        SimpleModule.class                          <i class="conum" data-value="1"></i><b>(1)</b>
     })
     public static class AppManifest {
     }
@@ -666,8 +658,6 @@ public abstract class SimpleModuleIntegTestAbstract extends CausewayIntegrationT
 )
 @TestPropertySource({
         CausewayPresets.H2InMemory_withUniqueSchema,
-        CausewayPresets.DataNucleusAutoCreate,
-        CausewayPresets.UseLog4j2Test,
 })
 @ContextConfiguration
 public abstract class ApplicationIntegTestAbstract extends CausewayIntegrationTestAbstract {
@@ -675,10 +665,10 @@ public abstract class ApplicationIntegTestAbstract extends CausewayIntegrationTe
     @Configuration
     @Import({
         CausewayModuleCoreRuntimeServices.class,
-        CausewayModuleJdoDataNucleus5.class,
         CausewayModuleSecurityBypass.class,
+        CausewayModuleJpaEclipseLink.class,
         CausewayModuleTestingFixturesApplib.class,
-        ApplicationModule.class                 <i class="conum" data-value="1"></i><b>(1)</b>
+        ApplicationModule.class                     <i class="conum" data-value="1"></i><b>(1)</b>
     })
     public static class AppManifest {
     }
@@ -697,7 +687,7 @@ public abstract class ApplicationIntegTestAbstract extends CausewayIntegrationTe
 <p>You can see that these are very similar, what&#8217;s different is the module referenced.</p>
 </div>
 <div class="paragraph">
-<p>They both also force an in-memory database, with JDO/DataNucleus ORM configured to autocreate the database schema.</p>
+<p>They both also force an in-memory database, with the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> ORM configured to autocreate the database schema.</p>
 </div>
 <div class="sect2">
 <h3 id="faster-bootstrapping"><a class="anchor" href="#faster-bootstrapping"></a>Faster bootstrapping</h3>
@@ -1336,34 +1326,6 @@ public class ModuleWithFixturesService {
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="hints-n-tips"><a class="anchor" href="#hints-n-tips"></a>Hints-n-Tips</h2>
-<div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="title">Using JDO/DataNucleus</div>
-<div class="paragraph">
-<p>When running integration tests through the IDE, and if using the JDO/DataNucleus ORM, then make sure the module(s) with entities have been enhanced first.</p>
-</div>
-<div class="paragraph">
-<p>If using IntelliJ, we recommend creating a run Maven configuration that runs <code>datanucleus:enhance</code>, and then pinning the configuration once run as a tab in the "Debug" window for easy access.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/pin-enhance-run-configuration.png" alt="pin enhance run configuration" width="400px">
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -1381,7 +1343,7 @@ public class ModuleWithFixturesService {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

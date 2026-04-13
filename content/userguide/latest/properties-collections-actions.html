@@ -365,14 +365,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -491,7 +483,7 @@ page.parent doesn't seem to be set...
     <li><a href="properties-collections-actions.html">Properties, Collections &amp; Actions</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/userguide/modules/ROOT/pages/properties-collections-actions.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/antora/components/userguide/modules/ROOT/pages/properties-collections-actions.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -691,7 +683,7 @@ It also provides a <a href="../../refguide/latest/applib/index/annotation/Proper
 <li>
 <p>the properties of domain entities are usually also annotated with ORM annotation(s).</p>
 <div class="paragraph">
-<p>For <a href="../../pjpa/latest/about.html" class="xref page">JPA/EclipseLink</a> this would be <a href="https://www.objectdb.com/api/java/jpa/Column">javax.persistence.Column</a>, for <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a> it is <a href="http://www.datanucleus.org/products/datanucleus/jdo/annotations.html#Column">@javax.jdo.annotations.Column</a> annotation.
+<p>For <a href="../../pjpa/latest/about.html" class="xref page">JPA/EclipseLink</a> this would be the <code>jakarta.persistence.Column</code> annotation.
 For property references, there may be other annotations to indicate whether the reference is bidirectional.
 It&#8217;s also possible (using annotations) to define a link table to hold foreign key columns.</p>
 </div>
@@ -766,45 +758,31 @@ private Customer customer;</code></pre>
 <p>It&#8217;s ok for a <a href="view-models.html" class="xref page">view model</a> to reference other view models and also to reference domain entities.
 However, it <em>isn&#8217;t</em> valid for a domain entity to hold a reference to view model, because the ORM will not know how to persist the view model object.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For further details on mapping associations using <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a>, see their <a href="http://www.datanucleus.org:15080/products/accessplatform_5_2/jdo/mapping.html">mapping guide</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="optional-properties"><a class="anchor" href="#optional-properties"></a>Optional Properties</h3>
 <div class="paragraph">
-<p>(For domain entities) JDO/DataNucleus' default is that a property is assumed to be mandatory if it is a primitive type (eg <code>int</code>, <code>boolean</code>), but optional if a reference type (eg <code>String</code>, <code>BigDecimal</code> etc).
-To override optionality in JDO/DataNucleus the <code>@Column(allowsNull="&#8230;&#8203;")</code> annotations is used.</p>
+<p>(For domain entities) <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> default is that a property is assumed to be optional, regardless of whether it is a primitive type (eg <code>int</code>, <code>boolean</code>),or a reference type (eg <code>String</code>, <code>BigDecimal</code> etc).
+To override optionality, use the <code>@Basic(optional="&#8230;&#8203;")</code> annotation.</p>
 </div>
 <div class="paragraph">
 <p>Apache Causeway on the other hand assumes that all properties (and action parameters, for that matter) are mandatory, not optional.
-These defaults can also be overridden using Apache Causeway' own annotations, specifically <code>@Property(optionality=&#8230;&#8203;)</code>, or (because it&#8217;s much less verbose) using <code>@javax.annotation.Nullable</code>.</p>
+These defaults can also be overridden using Apache Causeway' own annotations, specifically <code>@Property(optionality=&#8230;&#8203;)</code>, or (because it&#8217;s much less verbose) using either <code>@jakarta.annotation.Nullable</code> or <code>@org.jspecify.annotations.Nullable</code>.</p>
 </div>
 <div class="paragraph">
 <p>These different defaults can lead to incompatibilities between the two frameworks.
-To counteract that, Apache Causeway also recognizes and honours JDO&#8217;s <code>@Column(allowsNull=&#8230;&#8203;)</code>.</p>
+To counteract that, Apache Causeway also recognizes and honours JPA&#8217;s <code>@Column(nullable=&#8230;&#8203;)</code>.</p>
 </div>
 <div class="paragraph">
 <p>For example, you can write:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
-@Column(allowsNull="true")
+@Column(nullable=true)
 @Property
 @Getter @Setter
 private LocalDate date;</code></pre>
@@ -815,11 +793,11 @@ private LocalDate date;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
-@Column(allowsNull="true")
+@Column(nullable=true)
 @Property(optionality=Optionality.OPTIONAL)
 @Getter @Setter
 private LocalDate date;</code></pre>
@@ -871,20 +849,20 @@ private String notes;</code></pre>
 <p>For entities, editable properties are not necessarily persistable.
 In such a case the setter would not write to a field, but would (presumably) mutate the object in some other way.
 In such a case you will need a getter and a setter, but the property annotated for the ORM as non-persistent.
-(If using JDO/DataNucleus, this is done using <code>@NotPersistent</code>).</p>
+(If using <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a>, this is done using <code>@jakarta.persistence.Transient</code>).</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
-import javax.jdo.annotations.Column
-import javax.jdo.annotations.NotPersistent;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
+import jakarta.persistence.Column;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
-@javax.jdo.annotations.NotPersistent
+@Transient
 @Property(editing=Editing.ENABLED)
 public String getAddress() {
     return addressService.toAddress( getLatLong() );                <i class="conum" data-value="1"></i><b>(1)</b>
@@ -906,7 +884,7 @@ AddressService addressService;                                      <i class="co
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the representation of the address, in human readable form, eg "10 Downing Street, London, UK"</td>
+<td>the representation of the address, in human-readable form, eg "10 Downing Street, London, UK"</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -927,11 +905,11 @@ Excluded from the Apache Causeway metamodel.</td>
 To get Apache Causeway to ignore a property (exclude it from its metamodel), annotate the getter using <a href="../../refguide/latest/applib/index/annotation/Programmatic.html" class="xref page">@Programmatic</a>.</p>
 </div>
 <div class="paragraph">
-<p>Similarly, for the JDO/DataNucleus ORM, ignore a property using the <code>@javax.jdo.annotations.NotPersistent</code> annotation.
+<p>Similarly, for the <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> ORM, ignore a property using the <code>@jakarta.persistence.Transient</code> annotation.
 This is independent of Apache Causeway; in other words that property will still be rendered in the UI (unless also annotated with <code>@Programmatic</code>).</p>
 </div>
 <div class="paragraph">
-<p>For view models, you can tell JAXB to ignore a property using the <code>@javax.xml.bind.annotation.XmlTransient</code> annotation.
+<p>For view models, you can tell JAXB to ignore a property using the <code>@jakarta.xml.bind.annotation.XmlTransient</code> annotation.
 Again, this is independent of Apache Causeway.</p>
 </div>
 <div class="paragraph">
@@ -955,20 +933,20 @@ These will still be rendered in the UI, but they will be read-only (not editable
 <p>This section shows specific considerations for various datatypes, in particular how to annotate them for the ORM.</p>
 </div>
 <div class="paragraph">
-<p>This section covers the <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a> object store.</p>
+<p>This section covers the <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> object store.</p>
 </div>
 <div class="sect3">
 <h4 id="strings-length"><a class="anchor" href="#strings-length"></a><code>String</code>s (Length)</h4>
 <div class="paragraph">
-<p>By default JDO/DataNucleus will map string properties to a <code>VARCHAR(255)</code>.
-To limit the length, use the <code>@Column(length=&#8230;&#8203;)</code> annotation.</p>
+<p>By default <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> will map string properties to a <code>VARCHAR(255)</code>.
+To limit the length, use the <code>@jakarta.persistence.Column(length=&#8230;&#8203;)</code> annotation.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -979,37 +957,7 @@ private String firstName</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This is a good example of a case where Apache Causeway infers domain semantics from the JDO annotation.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="joda-dates"><a class="anchor" href="#joda-dates"></a>JODA Dates</h4>
-<div class="paragraph">
-<p>Apache Causeway' bundles DataNucleus' <a href="http://www.datanucleus.org/documentation/products/plugins.html">built-in support</a> for Joda <code>LocalDate</code> and <code>LocalDateTime</code> datatypes, meaning that entity properties of these types will be persisted as appropriate data types in the database tables.</p>
-</div>
-<div class="paragraph">
-<p>It is, however, necessary to annotate your properties with <code>@javax.jdo.annotations.Persistent</code>, otherwise the data won&#8217;t actually be persisted.
-See the <a href="http://db.apache.org/jdo/field_types.html">JDO docs</a> for more details on this.</p>
-</div>
-<div class="paragraph">
-<p>Moreover, these datatypes are <em>not</em> in the default fetch group, meaning that JDO/DataNucleus will perform an additional <code>SELECT</code> query for each attribute.
-To avoid this extra query, the annotation should indicate that the property is in the default fetch group.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Column;
-import org.joda.time.LocalDate;
-
-@Persistent(defaultFetchGroup="true")
-@Column(allowsNull="true")
-@Property
-@Getter @Setter
-private LocalDate dueBy;</code></pre>
-</div>
+<p>This is a good example of a case where Apache Causeway infers domain semantics from the JPA annotation.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1032,31 +980,18 @@ private BigDecimal impact;</code></pre>
 </div>
 <div class="paragraph">
 <p>Without any constraints, the length of the corresponding column is database specific.
-For example, with HSQL JDO/DataNucleus maps to a column NUMERIC(19);
-no decimal digits are admitted.
-(Further details <a href="http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sgc_numeric_types">here</a>).</p>
+For example, with H2 <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> maps to a column NUMERIC(19,2).</p>
 </div>
 <div class="paragraph">
-<p>What this implies is that, when a record is inserted, a log entry similar to this one appears:</p>
+<p>Best practice is to explicitly specify the <code>scale</code> to the field like this, and probably <code>precision</code> also:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">INSERT INTO ENTITY(..., IMPACT, ....) VALUES (...., 0.5, ....)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>But when that same record is retrieved, the log will show that a value of "0" is returned, instead of 0.5.</p>
-</div>
-<div class="paragraph">
-<p>The solution is to explicitly add the scale to the field like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
-@Column(scale=2)
+@Column(precision=10, scale=2)
 @Getter @Setter
 private BigDecimal impact;</code></pre>
 </div>
@@ -1071,155 +1006,56 @@ private BigDecimal impact;</code></pre>
 <div class="sect3">
 <h4 id="blobs"><a class="anchor" href="#blobs"></a><code>Blob</code>s</h4>
 <div class="paragraph">
-<p>Apache Causeway configures JDO/DataNucleus so that the properties of type <code>org.apache.causeway.applib.value.Blob</code> and <code>org.apache.causeway.applib.value.Clob</code> can also be persisted.</p>
+<p>Apache Causeway provides the <a href="../../refguide/latest/persistence/index/jpa/applib/types/BlobJpaEmbeddable.html" class="xref page">BlobJpaEmbeddable</a> utility class to allow properties of type <code>org.apache.causeway.applib.value.Blob</code> to be persisted.</p>
 </div>
 <div class="paragraph">
-<p>As for Joda dates, this requires the <code>@javax.jdo.annotations.Persistent</code> annotation.
-However, whereas for dates one would always expect this value to be retrieved eagerly, for blobs and clobs it is not so clear cut.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
+<p>This is used as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Persistent;
-import lombok.Getter;
-import lombok.Setter;
-
-@Persistent(defaultFetchGroup="false", columns = {
-    @Column(name = "attachment_name"),
-    @Column(name = "attachment_mimetype"),
-    @Column(name = "attachment_bytes",
-            jdbcType="BLOB", sqlType = "LONGVARBINARY")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@AttributeOverrides({
+    @AttributeOverride(name="name",    column=@Column(name="attachment_name")),
+    @AttributeOverride(name="mimeType",column=@Column(name="attachment_mimeType")),
+    @AttributeOverride(name="bytes",   column=@Column(name="attachment_bytes"))
 })
-@Property(optionality = Optionality.OPTIONAL)
-@Getter @Setter
-private Blob attachment;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The three <code>@Column</code> annotations are required because the mapping classes that Apache Causeway provides (<a href="https://github.com/apache/causeway/blob/causeway-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/causeway/objectstore/jdo/datanucleus/valuetypes/CausewayBlobMapping.java#L59">CausewayBlobMapping</a> and <a href="https://github.com/apache/causeway/blob/causeway-1.4.0/component/objectstore/jdo/jdo-datanucleus/src/main/java/org/apache/causeway/objectstore/jdo/datanucleus/valuetypes/CausewayClobMapping.java#L59">CausewayClobMapping</a>) map to 3 columns.
-(It is not an error to omit these <code>@Column</code> annotations, but without them the names of the table columns are simply suffixed <code>_0</code>, <code>_1</code>, <code>_2</code> etc.</p>
-</div>
-<div class="paragraph">
-<p>If the <code>Blob</code> is mandatory, then use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Persistent;
-import lombok.Getter;
-import lombok.Setter;
+@Embedded
+private BlobJpaEmbeddable attachment;
 
-@Persistent(defaultFetchGroup="false", columns = {
-    @Column(name = "attachment_name", allowsNull="false"),
-    @Column(name = "attachment_mimetype", allowsNull="false"),
-    @Column(name = "attachment_bytes",
-            jdbcType="BLOB", sqlType = "LONGVARBINARY", allowsNull="false")
-})
-@Property(optionality = Optionality.MANDATORY )
-@Getter @Setter
-private Blob attachment;</code></pre>
+@Property()
+@PropertyLayout()
+public Blob getPdf() {
+  return BlobJpaEmbeddable.toBlob(pdf);
+}
+public void setPdf(final Blob pdf) {
+  this.pdf = BlobJpaEmbeddable.fromBlob(pdf);
+}</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If specifying a <code>sqlType</code> of "LONGVARBINARY" does not work, try instead "BLOB".
-There can be differences in behaviour between JDBC drivers.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="clobs"><a class="anchor" href="#clobs"></a><code>Clob</code>s</h4>
 <div class="paragraph">
-<p>Mapping <code>Clob</code>s works in a very similar way to <code>Blob</code>s, but the <code>jdbcType</code> and <code>sqlType</code> attributes will, respectively, be <code>CLOB</code> and <code>LONGVARCHAR</code>:</p>
+<p>Mapping <code>Clob</code>s works in a very similar way to <code>Blob</code>s, using the <a href="../../refguide/latest/persistence/index/jpa/applib/types/ClobJpaEmbeddable.html" class="xref page">ClobJpaEmbeddable</a> utility class:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Persistent;
-import lombok.Getter;
-import lombok.Setter;
-
-@Persistent(defaultFetchGroup="false", columns = {
-    @Column(name = "attachment_name"),
-    @Column(name = "attachment_mimetype"),
-    @Column(name = "attachment_chars",
-            jdbcType="CLOB", sqlType = "LONGVARCHAR")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@AttributeOverrides({
+    @AttributeOverride(name="name",    column=@Column(name="doc_name")),
+    @AttributeOverride(name="mimeType",column=@Column(name="doc_mimeType")),
+    @AttributeOverride(name="bytes",   column=@Column(name="doc_bytes"))
 })
-@Property( optionality = Optionality.OPTIONAL )
 @Getter @Setter
-private Clob doc;</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If specifying a <code>sqlType</code> of "LONGVARCHAR" does not work, try instead "CLOB".
-There can be differences in behaviour between JDBC drivers.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="mapping-to-varbinary-or-varchar"><a class="anchor" href="#mapping-to-varbinary-or-varchar"></a>Mapping to VARBINARY or VARCHAR</h4>
-<div class="paragraph">
-<p>Instead of mapping to a sqlType of <code>LONGVARBINARY</code> (or perhaps <code>BLOB</code>), you might instead decide to map to a <code>VARBINARY</code>.
-The difference is whether the binary data is held "on-row" or as a pointer "off-row"; with a <code>VARBINARY</code> the data is held on-row and so you will need to specify a length.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
-import lombok.Getter;
-import lombok.Setter;
+private ClobJpaEmbeddable doc;
 
-@Column(
-        name = "attachment_bytes",
-        jdbcTypr="BLOB", sqlType = "VARBINARY", length=2048
-)
-@Getter @Setter
-private Blob image;</code></pre>
+@Property()
+@PropertyLayout()
+public Clob getDoc() {
+  return ClobJpaEmbeddable.toClob(doc);
+}
+public void setDoc(final Clob doc) {
+  this.doc = ClobJpaEmbeddable.fromClob(doc);
+}</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>The same argument applies to <code>LONGVARCHAR</code> (or <code>CLOB</code>); you could instead map to a regular <code>VARCHAR</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
-import lombok.Getter;
-import lombok.Setter;
-
-@Column(
-        name = "attachment_chars",
-        sqlType = "VARCHAR", length=2048
-)
-@Getter @Setter
-private Clob letter;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Support and maximum allowed length will vary by database vendor.</p>
 </div>
 </div>
 </div>
@@ -1248,12 +1084,12 @@ And collections properties will also have a number of annotations:</p>
 It also provides a <a href="../../refguide/latest/applib/index/annotation/CollectionLayout.html" class="xref page">@CollectionLayout</a> for UI hints (though the information in this annotation may instead be provided by a supplementary <a href="ui-layout-and-hints.html#object-layout" class="xref page">.layout.xml</a> file)</p>
 </li>
 <li>
-<p>the collections of domain entities are often annotated with ORM annotation(s).
-In the case of JDO/DataNucleus annotations this is most notably <code>javax.jdo.annotations.Persistent</code>.
-Other annotations can be used to specify if the association is bidirectional, and whether to define a link table or not to hold foreign key columns.</p>
+<p>the collections of domain entities will typically be annotated with ORM annotation(s), such as
+ <code>jakarta.persistence.Entity</code>.
+The collection itself will likely have its own ORM-specific annotations, to specify for example if the association is bidirectional, supports cascading deletes, or whether to define a link table or not to hold foreign key columns.</p>
 </li>
 <li>
-<p>for the collections of view models, then JAXB annotations such as <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/bind/annotation/XmlElementWrapper.html">@javax.xml.bind.annotation.XmlElementWrapper</a> and <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/bind/annotation/XmlElement.html">@javax.xml.bind.annotation.XmlElement</a> will be present</p>
+<p>for the collections of view models, then JAXB annotations such as <code>@jakarta.xml.bind.annotation.XmlElementWrapper</code> and <code>@jakarta.xml.bind.annotation.XmlElement</code> will be present</p>
 </li>
 </ul>
 </div>
@@ -1267,18 +1103,6 @@ For example, a <code>placeOrder(&#8230;&#8203;)</code> action will likely add an
 </div>
 <div class="paragraph">
 <p>Since writing getter and setter methods adds quite a bit of boilerplate, it&#8217;s common to use <a href="https://projectlombok.org/">Project Lombok</a> to code generate these methods at compile time (using Java&#8217;s annotation processor) simply by adding the <code>@lombok.Getter</code> and <code>@lombok.Setter</code> annotations to the field.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-see the DataNucleus <a href="http://www.datanucleus.org:15080/products/accessplatform_5_0/jdo/mapping.html">Mapping Guide</a> for more in-depth coverage of this topic.
-</td>
-</tr>
-</table>
 </div>
 <div class="sect2">
 <h3 id="mapping-bidir-1m"><a class="anchor" href="#mapping-bidir-1m"></a>Mapping bidir 1:m</h3>
@@ -1296,21 +1120,25 @@ see the DataNucleus <a href="http://www.datanucleus.org:15080/products/accesspla
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Persistent;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.OneToMany;
 import lombok.Getter;
-import lombok.Setter;
 
 public class ParentObject
-        implements Comparable&lt;ParentObject&gt;{
+        implements Comparable&lt;ParentObject&gt; {
 
-    @Persistent(
-        mappedBy = "parent",                                               <i class="conum" data-value="1"></i><b>(1)</b>
-        dependentElement = "false"                                         <i class="conum" data-value="2"></i><b>(2)</b>
+    @Id                                                                 <i class="conum" data-value="1"></i><b>(1)</b>
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Getter
+    @OneToMany(
+            mappedBy = "parent",                                        <i class="conum" data-value="2"></i><b>(2)</b>
+            cascade = CascadeType.ALL,                                  <i class="conum" data-value="3"></i><b>(3)</b>
+            orphanRemoval = true
     )
-    @Collection                                                            <i class="conum" data-value="3"></i><b>(3)</b>
-    @Getter @Setter
-    private SortedSet&lt;ChildObject&gt; children = new TreeSet&lt;ChildObject&gt;();  <i class="conum" data-value="4"></i><b>(4)</b>
-
+    @Collection                                                         <i class="conum" data-value="4"></i><b>(4)</b>
+    private Set&lt;ChildObject&gt; children = new TreeSet&lt;ChildObject&gt;();     <i class="conum" data-value="5"></i><b>(5)</b>
 }</code></pre>
 </div>
 </div>
@@ -1318,19 +1146,19 @@ public class ParentObject
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>indicates a bidirectional association; the foreign key pointing back to the <code>Parent</code> will be in the table for <code>ChildObject</code></td>
+<td>surrogate identifier for the entity.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>disables cascade delete</td>
+<td>indicates a bidirectional association; the foreign key pointing back to the <code>Parent</code> will be in the table for <code>ChildObject</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>(not actually required in this case, because no attributes are set, but acts as a useful reminder that this collection will be rendered in the UI by Apache Causeway)</td>
+<td>enables cascade delete</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>uses a <code>SortedSet</code> (as opposed to some other collection type; discussion below)</td>
+<td>(not actually required in this case, because no attributes are set, but acts as a useful reminder that this collection will be rendered in the UI by Apache Causeway)</td>
 </tr>
 </table>
 </div>
@@ -1339,17 +1167,25 @@ public class ParentObject
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 public class ChildObject
-        implements Comparable&lt;ChildObject&gt; {    <i class="conum" data-value="1"></i><b>(1)</b>
+        implements Comparable&lt;ChildObject&gt; {
 
-    @Column(allowsNull = "false")               <i class="conum" data-value="2"></i><b>(2)</b>
-    @Property(editing = Editing.DISABLED)       <i class="conum" data-value="3"></i><b>(3)</b>
+    @Id                                                 <i class="conum" data-value="1"></i><b>(1)</b>
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @ManyToOne(optional = false)                        <i class="conum" data-value="2"></i><b>(2)</b>
+    @JoinColumn(name = "parent_id")
+    @Property(editing = Editing.DISABLED)               <i class="conum" data-value="3"></i><b>(3)</b>
     @Getter @Setter
-    private ParentObject parent;
+    private PetOwner petOwner;
 }</code></pre>
 </div>
 </div>
@@ -1357,7 +1193,7 @@ public class ChildObject
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>implements <code>Comparable</code> because is mapped using a <code>SortedSet</code></td>
+<td>surrogate identifier for the entity.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1370,8 +1206,9 @@ public class ChildObject
 </table>
 </div>
 <div class="paragraph">
-<p>Generally speaking you should use <code>SortedSet</code> for collection types (as opposed to <code>Set</code>, <code>List</code> or <code>Collection</code>).
-JDO/Datanucleus does support the mapping of these other types, but RDBMS are set-oriented, so using this type introduces the least friction.</p>
+<p>Generally speaking you should use <code>Set</code> for collection types (as opposed to <code>List</code> or <code>Collection</code>).
+You should also implement <code>equals()</code> and <code>hashCode()</code>, based upon the id.
+It&#8217;s also common to implement <code>Comparable</code>, using the same ordering as the unique business key defined within the database and consistent with <code>equals()</code>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1386,7 +1223,7 @@ JDO/Datanucleus does support the mapping of these other types, but RDBMS are set
 <div class="sect2">
 <h3 id="value-vs-reference-types-2"><a class="anchor" href="#value-vs-reference-types-2"></a>Value vs Reference Types</h3>
 <div class="paragraph">
-<p>While ORMs support collections/arrays of value types, such collections are not supported by Apache Causeway.
+<p>While ORMs can persist collections/arrays of value types, such collections are not supported by Apache Causeway.
 Apache Causeway can (currently) only provide a UI for collections of references.</p>
 </div>
 <div class="paragraph">
@@ -1527,7 +1364,7 @@ public List&lt;Product&gt; autoComplete0AddToBasket(              <i class="conu
     String searchTerm) {
     return productRepository.find(searchTerm);              <i class="conum" data-value="3"></i><b>(3)</b>
 }
-@javax.inject.Inject
+@jakarta.inject.Inject
 ProductRepository productRepository;</code></pre>
 </div>
 </div>
@@ -1672,23 +1509,23 @@ public List&lt;Product&gt; autoComplete0AddToBasket(              <i class="conu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 @Action(semantics=SemanticsOf.IDEMPOTENT)
 public Order invoice(
                 PaymentMethodType paymentMethodType,
-                @Nullable                                      <i class="conum" data-value="1"></i><b>(1)</b>
+                @Nullable                                       <i class="conum" data-value="1"></i><b>(1)</b>
                 @ParameterLayout(named="Ship no later than")
                 LocalDate shipBy) {
-    ...
-    setShipBy(shipBy)
+    // ...
+    setShipBy(shipBy);
     return this;
 }
 
-@Column(allowsNull="true")                                     <i class="conum" data-value="2"></i><b>(2)</b>
+@Column(nullable=true)                                          <i class="conum" data-value="2"></i><b>(2)</b>
 @Property
 @Getter @Setter
 private LocalDate shipBy;</code></pre>
@@ -1704,13 +1541,10 @@ private LocalDate shipBy;</code></pre>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Specifies the corresponding property is optional.
 <div class="paragraph">
-<p>Note that this uses an ORM-specific mechanism to specify the same semantics (in this case, using JDO/DataNucleus' <code>@Column#allowsNull()</code>.)</p>
+<p>Note that this uses an ORM-specific mechanism to specify the same semantics (in this case, using <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a>' <code>@Column#nullable()</code>.)</p>
 </div></td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>See also <a href="meta-annotations.html#properties-vs-parameters" class="xref page">properties vs parameters</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1723,7 +1557,7 @@ private LocalDate shipBy;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -1787,26 +1621,27 @@ private String lastName;</code></pre>
 <div class="sect2">
 <h3 id="bigdecimals-precision-2"><a class="anchor" href="#bigdecimals-precision-2"></a><code>BigDecimal</code>s (Precision)</h3>
 <div class="paragraph">
-<p>The <a href="../../refguide/latest/applib-ant/Digits.html" class="xref page">@javax.validation.constraints.Digits#fraction</a> annotation/attribute is used to specify the scale/precision of decimals.</p>
+<p>The <a href="../../refguide/latest/applib-ant/Digits.html" class="xref page">@jakarta.validation.constraints.Digits#fraction</a> annotation/attribute is used to specify the scale/precision of decimals.</p>
 </div>
 <div class="paragraph">
 <p>For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.jdo.annotations.Column;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.Column;
+import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 
 public Order updateDiscount(
-                @javax.validation.constraints.Digits(fraction=2)    <i class="conum" data-value="1"></i><b>(1)</b>
+                @Digits(fraction=2)                         <i class="conum" data-value="1"></i><b>(1)</b>
                 @ParameterLayout(named="Discount rate")
                 String discountRate) {
     setDiscountRate(discountRate);
     return this;
 }
 
-@Column(scale=2)                                                    <i class="conum" data-value="2"></i><b>(2)</b>
+@Column(scale=2)                                            <i class="conum" data-value="2"></i><b>(2)</b>
 @Getter @Setter
 private BigDecimal discountRate;</code></pre>
 </div>
@@ -1819,15 +1654,9 @@ private BigDecimal discountRate;</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Specifies the corresponding property precision.
-<div class="paragraph">
-<p>Note that this uses an ORM-specific annotation (in this case,  <a href="../../refguide/latest/applib-ant/Column.html#lengthscale-for-bigdecimals" class="xref page">@Column#scale</a></p>
-</div></td>
+<td>Specifies the corresponding property precision for the <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> object store.</td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>See also <a href="meta-annotations.html#properties-vs-parameters" class="xref page">properties vs parameters</a>.</p>
 </div>
 </div>
 </div>
@@ -1849,7 +1678,7 @@ private BigDecimal discountRate;</code></pre>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

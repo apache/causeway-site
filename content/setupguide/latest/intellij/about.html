@@ -282,14 +282,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -408,7 +400,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">Using IntelliJ</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/setupguide/modules/intellij/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/antora/components/setupguide/modules/intellij/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -521,7 +513,7 @@ You might also want to increase the heap size, eg to 2048.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If using <a href="../../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a>, this setting enables the generation of the <code>Q*</code> classes for DataNucleus type-safe queries.</p>
+<p>If using QueryDSL, this setting enables the generation of the <code>Q*</code> classes for type-safe queries.</p>
 </div>
 <div class="paragraph">
 <p>It is also required for frameworks such as <a href="https://projectlombok.org">Lombok</a>.</p>
@@ -591,9 +583,7 @@ Allows diagrams to be authored within the IDE; works well with the AsciiDoctor p
 <p>We run the application by creating a Run configuration, using <code>Run &gt; Edit Configurations</code>.</p>
 </div>
 <div class="paragraph">
-<p>There is one complication, which is the ORM.
-If the app uses <a href="../../../pjpa/latest/about.html" class="xref page">JPA</a>, then dynamic class weaving should be configured.
-If the app uses <a href="../../../pjdo/latest/about.html" class="xref page">JDO</a>, then Datanucleus enhancer should be configured.</p>
+<p>We also configure dynamic class weaving for the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/EclipseLink</a> ORM.</p>
 </div>
 <div class="sect2">
 <h3 id="running-the-app-jpa"><a class="anchor" href="#running-the-app-jpa"></a>Running the App (JPA)</h3>
@@ -606,7 +596,7 @@ If the app uses <a href="../../../pjdo/latest/about.html" class="xref page">JDO<
 </div>
 </div>
 <div class="paragraph">
-<p>With JPA, the classes need to be "weaved" in order to support lazy loading and (more performant) dirty object tracking.
+<p>With <a href="../../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a>, the classes can optionally be "weaved" in order to support lazy loading and (more performant) dirty object tracking.
 This is typically done dynamically at runtime, using a Java agent.
 The <a href="../../../docs/latest/starters/simpleapp.html" class="xref page">SimpleApp</a> and <a href="../../../docs/latest/starters/helloworld.html" class="xref page">HelloWorld</a> starter apps demonstrate this, bundling the <code>spring-instrument.jar</code> file.
 To run, use:</p>
@@ -621,91 +611,6 @@ To run, use:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="running-the-app-jdo"><a class="anchor" href="#running-the-app-jdo"></a>Running the App (JDO)</h3>
-<div class="paragraph">
-<p>DataNucleus requires that all entities are bytecode enhanced.
-When building from the command line using Maven, the <code>datanucleus:enhance</code> Maven plugin takes care of this.</p>
-</div>
-<div class="paragraph">
-<p>We can just have IntelliJ run the enhance as a separate run configuration before the run configuration that runs the app itself.</p>
-</div>
-<div class="paragraph">
-<p>First, set up the run configuration to do the enhance:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/110-running-the-app/005-datanucleus-enhance-run-configuration.png" alt="005 datanucleus enhance run configuration" width="700px">
-</div>
-<div class="title">Figure 4. Run Configuration to enhance the entities</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Check "work offline" (in Maven Options) to speed this up slightly.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If on Windows you encounter "The command line is too long", then set '-Dfork=false' as a VM option, in Java options:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/110-running-the-app/006-datanucleus-enhance-run-configuration-fork-false.png" alt="006 datanucleus enhance run configuration fork false" width="400px">
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Then, set up the run configuration for the app:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/110-running-the-app/010-run-configuration.png" alt="010 run configuration" width="700px">
-</div>
-<div class="title">Figure 5. Run Configuration to run the app</div>
-</div>
-<div class="paragraph">
-<p>Note how it runs the "enhance" configuration first, specified using "Modify options".</p>
-</div>
-<div class="paragraph">
-<p>Because we are using Maven to enhance the app, build the app at least once from the Maven command line:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn install -DskipTests -T1C</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the app using <code>Run &gt; Run Configuration</code>.
-The same configuration can also be used to debug the app if you so need.</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="title">Dynamic Enhancement ?</div>
-<div class="paragraph">
-<p>Rather than statically enhancing the classes, an alternative&#8201;&#8212;&#8201;at least in theory&#8201;&#8212;&#8201;is to enhance the classes dynamically, at runtime.</p>
-</div>
-<div class="paragraph">
-<p>There is an <a href="https://plugins.jetbrains.com/plugin/11119-datanucleus-runtime-enhancement">IntelliJ plugin</a> (not tested) that purports to support this, but (at time of writing) is out of date and only supports older versions of IntelliJ.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="running-the-unit-tests"><a class="anchor" href="#running-the-unit-tests"></a>Running the Unit Tests</h3>
 <div class="paragraph">
 <p>The easiest way to run the unit tests is just to right click on the relevant package in the <em>Project Window</em>, and choose run unit tests.
@@ -715,7 +620,7 @@ Hopefully your tests will pass (!).</p>
 <div class="content">
 <img src="_images/110-running-the-app/030-running-unit-tests.png" alt="030 running unit tests" width="500px">
 </div>
-<div class="title">Figure 6. Running Unit Tests from Project Explorer</div>
+<div class="title">Figure 4. Running Unit Tests from Project Explorer</div>
 </div>
 <div class="paragraph">
 <p>As a side-effect, this will create a run configuration, very similar to the one we manually created for the main app.</p>
@@ -733,7 +638,7 @@ Hopefully your tests will pass (!).</p>
 <div class="content">
 <img src="_images/110-running-the-app/045-running-integ-tests.png" alt="045 running integ tests" width="800px">
 </div>
-<div class="title">Figure 7. Running Integ Tests from Project Explorer</div>
+<div class="title">Figure 5. Running Integ Tests from Project Explorer</div>
 </div>
 <div class="paragraph">
 <p>There are also tests in the <code>webapp-tests</code> module:</p>
@@ -742,16 +647,6 @@ Hopefully your tests will pass (!).</p>
 <div class="content">
 <img src="_images/110-running-the-app/046-running-integ-tests-webapp-tests.png" alt="046 running integ tests webapp tests" width="800">
 </div>
-</div>
-<div class="paragraph">
-<p>If the app uses JDO, then the tests might fail because the entities won&#8217;t have been enhanced.
-However, we can then easily update the automatically-created run configuration to run the datanucleus enhancer goal (same as when running the application):</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/110-running-the-app/050-running-integration-tests-run-configuration.png" alt="050 running integration tests run configuration" width="700px">
-</div>
-<div class="title">Figure 8. Integration Tests Run Configuration</div>
 </div>
 </div>
 </div>
@@ -773,7 +668,7 @@ However, we can then easily update the automatically-created run configuration t
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

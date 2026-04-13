@@ -365,14 +365,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -492,7 +484,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">Execution Log</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/extensions/core/executionlog/adoc/modules/executionlog/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/extensions/core/executionlog/adoc/modules/executionlog/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -500,7 +492,7 @@ page.parent doesn't seem to be set...
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <em>Execution Log</em> extension provides an implementation of <a href="../../../refguide/latest/applib/index/services/publishing/spi/ExecutionSubscriber.html" class="xref page">ExecutionSubscriber</a> that persists <a href="../../../refguide/latest/applib/index/services/iactn/Execution.html" class="xref page">Execution</a>s using either the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/EclipseLink</a> or <a href="../../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a> object store.</p>
+<p>The <em>Execution Log</em> extension provides an implementation of <a href="../../../refguide/latest/applib/index/services/publishing/spi/ExecutionSubscriber.html" class="xref page">ExecutionSubscriber</a> that persists <a href="../../../refguide/latest/applib/index/services/iactn/Execution.html" class="xref page">Execution</a>s using either the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/EclipseLink</a> object store.</p>
 </div>
 <div class="paragraph">
 <p>One use case is to combine with the <a href="../../../security/latest/audittrail/about.html" class="xref page">Audit Trail</a> extension.
@@ -540,7 +532,7 @@ The two logs are correlated using the <a href="../../../refguide/latest/applib/i
 <div class="sect2">
 <h3 id="dependencies"><a class="anchor" href="#dependencies"></a>Dependencies / Imports</h3>
 <div class="paragraph">
-<p>In the webapp module of your application, add the following dependency:</p>
+<p>In the webapp module of your application, add the following dependency for the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> object store:</p>
 </div>
 <div class="listingblock">
 <div class="title">pom.xml</div>
@@ -548,63 +540,26 @@ The two logs are correlated using the <a href="../../../refguide/latest/applib/i
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.causeway.extensions&lt;/groupId&gt;
-        &lt;artifactId&gt;causeway-extensions-executionlog-persistence-XXX&lt;/artifactId&gt;    <i class="conum" data-value="1"></i><b>(1)</b>
+        &lt;artifactId&gt;causeway-extensions-executionlog-persistence-jpa&lt;/artifactId&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>either:
-<div class="ulist">
-<ul>
-<li>
-<p><code>causeway-extensions-executionlog-persistence-jpa</code> (<a href="../../../pjpa/latest/about.html" class="xref page">JPA (EclipseLink)</a>), or</p>
-</li>
-<li>
-<p><code>causeway-extensions-executionlog-persistence-jdo</code> (<a href="../../../pjdo/latest/about.html" class="xref page">JDO (DataNucleus)</a>)</p>
-</li>
-</ul>
-</div></td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>In your application&#8217;s <a href="../modules.html#appmanifest" class="xref page">App Manifest</a>, import the <em>ExecutionLog</em> modules.
-The exact modules to use will depend upon the persistence mechanism in use:</p>
+For the <a href="../../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a> persistence mechanism, use:</p>
 </div>
 <div class="listingblock">
 <div class="title">AppManifest.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
 @Import({
-        ...
-        CausewayModuleExtExecutionLogPersistenceXxx.class,        <i class="conum" data-value="1"></i><b>(1)</b>
-        ...
+        CausewayModuleExtExecutionLogPersistenceJpa.class,
+        // ...
 })
 public class AppManifest {
 }</code></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>either:
-<div class="ulist">
-<ul>
-<li>
-<p><code>CausewayModuleExtExecutionLogPersistenceJdo</code> (<a href="../../../pjpa/latest/about.html" class="xref page">JPA (EclipseLink)</a>), or</p>
-</li>
-<li>
-<p><code>CausewayModuleExtExecutionLogPersistenceJpa</code> (<a href="../../../pjdo/latest/about.html" class="xref page">JDO (DataNucleus)</a>)</p>
-</li>
-</ul>
-</div></td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>If using <a href="../../../security/latest/secman/about.html" class="xref page">SecMan</a>, you will also need to import the <a href="../../../testing/latest/fixtures/about.html" class="xref page">Fixture</a> module; SecMan uses fixture scripts to seed its entities.</p>
@@ -761,7 +716,7 @@ Therefore one action can execute another can execute another, creating a nested 
 <p><a href="../../../refguide/latest/applib/index/services/iactn/Interaction.html" class="xref page">interaction</a></p>
 </li>
 <li>
-<p><a href="../../../refguide/latest/applib/index/services/iactnlayer/InteractionService.html" class="xref page">InteractionService</a>.</p>
+<p><a href="#refguide:applib:index/services/iactnlayer/InteractionService.adoc" class="xref unresolved">refguide:applib:index/services/iactnlayer/InteractionService.adoc</a>.</p>
 </li>
 <li>
 <p><a href="../../../refguide/latest/applib/index/services/publishing/spi/CommandSubscriber.html" class="xref page">CommandSubscriber</a> SPI</p>
@@ -793,7 +748,7 @@ Therefore one action can execute another can execute another, creating a nested 
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

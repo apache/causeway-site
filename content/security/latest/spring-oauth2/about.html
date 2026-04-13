@@ -205,9 +205,6 @@ page.parent doesn't seem to be set...
     <a class="nav-link" href="../bypass/about.html">Bypass (Authenticator &amp; Authorizor)</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../shiro/about.html">Shiro (Authenticator &amp; Authorizor)</a>
-  </li>
-  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../keycloak/about.html">Keycloak (Authenticator only)</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -226,9 +223,6 @@ page.parent doesn't seem to be set...
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../secman/setting-up.html">Setting up</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../secman/setting-up-with-shiro.html">Setting up with Shiro</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../secman/setting-up-with-spring-oauth2.html">Setting up with Spring OAuth2</a>
@@ -313,14 +307,6 @@ page.parent doesn't seem to be set...
       <ul class="versions">
         <li class="version">
           <a href="../../../incubator/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../pjdo/latest/about.html">latest</a>
         </li>
       </ul>
     </li>
@@ -444,7 +430,7 @@ page.parent doesn't seem to be set...
     <li><a href="about.html">Spring OAuth2 Integration</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/extensions/security/spring-oauth2/src/main/adoc/modules/spring-oauth2/pages/about.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/extensions/security/spring-oauth2/src/main/adoc/modules/spring-oauth2/pages/about.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -453,7 +439,9 @@ page.parent doesn't seem to be set...
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide describes the integration of Spring security&#8217;s OAuth2 client.
-Authentication is done via OAuth2 and authorization via either Shiro or Secman.</p>
+Authentication is done via OAuth2 and authorization can be done using another implementation, typically using <a href="../secman/about.html" class="xref page">Secman security</a> module (with roles/permissions defined as domain entities).
+But if the roles/permissions are static then using the <a href="../simple/about.html" class="xref page">Simple security</a> module is another alternative.
+We show both integrations on this page.</p>
 </div>
 </div>
 </div>
@@ -529,7 +517,7 @@ Using this, it provides an implementation of the <a href="../spring/about.html#a
 </div>
 </div>
 <div class="sect1">
-<h2 id="walk-through-oauth2"><a class="anchor" href="#walk-through-oauth2"></a>Walk-through (Oauth with Github and Shiro authorizor)</h2>
+<h2 id="walk-through-oauth2"><a class="anchor" href="#walk-through-oauth2"></a>Walk-through (Oauth with Github and Simple authorizor)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Using Spring Security we can configure your app with various authentication providers.
@@ -548,7 +536,7 @@ The steps here are based on <a href="https://spring.io/guides/tutorials/spring-b
 @Import({
         ...
         CausewayModuleExtSpringSecurityOAuth2.class,    <i class="conum" data-value="1"></i><b>(1)</b>
-        AuthorizorShiro.class,                          <i class="conum" data-value="2"></i><b>(2)</b>
+        SimpleAuthorizor.class,                         <i class="conum" data-value="2"></i><b>(2)</b>
         ...
 })
 public class AppManifest {
@@ -561,13 +549,48 @@ public class AppManifest {
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>The <code>CausewayModuleExtSpringSecurityOAuth2</code> module brings in a transitive dependency on <code>CausewayModuleSecuritySpring</code>.</td>
 </tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>An implementation of <code>Authorizor</code> is also required.
-For the purpose of this walkthrough, we&#8217;ll use the implementation provided by <a href="../shiro/about.html" class="xref page">Shiro</a>, namely <code>AuthorizorShiro</code>.</td>
-</tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Add in the corresponding Maven dependency:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+    ...
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.causeway.extensions&lt;/groupId&gt;
+        &lt;artifactId&gt;causeway-extensions-spring-security-oauth2&lt;/artifactId&gt;
+
+        &lt;version&gt;3.4.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    ...
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use the Simple authorizor, add in a reference to its authorizor:</p>
+</div>
+<div class="listingblock">
+<div class="title">AppManifest.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        ...
+        CausewayModuleExtSpringSecurityOAuth2.class,
+        SimpleAuthorizor.class,                         <i class="conum" data-value="1"></i><b>(1)</b>
+        ...
+})
+public class AppManifest {
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>reference <code>SimpleAuthorizor</code> directly.
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -576,24 +599,29 @@ For the purpose of this walkthrough, we&#8217;ll use the implementation provided
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Make sure that no other <code>CausewayModuleSecurityXxx</code> module is imported, either directly or indirectly.</p>
+<p>We do <em>not</em> reference all of <code>CausewayModuleSecuritySimple</code> module, as that would bring in the <code>SimpleAuthenticator</code> service, which we don&#8217;t require.</p>
 </div>
 </td>
 </tr>
 </table>
+</div></td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>To use the Shiro authorizor, also add in the corresponding dependency:</p>
+<p>We also need to add a dependency in Maven:</p>
 </div>
 <div class="listingblock">
 <div class="title">pom.xml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+    ...
     &lt;dependency&gt;
         &lt;groupId&gt;org.apache.causeway.security&lt;/groupId&gt;
-        &lt;artifactId&gt;causeway-security-shiro&lt;/artifactId&gt;
+        &lt;artifactId&gt;causeway-security-simple&lt;/artifactId&gt;
         &lt;version&gt;3.4.0&lt;/version&gt;
     &lt;/dependency&gt;
+    ...
 &lt;/dependencies&gt;</code></pre>
 </div>
 </div>
@@ -656,32 +684,49 @@ public class LoginController {
 @Import({
         ...
         CausewayModuleExtSpringSecurityOAuth2.class,
-        AuthorizorShiro.class,
+        SimpleAuthorizor.class,
         LoginController.class,
         ...
 })
 public class AppManifest {
+
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="configure-permissions"><a class="anchor" href="#configure-permissions"></a>Configure permissions</h3>
 <div class="paragraph">
-<p>Next configure authenticationStrategy and permissionResolver for realms, and add the userId:</p>
+<p>With <a href="../simple/about.html" class="xref page">Simple</a> security module, roles and permissions are provided by a <code>SimpleRealm</code> service.
+This can be created for example as a bean within <code>AppManifest</code>:</p>
 </div>
 <div class="listingblock">
-<div class="title">shiro.ini</div>
+<div class="title">AppManifest.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">[main]
-authenticationStrategy=org.apache.causeway.extensions.secman.delegated.shiro.realm.AuthenticationStrategyForSecMan
-securityManager.authenticator.authenticationStrategy = $authenticationStrategy
-securityManager.realms = $iniRealm
-permissionResolver = org.apache.causeway.security.shiro.authorization.CausewayPermissionResolver
-iniRealm.permissionResolver = $permissionResolver
-...
-[users]
-...
-your.id = ,admin_role
-...</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// ...
+public class AppManifest {
+
+    @Bean
+    public SimpleRealm realm() {                <i class="conum" data-value="1"></i><b>(1)</b>
+        String unusedPassword = null;
+        return new SimpleRealm()
+            .addRole("admin_role", id-&gt;Grant.CHANGE)
+            .addUser("danhaywood@apache.org", unusedPassword, List.of("admin_role"))
+;
+    }
+}</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>return a realm of required roles and permissions</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Consult the <a href="../simple/about.html" class="xref page">Simple</a> security module documentation for further details on creating a <code>SimpleRealm</code>.</p>
 </div>
 <div class="paragraph">
 <p>Lastly (and optionally), the swagger/REST API is not configured for oauth2, so we replace the <code>index.html</code> page with one to redirect straight to the <a href="../../../vw/latest/about.html" class="xref page">Wicket Viewer</a>:</p>
@@ -851,7 +896,7 @@ public class AppManifest {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Using secman for permissions (rather than Shiro, as was described in the <a href="#walk-through-oauth2">github walkthrough</a> above)</td>
+<td>Using secman for permissions</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1098,7 +1143,7 @@ spring.security.oauth2.resourceserver.jwt.jwk-set-uri=https://login.microsoftonl
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

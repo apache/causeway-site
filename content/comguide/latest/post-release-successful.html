@@ -338,14 +338,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -466,7 +458,7 @@ page.parent doesn't seem to be set...
     <li><a href="post-release-successful.html">Post Release (Successful)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/antora/components/comguide/modules/ROOT/pages/post-release-successful.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -506,7 +498,7 @@ If there are not +3 votes after this time then it is perfectly permissible to ke
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway Core release 3.4.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[RESULT] [VOTE] Apache Causeway release 3.4.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -814,7 +806,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # constants
-fullname="causeway-bom"
+fullname="causeway-all"
 repo_root=https://repository.apache.org/content/repositories/releases/org/apache/causeway
 
 # file suffices
@@ -986,9 +978,7 @@ git commit -m "$CAUSEWAYJIRA: bumps antora.yml versions to $CAUSEWAYREL"</code><
 <p>build framework</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pushd bom
-mvnd clean install -T1C -DskipTests -Dgithub
-popd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvnd clean install -DskipTests -Dgithub</code></pre>
 </div>
 </div>
 </li>
@@ -1068,12 +1058,20 @@ popd</code></pre>
   sources:
     - url: .
       start_path: antora/components/docs # docs
-      branches: [3.4.0]
+      branches: [..., 3.4.0]  <i class="conum" data-value="1"></i><b>(1)</b>
       # ...
     - url: .
       start_path: viewers/wicket/adoc # vw
-      branches: [3.4.0]</code></pre>
+      branches: [..., 3.4.0]  <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>comma-separated list of all branches to include.</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -1425,38 +1423,30 @@ git commit -m "$CAUSEWAYJIRA: bumps BASELINE to latest release version"</code></
 <h2 id="update-starter-projects"><a class="anchor" href="#update-starter-projects"></a>Update starter projects</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As explained in <a href="cutting-a-release.html#update-starter-apps" class="xref page">cutting a release</a>,for each of the two starter apps, we maintain
-four
-branches:</p>
+<p>As explained in <a href="cutting-a-release.html#update-starter-apps" class="xref page">cutting a release</a>,for each of the two starter apps, we maintain two branches:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>v3-jpa</code>; <code>v3-jdo</code></p>
+<p><code>v3-jpa</code></p>
 <div class="paragraph">
-<p>These are intended to reference the <em>most recently released</em> version, the first demonstrating persistence using JDO, the second using JPA.
-These are the branches referenced from the home page and getting started pages of the website.</p>
+<p>This branch is intended to reference the <em>most recently released</em> version, and is referenced from the home page and getting started pages of the website.</p>
 </div>
 </li>
-</ul>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><code>v3-jpa-SNAPSHOT</code>; <code>v3-jdo-SNAPSHOT</code></p>
+<p><code>v3-jpa-SNAPSHOT</code></p>
 <div class="paragraph">
-<p>These reference the most current snapshot nightly build.</p>
+<p>This branch is intended to reference the most current snapshot nightly build.</p>
 </div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The general idea is that a release will fast-forward <code>vN-jpa</code> to <code>vN-jpa-SNAPSHOT</code> and similarly moves <code>vN-jdo</code> up to <code>vN-jdo-SNAPSHOT</code>, bumping to the newly released version of the framework in the process.
-This is done for all current <code>vN</code> branches.
+<p>The general idea is that a release will fast-forward <code>vN-jpa</code> to <code>vN-jpa-SNAPSHOT</code>, bumping to the newly released version of the framework in the process.
 The non-SNAPSHOT builds should always reference the most recently release.</p>
 </div>
 <div class="paragraph">
-<p>In order that we don&#8217;t break the starter apps while a release is being voted on, we do the changes in work branches, <code>$CAUSEWAYBRANCH-jpa</code> and <code>$CAUSEWAYBRANCH-jdo</code>.</p>
+<p>In order that we don&#8217;t break the starter apps while a release is being voted on, we do the changes in a work branch, <code>$CAUSEWAYBRANCH-jpa</code>.</p>
 </div>
 <div class="paragraph">
 <p>Now that the release is complete, tidy up these branches and then set up the <code>-SNAPSHOT</code> branches as required.</p>
@@ -1468,7 +1458,7 @@ The non-SNAPSHOT builds should always reference the most recently release.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The <code>vN-{jpa,jdo}</code> branches should always work against the most recent release, whereas the <code>vN-{jpa,jdo}-SNAPSHOT</code> reference more recent nightly builds if necessary.
+The <code>vN-jpa</code> branch should always work against the most recent release, whereas the <code>vN-jpa-SNAPSHOT</code> reference more recent nightly builds if necessary.
 </td>
 </tr>
 </table>
@@ -1498,15 +1488,7 @@ The <code>vN-{jpa,jdo}</code> branches should always work against the most recen
 <p>Reset to the <code>v3</code> branch, which contains the scripts required to create the new tags.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git reset --hard v3</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Set the version using the <code>setver.sh</code> script (basically just runs <code>mvn versions:set</code>).</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./setver.sh -v 3.4.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git reset --hard origin/v3</code></pre>
 </div>
 </div>
 </li>
@@ -1514,15 +1496,19 @@ The <code>vN-{jpa,jdo}</code> branches should always work against the most recen
 <p>Create the new tags using <code>tagger.sh</code>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PREV_VERSION=...                              <i class="conum" data-value="1"></i><b>(1)</b>
-./tagger.sh -p $PREV_VERSION -v 3.4.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PREV_VERSION=...                                                  <i class="conum" data-value="1"></i><b>(1)</b>
+./tagger.sh -p $PREV_VERSION -v 3.4.0 -y  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>adjust as necessary; should be the immediately previous version, eg <code>3.3.0</code> precedes <code>3.4.0</code>.</td>
+<td>adjust as necessary; should be the immediately previous version.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>omit <code>-y</code> flag for a dry run.</td>
 </tr>
 </table>
 </div>
@@ -1691,7 +1677,7 @@ The message must:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

@@ -305,14 +305,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -431,7 +423,7 @@ page.parent doesn't seem to be set...
     <li><a href="hints-and-tips.html">Hints-n-Tips</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/viewers/restfulobjects/adoc/modules/ROOT/pages/hints-and-tips.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/viewers/restfulobjects/adoc/modules/ROOT/pages/hints-and-tips.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -577,99 +569,6 @@ view model OfferTemplateFilter would be created?</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting"></a>Troubleshooting</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="exception"><a class="anchor" href="#exception"></a>Exception</h3>
-<div class="paragraph">
-<p>When invoking a REST service and getting a response with an embeded stacktrace like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-	"httpStatusCode": 500,
-	"message": "com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 1 counts of IllegalAnnotationExceptions
-Klasse enthält zwei Eigenschaften mit demselben Namen \"name\"
-	this problem is related to the following location:
-		at public java.lang.String ife.dep.ServiceName.getName()
-		at ife.dep.ServiceName
-		at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName()
-		at ife.dep.ProvidedService
-		at public java.util.SortedSet ife.dep.Release.getCapabilities()
-		at ife.dep.Release
-		at public ife.dep.Release ife.cfg.Configuration.getRelease()
-		at ife.cfg.Configuration
-		at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration()
-		at ife.cfg.ConfigEntry
-		at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries()
-		at ife.cfg.Endpoint
-	this problem is related to the following location:
-		at public java.lang.String ife.dep.ServiceName.name
-		at ife.dep.ServiceName
-		at public ife.dep.ServiceName ife.dep.ProvidedService.getServiceName()
-		at ife.dep.ProvidedService
-		at public java.util.SortedSet ife.dep.Release.getCapabilities()
-		at ife.dep.Release
-		at public ife.dep.Release ife.cfg.Configuration.getRelease()
-		at ife.cfg.Configuration
-		at public ife.cfg.Configuration ife.cfg.ConfigEntry.getConfiguration()
-		at ife.cfg.ConfigEntry
-		at public java.util.SortedSet ife.cfg.Endpoint.getCfgEntries()
-		at ife.cfg.Endpoint
-",
-[...]
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="solution"><a class="anchor" href="#solution"></a>Solution</h3>
-<div class="paragraph">
-<p>Add <code>@XmlAccessorType(XmlAccessType.FIELD)</code> to your domain entity:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
-@javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.NATIVE, column = "id")
-@javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
-@Named("xxx.ServiceName")
-@DomainObject(bounded = true)
-@DomainObjectLayout(cssClassFa = "tag", describedAs = "")
-@XmlAccessorType(XmlAccessType.FIELD)
-@SuppressWarnings("javadoc")
-public class ServiceName implements Capability, Comparable&lt;ServiceName&gt; {
-
-	public String title() {
-		return getName();
-	}
-
-	public int compareTo(ServiceName o) {
-		return name.compareTo(o.name);
-	}
-
-	@Override
-	public String toString() {
-		return title();
-	}
-
-	@javax.jdo.annotations.Column(allowsNull = "false")
-	@Getter	@Setter
-	public String name;
-
-	public boolean isSynchronous() {
-		return !isAsynchonous();
-	}
-
-	public boolean isAsynchonous() {
-		return name.startsWith(Constants.ESB_JMS_PREFIX);
-	}
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -687,7 +586,7 @@ public class ServiceName implements Capability, Comparable&lt;ServiceName&gt; {
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

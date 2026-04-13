@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <link rel="stylesheet" href="../../../../_/css/site-custom.css">
 <link rel="home" href="https://causeway.apache.org" title="causeway">
+  <link rel="next" href="../3.4.0/relnotes.html" title="3.4.0">
+  <link rel="prev" href="../4.0.0-M1/relnotes.html" title="4.0.0-M1">
   </head>
   <body class="article">
 <header class="header">
@@ -182,12 +184,12 @@
   <input id="algolia-search-input" placeholder="Search"></span>
 </div>
 <div class="nav-panel-pagination">
-  <a class="page-previous disabled" rel="prev" href="" title=""><span></span></a>
-  <a class="page-next disabled" rel="next"
-     href="" title=""><span></span></a>
+  <a class="page-previous" rel="prev" href="../4.0.0-M1/relnotes.html" title="4.0.0-M1"><span></span></a>
+  <a class="page-next" rel="next"
+     href="../3.4.0/relnotes.html" title="3.4.0"><span></span></a>
 <!--
 page.parent doesn't seem to be set...
-  <a class="page-parent disabled" rel="prev" href="" title=""><span></span></a>
+  <a class="page-parent disabled" rel="prev" href="" title="4.0.0-M1"><span></span></a>
 -->
 </div>
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -198,8 +200,23 @@ page.parent doesn't seem to be set...
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
+    <span class="nav-text">2026</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../2026/3.6.0/relnotes.html">3.6.0</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <span class="nav-text">2025</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../4.0.0-M1/relnotes.html">4.0.0-M1</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="relnotes.html">3.5.0</a>
+  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../3.4.0/relnotes.html">3.4.0</a>
   </li>
@@ -366,14 +383,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -489,15 +498,84 @@ page.parent doesn't seem to be set...
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../../about.html">Release Notes</a></li>
+    <li>2025</li>
     <li><a href="relnotes.html">3.5.0</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/relnotes/modules/ROOT/pages/2025/3.5.0/relnotes.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/antora/components/relnotes/modules/ROOT/pages/2025/3.5.0/relnotes.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
 <h1 class="page">3.5.0</h1>
-
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is primarily a security release to address CVE-2025-64408, which was a Java deserialization vulnerability to authenticated attackers.</p>
+</div>
+<div class="paragraph">
+<p>The vulnerability applied to view models, not entities.
+The fix involves encrypting the view model memento using HMAC 256 encryption key.
+By default, a new key is created each time the application is restarted, which means that any bookmark of a view model will become invalid in subsequent runs.</p>
+</div>
+<div class="paragraph">
+<p>If you require stable (but still secure) bookmarks across runs, then this can be done by providing a custom implementation of the <code>HmacAuthority</code> bean (to override the default provided by the framework).</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="mignotes.html" class="xref page">Migration notes</a> for further details.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="new-feature"><a class="anchor" href="#new-feature"></a>New Feature</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/CAUSEWAY-3942">CAUSEWAY-3942</a> - Support EclipseLink static weaving automatically.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="improvement"><a class="anchor" href="#improvement"></a>Improvement</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/CAUSEWAY-3939">CAUSEWAY-3939</a> - Viewmodel Bookmark Overhaul (CVE-2025-64408).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bug"><a class="anchor" href="#bug"></a>Bug</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/CAUSEWAY-3938">CAUSEWAY-3938</a> - [Wicket Viewer] Editing uninitialized mandatory property causes exception</p>
+</li>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/CAUSEWAY-3899">CAUSEWAY-3899</a> - NPE guard for DomainChangeRecord</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task"><a class="anchor" href="#task"></a>Task</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://issues.apache.org/jira/browse/CAUSEWAY-3941">CAUSEWAY-3941</a> - Release activities, r3.5.0</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </article>
 <aside class="article-aside toc hide-for-print" role="navigation">
     <p class="toc-title">On this page</p>
@@ -515,7 +593,7 @@ page.parent doesn't seem to be set...
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>

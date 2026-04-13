@@ -365,14 +365,6 @@ page.parent doesn't seem to be set...
       </ul>
     </li>
     <li class="component">
-      <span class="title">JDO/DataNucleus</span>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../pjdo/latest/about.html">latest</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
       <span class="title">JPA</span>
       <ul class="versions">
         <li class="version">
@@ -491,7 +483,7 @@ page.parent doesn't seem to be set...
     <li><a href="domain-services.html">Domain Services</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/CAUSEWAY-3941/antora/components/userguide/modules/ROOT/pages/domain-services.adoc">Edit</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/causeway/edit/release-4.0.0-M2-RC1/antora/components/userguide/modules/ROOT/pages/domain-services.adoc">Edit</a></div>
 </div>
 <article class="doc">
     <a name="section-top"></a>
@@ -570,7 +562,7 @@ Said another way: it is the means by which Apache Causeway helps you avoid the a
 or <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Repository.html">@Repository</a>.</p>
 </div>
 <div class="paragraph">
-<p>Once declared, domain services can be injected into other domain objects (<strong>including</strong> entities and view models) using <code>@javax.inject.Inject</code>.
+<p>Once declared, domain services can be injected into other domain objects (<strong>including</strong> entities and view models) using <code>@jakarta.inject.Inject</code>.
 There&#8217;s more on this topic <a href="#injecting-services">below</a>.</p>
 </div>
 <div class="sect3">
@@ -931,18 +923,33 @@ Generally therefore the lazy persistence approach works well enough.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="persistence-by-reachability-jdo"><a class="anchor" href="#persistence-by-reachability-jdo"></a>Persistence by Reachability (JDO)</h4>
+<h4 id="persistence-by-reachability-jpa"><a class="anchor" href="#persistence-by-reachability-jpa"></a>Persistence by Reachability (JPA)</h4>
 <div class="paragraph">
-<p>If using <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a>, it is possible to configure ORM to automatically persist domain entities if they are associated with other already-persistent entities.
-This avoid the need to explicitly call "persist".</p>
+<p>If using <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a>, it is possible to configure ORM to automatically persist domain entities if they are associated with other already-persistent entities.
+This avoids the need to explicitly call "persist".</p>
 </div>
 <div class="paragraph">
-<p>This is done using <a href="../../refguide/latest/config/sections/datanucleus.html#datanucleus.persistence-by-reachability-at-commit" class="xref page">persistence-by-reachability</a> configuration property:</p>
+<p>This is done by annotating the relationship with a <code>CascadeType</code> of <code>CascadeType.PERSIST</code> or <code>CascadeType.ALL</code>.
+For example:</p>
 </div>
 <div class="listingblock">
-<div class="title">application.properties</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">datanucleus.persistence-by-reachability-at-commit=true</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Entity
+public class Parent {
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List&lt;Child&gt; children = new ArrayList&lt;&gt;();
+}
+
+@Entity
+public class Child {
+    @ManyToOne
+    private Parent parent;
+}
+
+// Usage:
+Parent p = new Parent();
+p.getChildren().add(new Child());
+em.persist(p);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -976,23 +983,25 @@ This avoid the need to explicitly call "persist".</p>
 See the <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference">Spring Data</a> documentation for further details.</p>
 </div>
 <div class="paragraph">
-<p>It is also possible to declare JPQL queries , either on the repository method (using <code>javax.persistence.Query</code>) or on the entity (using <code>javax.persistence.NamedQuery</code>).</p>
+<p>It is also possible to declare JPQL queries , either on the repository method (using <code>jakarta.persistence.Query</code>) or on the entity (using <code>jakarta.persistence.NamedQuery</code>).</p>
 </div>
 <div class="paragraph">
 <p>On the entity, declare a named query, eg:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@javax.persistence.Entity
-@javax.persistence.NamedQueries({
-    @javax.persistence.NamedQuery(          <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.*;
+
+@Entity
+@NamedQueries({
+    @NamedQuery(                            <i class="conum" data-value="1"></i><b>(1)</b>
         name = "Customer.findByNameLike",   <i class="conum" data-value="2"></i><b>(2)</b>
         query = "SELECT c " +               <i class="conum" data-value="3"></i><b>(3)</b>
                 "FROM Customer c " +        <i class="conum" data-value="4"></i><b>(4)</b>
                 "WHERE c.name LIKE :name"   <i class="conum" data-value="5"></i><b>(5)</b>
     )
     })
-...
+// ...
 public class Customer {
     // ...
 }</code></pre>
@@ -1062,113 +1071,6 @@ public class CustomerRepository {
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="finding-jdo"><a class="anchor" href="#finding-jdo"></a>Finding Objects (JDO)</h4>
-<div class="paragraph">
-<p>In the case of <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a>, it typically requires a JDOQL query defined on the domain entity, and a corresponding repository service for that domain entity type.
-This repository calls the framework-provided <a href="../../refguide/latest/applib/index/services/repository/RepositoryService.html" class="xref page">RepositoryService</a> to actually submit the query.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@javax.jdo.annotations.PersistenceCapable
-@javax.jdo.annotations.Queries({
-    @javax.jdo.annotations.Query(                       <i class="conum" data-value="1"></i><b>(1)</b>
-        name = "findByName",                            <i class="conum" data-value="2"></i><b>(2)</b>
-        value = "SELECT "                               <i class="conum" data-value="3"></i><b>(3)</b>
-                + "FROM com.mydomain.myapp.Customer "   <i class="conum" data-value="4"></i><b>(4)</b>
-                + "WHERE name.indexOf(:name) &gt;= 0 ")    <i class="conum" data-value="5"></i><b>(5)</b>
-})
-...
-public class Customer {
-    // ...
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>There may be several <code>@Query</code> annotations, nested within a <code>@Queries</code> annotation, defining queries using JDOQL.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Defines the name of the query.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The definition of the query, using JDOQL syntax.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The fully-qualified class name.
-Must correspond to the class on which the annotation is defined (the framework checks this automatically on bootstrapping).</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The predicate, expressed using Java syntax.
-In this particular query, is an implementation of a LIKE "name%" query.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>and in the corresponding repository, use <a href="../../refguide/latest/applib/index/services/repository/RepositoryService.html" class="xref page">RepositoryService</a>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.stereotype.Repository;
-import lombok.RequiredArgsConstructor;
-
-@Repository
-@RequiredArgsConstructor(onConstructor_ = {@Inject} )
-public class CustomerRepository {
-
-    private final RepositoryService repositoryService;
-
-    public List&lt;Customer&gt; findByName(String name) {
-        return repositoryService.allMatches(                <i class="conum" data-value="1"></i><b>(1)</b>
-                Query.named(Customer.class, "findByName")   <i class="conum" data-value="2"></i><b>(2)</b>
-                     .withParameter("name", name);          <i class="conum" data-value="3"></i><b>(3)</b>
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <a href="../../refguide/latest/applib/index/services/repository/RepositoryService.html" class="xref page">RepositoryService</a> is a generic facade over the ORM API.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Specifies the class that is annotated with @Query, along with the <code>@Query#name</code> attribute</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The <code>:name</code> parameter in the query JDOQL string, and its corresponding value</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Whenever a query is submitted, the framework will automatically "flush" any pending changes.
-This ensures that the database query runs against an up-to-date table so that all matching instances (with respect to the current transaction) are correctly retrieved.</p>
-</div>
-<div class="paragraph">
-<p>When an object is loaded from the database the framework will emit <code>ObjectLoadedEvent</code> <a href="events.html#lifecycle-events" class="xref page">lifecycle event</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="type-safe-queries"><a class="anchor" href="#type-safe-queries"></a>Type-safe queries</h4>
-<div class="paragraph">
-<p>DataNucleus also supports type-safe queries; these can be executed using the <a href="../../refguide/latest/persistence/index/jdo/applib/services/JdoSupportService.html" class="xref page">JdoSupportService</a> (JDO-specific) domain service.</p>
-</div>
-<div class="paragraph">
-<p>See <a href="../../refguide/latest/persistence/index/jdo/applib/services/JdoSupportService.html#type-safe-jdoql-queries" class="xref page">JdoSupportService</a> for further details.</p>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="updating"><a class="anchor" href="#updating"></a>Updating Objects</h3>
@@ -1185,7 +1087,7 @@ Rather, the ORM (DataNucleus) automatically keeps track of the state of each obj
 <p><a href="../../refguide/latest/applib/index/services/xactn/TransactionService.html" class="xref page">TransactionService</a> acts at the Apache Causeway layer, and flushes any pending object persistence or object deletions</p>
 </li>
 <li>
-<p>(if using <a href="../../pjdo/latest/about.html" class="xref page">JDO/DataNucleus</a>), the <a href="../../refguide/latest/persistence/index/jdo/applib/services/JdoSupportService.html" class="xref page">JdoSupportService</a> domain service can be used reach down to the underlying JDO API, and perform a flush of pending object updates also.</p>
+<p>(if using <a href="../../pjpa/latest/about.html" class="xref page">JPA/Eclipselink</a>), the <a href="../../refguide/latest/persistence/index/jpa/applib/services/JpaSupportService.html" class="xref page">JpaSupportService</a> domain service can be used reach down to the underlying JPA API (<code>EntityManager</code>), and perform a flush of pending object updates also.</p>
 </li>
 </ul>
 </div>
@@ -1244,7 +1146,7 @@ This is then executed either at the end of the transaction, or if a <a href="#fi
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Injection is requested using the JEE <a href="https://docs.oracle.com/javaee/7/api/javax/inject/Inject.html">@javax.inject.Inject</a> annotation.
+<p>Injection is requested using the JEE <code>@jakarta.inject.Inject</code> annotation.
 This is described in Spring&#8217;s documentation, <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-standard-annotations">using JSR330 standard annotations</a>.</p>
 </div>
 <div class="paragraph">
@@ -1367,7 +1269,7 @@ For example, setter injection is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
 
 public class Customer {
     ...
@@ -1396,7 +1298,7 @@ In many cases, default visibility will work (assuming unit tests that mock the d
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
 import lombok.Setter;
 
 public class Customer {
@@ -1419,7 +1321,7 @@ public class Customer {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
 
 public class Customer {
     ...
@@ -1450,7 +1352,7 @@ public class Customer {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
 
 public class DocumentService {
     ...
@@ -1459,7 +1361,7 @@ public class DocumentService {
 </div>
 </div>
 <div class="paragraph">
-<p>These will be in the order as defined by the <code>@javax.annotation.Priority</code> annotation.</p>
+<p>These will be in the order as defined by the <code>@jakarta.annotation.Priority</code> annotation.</p>
 </div>
 <div class="paragraph">
 <p>This pattern can be useful when implementing the <a href="https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern">chain of responsibility</a> design pattern, that is, looking for the first implementation that can handle a request.</p>
@@ -1503,12 +1405,12 @@ public class MyService {
 </div>
 </div>
 <div class="paragraph">
-<p>Unlike application-scoped services, these request-scoped services must be injected using a slightly different idiom (borrowed from CDI), using a <code>javax.inject.Provider</code>.
+<p>Unlike application-scoped services, these request-scoped services must be injected using a slightly different idiom (borrowed from CDI), using a <code>jakarta.inject.Provider</code>.
 For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Provider;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Provider;
 
 public class SomeClient {
     ...
@@ -1538,8 +1440,8 @@ To use that service, the idiom would be:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import javax.inject.Inject;
-import javax.inject.Provider;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 public class Customer {
     ...
@@ -1579,8 +1481,8 @@ public class Customer {
 <h2 id="overridingreplacing-services"><a class="anchor" href="#overridingreplacing-services"></a>Overriding/Replacing Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Causeway runs on top of Spring Boot, and relies on Spring Boot for dependency injection using <code>@javax.inject.Inject</code>.
-The <code>@javax.annotation.Priority</code> annotation is used to prioritize multiple service implementations.
+<p>Apache Causeway runs on top of Spring Boot, and relies on Spring Boot for dependency injection using <code>@jakarta.inject.Inject</code>.
+The <code>@jakarta.annotation.Priority</code> annotation is used to prioritize multiple service implementations.
 This allows any framework-provided domain service to be replaced by a user-defined one if required, simply by assigning it with an earlier precedence (= higher priority).</p>
 </div>
 <div class="paragraph">
@@ -1603,7 +1505,7 @@ If the initialization has dependencies, then these can be injected using standar
 </div>
 <div class="paragraph">
 <p>Alternatively, initialization can be moved into a <code>@PostConstruct</code> <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-postconstruct-and-predestroy-annotations">lifecycle callback</a>.
-Shutdown is similar; the framework will call any method annotated with <code>javax.annotation.PreDestroy</code>.</p>
+Shutdown is similar; the framework will call any method annotated with <code>jakarta.annotation.PreDestroy</code>.</p>
 </div>
 <div class="paragraph">
 <p>If a domain service needs to wait until the framework is fully initialized though, it should register for the <code>MetamodelEvent</code> that is emitted by the framework itself.
@@ -1770,7 +1672,7 @@ All that is required is this dependency:</p>
             </p>
         </div>
         <div class="revision">
-            <p>Revision: CAUSEWAY-3941.20251113-2329</p>
+            <p>Revision: release-4.0.0-M2-RC1.20260413-1016</p>
         </div>
     </div>
 </footer>
