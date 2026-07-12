@@ -11,11 +11,13 @@
 pushd content
 for a in $(ls -1 | grep -v schema | grep -v versions)
 do
+	    echo "rm -rf $a"
 	    rm -rf $a
 done
 popd
 
 pushd ../causeway/main
+echo "cp -Rf antora/target/site/* ../../causeway-site/content/."
 cp -Rf antora/target/site/* ../../causeway-site/content/.
 popd
 
